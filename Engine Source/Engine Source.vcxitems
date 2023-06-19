@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{baed1108-6b70-49ff-8990-1a7b678fd630}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daApplication.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daEntity.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daEnums.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daInput.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daMath.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daResources.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daTime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)David Engine.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daGraphicDevice Dx11.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daApplication.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daEntity.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daGraphicDevice Dx11.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daInput.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daResource.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daResources.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daTime.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)daMath.inl" />
+  </ItemGroup>
+</Project>
