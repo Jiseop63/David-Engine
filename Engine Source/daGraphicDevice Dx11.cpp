@@ -133,29 +133,29 @@ namespace da::graphics
 		std::filesystem::path vsPath(shaderPath.c_str());
 		vsPath += L"TriangleVS.hlsl";
 		D3DCompileFromFile(vsPath.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
-			, "main", "vs_5_0", 0, 0, &da::renderer::triangleVSBlob, &da::renderer::errorBlob);
-		if (da::renderer::errorBlob)
+			, "main", "vs_5_0", 0, 0, &renderer::triangleVSBlob, &renderer::errorBlob);
+		if (renderer::errorBlob)
 		{
-			OutputDebugStringA((char*)da::renderer::errorBlob->GetBufferPointer());
-			da::renderer::errorBlob->Release();
+			OutputDebugStringA((char*)renderer::errorBlob->GetBufferPointer());
+			renderer::errorBlob->Release();
 		}
-		mDevice->CreateVertexShader(da::renderer::triangleVSBlob->GetBufferPointer()
-			, da::renderer::triangleVSBlob->GetBufferSize()
-			, nullptr, &da::renderer::triangleVSShader);
+		mDevice->CreateVertexShader(renderer::triangleVSBlob->GetBufferPointer()
+			, renderer::triangleVSBlob->GetBufferSize()
+			, nullptr, &renderer::triangleVSShader);
 
 
 		std::filesystem::path psPath(shaderPath.c_str());
 		psPath += L"TrianglePS.hlsl";
 		D3DCompileFromFile(psPath.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
-			, "main", "ps_5_0", 0, 0, &da::renderer::trianglePSBlob, &da::renderer::errorBlob);
-		if (da::renderer::errorBlob)
+			, "main", "ps_5_0", 0, 0, &renderer::trianglePSBlob, &renderer::errorBlob);
+		if (renderer::errorBlob)
 		{
-			OutputDebugStringA((char*)da::renderer::errorBlob->GetBufferPointer());
-			da::renderer::errorBlob->Release();
+			OutputDebugStringA((char*)renderer::errorBlob->GetBufferPointer());
+			renderer::errorBlob->Release();
 		}
-		mDevice->CreatePixelShader(da::renderer::trianglePSBlob->GetBufferPointer()
-			, da::renderer::trianglePSBlob->GetBufferSize()
-			, nullptr, &da::renderer::trianglePSShader);
+		mDevice->CreatePixelShader(renderer::trianglePSBlob->GetBufferPointer()
+			, renderer::trianglePSBlob->GetBufferSize()
+			, nullptr, &renderer::trianglePSShader);
 
 
 		D3D11_INPUT_ELEMENT_DESC arrLayout[2] = {};
@@ -293,7 +293,7 @@ namespace da::graphics
 		mContext->PSSetShader(renderer::trianglePSShader, 0, 0);
 		
 		
-		mContext->DrawIndexed(3, 0, 0);
+		mContext->DrawIndexed(6, 0, 0);
 		mSwapChain->Present(0, 0);
 	}
 }

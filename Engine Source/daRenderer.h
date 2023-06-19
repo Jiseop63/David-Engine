@@ -3,7 +3,7 @@
 #include "daGraphicDevice Dx11.h"
 
 using namespace da::math;
-namespace da::renderer
+namespace renderer
 {
 	struct Vertex
 	{
@@ -25,4 +25,5 @@ namespace da::renderer
 
 
 	void Initialize();
+	void Release();
 }
