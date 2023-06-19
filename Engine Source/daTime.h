@@ -6,9 +6,9 @@ namespace da
 	class Time
 	{
 	public:
-		static void Initiailize();
+		static void Initialize();
 		static void Update();
-		static void Render(HDC hdc);
+		static void Render();
 
 		__forceinline static double DeltaTime() { return mDeltaTime; }
 

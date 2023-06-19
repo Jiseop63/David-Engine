@@ -1,4 +1,7 @@
 #include "daApplication.h"
+#include "daInput.h"
+#include "daTime.h"
+#include "daRenderer.h"
 
 namespace da
 {
@@ -24,10 +27,16 @@ namespace da
 
 	void Application::Initialize()
 	{
+		Time::Initialize();
+		Input::Initialize();
+
+		renderer::Initialize();
 	}
 
 	void Application::Update()
 	{
+		Time::Update();
+		Input::Update();
 	}
 
 	void Application::LateUpdate()
@@ -48,6 +57,7 @@ namespace da
 			mHeight = height;
 
 			graphicDevice = std::make_unique<da::graphics::GraphicDevice_Dx11>();
+			da::graphics::GetDevice() = graphicDevice.get();
 		}
 
 		RECT rt = { 0, 0, (LONG)width , (LONG)height };
