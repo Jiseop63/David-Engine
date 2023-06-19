@@ -3,53 +3,48 @@
 namespace renderer
 {
 	Vertex vertexes[4] = {};
-	ID3D11InputLayout* triangleLayout = nullptr;
-	ID3D11Buffer* triangleBuffer = nullptr;
-	ID3D11Buffer* triangleIndexBuffer = nullptr;
 	ID3D11Buffer* triangleConstantBuffer = nullptr;
-	ID3DBlob* errorBlob = nullptr;
-	ID3DBlob* triangleVSBlob = nullptr;
-	ID3D11VertexShader* triangleVSShader = nullptr;
-	ID3DBlob* trianglePSBlob = nullptr;
-	ID3D11PixelShader* trianglePSShader = nullptr;
+	
+	da::Mesh* mesh = nullptr;
+	da::Shader* shader = nullptr;
+
 
 	void SetupState()
 	{
+		D3D11_INPUT_ELEMENT_DESC arrLayout[2] = {};
 
+		arrLayout[0].AlignedByteOffset = 0;
+		arrLayout[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;
+		arrLayout[0].InputSlot = 0;
+		arrLayout[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+		arrLayout[0].SemanticName = "POSITION";
+		arrLayout[0].SemanticIndex = 0;
+
+		arrLayout[1].AlignedByteOffset = 12;
+		arrLayout[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[1].InputSlot = 0;
+		arrLayout[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+		arrLayout[1].SemanticName = "COLOR";
+		arrLayout[1].SemanticIndex = 0;
+
+		da::graphics::GetDevice()->CreateInputLayout(arrLayout, 2
+			, shader->GetVSCode()
+			, shader->GetInputLayoutAddressOf());
 	}
 	void LoadBuffer()
 	{
-		D3D11_BUFFER_DESC triangleDesc = {};
-		triangleDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
-		triangleDesc.ByteWidth = sizeof(Vertex) * 4;
-		triangleDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_VERTEX_BUFFER;
-		triangleDesc.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
-
-		D3D11_SUBRESOURCE_DATA triangleData = {};
-		triangleData.pSysMem = vertexes;
-		da::graphics::GetDevice()->CreateBuffer(&triangleBuffer, &triangleDesc, &triangleData);
-
-		
+		// Create Vertex & Index Buffer
+		mesh = new da::Mesh();
+		mesh->CreateVertexBuffer(vertexes, 4);
+				
 		std::vector<UINT> indexes = {};
-		indexes.push_back(0);
-		indexes.push_back(1);
-		indexes.push_back(2);
+		indexes.push_back(0); indexes.push_back(1); indexes.push_back(2); 
+		indexes.push_back(0); indexes.push_back(2); indexes.push_back(3);
 
-		indexes.push_back(0);
-		indexes.push_back(2);
-		indexes.push_back(3);
-
-		D3D11_BUFFER_DESC triangleIndexDesc = {};
-		triangleIndexDesc.Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT;
-		triangleIndexDesc.ByteWidth = sizeof(UINT) * indexes.size();
-		triangleIndexDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_INDEX_BUFFER;
-		triangleIndexDesc.CPUAccessFlags = 0;
-
-		D3D11_SUBRESOURCE_DATA triangleIndexData = {};
-		triangleIndexData.pSysMem = indexes.data();
-		da::graphics::GetDevice()->CreateBuffer(&triangleIndexBuffer, &triangleIndexDesc, &triangleIndexData);
+		mesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
 
 
+		// Create ConstantBuffer 
 		D3D11_BUFFER_DESC triangleConstantDesc = {};
 		triangleConstantDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
 		triangleConstantDesc.ByteWidth = sizeof(Vector4);
@@ -58,13 +53,15 @@ namespace renderer
 		da::graphics::GetDevice()->CreateBuffer(&triangleConstantBuffer, &triangleConstantDesc, nullptr);
 
 
-		Vector4 pos(0.3f, 0.0f, 0.0f, 1.0f);
+		Vector4 pos(0.0f, 0.0f, 0.0f, 1.0f);
 		da::graphics::GetDevice()->SetConstantBuffer(triangleConstantBuffer, &pos, sizeof(Vector4));
 		da::graphics::GetDevice()->BindConstantBuffer(eShaderStage::VS, eCBType::Transform, triangleConstantBuffer);
 	}
 	void LoadShader()
 	{
-		da::graphics::GetDevice()->CreateShader();
+		shader = new da::Shader();
+		shader->Create(eShaderStage::VS, L"TriangleVS.hlsl", "main");
+		shader->Create(eShaderStage::PS, L"TrianglePS.hlsl", "main");
 	}
 	void Initialize()
 	{
@@ -80,39 +77,14 @@ namespace renderer
 		vertexes[3].pos = Vector3(-0.5f, -0.5f, 0.0f);
 		vertexes[3].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 
-		SetupState();
 		LoadBuffer();
 		LoadShader();
+		SetupState();
 	}
 
 	void Release()
 	{
-		if (triangleLayout != nullptr)
-			triangleLayout->Release();
-
-		if (triangleBuffer != nullptr)
-			triangleBuffer->Release();
-
-		if (triangleIndexBuffer != nullptr)
-			triangleIndexBuffer->Release();
-
 		if (triangleConstantBuffer != nullptr)
 			triangleConstantBuffer->Release();
-
-		if (errorBlob != nullptr)
-			errorBlob->Release();
-
-		if (triangleVSBlob != nullptr)
-			triangleVSBlob->Release();
-
-		if (triangleVSShader != nullptr)
-			triangleVSShader->Release();
-
-		if (trianglePSBlob != nullptr)
-			trianglePSBlob->Release();
-
-		if (trianglePSShader != nullptr)
-			trianglePSShader->Release();
 	}
-
 }

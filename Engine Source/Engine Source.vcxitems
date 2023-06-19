@@ -21,9 +21,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daGraphics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daMath.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daMesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daResources.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daShader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daTime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)David Engine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daGraphicDevice Dx11.h" />
@@ -34,9 +36,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daGraphicDevice Dx11.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daInput.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daMesh.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daResources.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daTime.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -25,6 +25,15 @@
     <Filter Include="Common\Input">
       <UniqueIdentifier>{f2e5ae15-ddf8-487e-8342-6bf813377a77}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource\Base">
+      <UniqueIdentifier>{fd309283-a472-4d8c-8d9b-4a58abfa49e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Mesh">
+      <UniqueIdentifier>{5110afc4-b0ca-4f56-8b0f-938a212564de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Shader">
+      <UniqueIdentifier>{c18c5351-3c2e-46f1-ae5f-43a695191a66}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h">
@@ -51,12 +60,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daInput.h">
       <Filter>Common\Input</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daResource.h">
-      <Filter>Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daResources.h">
-      <Filter>Resource</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daGraphicDevice Dx11.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -65,6 +68,18 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daGraphics.h">
       <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daResource.h">
+      <Filter>Resource\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daResources.h">
+      <Filter>Resource\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daShader.h">
+      <Filter>Resource\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daMesh.h">
+      <Filter>Resource\Mesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -83,17 +98,23 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daApplication.cpp">
       <Filter>High Level Interface</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daResource.cpp">
-      <Filter>Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daResources.cpp">
-      <Filter>Resource</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daGraphicDevice Dx11.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daRenderer.cpp">
       <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daResource.cpp">
+      <Filter>Resource\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daResources.cpp">
+      <Filter>Resource\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daShader.cpp">
+      <Filter>Resource\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daMesh.cpp">
+      <Filter>Resource\Mesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
