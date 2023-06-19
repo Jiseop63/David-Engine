@@ -5,6 +5,8 @@ namespace da::renderer
 	Vertex vertexes[3] = {};
 	ID3D11InputLayout* triangleLayout = nullptr;
 	ID3D11Buffer* triangleBuffer = nullptr;
+	ID3D11Buffer* triangleIndexBuffer = nullptr;
+	ID3D11Buffer* triangleConstantBuffer = nullptr;
 	ID3DBlob* errorBlob = nullptr;
 	ID3DBlob* triangleVSBlob = nullptr;
 	ID3D11VertexShader* triangleVSShader = nullptr;
@@ -26,6 +28,35 @@ namespace da::renderer
 		D3D11_SUBRESOURCE_DATA triangleData = {};
 		triangleData.pSysMem = vertexes;
 		da::graphics::GetDevice()->CreateBuffer(&triangleBuffer, &triangleDesc, &triangleData);
+
+		
+		std::vector<UINT> indexes = {};
+		indexes.push_back(0);
+		indexes.push_back(1);
+		indexes.push_back(2);
+
+		D3D11_BUFFER_DESC triangleIndexDesc = {};
+		triangleIndexDesc.Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT;
+		triangleIndexDesc.ByteWidth = sizeof(UINT) * indexes.size();
+		triangleIndexDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_INDEX_BUFFER;
+		triangleIndexDesc.CPUAccessFlags = 0;
+
+		D3D11_SUBRESOURCE_DATA triangleIndexData = {};
+		triangleIndexData.pSysMem = indexes.data();
+		da::graphics::GetDevice()->CreateBuffer(&triangleIndexBuffer, &triangleIndexDesc, &triangleIndexData);
+
+
+		D3D11_BUFFER_DESC triangleConstantDesc = {};
+		triangleConstantDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
+		triangleConstantDesc.ByteWidth = sizeof(Vector4);
+		triangleConstantDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_CONSTANT_BUFFER;
+		triangleConstantDesc.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
+		da::graphics::GetDevice()->CreateBuffer(&triangleConstantBuffer, &triangleConstantDesc, nullptr);
+
+
+		Vector4 pos(0.3f, 0.0f, 0.0f, 1.0f);
+		da::graphics::GetDevice()->SetConstantBuffer(triangleConstantBuffer, &pos, sizeof(Vector4));
+		da::graphics::GetDevice()->BindConstantBuffer(eShaderStage::VS, eCBType::Transform, triangleConstantBuffer);
 	}
 	void LoadShader()
 	{
