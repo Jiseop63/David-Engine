@@ -45,6 +45,7 @@ namespace da
 
 	void Application::Render()
 	{
+		Time::Render();
 		graphicDevice->Draw();
 	}
 

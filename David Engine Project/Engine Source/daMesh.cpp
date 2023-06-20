@@ -34,6 +34,7 @@ namespace da
 	}
 	bool Mesh::CreateIndexBuffer(void* data, UINT count)
 	{
+		mIndexCount = count;
 		mIBDesc.ByteWidth = sizeof(UINT) * count;
 		mIBDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_INDEX_BUFFER;
 		mIBDesc.Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT;
@@ -51,7 +52,7 @@ namespace da
 		UINT stride = sizeof(renderer::Vertex);
 		UINT offset = 0;
 
-		GetDevice()->BindIndexBuffer(mIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 		GetDevice()->BindVertexBuffer(0, mVertexBuffer.GetAddressOf(), &stride, &offset);
+		GetDevice()->BindIndexBuffer(mIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 	}
 }

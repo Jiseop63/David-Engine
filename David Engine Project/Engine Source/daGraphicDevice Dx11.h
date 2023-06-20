@@ -2,12 +2,6 @@
 #include "David Engine.h"
 #include "daGraphics.h"
 
-#pragma comment(lib, "d3d11.lib")
-#pragma comment(lib, "d3dcompiler.lib")
-
-#include <d3d11.h>
-#include <d3dcompiler.h>
-
 namespace da::graphics
 {
 	class GraphicDevice_Dx11
@@ -27,7 +21,7 @@ namespace da::graphics
 
 
 		void BindInputLayout(ID3D11InputLayout* pInputLayout);
-		void BindPrimitiveTopolog(D3D11_PRIMITIVE_TOPOLOGY topology);
+		void BindPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY topology);
 
 		void BindVertexBuffer(UINT startSlot, ID3D11Buffer* const* ppVertexBuffers, const UINT* pStrides, const UINT* pOffsets);
 		void BindIndexBuffer(ID3D11Buffer* pIndexBuffer, DXGI_FORMAT format, UINT offset);

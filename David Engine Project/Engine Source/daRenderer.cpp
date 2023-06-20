@@ -3,11 +3,10 @@
 namespace renderer
 {
 	Vertex vertexes[4] = {};
-	ID3D11Buffer* triangleConstantBuffer = nullptr;
 	
 	da::Mesh* mesh = nullptr;
 	da::Shader* shader = nullptr;
-
+	da::ConstantBuffer* constantBuffer = nullptr;
 
 	void SetupState()
 	{
@@ -45,17 +44,12 @@ namespace renderer
 
 
 		// Create ConstantBuffer 
-		D3D11_BUFFER_DESC triangleConstantDesc = {};
-		triangleConstantDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
-		triangleConstantDesc.ByteWidth = sizeof(Vector4);
-		triangleConstantDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_CONSTANT_BUFFER;
-		triangleConstantDesc.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
-		da::graphics::GetDevice()->CreateBuffer(&triangleConstantBuffer, &triangleConstantDesc, nullptr);
-
+		constantBuffer = new da::graphics::ConstantBuffer(eCBType::Transform);
+		constantBuffer->Create(sizeof(Vector4));
 
 		Vector4 pos(0.0f, 0.0f, 0.0f, 1.0f);
-		da::graphics::GetDevice()->SetConstantBuffer(triangleConstantBuffer, &pos, sizeof(Vector4));
-		da::graphics::GetDevice()->BindConstantBuffer(eShaderStage::VS, eCBType::Transform, triangleConstantBuffer);
+		constantBuffer->SetData(&pos);
+		constantBuffer->Bind(eShaderStage::VS);
 	}
 	void LoadShader()
 	{
@@ -84,7 +78,8 @@ namespace renderer
 
 	void Release()
 	{
-		if (triangleConstantBuffer != nullptr)
-			triangleConstantBuffer->Release();
+		delete mesh;
+		delete shader;
+		delete constantBuffer;
 	}
 }

@@ -156,7 +156,7 @@ namespace da::graphics
 	{
 		mContext->IASetInputLayout(pInputLayout);
 	}
-	void GraphicDevice_Dx11::BindPrimitiveTopolog(D3D11_PRIMITIVE_TOPOLOGY topology)
+	void GraphicDevice_Dx11::BindPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY topology)
 	{
 		mContext->IASetPrimitiveTopology(topology);
 	}
@@ -269,11 +269,13 @@ namespace da::graphics
 
 	void GraphicDevice_Dx11::Draw()
 	{
+		// render target clear
 		FLOAT bgColor[4] = { 0.1f, 0.1f, 0.1f, 1.0f };
 		mContext->ClearRenderTargetView(mRenderTargetView.Get(), bgColor);
 		mContext->ClearDepthStencilView(mDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, (UINT8)0.0f);
 		
 
+		// viewport update
 		HWND hwnd = application.GetHwnd();
 		RECT  winRect = {};
 		GetClientRect(hwnd, &winRect);
@@ -288,11 +290,11 @@ namespace da::graphics
 		mContext->OMSetRenderTargets(1, mRenderTargetView.GetAddressOf(), mDepthStencilView.Get());
 
 
-		mContext->IASetInputLayout(renderer::shader->GetInputLayout());
-		mContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		renderer::mesh->BindBuffer();
+		mContext->IASetInputLayout(renderer::shader->GetInputLayout());
 		renderer::shader->Binds();
-		
+		mContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
 
 		mContext->DrawIndexed(renderer::mesh->GetIndexCount(), 0, 0);
 		mSwapChain->Present(0, 0);

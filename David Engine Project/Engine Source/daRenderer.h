@@ -3,6 +3,7 @@
 #include "daGraphicDevice Dx11.h"
 #include "daMesh.h"
 #include "daShader.h"
+#include "daConstantBuffer.h"
 
 using namespace da::math;
 namespace renderer
@@ -14,11 +15,10 @@ namespace renderer
 	};
 
 	extern Vertex vertexes[];
-	extern ID3D11Buffer* triangleConstantBuffer;
 
 	extern da::Mesh* mesh;
 	extern da::Shader* shader;
-
+	extern da::ConstantBuffer* constantBuffer;
 
 	void Initialize();
 	void Release();
