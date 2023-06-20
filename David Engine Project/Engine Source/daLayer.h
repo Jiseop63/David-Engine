@@ -14,6 +14,7 @@ namespace da
 		void LateUpdate();
 		void Render();
 
+		void AddGameObject(GameObject* target);
 	private:
 		std::vector<GameObject*> mGameObjects;
 	};

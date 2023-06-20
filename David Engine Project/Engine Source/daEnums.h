@@ -12,4 +12,12 @@ namespace da::enums
 		Script,
 		End,
 	};
+
+	enum class eLayerType
+	{
+		Playable,
+		Enemy,
+		UI,
+		End,
+	};
 }

@@ -37,6 +37,21 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{46fd4bd1-1155-4ccd-a3ad-2046835ae239}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{46c23c26-967c-49e0-985e-34586d429acb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Content">
+      <UniqueIdentifier>{c27438e5-e2d2-4198-a21e-da894f1c9e6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Base">
+      <UniqueIdentifier>{eacf48b2-46b0-4c68-93c9-74f593ae4bc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Base">
+      <UniqueIdentifier>{32275d09-31f5-4d9c-876f-a9d99b89cf48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{7cee5c22-89e2-4dce-84ee-df16f069108d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h">
@@ -87,12 +102,28 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daConstantBuffer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daPlayScene.h">
+      <Filter>Scene\Content</Filter>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daScene.h">
-      <Filter>Scene</Filter>
+      <Filter>Scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daSceneManager.h">
+      <Filter>Scene\Base</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daGameObject.h">
-      <Filter>Scene</Filter>
+      <Filter>Objects\Base</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daLayer.h">
+      <Filter>Objects\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daComponent.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daTransform.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daMeshRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp">
@@ -131,6 +162,28 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daConstantBuffer.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daScene.cpp">
+      <Filter>Scene\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daSceneManager.cpp">
+      <Filter>Scene\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daPlayScene.cpp">
+      <Filter>Scene\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daGameObject.cpp">
+      <Filter>Objects\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daLayer.cpp">
+      <Filter>Objects\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daComponent.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daTransform.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daMeshRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)daMath.inl">

@@ -2,38 +2,44 @@
 
 namespace da
 {
+	using namespace enums;
 	Scene::Scene()
 	{
+		mLayers.resize((int)eLayerType::End);
 	}
 	Scene::~Scene()
 	{
 	}
 	void Scene::Initialize()
 	{
-		for (Layer* gameObj : mLayers)
+		for (Layer& targetLayer : mLayers)
 		{
-			gameObj->Initialize();
+			targetLayer.Initialize();
 		}
 	}
 	void Scene::Update()
 	{
-		for (Layer* gameObj : mLayers)
+		for (Layer& targetLayer : mLayers)
 		{
-			gameObj->Update();
+			targetLayer.Update();
 		}
 	}
 	void Scene::LateUpdate()
 	{
-		for (Layer* gameObj : mLayers)
+		for (Layer& targetLayer : mLayers)
 		{
-			gameObj->LateUpdate();
+			targetLayer.LateUpdate();
 		}
 	}
 	void Scene::Render()
 	{
-		for (Layer* gameObj : mLayers)
+		for (Layer& targetLayer : mLayers)
 		{
-			gameObj->Render();
+			targetLayer.Render();
 		}
+	}
+	void Scene::AddGameObject(eLayerType layerType, GameObject* target)
+	{
+		mLayers[(UINT)layerType].AddGameObject(target);
 	}
 }

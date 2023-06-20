@@ -13,8 +13,10 @@ namespace da
 		virtual void Update();
 		virtual void LateUpdate();
 		virtual void Render();
+	public:
+		void AddGameObject(enums::eLayerType layerType, GameObject* target);
 
 	private:
-		std::vector<Layer*> mLayers;
+		std::vector<Layer> mLayers;
 	};
 }

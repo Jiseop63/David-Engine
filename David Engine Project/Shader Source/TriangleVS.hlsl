@@ -12,7 +12,7 @@ struct VSOut
 
 cbuffer Transform : register(b0)
 {
-    float4 TPos;
+    float4 TPosition;
 }
 
 VSOut main(VSIn In)
@@ -20,7 +20,8 @@ VSOut main(VSIn In)
     VSOut Out = (VSOut) 0.0f;
     
     Out.Pos = float4(In.Pos, 1.0f);
-    Out.Pos.x += TPos.x;
+    Out.Pos.x += TPosition.x;
+    Out.Pos.y += TPosition.y;
     Out.Color = In.Color;
     
     return Out;

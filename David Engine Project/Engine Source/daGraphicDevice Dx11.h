@@ -37,6 +37,8 @@ namespace da::graphics
 		void BindViewPort(D3D11_VIEWPORT* viewPort);
 	public:
 		void DrawIndexed(UINT indexCount, UINT startIndexLocation, INT baseVertexLocation);
+		void ClearTarget();
+		void UpdateViewPort();
 		void Draw();
 		void Present();
 

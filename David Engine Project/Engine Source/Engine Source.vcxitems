@@ -16,36 +16,50 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daApplication.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daConstantBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daEnums.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daGameObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daGraphics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daInput.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daLayer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daMesh.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daMeshRenderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daPlayScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daResources.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daSceneManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daShader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daTime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daTransform.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)David Engine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daGraphicDevice Dx11.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daApplication.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daConstantBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daEntity.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daGameObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daGraphicDevice Dx11.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daInput.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daLayer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daMesh.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daMeshRenderer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daPlayScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daResources.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daScene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daSceneManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daTime.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daTransform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)daMath.inl" />

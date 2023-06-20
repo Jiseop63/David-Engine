@@ -1,8 +1,10 @@
 #pragma once
 #include "daEntity.h"
 #include "daComponent.h"
+
 namespace da
 {
+	class Component;
 	class GameObject : public Entity
 	{
 	public:
@@ -24,7 +26,7 @@ namespace da
 		T* GetComponent()
 		{
 			T* component;
-			for (T* comp : mComponents)
+			for (Component* comp : mComponents)
 			{
 				component = dynamic_cast<T*>(comp);
 				if (component != nullptr)
@@ -33,18 +35,19 @@ namespace da
 
 			return nullptr;
 		}
+
 		template <typename T>
 		T* AddComponent()
 		{
 			T* comp = new T();
 
-			Component* buff
-				= dynamic_cast<Component*>(comp);
+			Component* buff = dynamic_cast<Component*>(comp);
 
 			if (buff == nullptr)
 				return nullptr;
 
 			mComponents.push_back(buff);
+			comp->SetOwner(this);
 
 			return comp;
 		}

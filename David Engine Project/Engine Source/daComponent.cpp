@@ -2,8 +2,10 @@
 
 namespace da
 {
-	Component::Component()
-		: mType(eComponentType::None)
+	using namespace enums;
+
+	Component::Component(eComponentType type)
+		: mType(type)
 	{
 	}
 	Component::~Component()

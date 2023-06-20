@@ -36,4 +36,8 @@ namespace da
 			targetObject->Render();
 		}
 	}
+	void Layer::AddGameObject(GameObject* target)
+	{
+		mGameObjects.push_back(target);
+	}
 }
