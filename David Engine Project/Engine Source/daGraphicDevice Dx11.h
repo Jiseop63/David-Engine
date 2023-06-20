@@ -36,7 +36,9 @@ namespace da::graphics
 
 		void BindViewPort(D3D11_VIEWPORT* viewPort);
 	public:
+		void DrawIndexed(UINT indexCount, UINT startIndexLocation, INT baseVertexLocation);
 		void Draw();
+		void Present();
 
 	private:
 		// 실제 그래픽카드 하드웨어 객체

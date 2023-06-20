@@ -4,9 +4,9 @@ namespace renderer
 {
 	Vertex vertexes[4] = {};
 	
-	da::Mesh* mesh = nullptr;
-	da::Shader* shader = nullptr;
-	da::ConstantBuffer* constantBuffer = nullptr;
+	Mesh* mesh = nullptr;
+	Shader* shader = nullptr;
+	ConstantBuffer* constantBuffer = nullptr;
 
 	void SetupState()
 	{
@@ -26,14 +26,14 @@ namespace renderer
 		arrLayout[1].SemanticName = "COLOR";
 		arrLayout[1].SemanticIndex = 0;
 
-		da::graphics::GetDevice()->CreateInputLayout(arrLayout, 2
+		GetDevice()->CreateInputLayout(arrLayout, 2
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());
 	}
 	void LoadBuffer()
 	{
 		// Create Vertex & Index Buffer
-		mesh = new da::Mesh();
+		mesh = new Mesh();
 		mesh->CreateVertexBuffer(vertexes, 4);
 				
 		std::vector<UINT> indexes = {};
@@ -44,7 +44,7 @@ namespace renderer
 
 
 		// Create ConstantBuffer 
-		constantBuffer = new da::graphics::ConstantBuffer(eCBType::Transform);
+		constantBuffer = new ConstantBuffer(eCBType::Transform);
 		constantBuffer->Create(sizeof(Vector4));
 
 		Vector4 pos(0.0f, 0.0f, 0.0f, 1.0f);
@@ -53,7 +53,7 @@ namespace renderer
 	}
 	void LoadShader()
 	{
-		shader = new da::Shader();
+		shader = new Shader();
 		shader->Create(eShaderStage::VS, L"TriangleVS.hlsl", "main");
 		shader->Create(eShaderStage::PS, L"TrianglePS.hlsl", "main");
 	}

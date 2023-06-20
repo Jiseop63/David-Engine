@@ -267,6 +267,11 @@ namespace da::graphics
 		mContext->CSSetConstantBuffers((UINT)type, 1, &buffer);
 	}
 
+	void GraphicDevice_Dx11::DrawIndexed(UINT indexCount, UINT startIndexLocation, INT baseVertexLocation)
+	{
+		mContext->DrawIndexed(indexCount, startIndexLocation, baseVertexLocation);
+	}
+
 	void GraphicDevice_Dx11::Draw()
 	{
 		// render target clear
@@ -288,15 +293,9 @@ namespace da::graphics
 		};
 		BindViewPort(&mViewPort);
 		mContext->OMSetRenderTargets(1, mRenderTargetView.GetAddressOf(), mDepthStencilView.Get());
-
-
-		renderer::mesh->BindBuffer();
-		mContext->IASetInputLayout(renderer::shader->GetInputLayout());
-		renderer::shader->Binds();
-		mContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-
-		mContext->DrawIndexed(renderer::mesh->GetIndexCount(), 0, 0);
+	}
+	void GraphicDevice_Dx11::Present()
+	{
 		mSwapChain->Present(0, 0);
 	}
 }

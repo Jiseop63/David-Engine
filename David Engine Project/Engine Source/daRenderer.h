@@ -5,6 +5,8 @@
 #include "daShader.h"
 #include "daConstantBuffer.h"
 
+using namespace da;
+using namespace da::graphics;
 using namespace da::math;
 namespace renderer
 {
@@ -16,9 +18,9 @@ namespace renderer
 
 	extern Vertex vertexes[];
 
-	extern da::Mesh* mesh;
-	extern da::Shader* shader;
-	extern da::ConstantBuffer* constantBuffer;
+	extern Mesh* mesh;
+	extern Shader* shader;
+	extern ConstantBuffer* constantBuffer;
 
 	void Initialize();
 	void Release();

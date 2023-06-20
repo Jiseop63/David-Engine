@@ -19,6 +19,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daConstantBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daEnums.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daGameObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daGraphics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daMath.h" />
@@ -30,6 +31,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daTime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)David Engine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daGraphicDevice Dx11.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daApplication.cpp" />

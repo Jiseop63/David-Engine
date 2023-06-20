@@ -1,6 +1,7 @@
 #pragma once
 #include "David Engine.h"
 #include "daGraphicDevice Dx11.h"
+#include "daScene.h"
 
 namespace da
 {
@@ -31,5 +32,7 @@ namespace da
 		HWND mHwnd;
 		UINT mWidth;
 		UINT mHeight;
+
+		Scene* mScene;
 	};
 }
