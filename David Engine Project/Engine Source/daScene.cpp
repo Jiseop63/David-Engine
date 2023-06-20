@@ -10,28 +10,28 @@ namespace da
 	}
 	void Scene::Initialize()
 	{
-		for (GameObject* gameObj : mGameObjects)
+		for (Layer* gameObj : mLayers)
 		{
 			gameObj->Initialize();
 		}
 	}
 	void Scene::Update()
 	{
-		for (GameObject* gameObj : mGameObjects)
+		for (Layer* gameObj : mLayers)
 		{
 			gameObj->Update();
 		}
 	}
 	void Scene::LateUpdate()
 	{
-		for (GameObject* gameObj : mGameObjects)
+		for (Layer* gameObj : mLayers)
 		{
 			gameObj->LateUpdate();
 		}
 	}
 	void Scene::Render()
 	{
-		for (GameObject* gameObj : mGameObjects)
+		for (Layer* gameObj : mLayers)
 		{
 			gameObj->Render();
 		}
