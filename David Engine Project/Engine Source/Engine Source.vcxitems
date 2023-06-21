@@ -24,6 +24,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daGraphics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daLayer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daMaterial.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daMesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daMeshRenderer.h" />
@@ -49,6 +50,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daGraphicDevice Dx11.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daInput.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daLayer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daMaterial.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daMesh.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daMeshRenderer.cpp" />

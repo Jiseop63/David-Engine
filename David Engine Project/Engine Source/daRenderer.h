@@ -5,23 +5,17 @@
 #include "daShader.h"
 #include "daConstantBuffer.h"
 
-using namespace da;
-using namespace da::graphics;
-using namespace da::math;
 namespace renderer
 {
 	struct Vertex
 	{
-		Vector3 pos;
-		Vector4 color;
-		Vector2 uv;
+		da::math::Vector3 pos;
+		da::math::Vector4 color;
+		da::math::Vector2 uv;
 	};
 
 	extern Vertex vertexes[];
-
-	extern Mesh* mesh;
-	extern Shader* shader;
-	extern ConstantBuffer* constantBuffer;
+	extern da::graphics::ConstantBuffer* constantBuffer[(UINT)da::graphics::eCBType::End];
 
 	void Initialize();
 	void Release();

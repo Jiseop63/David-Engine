@@ -23,6 +23,7 @@ namespace da::graphics
 	enum class eCBType
 	{
 		Transform,
+		Material,
 		End,
 	};
 

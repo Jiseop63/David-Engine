@@ -55,6 +55,9 @@
     <Filter Include="Resource\Texture">
       <UniqueIdentifier>{c8f35b83-b1cf-4cbb-bff3-2c69fa24c164}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource\Material">
+      <UniqueIdentifier>{be3a9c1b-f3ac-450e-a82b-79416b6c5f8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h">
@@ -126,9 +129,14 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daTransform.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daMeshRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daTexture.h">
       <Filter>Resource\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daMeshRenderer.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daMaterial.h">
+      <Filter>Resource\Material</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -189,8 +197,13 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daTransform.cpp">
       <Filter>Component</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daMeshRenderer.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)daTexture.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daTexture.cpp">
+      <Filter>Resource\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daMeshRenderer.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daMaterial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)daMath.inl">

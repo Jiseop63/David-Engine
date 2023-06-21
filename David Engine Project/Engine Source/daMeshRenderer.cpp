@@ -1,5 +1,4 @@
 #include "daMeshRenderer.h"
-#include "daRenderer.h"
 #include "daGameObject.h"
 #include "daTransform.h"
 
@@ -10,7 +9,7 @@ namespace da
 	MeshRenderer::MeshRenderer()
 		: Component(eComponentType::Renderer)
 		, mMesh(nullptr)
-		, mShader(nullptr)
+		, mMaterial(nullptr)
 	{
 	}
 	MeshRenderer::~MeshRenderer()
@@ -30,8 +29,8 @@ namespace da
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 		tr->BindConstantBuffer();
 
-		renderer::mesh->BindBuffer();
-		renderer::shader->Binds();
-		GetDevice()->DrawIndexed(renderer::mesh->GetIndexCount(), 0, 0);
+		mMesh->BindBuffer();
+		mMaterial->Binds();
+		mMesh->Render();
 	}
 }

@@ -1,14 +1,16 @@
 #include "daRenderer.h"
 #include "daResources.h"
 #include "daTexture.h"
+#include "daMaterial.h"
+
+using namespace da;
+using namespace da::graphics;
+using namespace da::math;
 
 namespace renderer
 {
-	Vertex vertexes[4] = {};
-	
-	Mesh* mesh = nullptr;
-	Shader* shader = nullptr;
-	ConstantBuffer* constantBuffer = nullptr;
+	Vertex vertexes[4] = {};	
+	ConstantBuffer* constantBuffer[(UINT)eCBType::End] = {};
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState[(UINT)eSamplerType::End] = {};
 
 	void SetupState()
@@ -37,9 +39,16 @@ namespace renderer
 		arrLayout[2].SemanticName = "TEXCOORD";
 		arrLayout[2].SemanticIndex = 0;
 
+		Shader* shader = Resources::Find<Shader>(L"TriangleShader");
 		GetDevice()->CreateInputLayout(arrLayout, numElement
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());
+		
+		shader = Resources::Find<Shader>(L"SpriteShader");
+		GetDevice()->CreateInputLayout(arrLayout, numElement
+			, shader->GetVSCode()
+			, shader->GetInputLayoutAddressOf());
+
 
 		D3D11_SAMPLER_DESC desc = {};
 		desc.AddressU = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
@@ -56,7 +65,8 @@ namespace renderer
 	void LoadBuffer()
 	{
 		// Create Vertex & Index Buffer
-		mesh = new Mesh();
+		Mesh* mesh = new Mesh();
+		Resources::Insert<Mesh>(L"RectMesh", mesh);
 		mesh->CreateVertexBuffer(vertexes, 4);
 				
 		std::vector<UINT> indexes = {};
@@ -67,18 +77,30 @@ namespace renderer
 
 
 		// Create ConstantBuffer 
-		constantBuffer = new ConstantBuffer(eCBType::Transform);
-		constantBuffer->Create(sizeof(Vector4));
+		constantBuffer[(UINT)eCBType::Transform] = new ConstantBuffer(eCBType::Transform);
+		constantBuffer[(UINT)eCBType::Transform]->Create(sizeof(Vector4));
 
-		Vector4 pos(0.0f, 0.0f, 0.0f, 1.0f);
-		constantBuffer->SetData(&pos);
-		constantBuffer->Bind(eShaderStage::VS);
+		//Vector4 pos(0.0f, 0.0f, 0.0f, 1.0f);
+		//constantBuffer[(UINT)eCBType::Transform]->SetData(&pos);
+		//constantBuffer[(UINT)eCBType::Transform]->Bind(eShaderStage::VS);
 	}
-	void LoadShader()
+	void LoadResource()
 	{
-		shader = new Shader();
-		shader->Create(eShaderStage::VS, L"TriangleVS.hlsl", "main");
-		shader->Create(eShaderStage::PS, L"TrianglePS.hlsl", "main");
+		Shader* triangleShader = new Shader();
+		triangleShader->Create(eShaderStage::VS, L"TriangleVS.hlsl", "main");
+		triangleShader->Create(eShaderStage::PS, L"TrianglePS.hlsl", "main");
+		Resources::Insert<Shader>(L"TriangleShader", triangleShader);
+
+		Shader* spriteShader = new Shader();
+		spriteShader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "main");
+		spriteShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "main");
+		Resources::Insert<Shader>(L"SpriteShader", spriteShader);
+		Texture* texture
+			= Resources::Load<Texture>(L"SmileTexture", L"..\\Resources\\Texture\\smileTexture.png");
+		Material* spriteMaterial = new Material();
+		spriteMaterial->SetTexture(texture);
+		spriteMaterial->SetShader(spriteShader);
+		Resources::Insert<Material>(L"SpriteMaterial", spriteMaterial);
 	}
 	void Initialize()
 	{
@@ -99,7 +121,7 @@ namespace renderer
 		vertexes[3].uv = Vector2(0.0f, 1.0f);
 
 		LoadBuffer();
-		LoadShader();
+		LoadResource();
 		SetupState();
 
 		Texture* texture
@@ -110,8 +132,13 @@ namespace renderer
 
 	void Release()
 	{
-		delete mesh;
-		delete shader;
-		delete constantBuffer;
+		for (ConstantBuffer* buff : constantBuffer)
+		{
+			if (buff == nullptr)
+				continue;
+
+			delete buff;
+			buff = nullptr;
+		}
 	}
 }

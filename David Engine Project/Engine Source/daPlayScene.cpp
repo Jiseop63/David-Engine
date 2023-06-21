@@ -1,6 +1,11 @@
 #include "daPlayScene.h"
+
+#include "daResources.h"
+
 #include "daGameObject.h"
+
 #include "daTransform.h"
+#include "daMesh.h"
 #include "daMeshRenderer.h"
 
 namespace da
@@ -17,7 +22,9 @@ namespace da
 	{
 		GameObject* player = new GameObject();
 		AddGameObject(eLayerType::Playable, player);
-		player->AddComponent<MeshRenderer>();
+		MeshRenderer* playerRenderer = player->AddComponent<MeshRenderer>();
+		playerRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		playerRenderer->SetMaterial(Resources::Find<Material>(L"SpriteMaterial"));
 	}
 	void PlayScene::Update()
 	{

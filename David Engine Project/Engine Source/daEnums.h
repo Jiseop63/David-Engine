@@ -20,4 +20,13 @@ namespace da::enums
 		UI,
 		End,
 	};
+
+	enum class eResourceType
+	{
+		Mesh,
+		Texture,
+		Shader,
+		Material,
+		End,
+	};
 }

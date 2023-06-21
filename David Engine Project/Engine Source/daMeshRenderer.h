@@ -1,7 +1,7 @@
 #pragma once
 #include "daComponent.h"
 #include "daMesh.h"
-#include "daShader.h"
+#include "daMaterial.h"
 
 namespace da
 {
@@ -15,8 +15,10 @@ namespace da
 		virtual void LateUpdate() override;
 		virtual void Render() override;
 
+		void SetMesh(Mesh* mesh) { mMesh = mesh; }
+		void SetMaterial(Material* material) { mMaterial = material; }
 	private:
 		Mesh* mMesh;
-		Shader* mShader;
+		Material* mMaterial;
 	};
 }
