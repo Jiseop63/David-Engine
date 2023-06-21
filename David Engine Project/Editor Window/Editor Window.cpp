@@ -5,6 +5,7 @@
 #include "Editor Window.h"
 #include "daApplication.h"
 #include "daRenderer.h"
+#include "daSceneManager.h"
 
 da::Application application;
 
@@ -68,6 +69,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
     renderer::Release();
+    SceneManager::Release();
     return (int) msg.wParam;
 }
 

@@ -38,6 +38,12 @@ namespace da
 			targetLayer.Render();
 		}
 	}
+	void Scene::OnEnter()
+	{
+	}
+	void Scene::OnExit()
+	{
+	}
 	void Scene::AddGameObject(eLayerType layerType, GameObject* target)
 	{
 		mLayers[(UINT)layerType].AddGameObject(target);

@@ -7,6 +7,14 @@ namespace da
 	}
 	Layer::~Layer()
 	{
+		for (GameObject* target : mGameObjects)
+		{
+			if (nullptr == target)
+				continue;
+
+			delete target;
+			target = nullptr;
+		}
 	}
 	void Layer::Initialize()
 	{

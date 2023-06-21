@@ -11,6 +11,14 @@ namespace da
 	}
 	GameObject::~GameObject()
 	{
+		for (Component* target : mComponents)
+		{
+			if (nullptr == target)
+				continue;
+
+			delete target;
+			target = nullptr;
+		}
 	}
 	void GameObject::Initialize()
 	{

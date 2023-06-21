@@ -13,7 +13,11 @@ namespace da
 		virtual void Update();
 		virtual void LateUpdate();
 		virtual void Render();
+
 	public:
+		virtual void OnEnter();
+		virtual void OnExit();
+		
 		void AddGameObject(enums::eLayerType layerType, GameObject* target);
 
 	private:
