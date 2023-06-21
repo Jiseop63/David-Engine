@@ -6,31 +6,42 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
-enum class eShaderStage
+namespace da::graphics
 {
-	VS,
-	HS,
-	DS,
-	GS,
-	PS,
-	CS,
-	End,
-};
 
-enum class eCBType
-{
-	Transform,
-	End,
-};
+	enum class eShaderStage
+	{
+		VS,
+		HS,
+		DS,
+		GS,
+		PS,
+		CS,
+		End,
+	};
 
-struct GPUBuffer
-{
-	Microsoft::WRL::ComPtr<ID3D11Buffer> buffer;
-	D3D11_BUFFER_DESC desc;
+	enum class eCBType
+	{
+		Transform,
+		End,
+	};
 
-	GPUBuffer()
-		: buffer(nullptr)
-		, desc{}
-	{}
-	virtual ~GPUBuffer() = default;
+	enum class eSamplerType
+	{
+		Point,
+		Anisotropic,
+		End,
+	};
+
+	struct GPUBuffer
+	{
+		Microsoft::WRL::ComPtr<ID3D11Buffer> buffer;
+		D3D11_BUFFER_DESC desc;
+
+		GPUBuffer()
+			: buffer(nullptr)
+			, desc{}
+		{}
+		virtual ~GPUBuffer() = default;
+	};
 };

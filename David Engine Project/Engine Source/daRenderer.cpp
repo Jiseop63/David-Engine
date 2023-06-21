@@ -9,6 +9,7 @@ namespace renderer
 	Mesh* mesh = nullptr;
 	Shader* shader = nullptr;
 	ConstantBuffer* constantBuffer = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState[(UINT)eSamplerType::End] = {};
 
 	void SetupState()
 	{
@@ -39,6 +40,18 @@ namespace renderer
 		GetDevice()->CreateInputLayout(arrLayout, numElement
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());
+
+		D3D11_SAMPLER_DESC desc = {};
+		desc.AddressU = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
+		desc.AddressV = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
+		desc.AddressW = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
+		desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+		GetDevice()->CreateSampler(&desc, samplerState[(UINT)eSamplerType::Point].GetAddressOf());
+		GetDevice()->BindSampler(eShaderStage::PS, 0, samplerState[(UINT)eSamplerType::Point].GetAddressOf());
+
+		desc.Filter = D3D11_FILTER_ANISOTROPIC;
+		GetDevice()->CreateSampler(&desc, samplerState[(UINT)eSamplerType::Anisotropic].GetAddressOf());
+		GetDevice()->BindSampler(eShaderStage::PS, 1, samplerState[(UINT)eSamplerType::Anisotropic].GetAddressOf());
 	}
 	void LoadBuffer()
 	{
