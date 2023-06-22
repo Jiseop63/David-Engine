@@ -8,6 +8,7 @@ namespace da::enums
 		Transform,
 		Mesh,
 		Renderer,
+		Camera,
 		Particle,
 		Script,
 		End,

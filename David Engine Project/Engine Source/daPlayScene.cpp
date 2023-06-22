@@ -27,7 +27,10 @@ namespace da
 		playerRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 		playerRenderer->SetMaterial(Resources::Find<Material>(L"SpriteMaterial"));
 
-		player->AddComponent<CameraScript>();
+		//player->AddComponent<CameraScript>();
+
+		Transform* playerTr = player->GetComponent<Transform>();
+		playerTr->SetPosition(math::Vector3(0.5f, 0.5f, 0.0f));
 	}
 	void PlayScene::Update()
 	{

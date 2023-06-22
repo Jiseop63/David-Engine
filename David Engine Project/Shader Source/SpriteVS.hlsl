@@ -1,3 +1,5 @@
+#include "Globals.hlsli"
+
 struct VSIn
 {
     float3 Pos : POSITION;
@@ -12,18 +14,15 @@ struct VSOut
     float2 UV : TEXCOORD;
 };
 
-cbuffer Transform : register(b0)
-{
-    float4 Position;
-}
-
-
 VSOut main(VSIn In)
 {
     VSOut Out = (VSOut) 0.0f;
     
-    Out.Pos = float4(In.Pos, 1.0f);
-    Out.Pos.x += Position.x;
+    float4 world = mul(float4(In.Pos, 1.0f), mWorld);
+    //float4 view = mul(world, mView);
+    //float4 projection = mul(view, mProjection);
+    
+    Out.Pos = world;
     Out.UV = In.UV;
     Out.Color = In.Color;
     

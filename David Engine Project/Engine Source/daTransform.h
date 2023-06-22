@@ -27,9 +27,20 @@ namespace da
 		math::Vector3 GetRotation() { return mRotation; }
 		math::Vector3 GetScale() { return mScale; }
 
+		math::Vector3 Foward() { return mFoward; }
+		math::Vector3 Right() { return mRight; }
+		math::Vector3 Up() { return mUp; }
+
 	public:
+		math::Matrix mWorld;
+		
 		math::Vector3 mPosition;
 		math::Vector3 mRotation;
 		math::Vector3 mScale;
+		
+		math::Vector3 mUp;
+		math::Vector3 mFoward;
+		math::Vector3 mRight;
+
 	};
 }

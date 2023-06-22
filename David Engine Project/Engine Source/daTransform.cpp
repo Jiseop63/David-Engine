@@ -26,15 +26,36 @@ namespace da
 	}
 	void Transform::LateUpdate()
 	{
+		mWorld = Matrix::Identity;
+		
+		Matrix scaleMatrix;
+		scaleMatrix = Matrix::CreateScale(mScale);
+
+		Matrix rotateMatrix;
+		rotateMatrix = Matrix::CreateRotationX(mRotation.x);
+		rotateMatrix *= Matrix::CreateRotationY(mRotation.y);
+		rotateMatrix *= Matrix::CreateRotationZ(mRotation.z);
+
+		mUp = Vector3::TransformNormal(Vector3::Up, rotateMatrix);
+		mFoward = Vector3::TransformNormal(Vector3::Forward, rotateMatrix);
+		mRight = Vector3::TransformNormal(Vector3::Right, rotateMatrix);
+
+		Matrix positionMatrix;
+		positionMatrix.Translation(mPosition);
+
+		mWorld = scaleMatrix * rotateMatrix * positionMatrix;
+
 	}
 	void Transform::Render()
 	{
 	}
 	void Transform::BindConstantBuffer()
 	{
+		renderer::TransformCB transformCB = {};
+		transformCB.mWorld = mWorld;
+				
 		ConstantBuffer* cb = renderer::constantBuffer[(UINT)graphics::eCBType::Transform];
-		Vector4 position(mPosition.x, mPosition.y, mPosition.z, 1.0f);
-		cb->SetData(&position);
+		cb->SetData(&transformCB);
 		cb->Bind(eShaderStage::VS);
 	}
 }
