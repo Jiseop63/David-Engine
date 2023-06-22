@@ -16,6 +16,7 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daApplication.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daCameraScript.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daConstantBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daEntity.h" />
@@ -44,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daApplication.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daCameraScript.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daConstantBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daEntity.cpp" />
@@ -61,6 +63,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daResources.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daSceneManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daScript.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daTexture.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daTime.cpp" />

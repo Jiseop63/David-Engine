@@ -6,9 +6,11 @@
 #include "../External/DirectXTex/Include/DirectXTex.inl"
 
 #ifdef _DEBUG
-#pragma comment(lib, "..\\External\\DirectXTex\\Lib\\Debug\\DirectXTex.lib")
+//#pragma comment(lib, "..\\External\\DirectXTex\\Lib\\Debug\\DirectXTex.lib")
+#pragma comment(lib, "../External/DirectXTex/Lib/Debug/DirectXTex.lib")
 #else
-#pragma comment(lib, "..\\External\\DirectXTex\\Lib\\Release\\DirectXTex.lib")
+//#pragma comment(lib, "..\\External\\DirectXTex\\Lib\\Release\\DirectXTex.lib")
+#pragma comment(lib, "../External/DirectXTex/Lib/Release/DirectXTex.lib")
 #endif
 
 namespace da::graphics

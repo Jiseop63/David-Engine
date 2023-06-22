@@ -1,5 +1,6 @@
 #include "daGameObject.h"
 #include "daRenderer.h"
+
 #include "daTransform.h"
 
 namespace da
@@ -11,13 +12,22 @@ namespace da
 	}
 	GameObject::~GameObject()
 	{
-		for (Component* target : mComponents)
+		for (Component* component : mComponents)
 		{
-			if (nullptr == target)
+			if (nullptr == component)
 				continue;
 
-			delete target;
-			target = nullptr;
+			delete component;
+			component = nullptr;
+		}
+
+		for (Script* script : mScripts)
+		{
+			if (script == nullptr)
+				continue;
+
+			delete script;
+			script = nullptr;
 		}
 	}
 	void GameObject::Initialize()
@@ -25,23 +35,35 @@ namespace da
 	}
 	void GameObject::Update()
 	{
-		for (Component* comp : mComponents)
+		for (Component* component : mComponents)
 		{
-			comp->Update();
+			component->Update();
+		}
+		for (Script* script : mScripts)
+		{
+			script->Update();
 		}
 	}
 	void GameObject::LateUpdate()
 	{
-		for (Component* comp : mComponents)
+		for (Component* component : mComponents)
 		{
-			comp->LateUpdate();
+			component->LateUpdate();
+		}
+		for (Script* script : mScripts)
+		{
+			script->LateUpdate();
 		}
 	}
 	void GameObject::Render()
 	{
-		for (Component* comp : mComponents)
+		for (Component* component : mComponents)
 		{
-			comp->Render();
+			component->Render();
+		}
+		for (Script* script : mScripts)
+		{
+			script->Render();
 		}
 	}
 }

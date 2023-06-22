@@ -1,4 +1,6 @@
 #include "daScene.h"
+#include "daLayer.h"
+#include "daGameObject.h"
 
 namespace da
 {

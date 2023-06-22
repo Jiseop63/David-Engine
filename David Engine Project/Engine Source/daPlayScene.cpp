@@ -7,6 +7,7 @@
 #include "daTransform.h"
 #include "daMesh.h"
 #include "daMeshRenderer.h"
+#include "daCameraScript.h"
 
 namespace da
 {
@@ -25,6 +26,8 @@ namespace da
 		MeshRenderer* playerRenderer = player->AddComponent<MeshRenderer>();
 		playerRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 		playerRenderer->SetMaterial(Resources::Find<Material>(L"SpriteMaterial"));
+
+		player->AddComponent<CameraScript>();
 	}
 	void PlayScene::Update()
 	{

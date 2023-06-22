@@ -23,9 +23,9 @@ namespace da
 		void SetRotation(float x, float y, float z) { mRotation = math::Vector3(x, y, z); }
 		void SetScale(float x, float y, float z) { mScale = math::Vector3(x, y, z); }
 
-		math::Vector3 GetPosition(math::Vector3 position) { return mPosition; }
-		math::Vector3 GetRotation(math::Vector3 rotation) { return mRotation; }
-		math::Vector3 GetScale(math::Vector3 scale) { return mScale; }
+		math::Vector3 GetPosition() { return mPosition; }
+		math::Vector3 GetRotation() { return mRotation; }
+		math::Vector3 GetScale() { return mScale; }
 
 	public:
 		math::Vector3 mPosition;

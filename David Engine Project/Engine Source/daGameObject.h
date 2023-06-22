@@ -1,10 +1,9 @@
 #pragma once
 #include "daEntity.h"
 #include "daComponent.h"
-
+#include "daScript.h"
 namespace da
 {
-	class Component;
 	class GameObject : public Entity
 	{
 	public:
@@ -25,12 +24,18 @@ namespace da
 		template <typename T>
 		T* GetComponent()
 		{
-			T* component;
-			for (Component* comp : mComponents)
+			T* findComponent;
+			for (Component* component : mComponents)
 			{
-				component = dynamic_cast<T*>(comp);
-				if (component != nullptr)
-					return component;
+				findComponent = dynamic_cast<T*>(component);
+				if (nullptr != findComponent)
+					return findComponent;
+			}
+			for (Script* script : mScripts)
+			{
+				findComponent = dynamic_cast<T*>(script);
+				if (nullptr != findComponent)
+					return findComponent;
 			}
 
 			return nullptr;
@@ -39,21 +44,27 @@ namespace da
 		template <typename T>
 		T* AddComponent()
 		{
-			T* comp = new T();
+			T* origin = new T();
 
-			Component* buff = dynamic_cast<Component*>(comp);
+			Component* component = dynamic_cast<Component*>(origin);
+			Script* script = dynamic_cast<Script*>(component);
 
-			if (buff == nullptr)
+			if (nullptr == component)
 				return nullptr;
 
-			mComponents.push_back(buff);
-			comp->SetOwner(this);
+			if (nullptr == script)
+				mComponents.push_back(component);
+			else
+				mScripts.push_back(script);
 
-			return comp;
+			origin->SetOwner(this);
+
+			return origin;
 		}
 
 	private:
 		eObjectState mState;
 		std::vector<Component*> mComponents;
+		std::vector<Script*> mScripts;
 	};
 }

@@ -58,6 +58,18 @@
     <Filter Include="Resource\Material">
       <UniqueIdentifier>{be3a9c1b-f3ac-450e-a82b-79416b6c5f8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Component\Base">
+      <UniqueIdentifier>{b2ca6112-8d1e-4d84-9609-2dc605459ff3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Transform">
+      <UniqueIdentifier>{be2a6527-992e-4c01-9529-59d74bb4a959}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Renderer">
+      <UniqueIdentifier>{03157561-d664-4024-a0b2-abe712c651a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Camera">
+      <UniqueIdentifier>{87d37685-f8e6-4be7-bfb1-a87519d56eda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h">
@@ -123,23 +135,26 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daLayer.h">
       <Filter>Objects\Base</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daComponent.h">
-      <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daTransform.h">
-      <Filter>Component</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daTexture.h">
       <Filter>Resource\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daMeshRenderer.h">
-      <Filter>Component</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daMaterial.h">
       <Filter>Resource\Material</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daComponent.h">
+      <Filter>Component\Base</Filter>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daScript.h">
-      <Filter>Component</Filter>
+      <Filter>Component\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daTransform.h">
+      <Filter>Component\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daMeshRenderer.h">
+      <Filter>Component\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daCameraScript.h">
+      <Filter>Component\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -194,19 +209,27 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daLayer.cpp">
       <Filter>Objects\Base</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daComponent.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daTransform.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daTexture.cpp">
       <Filter>Resource\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daMeshRenderer.cpp">
-      <Filter>Component</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daMaterial.cpp">
+      <Filter>Resource\Material</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daMaterial.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daComponent.cpp">
+      <Filter>Component\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daScript.cpp">
+      <Filter>Component\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daTransform.cpp">
+      <Filter>Component\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daMeshRenderer.cpp">
+      <Filter>Component\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daCameraScript.cpp">
+      <Filter>Component\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)daMath.inl">

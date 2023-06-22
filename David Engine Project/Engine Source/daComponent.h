@@ -1,6 +1,5 @@
 #pragma once
 #include "daEntity.h"
-#include "daGameObject.h"
 
 namespace da
 {

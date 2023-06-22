@@ -1,9 +1,10 @@
 #pragma once
 #include "daEntity.h"
-#include "daLayer.h"
 
 namespace da
 {
+	class Layer;
+	class GameObject;
 	class Scene : public Entity
 	{
 	public:
