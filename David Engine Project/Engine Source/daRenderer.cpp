@@ -39,7 +39,7 @@ namespace renderer
 		arrLayout[2].SemanticName = "TEXCOORD";
 		arrLayout[2].SemanticIndex = 0;
 
-		Shader* shader = Resources::Find<Shader>(L"TriangleShader");
+		std::shared_ptr<Shader> shader = Resources::Find<Shader>(L"TriangleShader");
 		GetDevice()->CreateInputLayout(arrLayout, numElement
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());
@@ -65,7 +65,7 @@ namespace renderer
 	void LoadBuffer()
 	{
 		// Create Vertex & Index Buffer
-		Mesh* mesh = new Mesh();
+		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
 		Resources::Insert<Mesh>(L"RectMesh", mesh);
 		mesh->CreateVertexBuffer(vertexes, 4);
 				
@@ -86,18 +86,19 @@ namespace renderer
 	}
 	void LoadResource()
 	{
-		Shader* triangleShader = new Shader();
+		std::shared_ptr<Shader> triangleShader = std::make_shared<Shader>();
 		triangleShader->Create(eShaderStage::VS, L"TriangleVS.hlsl", "main");
 		triangleShader->Create(eShaderStage::PS, L"TrianglePS.hlsl", "main");
 		Resources::Insert<Shader>(L"TriangleShader", triangleShader);
 
-		Shader* spriteShader = new Shader();
+		std::shared_ptr<Shader> spriteShader = std::make_shared<Shader>();
 		spriteShader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "main");
 		spriteShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "main");
 		Resources::Insert<Shader>(L"SpriteShader", spriteShader);
-		Texture* texture
+
+		std::shared_ptr<Texture> texture
 			= Resources::Load<Texture>(L"SmileTexture", L"..\\Resources\\Texture\\smileTexture.png");
-		Material* spriteMaterial = new Material();
+		std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 		spriteMaterial->SetTexture(texture);
 		spriteMaterial->SetShader(spriteShader);
 		Resources::Insert<Material>(L"SpriteMaterial", spriteMaterial);
@@ -124,7 +125,7 @@ namespace renderer
 		LoadResource();
 		SetupState();
 
-		Texture* texture
+		std::shared_ptr<Texture> texture
 			= Resources::Load<Texture>(L"Smile", L"..\\Resources\\Texture\\smileTexture.png");
 
 		texture->BindShader(eShaderStage::PS, 0);

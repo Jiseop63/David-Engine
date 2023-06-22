@@ -6,7 +6,6 @@
 #include "daApplication.h"
 #include "daRenderer.h"
 #include "daSceneManager.h"
-#include "daResources.h"
 
 da::Application application;
 
@@ -70,7 +69,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
     renderer::Release();
-    da::Resources::Release();
     da::SceneManager::Release();
     return (int) msg.wParam;
 }

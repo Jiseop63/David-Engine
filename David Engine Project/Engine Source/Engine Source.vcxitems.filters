@@ -138,6 +138,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daMaterial.h">
       <Filter>Resource\Material</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daScript.h">
+      <Filter>Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp">

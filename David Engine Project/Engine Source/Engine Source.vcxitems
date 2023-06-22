@@ -33,6 +33,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daResources.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daSceneManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daScript.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daShader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daTexture.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daTime.h" />

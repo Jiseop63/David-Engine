@@ -6,6 +6,9 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
+#define CB_GETBINDSLOT(name) 
+#define CBUFFER(name, slot) static const int CB_GETBINDSLOT struct alignas(16)
+
 namespace da::graphics
 {
 
