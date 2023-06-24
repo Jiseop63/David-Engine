@@ -156,7 +156,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daCameraScript.h">
       <Filter>Component\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daCamera.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daCamera.h">
+      <Filter>Component\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp">
@@ -231,7 +233,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daCameraScript.cpp">
       <Filter>Component\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daCamera.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daCamera.cpp">
+      <Filter>Component\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)daMath.inl">

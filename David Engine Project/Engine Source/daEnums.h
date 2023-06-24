@@ -8,14 +8,15 @@ namespace da::enums
 		Transform,
 		Mesh,
 		Renderer,
-		Camera,
 		Particle,
 		Script,
+		Camera,
 		End,
 	};
 
 	enum class eLayerType
 	{
+		None, // ¼þµ¹ ¾ø°í ·»´õ ¾ÈÇÏ´Â °´Ã¼
 		Playable,
 		Enemy,
 		UI,

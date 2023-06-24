@@ -1,6 +1,7 @@
 #include "daTransform.h"
 #include "daConstantBuffer.h"
 #include "daRenderer.h"
+#include "daCamera.h"
 
 namespace da
 {
@@ -37,7 +38,7 @@ namespace da
 		rotateMatrix *= Matrix::CreateRotationZ(mRotation.z);
 
 		mUp = Vector3::TransformNormal(Vector3::Up, rotateMatrix);
-		mFoward = Vector3::TransformNormal(Vector3::Forward, rotateMatrix);
+		mForward = Vector3::TransformNormal(Vector3::Forward, rotateMatrix);
 		mRight = Vector3::TransformNormal(Vector3::Right, rotateMatrix);
 
 		Matrix positionMatrix;
@@ -53,6 +54,8 @@ namespace da
 	{
 		renderer::TransformCB transformCB = {};
 		transformCB.mWorld = mWorld;
+		transformCB.mView = Camera::GetViewMatrix();
+		transformCB.mProjection = Camera::GetProjectionMatrix();
 				
 		ConstantBuffer* cb = renderer::constantBuffer[(UINT)graphics::eCBType::Transform];
 		cb->SetData(&transformCB);

@@ -27,7 +27,7 @@ namespace da
 		math::Vector3 GetRotation() { return mRotation; }
 		math::Vector3 GetScale() { return mScale; }
 
-		math::Vector3 Foward() { return mFoward; }
+		math::Vector3 Forward() { return mForward; }
 		math::Vector3 Right() { return mRight; }
 		math::Vector3 Up() { return mUp; }
 
@@ -39,7 +39,7 @@ namespace da
 		math::Vector3 mScale;
 		
 		math::Vector3 mUp;
-		math::Vector3 mFoward;
+		math::Vector3 mForward;
 		math::Vector3 mRight;
 
 	};

@@ -32,5 +32,6 @@ namespace da
 		mMesh->BindBuffer();
 		mMaterial->Binds();
 		mMesh->Render();
+		mMaterial->Clear();
 	}
 }

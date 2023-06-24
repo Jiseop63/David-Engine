@@ -23,6 +23,7 @@ namespace da::graphics
 
 		virtual HRESULT Load(const std::wstring& path);
 		void BindShader(eShaderStage stage, UINT startSlot);
+		void Clear();
 
 	private:
 		ScratchImage mImage;
