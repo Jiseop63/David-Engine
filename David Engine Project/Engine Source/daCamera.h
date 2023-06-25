@@ -3,6 +3,7 @@
 
 namespace da
 {
+	class Transform;
 	class Camera : public Component
 	{
 	public:
@@ -23,9 +24,16 @@ namespace da
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 		virtual void Render() override;
-		void SetProjectionType(eProjectionType type) { mProjectionType = type; }
 		bool CreateViewMatrix();
 		bool CreateProjectionMatrix();
+
+		float GetSize() { return mSize; }
+		void SetSize(float size) { mSize = size; };
+		eProjectionType GetProjectionType() { return mProjectionType; }
+		void SetProjectionType(eProjectionType type) { mProjectionType = type; }
+
+	private:
+		Transform* mTransform;
 
 	private:
 		static math::Matrix mView;

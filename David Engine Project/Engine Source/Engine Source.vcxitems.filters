@@ -70,6 +70,12 @@
     <Filter Include="Component\Camera">
       <UniqueIdentifier>{87d37685-f8e6-4be7-bfb1-a87519d56eda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\System">
+      <UniqueIdentifier>{12ae42b1-9348-4fba-b122-34855d94b365}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\System\Camera">
+      <UniqueIdentifier>{124f79c5-c6b2-454d-8231-682d01d29588}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h">
@@ -159,6 +165,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daCamera.h">
       <Filter>Component\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daCameraObject.h">
+      <Filter>Objects\System\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp">
@@ -235,6 +244,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daCamera.cpp">
       <Filter>Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daCameraObject.cpp">
+      <Filter>Objects\System\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

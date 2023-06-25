@@ -8,6 +8,7 @@
 #include "daMesh.h"
 #include "daMeshRenderer.h"
 
+#include "daCameraObject.h"
 #include "daCamera.h"
 #include "daCameraScript.h"
 
@@ -34,11 +35,17 @@ namespace da
 		}
 
 		{
-			GameObject* cameraObj = new GameObject();
+			/*GameObject* cameraObj = new GameObject();
 			AddGameObject(eLayerType::None, cameraObj);
 			cameraObj->GetComponent<Transform>()->SetPosition(math::Vector3(0.0f, 0.0f, -10.0f));
 			Camera* cameraComp = cameraObj->AddComponent<Camera>();
-			CameraScript* cameraScript = cameraObj->AddComponent<CameraScript>();
+			cameraComp->SetProjectionType(Camera::eProjectionType::Orthographic);
+			CameraScript* cameraScript = cameraObj->AddComponent<CameraScript>();*/
+		}
+		{
+			CameraObject* cameraObj = new CameraObject();
+			cameraObj->Initialize();
+			AddGameObject(eLayerType::None, cameraObj);
 		}
 	}
 	void PlayScene::Update()

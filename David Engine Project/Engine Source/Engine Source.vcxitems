@@ -17,6 +17,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daApplication.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daCamera.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daCameraObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daCameraScript.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daConstantBuffer.h" />
@@ -47,6 +48,7 @@
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daApplication.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daCamera.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daCameraObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daCameraScript.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daConstantBuffer.cpp" />

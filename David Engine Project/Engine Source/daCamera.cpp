@@ -18,6 +18,7 @@ namespace da
 		, mNear(1.0f)
 		, mFar(1000.0f)
 		, mSize(1.0f)
+		, mTransform(nullptr)
 
 	{
 	}
@@ -26,6 +27,7 @@ namespace da
 	}
 	void Camera::Initialize()
 	{
+		mTransform = GetOwner()->GetComponent<Transform>();
 	}
 	void Camera::Update()
 	{
@@ -40,17 +42,16 @@ namespace da
 	}
 	bool Camera::CreateViewMatrix()
 	{
-		Transform* tr = GetOwner()->GetComponent<Transform>();
-		Vector3 pos = tr->GetPosition();
+		Vector3 pos = mTransform->GetPosition();
 
 		// View Translate Matrix
 		mView = Matrix::Identity;
 		mView *= Matrix::CreateTranslation(-pos);
 
 		// View Rotation Matrix
-		Vector3 up = tr->Up();
-		Vector3 right = tr->Right();
-		Vector3 foward = tr->Forward();
+		Vector3 up = mTransform->Up();
+		Vector3 right = mTransform->Right();
+		Vector3 foward = mTransform->Forward();
 
 		Matrix viewRotate;
 		viewRotate._11 = right.x;	viewRotate._12 = up.x;	viewRotate._13 = foward.x;
@@ -68,6 +69,8 @@ namespace da
 		float height = float(rect.bottom - rect.top);
 		mAspectRatio = width / height;;
 
+
+
 		if (mProjectionType == eProjectionType::Orthographic)
 		{
 			float OrthorGraphicRatio = mSize / 1000.0f;
@@ -80,7 +83,6 @@ namespace da
 		{
 			mProjection = Matrix::CreatePerspectiveFieldOfViewLH(XM_2PI / 6.0f, mAspectRatio, mNear, mFar);
 		}
-
 
 		return true;
 	}
