@@ -2,6 +2,8 @@
 
 #include "daTime.h"
 
+#include "daGameManager.h"
+
 #include "daGameObject.h"
 #include "daTransform.h"
 

@@ -26,6 +26,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daCreatureObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daEnums.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daGameManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daGameObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daGraphics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daInput.h" />
@@ -34,6 +35,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daMesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daMeshRenderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daOverlayObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daPlayScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daResource.h" />
@@ -82,6 +84,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daTime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daTitleScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daTransform.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daGameManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)daMath.inl" />

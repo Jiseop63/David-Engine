@@ -1,12 +1,13 @@
 #include "daBackGroundObject.h"
 #include "daTransform.h"
 #include "daBackGroundObject.h"
-
+#include "daGameManager.h"
 namespace da
 {
 	BackGroundObject::BackGroundObject()
 		: mTransform(nullptr)
 		, mBackGroundScript(nullptr)
+		, mIsDisapperObject(false)
 	{
 	}
 	BackGroundObject::~BackGroundObject()
@@ -21,6 +22,9 @@ namespace da
 	}
 	void BackGroundObject::Update()
 	{
+		if (true == mIsDisapperObject && true == GameManager::IsOverrayOn())
+			GameObject::SetObjectState(GameObject::eObjectState::Paused);
+
 		GameObject::Update();
 	}
 	void BackGroundObject::LateUpdate()

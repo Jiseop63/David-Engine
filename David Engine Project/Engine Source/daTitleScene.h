@@ -13,7 +13,8 @@ namespace da
 		virtual void LateUpdate() override;
 		virtual void Render() override;
 		
-		void InitBGObj();
+		virtual void AddBackgroundObject() override;
 
+	private:
 	};
 }

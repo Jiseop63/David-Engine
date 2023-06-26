@@ -20,4 +20,7 @@ namespace da
 	void SelectScene::Render()
 	{
 	}
+	void SelectScene::AddBackgroundObject()
+	{
+	}
 }

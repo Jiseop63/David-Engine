@@ -28,7 +28,7 @@ namespace da
 	void PlayScene::Initialize()
 	{
 		srand((unsigned int)time(0));
-		InitBGObj();
+		AddBackgroundObject();
 
 		{
 			/*GameObject* player = new GameObject();
@@ -68,7 +68,7 @@ namespace da
 		Scene::Render();
 	}
 
-	void PlayScene::InitBGObj()
+	void PlayScene::AddBackgroundObject()
 	{
 		//BG
 		{
@@ -80,7 +80,7 @@ namespace da
 			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"TitleBackGroundMaterial"));
 			BackGroundScript* bgScript = backGround->GetBGScript();
 			bgScript->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
-			bgScript->SetMovingObject(false);
+			bgScript->TurnMovingObject(false);
 		}
 
 		// BGObj cloud

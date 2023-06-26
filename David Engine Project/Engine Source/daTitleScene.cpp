@@ -1,6 +1,7 @@
 #include "daTitleScene.h"
 
 #include "daResources.h"
+#include "daGameManager.h"
 
 #include "daGameObject.h"
 #include "daMeshRenderer.h"
@@ -11,9 +12,14 @@
 #include "daBackGroundObject.h"
 #include "daBackGroundScript.h"
 
+// юс╫ц
+#include "daInput.h"
+
+
 namespace da
 {
 	TitleScene::TitleScene()
+		: mIsSelectOverray(false)
 	{
 	}
 	TitleScene::~TitleScene()
@@ -21,7 +27,7 @@ namespace da
 	}
 	void TitleScene::Initialize()
 	{
-		InitBGObj();
+		AddBackgroundObject();
 
 		{
 			CameraObject* cameraObj = new CameraObject();
@@ -31,6 +37,10 @@ namespace da
 	}
 	void TitleScene::Update()
 	{
+		if (Input::GetKeyDown(da::eKeyCode::N))
+		{
+			GameManager::TurnOverlay(true);
+		}
 		Scene::Update();
 	}
 	void TitleScene::LateUpdate()
@@ -41,7 +51,7 @@ namespace da
 	{
 		Scene::Render();
 	}
-	void TitleScene::InitBGObj()
+	void TitleScene::AddBackgroundObject()
 	{
 		//BG
 		{
@@ -53,7 +63,7 @@ namespace da
 			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"TitleBackGroundMaterial"));
 			BackGroundScript* bgScript = backGround->GetBGScript();
 			bgScript->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
-			bgScript->SetMovingObject(false);
+			bgScript->TurnMovingObject(false);
 		}
 
 		// BGObj cloud

@@ -12,7 +12,8 @@ namespace renderer
 	Vertex vertexes[4] = {};	
 	ConstantBuffer* constantBuffer[(UINT)eCBType::End] = {};
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState[(UINT)eSamplerType::End] = {};
-
+	
+	
 	void SetupState()
 	{
 		const int numElement = 3;

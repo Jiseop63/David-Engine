@@ -61,7 +61,7 @@ namespace da
 
 			return origin;
 		}
-
+		void SetObjectState(eObjectState state) { mState = state; }
 	private:
 		eObjectState mState;
 		std::vector<Component*> mComponents;

@@ -43,6 +43,8 @@ namespace da
 	}
 	void GameObject::Update()
 	{
+		if (eObjectState::Paused == mState)
+			return;
 		for (Component* component : mComponents)
 		{
 			component->Update();
@@ -54,6 +56,8 @@ namespace da
 	}
 	void GameObject::LateUpdate()
 	{
+		if (eObjectState::Paused == mState)
+			return;
 		for (Component* component : mComponents)
 		{
 			component->LateUpdate();
@@ -65,6 +69,8 @@ namespace da
 	}
 	void GameObject::Render()
 	{
+		if (eObjectState::Paused == mState)
+			return;
 		for (Component* component : mComponents)
 		{
 			component->Render();

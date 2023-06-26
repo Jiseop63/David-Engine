@@ -82,6 +82,12 @@
     <Filter Include="Objects\Content">
       <UniqueIdentifier>{9cb1f3c7-136b-4301-96ae-c34ce116662b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Global Manager">
+      <UniqueIdentifier>{943df119-4a03-43d3-9cdb-6a0518cbd16f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\System\Overlay">
+      <UniqueIdentifier>{4e462f83-5106-4cdc-87ee-ca354140c646}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h">
@@ -189,6 +195,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daCreatureObject.h">
       <Filter>Objects\Content</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daGameManager.h">
+      <Filter>Global Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daOverlayObject.h">
+      <Filter>Objects\System\Overlay</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp">
@@ -283,6 +295,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daCreatureObject.cpp">
       <Filter>Objects\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daGameManager.cpp">
+      <Filter>Global Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -16,9 +16,12 @@ namespace da
 		virtual void Render();
 
 		BackGroundScript* GetBGScript() { return mBackGroundScript; }
-
+		void SetOverryObject(bool value) { mIsDisapperObject = value; }
 	public:
 		Transform* mTransform;
 		BackGroundScript* mBackGroundScript;
+
+	public:
+		bool mIsDisapperObject;
 	};
 }

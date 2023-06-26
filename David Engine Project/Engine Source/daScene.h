@@ -22,6 +22,9 @@ namespace da
 		void AddGameObject(enums::eLayerType layerType, GameObject* target);
 
 	private:
+		virtual void AddBackgroundObject() {}
+
+	private:
 		std::vector<Layer> mLayers;
 	};
 }
