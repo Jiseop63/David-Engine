@@ -23,6 +23,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daCameraScript.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daConstantBuffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daCreatureObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daEnums.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daGameObject.h" />
@@ -58,6 +59,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daCameraScript.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daConstantBuffer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daCreatureObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daEntity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daGameObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daGraphicDevice Dx11.cpp" />

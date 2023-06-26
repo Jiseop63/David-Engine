@@ -12,6 +12,8 @@ namespace da
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 		virtual void Render() override;
+		
+		void InitBGObj();
 
 	};
 }

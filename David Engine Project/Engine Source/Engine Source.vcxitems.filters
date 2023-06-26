@@ -79,6 +79,9 @@
     <Filter Include="Objects\System\BackGround">
       <UniqueIdentifier>{c3f46356-dcf2-4bd4-96fb-00ea33d23c78}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Content">
+      <UniqueIdentifier>{9cb1f3c7-136b-4301-96ae-c34ce116662b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h">
@@ -183,6 +186,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daCameraScript.h">
       <Filter>Objects\System\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daCreatureObject.h">
+      <Filter>Objects\Content</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp">
@@ -274,6 +280,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daBackGroundObject.cpp">
       <Filter>Objects\System\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daCreatureObject.cpp">
+      <Filter>Objects\Content</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

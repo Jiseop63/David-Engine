@@ -11,9 +11,15 @@ namespace da
 	std::map<std::wstring, Scene*> SceneManager::mScenes = {};
 	void SceneManager::Initialize()
 	{
-		mActiveScene = new PlayScene();
+		// mActiveScene = new PlayScene();
+		// mActiveScene->Initialize();
+		// mScenes.insert( std::make_pair(L"PlayScene", mActiveScene) );
+		
+		mActiveScene = new TitleScene();
 		mActiveScene->Initialize();
-		mScenes.insert( std::make_pair(L"PlayScene", mActiveScene) );
+		mScenes.insert(std::make_pair(L"TitleScene", mActiveScene));
+		
+		
 		//mScenes.insert(std::make_pair(L"TitleScene", new TitleScene()));
 		//mScenes.insert(std::make_pair(L"SelectScene", new SelectScene()));
 		//mScenes.insert(std::make_pair(L"PlayScene", new PlayScene()));

@@ -17,7 +17,7 @@ namespace da
 		, mAspectRatio(1.0f)
 		, mNear(1.0f)
 		, mFar(1000.0f)
-		, mSize(1.0f)
+		, mSize(10.0f)
 		, mTransform(nullptr)
 
 	{
