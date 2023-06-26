@@ -140,6 +140,14 @@ namespace renderer
 			spriteMaterial->SetShader(spriteShader);
 			Resources::Insert<Material>(L"TitleLogoMaterial", spriteMaterial);
 		}
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"GotoSelectButtonTexture", L"..\\Resources\\Texture\\GotoSelectButton.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"GotoSelectButtonMaterial", spriteMaterial);
+		}
 	}
 	void Initialize()
 	{

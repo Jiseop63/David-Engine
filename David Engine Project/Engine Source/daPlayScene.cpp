@@ -27,6 +27,7 @@ namespace da
 	}
 	void PlayScene::Initialize()
 	{
+		srand((unsigned int)time(0));
 		InitBGObj();
 
 		{
@@ -190,6 +191,18 @@ namespace da
 			BackGroundScript* bgScript = titleLogoObj->GetBGScript();
 			bgScript->SetScale(math::Vector3(6.0f, 1.70f, 1.0f));
 			bgScript->SetPosition(math::Vector3(0.0f, 2.0f, -1.10f));
+		}
+		{
+			GameObject* goToSelectButton = new GameObject();
+			goToSelectButton->Initialize();
+			AddGameObject(enums::eLayerType::UI, goToSelectButton);
+			MeshRenderer* buttonRenderer = goToSelectButton->AddComponent<MeshRenderer>();
+			buttonRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			buttonRenderer->SetMaterial(Resources::Find<Material>(L"GotoSelectButtonMaterial"));
+			Transform* buttonTr = goToSelectButton->GetComponent<Transform>();
+			
+			buttonTr->SetScale(math::Vector3(4.20f, 0.60f, 1.0f));
+			buttonTr->SetPosition(math::Vector3(0.0f, 0.50, -1.20f));
 		}
 	}
 }

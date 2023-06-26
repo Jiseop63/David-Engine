@@ -13,7 +13,8 @@ namespace da
 		: mTransform(nullptr)
 		, mIsMovingObj(true)
 		, mMoveValue(0.0f)
-		, mMoveSpeed(3.5f)
+		, mTurnSpeed(3.5f)
+		, mMoveSpeed(10.5f)
 	{
 	}
 	BackGroundScript::~BackGroundScript()
@@ -23,6 +24,11 @@ namespace da
 	void BackGroundScript::Initialize()
 	{
 		mTransform = GetOwner()->GetComponent<Transform>();
+		int addTurnSpeedValue = rand() % 5;
+		int addMoveSpeedValue = rand() % 10;
+
+		mTurnSpeed += addTurnSpeedValue;
+		mMoveSpeed += addMoveSpeedValue;
 	}
 	void BackGroundScript::Update()
 	{
@@ -45,8 +51,8 @@ namespace da
 
 		Vector3 position = mTransform->GetPosition();
 		mMoveValue += (float)Time::DeltaTime();
-		// 방향 * 이동값 ()  * 시간
-		position += mTransform->Up() * cos(mMoveValue) / mMoveSpeed * (float)Time::DeltaTime();
+		// 방향 * cos (이동값 * 전환속도) / 이동속도 * DT
+		position += mTransform->Up() * cos(mMoveValue * mTurnSpeed) / mMoveSpeed * (float)Time::DeltaTime();
 
 		mTransform->SetPosition(position);
 	}

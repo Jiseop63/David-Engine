@@ -30,6 +30,7 @@ namespace da
 		Transform* mTransform;
 		bool mIsMovingObj;
 		float mMoveValue;
+		float mTurnSpeed;
 		float mMoveSpeed;
 	};
 }
