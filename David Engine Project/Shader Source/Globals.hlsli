@@ -8,7 +8,7 @@ cbuffer Transform : register(b0)
 }
 
 
-Texture2D smileTexture : register(t0);
+Texture2D BindingTexture : register(t0);
 
 SamplerState pointSampler : register(s0);
 SamplerState anisotropicSampler : register(s1);

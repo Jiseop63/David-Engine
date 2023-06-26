@@ -76,6 +76,9 @@
     <Filter Include="Objects\System\Camera">
       <UniqueIdentifier>{124f79c5-c6b2-454d-8231-682d01d29588}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\System\BackGround">
+      <UniqueIdentifier>{c3f46356-dcf2-4bd4-96fb-00ea33d23c78}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h">
@@ -159,9 +162,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daMeshRenderer.h">
       <Filter>Component\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daCameraScript.h">
-      <Filter>Component\Camera</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daCamera.h">
       <Filter>Component\Camera</Filter>
     </ClInclude>
@@ -173,6 +173,15 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daSelectScene.h">
       <Filter>Scene\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daBackGroundObject.h">
+      <Filter>Objects\System\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daBackGroundScript.h">
+      <Filter>Objects\System\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daCameraScript.h">
+      <Filter>Objects\System\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -245,9 +254,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daMeshRenderer.cpp">
       <Filter>Component\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daCameraScript.cpp">
-      <Filter>Component\Camera</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daCamera.cpp">
       <Filter>Component\Camera</Filter>
     </ClCompile>
@@ -259,6 +265,15 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daTitleScene.cpp">
       <Filter>Scene\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daBackGroundScript.cpp">
+      <Filter>Objects\System\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daCameraScript.cpp">
+      <Filter>Objects\System\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daBackGroundObject.cpp">
+      <Filter>Objects\System\BackGround</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

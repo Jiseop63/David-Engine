@@ -16,6 +16,8 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daApplication.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daBackGroundObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daBackGroundScript.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daCameraObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daCameraScript.h" />
@@ -49,6 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daApplication.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daBackGroundObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daBackGroundScript.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daCameraObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daCameraScript.cpp" />

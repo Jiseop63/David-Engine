@@ -14,12 +14,10 @@ struct VSOut
     float2 UV : TEXCOORD;
 };
 
-
-
-float4 main(VSOut In) : SV_TARGET
+float4 main(VSOut In) : SV_Target
 {
     float4 color = (float) 0.0f;
-    color = smileTexture.Sample(pointSampler, In.UV);
+    color = BindingTexture.Sample(pointSampler, In.UV);
     
     return color;
 }

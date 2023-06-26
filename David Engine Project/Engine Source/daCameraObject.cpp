@@ -19,7 +19,7 @@ namespace da
 		mTransform = GetComponent<Transform>();
 		mCameraComponent = AddComponent<Camera>();
 		mCameraScript = AddComponent<CameraScript>();
-		mTransform->SetPosition(math::Vector3(0.0f, 0.0f, -10.0f));
+		mTransform->SetPosition(math::Vector3(0.0f, 0.0f, -6.50f));
 		GameObject::Initialize();
 	}
 	void CameraObject::Update()
