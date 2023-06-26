@@ -1,117 +1,85 @@
-#include "daPlayScene.h"
+#include "daTitleScene.h"
 
 #include "daResources.h"
 
 #include "daGameObject.h"
-
-#include "daTransform.h"
-#include "daMesh.h"
 #include "daMeshRenderer.h"
+#include "daTransform.h"
 
 #include "daCameraObject.h"
-#include "daCamera.h"
-#include "daCameraScript.h"
-
 namespace da
 {
-	using namespace enums;
-
-	PlayScene::PlayScene()
+	TitleScene::TitleScene()
 	{
 	}
-	PlayScene::~PlayScene()
+	TitleScene::~TitleScene()
 	{
 	}
-	void PlayScene::Initialize()
+	void TitleScene::Initialize()
 	{
 		//BG
 		{
 			GameObject* backGround = new GameObject();
-			AddGameObject(enums::eLayerType::a, backGround);
+			AddGameObject(enums::eLayerType::BackGround, backGround);
 			MeshRenderer* backGroundRenderer = backGround->AddComponent<MeshRenderer>();
 			backGroundRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"TitleBackGroundMaterial"));
 			Transform* backGroundTr = backGround->GetComponent<Transform>();
 			backGroundTr->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
 		}
-		// BGObj cloud
+		// BGObj
 		{
 			GameObject* cloudObj = new GameObject();
-			AddGameObject(enums::eLayerType::b, cloudObj);
+			AddGameObject(enums::eLayerType::BackGround, cloudObj);
 			MeshRenderer* backGroundRenderer = cloudObj->AddComponent<MeshRenderer>();
 			backGroundRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"CloudAMaterial"));
 			Transform* backGroundTr = cloudObj->GetComponent<Transform>();
-			backGroundTr->SetScale(math::Vector3(2.0f, 1.44f, 1.0f));
-			backGroundTr->SetPosition(math::Vector3(-1.0f, -1.0f, 0.0f));
+			backGroundTr->SetPosition(math::Vector3(-3.0f, -2.0f, 0.0f));
 		}
-		// BGObj cloud
+		// BGObj
 		{
 			GameObject* cloudObj = new GameObject();
-			AddGameObject(enums::eLayerType::c, cloudObj);
+			AddGameObject(enums::eLayerType::BackGround, cloudObj);
 			MeshRenderer* backGroundRenderer = cloudObj->AddComponent<MeshRenderer>();
 			backGroundRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"CloudBMaterial"));
 			Transform* backGroundTr = cloudObj->GetComponent<Transform>();
-			backGroundTr->SetScale(math::Vector3(2.50f, 1.51f, 1.0f));
-			backGroundTr->SetPosition(math::Vector3(1.0f, 1.0f, 0.0f));
+			backGroundTr->SetPosition(math::Vector3(3.0f, -2.0f, 0.0f));
 		}
-		// BGObj cloud
+		// BGObj
 		{
 			GameObject* cloudObj = new GameObject();
-			AddGameObject(enums::eLayerType::d, cloudObj);
+			AddGameObject(enums::eLayerType::BackGround, cloudObj);
 			MeshRenderer* backGroundRenderer = cloudObj->AddComponent<MeshRenderer>();
 			backGroundRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"CloudCMaterial"));
 			Transform* backGroundTr = cloudObj->GetComponent<Transform>();
-			backGroundTr->SetScale(math::Vector3(6.0f, 3.81f, 1.0f));
-			backGroundTr->SetPosition(math::Vector3(2.0f, -2.0f, 0.0f));
+			backGroundTr->SetPosition(math::Vector3(5.0f, 4.0f, 0.0f));
 		}
-		// BGObj titleLogo
+		// BGObj
 		{
 			GameObject* titleLogoObj = new GameObject();
-			AddGameObject(enums::eLayerType::e, titleLogoObj);
+			AddGameObject(enums::eLayerType::BackGround, titleLogoObj);
 			MeshRenderer* backGroundRenderer = titleLogoObj->AddComponent<MeshRenderer>();
 			backGroundRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"TitleLogoMaterial"));
 			Transform* backGroundTr = titleLogoObj->GetComponent<Transform>();
-			backGroundTr->SetScale(math::Vector3(6.0f, 1.70f, 1.0f));
-			backGroundTr->SetPosition(math::Vector3(0.0f, 2.0f, 0.0f));
-		}
-		{
-			/*GameObject* player = new GameObject();
-			AddGameObject(eLayerType::Playable, player);
-			MeshRenderer* playerRenderer = player->AddComponent<MeshRenderer>();
-			playerRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			playerRenderer->SetMaterial(Resources::Find<Material>(L"SpriteMaterial"));
-			Transform* playerTr = player->GetComponent<Transform>();
-			playerTr->SetPosition(math::Vector3(0.5f, 0.5f, 0.0f));*/
-		}
-
-		{
-			/*GameObject* cameraObj = new GameObject();
-			AddGameObject(eLayerType::None, cameraObj);
-			cameraObj->GetComponent<Transform>()->SetPosition(math::Vector3(0.0f, 0.0f, -10.0f));
-			Camera* cameraComp = cameraObj->AddComponent<Camera>();
-			cameraComp->SetProjectionType(Camera::eProjectionType::Orthographic);
-			CameraScript* cameraScript = cameraObj->AddComponent<CameraScript>();*/
+			backGroundTr->SetPosition(math::Vector3(0.0f, 5.0f, 0.0f));
 		}
 		{
 			CameraObject* cameraObj = new CameraObject();
 			cameraObj->Initialize();
-			AddGameObject(eLayerType::None, cameraObj);
+			AddGameObject(enums::eLayerType::None, cameraObj);
 		}
 	}
-	void PlayScene::Update()
+	void TitleScene::Update()
 	{
-		Scene::Update();
 	}
-	void PlayScene::LateUpdate()
+	void TitleScene::LateUpdate()
 	{
-		Scene::LateUpdate();
 	}
-	void PlayScene::Render()
+	void TitleScene::Render()
 	{
-		Scene::Render();
 	}
 }

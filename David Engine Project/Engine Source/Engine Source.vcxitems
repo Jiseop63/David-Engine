@@ -37,9 +37,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daResources.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daSceneManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daScript.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daSelectScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daShader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daTexture.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daTime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daTitleScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daTransform.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)David Engine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daGraphicDevice Dx11.h" />
@@ -68,9 +70,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daSceneManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daScript.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daSelectScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daTexture.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daTime.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daTitleScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daTransform.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -168,6 +168,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daCameraObject.h">
       <Filter>Objects\System\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daTitleScene.h">
+      <Filter>Scene\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daSelectScene.h">
+      <Filter>Scene\Content</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp">
@@ -247,6 +253,12 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daCameraObject.cpp">
       <Filter>Objects\System\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daSelectScene.cpp">
+      <Filter>Scene\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daTitleScene.cpp">
+      <Filter>Scene\Content</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

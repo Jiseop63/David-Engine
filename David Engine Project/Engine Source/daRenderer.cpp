@@ -50,16 +50,16 @@ namespace renderer
 			, shader->GetInputLayoutAddressOf());
 
 
-		D3D11_SAMPLER_DESC desc = {};
-		desc.AddressU = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
-		desc.AddressV = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
-		desc.AddressW = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
-		desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
-		GetDevice()->CreateSampler(&desc, samplerState[(UINT)eSamplerType::Point].GetAddressOf());
+		D3D11_SAMPLER_DESC samplerDesc = {};
+		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
+		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
+		samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
+		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+		GetDevice()->CreateSampler(&samplerDesc, samplerState[(UINT)eSamplerType::Point].GetAddressOf());
 		GetDevice()->BindSampler(eShaderStage::PS, 0, samplerState[(UINT)eSamplerType::Point].GetAddressOf());
 
-		desc.Filter = D3D11_FILTER_ANISOTROPIC;
-		GetDevice()->CreateSampler(&desc, samplerState[(UINT)eSamplerType::Anisotropic].GetAddressOf());
+		samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
+		GetDevice()->CreateSampler(&samplerDesc, samplerState[(UINT)eSamplerType::Anisotropic].GetAddressOf());
 		GetDevice()->BindSampler(eShaderStage::PS, 1, samplerState[(UINT)eSamplerType::Anisotropic].GetAddressOf());
 	}
 	void LoadBuffer()
@@ -74,7 +74,6 @@ namespace renderer
 		indexes.push_back(0); indexes.push_back(2); indexes.push_back(3);
 
 		mesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
-
 
 		// Create ConstantBuffer 
 		constantBuffer[(UINT)eCBType::Transform] = new ConstantBuffer(eCBType::Transform);
@@ -94,10 +93,53 @@ namespace renderer
 
 		std::shared_ptr<Texture> texture
 			= Resources::Load<Texture>(L"SmileTexture", L"..\\Resources\\Texture\\smileTexture.png");
+
 		std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 		spriteMaterial->SetTexture(texture);
 		spriteMaterial->SetShader(spriteShader);
 		Resources::Insert<Material>(L"SpriteMaterial", spriteMaterial);
+
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"TitleBackGroundTexture", L"..\\Resources\\Texture\\TitleBackGround.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"TitleBackGroundMaterial", spriteMaterial);
+		}
+
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"CloudATexture", L"..\\Resources\\Texture\\CloudA.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"CloudAMaterial", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"CloudBTexture", L"..\\Resources\\Texture\\CloudB.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"CloudBMaterial", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"CloudCTexture", L"..\\Resources\\Texture\\CloudC.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"CloudCMaterial", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"TitleLogoTexture", L"..\\Resources\\Texture\\TitleLogo.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"TitleLogoMaterial", spriteMaterial);
+		}
 	}
 	void Initialize()
 	{

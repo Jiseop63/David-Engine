@@ -1,6 +1,9 @@
 #include "daSceneManager.h"
 
+#include "daTitleScene.h"
+#include "daSelectScene.h"
 #include "daPlayScene.h"
+
 
 namespace da
 {
@@ -10,7 +13,20 @@ namespace da
 	{
 		mActiveScene = new PlayScene();
 		mActiveScene->Initialize();
-		mScenes.insert(std::make_pair(L"PlayScene", mActiveScene));
+		mScenes.insert( std::make_pair(L"PlayScene", mActiveScene) );
+		//mScenes.insert(std::make_pair(L"TitleScene", new TitleScene()));
+		//mScenes.insert(std::make_pair(L"SelectScene", new SelectScene()));
+		//mScenes.insert(std::make_pair(L"PlayScene", new PlayScene()));
+
+		/*for (const auto& scene : mScenes) {
+			scene.second->Initialize();
+		}
+
+		std::map<std::wstring, Scene*>::iterator iter = mScenes.find(L"TitleScene");
+		if (iter != mScenes.end())
+		{
+			mActiveScene = iter->second;
+		}*/
 	}
 	void SceneManager::Update()
 	{
