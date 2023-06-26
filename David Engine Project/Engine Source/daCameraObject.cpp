@@ -16,6 +16,7 @@ namespace da
 	}
 	void CameraObject::Initialize()
 	{
+		SetObjectType(eObjectType::None);
 		mTransform = GetComponent<Transform>();
 		mCameraComponent = AddComponent<Camera>();
 		mCameraScript = AddComponent<CameraScript>();

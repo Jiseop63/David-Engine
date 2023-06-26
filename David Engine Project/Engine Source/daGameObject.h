@@ -21,6 +21,19 @@ namespace da
 			Paused,
 			Dead,
 		};
+
+		// 외부에서 오브젝트 타입에 따라 전용 호출이 가능할 수 있도록 타입을 나눔
+		enum eObjectType
+		{
+			None, // <- 아마 카메라
+			Background,
+			Overlay,
+			HUD,
+			Creature,
+			Effect,
+			ENV,
+			End,
+		};
 		template <typename T>
 		T* GetComponent()
 		{
@@ -61,9 +74,11 @@ namespace da
 
 			return origin;
 		}
-		void SetObjectState(eObjectState state) { mState = state; }
+		void SetObjectState(eObjectState state) { mObjectState = state; }
+		void SetObjectType(eObjectType type) { mObjectType = type; }
 	private:
-		eObjectState mState;
+		eObjectState mObjectState;
+		eObjectType mObjectType;
 		std::vector<Component*> mComponents;
 		std::vector<Script*> mScripts;
 	};

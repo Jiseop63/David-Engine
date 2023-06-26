@@ -16,6 +16,7 @@ namespace da
 
 	void BackGroundObject::Initialize()
 	{
+		SetObjectType(eObjectType::Background);
 		mTransform = GetComponent<Transform>();
 		mBackGroundScript = AddComponent<BackGroundScript>();
 		GameObject::Initialize();

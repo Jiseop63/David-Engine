@@ -6,7 +6,7 @@
 namespace da
 {
 	GameObject::GameObject()
-		: mState(eObjectState::Active)
+		: mObjectState(eObjectState::Active)
 	{
 		AddComponent<Transform>();
 	}
@@ -43,7 +43,7 @@ namespace da
 	}
 	void GameObject::Update()
 	{
-		if (eObjectState::Paused == mState)
+		if (eObjectState::Paused == mObjectState)
 			return;
 		for (Component* component : mComponents)
 		{
@@ -56,7 +56,7 @@ namespace da
 	}
 	void GameObject::LateUpdate()
 	{
-		if (eObjectState::Paused == mState)
+		if (eObjectState::Paused == mObjectState)
 			return;
 		for (Component* component : mComponents)
 		{
@@ -69,7 +69,7 @@ namespace da
 	}
 	void GameObject::Render()
 	{
-		if (eObjectState::Paused == mState)
+		if (eObjectState::Paused == mObjectState)
 			return;
 		for (Component* component : mComponents)
 		{
