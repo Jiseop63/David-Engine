@@ -18,7 +18,6 @@ namespace da
 		virtual void Render() override;
 
 	private:
-		Transform* mTransform;
 		Camera* mCameraComponent;
 		CameraScript* mCameraScript;
 	};

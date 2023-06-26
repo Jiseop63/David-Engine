@@ -71,6 +71,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daMesh.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daMeshRenderer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daOverlayObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daPlayScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daResource.cpp" />

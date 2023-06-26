@@ -299,6 +299,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daGameManager.cpp">
       <Filter>Global Manager</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daOverlayObject.cpp">
+      <Filter>Objects\System\Overlay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)daMath.inl">

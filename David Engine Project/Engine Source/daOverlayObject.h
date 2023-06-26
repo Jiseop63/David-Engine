@@ -3,6 +3,7 @@
 
 namespace da
 {
+	class Transform;
 	class OverlayObject : public GameObject
 	{
 	public:
@@ -12,6 +13,7 @@ namespace da
 		virtual void Update();
 		virtual void LateUpdate();
 		virtual void Render();
+
 
 	};
 }

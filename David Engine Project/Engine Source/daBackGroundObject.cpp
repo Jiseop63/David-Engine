@@ -1,12 +1,10 @@
 #include "daBackGroundObject.h"
-#include "daTransform.h"
-#include "daBackGroundObject.h"
 #include "daGameManager.h"
+
 namespace da
 {
 	BackGroundObject::BackGroundObject()
-		: mTransform(nullptr)
-		, mBackGroundScript(nullptr)
+		: mBackGroundScript(nullptr)
 		, mIsDisapperObject(false)
 	{
 	}
@@ -17,7 +15,6 @@ namespace da
 	void BackGroundObject::Initialize()
 	{
 		SetObjectType(eObjectType::Background);
-		mTransform = GetComponent<Transform>();
 		mBackGroundScript = AddComponent<BackGroundScript>();
 		GameObject::Initialize();
 	}

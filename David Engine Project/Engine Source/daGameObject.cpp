@@ -7,8 +7,9 @@ namespace da
 {
 	GameObject::GameObject()
 		: mObjectState(eObjectState::Active)
+		, mTransform(nullptr)
 	{
-		AddComponent<Transform>();
+		mTransform = AddComponent<Transform>();
 	}
 	GameObject::~GameObject()
 	{

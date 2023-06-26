@@ -19,7 +19,6 @@
 namespace da
 {
 	TitleScene::TitleScene()
-		: mIsSelectOverray(false)
 	{
 	}
 	TitleScene::~TitleScene()

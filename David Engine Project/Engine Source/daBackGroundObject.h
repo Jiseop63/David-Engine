@@ -17,8 +17,7 @@ namespace da
 
 		BackGroundScript* GetBGScript() { return mBackGroundScript; }
 		void SetOverryObject(bool value) { mIsDisapperObject = value; }
-	public:
-		Transform* mTransform;
+	protected:
 		BackGroundScript* mBackGroundScript;
 
 	public:

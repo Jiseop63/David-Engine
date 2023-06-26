@@ -4,6 +4,7 @@
 #include "daScript.h"
 namespace da
 {
+	class Transform;
 	class GameObject : public Entity
 	{
 	public:
@@ -23,6 +24,7 @@ namespace da
 		};
 
 		// 외부에서 오브젝트 타입에 따라 전용 호출이 가능할 수 있도록 타입을 나눔
+		// 호출하는건 씬에서 해줘야할듯
 		enum eObjectType
 		{
 			None, // <- 아마 카메라
@@ -76,6 +78,12 @@ namespace da
 		}
 		void SetObjectState(eObjectState state) { mObjectState = state; }
 		void SetObjectType(eObjectType type) { mObjectType = type; }
+
+
+	protected:
+		Transform* mTransform;
+
+
 	private:
 		eObjectState mObjectState;
 		eObjectType mObjectType;
