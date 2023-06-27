@@ -23,6 +23,10 @@ namespace renderer
 
 	extern Vertex vertexes[];
 	extern da::graphics::ConstantBuffer* constantBuffer[(UINT)da::graphics::eCBType::End];
+	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[(UINT)da::graphics::eSamplerType::End];
+	extern Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerStates[(UINT)da::graphics::eRSType::End];
+	extern Microsoft::WRL::ComPtr<ID3D11DepthStencilState> DepthStencilStates[(UINT)da::graphics::eDSType::End];
+	extern Microsoft::WRL::ComPtr<ID3D11BlendState> BlendStates[(UINT)da::graphics::eBSType::End];
 
 	void Initialize();
 	void Release();

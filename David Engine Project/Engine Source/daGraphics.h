@@ -39,6 +39,32 @@ namespace da::graphics
 		End,
 	};
 
+	enum class eRSType
+	{
+		SolidBack,
+		SolidFront,
+		SolidNone,
+		Wireframe,
+		End,
+	};
+
+	enum class eDSType
+	{
+		Less,
+		Greater,
+		NoWrite,
+		None,
+		End,
+	};
+
+	enum class eBSType
+	{
+		Default,
+		AlphaBlend,
+		Oneone,
+		End,
+	};
+
 	struct GPUBuffer
 	{
 		Microsoft::WRL::ComPtr<ID3D11Buffer> buffer;
