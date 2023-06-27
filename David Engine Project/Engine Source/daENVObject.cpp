@@ -1,4 +1,5 @@
 #include "daENVObject.h"
+#include "daGameManager.h"
 
 namespace da
 {
@@ -15,14 +16,20 @@ namespace da
 	}
 	void ENVObject::Update()
 	{
+		if (true == mIsDisappearObject && GameManager::IsOverrayOn())
+			return;
 		GameObject::Update();
 	}
 	void ENVObject::LateUpdate()
 	{
+		if (true == mIsDisappearObject && GameManager::IsOverrayOn())
+			return;
 		GameObject::LateUpdate();
 	}
 	void ENVObject::Render()
 	{
+		if (true == mIsDisappearObject && GameManager::IsOverrayOn())
+			return;
 		GameObject::Render();
 	}
 }

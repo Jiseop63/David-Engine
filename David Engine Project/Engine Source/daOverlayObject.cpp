@@ -1,5 +1,5 @@
 #include "daOverlayObject.h"
-#include "daTransform.h"
+#include "daGameManager.h"
 
 namespace da
 {
@@ -12,22 +12,24 @@ namespace da
 	}
 	void OverlayObject::Initialize()
 	{
-		mTransform = GetComponent<Transform>();
 		GameObject::Initialize();
 	}
 	void OverlayObject::Update()
 	{
+		if ( false == GameManager::IsOverrayOn() )
+			return;
 		GameObject::Update();
-		// Overlay가 On인 경우 업데이트하기
 	}
 	void OverlayObject::LateUpdate()
 	{
-		// Overlay가 On인 경우 업데이트하기
+		if (false == GameManager::IsOverrayOn())
+			return;
 		GameObject::LateUpdate();
 	}
 	void OverlayObject::Render()
 	{
-		// Overlay가 On인 경우 업데이트하기
+		if (false == GameManager::IsOverrayOn())
+			return;
 		GameObject::Render();
 	}
 }

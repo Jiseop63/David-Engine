@@ -25,7 +25,7 @@ namespace da
 
 
 	public:
-		void TurnOverlayDisappear(bool value) { mIsoverlayOn = value; }
+		void TurnOverlayDisappear(bool value) { mIsOverlayOn = value; }
 
 		void TurnMovingObject(bool value) { mIsMovingObj = value; }
 		void SetMoveValue(float value) { mMoveValue = value; }
@@ -37,7 +37,7 @@ namespace da
 	private:
 		Transform* mTransform;
 		bool mIsMovingObj;
-		bool mIsoverlayOn;
+		bool mIsOverlayOn;
 		float mMoveValue;
 		float mTurnSpeed;
 		float mMoveSpeed;

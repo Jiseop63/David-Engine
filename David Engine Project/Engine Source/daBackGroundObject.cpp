@@ -14,21 +14,18 @@ namespace da
 	void BackGroundObject::Initialize()
 	{
 		mBackGroundScript = AddComponent<BackGroundScript>();
-		GameObject::Initialize();
+		ENVObject::Initialize();
 	}
 	void BackGroundObject::Update()
 	{
-	/*	if (true == mIsDisappearObject && true == GameManager::IsOverrayOn())
-			GameObject::SetObjectState(GameObject::eObjectState::Disappear);*/
-
-		GameObject::Update();
+		ENVObject::Update();
 	}
 	void BackGroundObject::LateUpdate()
 	{
-		GameObject::LateUpdate();
+		ENVObject::LateUpdate();
 	}
 	void BackGroundObject::Render()
 	{
-		GameObject::Render();
+		ENVObject::Render();
 	}
 }

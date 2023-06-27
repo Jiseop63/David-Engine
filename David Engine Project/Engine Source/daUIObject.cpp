@@ -10,18 +10,18 @@ namespace da
 	}
 	void UIObject::Initialize()
 	{
-		GameObject::Initialize();
+		ENVObject::Initialize();
 	}
 	void UIObject::Update()
 	{
-		GameObject::Update();
+		ENVObject::Update();
 	}
 	void UIObject::LateUpdate()
 	{
-		GameObject::LateUpdate();
+		ENVObject::LateUpdate();
 	}
 	void UIObject::Render()
 	{
-		GameObject::Render();
+		ENVObject::Render();
 	}
 }

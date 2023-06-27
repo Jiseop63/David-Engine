@@ -5,13 +5,13 @@ namespace da
 	class GameManager
 	{
 	public:
-		static bool IsOverrayOn() { return mIsoverlayOn; }
-		static void TurnOverlay(bool value);
+		static bool IsOverrayOn() { return mIsOverlayOn; }
+		static void TurnOverlay(bool value) { mIsOverlayOn = value; }
 
 		static void DisappearObjects();
 		static void TurnOnOverlay();
 
 	private:
-		static bool mIsoverlayOn;
+		static bool mIsOverlayOn;
 	};
 }

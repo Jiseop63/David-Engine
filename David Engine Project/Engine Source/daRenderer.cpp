@@ -175,6 +175,7 @@ namespace renderer
 		spriteMaterial->SetShader(spriteShader);
 		Resources::Insert<Material>(L"SpriteMaterial", spriteMaterial);
 
+		// TitleScene BG
 		{
 			std::shared_ptr<Texture> texture
 				= Resources::Load<Texture>(L"TitleBackGroundTexture", L"..\\Resources\\Texture\\TitleBackGround.png");
@@ -183,7 +184,7 @@ namespace renderer
 			spriteMaterial->SetShader(spriteShader);
 			Resources::Insert<Material>(L"TitleBackGroundMaterial", spriteMaterial);
 		}
-
+		// Clouds
 		{
 			std::shared_ptr<Texture> texture
 				= Resources::Load<Texture>(L"CloudATexture", L"..\\Resources\\Texture\\CloudA.png");
@@ -208,6 +209,8 @@ namespace renderer
 			spriteMaterial->SetShader(spriteShader);
 			Resources::Insert<Material>(L"CloudCMaterial", spriteMaterial);
 		}
+
+		// Title Logo
 		{
 			std::shared_ptr<Texture> texture
 				= Resources::Load<Texture>(L"TitleLogoTexture", L"..\\Resources\\Texture\\TitleLogo.png");
@@ -216,6 +219,7 @@ namespace renderer
 			spriteMaterial->SetShader(spriteShader);
 			Resources::Insert<Material>(L"TitleLogoMaterial", spriteMaterial);
 		}
+		// SelectBtn
 		{
 			std::shared_ptr<Texture> texture
 				= Resources::Load<Texture>(L"GotoSelectButtonTexture", L"..\\Resources\\Texture\\GotoSelectButton.png");
@@ -223,6 +227,33 @@ namespace renderer
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
 			Resources::Insert<Material>(L"GotoSelectButtonMaterial", spriteMaterial);
+		}
+		// Player Portrait Panel
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"PlayerPortraitTexture", L"..\\Resources\\Texture\\PlayerPortrait.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"PlayerPortraitMaterial", spriteMaterial);
+		}
+		// Player Select Info Panel
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"PlayerInfoUIPanelTexture", L"..\\Resources\\Texture\\PlayerInfoUIPanel.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"PlayerInfoUIPanelMaterial", spriteMaterial);
+		}
+		// Game Start Btn
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"StartGameButtonTexture", L"..\\Resources\\Texture\\StartGameButton.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"StartGameButtonMaterial", spriteMaterial);
 		}
 	}
 	void Initialize()

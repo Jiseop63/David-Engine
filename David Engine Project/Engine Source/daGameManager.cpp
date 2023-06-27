@@ -5,15 +5,7 @@
 #include "daENVObject.h"
 namespace da
 {
-	bool GameManager::mIsoverlayOn = false;
-	void GameManager::TurnOverlay(bool value)
-	{
-		if (true == value)
-		{
-			DisappearObjects();
-			TurnOnOverlay();
-		}
-	}
+	bool GameManager::mIsOverlayOn = false;
 	void GameManager::DisappearObjects()
 	{
 		Layer* backgroundLayer = SceneManager::GetActiveScene()->GetLayer(enums::eLayerType::BackGround);

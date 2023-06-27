@@ -131,5 +131,48 @@ namespace da
 			buttonTr->SetScale(math::Vector3(4.20f, 0.60f, 1.0f));
 			buttonTr->SetPosition(math::Vector3(0.0f, 0.50, -1.20f));
 		}
+
+		// Overlay Objects
+		{
+			// Player Portrait
+			{
+				OverlayObject* playerPortrait = new OverlayObject();
+				playerPortrait->Initialize();
+				AddGameObject(enums::eLayerType::UI, playerPortrait);
+				MeshRenderer* panelRenderer = playerPortrait->AddComponent<MeshRenderer>();
+				panelRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+				panelRenderer->SetMaterial(Resources::Find<Material>(L"PlayerPortraitMaterial"));
+				Transform* playerPortraitTr = playerPortrait->GetComponent<Transform>();
+
+				playerPortraitTr->SetScale(math::Vector3(1.68f, 1.68f, 1.0f));
+				playerPortraitTr->SetPosition(math::Vector3(-1.0f, 1.50f, -1.30f));
+			}
+			// Player Select Info
+			{
+				OverlayObject* playerSelectInfo = new OverlayObject();
+				playerSelectInfo->Initialize();
+				AddGameObject(enums::eLayerType::UI, playerSelectInfo);
+				MeshRenderer* panelRenderer = playerSelectInfo->AddComponent<MeshRenderer>();
+				panelRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+				panelRenderer->SetMaterial(Resources::Find<Material>(L"PlayerInfoUIPanelMaterial"));
+				Transform* playerSelectInfoTr = playerSelectInfo->GetComponent<Transform>();
+
+				playerSelectInfoTr->SetScale(math::Vector3(6.12f, 5.88f, 1.0f));
+				playerSelectInfoTr->SetPosition(math::Vector3(-1.5f, 0.50, -1.30f));
+			}
+			// Game Start Btn
+			{
+				OverlayObject* gameStartBtn = new OverlayObject();
+				gameStartBtn->Initialize();
+				AddGameObject(enums::eLayerType::UI, gameStartBtn);
+				MeshRenderer* buttonRenderer = gameStartBtn->AddComponent<MeshRenderer>();
+				buttonRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+				buttonRenderer->SetMaterial(Resources::Find<Material>(L"StartGameButtonMaterial"));
+				Transform* buttonTr = gameStartBtn->GetComponent<Transform>();
+
+				buttonTr->SetScale(math::Vector3(2.58f, 0.88f, 1.0f));
+				buttonTr->SetPosition(math::Vector3(1.0f, -1.50, -1.30f));
+			}
+		}
 	}
 }
