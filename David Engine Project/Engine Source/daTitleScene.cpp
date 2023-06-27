@@ -145,7 +145,7 @@ namespace da
 				Transform* playerPortraitTr = playerPortrait->GetComponent<Transform>();
 
 				playerPortraitTr->SetScale(math::Vector3(0.84f, 0.84f, 1.0f));
-				playerPortraitTr->SetPosition(math::Vector3(-2.5f, 1.50f, -1.30f));
+				playerPortraitTr->SetPosition(math::Vector3(-3.0f, 2.0f, -1.30f));
 			}
 			// Player Select Info
 			{
@@ -158,7 +158,7 @@ namespace da
 				Transform* playerSelectInfoTr = playerSelectInfo->GetComponent<Transform>();
 
 				playerSelectInfoTr->SetScale(math::Vector3(3.06f, 2.94f, 1.0f));
-				playerSelectInfoTr->SetPosition(math::Vector3(-2.5f, -1.0f, -1.30f));
+				playerSelectInfoTr->SetPosition(math::Vector3(-3.0f, -0.50f, -1.30f));
 			}
 			// Game Start Btn
 			{
