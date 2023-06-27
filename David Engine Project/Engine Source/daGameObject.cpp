@@ -46,6 +46,8 @@ namespace da
 	{
 		if (eObjectState::Paused == mObjectState)
 			return;
+		if (eObjectState::Inactive == mObjectState)
+			return;
 		for (Component* component : mComponents)
 		{
 			component->Update();
@@ -59,6 +61,8 @@ namespace da
 	{
 		if (eObjectState::Paused == mObjectState)
 			return;
+		if (eObjectState::Inactive == mObjectState)
+			return;
 		for (Component* component : mComponents)
 		{
 			component->LateUpdate();
@@ -70,7 +74,9 @@ namespace da
 	}
 	void GameObject::Render()
 	{
-		if (eObjectState::Paused == mObjectState)
+		if (eObjectState::Disappear == mObjectState)
+			return;
+		if (eObjectState::Inactive == mObjectState)
 			return;
 		for (Component* component : mComponents)
 		{

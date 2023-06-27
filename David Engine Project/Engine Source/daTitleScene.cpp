@@ -11,7 +11,8 @@
 
 #include "daBackGroundObject.h"
 #include "daBackGroundScript.h"
-
+#include "daOverlayObject.h"
+#include "daUIObject.h"
 // юс╫ц
 #include "daInput.h"
 
@@ -56,7 +57,7 @@ namespace da
 		{
 			BackGroundObject* backGround = new BackGroundObject();
 			backGround->Initialize();
-			AddGameObject(enums::eLayerType::a, backGround);
+			AddGameObject(enums::eLayerType::BackGround, backGround);
 			MeshRenderer* backGroundRenderer = backGround->AddComponent<MeshRenderer>();
 			backGroundRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"TitleBackGroundMaterial"));
@@ -64,12 +65,11 @@ namespace da
 			bgScript->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
 			bgScript->TurnMovingObject(false);
 		}
-
 		// BGObj cloud
 		{
 			BackGroundObject* cloudObj = new BackGroundObject();
 			cloudObj->Initialize();
-			AddGameObject(enums::eLayerType::b, cloudObj);
+			AddGameObject(enums::eLayerType::BackGround, cloudObj);
 			MeshRenderer* backGroundRenderer = cloudObj->AddComponent<MeshRenderer>();
 			backGroundRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"CloudAMaterial"));
@@ -77,12 +77,11 @@ namespace da
 			bgScript->SetScale(math::Vector3(2.0f, 1.44f, 1.0f));
 			bgScript->SetPosition(math::Vector3(-4.0f, 1.0f, -1.0f));
 		}
-
 		// BGObj cloud
 		{
 			BackGroundObject* cloudObj = new BackGroundObject();
 			cloudObj->Initialize();
-			AddGameObject(enums::eLayerType::c, cloudObj);
+			AddGameObject(enums::eLayerType::BackGround, cloudObj);
 			MeshRenderer* backGroundRenderer = cloudObj->AddComponent<MeshRenderer>();
 			backGroundRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"CloudBMaterial"));
@@ -90,12 +89,11 @@ namespace da
 			bgScript->SetScale(math::Vector3(2.50f, 1.51f, 1.0f));
 			bgScript->SetPosition(math::Vector3(3.0f, 1.0f, -1.0f));
 		}
-
 		// BGObj cloud
 		{
 			BackGroundObject* cloudObj = new BackGroundObject();
 			cloudObj->Initialize();
-			AddGameObject(enums::eLayerType::d, cloudObj);
+			AddGameObject(enums::eLayerType::BackGround, cloudObj);
 			MeshRenderer* backGroundRenderer = cloudObj->AddComponent<MeshRenderer>();
 			backGroundRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"CloudCMaterial"));
@@ -109,7 +107,8 @@ namespace da
 		{
 			BackGroundObject* titleLogoObj = new BackGroundObject();
 			titleLogoObj->Initialize();
-			AddGameObject(enums::eLayerType::e, titleLogoObj);
+			titleLogoObj->SetDisappearObject(true);
+			AddGameObject(enums::eLayerType::BackGround, titleLogoObj);
 			MeshRenderer* backGroundRenderer = titleLogoObj->AddComponent<MeshRenderer>();
 			backGroundRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"TitleLogoMaterial"));
@@ -117,9 +116,12 @@ namespace da
 			bgScript->SetScale(math::Vector3(6.0f, 1.70f, 1.0f));
 			bgScript->SetPosition(math::Vector3(0.0f, 2.0f, -1.10f));
 		}
+
+		// Button Object
 		{
-			GameObject* goToSelectButton = new GameObject();
+			UIObject* goToSelectButton = new UIObject();
 			goToSelectButton->Initialize();
+			goToSelectButton->SetDisappearObject(true);
 			AddGameObject(enums::eLayerType::UI, goToSelectButton);
 			MeshRenderer* buttonRenderer = goToSelectButton->AddComponent<MeshRenderer>();
 			buttonRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));

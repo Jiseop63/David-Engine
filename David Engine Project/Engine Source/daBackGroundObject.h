@@ -1,10 +1,10 @@
 #pragma once
-#include "daGameObject.h"
+#include "daENVObject.h"
 #include "daBackGroundScript.h"
 namespace da
 {
 	class Transform;
-	class BackGroundObject : public GameObject
+	class BackGroundObject : public ENVObject
 	{
 	public:
 		BackGroundObject();
@@ -16,11 +16,8 @@ namespace da
 		virtual void Render();
 
 		BackGroundScript* GetBGScript() { return mBackGroundScript; }
-		void SetOverryObject(bool value) { mIsDisapperObject = value; }
+
 	protected:
 		BackGroundScript* mBackGroundScript;
-
-	public:
-		bool mIsDisapperObject;
 	};
 }

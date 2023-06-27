@@ -12,7 +12,6 @@ namespace da
 	}
 	void OverlayObject::Initialize()
 	{
-		SetObjectType(eObjectType::Overlay);
 		mTransform = GetComponent<Transform>();
 		GameObject::Initialize();
 	}

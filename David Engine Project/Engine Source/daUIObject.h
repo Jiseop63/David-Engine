@@ -1,13 +1,14 @@
 #pragma once
-#include "daUIObject.h"
+#include "daENVObject.h"
 
 namespace da
 {
-	class OverlayObject : public UIObject
+	class Transform;
+	class UIObject : public ENVObject
 	{
 	public:
-		OverlayObject();
-		virtual ~OverlayObject();
+		UIObject();
+		virtual ~UIObject();
 		virtual void Initialize();
 		virtual void Update();
 		virtual void LateUpdate();

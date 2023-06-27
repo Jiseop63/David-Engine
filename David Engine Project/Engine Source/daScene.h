@@ -21,6 +21,8 @@ namespace da
 		
 		void AddGameObject(enums::eLayerType layerType, GameObject* target);
 
+		Layer* GetLayer(enums::eLayerType targetLayer);
+
 	private:
 		virtual void AddBackgroundObject() {}
 

@@ -76,17 +76,23 @@
     <Filter Include="Objects\System\Camera">
       <UniqueIdentifier>{124f79c5-c6b2-454d-8231-682d01d29588}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\System\BackGround">
-      <UniqueIdentifier>{c3f46356-dcf2-4bd4-96fb-00ea33d23c78}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\Content">
       <UniqueIdentifier>{9cb1f3c7-136b-4301-96ae-c34ce116662b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Global Manager">
       <UniqueIdentifier>{943df119-4a03-43d3-9cdb-6a0518cbd16f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\System\Overlay">
+    <Filter Include="Objects\System\ENV">
+      <UniqueIdentifier>{3c867dd8-359e-4747-a818-1c006254d4b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\System\ENV\Overlay">
       <UniqueIdentifier>{4e462f83-5106-4cdc-87ee-ca354140c646}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\System\ENV\BackGround">
+      <UniqueIdentifier>{c3f46356-dcf2-4bd4-96fb-00ea33d23c78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\System\ENV\UI">
+      <UniqueIdentifier>{3463c447-a0dc-42cf-a3ed-47ad5e6c31e8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -184,10 +190,10 @@
       <Filter>Scene\Content</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daBackGroundObject.h">
-      <Filter>Objects\System\BackGround</Filter>
+      <Filter>Objects\System\ENV\BackGround</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daBackGroundScript.h">
-      <Filter>Objects\System\BackGround</Filter>
+      <Filter>Objects\System\ENV\BackGround</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daCameraScript.h">
       <Filter>Objects\System\Camera</Filter>
@@ -199,7 +205,11 @@
       <Filter>Global Manager</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daOverlayObject.h">
-      <Filter>Objects\System\Overlay</Filter>
+      <Filter>Objects\System\ENV\Overlay</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daENVObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daUIObject.h">
+      <Filter>Objects\System\ENV\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -285,13 +295,13 @@
       <Filter>Scene\Content</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daBackGroundScript.cpp">
-      <Filter>Objects\System\BackGround</Filter>
+      <Filter>Objects\System\ENV\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daCameraScript.cpp">
       <Filter>Objects\System\Camera</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daBackGroundObject.cpp">
-      <Filter>Objects\System\BackGround</Filter>
+      <Filter>Objects\System\ENV\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daCreatureObject.cpp">
       <Filter>Objects\Content</Filter>
@@ -300,8 +310,10 @@
       <Filter>Global Manager</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daOverlayObject.cpp">
-      <Filter>Objects\System\Overlay</Filter>
+      <Filter>Objects\System\ENV\Overlay</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daENVObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daUIObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)daMath.inl">

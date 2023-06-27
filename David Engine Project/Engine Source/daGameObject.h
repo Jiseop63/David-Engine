@@ -18,24 +18,15 @@ namespace da
 	public:
 		enum eObjectState
 		{
-			Active,
-			Paused,
-			Dead,
+			Active,		// 씬에서 동작함
+			Paused,		// Update X
+			Disappear,	// Render X
+			Inactive,	// 더이상 동작하지 않음
 		};
 
 		// 외부에서 오브젝트 타입에 따라 전용 호출이 가능할 수 있도록 타입을 나눔
 		// 호출하는건 씬에서 해줘야할듯
-		enum eObjectType
-		{
-			None, // <- 아마 카메라
-			Background,
-			Overlay,
-			HUD,
-			Creature,
-			Effect,
-			ENV,
-			End,
-		};
+		
 		template <typename T>
 		T* GetComponent()
 		{
@@ -55,7 +46,6 @@ namespace da
 
 			return nullptr;
 		}
-
 		template <typename T>
 		T* AddComponent()
 		{
@@ -76,9 +66,9 @@ namespace da
 
 			return origin;
 		}
-		void SetObjectState(eObjectState state) { mObjectState = state; }
-		void SetObjectType(eObjectType type) { mObjectType = type; }
 
+		void SetObjectState(eObjectState state) { mObjectState = state; }
+		eObjectState GetObjectState() { return mObjectState; }
 
 	protected:
 		Transform* mTransform;
@@ -86,7 +76,6 @@ namespace da
 
 	private:
 		eObjectState mObjectState;
-		eObjectType mObjectType;
 		std::vector<Component*> mComponents;
 		std::vector<Script*> mScripts;
 	};

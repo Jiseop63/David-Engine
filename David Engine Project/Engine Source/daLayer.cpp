@@ -48,4 +48,14 @@ namespace da
 	{
 		mGameObjects.push_back(target);
 	}
+	std::vector<GameObject*> Layer::GetDisappearObject()
+	{
+		std::vector<GameObject*> retDisapperObject;
+		for (GameObject* targetObject : mGameObjects)
+		{
+			if (GameObject::eObjectState::Disappear == targetObject->GetObjectState())
+				retDisapperObject.push_back(targetObject);
+		}
+		return retDisapperObject;
+	}
 }

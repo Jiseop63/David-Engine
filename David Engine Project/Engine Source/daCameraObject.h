@@ -3,7 +3,6 @@
 
 namespace da
 {
-	class Transform;
 	class Camera;
 	class CameraScript;
 	class CameraObject : public GameObject

@@ -27,14 +27,11 @@ namespace da::enums
 	{
 		None, // ¼þµ¹ ¾ø°í ·»´õ ¾ÈÇÏ´Â °´Ã¼
 		BackGround,
-		a,
-		b,
-		c,
-		d,
-		e,
 		Tile,
+		ENV,
 		Playable,
-		Enemy,
+		Creature,
+		Effect,
 		UI,
 		Button,
 		End,

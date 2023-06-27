@@ -6,9 +6,10 @@ namespace da
 	{
 	public:
 		static bool IsOverrayOn() { return mIsoverlayOn; }
-		static void TurnOverlay(bool value) { mIsoverlayOn = value; }
+		static void TurnOverlay(bool value);
 
-
+		static void DisappearObjects();
+		static void TurnOnOverlay();
 
 	private:
 		static bool mIsoverlayOn;

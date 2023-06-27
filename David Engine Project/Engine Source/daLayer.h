@@ -15,6 +15,10 @@ namespace da
 		void Render();
 
 		void AddGameObject(GameObject* target);
+
+		std::vector<GameObject*> GetGameObjects() { return mGameObjects; }
+		// 이건 아마 안쓸듯
+		std::vector<GameObject*> GetDisappearObject();
 	private:
 		std::vector<GameObject*> mGameObjects;
 	};

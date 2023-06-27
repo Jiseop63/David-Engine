@@ -50,4 +50,8 @@ namespace da
 	{
 		mLayers[(UINT)layerType].AddGameObject(target);
 	}
+	Layer* Scene::GetLayer(enums::eLayerType targetLayer)
+	{
+		return &mLayers[(UINT)targetLayer];
+	}
 }

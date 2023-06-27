@@ -5,7 +5,6 @@ namespace da
 {
 	BackGroundObject::BackGroundObject()
 		: mBackGroundScript(nullptr)
-		, mIsDisapperObject(false)
 	{
 	}
 	BackGroundObject::~BackGroundObject()
@@ -14,14 +13,13 @@ namespace da
 
 	void BackGroundObject::Initialize()
 	{
-		SetObjectType(eObjectType::Background);
 		mBackGroundScript = AddComponent<BackGroundScript>();
 		GameObject::Initialize();
 	}
 	void BackGroundObject::Update()
 	{
-		if (true == mIsDisapperObject && true == GameManager::IsOverrayOn())
-			GameObject::SetObjectState(GameObject::eObjectState::Paused);
+	/*	if (true == mIsDisappearObject && true == GameManager::IsOverrayOn())
+			GameObject::SetObjectState(GameObject::eObjectState::Disappear);*/
 
 		GameObject::Update();
 	}
