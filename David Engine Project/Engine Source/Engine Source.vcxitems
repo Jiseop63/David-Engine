@@ -38,6 +38,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daMeshRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daOverlayObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daPlayScene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daProjectileObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daResources.h" />
@@ -76,6 +77,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daMeshRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daOverlayObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daPlayScene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daProjectileObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daResources.cpp" />

@@ -144,8 +144,8 @@ namespace da
 				panelRenderer->SetMaterial(Resources::Find<Material>(L"PlayerPortraitMaterial"));
 				Transform* playerPortraitTr = playerPortrait->GetComponent<Transform>();
 
-				playerPortraitTr->SetScale(math::Vector3(1.68f, 1.68f, 1.0f));
-				playerPortraitTr->SetPosition(math::Vector3(-1.0f, 1.50f, -1.30f));
+				playerPortraitTr->SetScale(math::Vector3(0.84f, 0.84f, 1.0f));
+				playerPortraitTr->SetPosition(math::Vector3(-2.5f, 1.50f, -1.30f));
 			}
 			// Player Select Info
 			{
@@ -157,8 +157,8 @@ namespace da
 				panelRenderer->SetMaterial(Resources::Find<Material>(L"PlayerInfoUIPanelMaterial"));
 				Transform* playerSelectInfoTr = playerSelectInfo->GetComponent<Transform>();
 
-				playerSelectInfoTr->SetScale(math::Vector3(6.12f, 5.88f, 1.0f));
-				playerSelectInfoTr->SetPosition(math::Vector3(-1.5f, 0.50, -1.30f));
+				playerSelectInfoTr->SetScale(math::Vector3(3.06f, 2.94f, 1.0f));
+				playerSelectInfoTr->SetPosition(math::Vector3(-2.5f, -1.0f, -1.30f));
 			}
 			// Game Start Btn
 			{
@@ -170,8 +170,8 @@ namespace da
 				buttonRenderer->SetMaterial(Resources::Find<Material>(L"StartGameButtonMaterial"));
 				Transform* buttonTr = gameStartBtn->GetComponent<Transform>();
 
-				buttonTr->SetScale(math::Vector3(2.58f, 0.88f, 1.0f));
-				buttonTr->SetPosition(math::Vector3(1.0f, -1.50, -1.30f));
+				buttonTr->SetScale(math::Vector3(1.29f, 0.44f, 1.0f));
+				buttonTr->SetPosition(math::Vector3(4.0f, -2.0, -1.30f));
 			}
 		}
 	}

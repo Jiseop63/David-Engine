@@ -28,12 +28,6 @@
     <Filter Include="Resource\Base">
       <UniqueIdentifier>{fd309283-a472-4d8c-8d9b-4a58abfa49e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource\Mesh">
-      <UniqueIdentifier>{5110afc4-b0ca-4f56-8b0f-938a212564de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource\Shader">
-      <UniqueIdentifier>{c18c5351-3c2e-46f1-ae5f-43a695191a66}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scene">
       <UniqueIdentifier>{46fd4bd1-1155-4ccd-a3ad-2046835ae239}</UniqueIdentifier>
     </Filter>
@@ -51,12 +45,6 @@
     </Filter>
     <Filter Include="Component">
       <UniqueIdentifier>{7cee5c22-89e2-4dce-84ee-df16f069108d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource\Texture">
-      <UniqueIdentifier>{c8f35b83-b1cf-4cbb-bff3-2c69fa24c164}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource\Material">
-      <UniqueIdentifier>{be3a9c1b-f3ac-450e-a82b-79416b6c5f8f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Component\Base">
       <UniqueIdentifier>{b2ca6112-8d1e-4d84-9609-2dc605459ff3}</UniqueIdentifier>
@@ -94,6 +82,36 @@
     <Filter Include="Objects\System\ENV\UI">
       <UniqueIdentifier>{3463c447-a0dc-42cf-a3ed-47ad5e6c31e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\Buffer">
+      <UniqueIdentifier>{1016fc32-42f3-4018-a51e-948262fe3e99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Base">
+      <UniqueIdentifier>{ffb19cd6-9fe3-4dfc-8b49-aeed8a9ae73e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\RenderObjects">
+      <UniqueIdentifier>{dd4fcdbd-6c49-496b-92e0-b69e84c30d98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Material">
+      <UniqueIdentifier>{be3a9c1b-f3ac-450e-a82b-79416b6c5f8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Mesh">
+      <UniqueIdentifier>{5110afc4-b0ca-4f56-8b0f-938a212564de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Shader">
+      <UniqueIdentifier>{c18c5351-3c2e-46f1-ae5f-43a695191a66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Texture">
+      <UniqueIdentifier>{c8f35b83-b1cf-4cbb-bff3-2c69fa24c164}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Content\Creature">
+      <UniqueIdentifier>{52baab2c-2da8-4c31-98cc-7e0d295cc4ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Content\Projectile">
+      <UniqueIdentifier>{c5e874c2-15d3-44c2-9c11-43e6eff67cd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\System\ENV\Base">
+      <UniqueIdentifier>{f185a33a-b075-4b16-9c71-832b99240c68}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h">
@@ -120,15 +138,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daInput.h">
       <Filter>Common\Input</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daGraphicDevice Dx11.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daRenderer.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daGraphics.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daResource.h">
       <Filter>Resource\Base</Filter>
     </ClInclude>
@@ -136,13 +145,10 @@
       <Filter>Resource\Base</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daShader.h">
-      <Filter>Resource\Shader</Filter>
+      <Filter>Graphics\Shader</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daMesh.h">
-      <Filter>Resource\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daConstantBuffer.h">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daPlayScene.h">
       <Filter>Scene\Content</Filter>
@@ -160,10 +166,10 @@
       <Filter>Objects\Base</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daTexture.h">
-      <Filter>Resource\Texture</Filter>
+      <Filter>Graphics\Texture</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daMaterial.h">
-      <Filter>Resource\Material</Filter>
+      <Filter>Graphics\Material</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daComponent.h">
       <Filter>Component\Base</Filter>
@@ -198,18 +204,35 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daCameraScript.h">
       <Filter>Objects\System\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daCreatureObject.h">
-      <Filter>Objects\Content</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daGameManager.h">
       <Filter>Global Manager</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daOverlayObject.h">
       <Filter>Objects\System\ENV\Overlay</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daENVObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daUIObject.h">
       <Filter>Objects\System\ENV\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daConstantBuffer.h">
+      <Filter>Graphics\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daGraphicDevice Dx11.h">
+      <Filter>Graphics\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daGraphics.h">
+      <Filter>Graphics\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daRenderer.h">
+      <Filter>Graphics\RenderObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daProjectileObject.h">
+      <Filter>Objects\Content\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daENVObject.h">
+      <Filter>Objects\System\ENV\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daCreatureObject.h">
+      <Filter>Objects\Content\Creature</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -228,12 +251,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daApplication.cpp">
       <Filter>High Level Interface</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daGraphicDevice Dx11.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daRenderer.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daResource.cpp">
       <Filter>Resource\Base</Filter>
     </ClCompile>
@@ -241,13 +258,10 @@
       <Filter>Resource\Base</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daShader.cpp">
-      <Filter>Resource\Shader</Filter>
+      <Filter>Graphics\Shader</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMesh.cpp">
-      <Filter>Resource\Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daConstantBuffer.cpp">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daScene.cpp">
       <Filter>Scene\Base</Filter>
@@ -265,10 +279,10 @@
       <Filter>Objects\Base</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daTexture.cpp">
-      <Filter>Resource\Texture</Filter>
+      <Filter>Graphics\Texture</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMaterial.cpp">
-      <Filter>Resource\Material</Filter>
+      <Filter>Graphics\Material</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daComponent.cpp">
       <Filter>Component\Base</Filter>
@@ -303,17 +317,33 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daBackGroundObject.cpp">
       <Filter>Objects\System\ENV\BackGround</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daCreatureObject.cpp">
-      <Filter>Objects\Content</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daGameManager.cpp">
       <Filter>Global Manager</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daOverlayObject.cpp">
       <Filter>Objects\System\ENV\Overlay</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daENVObject.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)daUIObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daConstantBuffer.cpp">
+      <Filter>Graphics\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daGraphicDevice Dx11.cpp">
+      <Filter>Graphics\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daRenderer.cpp">
+      <Filter>Graphics\RenderObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daProjectileObject.cpp">
+      <Filter>Objects\Content\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daUIObject.cpp">
+      <Filter>Objects\System\ENV\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daENVObject.cpp">
+      <Filter>Objects\System\ENV\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daCreatureObject.cpp">
+      <Filter>Objects\Content\Creature</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)daMath.inl">

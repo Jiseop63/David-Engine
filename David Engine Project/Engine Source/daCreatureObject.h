@@ -13,11 +13,12 @@ namespace da
 		virtual void LateUpdate();
 		virtual void Render();
 	
+
 	protected:
+		// 충돌 함수
 		// void OnAttack();
 		// void OnHit();
-		// void OnDamage();
-		
+		// void OnDamage();		
 		// void OnDamaged();
 
 	protected:

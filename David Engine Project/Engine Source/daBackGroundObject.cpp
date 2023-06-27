@@ -1,5 +1,4 @@
 #include "daBackGroundObject.h"
-#include "daGameManager.h"
 
 namespace da
 {

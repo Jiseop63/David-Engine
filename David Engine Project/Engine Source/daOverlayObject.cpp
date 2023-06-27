@@ -5,31 +5,30 @@ namespace da
 {
 	OverlayObject::OverlayObject()
 	{
-		SetObjectState(eObjectState::Paused);
 	}
 	OverlayObject::~OverlayObject()
 	{
 	}
 	void OverlayObject::Initialize()
 	{
-		GameObject::Initialize();
+		ENVObject::Initialize();
 	}
 	void OverlayObject::Update()
 	{
 		if ( false == GameManager::IsOverrayOn() )
 			return;
-		GameObject::Update();
+		ENVObject::Update();
 	}
 	void OverlayObject::LateUpdate()
 	{
 		if (false == GameManager::IsOverrayOn())
 			return;
-		GameObject::LateUpdate();
+		ENVObject::LateUpdate();
 	}
 	void OverlayObject::Render()
 	{
 		if (false == GameManager::IsOverrayOn())
 			return;
-		GameObject::Render();
+		ENVObject::Render();
 	}
 }
