@@ -1,4 +1,4 @@
-#include "daTitleScene.h"
+#include "daScene_Title.h"
 
 #include "daResources.h"
 #include "daGameManager.h"
@@ -19,13 +19,13 @@
 
 namespace da
 {
-	TitleScene::TitleScene()
+	Scene_Title::Scene_Title()
 	{
 	}
-	TitleScene::~TitleScene()
+	Scene_Title::~Scene_Title()
 	{
 	}
-	void TitleScene::Initialize()
+	void Scene_Title::Initialize()
 	{
 		AddBackgroundObject();
 
@@ -35,7 +35,7 @@ namespace da
 			AddGameObject(enums::eLayerType::None, cameraObj);
 		}
 	}
-	void TitleScene::Update()
+	void Scene_Title::Update()
 	{
 		if (Input::GetKeyDown(da::eKeyCode::N))
 		{
@@ -43,15 +43,15 @@ namespace da
 		}
 		Scene::Update();
 	}
-	void TitleScene::LateUpdate()
+	void Scene_Title::LateUpdate()
 	{
 		Scene::LateUpdate();
 	}
-	void TitleScene::Render()
+	void Scene_Title::Render()
 	{
 		Scene::Render();
 	}
-	void TitleScene::AddBackgroundObject()
+	void Scene_Title::AddBackgroundObject()
 	{
 		//BG
 		{

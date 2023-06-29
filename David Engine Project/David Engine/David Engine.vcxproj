@@ -56,6 +56,7 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
+    <Import Project="..\Engine Source\Engine Source.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -144,9 +145,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="daBackGroundObject.h" />
+    <ClInclude Include="daBackGroundScript.h" />
+    <ClInclude Include="daCameraObject.h" />
+    <ClInclude Include="daCameraScript.h" />
+    <ClInclude Include="daCreatureObject.h" />
+    <ClInclude Include="daENVObject.h" />
+    <ClInclude Include="daGameManager.h" />
+    <ClInclude Include="daLoadScenes.h" />
+    <ClInclude Include="daOverlayObject.h" />
+    <ClInclude Include="daProjectileObject.h" />
+    <ClInclude Include="daScene_Title.h" />
+    <ClInclude Include="daUIObject.h" />
     <ClInclude Include="framework.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="daBackGroundObject.cpp" />
+    <ClCompile Include="daBackGroundScript.cpp" />
+    <ClCompile Include="daCameraObject.cpp" />
+    <ClCompile Include="daCameraScript.cpp" />
+    <ClCompile Include="daCreatureObject.cpp" />
+    <ClCompile Include="daENVObject.cpp" />
+    <ClCompile Include="daGameManager.cpp" />
+    <ClCompile Include="daOverlayObject.cpp" />
+    <ClCompile Include="daProjectileObject.cpp" />
+    <ClCompile Include="daScene_Title.cpp" />
+    <ClCompile Include="daUIObject.cpp" />
     <ClCompile Include="David Engine.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -28,6 +28,5 @@ namespace da
 	{
 		// 오버레이 객체를 찾기
 		Layer* backgroundLayer = SceneManager::GetActiveScene()->GetLayer(enums::eLayerType::BackGround);
-
 	}
 }

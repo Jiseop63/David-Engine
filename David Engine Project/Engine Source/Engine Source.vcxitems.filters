@@ -25,23 +25,11 @@
     <Filter Include="Common\Input">
       <UniqueIdentifier>{f2e5ae15-ddf8-487e-8342-6bf813377a77}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource\Base">
-      <UniqueIdentifier>{fd309283-a472-4d8c-8d9b-4a58abfa49e1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scene">
       <UniqueIdentifier>{46fd4bd1-1155-4ccd-a3ad-2046835ae239}</UniqueIdentifier>
     </Filter>
     <Filter Include="Objects">
       <UniqueIdentifier>{46c23c26-967c-49e0-985e-34586d429acb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\Content">
-      <UniqueIdentifier>{c27438e5-e2d2-4198-a21e-da894f1c9e6a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\Base">
-      <UniqueIdentifier>{eacf48b2-46b0-4c68-93c9-74f593ae4bc4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\Base">
-      <UniqueIdentifier>{32275d09-31f5-4d9c-876f-a9d99b89cf48}</UniqueIdentifier>
     </Filter>
     <Filter Include="Component">
       <UniqueIdentifier>{7cee5c22-89e2-4dce-84ee-df16f069108d}</UniqueIdentifier>
@@ -57,30 +45,6 @@
     </Filter>
     <Filter Include="Component\Camera">
       <UniqueIdentifier>{87d37685-f8e6-4be7-bfb1-a87519d56eda}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\System">
-      <UniqueIdentifier>{12ae42b1-9348-4fba-b122-34855d94b365}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\System\Camera">
-      <UniqueIdentifier>{124f79c5-c6b2-454d-8231-682d01d29588}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\Content">
-      <UniqueIdentifier>{9cb1f3c7-136b-4301-96ae-c34ce116662b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Global Manager">
-      <UniqueIdentifier>{943df119-4a03-43d3-9cdb-6a0518cbd16f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\System\ENV">
-      <UniqueIdentifier>{3c867dd8-359e-4747-a818-1c006254d4b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\System\ENV\Overlay">
-      <UniqueIdentifier>{4e462f83-5106-4cdc-87ee-ca354140c646}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\System\ENV\BackGround">
-      <UniqueIdentifier>{c3f46356-dcf2-4bd4-96fb-00ea33d23c78}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\System\ENV\UI">
-      <UniqueIdentifier>{3463c447-a0dc-42cf-a3ed-47ad5e6c31e8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\Buffer">
       <UniqueIdentifier>{1016fc32-42f3-4018-a51e-948262fe3e99}</UniqueIdentifier>
@@ -103,26 +67,11 @@
     <Filter Include="Graphics\Texture">
       <UniqueIdentifier>{c8f35b83-b1cf-4cbb-bff3-2c69fa24c164}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\Content\Creature">
-      <UniqueIdentifier>{52baab2c-2da8-4c31-98cc-7e0d295cc4ce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\Content\Projectile">
-      <UniqueIdentifier>{c5e874c2-15d3-44c2-9c11-43e6eff67cd1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\System\ENV\Base">
-      <UniqueIdentifier>{f185a33a-b075-4b16-9c71-832b99240c68}</UniqueIdentifier>
+    <Filter Include="Common\Header">
+      <UniqueIdentifier>{bd8e1546-a87c-4305-95b9-23860e9e2307}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daEnums.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)David Engine.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daMath.h">
       <Filter>Common\Math</Filter>
     </ClInclude>
@@ -138,32 +87,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daInput.h">
       <Filter>Common\Input</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daResource.h">
-      <Filter>Resource\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daResources.h">
-      <Filter>Resource\Base</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daShader.h">
       <Filter>Graphics\Shader</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daMesh.h">
       <Filter>Graphics\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daPlayScene.h">
-      <Filter>Scene\Content</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daScene.h">
-      <Filter>Scene\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daSceneManager.h">
-      <Filter>Scene\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daGameObject.h">
-      <Filter>Objects\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daLayer.h">
-      <Filter>Objects\Base</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daTexture.h">
       <Filter>Graphics\Texture</Filter>
@@ -186,33 +114,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daCamera.h">
       <Filter>Component\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daCameraObject.h">
-      <Filter>Objects\System\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daTitleScene.h">
-      <Filter>Scene\Content</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daSelectScene.h">
-      <Filter>Scene\Content</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daBackGroundObject.h">
-      <Filter>Objects\System\ENV\BackGround</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daBackGroundScript.h">
-      <Filter>Objects\System\ENV\BackGround</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daCameraScript.h">
-      <Filter>Objects\System\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daGameManager.h">
-      <Filter>Global Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daOverlayObject.h">
-      <Filter>Objects\System\ENV\Overlay</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daUIObject.h">
-      <Filter>Objects\System\ENV\UI</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daConstantBuffer.h">
       <Filter>Graphics\Buffer</Filter>
     </ClInclude>
@@ -225,14 +126,32 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daRenderer.h">
       <Filter>Graphics\RenderObjects</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daProjectileObject.h">
-      <Filter>Objects\Content\Projectile</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daScene.h">
+      <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daENVObject.h">
-      <Filter>Objects\System\ENV\Base</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daSceneManager.h">
+      <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daCreatureObject.h">
-      <Filter>Objects\Content\Creature</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daResource.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daResources.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h">
+      <Filter>Common\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daEnums.h">
+      <Filter>Common\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)David Engine.h">
+      <Filter>Common\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daGameObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daLayer.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -251,32 +170,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daApplication.cpp">
       <Filter>High Level Interface</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daResource.cpp">
-      <Filter>Resource\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daResources.cpp">
-      <Filter>Resource\Base</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daShader.cpp">
       <Filter>Graphics\Shader</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMesh.cpp">
       <Filter>Graphics\Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daScene.cpp">
-      <Filter>Scene\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daSceneManager.cpp">
-      <Filter>Scene\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daPlayScene.cpp">
-      <Filter>Scene\Content</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daGameObject.cpp">
-      <Filter>Objects\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daLayer.cpp">
-      <Filter>Objects\Base</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daTexture.cpp">
       <Filter>Graphics\Texture</Filter>
@@ -299,30 +197,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daCamera.cpp">
       <Filter>Component\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daCameraObject.cpp">
-      <Filter>Objects\System\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daSelectScene.cpp">
-      <Filter>Scene\Content</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daTitleScene.cpp">
-      <Filter>Scene\Content</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daBackGroundScript.cpp">
-      <Filter>Objects\System\ENV\BackGround</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daCameraScript.cpp">
-      <Filter>Objects\System\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daBackGroundObject.cpp">
-      <Filter>Objects\System\ENV\BackGround</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daGameManager.cpp">
-      <Filter>Global Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daOverlayObject.cpp">
-      <Filter>Objects\System\ENV\Overlay</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daConstantBuffer.cpp">
       <Filter>Graphics\Buffer</Filter>
     </ClCompile>
@@ -332,17 +206,23 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daRenderer.cpp">
       <Filter>Graphics\RenderObjects</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daProjectileObject.cpp">
-      <Filter>Objects\Content\Projectile</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daScene.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daUIObject.cpp">
-      <Filter>Objects\System\ENV\UI</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daSceneManager.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daENVObject.cpp">
-      <Filter>Objects\System\ENV\Base</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daResource.cpp">
+      <Filter>Resource</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daCreatureObject.cpp">
-      <Filter>Objects\Content\Creature</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daResources.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daGameObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daLayer.cpp">
+      <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

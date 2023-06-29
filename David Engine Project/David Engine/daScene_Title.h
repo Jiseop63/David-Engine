@@ -3,11 +3,11 @@
 
 namespace da
 {
-	class TitleScene : public Scene
+	class Scene_Title : public Scene
 	{
 	public:
-		TitleScene();
-		virtual ~TitleScene();
+		Scene_Title();
+		virtual ~Scene_Title();
 		virtual void Initialize() override;
 		virtual void Update() override;
 		virtual void LateUpdate() override;

@@ -13,15 +13,120 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Load">
+      <UniqueIdentifier>{32f3f182-b4d8-478a-868f-7e79fb502688}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{af698439-30ff-4d0a-b561-067215446954}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{b830c822-eefd-4169-b782-76494287e4fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\System">
+      <UniqueIdentifier>{ef3ceb1d-d1c0-4ccf-a5ae-38c9d75f2594}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\System\ENV">
+      <UniqueIdentifier>{c970e32d-9ab5-40e9-99f5-16e649995e89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\System\ENV\Base">
+      <UniqueIdentifier>{051527d2-c941-43f6-a035-22978097efed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\System\ENV\BackGround">
+      <UniqueIdentifier>{454e9c2b-4b74-41af-a9da-522a5b998801}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\System\ENV\UI">
+      <UniqueIdentifier>{aebb06b9-71cf-448f-8710-95316a16a433}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\System\Camera">
+      <UniqueIdentifier>{c2a9dbb2-d7e7-4d07-8cb8-8b3c24bfd115}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Creature">
+      <UniqueIdentifier>{f1d6c165-77b1-4600-bcad-69546ff9a36c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Projectile">
+      <UniqueIdentifier>{9b6f2395-2724-4804-93c4-084a1d419492}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global">
+      <UniqueIdentifier>{b9cf5647-e53a-4021-b1cf-90426a34c88b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="daScene_Title.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="daGameManager.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="daCreatureObject.h">
+      <Filter>Objects\Creature</Filter>
+    </ClInclude>
+    <ClInclude Include="daProjectileObject.h">
+      <Filter>Objects\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="daCameraObject.h">
+      <Filter>Objects\System\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="daCameraScript.h">
+      <Filter>Objects\System\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="daENVObject.h">
+      <Filter>Objects\System\ENV\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="daBackGroundObject.h">
+      <Filter>Objects\System\ENV\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="daBackGroundScript.h">
+      <Filter>Objects\System\ENV\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="daUIObject.h">
+      <Filter>Objects\System\ENV\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="daOverlayObject.h">
+      <Filter>Objects\System\ENV\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="daLoadScenes.h">
+      <Filter>Load</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="daScene_Title.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="daGameManager.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="daCreatureObject.cpp">
+      <Filter>Objects\Creature</Filter>
+    </ClCompile>
+    <ClCompile Include="daProjectileObject.cpp">
+      <Filter>Objects\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="daCameraObject.cpp">
+      <Filter>Objects\System\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="daCameraScript.cpp">
+      <Filter>Objects\System\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="daENVObject.cpp">
+      <Filter>Objects\System\ENV\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="daBackGroundObject.cpp">
+      <Filter>Objects\System\ENV\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="daBackGroundScript.cpp">
+      <Filter>Objects\System\ENV\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="daUIObject.cpp">
+      <Filter>Objects\System\ENV\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="daOverlayObject.cpp">
+      <Filter>Objects\System\ENV\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

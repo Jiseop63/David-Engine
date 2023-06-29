@@ -6,6 +6,7 @@
 #include "daApplication.h"
 #include "daRenderer.h"
 #include "daSceneManager.h"
+#include "daLoadScenes.h"
 
 da::Application application;
 
@@ -133,6 +134,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    UpdateWindow(hWnd);
 
    application.Initialize();
+   da::InitializeScenes();
 
    return TRUE;
 }
