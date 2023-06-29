@@ -3,20 +3,20 @@
 
 namespace da
 {
-	class Scene_Title : public Scene
+	class Scene_Town : public Scene
 	{
 	public:
-		Scene_Title();
-		virtual ~Scene_Title();
+		Scene_Town();
+		virtual ~Scene_Town();
 		virtual void Initialize() override;
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 		virtual void Render() override;
-		
+
 		virtual void AddBackgroundObject() override;
 
-		virtual void OnEnter();
-		virtual void OnExit();
+		virtual void OnEnter() override;
+		virtual void OnExit() override;
 
 	private:
 	};

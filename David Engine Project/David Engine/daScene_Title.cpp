@@ -175,4 +175,10 @@ namespace da
 			}
 		}
 	}
+	void Scene_Title::OnEnter()
+	{
+	}
+	void Scene_Title::OnExit()
+	{
+	}
 }

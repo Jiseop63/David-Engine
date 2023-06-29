@@ -90,6 +90,12 @@
     <ClInclude Include="daLoadScenes.h">
       <Filter>Load</Filter>
     </ClInclude>
+    <ClInclude Include="daScene_Town.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="daScene_Dungeon.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -127,6 +133,12 @@
     </ClCompile>
     <ClCompile Include="daOverlayObject.cpp">
       <Filter>Objects\System\ENV\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="daScene_Town.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="daScene_Dungeon.cpp">
+      <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -15,13 +15,13 @@ namespace da
 		template <typename T>
 		static bool CreateScene(std::wstring name)
 		{
-			T* scene = new T();
 			std::map<std::wstring, Scene*>::iterator iter
 				= mScenes.find(name);
 
 			if (iter != mScenes.end())
 				return false;
 
+			T* scene = new T();
 			mScenes.insert(std::make_pair(name, scene));
 			mActiveScene = scene;
 			scene->Initialize();

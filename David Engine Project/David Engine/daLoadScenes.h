@@ -1,6 +1,8 @@
 #pragma once
 #include "daSceneManager.h"
 #include "daScene_Title.h"
+#include "daScene_Town.h"
+#include "daScene_Dungeon.h"
 
 #ifdef _DEBUG
 #pragma comment(lib, "..\\x64\\Debug\\David Engine.lib")
@@ -15,5 +17,7 @@ namespace da
 	void InitializeScenes()
 	{
 		SceneManager::CreateScene<Scene_Title>(L"Scene_Title");
+		SceneManager::CreateScene<Scene_Town>(L"Scene_Town");
+		SceneManager::CreateScene<Scene_Dungeon>(L"Scene_Dungeon");
 	}
 }
