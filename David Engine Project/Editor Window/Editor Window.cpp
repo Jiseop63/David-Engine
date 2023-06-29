@@ -8,6 +8,12 @@
 #include "daSceneManager.h"
 #include "daLoadScenes.h"
 
+#ifdef _DEBUG
+#pragma comment(lib, "..\\x64\\Debug\\David Engine.lib")
+#else
+#pragma comment(lib, "..\\x64\\Release\\David Engine.lib")
+#endif
+
 da::Application application;
 
 

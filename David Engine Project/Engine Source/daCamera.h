@@ -24,9 +24,24 @@ namespace da
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 		virtual void Render() override;
-		bool CreateViewMatrix();
-		bool CreateProjectionMatrix();
+		
+	public:
+		void TurnLayerMask(enums::eLayerType layer, bool enable = true);
+		void EnableLayerMask() {}
+		void DisableLayerMask() {}
 
+	private:
+		bool createViewMatrix();
+		bool createProjectionMatrix();
+		void registerCameraInRanderer();
+
+
+		void sortGameObjects();
+		void renderOpaque();
+		void renderCutout();
+		void renderTransparent();
+
+	public:
 		float GetSize() { return mSize; }
 		void SetSize(float size) { mSize = size; };
 		eProjectionType GetProjectionType() { return mProjectionType; }
@@ -44,5 +59,11 @@ namespace da
 		float mNear;
 		float mFar;
 		float mSize;
+
+	private:
+		std::bitset<(UINT)enums::eLayerType::End> mLayerMask;
+		std::vector<GameObject*> mOpaqueGameObjects;
+		std::vector<GameObject*> mCutoutGameObjects;
+		std::vector<GameObject*> mTransparentGameObjects;
 	};
 }

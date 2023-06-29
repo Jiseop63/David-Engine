@@ -1,7 +1,8 @@
 #include "daCamera.h"
+#include "daApplication.h"
+#include "daRenderer.h"
 #include "daGameObject.h"
 #include "daTransform.h"
-#include "daApplication.h"
 
 extern da::Application application;
 namespace da
@@ -19,7 +20,10 @@ namespace da
 		, mFar(1000.0f)
 		, mSize(10.0f)
 		, mTransform(nullptr)
-
+		, mLayerMask{}
+		, mOpaqueGameObjects{}
+		, mCutoutGameObjects{}
+		, mTransparentGameObjects{}
 	{
 	}
 	Camera::~Camera()
@@ -28,19 +32,33 @@ namespace da
 	void Camera::Initialize()
 	{
 		mTransform = GetOwner()->GetComponent<Transform>();
+		EnableLayerMask();
 	}
 	void Camera::Update()
 	{
 	}
 	void Camera::LateUpdate()
 	{
-		CreateViewMatrix();
-		CreateProjectionMatrix();
+		createViewMatrix();
+		createProjectionMatrix();
+		registerCameraInRanderer();
 	}
 	void Camera::Render()
 	{
+		sortGameObjects();
+
+		renderOpaque();
+		renderCutout();
+		renderTransparent();
 	}
-	bool Camera::CreateViewMatrix()
+
+	void Camera::TurnLayerMask(enums::eLayerType layer, bool enable)
+	{
+		mLayerMask.set( (UINT)layer, enable );
+	}
+
+
+	bool Camera::createViewMatrix()
 	{
 		Vector3 pos = mTransform->GetPosition();
 
@@ -61,7 +79,7 @@ namespace da
 
 		return true;
 	}
-	bool Camera::CreateProjectionMatrix()
+	bool Camera::createProjectionMatrix()
 	{
 		RECT rect = {};
 		GetClientRect(application.GetHwnd(), &rect);
@@ -86,4 +104,45 @@ namespace da
 
 		return true;
 	}
+
+
+	void Camera::registerCameraInRanderer()
+	{
+		renderer::cameras.push_back(this);
+	}
+	void Camera::sortGameObjects()
+	{
+
+	}
+	
+	void Camera::renderOpaque()
+	{
+		for (GameObject* opaqueObject : mOpaqueGameObjects)
+		{
+			if (nullptr == opaqueObject)
+				continue;
+
+			opaqueObject->Render();
+		}
+	}
+	void Camera::renderCutout()
+	{
+		for (GameObject* cutoutObject : mCutoutGameObjects)
+		{
+			if (nullptr == cutoutObject)
+				continue;
+
+			cutoutObject->Render();
+		}
+	}
+	void Camera::renderTransparent()
+	{
+		for (GameObject* transparentObject : mTransparentGameObjects)
+		{
+			if (nullptr == transparentObject)
+				continue;
+
+			transparentObject->Render();
+		}
+	}	
 }

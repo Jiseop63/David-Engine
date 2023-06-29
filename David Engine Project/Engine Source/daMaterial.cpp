@@ -6,6 +6,7 @@ namespace da::graphics
 		: Resource(da::enums::eResourceType::Material)
 		, mTexture(nullptr)
 		, mShader(nullptr)
+		, mRenderingMode(eRenderingMode::CutOut)
 	{
 	}
 	Material::~Material()
@@ -28,4 +29,5 @@ namespace da::graphics
 	{
 		mTexture->Clear();
 	}
+
 }

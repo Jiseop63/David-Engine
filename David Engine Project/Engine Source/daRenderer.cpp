@@ -2,6 +2,8 @@
 #include "daResources.h"
 #include "daTexture.h"
 #include "daMaterial.h"
+#include "daMesh.h"
+#include "daShader.h"
 
 using namespace da;
 using namespace da::graphics;
@@ -10,12 +12,13 @@ using namespace da::math;
 namespace renderer
 {
 	renderer::Vertex vertexes[4] = {};	
-	da::graphics::ConstantBuffer* constantBuffer[(UINT)eCBType::End] = {};
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[(UINT)eSamplerType::End] = {};
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerStates[(UINT)eRSType::End] = {};
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> DepthStencilStates[(UINT)eDSType::End] = {};
 	Microsoft::WRL::ComPtr<ID3D11BlendState> BlendStates[(UINT)eBSType::End] = {};
-		
+	da::graphics::ConstantBuffer* constantBuffer[(UINT)eCBType::End] = {};
+	std::vector<da::Camera*> cameras = {};
+
 	void SetupState()
 	{
 #pragma region InputLayout
@@ -282,6 +285,19 @@ namespace renderer
 			= Resources::Load<Texture>(L"Smile", L"..\\Resources\\Texture\\smileTexture.png");
 
 		texture->BindShader(eShaderStage::PS, 0);
+	}
+
+	void Render()
+	{
+		for (Camera* camera : cameras)
+		{
+			if (nullptr == camera)
+				continue;
+
+			camera->Render();
+		}
+
+		cameras.clear();
 	}
 
 	void Release()

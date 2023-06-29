@@ -1,9 +1,8 @@
 #pragma once
 #include "David Engine.h"
 #include "daGraphicDevice Dx11.h"
-#include "daMesh.h"
-#include "daShader.h"
 #include "daConstantBuffer.h"
+#include "daCamera.h"
 
 namespace renderer
 {
@@ -22,12 +21,14 @@ namespace renderer
 	};
 
 	extern Vertex vertexes[];
-	extern da::graphics::ConstantBuffer* constantBuffer[(UINT)da::graphics::eCBType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[(UINT)da::graphics::eSamplerType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerStates[(UINT)da::graphics::eRSType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11DepthStencilState> DepthStencilStates[(UINT)da::graphics::eDSType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11BlendState> BlendStates[(UINT)da::graphics::eBSType::End];
+	extern da::graphics::ConstantBuffer* constantBuffer[(UINT)da::graphics::eCBType::End];
+	extern std::vector<da::Camera*> cameras;
 
 	void Initialize();
+	void Render();
 	void Release();
 }
