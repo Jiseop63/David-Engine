@@ -141,7 +141,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    application.Initialize();
    da::InitializeScenes();
-
+   da::SceneManager::LoadScene(L"Scene_Title");
    return TRUE;
 }
 

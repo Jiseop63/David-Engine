@@ -33,8 +33,8 @@ namespace da
 		std::map<std::wstring, Scene*>::iterator iter = mScenes.find(name);
 		if (iter == mScenes.end())
 			return nullptr;
-		
-		mActiveScene->OnExit();
+		if (nullptr != mActiveScene)
+			mActiveScene->OnExit();
 		mActiveScene = iter->second;
 		mActiveScene->OnEnter();
 		return mActiveScene;

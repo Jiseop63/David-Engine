@@ -24,4 +24,10 @@ namespace da
 	void Scene_Town::AddBackgroundObject()
 	{
 	}
+	void Scene_Town::OnEnter()
+	{
+	}
+	void Scene_Town::OnExit()
+	{
+	}
 }

@@ -15,8 +15,8 @@ namespace da
 		
 		virtual void AddBackgroundObject() override;
 
-		virtual void OnEnter();
-		virtual void OnExit();
+		virtual void OnEnter() override;
+		virtual void OnExit() override;
 
 	private:
 	};
