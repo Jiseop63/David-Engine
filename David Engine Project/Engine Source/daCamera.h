@@ -13,8 +13,8 @@ namespace da
 			Orthographic,
 		};
 	public:
-		static math::Matrix GetViewMatrix() { return mView; }
-		static math::Matrix GetProjectionMatrix() { return mProjection; }
+		static math::Matrix GetViewMatrix() { return View; }
+		static math::Matrix GetProjectionMatrix() { return Projection; }
 	
 	public:
 		Camera();
@@ -27,8 +27,8 @@ namespace da
 		
 	public:
 		void TurnLayerMask(enums::eLayerType layer, bool enable = true);
-		void EnableLayerMask() {}
-		void DisableLayerMask() {}
+		void EnableLayerMask() { mLayerMask.set(); }
+		void DisableLayerMask() { mLayerMask.reset(); }
 
 	private:
 		bool createViewMatrix();
@@ -47,12 +47,13 @@ namespace da
 		eProjectionType GetProjectionType() { return mProjectionType; }
 		void SetProjectionType(eProjectionType type) { mProjectionType = type; }
 
-	private:
+	protected:
 		Transform* mTransform;
 
 	private:
-		static math::Matrix mView;
-		static math::Matrix mProjection;
+		// Global matrix
+		static math::Matrix View;
+		static math::Matrix Projection;
 
 		eProjectionType mProjectionType;
 		float mAspectRatio;

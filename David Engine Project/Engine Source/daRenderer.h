@@ -16,8 +16,8 @@ namespace renderer
 	CBUFFER(TransformCB, CBSLOT_TRANSFORM)
 	{
 		da::math::Matrix mWorld;
-		da::math::Matrix mView;
-		da::math::Matrix mProjection;
+		da::math::Matrix View;
+		da::math::Matrix Projection;
 	};
 
 	extern Vertex vertexes[];

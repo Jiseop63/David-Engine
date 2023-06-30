@@ -1,9 +1,9 @@
 #pragma once
 #include "daEntity.h"
+#include "daLayer.h"
 
 namespace da
 {
-	class Layer;
 	class GameObject;
 	class Scene : public Entity
 	{
@@ -20,8 +20,25 @@ namespace da
 		virtual void OnExit();
 		
 		void AddGameObject(enums::eLayerType layerType, GameObject* target);
+		
+		template <typename T>
+		std::vector<T*> FindObjectOfType()
+		{
+			std::vector<T*> findObjects = {};
+			for (Layer* layer : mLayers)
+			{
+				auto objectLayer = layer->GetGameObjects();
+				for (GameObject* object : objectLayer)
+				{
+					T* target = dynamic_cast<T*>(object);
+					if (nullptr != target)
+						findObjects.push_back(target);
+				}
+			}
+			return findObjects;
+		}
 
-		Layer* GetLayer(enums::eLayerType targetLayer);
+		Layer& GetLayer(enums::eLayerType targetLayer) { return mLayers[(UINT)targetLayer]; }
 
 	private:
 		virtual void AddBackgroundObject() {}

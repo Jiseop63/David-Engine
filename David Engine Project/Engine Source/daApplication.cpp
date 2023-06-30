@@ -53,7 +53,8 @@ namespace da
 
 		graphicDevice->ClearTarget();
 		graphicDevice->UpdateViewPort();
-		SceneManager::Render();
+		//SceneManager::Render();
+		renderer::Render();
 		graphicDevice->Present();
 	}
 

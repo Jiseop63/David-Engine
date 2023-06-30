@@ -54,8 +54,8 @@ namespace da
 	{
 		renderer::TransformCB transformCB = {};
 		transformCB.mWorld = mWorld;
-		transformCB.mView = Camera::GetViewMatrix();
-		transformCB.mProjection = Camera::GetProjectionMatrix();
+		transformCB.View = Camera::GetViewMatrix();
+		transformCB.Projection = Camera::GetProjectionMatrix();
 				
 		ConstantBuffer* cb = renderer::constantBuffer[(UINT)graphics::eCBType::Transform];
 		cb->SetData(&transformCB);
