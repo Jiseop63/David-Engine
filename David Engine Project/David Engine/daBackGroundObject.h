@@ -1,10 +1,10 @@
 #pragma once
-#include "daENVObject.h"
+#include "daGameObject.h"
 #include "daBackGroundScript.h"
 namespace da
 {
 	class Transform;
-	class BackGroundObject : public ENVObject
+	class BackGroundObject : public GameObject
 	{
 	public:
 		BackGroundObject();

@@ -1,10 +1,10 @@
 #pragma once
-#include "daENVObject.h"
+#include "daGameObject.h"
 
 namespace da
 {
 	class Transform;
-	class UIObject : public ENVObject
+	class UIObject : public GameObject
 	{
 	public:
 		UIObject();

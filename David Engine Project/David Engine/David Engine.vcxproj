@@ -151,7 +151,6 @@
     <ClInclude Include="daCameraObject.h" />
     <ClInclude Include="daCameraScript.h" />
     <ClInclude Include="daCreatureObject.h" />
-    <ClInclude Include="daENVObject.h" />
     <ClInclude Include="daGameManager.h" />
     <ClInclude Include="daLoadScenes.h" />
     <ClInclude Include="daOverlayObject.h" />
@@ -168,7 +167,6 @@
     <ClCompile Include="daCameraObject.cpp" />
     <ClCompile Include="daCameraScript.cpp" />
     <ClCompile Include="daCreatureObject.cpp" />
-    <ClCompile Include="daENVObject.cpp" />
     <ClCompile Include="daGameManager.cpp" />
     <ClCompile Include="daOverlayObject.cpp" />
     <ClCompile Include="daProjectileObject.cpp" />

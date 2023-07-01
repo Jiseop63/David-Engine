@@ -13,18 +13,18 @@ namespace da
 	void BackGroundObject::Initialize()
 	{
 		mBackGroundScript = AddComponent<BackGroundScript>();
-		ENVObject::Initialize();
+		GameObject::Initialize();
 	}
 	void BackGroundObject::Update()
 	{
-		ENVObject::Update();
+		GameObject::Update();
 	}
 	void BackGroundObject::LateUpdate()
 	{
-		ENVObject::LateUpdate();
+		GameObject::LateUpdate();
 	}
 	void BackGroundObject::Render()
 	{
-		ENVObject::Render();
+		GameObject::Render();
 	}
 }

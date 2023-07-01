@@ -28,7 +28,7 @@ namespace da::math
 
     //------------------------------------------------------------------------------
     // float
-    float RadianToDegree(float radian)
+    /*float RadianToDegree(float radian)
     {
         float retDegree = 0.0f;
         retDegree = radian * 180 / XM_PI;
@@ -39,7 +39,7 @@ namespace da::math
         float retRadian = 0.0f;
         retRadian = degree * XM_PI / 180;
         return retRadian;
-    }
+    }*/
 
     //------------------------------------------------------------------------------
     // 2D rectangle

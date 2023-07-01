@@ -160,113 +160,71 @@ namespace renderer
 	}
 	void LoadResource()
 	{
-		std::shared_ptr<Shader> triangleShader = std::make_shared<Shader>();
-		triangleShader->Create(eShaderStage::VS, L"TriangleVS.hlsl", "main");
-		triangleShader->Create(eShaderStage::PS, L"TrianglePS.hlsl", "main");
-		Resources::Insert<Shader>(L"TriangleShader", triangleShader);
+			std::shared_ptr<Shader> triangleShader = std::make_shared<Shader>();
+		{
+			triangleShader->Create(eShaderStage::VS, L"TriangleVS.hlsl", "main");
+			triangleShader->Create(eShaderStage::PS, L"TrianglePS.hlsl", "main");
+			Resources::Insert<Shader>(L"TriangleShader", triangleShader);
+		}
 
-		std::shared_ptr<Shader> spriteShader = std::make_shared<Shader>();
-		spriteShader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "main");
-		spriteShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "main");
-		Resources::Insert<Shader>(L"SpriteShader", spriteShader);
-
-		std::shared_ptr<Texture> texture
-			= Resources::Load<Texture>(L"SmileTexture", L"..\\Resources\\Texture\\smileTexture.png");
-
-		std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-		spriteMaterial->SetTexture(texture);
-		spriteMaterial->SetShader(spriteShader);
-		Resources::Insert<Material>(L"SpriteMaterial", spriteMaterial);
+			std::shared_ptr<Shader> spriteShader = std::make_shared<Shader>();
+		{
+			spriteShader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "main");
+			spriteShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "main");
+			Resources::Insert<Shader>(L"SpriteShader", spriteShader);
+		}
 
 		// TitleScene BG
+		
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"TitleBackGroundTexture", L"..\\Resources\\Texture\\TitleBackGround.png");
+				= Resources::Load<Texture>(L"TitleBackgroundTexture", L"..\\Resources\\Texture\\Scene_Title\\TitleBackground.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
-			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
-			Resources::Insert<Material>(L"TitleBackGroundMaterial", spriteMaterial);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
+			Resources::Insert<Material>(L"TitleBackgroundMaterial", spriteMaterial);
 		}
 		// Clouds
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"CloudATexture", L"..\\Resources\\Texture\\CloudA.png");
+				= Resources::Load<Texture>(L"SmallCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\smallCloud.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
 			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
-			Resources::Insert<Material>(L"CloudAMaterial", spriteMaterial);
+			Resources::Insert<Material>(L"SmallCloudMaterial", spriteMaterial);
 		}
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"CloudBTexture", L"..\\Resources\\Texture\\CloudB.png");
+				= Resources::Load<Texture>(L"BackCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\BackCloud.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
 			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
-			Resources::Insert<Material>(L"CloudBMaterial", spriteMaterial);
+			Resources::Insert<Material>(L"BackCloudMaterial", spriteMaterial);
 		}
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"CloudCTexture", L"..\\Resources\\Texture\\CloudC.png");
+				= Resources::Load<Texture>(L"FrontCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\FrontCloud.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
 			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
-			Resources::Insert<Material>(L"CloudCMaterial", spriteMaterial);
+			Resources::Insert<Material>(L"FrontCloudMaterial", spriteMaterial);
 		}
 
-		// Title Logo
+		// Title MainLogo
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"TitleLogoTexture", L"..\\Resources\\Texture\\TitleLogo.png");
+				= Resources::Load<Texture>(L"MainLogoTexture", L"..\\Resources\\Texture\\Scene_Title\\MainLogo.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
 			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
-			Resources::Insert<Material>(L"TitleLogoMaterial", spriteMaterial);
+			Resources::Insert<Material>(L"MainLogoMaterial", spriteMaterial);
 		}
-		// SelectBtn
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"GotoSelectButtonTexture", L"..\\Resources\\Texture\\GotoSelectButton.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
-			Resources::Insert<Material>(L"GotoSelectButtonMaterial", spriteMaterial);
-		}
-		// Player Portrait Panel
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"PlayerPortraitTexture", L"..\\Resources\\Texture\\PlayerPortrait.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
-			Resources::Insert<Material>(L"PlayerPortraitMaterial", spriteMaterial);
-		}
-		// Player Select Info Panel
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"PlayerInfoUIPanelTexture", L"..\\Resources\\Texture\\PlayerInfoUIPanel.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
-			Resources::Insert<Material>(L"PlayerInfoUIPanelMaterial", spriteMaterial);
-		}
-		// Game Start Btn
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"StartGameButtonTexture", L"..\\Resources\\Texture\\StartGameButton.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
-			Resources::Insert<Material>(L"StartGameButtonMaterial", spriteMaterial);
-		}
+		
 	}
 	void Initialize()
 	{

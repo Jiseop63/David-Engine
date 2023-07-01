@@ -1,5 +1,4 @@
 #include "daOverlayObject.h"
-#include "daGameManager.h"
 
 namespace da
 {
@@ -11,24 +10,18 @@ namespace da
 	}
 	void OverlayObject::Initialize()
 	{
-		ENVObject::Initialize();
+		GameObject::Initialize();
 	}
 	void OverlayObject::Update()
 	{
-		if ( false == GameManager::IsOverrayOn() )
-			return;
-		ENVObject::Update();
+		GameObject::Update();
 	}
 	void OverlayObject::LateUpdate()
 	{
-		if (false == GameManager::IsOverrayOn())
-			return;
-		ENVObject::LateUpdate();
+		GameObject::LateUpdate();
 	}
 	void OverlayObject::Render()
 	{
-		if (false == GameManager::IsOverrayOn())
-			return;
-		ENVObject::Render();
+		GameObject::Render();
 	}
 }

@@ -72,9 +72,6 @@
     <ClInclude Include="daCameraScript.h">
       <Filter>Objects\System\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="daENVObject.h">
-      <Filter>Objects\System\ENV\Base</Filter>
-    </ClInclude>
     <ClInclude Include="daBackGroundObject.h">
       <Filter>Objects\System\ENV\BackGround</Filter>
     </ClInclude>
@@ -118,9 +115,6 @@
     </ClCompile>
     <ClCompile Include="daCameraScript.cpp">
       <Filter>Objects\System\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="daENVObject.cpp">
-      <Filter>Objects\System\ENV\Base</Filter>
     </ClCompile>
     <ClCompile Include="daBackGroundObject.cpp">
       <Filter>Objects\System\ENV\BackGround</Filter>
