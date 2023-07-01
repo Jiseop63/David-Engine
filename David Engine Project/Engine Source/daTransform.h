@@ -31,7 +31,12 @@ namespace da
 		math::Vector3 Right() { return mRight; }
 		math::Vector3 Up() { return mUp; }
 
-	public:
+
+		void SetParent(Transform* parent) { mParent = parent; }
+
+
+	private:
+		Transform* mParent;
 		math::Matrix mWorld;
 		
 		math::Vector3 mPosition;

@@ -2,6 +2,7 @@
 #include "daEntity.h"
 #include "daComponent.h"
 #include "daScript.h"
+#include "daTransform.h"
 namespace da
 {
 	class Transform;
@@ -69,6 +70,9 @@ namespace da
 
 		void SetObjectState(eObjectState state) { mObjectState = state; }
 		eObjectState GetObjectState() { return mObjectState; }
+
+		Transform* GetTransform() { return mTransform; }
+		void SetParent(GameObject* parent) { mTransform->SetParent( parent->GetTransform() ); }
 
 	protected:
 		Transform* mTransform;

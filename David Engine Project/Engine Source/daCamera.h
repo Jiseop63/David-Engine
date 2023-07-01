@@ -36,10 +36,15 @@ namespace da
 		void registerCameraInRanderer();
 
 
-		void sortGameObjects();
+		void alphaSortGameObjects();
+		void depthSortTransparencyGameobjects();
+		void divideAlphaBlendObjects(const std::vector<GameObject*> objects);
 		void renderOpaque();
 		void renderCutout();
 		void renderTransparent();
+
+		void enableDepthStencilState();
+		void disableDepthStencilState();
 
 	public:
 		float GetSize() { return mSize; }

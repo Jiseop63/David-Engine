@@ -95,23 +95,23 @@ namespace renderer
 
 #pragma region DepthStencil State
 		D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
-		// Less
+		// Less <- Z 값이 나보다 작으면 안그림
 		depthStencilDesc.DepthEnable = true;
 		depthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
 		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		depthStencilDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(
 			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::Less].GetAddressOf());
-		// Greater
+		// Greater <- Z 값이 나보다 크면 안그림
 		depthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER;
 		GetDevice()->CreateDepthStencilState(
 			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::Greater].GetAddressOf());
-		// No Write
+		// No Write <- 덮어쓰기 안함
 		depthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
 		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ZERO;
 		GetDevice()->CreateDepthStencilState(
 			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::NoWrite].GetAddressOf());
-		// None
+		// None 
 		depthStencilDesc.DepthEnable = false;
 		GetDevice()->CreateDepthStencilState(
 			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::None].GetAddressOf());

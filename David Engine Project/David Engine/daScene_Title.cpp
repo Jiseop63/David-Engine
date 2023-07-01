@@ -103,6 +103,16 @@ namespace da
 			BackGroundScript* bgScript = cloudObj->GetBGScript();
 			bgScript->SetScale(math::Vector3(2.50f, 1.51f, 1.0f));
 			bgScript->SetPosition(math::Vector3(3.0f, 1.0f, -1.0f));
+
+			BackGroundObject* cloudObj2 = new BackGroundObject();
+			AddGameObject(enums::eLayerType::BackGround, cloudObj2);
+			MeshRenderer* backGroundRenderer2 = cloudObj2->AddComponent<MeshRenderer>();
+			backGroundRenderer2->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			backGroundRenderer2->SetMaterial(Resources::Find<Material>(L"CloudBMaterial"));
+			BackGroundScript* bgScript2 = cloudObj->GetBGScript();
+			bgScript2->SetPosition(math::Vector3(1.0f, 0.0f, 0.0f));
+			cloudObj2->SetParent(cloudObj);
+			cloudObj2->Initialize();
 		}
 		// BGObj cloud
 		{

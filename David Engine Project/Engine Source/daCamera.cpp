@@ -17,6 +17,15 @@ namespace da
 	Matrix Camera::View = Matrix::Identity;
 	Matrix Camera::Projection = Matrix::Identity;
 
+	bool CompareDepthSort(GameObject* left, GameObject* right)
+	{
+		if (left->GetComponent<Transform>()->GetPosition().z
+			<= right->GetComponent<Transform>()->GetPosition().z)
+			return false;
+
+		return true;
+	}
+
 	Camera::Camera()
 		: Component(enums::eComponentType::Camera)
 		, mProjectionType(eProjectionType::Perspective)
@@ -54,11 +63,22 @@ namespace da
 	{
 		View = mView;
 		Projection = mProjection;
-		sortGameObjects();
 
+		// 씬의 오브젝트들을 렌더모드에 따라 렌더링배열에 추가
+		alphaSortGameObjects();
+		// 오브젝트들을 z축으로 정렬
+		depthSortTransparencyGameobjects();
+		// 불투명 객체부터 우선 렌더
 		renderOpaque();
+		// depthState 설정 끄기
+		disableDepthStencilState();
+		// 일부 투명 객체 렌더
 		renderCutout();
+		// 반투명 객체 렌더
 		renderTransparent();
+		// depthState 설정 켜기
+		enableDepthStencilState();
+		
 	}
 
 	void Camera::TurnLayerMask(enums::eLayerType layerType, bool enable)
@@ -118,7 +138,7 @@ namespace da
 	{
 		renderer::cameras.push_back(this);
 	}
-	void Camera::sortGameObjects()
+	void Camera::alphaSortGameObjects()
 	{
 		// 각 렌더 오브젝트들 초기화
 		mOpaqueGameObjects.clear();
@@ -137,31 +157,46 @@ namespace da
 				Layer& targetLayer = scene->GetLayer((da::enums::eLayerType)layerType);
 				const std::vector<GameObject*> gameObjects = targetLayer.GetGameObjects();
 
+				divideAlphaBlendObjects(gameObjects);
 				
-				for (GameObject* object : gameObjects)
-				{
-					// 렌더러 컴포넌트를 가져와서 렌더모드를 확인함
-					MeshRenderer* meshRenderer = object->GetComponent<MeshRenderer>();
-					if (nullptr == meshRenderer)
-						continue;
+			}
+		}
+	}
 
-					std::shared_ptr<Material> material = meshRenderer->GetMaterial();
-					eRenderingMode renderMode = material->GetRenderingMode();
+	void Camera::depthSortTransparencyGameobjects()
+	{
+		std::sort(mCutoutGameObjects.begin()
+			, mCutoutGameObjects.end()
+			, CompareDepthSort);
+		std::sort(mTransparentGameObjects.begin()
+			, mTransparentGameObjects.end()
+			, CompareDepthSort);
+	}
 
-					// 타입에 맞게 정렬해줌
-					switch (renderMode)
-					{
-					case da::graphics::eRenderingMode::Opaque:
-						mOpaqueGameObjects.push_back(object);
-						break;
-					case da::graphics::eRenderingMode::Cutout:
-						mCutoutGameObjects.push_back(object);
-						break;
-					case da::graphics::eRenderingMode::Transparent:
-						mTransparentGameObjects.push_back(object);
-						break;
-					}
-				}
+	void Camera::divideAlphaBlendObjects(const std::vector<GameObject*> objects)
+	{
+		for (GameObject* object : objects)
+		{
+			// 렌더러 컴포넌트를 가져와서 렌더모드를 확인함
+			MeshRenderer* meshRenderer = object->GetComponent<MeshRenderer>();
+			if (nullptr == meshRenderer)
+				continue;
+
+			std::shared_ptr<Material> material = meshRenderer->GetMaterial();
+			eRenderingMode renderMode = material->GetRenderingMode();
+
+			// 타입에 맞게 정렬해줌
+			switch (renderMode)
+			{
+			case da::graphics::eRenderingMode::Opaque:
+				mOpaqueGameObjects.push_back(object);
+				break;
+			case da::graphics::eRenderingMode::Cutout:
+				mCutoutGameObjects.push_back(object);
+				break;
+			case da::graphics::eRenderingMode::Transparent:
+				mTransparentGameObjects.push_back(object);
+				break;
 			}
 		}
 	}
@@ -195,5 +230,19 @@ namespace da
 
 			transparentObject->Render();
 		}
-	}	
+	}
+
+	void Camera::enableDepthStencilState()
+	{
+		Microsoft::WRL::ComPtr<ID3D11DepthStencilState> dsState
+			= renderer::DepthStencilStates[(UINT)eDSType::Less];
+		GetDevice()->BindDepthStencilState(dsState.Get());
+	}
+	void Camera::disableDepthStencilState()
+	{
+		Microsoft::WRL::ComPtr<ID3D11DepthStencilState> dsState
+			= renderer::DepthStencilStates[(UINT)eDSType::None];
+		GetDevice()->BindDepthStencilState(dsState.Get());
+	}
+
 }

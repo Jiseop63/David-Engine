@@ -46,6 +46,11 @@ namespace da
 
 		mWorld = scaleMatrix * rotateMatrix * positionMatrix;
 
+		if (mParent)
+		{
+			mWorld *= mParent->mWorld;
+		}
+
 	}
 	void Transform::Render()
 	{
