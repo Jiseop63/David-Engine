@@ -55,6 +55,9 @@ namespace da
 		static math::Matrix View;
 		static math::Matrix Projection;
 
+		math::Matrix mView;
+		math::Matrix mProjection;
+
 		eProjectionType mProjectionType;
 		float mAspectRatio;
 		float mNear;

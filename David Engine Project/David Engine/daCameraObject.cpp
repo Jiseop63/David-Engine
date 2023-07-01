@@ -7,7 +7,6 @@ namespace da
 {
 	CameraObject::CameraObject()
 		: mCameraComponent(nullptr)
-		, mCameraScript(nullptr)
 	{
 	}
 	CameraObject::~CameraObject()
@@ -16,7 +15,6 @@ namespace da
 	void CameraObject::Initialize()
 	{
 		mCameraComponent = AddComponent<Camera>();
-		mCameraScript = AddComponent<CameraScript>();
 		mTransform->SetPosition(math::Vector3(0.0f, 0.0f, -6.50f));
 		GameObject::Initialize();
 	}

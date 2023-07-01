@@ -4,7 +4,6 @@
 namespace da
 {
 	class Camera;
-	class CameraScript;
 	class CameraObject : public GameObject
 	{
 	public:
@@ -16,8 +15,8 @@ namespace da
 		virtual void LateUpdate() override;
 		virtual void Render() override;
 
+		Camera* GetCameraComponent() { return mCameraComponent; }
 	private:
 		Camera* mCameraComponent;
-		CameraScript* mCameraScript;
 	};
 }

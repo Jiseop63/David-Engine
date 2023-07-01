@@ -68,7 +68,7 @@ namespace da::graphics
 	enum class eRenderingMode
 	{
 		Opaque,
-		CutOut,
+		Cutout,
 		Transparent,
 		End,
 	};

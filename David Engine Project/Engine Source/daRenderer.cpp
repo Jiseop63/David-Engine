@@ -185,6 +185,7 @@ namespace renderer
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
 			Resources::Insert<Material>(L"TitleBackGroundMaterial", spriteMaterial);
 		}
 		// Clouds
@@ -194,6 +195,7 @@ namespace renderer
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
 			Resources::Insert<Material>(L"CloudAMaterial", spriteMaterial);
 		}
 		{
@@ -202,6 +204,7 @@ namespace renderer
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
 			Resources::Insert<Material>(L"CloudBMaterial", spriteMaterial);
 		}
 		{
@@ -210,6 +213,7 @@ namespace renderer
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
 			Resources::Insert<Material>(L"CloudCMaterial", spriteMaterial);
 		}
 
@@ -220,6 +224,7 @@ namespace renderer
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
 			Resources::Insert<Material>(L"TitleLogoMaterial", spriteMaterial);
 		}
 		// SelectBtn
@@ -229,6 +234,7 @@ namespace renderer
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
 			Resources::Insert<Material>(L"GotoSelectButtonMaterial", spriteMaterial);
 		}
 		// Player Portrait Panel
@@ -238,6 +244,7 @@ namespace renderer
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
 			Resources::Insert<Material>(L"PlayerPortraitMaterial", spriteMaterial);
 		}
 		// Player Select Info Panel
@@ -247,6 +254,7 @@ namespace renderer
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
 			Resources::Insert<Material>(L"PlayerInfoUIPanelMaterial", spriteMaterial);
 		}
 		// Game Start Btn
@@ -256,6 +264,7 @@ namespace renderer
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
 			Resources::Insert<Material>(L"StartGameButtonMaterial", spriteMaterial);
 		}
 	}

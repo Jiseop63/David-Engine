@@ -3,7 +3,6 @@
 
 namespace da
 {
-	class Transform;
 	class Camera;
 	class CameraScript : public Script
 	{
@@ -15,7 +14,6 @@ namespace da
 		virtual void Update() override;
 
 	public:
-		Transform* mTransform;
 		Camera* mCameraComponent;
 	};
 }

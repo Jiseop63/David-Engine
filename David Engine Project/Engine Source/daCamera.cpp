@@ -21,16 +21,17 @@ namespace da
 		: Component(enums::eComponentType::Camera)
 		, mProjectionType(eProjectionType::Perspective)
 		, mTransform(nullptr)
+		, mView(Matrix::Identity)
+		, mProjection(Matrix::Identity)
 		, mAspectRatio(1.0f)
 		, mNear(1.0f)
 		, mFar(1000.0f)
-		, mSize(10.0f)
+		, mSize(1.0f)
 		, mLayerMask{}
 		, mOpaqueGameObjects{}
 		, mCutoutGameObjects{}
 		, mTransparentGameObjects{}
 	{
-		EnableLayerMask();
 	}
 	Camera::~Camera()
 	{
@@ -38,6 +39,7 @@ namespace da
 	void Camera::Initialize()
 	{
 		mTransform = GetOwner()->GetComponent<Transform>();
+		EnableLayerMask();
 	}
 	void Camera::Update()
 	{
@@ -50,6 +52,8 @@ namespace da
 	}
 	void Camera::Render()
 	{
+		View = mView;
+		Projection = mProjection;
 		sortGameObjects();
 
 		renderOpaque();
@@ -69,8 +73,8 @@ namespace da
 		Vector3 pos = transform->GetPosition();
 
 		// View Translate Matrix
-		View = Matrix::Identity;
-		View *= Matrix::CreateTranslation(-pos);
+		mView = Matrix::Identity;
+		mView *= Matrix::CreateTranslation(-pos);
 
 		// View Rotation Matrix
 		Vector3 up = transform->Up();
@@ -81,7 +85,7 @@ namespace da
 		viewRotate._11 = right.x;	viewRotate._12 = up.x;	viewRotate._13 = foward.x;
 		viewRotate._21 = right.y;	viewRotate._22 = up.y;	viewRotate._23 = foward.y;
 		viewRotate._31 = right.z;	viewRotate._32 = up.z;	viewRotate._33 = foward.z;
-		View *= viewRotate;
+		mView *= viewRotate;
 
 		return true;
 	}
@@ -91,21 +95,19 @@ namespace da
 		GetClientRect(application.GetHwnd(), &rect);
 		float width = float(rect.right - rect.left);
 		float height = float(rect.bottom - rect.top);
-		mAspectRatio = width / height;;
-
-
+		mAspectRatio = width / height;
 
 		if (mProjectionType == eProjectionType::Orthographic)
 		{
-			float OrthorGraphicRatio = mSize / 1000.0f;
+			float OrthorGraphicRatio = mSize / 100.0f;
 			width *= OrthorGraphicRatio;
 			height *= OrthorGraphicRatio;
 
-			Projection = Matrix::CreateOrthographicLH(width, height, mNear, mFar);
+			mProjection = Matrix::CreateOrthographicLH(width, height, mNear, mFar);
 		}
 		else
 		{
-			Projection = Matrix::CreatePerspectiveFieldOfViewLH(XM_2PI / 6.0f, mAspectRatio, mNear, mFar);
+			mProjection = Matrix::CreatePerspectiveFieldOfViewLH(XM_2PI / 6.0f, mAspectRatio, mNear, mFar);
 		}
 
 		return true;
@@ -152,7 +154,7 @@ namespace da
 					case da::graphics::eRenderingMode::Opaque:
 						mOpaqueGameObjects.push_back(object);
 						break;
-					case da::graphics::eRenderingMode::CutOut:
+					case da::graphics::eRenderingMode::Cutout:
 						mCutoutGameObjects.push_back(object);
 						break;
 					case da::graphics::eRenderingMode::Transparent:

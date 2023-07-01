@@ -8,11 +8,15 @@
 #include "daTransform.h"
 
 #include "daCameraObject.h"
+#include "daCamera.h"
+#include "daCameraScript.h"
 
 #include "daBackGroundObject.h"
 #include "daBackGroundScript.h"
 #include "daOverlayObject.h"
 #include "daUIObject.h"
+
+
 // юс╫ц
 #include "daInput.h"
 
@@ -31,8 +35,19 @@ namespace da
 
 		{
 			CameraObject* cameraObj = new CameraObject();
+			cameraObj->AddComponent<CameraScript>();
 			cameraObj->Initialize();
 			AddGameObject(enums::eLayerType::None, cameraObj);
+			Camera* camera = cameraObj->GetCameraComponent();
+			camera->TurnLayerMask(enums::eLayerType::UI, false);
+		}
+		{
+			CameraObject* cameraObj = new CameraObject();
+			cameraObj->Initialize();
+			AddGameObject(enums::eLayerType::None, cameraObj);
+			Camera* camera = cameraObj->GetCameraComponent();
+			camera->DisableLayerMask();
+			camera->TurnLayerMask(enums::eLayerType::UI);
 		}
 	}
 	void Scene_Title::Update()
@@ -129,7 +144,7 @@ namespace da
 			Transform* buttonTr = goToSelectButton->GetComponent<Transform>();
 
 			buttonTr->SetScale(math::Vector3(4.20f, 0.60f, 1.0f));
-			buttonTr->SetPosition(math::Vector3(0.0f, 0.50, -1.20f));
+			buttonTr->SetPosition(math::Vector3(0.0f, 0.50, -1.10f));
 		}
 
 		// Overlay Objects

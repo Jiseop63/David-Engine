@@ -10,8 +10,7 @@
 namespace da
 {
 	CameraScript::CameraScript()
-		: mTransform(nullptr)
-		, mCameraComponent(nullptr)
+		: mCameraComponent(nullptr)
 	{
 	}
 
@@ -21,42 +20,43 @@ namespace da
 
 	void CameraScript::Initialize()
 	{
-		mTransform = GetOwner()->GetComponent<Transform>();
 		mCameraComponent = GetOwner()->GetComponent<Camera>();
 	}
 
 	void CameraScript::Update()
 	{
-		Vector3 pos = mTransform->GetPosition();
+		Transform* myTransform = GetOwner()->GetComponent<Transform>();
+		Vector3 pos = myTransform->GetPosition();
+
 		if (Input::GetKey(eKeyCode::NUM_9))
 		{
-			pos += mTransform->Forward() * 5.0f * (float)Time::DeltaTime();
-			mTransform->SetPosition(pos);
+			pos += myTransform->Forward() * 5.0f * (float)Time::DeltaTime();
+			myTransform->SetPosition(pos);
 		}
 		else if (Input::GetKey(eKeyCode::NUM_3))
 		{
-			pos += -mTransform->Forward() * 5.0f * (float)Time::DeltaTime();
-			mTransform->SetPosition(pos);
+			pos += -myTransform->Forward() * 5.0f * (float)Time::DeltaTime();
+			myTransform->SetPosition(pos);
 		}
 		else if (Input::GetKey(eKeyCode::NUM_4))
 		{
-			pos += -mTransform->Right() * 5.0f * (float)Time::DeltaTime();
-			mTransform->SetPosition(pos);
+			pos += -myTransform->Right() * 5.0f * (float)Time::DeltaTime();
+			myTransform->SetPosition(pos);
 		}
 		else if (Input::GetKey(eKeyCode::NUM_6))
 		{
-			pos += mTransform->Right() * 5.0f * (float)Time::DeltaTime();
-			mTransform->SetPosition(pos);
+			pos += myTransform->Right() * 5.0f * (float)Time::DeltaTime();
+			myTransform->SetPosition(pos);
 		}
 		else if (Input::GetKey(eKeyCode::NUM_8))
 		{
-			pos += mTransform->Up() * 5.0f * (float)Time::DeltaTime();
-			mTransform->SetPosition(pos);
+			pos += myTransform->Up() * 5.0f * (float)Time::DeltaTime();
+			myTransform->SetPosition(pos);
 		}
 		else if (Input::GetKey(eKeyCode::NUM_2))
 		{
-			pos += -mTransform->Up() * 5.0f * (float)Time::DeltaTime();
-			mTransform->SetPosition(pos);
+			pos += -myTransform->Up() * 5.0f * (float)Time::DeltaTime();
+			myTransform->SetPosition(pos);
 		}
 		// num 0 : ProjectionType Change
 		else if (Input::GetKeyDown(eKeyCode::NUM_0))
