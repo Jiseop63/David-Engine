@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <FxCompile Include="$(MSBuildThisFileDirectory)TrianglePS.hlsl">
+      <Filter>2 Shaders\Mesh</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)TriangleVS.hlsl">
+      <Filter>2 Shaders\Mesh</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)SpriteVS.hlsl">
+      <Filter>2 Shaders\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)SpritePS.hlsl">
+      <Filter>2 Shaders\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)BackgroundShader.hlsl">
+      <Filter>3 Custom Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Globals.hlsli">
+      <Filter>1 Common</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Structures.hlsli">
+      <Filter>1 Common</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Constant Buffer.hlsli">
+      <Filter>1 Common</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="2 Shaders">
+      <UniqueIdentifier>{efe535f5-df94-42ec-924e-541296d936ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Common">
+      <UniqueIdentifier>{ddbccf7a-b2e4-4e97-985d-24fdad99168d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2 Shaders\Sprite">
+      <UniqueIdentifier>{3020f49a-98bc-4420-9345-d173329c1ec4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2 Shaders\Mesh">
+      <UniqueIdentifier>{0832ec6b-1f72-4b65-878b-7835a31609a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3 Custom Shaders">
+      <UniqueIdentifier>{40bd642a-1e3f-48f6-8878-12a970065e76}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

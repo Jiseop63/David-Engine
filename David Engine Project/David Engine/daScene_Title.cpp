@@ -1,7 +1,6 @@
 #include "daScene_Title.h"
 
 #include "daResources.h"
-#include "daGameManager.h"
 
 #include "daGameObject.h"
 #include "daMeshRenderer.h"
@@ -13,7 +12,6 @@
 
 #include "daBackGroundObject.h"
 #include "daBackGroundScript.h"
-#include "daOverlayObject.h"
 #include "daUIObject.h"
 
 
@@ -54,7 +52,7 @@ namespace da
 	{
 		if (Input::GetKeyDown(da::eKeyCode::N))
 		{
-			GameManager::TurnOverlay(true);
+			// Do something!!
 		}
 		Scene::Update();
 	}
@@ -78,7 +76,6 @@ namespace da
 			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"TitleBackgroundMaterial"));
 			BackGroundScript* bgScript = backGround->GetBGScript();
 			bgScript->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
-			bgScript->TurnMovingObject(false);
 		}
 		// Back Cloud Layer
 		{
@@ -91,7 +88,6 @@ namespace da
 			BackGroundScript* bgScript = cloudObj->GetBGScript();
 			bgScript->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
 			bgScript->SetPosition(math::Vector3(0.0f, 0.0f, -0.001f));
-			bgScript->TurnMovingObject(false);
 		}
 		// Front Cloud Lyaer
 		{
@@ -104,7 +100,6 @@ namespace da
 			BackGroundScript* bgScript = cloudObj->GetBGScript();
 			bgScript->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
 			bgScript->SetPosition(math::Vector3(0.0f, 0.0f, -0.002f));
-			bgScript->TurnMovingObject(false);
 		}
 		// BGObj MainLogo
 		{
@@ -116,8 +111,19 @@ namespace da
 			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"MainLogoMaterial"));
 			BackGroundScript* bgScript = titleLogoObj->GetBGScript();
 			bgScript->SetScale(math::Vector3(4.680f, 2.250f, 1.0f));
-			bgScript->SetPosition(math::Vector3(0.0f, 2.250f, -0.0030f));
-			bgScript->TurnMovingObject(false);
+			bgScript->SetPosition(math::Vector3(0.0f, 1.750f, -0.0030f));
+		}
+		// BGObj Copyright
+		{
+			BackGroundObject* copyrightObj = new BackGroundObject();
+			copyrightObj->Initialize();
+			AddGameObject(enums::eLayerType::BackGround, copyrightObj);
+			MeshRenderer* backGroundRenderer = copyrightObj->AddComponent<MeshRenderer>();
+			backGroundRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"CopyrightMaterial"));
+			BackGroundScript* bgScript = copyrightObj->GetBGScript();
+			bgScript->SetScale(math::Vector3(5.010f, 0.360f, 1.0f));
+			bgScript->SetPosition(math::Vector3(0.0f, -2.750f, -0.0030f));
 		}
 	}
 	void Scene_Title::OnEnter()
