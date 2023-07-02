@@ -20,15 +20,17 @@ namespace da
 
 	void CameraScript::Initialize()
 	{
-		mCameraComponent = GetOwner()->GetComponent<Camera>();
 	}
 
 	void CameraScript::Update()
 	{
+		Camera* cameraComponent = GetOwner()->GetComponent<Camera>();
+		float viewSize = cameraComponent->GetSize();
+
 		Transform* myTransform = GetOwner()->GetComponent<Transform>();
 		Vector3 pos = myTransform->GetPosition();
-		float viewSize = mCameraComponent->GetSize();
-		Camera::eProjectionType projectionType = mCameraComponent->GetProjectionType();
+
+		Camera::eProjectionType projectionType = cameraComponent->GetProjectionType();
 
 		if (Input::GetKey(eKeyCode::NUM_9))
 		{
@@ -75,12 +77,12 @@ namespace da
 		// num 0 : ProjectionType Change
 		else if (Input::GetKeyDown(eKeyCode::NUM_0))
 		{
-			Camera::eProjectionType projectionType = mCameraComponent->GetProjectionType();
+			Camera::eProjectionType projectionType = cameraComponent->GetProjectionType();
 
 			if (Camera::eProjectionType::Orthographic == projectionType)
-				mCameraComponent->SetProjectionType(Camera::eProjectionType::Perspective);
+				cameraComponent->SetProjectionType(Camera::eProjectionType::Perspective);
 			else
-				mCameraComponent->SetProjectionType(Camera::eProjectionType::Orthographic);
+				cameraComponent->SetProjectionType(Camera::eProjectionType::Orthographic);
 		}
 
 		// num 7 - 1 : size Up-Down
@@ -88,12 +90,12 @@ namespace da
 		{			
 			viewSize -= 1.f * (float)Time::DeltaTime();
 			if (0.001 <= viewSize)
-				mCameraComponent->SetSize(viewSize); 
+				cameraComponent->SetSize(viewSize);
 		}
 		else if (Input::GetKey(eKeyCode::NUM_1))
 		{
 			viewSize += 1.f * (float)Time::DeltaTime();
-			mCameraComponent->SetSize(viewSize);
+			cameraComponent->SetSize(viewSize);
 		}
 
 		// num 5 : Debug On-Off

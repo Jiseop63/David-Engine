@@ -87,9 +87,6 @@
     <ClInclude Include="daScene_Dungeon.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="daBGMoveObject.h">
-      <Filter>Objects\System\BackGround</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -130,9 +127,6 @@
     </ClCompile>
     <ClCompile Include="daScene_Dungeon.cpp">
       <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="daBGMoveObject.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
