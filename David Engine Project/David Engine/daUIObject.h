@@ -3,7 +3,6 @@
 
 namespace da
 {
-	class Transform;
 	class UIObject : public GameObject
 	{
 	public:
@@ -14,5 +13,8 @@ namespace da
 		virtual void LateUpdate();
 		virtual void Render();
 
+	public:
+
+	protected:
 	};
 }

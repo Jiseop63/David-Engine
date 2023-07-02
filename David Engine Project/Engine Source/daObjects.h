@@ -14,6 +14,8 @@
 #include "daCamera.h"
 #include "daCameraScript.h"
 
+#include "daUIObject.h"
+#include "daUIScript.h"
 namespace da::objects
 {
 	template <typename T>
@@ -23,38 +25,69 @@ namespace da::objects
 		Layer& myLayer = scene->GetLayer(layer);
 		myLayer.AddGameObject(obj);
 		
-		GameObject* gameObj = dynamic_cast<GameObject*>(obj);
-		if (nullptr != gameObj)
-			gameObj->Initialize();
-
-		MeshRenderer* meshRenderer = gameObj->AddComponent<MeshRenderer>();
+		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
 		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 		meshRenderer->SetMaterial(Resources::Find<Material>(material));
 
+		obj->Initialize();
+		return obj;
+	}
+
+	// 아직 손을 봐야할것 같음
+	template <typename T>
+	static T* InstantiateUIObject(Scene* scene)
+	{
+		T* obj = new T();
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::UI);
+		myLayer.AddGameObject(obj);
+
+		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
+		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		meshRenderer->SetMaterial(Resources::Find<Material>(L"UIMaterial"));
+				
+		obj->Initialize();
+		return obj;
+	}
+
+	template <typename T>
+	static T* InstantiateButtonObject(Scene* scene, const std::wstring& material, const std::wstring& first, const std::wstring& second)
+	{
+		T* obj = new T();
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::UI);
+		myLayer.AddGameObject(obj);
+
+		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
+		meshRenderer->SetMesh( Resources::Find<Mesh>(L"RectMesh") );
+		meshRenderer->SetMaterial( Resources::Find<Material>(material) );
+		UIScript* uiScript = obj->AddComponent<UIScript>();
+		obj->Initialize();
+
+		uiScript->SetUITextures( Resources::Find<graphics::Texture>(first), Resources::Find<graphics::Texture>(second) );
 		return obj;
 	}
 
 	static CameraObject* InstantiateMainCamera(Scene* scene)
 	{
 		CameraObject* cameraObj = new CameraObject(); 
-		Layer& myLayer = scene->GetLayer(enums::eLayerType::None); 
-		myLayer.AddGameObject(cameraObj);
 		cameraObj->Initialize();
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::None);
+		myLayer.AddGameObject(cameraObj);
 		cameraObj->AddComponent<CameraScript>();
 		Camera* camera = cameraObj->GetCameraComponent();
 		camera->TurnLayerMask(enums::eLayerType::UI, false);
+
 		return cameraObj;
 	}
 	static CameraObject* InstantiateUICamera(Scene* scene)
 	{
 		CameraObject* cameraObj = new CameraObject();
+		cameraObj->Initialize();
 		Layer& myLayer = scene->GetLayer(enums::eLayerType::None);
 		myLayer.AddGameObject(cameraObj);
-		cameraObj->Initialize();
 		Camera* camera = cameraObj->GetCameraComponent();
+
 		camera->DisableLayerMask();
 		camera->TurnLayerMask(enums::eLayerType::UI);
-
 		return cameraObj;
 	}
 }

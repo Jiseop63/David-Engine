@@ -159,6 +159,7 @@
     <ClInclude Include="daScene_Title.h" />
     <ClInclude Include="daScene_Town.h" />
     <ClInclude Include="daUIObject.h" />
+    <ClInclude Include="daUIScript.h" />
     <ClInclude Include="framework.h" />
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +175,7 @@
     <ClCompile Include="daScene_Title.cpp" />
     <ClCompile Include="daScene_Town.cpp" />
     <ClCompile Include="daUIObject.cpp" />
+    <ClCompile Include="daUIScript.cpp" />
     <ClCompile Include="David Engine.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

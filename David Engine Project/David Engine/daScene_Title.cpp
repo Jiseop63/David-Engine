@@ -1,6 +1,11 @@
 #include "daScene_Title.h"
 
+// resource
 #include "daResources.h"
+#include "daTexture.h"
+
+// objects & components
+#include "daObjects.h"
 
 #include "daGameObject.h"
 #include "daMeshRenderer.h"
@@ -12,12 +17,12 @@
 
 #include "daBackGroundObject.h"
 #include "daBackGroundScript.h"
+
 #include "daUIObject.h"
 
 
-#include "daObjects.h"
 
-// юс╫ц
+// etc
 #include "daInput.h"
 
 
@@ -31,10 +36,11 @@ namespace da
 	}
 	void Scene_Title::Initialize()
 	{
-		AddBackgroundObject();
-
 		CameraObject* mainCameraObj = objects::InstantiateMainCamera(this);
+
 		CameraObject* uiCameraObj = objects::InstantiateUICamera(this);
+		addBackgroundObjects();
+		addUIObjects();
 
 	}
 	void Scene_Title::Update()
@@ -53,7 +59,16 @@ namespace da
 	{
 		Scene::Render();
 	}
-	void Scene_Title::AddBackgroundObject()
+
+	void Scene_Title::OnEnter()
+	{
+	}
+	void Scene_Title::OnExit()
+	{
+	}
+
+
+	void Scene_Title::addBackgroundObjects()
 	{
 		//BG
 		{
@@ -78,7 +93,6 @@ namespace da
 
 			BackGroundScript* cloudScript2 = cloudObj2->AddComponent<BackGroundScript>();
 			cloudScript2->SetSpeed(0.1f);
-			int a = 0;
 		}
 		// BGObj MainLogo
 		{
@@ -95,10 +109,19 @@ namespace da
 			copyrightObj->SetPosition(math::Vector3(0.0f, -2.750f, -0.0030f));
 		}
 	}
-	void Scene_Title::OnEnter()
+	void Scene_Title::addUIObjects()
 	{
+		// buttons
+		{
+			UIObject* playBtnObject = objects::InstantiateButtonObject<UIObject>(this, L"StartBtnMaterial", L"PlayOffTexture", L"PlayOnTexture");
+			playBtnObject->GetTransform()->SetScale(math::Vector3(0.630f, 0.36f, 1.0f));
+			playBtnObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -0.003f));
+
+			UIObject* exitBtnObject = objects::InstantiateButtonObject<UIObject>(this, L"ExitBtnMaterial", L"ExitOffTexture", L"ExitOnTexture");
+			playBtnObject->GetTransform()->SetScale(math::Vector3(0.630f, 0.36f, 1.0f));
+			playBtnObject->GetTransform()->SetPosition(math::Vector3(0.0f, -1.0f, -0.003f));
+
+		}
 	}
-	void Scene_Title::OnExit()
-	{
-	}
+
 }

@@ -13,10 +13,12 @@ namespace da
 		virtual void LateUpdate() override;
 		virtual void Render() override;
 		
-		virtual void AddBackgroundObject() override;
-
 		virtual void OnEnter() override;
 		virtual void OnExit() override;
+
+	private:
+		void addBackgroundObjects();
+		void addUIObjects();
 
 	private:
 	};

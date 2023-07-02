@@ -10,7 +10,7 @@ namespace da
 	}
 	void Scene_Town::Initialize()
 	{
-		AddBackgroundObject();
+		addBackgroundObject();
 	}
 	void Scene_Town::Update()
 	{
@@ -21,13 +21,15 @@ namespace da
 	void Scene_Town::Render()
 	{
 	}
-	void Scene_Town::AddBackgroundObject()
-	{
-	}
+	
 	void Scene_Town::OnEnter()
 	{
 	}
 	void Scene_Town::OnExit()
+	{
+	}
+
+	void Scene_Town::addBackgroundObject()
 	{
 	}
 }

@@ -20,13 +20,14 @@ namespace da
 	void Scene_Dungeon::Render()
 	{
 	}
-	void Scene_Dungeon::AddBackgroundObject()
-	{
-	}
+	
 	void Scene_Dungeon::OnEnter()
 	{
 	}
 	void Scene_Dungeon::OnExit()
+	{
+	}
+	void Scene_Dungeon::addBackgroundObjects()
 	{
 	}
 }

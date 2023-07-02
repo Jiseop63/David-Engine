@@ -41,9 +41,6 @@ namespace da
 		Layer& GetLayer(enums::eLayerType targetLayer) { return mLayers[(UINT)targetLayer]; }
 
 	private:
-		virtual void AddBackgroundObject() {}
-
-	private:
 		std::vector<Layer> mLayers;
 	};
 }

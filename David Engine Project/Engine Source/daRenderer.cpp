@@ -93,6 +93,16 @@ namespace renderer
 #pragma endregion
 
 #pragma region Load Texture & Create Material
+
+		// NoneTexture Material
+		{
+			std::shared_ptr<Material> uiMaterial = std::make_shared<Material>();
+			uiMaterial->SetShader(spriteShader);
+			uiMaterial->SetRenderingMode(eRenderingMode::Transparent);
+			Resources::Insert<Material>(L"StartBtnMaterial", uiMaterial);
+			Resources::Insert<Material>(L"ExitBtnMaterial", uiMaterial);
+		}
+
 		// TitleScene BG layer		
 		{
 			std::shared_ptr<Texture> texture
@@ -150,6 +160,15 @@ namespace renderer
 			spriteMaterial->SetShader(spriteShader);
 			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
 			Resources::Insert<Material>(L"CopyrightMaterial", spriteMaterial);
+		}
+
+		// TitleScene Button Textures
+		{
+			Resources::Load<Texture>(L"PlayOffTexture", L"..\\Resources\\Texture\\Scene_Title\\Button\\PlayOff_Kor.png");
+			Resources::Load<Texture>(L"PlayOnTexture", L"..\\Resources\\Texture\\Scene_Title\\Button\\PlayOn_Kor.png");
+			
+			Resources::Load<Texture>(L"ExitOffTexture", L"..\\Resources\\Texture\\Scene_Title\\Button\\ExitOff_Kor.png");
+			Resources::Load<Texture>(L"ExitOnTexture", L"..\\Resources\\Texture\\Scene_Title\\Button\\ExitOn_Kor.png");
 		}
 #pragma endregion
 	}
