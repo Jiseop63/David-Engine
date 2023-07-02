@@ -1,20 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <FxCompile Include="$(MSBuildThisFileDirectory)TrianglePS.hlsl">
-      <Filter>2 Shaders\Mesh</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)TriangleVS.hlsl">
-      <Filter>2 Shaders\Mesh</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)SpriteVS.hlsl">
-      <Filter>2 Shaders\Sprite</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)SpritePS.hlsl">
-      <Filter>2 Shaders\Sprite</Filter>
-    </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)BackgroundShader.hlsl">
       <Filter>3 Custom Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)SpriteShader.hlsl">
+      <Filter>2 Shaders\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)TriangleShader.hlsl">
+      <Filter>2 Shaders\Mesh</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

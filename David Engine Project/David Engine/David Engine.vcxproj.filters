@@ -25,18 +25,6 @@
     <Filter Include="Objects\System">
       <UniqueIdentifier>{ef3ceb1d-d1c0-4ccf-a5ae-38c9d75f2594}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\System\ENV">
-      <UniqueIdentifier>{c970e32d-9ab5-40e9-99f5-16e649995e89}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\System\ENV\Base">
-      <UniqueIdentifier>{051527d2-c941-43f6-a035-22978097efed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\System\ENV\BackGround">
-      <UniqueIdentifier>{454e9c2b-4b74-41af-a9da-522a5b998801}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\System\ENV\UI">
-      <UniqueIdentifier>{aebb06b9-71cf-448f-8710-95316a16a433}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\System\Camera">
       <UniqueIdentifier>{c2a9dbb2-d7e7-4d07-8cb8-8b3c24bfd115}</UniqueIdentifier>
     </Filter>
@@ -48,6 +36,12 @@
     </Filter>
     <Filter Include="Global">
       <UniqueIdentifier>{b9cf5647-e53a-4021-b1cf-90426a34c88b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\System\BackGround">
+      <UniqueIdentifier>{454e9c2b-4b74-41af-a9da-522a5b998801}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\System\UI">
+      <UniqueIdentifier>{aebb06b9-71cf-448f-8710-95316a16a433}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -73,16 +67,16 @@
       <Filter>Objects\System\Camera</Filter>
     </ClInclude>
     <ClInclude Include="daBackGroundObject.h">
-      <Filter>Objects\System\ENV\BackGround</Filter>
+      <Filter>Objects\System\BackGround</Filter>
     </ClInclude>
     <ClInclude Include="daBackGroundScript.h">
-      <Filter>Objects\System\ENV\BackGround</Filter>
+      <Filter>Objects\System\BackGround</Filter>
     </ClInclude>
     <ClInclude Include="daUIObject.h">
-      <Filter>Objects\System\ENV\UI</Filter>
+      <Filter>Objects\System\UI</Filter>
     </ClInclude>
     <ClInclude Include="daOverlayObject.h">
-      <Filter>Objects\System\ENV\UI</Filter>
+      <Filter>Objects\System\UI</Filter>
     </ClInclude>
     <ClInclude Include="daLoadScenes.h">
       <Filter>Load</Filter>
@@ -92,6 +86,9 @@
     </ClInclude>
     <ClInclude Include="daScene_Dungeon.h">
       <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="daBGMoveObject.h">
+      <Filter>Objects\System\BackGround</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -117,22 +114,25 @@
       <Filter>Objects\System\Camera</Filter>
     </ClCompile>
     <ClCompile Include="daBackGroundObject.cpp">
-      <Filter>Objects\System\ENV\BackGround</Filter>
+      <Filter>Objects\System\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="daBackGroundScript.cpp">
-      <Filter>Objects\System\ENV\BackGround</Filter>
+      <Filter>Objects\System\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="daUIObject.cpp">
-      <Filter>Objects\System\ENV\UI</Filter>
+      <Filter>Objects\System\UI</Filter>
     </ClCompile>
     <ClCompile Include="daOverlayObject.cpp">
-      <Filter>Objects\System\ENV\UI</Filter>
+      <Filter>Objects\System\UI</Filter>
     </ClCompile>
     <ClCompile Include="daScene_Town.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="daScene_Dungeon.cpp">
       <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="daBGMoveObject.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

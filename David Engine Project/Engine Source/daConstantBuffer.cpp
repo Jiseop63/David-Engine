@@ -17,7 +17,7 @@ namespace da::graphics
 		desc.ByteWidth = size;
 		desc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_CONSTANT_BUFFER;
 		desc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
-		desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+		desc.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
 
 		da::graphics::GetDevice()->CreateBuffer(buffer.GetAddressOf(), &desc, nullptr);
 

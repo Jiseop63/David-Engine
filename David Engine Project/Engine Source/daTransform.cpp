@@ -11,6 +11,7 @@ namespace da
 
 	Transform::Transform()
 		: Component(eComponentType::Transform)
+		, mParent(nullptr)
 		, mPosition(Vector3::Zero)
 		, mRotation(Vector3::Zero)
 		, mScale(Vector3::One)
@@ -58,12 +59,12 @@ namespace da
 	void Transform::BindConstantBuffer()
 	{
 		renderer::TransformCB transformCB = {};
-		transformCB.mWorld = mWorld;
+		transformCB.World = mWorld;
 		transformCB.View = Camera::GetViewMatrix();
 		transformCB.Projection = Camera::GetProjectionMatrix();
 				
-		ConstantBuffer* cb = renderer::constantBuffer[(UINT)graphics::eCBType::Transform];
-		cb->SetData(&transformCB);
-		cb->Bind(eShaderStage::VS);
+		ConstantBuffer* bindTransform = renderer::constantBuffer[(UINT)graphics::eCBType::Transform];
+		bindTransform->SetData(&transformCB);
+		bindTransform->Bind(eShaderStage::VS);
 	}
 }

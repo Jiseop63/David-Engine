@@ -1,20 +1,17 @@
 #pragma once
-#include "daScript.h"
+#include "daBackGroundObject.h"
 
 namespace da
 {
-	class BackGroundScript : public Script
+	class BGMoveObject : public BackGroundObject
 	{
 	public:
-		BackGroundScript();
-		virtual ~BackGroundScript();
+		BGMoveObject();
+		virtual ~BGMoveObject();
 
 		virtual void Initialize();
 		virtual void Update();
 		virtual void LateUpdate();
 		virtual void Render();
-
-	private:
-		float mAddTime;
 	};
 }

@@ -1,9 +1,9 @@
 #include "daRenderer.h"
 #include "daResources.h"
-#include "daTexture.h"
-#include "daMaterial.h"
 #include "daMesh.h"
+#include "daTexture.h"
 #include "daShader.h"
+#include "daMaterial.h"
 
 using namespace da;
 using namespace da::graphics;
@@ -19,6 +19,140 @@ namespace renderer
 	da::graphics::ConstantBuffer* constantBuffer[(UINT)eCBType::End] = {};
 	std::vector<da::Camera*> cameras = {};
 
+	void LoadMesh()
+	{		
+#pragma region Create vertex & index buffer
+
+		vertexes[0].pos = Vector3(-0.5f, 0.5f, 0.0f);
+		vertexes[0].color = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
+		vertexes[0].uv = Vector2(0.0f, 0.0f);
+
+		vertexes[1].pos = Vector3(0.5f, 0.5f, 0.0f);
+		vertexes[1].color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+		vertexes[1].uv = Vector2(1.0f, 0.0f);
+
+		vertexes[2].pos = Vector3(0.5f, -0.5f, 0.0f);
+		vertexes[2].color = Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+		vertexes[2].uv = Vector2(1.0f, 1.0f);
+
+		vertexes[3].pos = Vector3(-0.5f, -0.5f, 0.0f);
+		vertexes[3].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+		vertexes[3].uv = Vector2(0.0f, 1.0f);
+
+		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+		Resources::Insert<Mesh>(L"RectMesh", mesh);
+		mesh->CreateVertexBuffer(vertexes, 4);
+
+		std::vector<UINT> indexes = {};
+		indexes.push_back(0); indexes.push_back(1); indexes.push_back(2);
+		indexes.push_back(0); indexes.push_back(2); indexes.push_back(3);
+
+		mesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
+#pragma endregion		
+	}
+	void LoadBuffer()
+	{
+#pragma region Create constant buffer 
+
+		// 추가할 cbuffer 목록
+		constantBuffer[(UINT)eCBType::Transform] = new ConstantBuffer(eCBType::Transform);
+		constantBuffer[(UINT)eCBType::Transform]->Create(sizeof(TransformCB));
+
+		// background
+		constantBuffer[(UINT)eCBType::Time] = new ConstantBuffer(eCBType::Time);
+		constantBuffer[(UINT)eCBType::Time]->Create(sizeof(TimeCB));
+		// fade
+		// afterimage
+		// blink
+#pragma endregion
+	}
+	void LoadResource()
+	{
+#pragma region Create Shaders
+
+		// Default Shaders
+		std::shared_ptr<Shader> triangleShader = std::make_shared<Shader>();
+		{
+			triangleShader->Create(eShaderStage::VS, L"TriangleShader.hlsl", "mainVS");
+			triangleShader->Create(eShaderStage::PS, L"TriangleShader.hlsl", "mainPS");
+			Resources::Insert<Shader>(L"TriangleShader", triangleShader);
+		}
+		std::shared_ptr<Shader> spriteShader = std::make_shared<Shader>();
+		{
+			spriteShader->Create(eShaderStage::VS, L"SpriteShader.hlsl", "mainVS");
+			spriteShader->Create(eShaderStage::PS, L"SpriteShader.hlsl", "mainPS");
+			Resources::Insert<Shader>(L"SpriteShader", spriteShader);
+		}
+		// TitleBackground Shader
+		std::shared_ptr<Shader> backgroundShader = std::make_shared<Shader>();
+		{
+			backgroundShader->Create(eShaderStage::VS, L"BackgroundShader.hlsl", "mainVS");
+			backgroundShader->Create(eShaderStage::PS, L"BackgroundShader.hlsl", "mainPS");
+			Resources::Insert<Shader>(L"BackgroundShader", backgroundShader);
+		}
+#pragma endregion
+
+#pragma region Load Texture & Create Material
+		// TitleScene BG layer		
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"TitleBackgroundTexture", L"..\\Resources\\Texture\\Scene_Title\\TitleBackground.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
+			Resources::Insert<Material>(L"TitleBackgroundMaterial", spriteMaterial);
+		}
+		// Front Layer, Back Layer, Small Clouds
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"BackCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\BackCloud.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(backgroundShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"BackCloudMaterial", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"FrontCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\FrontCloud.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(backgroundShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"FrontCloudMaterial", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"SmallCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\smallCloud.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(backgroundShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"SmallCloudMaterial", spriteMaterial);
+		}
+
+		// Title MainLogo & CopyRight
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"MainLogoTexture", L"..\\Resources\\Texture\\Scene_Title\\MainLogo.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"MainLogoMaterial", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"CopyrightTexture", L"..\\Resources\\Texture\\Scene_Title\\Copyright.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"CopyrightMaterial", spriteMaterial);
+		}
+#pragma endregion
+	}
 	void SetupState()
 	{
 #pragma region InputLayout
@@ -78,7 +212,6 @@ namespace renderer
 		GetDevice()->CreateSamplerState(&samplerDesc, samplerStates[(UINT)eSamplerType::Anisotropic].GetAddressOf());
 		GetDevice()->BindSamplers(eShaderStage::PS, 1, samplerStates[(UINT)eSamplerType::Anisotropic].GetAddressOf());
 #pragma endregion
-
 #pragma region Rasterizer State
 		D3D11_RASTERIZER_DESC rasterizerDesc = {};
 		// Soild Back	: 뒷면을 렌더링하지 않음
@@ -99,7 +232,6 @@ namespace renderer
 		GetDevice()->CreateRasterizerState(
 			&rasterizerDesc, RasterizerStates[(UINT)eRSType::Wireframe].GetAddressOf());
 #pragma endregion
-
 #pragma region DepthStencil State
 		D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
 		// Less <- Z 값이 나보다 작으면 안그림
@@ -123,7 +255,6 @@ namespace renderer
 		GetDevice()->CreateDepthStencilState(
 			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::None].GetAddressOf());
 #pragma endregion
-
 #pragma region Blend State
 		D3D11_BLEND_DESC blendDesc = {};
 		// Default
@@ -148,129 +279,10 @@ namespace renderer
 			&blendDesc, BlendStates[(UINT)eBSType::Oneone].GetAddressOf());
 #pragma endregion
 	}
-	void LoadBuffer()
-	{
-		// Create Vertex & Index Buffer
-		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-		Resources::Insert<Mesh>(L"RectMesh", mesh);
-		mesh->CreateVertexBuffer(vertexes, 4);
-				
-		std::vector<UINT> indexes = {};
-		indexes.push_back(0); indexes.push_back(1); indexes.push_back(2); 
-		indexes.push_back(0); indexes.push_back(2); indexes.push_back(3);
-
-		mesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
-
-		// Create ConstantBuffer 
-		constantBuffer[(UINT)eCBType::Transform] = new ConstantBuffer(eCBType::Transform);
-		constantBuffer[(UINT)eCBType::Transform]->Create(sizeof(TransformCB));
-
-		// 추가할 cbuffer 목록
-		// background
-		// fade
-		// afterimage
-		// blink
-	}
-	void LoadResource()
-	{
-		// Default Shaders
-		std::shared_ptr<Shader> triangleShader = std::make_shared<Shader>();
-		{
-			triangleShader->Create(eShaderStage::VS, L"TriangleVS.hlsl", "main");
-			triangleShader->Create(eShaderStage::PS, L"TrianglePS.hlsl", "main");
-			Resources::Insert<Shader>(L"TriangleShader", triangleShader);
-		}
-		std::shared_ptr<Shader> spriteShader = std::make_shared<Shader>();
-		{
-			spriteShader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "main");
-			spriteShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "main");
-			Resources::Insert<Shader>(L"SpriteShader", spriteShader);
-		}
-		// TitleBackground Shader
-		std::shared_ptr<Shader> backgroundShader = std::make_shared<Shader>();
-		{
-			backgroundShader->Create(eShaderStage::VS, L"BackgroundShader.hlsl", "mainVS");
-			backgroundShader->Create(eShaderStage::PS, L"BackgroundShader.hlsl", "mainPS");
-			Resources::Insert<Shader>(L"BackgroundShader", backgroundShader);
-		}
-
-		// TitleScene BG layer		
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"TitleBackgroundTexture", L"..\\Resources\\Texture\\Scene_Title\\TitleBackground.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
-			Resources::Insert<Material>(L"TitleBackgroundMaterial", spriteMaterial);
-		}
-		// Front Layer, Back Layer, Small Clouds
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"BackCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\BackCloud.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(backgroundShader);
-			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
-			Resources::Insert<Material>(L"BackCloudMaterial", spriteMaterial);
-		}
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"FrontCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\FrontCloud.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(backgroundShader);
-			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
-			Resources::Insert<Material>(L"FrontCloudMaterial", spriteMaterial);
-		}
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"SmallCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\smallCloud.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(backgroundShader);
-			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
-			Resources::Insert<Material>(L"SmallCloudMaterial", spriteMaterial);
-		}
-
-		// Title MainLogo & CopyRight
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"MainLogoTexture", L"..\\Resources\\Texture\\Scene_Title\\MainLogo.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
-			Resources::Insert<Material>(L"MainLogoMaterial", spriteMaterial);
-		}
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"CopyrightTexture", L"..\\Resources\\Texture\\Scene_Title\\Copyright.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
-			Resources::Insert<Material>(L"CopyrightMaterial", spriteMaterial);
-		}
-	}
 	void Initialize()
 	{
-		vertexes[0].pos = Vector3(-0.5f, 0.5f, 0.0f);
-		vertexes[0].color = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
-		vertexes[0].uv = Vector2(0.0f, 0.0f);
-
-		vertexes[1].pos = Vector3(0.5f, 0.5f, 0.0f);
-		vertexes[1].color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
-		vertexes[1].uv = Vector2(1.0f, 0.0f);
-
-		vertexes[2].pos = Vector3(0.5f, -0.5f, 0.0f);
-		vertexes[2].color = Vector4(0.0f, 0.0f, 1.0f, 1.0f);
-		vertexes[2].uv = Vector2(1.0f, 1.0f);
-
-		vertexes[3].pos = Vector3(-0.5f, -0.5f, 0.0f);
-		vertexes[3].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertexes[3].uv = Vector2(0.0f, 1.0f);
-
+		
+		LoadMesh();
 		LoadBuffer();
 		LoadResource();
 		SetupState();

@@ -3,7 +3,6 @@
 namespace da
 {
 	BackGroundObject::BackGroundObject()
-		: mBackGroundScript(nullptr)
 	{
 	}
 	BackGroundObject::~BackGroundObject()
@@ -11,8 +10,7 @@ namespace da
 	}
 
 	void BackGroundObject::Initialize()
-	{
-		mBackGroundScript = AddComponent<BackGroundScript>();
+	{		
 		GameObject::Initialize();
 	}
 	void BackGroundObject::Update()

@@ -15,9 +15,13 @@ namespace renderer
 
 	CBUFFER(TransformCB, CBSLOT_TRANSFORM)
 	{
-		da::math::Matrix mWorld;
+		da::math::Matrix World;
 		da::math::Matrix View;
 		da::math::Matrix Projection;
+	};
+	CBUFFER(TimeCB, CBSLOT_TIME)
+	{
+		float AddTime;
 	};
 
 	extern Vertex vertexes[];

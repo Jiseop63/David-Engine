@@ -15,14 +15,8 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="$(MSBuildThisFileDirectory)BackgroundShader.hlsl" />
-    <FxCompile Include="$(MSBuildThisFileDirectory)SpritePS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)SpriteVS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)TrianglePS.hlsl" />
-    <FxCompile Include="$(MSBuildThisFileDirectory)TriangleVS.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)SpriteShader.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)TriangleShader.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Constant Buffer.hlsli" />

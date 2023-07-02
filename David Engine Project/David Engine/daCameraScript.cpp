@@ -27,10 +27,12 @@ namespace da
 	{
 		Transform* myTransform = GetOwner()->GetComponent<Transform>();
 		Vector3 pos = myTransform->GetPosition();
+		float viewSize = mCameraComponent->GetSize();
+		Camera::eProjectionType projectionType = mCameraComponent->GetProjectionType();
 
 		if (Input::GetKey(eKeyCode::NUM_9))
 		{
-			pos += myTransform->Forward() * 5.0f * (float)Time::DeltaTime();
+			pos += myTransform->Forward() * 5.0f * (float)Time::DeltaTime();			
 			myTransform->SetPosition(pos);
 		}
 		else if (Input::GetKey(eKeyCode::NUM_3))
@@ -40,22 +42,34 @@ namespace da
 		}
 		else if (Input::GetKey(eKeyCode::NUM_4))
 		{
-			pos += -myTransform->Right() * 5.0f * (float)Time::DeltaTime();
+			if (Camera::eProjectionType::Orthographic == projectionType)
+				pos += -myTransform->Right() * viewSize * 5.0f * (float)Time::DeltaTime();
+			else
+				pos += -myTransform->Right() * -pos.z * (float)Time::DeltaTime();
 			myTransform->SetPosition(pos);
 		}
 		else if (Input::GetKey(eKeyCode::NUM_6))
 		{
-			pos += myTransform->Right() * 5.0f * (float)Time::DeltaTime();
+			if (Camera::eProjectionType::Orthographic == projectionType)
+				pos += myTransform->Right() * viewSize * 5.0f * (float)Time::DeltaTime();
+			else
+				pos += myTransform->Right() * -pos.z * (float)Time::DeltaTime();
 			myTransform->SetPosition(pos);
 		}
 		else if (Input::GetKey(eKeyCode::NUM_8))
 		{
-			pos += myTransform->Up() * 5.0f * (float)Time::DeltaTime();
+			if (Camera::eProjectionType::Orthographic == projectionType)
+				pos += myTransform->Up() * viewSize * 5.0f * (float)Time::DeltaTime();
+			else
+				pos += myTransform->Up() * -pos.z * (float)Time::DeltaTime();
 			myTransform->SetPosition(pos);
 		}
 		else if (Input::GetKey(eKeyCode::NUM_2))
 		{
-			pos += -myTransform->Up() * 5.0f * (float)Time::DeltaTime();
+			if (Camera::eProjectionType::Orthographic == projectionType)
+				pos += -myTransform->Up() * viewSize * 5.0f * (float)Time::DeltaTime();
+			else
+				pos += -myTransform->Up() * -pos.z * (float)Time::DeltaTime();
 			myTransform->SetPosition(pos);
 		}
 		// num 0 : ProjectionType Change
@@ -71,16 +85,14 @@ namespace da
 
 		// num 7 - 1 : size Up-Down
 		else if (Input::GetKey(eKeyCode::NUM_7))
-		{
-			float viewSize = mCameraComponent->GetSize();
-			viewSize -= 2.f * (float)Time::DeltaTime();
+		{			
+			viewSize -= 1.f * (float)Time::DeltaTime();
 			if (0.001 <= viewSize)
 				mCameraComponent->SetSize(viewSize); 
 		}
 		else if (Input::GetKey(eKeyCode::NUM_1))
 		{
-			float viewSize = mCameraComponent->GetSize();
-			viewSize += 2.f * (float)Time::DeltaTime();
+			viewSize += 1.f * (float)Time::DeltaTime();
 			mCameraComponent->SetSize(viewSize);
 		}
 

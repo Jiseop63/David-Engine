@@ -77,7 +77,6 @@ namespace da
 	protected:
 		Transform* mTransform;
 
-
 	private:
 		eObjectState mObjectState;
 		std::vector<Component*> mComponents;

@@ -74,10 +74,9 @@ namespace da
 			MeshRenderer* backGroundRenderer = backGround->AddComponent<MeshRenderer>();
 			backGroundRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"TitleBackgroundMaterial"));
-			BackGroundScript* bgScript = backGround->GetBGScript();
-			bgScript->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
+			backGround->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
 		}
-		// Back Cloud Layer
+		// Back & Front Cloud Layer
 		{
 			BackGroundObject* cloudObj = new BackGroundObject();
 			cloudObj->Initialize();
@@ -85,11 +84,10 @@ namespace da
 			MeshRenderer* backGroundRenderer = cloudObj->AddComponent<MeshRenderer>();
 			backGroundRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"BackCloudMaterial"));
-			BackGroundScript* bgScript = cloudObj->GetBGScript();
-			bgScript->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
-			bgScript->SetPosition(math::Vector3(0.0f, 0.0f, -0.001f));
+			cloudObj->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
+			cloudObj->SetPosition(math::Vector3(0.0f, 0.0f, -0.001f));
+			cloudObj->AddComponent<BackGroundScript>();
 		}
-		// Front Cloud Lyaer
 		{
 			BackGroundObject* cloudObj = new BackGroundObject();
 			cloudObj->Initialize();
@@ -97,9 +95,9 @@ namespace da
 			MeshRenderer* backGroundRenderer = cloudObj->AddComponent<MeshRenderer>();
 			backGroundRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"FrontCloudMaterial"));
-			BackGroundScript* bgScript = cloudObj->GetBGScript();
-			bgScript->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
-			bgScript->SetPosition(math::Vector3(0.0f, 0.0f, -0.002f));
+			cloudObj->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
+			cloudObj->SetPosition(math::Vector3(0.0f, 0.0f, -0.002f));
+			cloudObj->AddComponent<BackGroundScript>();
 		}
 		// BGObj MainLogo
 		{
@@ -109,9 +107,8 @@ namespace da
 			MeshRenderer* backGroundRenderer = titleLogoObj->AddComponent<MeshRenderer>();
 			backGroundRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"MainLogoMaterial"));
-			BackGroundScript* bgScript = titleLogoObj->GetBGScript();
-			bgScript->SetScale(math::Vector3(4.680f, 2.250f, 1.0f));
-			bgScript->SetPosition(math::Vector3(0.0f, 1.750f, -0.0030f));
+			titleLogoObj->SetScale(math::Vector3(4.680f, 2.250f, 1.0f));
+			titleLogoObj->SetPosition(math::Vector3(0.0f, 1.750f, -0.0030f));
 		}
 		// BGObj Copyright
 		{
@@ -121,9 +118,8 @@ namespace da
 			MeshRenderer* backGroundRenderer = copyrightObj->AddComponent<MeshRenderer>();
 			backGroundRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"CopyrightMaterial"));
-			BackGroundScript* bgScript = copyrightObj->GetBGScript();
-			bgScript->SetScale(math::Vector3(5.010f, 0.360f, 1.0f));
-			bgScript->SetPosition(math::Vector3(0.0f, -2.750f, -0.0030f));
+			copyrightObj->SetScale(math::Vector3(5.010f, 0.360f, 1.0f));
+			copyrightObj->SetPosition(math::Vector3(0.0f, -2.750f, -0.0030f));
 		}
 	}
 	void Scene_Title::OnEnter()

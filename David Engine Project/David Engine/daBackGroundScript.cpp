@@ -1,18 +1,15 @@
 #include "daBackGroundScript.h"
 
+#include "daRenderer.h"
+#include "daConstantBuffer.h"
 #include "daTime.h"
-
-#include "daGameManager.h"
-
-#include "daGameObject.h"
-#include "daTransform.h"
 
 namespace da
 {
 	using namespace math;
 
 	BackGroundScript::BackGroundScript()
-		: mTransform(nullptr)
+		: mAddTime(0.0f)
 	{
 	}
 	BackGroundScript::~BackGroundScript()
@@ -20,14 +17,20 @@ namespace da
 	}
 
 	void BackGroundScript::Initialize()
-	{
-		mTransform = GetOwner()->GetComponent<Transform>();
+	{		
 	}
 	void BackGroundScript::Update()
-	{		
+	{
 	}
 	void BackGroundScript::LateUpdate()
 	{
+		mAddTime += Time::DeltaTime(); 
+		renderer::TimeCB timeCB = {};
+		timeCB.AddTime = mAddTime; 
+
+		graphics::ConstantBuffer* cb = renderer::constantBuffer[(UINT)graphics::eCBType::Time];
+		cb->SetData(&timeCB);
+		cb->Bind(graphics::eShaderStage::VS); 
 	}
 	void BackGroundScript::Render()
 	{

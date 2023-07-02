@@ -1,6 +1,11 @@
-cbuffer Transform : register(b0)
+cbuffer cTransform : register(b0)
 {
-    row_major matrix mWorld;
-    row_major matrix mView;
-    row_major matrix mProjection;
+    row_major matrix cWorld;
+    row_major matrix cView;
+    row_major matrix cProjection;
+}
+
+cbuffer cTime : register(b1)
+{
+    float cAddTime;
 }

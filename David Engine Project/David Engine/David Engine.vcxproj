@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="daBackGroundObject.h" />
     <ClInclude Include="daBackGroundScript.h" />
+    <ClInclude Include="daBGMoveObject.h" />
     <ClInclude Include="daCameraObject.h" />
     <ClInclude Include="daCameraScript.h" />
     <ClInclude Include="daCreatureObject.h" />
@@ -164,6 +165,7 @@
   <ItemGroup>
     <ClCompile Include="daBackGroundObject.cpp" />
     <ClCompile Include="daBackGroundScript.cpp" />
+    <ClCompile Include="daBGMoveObject.cpp" />
     <ClCompile Include="daCameraObject.cpp" />
     <ClCompile Include="daCameraScript.cpp" />
     <ClCompile Include="daCreatureObject.cpp" />

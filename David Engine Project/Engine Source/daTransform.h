@@ -34,7 +34,6 @@ namespace da
 
 		void SetParent(Transform* parent) { mParent = parent; }
 
-
 	private:
 		Transform* mParent;
 		math::Matrix mWorld;
@@ -46,6 +45,5 @@ namespace da
 		math::Vector3 mUp;
 		math::Vector3 mForward;
 		math::Vector3 mRight;
-
 	};
 }
