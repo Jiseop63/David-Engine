@@ -17,6 +17,7 @@
 
 #include "daBackGroundObject.h"
 #include "daBackGroundScript.h"
+#include "daMoveShaderScript.h"
 
 #include "daUIObject.h"
 
@@ -85,14 +86,21 @@ namespace da
 
 			BackGroundScript* cloudScript = cloudObj->AddComponent<BackGroundScript>();
 			cloudScript->SetSpeed(0.7f);
+			cloudScript->SetName(L"imBack");
+
+			int b = 0;
 
 			BackGroundObject* cloudObj2 = objects::InstantiateObject
 				<BackGroundObject>(this, enums::eLayerType::BackGround, L"FrontCloudMaterial");
 			cloudObj2->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
 			cloudObj2->SetPosition(math::Vector3(0.0f, 0.0f, -0.002f));
 
-			BackGroundScript* cloudScript2 = cloudObj2->AddComponent<BackGroundScript>();
+			
+			MoveShaderScript* cloudScript2 = cloudObj2->AddComponent<MoveShaderScript>();
 			cloudScript2->SetSpeed(0.1f);
+			cloudScript2->SetName(L"imFront");
+
+			int a = 0;
 		}
 		// BGObj MainLogo
 		{
@@ -113,14 +121,40 @@ namespace da
 	{
 		// buttons
 		{
-			UIObject* playBtnObject = objects::InstantiateButtonObject<UIObject>(this, L"StartBtnMaterial", L"PlayOffTexture", L"PlayOnTexture");
+			/*UIObject* playBtnObject = objects::InstantiateButtonObject<UIObject>(this, L"StartBtnMaterial", L"PlayOffTexture", L"PlayOnTexture");
 			playBtnObject->GetTransform()->SetScale(math::Vector3(0.630f, 0.36f, 1.0f));
 			playBtnObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -0.003f));
 
 			UIObject* exitBtnObject = objects::InstantiateButtonObject<UIObject>(this, L"ExitBtnMaterial", L"ExitOffTexture", L"ExitOnTexture");
 			playBtnObject->GetTransform()->SetScale(math::Vector3(0.630f, 0.36f, 1.0f));
-			playBtnObject->GetTransform()->SetPosition(math::Vector3(0.0f, -1.0f, -0.003f));
+			playBtnObject->GetTransform()->SetPosition(math::Vector3(0.0f, -1.0f, -0.003f));*/
 
+			UIObject* obj = new UIObject();
+			AddGameObject(enums::eLayerType::UI, obj);
+			obj->SetName(L"1번 UI Object");
+			MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
+			meshRenderer->SetName(L"1번 UI Renderer");
+			meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			meshRenderer->SetMaterial(Resources::Find<Material>(L"StartBtnMaterial"));
+			UIScript* uiScript = obj->AddComponent<UIScript>();
+			obj->Initialize();
+			uiScript->SetUITextures(Resources::Find<graphics::Texture>(L"PlayOffTexture"), Resources::Find<graphics::Texture>(L"PlayOnTexture"));
+			obj->GetTransform()->SetScale(math::Vector3(0.630f, 0.36f, 1.0f));
+			obj->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -0.003f));
+
+
+			UIObject* obj2 = new UIObject();
+			AddGameObject(enums::eLayerType::UI, obj2);
+			obj2->SetName(L"2번 UI Object");
+			MeshRenderer* meshRenderer2 = obj2->AddComponent<MeshRenderer>();
+			meshRenderer2->SetName(L"2번 UI Renderer");
+			meshRenderer2->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			meshRenderer2->SetMaterial(Resources::Find<Material>(L"ExitBtnMaterial"));
+			UIScript* uiScript2 = obj2->AddComponent<UIScript>();
+			obj2->Initialize();
+			uiScript2->SetUITextures(Resources::Find<graphics::Texture>(L"ExitOffTexture"), Resources::Find<graphics::Texture>(L"ExitOnTexture"));
+			obj2->GetTransform()->SetScale(math::Vector3(0.630f, 0.36f, 1.0f));
+			obj2->GetTransform()->SetPosition(math::Vector3(0.0f, -1.0f, -0.003f));
 		}
 	}
 

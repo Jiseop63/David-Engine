@@ -90,6 +90,9 @@
     <ClInclude Include="daUIScript.h">
       <Filter>Objects\System\UI</Filter>
     </ClInclude>
+    <ClInclude Include="daMoveShaderScript.h">
+      <Filter>Objects\System\BackGround</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -133,6 +136,9 @@
     </ClCompile>
     <ClCompile Include="daUIScript.cpp">
       <Filter>Objects\System\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="daMoveShaderScript.cpp">
+      <Filter>Objects\System\BackGround</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

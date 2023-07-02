@@ -99,8 +99,11 @@ namespace renderer
 			std::shared_ptr<Material> uiMaterial = std::make_shared<Material>();
 			uiMaterial->SetShader(spriteShader);
 			uiMaterial->SetRenderingMode(eRenderingMode::Transparent);
+			std::shared_ptr<Material> uiMaterial2 = std::make_shared<Material>();
+			uiMaterial->SetShader(spriteShader);
+			uiMaterial->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert<Material>(L"StartBtnMaterial", uiMaterial);
-			Resources::Insert<Material>(L"ExitBtnMaterial", uiMaterial);
+			Resources::Insert<Material>(L"ExitBtnMaterial", uiMaterial2);
 		}
 
 		// TitleScene BG layer		
