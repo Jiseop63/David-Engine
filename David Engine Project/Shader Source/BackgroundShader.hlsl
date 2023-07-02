@@ -10,12 +10,11 @@ VSOut mainVS(VSIn In)
     
     Out.Pos = projection;
     Out.Color = In.Color;
+            
+    float2 offset = float2(0.05f + cSpeed, 0.0f); // 이동할 양
+    offset *= cAddTime / 2.0f;
+    float2 newUV = In.UV + offset;
     
-        
-    float2 offset = float2(0.1f, 0.0f);  // 이동할 양
-    offset *= cAddTime;
-    float2 newUV = In. UV + offset;
-    //Out.UV = In.UV;
     Out.UV = newUV;
     
     return Out;

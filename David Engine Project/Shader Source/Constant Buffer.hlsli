@@ -5,7 +5,8 @@ cbuffer cTransform : register(b0)
     row_major matrix cProjection;
 }
 
-cbuffer cTime : register(b1)
+cbuffer cTime : register(b2)
 {
     float cAddTime;
+    float cSpeed;
 }

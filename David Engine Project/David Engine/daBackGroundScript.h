@@ -14,7 +14,9 @@ namespace da
 		virtual void LateUpdate();
 		virtual void Render();
 
+		void SetSpeed(float value) { mSpeed = value; }
 	private:
 		float mAddTime;
+		float mSpeed;
 	};
 }

@@ -153,6 +153,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daLayer.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daObjects.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp">

@@ -15,6 +15,8 @@
 #include "daUIObject.h"
 
 
+#include "daObjects.h"
+
 // юс╫ц
 #include "daInput.h"
 
@@ -76,28 +78,29 @@ namespace da
 			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"TitleBackgroundMaterial"));
 			backGround->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
 		}
-		// Back & Front Cloud Layer
+		// Back & Front Cloud Layer		
 		{
-			BackGroundObject* cloudObj = new BackGroundObject();
-			cloudObj->Initialize();
-			AddGameObject(enums::eLayerType::BackGround, cloudObj);
-			MeshRenderer* backGroundRenderer = cloudObj->AddComponent<MeshRenderer>();
-			backGroundRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"BackCloudMaterial"));
+			BackGroundObject* cloudObj
+				= objects::InstantiateObject
+				<BackGroundObject>(this, enums::eLayerType::BackGround, L"BackCloudMaterial");			
 			cloudObj->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
 			cloudObj->SetPosition(math::Vector3(0.0f, 0.0f, -0.001f));
-			cloudObj->AddComponent<BackGroundScript>();
+
+			BackGroundScript* cloudScript = cloudObj->AddComponent<BackGroundScript>();
+			cloudScript->SetSpeed(0.1f);
+
+			BackGroundObject* cloudObj2
+				= objects::InstantiateObject
+				<BackGroundObject>(this, enums::eLayerType::BackGround, L"FrontCloudMaterial");
+			cloudObj2->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
+			cloudObj2->SetPosition(math::Vector3(0.0f, 0.0f, -0.002f));
+
+			BackGroundScript* cloudScript2 = cloudObj2->AddComponent<BackGroundScript>();
+			cloudScript2->SetSpeed(0.8f);
+			int a = 0;
 		}
 		{
-			BackGroundObject* cloudObj = new BackGroundObject();
-			cloudObj->Initialize();
-			AddGameObject(enums::eLayerType::BackGround, cloudObj);
-			MeshRenderer* backGroundRenderer = cloudObj->AddComponent<MeshRenderer>();
-			backGroundRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			backGroundRenderer->SetMaterial(Resources::Find<Material>(L"FrontCloudMaterial"));
-			cloudObj->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
-			cloudObj->SetPosition(math::Vector3(0.0f, 0.0f, -0.002f));
-			cloudObj->AddComponent<BackGroundScript>();
+			
 		}
 		// BGObj MainLogo
 		{

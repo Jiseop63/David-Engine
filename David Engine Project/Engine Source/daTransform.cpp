@@ -2,7 +2,6 @@
 #include "daConstantBuffer.h"
 #include "daRenderer.h"
 #include "daCamera.h"
-
 namespace da
 {
 	using namespace enums;

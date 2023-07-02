@@ -10,7 +10,7 @@
 #define CBUFFER(name, slot) static const int CB_GETBINDSLOT(name) = slot; struct alignas(16) name 
 
 #define CBSLOT_TRANSFORM		0;
-#define CBSLOT_TIME				1;
+#define CBSLOT_TIME				2;
 
 namespace da::graphics
 {

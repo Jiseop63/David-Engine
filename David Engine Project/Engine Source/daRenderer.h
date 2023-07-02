@@ -22,6 +22,7 @@ namespace renderer
 	CBUFFER(TimeCB, CBSLOT_TIME)
 	{
 		float AddTime;
+		float Speed;
 	};
 
 	extern Vertex vertexes[];

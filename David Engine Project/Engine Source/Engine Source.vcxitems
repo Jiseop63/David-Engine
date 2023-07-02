@@ -29,6 +29,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daMesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daMeshRenderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daObjects.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daResources.h" />
