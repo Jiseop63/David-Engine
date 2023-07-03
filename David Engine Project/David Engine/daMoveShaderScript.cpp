@@ -22,8 +22,8 @@ namespace da
 	{
 		mAddTime += (float)Time::DeltaTime();
 		renderer::TimeCB timeCB = {};
-		timeCB.AddTime = mAddTime;
-		timeCB.Speed = mSpeed;
+		timeCB.ElapsedTime = mAddTime;
+		timeCB.Value = mSpeed;
 		graphics::ConstantBuffer* cb = renderer::constantBuffer[(UINT)graphics::eCBType::Time];
 		cb->SetData(&timeCB);
 		cb->Bind(graphics::eShaderStage::VS);

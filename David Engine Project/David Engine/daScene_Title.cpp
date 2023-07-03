@@ -16,6 +16,8 @@
 #include "daCameraScript.h"
 
 #include "daBackGroundObject.h"
+#include "daTimeConstants.h"
+
 #include "daBackGroundScript.h"
 #include "daMoveShaderScript.h"
 
@@ -71,36 +73,41 @@ namespace da
 
 	void Scene_Title::addBackgroundObjects()
 	{
-		//BG
+		// just BG
 		{
 			BackGroundObject* backGround = objects::InstantiateObject
 				<BackGroundObject>(this, enums::eLayerType::BackGround, L"TitleBackgroundMaterial");
 			backGround->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
 		}
-		// Back & Front Cloud Layer		
+
+		// moving background layer
 		{
+			// Back & Front Cloud Layer
 			BackGroundObject* cloudObj = objects::InstantiateObject
 				<BackGroundObject>(this, enums::eLayerType::BackGround, L"BackCloudMaterial");			
 			cloudObj->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
 			cloudObj->SetPosition(math::Vector3(0.0f, 0.0f, -0.001f));
 
-			BackGroundScript* cloudScript = cloudObj->AddComponent<BackGroundScript>();
-			cloudScript->SetSpeed(0.7f);
-			cloudScript->SetName(L"imBack");
+			//BackGroundScript* cloudScript = cloudObj->AddComponent<BackGroundScript>();
+			//cloudScript->SetSpeed(0.7f);
+			//cloudScript->SetName(L"imBack");
+			TimeConstants* cloudTimer = cloudObj->AddComponent<TimeConstants>();
+			cloudTimer->SetValue(0.1f);
 
-			int b = 0;
 
 			BackGroundObject* cloudObj2 = objects::InstantiateObject
 				<BackGroundObject>(this, enums::eLayerType::BackGround, L"FrontCloudMaterial");
 			cloudObj2->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
 			cloudObj2->SetPosition(math::Vector3(0.0f, 0.0f, -0.002f));
 
-			
-			MoveShaderScript* cloudScript2 = cloudObj2->AddComponent<MoveShaderScript>();
-			cloudScript2->SetSpeed(0.1f);
-			cloudScript2->SetName(L"imFront");
 
-			int a = 0;
+			TimeConstants* cloudTimer2 = cloudObj2->AddComponent<TimeConstants>();
+			cloudTimer2->SetValue(0.7f);
+
+			//MoveShaderScript* cloudScript2 = cloudObj2->AddComponent<MoveShaderScript>();
+			//cloudScript2->SetSpeed(0.1f);
+			//cloudScript2->SetName(L"imFront");
+
 		}
 		// BGObj MainLogo
 		{
@@ -139,7 +146,7 @@ namespace da
 			UIScript* uiScript = obj->AddComponent<UIScript>();
 			obj->Initialize();
 			uiScript->SetUITextures(Resources::Find<graphics::Texture>(L"PlayOffTexture"), Resources::Find<graphics::Texture>(L"PlayOnTexture"));
-			obj->GetTransform()->SetScale(math::Vector3(0.630f, 0.36f, 1.0f));
+			obj->GetTransform()->SetScale(math::Vector3(1.440f, 0.480f, 1.0f));
 			obj->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -0.003f));
 
 
@@ -153,7 +160,7 @@ namespace da
 			UIScript* uiScript2 = obj2->AddComponent<UIScript>();
 			obj2->Initialize();
 			uiScript2->SetUITextures(Resources::Find<graphics::Texture>(L"ExitOffTexture"), Resources::Find<graphics::Texture>(L"ExitOnTexture"));
-			obj2->GetTransform()->SetScale(math::Vector3(0.630f, 0.36f, 1.0f));
+			obj2->GetTransform()->SetScale(math::Vector3(0.840f, 0.480f, 1.0f));
 			obj2->GetTransform()->SetPosition(math::Vector3(0.0f, -1.0f, -0.003f));
 		}
 	}

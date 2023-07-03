@@ -14,8 +14,8 @@ namespace da
 		, mV2Force(Vector2::Zero)
 		, mV2Velocity(Vector2::Zero)
 		, mV2Accelation(Vector2::Zero)
-		, mV2Gravity( Vector2(0.0f, 10.0f) )
-		, mV2LimitVelocity( Vector2(400.0f, 600.0f) )
+		, mV2Gravity(Vector2(0.0f, 10.0f))
+		, mV2LimitVelocity(Vector2(400.0f, 600.0f))
 		, mV3Force(Vector3::Zero)
 		, mV3Velocity(Vector3::Zero)
 		, mV3Accelation(Vector3::Zero)
@@ -29,8 +29,8 @@ namespace da
 
 	void Rigidbody::Update()
 	{
-		// ê°€ì†ë„ êµ¬í•˜ê¸° (A = F / M)
-		// ì†ë„ êµ¬í•˜ê¸° (V = A * T * Default)
+		// °¡¼Óµµ ±¸ÇÏ±â (A = F / M)
+		// ¼Óµµ ±¸ÇÏ±â (V = A * T * Default)
 		if (eDimensionType::SecondDimension == mDimensionType)
 		{
 			mV2Accelation = mV2Force / mMass;
@@ -52,23 +52,23 @@ namespace da
 			v3LimitVelocityAction();
 		}
 	}
-		
+
 	void Rigidbody::v2FrictionAction()
 	{
 		if (!(mV2Velocity == Vector2::Zero))
 		{
-			// ë§ˆì°° ë°©í–¥ êµ¬í•˜ê¸° (ì†ë„ì˜ ë°˜ëŒ€ ë°©í–¥)
+			// ¸¶Âû ¹æÇâ ±¸ÇÏ±â (¼ÓµµÀÇ ¹İ´ë ¹æÇâ)
 			Vector2 frictionUnit = -mV2Velocity;
 			frictionUnit.Normalize();
 
-			// ë§ˆì°°ë ¥ í¬ê¸°
+			// ¸¶Âû·Â Å©±â
 			Vector2 friction = frictionUnit * mFriction * mMass * (float)Time::DeltaTime();
 
-			// ì´ë™ì¤‘ì´ ì•„ë‹ˆë¼ë©´ ë§ˆì°°ë ¥ ì¦ê°€
+			// ÀÌµ¿ÁßÀÌ ¾Æ´Ï¶ó¸é ¸¶Âû·Â Áõ°¡
 			if (Vector2::Zero == mV2Force)
 				friction += friction;
 
-			// ë§ˆì°°ë ¥ì´ ì†ë„ë¥¼ ë„˜ê¸°ë©´
+			// ¸¶Âû·ÂÀÌ ¼Óµµ¸¦ ³Ñ±â¸é
 			if (friction.Length() > mV2Velocity.Length())
 				mV2Velocity = Vector2::Zero;
 			else
@@ -77,52 +77,52 @@ namespace da
 	}
 	void Rigidbody::v2MoveAction()
 	{
-		// ì˜¤ë„ˆ Position ê°€ì ¸ì˜¤ê¸°
+		// ¿À³Ê Position °¡Á®¿À±â
 		Vector3 ownerPosition = GetOwner()->GetComponent<Transform>()->GetPosition();
 		Vector2 movePosision(ownerPosition.x, ownerPosition.y);
 
-		// ë‚´ ìœ„ì¹˜ì— ì†ë„ ë”í•´ì£¼ê¸°
+		// ³» À§Ä¡¿¡ ¼Óµµ ´õÇØÁÖ±â
 		movePosision += mV2Velocity * (float)Time::DeltaTime();
 
 
-		// ë³€ê²½ëœ ìœ„ì¹˜ë¥¼ ê°±ì‹ í•´ì£¼ê¸°
+		// º¯°æµÈ À§Ä¡¸¦ °»½ÅÇØÁÖ±â
 		ownerPosition.x = movePosision.x;
 		ownerPosition.y = movePosision.y;
 		GetOwner()->GetComponent<Transform>()->SetPosition(ownerPosition);
 
-		// í˜ ì´ˆê¸°í™”
+		// Èû ÃÊ±âÈ­
 		mV2Force = Vector2::Zero;
 	}
 	void Rigidbody::v2GravityAction()
 	{
 		if (mIsGround)
 		{
-			// í˜„ì¬ ì ìš©ëœ ì¤‘ë ¥ ì œê±°í•˜ê¸°
+			// ÇöÀç Àû¿ëµÈ Áß·Â Á¦°ÅÇÏ±â
 			EraseVelocity(mV2Gravity, mV2Velocity);
 		}
 		else
 		{
-			// ì†ë„ì— ì¤‘ë ¥ ë”í•˜ê¸°
+			// ¼Óµµ¿¡ Áß·Â ´õÇÏ±â
 			mV2Velocity += mV2Gravity * (float)Time::DeltaTime();
-			// ì¶”í›„ì— ì¤‘ë ¥ ì¡°ì ˆê¸°ëŠ¥ ì¶”ê°€
+			// ÃßÈÄ¿¡ Áß·Â Á¶Àı±â´É Ãß°¡
 		}
 	}
 	void Rigidbody::v2LimitVelocityAction()
 	{
-		// ìˆ˜ì§, ìˆ˜í‰ ì†ë„ ì„±ë¶„ ë¶„ë¦¬
+		// ¼öÁ÷, ¼öÆò ¼Óµµ ¼ººĞ ºĞ¸®
 		Vector2 gravityUnit = mV2Gravity;
 		gravityUnit.Normalize();
-		
-		// ìˆ˜ì§ ì†ë„ êµ¬í•˜ê¸°
+
+		// ¼öÁ÷ ¼Óµµ ±¸ÇÏ±â
 		float dot = gravityUnit.Dot(mV2Gravity);
 		Vector2 verticalVelocity = gravityUnit;
 		verticalVelocity *= dot;
 
-		// ìˆ˜í‰ ì†ë„ êµ¬í•˜ê¸°
+		// ¼öÆò ¼Óµµ ±¸ÇÏ±â
 		Vector2 horizontalVelocity = mV2Velocity - verticalVelocity;
 
 
-		// ê° ì„±ë¶„ì„ ë¶„ë¦¬í•´ì„œ ê³„ì‚° ì ìš©
+		// °¢ ¼ººĞÀ» ºĞ¸®ÇØ¼­ °è»ê Àû¿ë
 		if (verticalVelocity.Length() > mV2LimitVelocity.y)
 		{
 			verticalVelocity.Normalize();
@@ -134,20 +134,20 @@ namespace da
 			horizontalVelocity *= mV2LimitVelocity.x;
 		}
 
-		// ë‹¤ì‹œ ìˆ˜í‰, ìˆ˜ì§ ì†ë„ë¥¼ í•©ì³ì„œ ê°±ì‹ 
+		// ´Ù½Ã ¼öÆò, ¼öÁ÷ ¼Óµµ¸¦ ÇÕÃÄ¼­ °»½Å
 		mV2Velocity = verticalVelocity + horizontalVelocity;
 	}
 
 	void Rigidbody::EraseVelocity(math::Vector2 dir, math::Vector2 velocity)
 	{
-		// ì§€ìš°ë ¤ëŠ” ë°©í–¥ì˜ ë‹¨ìœ„ë²¡í„° êµ¬í•˜ê¸°
+		// Áö¿ì·Á´Â ¹æÇâÀÇ ´ÜÀ§º¤ÅÍ ±¸ÇÏ±â
 		Vector2 unit = dir;
 		unit.Normalize();
 
-		// ë‹¨ìœ„ë²¡í„°ì— ì†ë ¥ì„ ë‚´ì í•´ì„œ ì§€ì›Œì•¼ í•˜ëŠ” ì†ë ¥ì„ êµ¬í•¨
+		// ´ÜÀ§º¤ÅÍ¿¡ ¼Ó·ÂÀ» ³»ÀûÇØ¼­ Áö¿ö¾ß ÇÏ´Â ¼Ó·ÂÀ» ±¸ÇÔ
 		float dot = unit.Dot(velocity);
 
-		// í˜„ì¬ ì†ë„ì—ì„œ íŠ¹ì • ë°©í–¥ì˜ ë²¡í„°ë¥¼ ì§€ì›Œì¤Œ 
+		// ÇöÀç ¼Óµµ¿¡¼­ Æ¯Á¤ ¹æÇâÀÇ º¤ÅÍ¸¦ Áö¿öÁÜ 
 		mV2Velocity -= unit * dot;
 	}
 }

@@ -1,7 +1,7 @@
 #include "daMeshRenderer.h"
 #include "daGameObject.h"
 #include "daTransform.h"
-
+#include "daTimeConstants.h"
 namespace da
 {
 	using namespace enums;
@@ -28,6 +28,9 @@ namespace da
 	{
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 		tr->BindConstantBuffer();
+		TimeConstants* timeConstants = GetOwner()->GetComponent<TimeConstants>();
+		if (timeConstants)
+			timeConstants->BindConstantBuffer();
 
 		mMesh->BindBuffer();
 		mMaterial->Binds();

@@ -84,17 +84,17 @@ namespace renderer
 			Resources::Insert<Shader>(L"SpriteShader", spriteShader);
 		}
 		// TitleBackground Shader
-		std::shared_ptr<Shader> backgroundShader = std::make_shared<Shader>();
+		std::shared_ptr<Shader> MovingBGShader = std::make_shared<Shader>();
 		{
-			backgroundShader->Create(eShaderStage::VS, L"BackgroundShader.hlsl", "mainVS");
-			backgroundShader->Create(eShaderStage::PS, L"BackgroundShader.hlsl", "mainPS");
-			Resources::Insert<Shader>(L"BackgroundShader", backgroundShader);
+			MovingBGShader->Create(eShaderStage::VS, L"MovingBGShader.hlsl", "mainVS");
+			MovingBGShader->Create(eShaderStage::PS, L"MovingBGShader.hlsl", "mainPS");
+			Resources::Insert<Shader>(L"MovingBGShader", MovingBGShader);
 		}
 #pragma endregion
 
 #pragma region Load Texture & Create Material
 
-		// NoneTexture Material
+		// NoneTexture Material | Sprite Shader
 		{
 			std::shared_ptr<Material> uiMaterial = std::make_shared<Material>();
 			uiMaterial->SetShader(spriteShader);
@@ -106,7 +106,7 @@ namespace renderer
 			Resources::Insert<Material>(L"ExitBtnMaterial", uiMaterial2);
 		}
 
-		// TitleScene BG layer		
+		// TitleScene BG layer | Sprite Shader	
 		{
 			std::shared_ptr<Texture> texture
 				= Resources::Load<Texture>(L"TitleBackgroundTexture", L"..\\Resources\\Texture\\Scene_Title\\TitleBackground.png");
@@ -116,13 +116,13 @@ namespace renderer
 			spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
 			Resources::Insert<Material>(L"TitleBackgroundMaterial", spriteMaterial);
 		}
-		// Front Layer, Back Layer, Small Clouds
+		// Front Layer, Back Layer, Small Clouds | MovingBG Shader
 		{
 			std::shared_ptr<Texture> texture
 				= Resources::Load<Texture>(L"BackCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\BackCloud.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(backgroundShader);
+			spriteMaterial->SetShader(MovingBGShader);
 			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
 			Resources::Insert<Material>(L"BackCloudMaterial", spriteMaterial);
 		}
@@ -131,7 +131,7 @@ namespace renderer
 				= Resources::Load<Texture>(L"FrontCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\FrontCloud.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(backgroundShader);
+			spriteMaterial->SetShader(MovingBGShader);
 			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
 			Resources::Insert<Material>(L"FrontCloudMaterial", spriteMaterial);
 		}
@@ -140,12 +140,12 @@ namespace renderer
 				= Resources::Load<Texture>(L"SmallCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\smallCloud.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(backgroundShader);
+			spriteMaterial->SetShader(MovingBGShader);
 			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
 			Resources::Insert<Material>(L"SmallCloudMaterial", spriteMaterial);
 		}
 
-		// Title MainLogo & CopyRight
+		// Title MainLogo & CopyRight | sprite shader
 		{
 			std::shared_ptr<Texture> texture
 				= Resources::Load<Texture>(L"MainLogoTexture", L"..\\Resources\\Texture\\Scene_Title\\MainLogo.png");
@@ -212,7 +212,7 @@ namespace renderer
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());
 
-		shader = Resources::Find<Shader>(L"BackgroundShader");
+		shader = Resources::Find<Shader>(L"MovingBGShader");
 		GetDevice()->CreateInputLayout(arrLayout, numElement
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());

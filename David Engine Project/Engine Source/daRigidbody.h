@@ -1,3 +1,4 @@
+#pragma once
 #include "daComponent.h"
 
 namespace da
@@ -21,7 +22,7 @@ namespace da
 	public:
 		void SetDimentionType(eDimensionType dimension) { mDimensionType = dimension; }
 
-		// unit : ì†ë„ í†µì œ ë°©í–¥, inner : í˜„ì¬ ì†ë„
+		// unit : ¼Óµµ ÅëÁ¦ ¹æÇâ, inner : ÇöÀç ¼Óµµ
 		void EraseVelocity(math::Vector2 dir, math::Vector2 velocity);
 		void EraseVelocity(math::Vector3 dir, math::Vector3 velocity) {};
 
@@ -39,22 +40,22 @@ namespace da
 
 	private:
 		eDimensionType	mDimensionType;
-		float			mMass;			// ì§ˆëŸ‰
-		float			mFriction;		// ë§ˆì°°ë ¥
-		
+		float			mMass;			// Áú·®
+		float			mFriction;		// ¸¶Âû·Â
+
 		// V2
-		math::Vector2	mV2Force;			// ê°€í•´ì§€ëŠ” í˜
-		math::Vector2	mV2Velocity;		// ì†ë„
-		math::Vector2	mV2Accelation;		// ê°€ì†ë„
-		math::Vector2	mV2LimitVelocity;	// ìµœëŒ€ ì œí•œì†ë„
-		math::Vector2	mV2Gravity;			// ì¤‘ë ¥ ì†ë„
-		
+		math::Vector2	mV2Force;			// °¡ÇØÁö´Â Èû
+		math::Vector2	mV2Velocity;		// ¼Óµµ
+		math::Vector2	mV2Accelation;		// °¡¼Óµµ
+		math::Vector2	mV2LimitVelocity;	// ÃÖ´ë Á¦ÇÑ¼Óµµ
+		math::Vector2	mV2Gravity;			// Áß·Â ¼Óµµ
+
 		// V3
-		math::Vector3	mV3Force;			// ê°€í•´ì§€ëŠ” í˜
-		math::Vector3	mV3Velocity;		// ì†ë„
-		math::Vector3	mV3Accelation;		// ê°€ì†ë„
-		//math::Vector3	mV3LimitVelocity;	// ìµœëŒ€ ì œí•œì†ë„
-		//math::Vector3	mV3Gravity;			// ì¤‘ë ¥ ì†ë„
+		math::Vector3	mV3Force;			// °¡ÇØÁö´Â Èû
+		math::Vector3	mV3Velocity;		// ¼Óµµ
+		math::Vector3	mV3Accelation;		// °¡¼Óµµ
+		//math::Vector3	mV3LimitVelocity;	// ÃÖ´ë Á¦ÇÑ¼Óµµ
+		//math::Vector3	mV3Gravity;			// Áß·Â ¼Óµµ
 		bool			mIsGround;
 		bool			mUseGravity;
 	};

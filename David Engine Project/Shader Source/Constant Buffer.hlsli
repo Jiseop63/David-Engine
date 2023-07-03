@@ -7,6 +7,6 @@ cbuffer cTransform : register(b0)
 
 cbuffer cTime : register(b2)
 {
-    float cAddTime;
-    float cSpeed;
+    float cElapsedTime;
+    float cValue;
 }

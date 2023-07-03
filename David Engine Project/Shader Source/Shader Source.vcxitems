@@ -14,7 +14,7 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="$(MSBuildThisFileDirectory)BackgroundShader.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)MovingBGShader.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)SpriteShader.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)TriangleShader.hlsl" />
   </ItemGroup>
