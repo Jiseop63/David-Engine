@@ -4,6 +4,7 @@
 namespace da
 {
 	using namespace math;
+
 	enum class eKeyCode
 	{
 		//Alphabet
@@ -28,7 +29,6 @@ namespace da
 
 		END,
 	};
-
 	enum class eKeyState
 	{
 		Down,
@@ -73,7 +73,7 @@ namespace da
 			return mKeys[static_cast<UINT>(keyCode)].state == eKeyState::Up;
 		}
 
-		static __forceinline Vector2 GetMousePos() { return mMousePosition; }
+		static __forceinline Vector2 GetMouseScreenPos() { return mMousePosition; }
 
 	public:
 		static void CalculateMouseMatrix();

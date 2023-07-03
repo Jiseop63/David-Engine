@@ -19,6 +19,8 @@ namespace da
 		void SetUITextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second);
 
 	protected:
+		// 내 스크린 좌표 찾는 함수
+		math::Vector3 GetScreenPosision();
 		// 마우스 위치 찾는 함수
 		// 충돌 확인하는 함수
 

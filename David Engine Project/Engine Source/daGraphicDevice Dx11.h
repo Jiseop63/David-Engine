@@ -56,6 +56,7 @@ namespace da::graphics
 
 	public:
 		ID3D11Device* GetID3D11Device() { return mDevice.Get(); }
+		D3D11_VIEWPORT GetViewPort() { return mViewPort; }
 
 	private:
 		// 실제 그래픽카드 하드웨어 객체

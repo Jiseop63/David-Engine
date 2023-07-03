@@ -6,6 +6,9 @@
 #include "daResources.h"
 #include "daTexture.h"
 
+#include "daInput.h"
+#include "daTransform.h"
+
 namespace da
 {
 	UIScript::UIScript()
@@ -21,6 +24,10 @@ namespace da
 	}
 	void UIScript::Update()
 	{
+		if (Input::GetKeyDown(eKeyCode::A))
+		{
+			GetScreenPosision();
+		}
 	}
 	void UIScript::LateUpdate()
 	{
@@ -34,6 +41,11 @@ namespace da
 		mFirstTexture = first;
 		mSecondTexture = second;
 		meshRenderer->ChangeTexture(first);
+	}
+	math::Vector3 UIScript::GetScreenPosision()
+	{
+		math::Vector3 myScreenPos = GetOwner()->GetComponent<Transform>()->GetScreenPosition();
+		return myScreenPos;
 	}
 	void UIScript::changeTexture(std::shared_ptr<graphics::Texture> texture)
 	{
