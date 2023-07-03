@@ -147,13 +147,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="daBackGroundObject.h" />
-    <ClInclude Include="daBackGroundScript.h" />
     <ClInclude Include="daCameraObject.h" />
     <ClInclude Include="daCameraScript.h" />
     <ClInclude Include="daCreatureObject.h" />
     <ClInclude Include="daGameManager.h" />
     <ClInclude Include="daLoadScenes.h" />
-    <ClInclude Include="daMoveShaderScript.h" />
     <ClInclude Include="daOverlayObject.h" />
     <ClInclude Include="daProjectileObject.h" />
     <ClInclude Include="daScene_Dungeon.h" />
@@ -165,12 +163,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="daBackGroundObject.cpp" />
-    <ClCompile Include="daBackGroundScript.cpp" />
     <ClCompile Include="daCameraObject.cpp" />
     <ClCompile Include="daCameraScript.cpp" />
     <ClCompile Include="daCreatureObject.cpp" />
     <ClCompile Include="daGameManager.cpp" />
-    <ClCompile Include="daMoveShaderScript.cpp" />
     <ClCompile Include="daOverlayObject.cpp" />
     <ClCompile Include="daProjectileObject.cpp" />
     <ClCompile Include="daScene_Dungeon.cpp" />

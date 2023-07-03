@@ -4,11 +4,11 @@
 #include "daLayer.h"
 
 #include "daResources.h"
+#include "daMesh.h"
+#include "daMaterial.h"
 
 #include "daGameObject.h"
 #include "daMeshRenderer.h"
-#include "daMesh.h"
-#include "daMaterial.h"
 
 #include "daCameraObject.h"
 #include "daCamera.h"
@@ -16,6 +16,7 @@
 
 #include "daUIObject.h"
 #include "daUIScript.h"
+
 namespace da::objects
 {
 	template <typename T>
@@ -55,7 +56,6 @@ namespace da::objects
 		T* obj = new T();
 		Layer& myLayer = scene->GetLayer(enums::eLayerType::UI);
 		myLayer.AddGameObject(obj);
-
 		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
 		meshRenderer->SetMesh( Resources::Find<Mesh>(L"RectMesh") );
 		meshRenderer->SetMaterial( Resources::Find<Material>(material) );
@@ -66,6 +66,8 @@ namespace da::objects
 		return obj;
 	}
 
+
+#pragma region Camera Objects
 	static CameraObject* InstantiateMainCamera(Scene* scene)
 	{
 		CameraObject* cameraObj = new CameraObject(); 
@@ -90,4 +92,5 @@ namespace da::objects
 		camera->TurnLayerMask(enums::eLayerType::UI);
 		return cameraObj;
 	}
+#pragma endregion
 }

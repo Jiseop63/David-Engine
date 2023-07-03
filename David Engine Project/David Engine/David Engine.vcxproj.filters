@@ -69,9 +69,6 @@
     <ClInclude Include="daBackGroundObject.h">
       <Filter>Objects\System\BackGround</Filter>
     </ClInclude>
-    <ClInclude Include="daBackGroundScript.h">
-      <Filter>Objects\System\BackGround</Filter>
-    </ClInclude>
     <ClInclude Include="daUIObject.h">
       <Filter>Objects\System\UI</Filter>
     </ClInclude>
@@ -89,9 +86,6 @@
     </ClInclude>
     <ClInclude Include="daUIScript.h">
       <Filter>Objects\System\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="daMoveShaderScript.h">
-      <Filter>Objects\System\BackGround</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -119,9 +113,6 @@
     <ClCompile Include="daBackGroundObject.cpp">
       <Filter>Objects\System\BackGround</Filter>
     </ClCompile>
-    <ClCompile Include="daBackGroundScript.cpp">
-      <Filter>Objects\System\BackGround</Filter>
-    </ClCompile>
     <ClCompile Include="daUIObject.cpp">
       <Filter>Objects\System\UI</Filter>
     </ClCompile>
@@ -136,9 +127,6 @@
     </ClCompile>
     <ClCompile Include="daUIScript.cpp">
       <Filter>Objects\System\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="daMoveShaderScript.cpp">
-      <Filter>Objects\System\BackGround</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

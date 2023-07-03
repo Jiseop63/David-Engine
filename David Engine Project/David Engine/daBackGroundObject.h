@@ -1,6 +1,5 @@
 #pragma once
 #include "daGameObject.h"
-#include "daBackGroundScript.h"
 namespace da
 {
 	class Transform;
