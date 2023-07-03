@@ -33,6 +33,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daResources.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daRigidbody.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daSceneManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daScript.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daShader.h" />
@@ -60,6 +61,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daResources.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daRigidbody.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daSceneManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daScript.cpp" />

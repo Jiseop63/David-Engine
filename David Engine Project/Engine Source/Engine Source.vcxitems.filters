@@ -70,6 +70,9 @@
     <Filter Include="Common\Header">
       <UniqueIdentifier>{bd8e1546-a87c-4305-95b9-23860e9e2307}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Component\Rigidbody">
+      <UniqueIdentifier>{11b6a4ba-fdde-4e86-a39b-216372b410e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)daMath.h">
@@ -156,6 +159,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daObjects.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daRigidbody.h">
+      <Filter>Component\Rigidbody</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp">
@@ -226,6 +232,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daLayer.cpp">
       <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daRigidbody.cpp">
+      <Filter>Component\Rigidbody</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

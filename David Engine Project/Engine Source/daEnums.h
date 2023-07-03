@@ -15,6 +15,7 @@ namespace da::enums
 	{
 		None,
 		Transform,
+		Rigidbody,
 		Mesh,
 		Renderer,
 		Particle,
