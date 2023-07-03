@@ -15,10 +15,11 @@
 #include "daCameraScript.h"
 
 #include "daUIObject.h"
-#include "daUIScript.h"
+#include "daButtonScript.h"
 
 namespace da::objects
 {
+
 	template <typename T>
 	static T* InstantiateObject(Scene* scene, enums::eLayerType layer, const std::wstring& material)
 	{
@@ -34,22 +35,6 @@ namespace da::objects
 		return obj;
 	}
 
-	// 아직 손을 봐야할것 같음
-	template <typename T>
-	static T* InstantiateUIObject(Scene* scene)
-	{
-		T* obj = new T();
-		Layer& myLayer = scene->GetLayer(enums::eLayerType::UI);
-		myLayer.AddGameObject(obj);
-
-		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
-		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-		meshRenderer->SetMaterial(Resources::Find<Material>(L"UIMaterial"));
-				
-		obj->Initialize();
-		return obj;
-	}
-
 	template <typename T>
 	static T* InstantiateButtonObject(Scene* scene, const std::wstring& material, const std::wstring& first, const std::wstring& second)
 	{
@@ -59,13 +44,12 @@ namespace da::objects
 		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
 		meshRenderer->SetMesh( Resources::Find<Mesh>(L"RectMesh") );
 		meshRenderer->SetMaterial( Resources::Find<Material>(material) );
-		UIScript* uiScript = obj->AddComponent<UIScript>();
+		ButtonScript* uiScript = obj->AddComponent<ButtonScript>();
 		obj->Initialize();
 
 		uiScript->SetUITextures( Resources::Find<graphics::Texture>(first), Resources::Find<graphics::Texture>(second) );
 		return obj;
 	}
-
 
 #pragma region Camera Objects
 	static CameraObject* InstantiateMainCamera(Scene* scene)

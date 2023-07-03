@@ -15,11 +15,10 @@
 #include "daCamera.h"
 #include "daCameraScript.h"
 
-#include "daBackGroundObject.h"
 #include "daTimeConstants.h"
 
 #include "daUIObject.h"
-
+#include "daButtonScript.h"
 
 
 
@@ -72,43 +71,43 @@ namespace da
 	{
 		// just BG
 		{
-			BackGroundObject* backGround = objects::InstantiateObject
-				<BackGroundObject>(this, enums::eLayerType::BackGround, L"TitleBackgroundMaterial");
-			backGround->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
+			GameObject* backGround = objects::InstantiateObject
+				<GameObject>(this, enums::eLayerType::BackGround, L"TitleBackgroundMaterial");
+			backGround->GetTransform()->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
 		}
 
 		// moving background layer
 		{
 			// Back & Front Cloud Layer
-			BackGroundObject* cloudObj = objects::InstantiateObject
-				<BackGroundObject>(this, enums::eLayerType::BackGround, L"BackCloudMaterial");			
-			cloudObj->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
-			cloudObj->SetPosition(math::Vector3(0.0f, 0.0f, -0.001f));
+			GameObject* cloudObj = objects::InstantiateObject
+				<GameObject>(this, enums::eLayerType::BackGround, L"BackCloudMaterial");
+			cloudObj->GetTransform()->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
+			cloudObj->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -0.001f));
 			TimeConstants* cloudTimer = cloudObj->AddComponent<TimeConstants>();
 			cloudTimer->SetValue(0.1f);
 
 
-			BackGroundObject* cloudObj2 = objects::InstantiateObject
-				<BackGroundObject>(this, enums::eLayerType::BackGround, L"FrontCloudMaterial");
-			cloudObj2->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
-			cloudObj2->SetPosition(math::Vector3(0.0f, 0.0f, -0.002f));
+			GameObject* cloudObj2 = objects::InstantiateObject
+				<GameObject>(this, enums::eLayerType::BackGround, L"FrontCloudMaterial");
+			cloudObj2->GetTransform()->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
+			cloudObj2->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -0.002f));
 			TimeConstants* cloudTimer2 = cloudObj2->AddComponent<TimeConstants>();
 			cloudTimer2->SetValue(0.7f);
 
 		}
 		// BGObj MainLogo
 		{
-			BackGroundObject* titleLogoObj = objects::InstantiateObject
-				<BackGroundObject>(this, enums::eLayerType::BackGround, L"MainLogoMaterial");
-			titleLogoObj->SetScale(math::Vector3(4.680f, 2.250f, 1.0f));
-			titleLogoObj->SetPosition(math::Vector3(0.0f, 1.750f, -0.0030f));
+			GameObject* titleLogoObj = objects::InstantiateObject
+				<GameObject>(this, enums::eLayerType::BackGround, L"MainLogoMaterial");
+			titleLogoObj->GetTransform()->SetScale(math::Vector3(4.680f, 2.250f, 1.0f));
+			titleLogoObj->GetTransform()->SetPosition(math::Vector3(0.0f, 1.750f, -0.0030f));
 		}
 		// BGObj Copyright
 		{
-			BackGroundObject* copyrightObj = objects::InstantiateObject
-				<BackGroundObject>(this, enums::eLayerType::BackGround, L"CopyrightMaterial");			
-			copyrightObj->SetScale(math::Vector3(5.010f, 0.360f, 1.0f));
-			copyrightObj->SetPosition(math::Vector3(0.0f, -2.750f, -0.0030f));
+			GameObject* copyrightObj = objects::InstantiateObject
+				<GameObject>(this, enums::eLayerType::BackGround, L"CopyrightMaterial");
+			copyrightObj->GetTransform()->SetScale(math::Vector3(5.010f, 0.360f, 1.0f));
+			copyrightObj->GetTransform()->SetPosition(math::Vector3(0.0f, -2.750f, -0.0030f));
 		}
 	}
 
@@ -119,10 +118,12 @@ namespace da
 			UIObject* playBtnObject = objects::InstantiateButtonObject<UIObject>(this, L"StartBtnMaterial", L"PlayOffTexture", L"PlayOnTexture");
 			playBtnObject->GetTransform()->SetScale(math::Vector3(1.440f, 0.480f, 1.0f));
 			playBtnObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -0.003f));
+			playBtnObject->GetComponent<ButtonScript>()->SetScreenPosision();
 
 			UIObject* exitBtnObject = objects::InstantiateButtonObject<UIObject>(this, L"ExitBtnMaterial", L"ExitOffTexture", L"ExitOnTexture");
 			exitBtnObject->GetTransform()->SetScale(math::Vector3(0.840f, 0.480f, 1.0f));
 			exitBtnObject->GetTransform()->SetPosition(math::Vector3(0.0f, -1.0f, -0.003f));
+			exitBtnObject->GetComponent<ButtonScript>()->SetScreenPosision();
 		}
 	}
 

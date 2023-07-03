@@ -4,11 +4,11 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)MovingBGShader.hlsl">
       <Filter>3 Custom Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)SpriteShader.hlsl">
-      <Filter>2 Shaders\Sprite</Filter>
-    </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)TriangleShader.hlsl">
-      <Filter>2 Shaders\Mesh</Filter>
+      <Filter>2 Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)SpriteShader.hlsl">
+      <Filter>2 Shaders</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -28,12 +28,6 @@
     </Filter>
     <Filter Include="1 Common">
       <UniqueIdentifier>{ddbccf7a-b2e4-4e97-985d-24fdad99168d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="2 Shaders\Sprite">
-      <UniqueIdentifier>{3020f49a-98bc-4420-9345-d173329c1ec4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="2 Shaders\Mesh">
-      <UniqueIdentifier>{0832ec6b-1f72-4b65-878b-7835a31609a9}</UniqueIdentifier>
     </Filter>
     <Filter Include="3 Custom Shaders">
       <UniqueIdentifier>{40bd642a-1e3f-48f6-8878-12a970065e76}</UniqueIdentifier>

@@ -37,9 +37,6 @@
     <Filter Include="Global">
       <UniqueIdentifier>{b9cf5647-e53a-4021-b1cf-90426a34c88b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\System\BackGround">
-      <UniqueIdentifier>{454e9c2b-4b74-41af-a9da-522a5b998801}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\System\UI">
       <UniqueIdentifier>{aebb06b9-71cf-448f-8710-95316a16a433}</UniqueIdentifier>
     </Filter>
@@ -66,9 +63,6 @@
     <ClInclude Include="daCameraScript.h">
       <Filter>Objects\System\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="daBackGroundObject.h">
-      <Filter>Objects\System\BackGround</Filter>
-    </ClInclude>
     <ClInclude Include="daUIObject.h">
       <Filter>Objects\System\UI</Filter>
     </ClInclude>
@@ -85,6 +79,9 @@
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="daUIScript.h">
+      <Filter>Objects\System\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="daButtonScript.h">
       <Filter>Objects\System\UI</Filter>
     </ClInclude>
   </ItemGroup>
@@ -110,9 +107,6 @@
     <ClCompile Include="daCameraScript.cpp">
       <Filter>Objects\System\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="daBackGroundObject.cpp">
-      <Filter>Objects\System\BackGround</Filter>
-    </ClCompile>
     <ClCompile Include="daUIObject.cpp">
       <Filter>Objects\System\UI</Filter>
     </ClCompile>
@@ -126,6 +120,9 @@
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="daUIScript.cpp">
+      <Filter>Objects\System\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="daButtonScript.cpp">
       <Filter>Objects\System\UI</Filter>
     </ClCompile>
   </ItemGroup>

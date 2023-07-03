@@ -13,8 +13,8 @@ namespace da
 		virtual void LateUpdate();
 		virtual void Render();
 
-	public:
-
 	protected:
+
+
 	};
 }
