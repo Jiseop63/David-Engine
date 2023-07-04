@@ -52,6 +52,21 @@ namespace da::objects
 	}
 
 #pragma region Camera Objects
+	// 덮어씌여저서 안보이는 문제가 있음(안쓰는게 나을지도)
+	static CameraObject* InstantiateBackGroundCamera(Scene* scene)
+	{
+		CameraObject* cameraObj = new CameraObject();
+		cameraObj->Initialize();
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::None);
+		myLayer.AddGameObject(cameraObj);
+
+		Camera* camera = cameraObj->GetCameraComponent();
+		camera->DisableLayerMask();
+		camera->TurnLayerMask(enums::eLayerType::BackGround);
+
+		return cameraObj;
+	}
+
 	static CameraObject* InstantiateMainCamera(Scene* scene)
 	{
 		CameraObject* cameraObj = new CameraObject(); 
@@ -70,8 +85,8 @@ namespace da::objects
 		cameraObj->Initialize();
 		Layer& myLayer = scene->GetLayer(enums::eLayerType::None);
 		myLayer.AddGameObject(cameraObj);
-		Camera* camera = cameraObj->GetCameraComponent();
 
+		Camera* camera = cameraObj->GetCameraComponent();
 		camera->DisableLayerMask();
 		camera->TurnLayerMask(enums::eLayerType::UI);
 		return cameraObj;

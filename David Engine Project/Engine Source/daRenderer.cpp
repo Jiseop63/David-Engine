@@ -207,6 +207,21 @@ namespace renderer
 			Resources::Insert<Material>(L"TownLayerMaterial", spriteMaterial);
 		}
 #pragma endregion
+
+#pragma region Town :: Load Texture & Create material
+		// Temp dungeon
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"TempDungeonTexture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\tempDungeon.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"TempDungeonMaterial", spriteMaterial);
+		}
+
+#pragma endregion
+
 	}
 	void SetupState()
 	{

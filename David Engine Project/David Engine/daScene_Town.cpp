@@ -43,7 +43,7 @@ namespace da
 	{
 		if (Input::GetKeyDown(eKeyCode::N))
 		{
-			SceneManager::LoadScene(L"Scene_Title");
+			SceneManager::LoadScene(L"Scene_Dungeon");
 		}
 		Scene::Update();
 	}
