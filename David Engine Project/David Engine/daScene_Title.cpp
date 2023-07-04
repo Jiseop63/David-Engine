@@ -118,14 +118,15 @@ namespace da
 			UIObject* playBtnObject = objects::InstantiateButtonObject<UIObject>(this, L"StartBtnMaterial", L"PlayOffTexture", L"PlayOnTexture");
 			playBtnObject->GetTransform()->SetScale(math::Vector3(1.440f, 0.480f, 1.0f));
 			playBtnObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -0.003f));
-			playBtnObject->GetComponent<ButtonScript>()->SetScreenPosision();
-
+			ButtonScript* playBtnScript = playBtnObject->GetComponent<ButtonScript>();
+			playBtnScript->SetScreenPosision();
+			playBtnScript->SetButtonType(ButtonScript::eButtonType::Play);
 			UIObject* exitBtnObject = objects::InstantiateButtonObject<UIObject>(this, L"ExitBtnMaterial", L"ExitOffTexture", L"ExitOnTexture");
 			exitBtnObject->GetTransform()->SetScale(math::Vector3(0.840f, 0.480f, 1.0f));
 			exitBtnObject->GetTransform()->SetPosition(math::Vector3(0.0f, -1.0f, -0.003f));
-			exitBtnObject->GetComponent<ButtonScript>()->SetScreenPosision();
-			exitBtnObject->SetName(L"2");
+			ButtonScript* exitBtnScript = exitBtnObject->GetComponent<ButtonScript>();
+			exitBtnScript->SetScreenPosision();
+			exitBtnScript->SetButtonType(ButtonScript::eButtonType::Exit);
 		}
 	}
-
 }

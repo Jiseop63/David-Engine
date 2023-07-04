@@ -2,14 +2,15 @@
 
 #include "daGameObject.h"
 #include "daMeshRenderer.h"
-
 #include "daInput.h"
+
+#include "daUIObject.h"
 
 namespace da
 {
 	using namespace math;
 	ButtonScript::ButtonScript()
-		: mIsChanged(false)
+		: mMouseIn(false)
 		, mFirstTexture(nullptr)
 		, mSecondTexture(nullptr)
 		, mScreenPosition(Vector2::Zero)
@@ -24,11 +25,12 @@ namespace da
 	}
 	void ButtonScript::Update()
 	{
-		if (Input::GetKeyDown(eKeyCode::A))
+		if ( true == mMouseIn && Input::GetKeyDown(eKeyCode::LBTN) )
 		{
 			int a = 0;
+			dynamic_cast<UIObject*>(GetOwner())->ExcuteEvent();
 		}
-		isCollisionMouse();
+		mouseCollisionCheck();
 	}
 	void ButtonScript::LateUpdate()
 	{
@@ -36,18 +38,13 @@ namespace da
 	void ButtonScript::Render()
 	{
 	}
+
 	void ButtonScript::SetUITextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second)
 	{
 		MeshRenderer* meshRenderer = GetOwner()->GetComponent<MeshRenderer>();
 		mFirstTexture = first;
 		mSecondTexture = second;
 		meshRenderer->ChangeTexture(first);
-	}
-
-	void ButtonScript::changeTexture(std::shared_ptr<graphics::Texture> texture)
-	{
-		MeshRenderer* meshRenderer = GetOwner()->GetComponent<MeshRenderer>();
-		meshRenderer->ChangeTexture(texture);
 	}
 
 	void ButtonScript::SetScreenPosision()
@@ -61,7 +58,8 @@ namespace da
 		Vector3 myScreenPos = myTransform->GetScreenPosition();		 
 		mScreenPosition = Vector2( myScreenPos.x, myScreenPos.y );
 	}
-	void ButtonScript::isCollisionMouse()
+
+	void ButtonScript::mouseCollisionCheck()
 	{
 		Vector2 mousePosition = Input::GetMouseScreenPos();	
 
@@ -80,12 +78,17 @@ namespace da
 			&& mousePosition.y >= bottom)
 		{
 			changeTexture(mSecondTexture);
-			mIsChanged = true;
+			mMouseIn = true;
 		}
-		else if (mIsChanged = true)
+		else if (mMouseIn = true)
 		{
 			changeTexture(mFirstTexture);
-			mIsChanged = false;
+			mMouseIn = false;
 		}		
+	}
+	void ButtonScript::changeTexture(std::shared_ptr<graphics::Texture> texture)
+	{
+		MeshRenderer* meshRenderer = GetOwner()->GetComponent<MeshRenderer>();
+		meshRenderer->ChangeTexture(texture);
 	}
 }

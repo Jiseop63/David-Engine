@@ -1,5 +1,6 @@
 #include "daScene_Town.h"
-
+#include "daInput.h"
+#include "daSceneManager.h"
 namespace da
 {
 	Scene_Town::Scene_Town()
@@ -14,6 +15,10 @@ namespace da
 	}
 	void Scene_Town::Update()
 	{
+		if (Input::GetKeyDown(eKeyCode::N))
+		{
+			SceneManager::LoadScene(L"Scene_Title");
+		}
 	}
 	void Scene_Town::LateUpdate()
 	{

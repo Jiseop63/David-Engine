@@ -13,6 +13,9 @@ namespace da
 		virtual void LateUpdate();
 		virtual void Render();
 
+	public:
+		void ExcuteEvent();
+
 	protected:
 
 

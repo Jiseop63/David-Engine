@@ -7,6 +7,13 @@ namespace da
 	class ButtonScript : public Script
 	{
 	public:
+		enum eButtonType
+		{
+			Play,
+			Exit,
+		};
+
+	public:
 		ButtonScript();
 		virtual ~ButtonScript();
 		virtual void Initialize();
@@ -17,10 +24,11 @@ namespace da
 	public:
 		void SetUITextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second);
 		void SetScreenPosision();
-
+		void SetButtonType(eButtonType buttonType) { mButtonType = buttonType; }
+		eButtonType GetButtonType() { return mButtonType; }
 	protected:
 		void changeTexture(std::shared_ptr<graphics::Texture> texture);
-		void isCollisionMouse();
+		void mouseCollisionCheck();
 
 
 	protected:
@@ -30,6 +38,7 @@ namespace da
 		math::Vector2 mScreenPosition;
 		math::Vector2 mSize;
 
-		bool mIsChanged;
+		eButtonType mButtonType;
+		bool mMouseIn;
 	};
 }

@@ -78,9 +78,6 @@
     <ClInclude Include="daScene_Dungeon.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="daUIScript.h">
-      <Filter>Objects\System\UI</Filter>
-    </ClInclude>
     <ClInclude Include="daButtonScript.h">
       <Filter>Objects\System\UI</Filter>
     </ClInclude>
@@ -118,9 +115,6 @@
     </ClCompile>
     <ClCompile Include="daScene_Dungeon.cpp">
       <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="daUIScript.cpp">
-      <Filter>Objects\System\UI</Filter>
     </ClCompile>
     <ClCompile Include="daButtonScript.cpp">
       <Filter>Objects\System\UI</Filter>
