@@ -37,6 +37,10 @@ namespace da
 				// Town¾ÀÀ¸·Î ÀÌµ¿
 				SceneManager::LoadScene(L"Scene_Town");
 			}
+			if (ButtonScript::eButtonType::Exit == uiScript->GetButtonType())
+			{
+				PostQuitMessage(WM_QUIT);
+			}
 		}
 	}
 }
