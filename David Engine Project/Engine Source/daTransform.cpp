@@ -69,17 +69,22 @@ namespace da
 	Vector3 Transform::GetScreenPosition()
 	{
 		// viewport 가져오기
+		Viewport viewport = GetViewport();
+
+		// 스크린 변환할 행렬 가져오기
+		Matrix projMatrix = Camera::GetProjectionMatrix();
+		Matrix viewMatrix = Camera::GetViewMatrix();
+				
+		viewport.Project(mPosition / 3.50f, projMatrix, viewMatrix, mWorld, mScreenPos);
+
+		return mScreenPos;
+	}
+	Viewport Transform::GetViewport()
+	{
 		D3D11_VIEWPORT deviceViewport = graphics::GetDevice()->GetViewPort();
 		Viewport viewport =
 			Viewport(deviceViewport.TopLeftX, deviceViewport.TopLeftY
 				, deviceViewport.Width, deviceViewport.Height, deviceViewport.MinDepth, deviceViewport.MaxDepth);
-
-		// 뷰표트를 가져와서 월드 ~ 프로젝션 행렬 변환을 적용해 스크린 좌표 구하기
-		Matrix projMatrix = Camera::GetProjectionMatrix();
-		Matrix viewMatrix = Camera::GetViewMatrix();
-		viewport.Project(mPosition, projMatrix, viewMatrix, mWorld, mScreenPos);
-
-		int a = 0;
-		return mScreenPos;
+		return viewport;
 	}
 }

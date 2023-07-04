@@ -37,6 +37,8 @@ namespace da
 		// 내 스크린 좌표 반환하는 함수
 	public:
 		math::Vector3  GetScreenPosition();
+		math::Viewport GetViewport();
+
 
 	private:
 		Transform* mParent;

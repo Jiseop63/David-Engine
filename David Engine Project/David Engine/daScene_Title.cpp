@@ -124,6 +124,7 @@ namespace da
 			exitBtnObject->GetTransform()->SetScale(math::Vector3(0.840f, 0.480f, 1.0f));
 			exitBtnObject->GetTransform()->SetPosition(math::Vector3(0.0f, -1.0f, -0.003f));
 			exitBtnObject->GetComponent<ButtonScript>()->SetScreenPosision();
+			exitBtnObject->SetName(L"2");
 		}
 	}
 

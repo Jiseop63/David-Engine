@@ -53,16 +53,16 @@ namespace da
 	void ButtonScript::SetScreenPosision()
 	{
 		Transform* myTransform = GetOwner()->GetComponent<Transform>();
-		Vector3 myScreenPos = myTransform->GetScreenPosition();
+		// 내 크기 구하기
 		Vector3 myScale = myTransform->GetScale();
-		
 		mSize = Vector2(myScale.x * 100, myScale.y * 100);
-		mScreenPosition = Vector2(myScreenPos.x, myScreenPos.y);
+
+		// 내 위치 구하기
+		Vector3 myScreenPos = myTransform->GetScreenPosition();		 
+		mScreenPosition = Vector2( myScreenPos.x, myScreenPos.y );
 	}
 	void ButtonScript::isCollisionMouse()
 	{
-		
-		
 		Vector2 mousePosition = Input::GetMouseScreenPos();	
 
 		float left		= mScreenPosition.x - (mSize.x / 2);
@@ -86,8 +86,6 @@ namespace da
 		{
 			changeTexture(mFirstTexture);
 			mIsChanged = false;
-		}
-		// 충돌이 아님
-		
+		}		
 	}
 }

@@ -81,6 +81,10 @@ namespace da
 			GetCursorPos(&mousePos);
 
 			ScreenToClient(application.GetHwnd(), &mousePos);
+			D3D11_VIEWPORT deviceViewport = graphics::GetDevice()->GetViewPort();
+			Viewport viewport(deviceViewport.TopLeftX, deviceViewport.TopLeftY
+			, deviceViewport.Width, deviceViewport.Height, deviceViewport.MinDepth, deviceViewport.MaxDepth);
+			
 			mMousePosition.x = (float)mousePos.x;
 			mMousePosition.y = (float)mousePos.y;
 		}
