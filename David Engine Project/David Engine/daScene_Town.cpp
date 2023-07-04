@@ -73,20 +73,21 @@ namespace da
 			backGround->GetTransform()->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
 		}
 
+		// 레이어 역할을 하는 배경들은 스케일 값을 건드는게 아니라 카메라로부터 영향받는 수치를 낮추는 식으로 해야할듯?
 		// town BG : follow
 		{
 			GameObject* backGround = objects::InstantiateObject
-				<GameObject>(this, enums::eLayerType::BackGround, L"TownBGMaterial");
+				<GameObject>(this, enums::eLayerType::Layer, L"TownBGMaterial");
 			backGround->GetTransform()->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
-			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -0.001f));
+			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, -3.0f, -0.001f));
 		}
 
 		// town Layer : follow
 		{
 			GameObject* backGround = objects::InstantiateObject
-				<GameObject>(this, enums::eLayerType::BackGround, L"TownLayerMaterial");
+				<GameObject>(this, enums::eLayerType::Layer, L"TownLayerMaterial");
 			backGround->GetTransform()->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
-			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -0.002f));
+			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, -6.0f, -0.002f));
 		}
 	}
 }
