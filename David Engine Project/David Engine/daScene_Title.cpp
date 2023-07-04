@@ -20,12 +20,6 @@
 #include "daUIObject.h"
 #include "daButtonScript.h"
 
-
-
-// etc
-#include "daInput.h"
-
-
 namespace da
 {
 	Scene_Title::Scene_Title()
@@ -44,10 +38,6 @@ namespace da
 	}
 	void Scene_Title::Update()
 	{
-		if (Input::GetKeyDown(da::eKeyCode::N))
-		{
-			// Do something!!
-		}
 		Scene::Update();
 	}
 	void Scene_Title::LateUpdate()

@@ -23,8 +23,8 @@ namespace da
 		{
 			Active,		// 씬에서 동작함
 			Paused,		// Update X
-			Disappear,	// Render X
-			Inactive,	// 더이상 동작하지 않음
+			Hide,		// Render X
+			Inactive,	// Update, Render X
 		};
 
 		// 외부에서 오브젝트 타입에 따라 전용 호출이 가능할 수 있도록 타입을 나눔

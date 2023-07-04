@@ -74,7 +74,7 @@ namespace da
 	}
 	void GameObject::Render()
 	{
-		if (eObjectState::Disappear == mObjectState)
+		if (eObjectState::Hide == mObjectState)
 			return;
 		if (eObjectState::Inactive == mObjectState)
 			return;

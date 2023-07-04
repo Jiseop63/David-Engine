@@ -92,7 +92,7 @@ namespace renderer
 		}
 #pragma endregion
 
-#pragma region Load Texture & Create Material
+#pragma region Title :: Load Texture & Create Material
 
 		// NoneTexture Material | Sprite Shader
 		{
@@ -172,6 +172,39 @@ namespace renderer
 			
 			Resources::Load<Texture>(L"ExitOffTexture", L"..\\Resources\\Texture\\Scene_Title\\Button\\ExitOff_Kor.png");
 			Resources::Load<Texture>(L"ExitOnTexture", L"..\\Resources\\Texture\\Scene_Title\\Button\\ExitOn_Kor.png");
+		}
+#pragma endregion
+
+#pragma region Town :: Load Texture & Create material
+		// sky
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"SkyTexture", L"..\\Resources\\Texture\\Scene_Town\\layer\\Sky_Day.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
+			Resources::Insert<Material>(L"SkyMaterial", spriteMaterial);
+		}
+		// TownBG
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"TownBGTexture", L"..\\Resources\\Texture\\Scene_Town\\layer\\TownBG_Day.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"TownBGMaterial", spriteMaterial);
+		}
+		// TownLayer
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"TownLayerDayTexture", L"..\\Resources\\Texture\\Scene_Town\\layer\\TownLayer_Day.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"TownLayerMaterial", spriteMaterial);
 		}
 #pragma endregion
 	}
