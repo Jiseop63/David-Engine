@@ -93,6 +93,9 @@
     <ClInclude Include="daObjecsFastIncludeHeader.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="daCursorScript.h">
+      <Filter>Objects\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -133,6 +136,9 @@
     </ClCompile>
     <ClCompile Include="daScene_Dungeon2F.cpp">
       <Filter>Scenes\03 Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="daCursorScript.cpp">
+      <Filter>Objects\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

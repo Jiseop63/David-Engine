@@ -16,10 +16,8 @@ namespace da
 	public:
 		ButtonScript();
 		virtual ~ButtonScript();
-		virtual void Initialize();
+
 		virtual void Update();
-		virtual void LateUpdate();
-		virtual void Render();
 
 	public:
 		void SetUITextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second);

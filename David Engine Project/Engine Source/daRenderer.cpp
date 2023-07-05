@@ -19,8 +19,11 @@ namespace renderer
 	da::graphics::ConstantBuffer* constantBuffer[(UINT)eCBType::End] = {};
 	std::vector<da::Camera*> cameras = {};
 
+	da::Camera* mainCamera = nullptr;
+	da::Camera* uiCamera = nullptr;
+
 	void LoadMesh()
-	{		
+	{
 #pragma region Create vertex & index buffer
 
 		vertexes[0].pos = Vector3(-0.5f, 0.5f, 0.0f);
@@ -176,6 +179,27 @@ namespace renderer
 #pragma endregion
 
 #pragma region UI
+		// Basic Cursor
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"BasicCursorTexture", L"..\\Resources\\Texture\\UIs\\Mouse\\BasicCursor.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"BasicCursorMaterial", spriteMaterial);
+		}
+		// Shooting Cursor
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"ShootingCursorTexture", L"..\\Resources\\Texture\\UIs\\Mouse\\ShootingCursor2.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"ShootingCursorMaterial", spriteMaterial);
+		}
+
 		// player life
 		{
 			std::shared_ptr<Texture> texture

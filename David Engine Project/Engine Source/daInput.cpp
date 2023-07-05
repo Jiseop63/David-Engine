@@ -31,9 +31,9 @@ namespace da
 	};
 
 	std::vector<Input::Key> Input::mKeys;
-	Vector2 Input::mMousePosition = Vector2::Zero;
-	Vector3 Input::mMouseWorldPosition = Vector3::Zero;
-	Vector3 Input::mMouseUIPosition = Vector3::Zero;
+	math::Vector2 Input::mMousePosition = Vector2::Zero;
+	math::Vector3 Input::mMouseWorldPosition = Vector3::Zero;
+	math::Vector3 Input::mMouseUIPosition = Vector3::Zero;
 
 	void Input::Initialize()
 	{
@@ -52,7 +52,6 @@ namespace da
 	{
 		if (GetFocus())
 		{
-
 			for (UINT i = 0; i < (UINT)eKeyCode::END; i++)
 			{
 				if (GetAsyncKeyState(ASCII[i]) & 0x8000)
@@ -87,6 +86,8 @@ namespace da
 			
 			mMousePosition.x = (float)mousePos.x;
 			mMousePosition.y = (float)mousePos.y;
+
+			CalculateMouseMatrix();
 		}
 		else
 		{
@@ -109,41 +110,44 @@ namespace da
 
 	void Input::Render(HDC hdc)
 	{
-
 	}
+
 	void Input::CalculateMouseMatrix()
 	{
-		//if (renderer::mainCamera)
-		//{
-		//	// 단위행렬
-		//	Matrix worldMatrix = Matrix::Identity;
-		//	// viewport 가져오기
-		//	D3D11_VIEWPORT deviceViewport = graphics::GetDevice()->GetViewPort();
-		//	Viewport viewport =
-		//		Viewport(deviceViewport.TopLeftX, deviceViewport.TopLeftY
-		//			, deviceViewport.Width, deviceViewport.Height, deviceViewport.MinDepth, deviceViewport.MaxDepth);
 
-		//	// 뷰포트부터 월드좌표까지 역행렬을 적용해서 마우스 위치 구하기
-		//	Matrix projMatrix = renderer::mainCamera->GetProjectionMatrix();
-		//	Matrix viewMatrix = renderer::mainCamera->GetViewMatrix();
+		if (renderer::mainCamera)
+		{
+			// 단위행렬
+			Matrix worldMatrix = Matrix::Identity;
+			// viewport 가져오기
+			D3D11_VIEWPORT deviceViewport = graphics::GetDevice()->GetViewPort();
+			Viewport viewport =
+				Viewport(deviceViewport.TopLeftX, deviceViewport.TopLeftY
+					, deviceViewport.Width, deviceViewport.Height, deviceViewport.MinDepth, deviceViewport.MaxDepth);
+			// 뷰포트부터 월드좌표까지 역행렬을 적용해서 마우스 위치 구하기
+			Matrix projMatrix = renderer::mainCamera->GetProjectionMatrix();
+			Matrix viewMatrix = renderer::mainCamera->GetViewMatrix();
+			Vector3 mousePosition = Vector3(mMousePosition.x, mMousePosition.y, 0.0f);
 
-		//	viewport.Unproject(mMousePosition, projMatrix, viewMatrix, worldMatrix, mMouseWorldPosition);
-		//}
-		//if (renderer::uiCamera)
-		//{
-		//	// 단위행렬
-		//	Matrix worldMatrix = Matrix::Identity;
-		//	// viewport 가져오기
-		//	D3D11_VIEWPORT deviceViewport = graphics::GetDevice()->GetViewPort();
-		//	Viewport viewport =
-		//		Viewport(deviceViewport.TopLeftX, deviceViewport.TopLeftY
-		//			, deviceViewport.Width, deviceViewport.Height, deviceViewport.MinDepth, deviceViewport.MaxDepth);
+			viewport.Unproject(mousePosition, projMatrix, viewMatrix, worldMatrix, mMouseWorldPosition);
+		}
+		
+		if (renderer::uiCamera)
+		{
+			// 단위행렬
+			Matrix worldMatrix = Matrix::Identity;
+			// viewport 가져오기
+			D3D11_VIEWPORT deviceViewport = graphics::GetDevice()->GetViewPort();
+			Viewport viewport =
+				Viewport(deviceViewport.TopLeftX, deviceViewport.TopLeftY
+					, deviceViewport.Width, deviceViewport.Height, deviceViewport.MinDepth, deviceViewport.MaxDepth);
 
-		//	// 뷰포트부터 월드좌표까지 역행렬을 적용해서 마우스 위치 구하기
-		//	Matrix projMatrix = renderer::uiCamera->GetProjectionMatrix();
-		//	Matrix viewMatrix = renderer::uiCamera->GetViewMatrix();
+			// 뷰포트부터 월드좌표까지 역행렬을 적용해서 마우스 위치 구하기
+			Matrix projMatrix = renderer::uiCamera->GetProjectionMatrix();
+			Matrix viewMatrix = renderer::uiCamera->GetViewMatrix();
+			Vector3 mousePosition = Vector3(mMousePosition.x, mMousePosition.y, 0.0f);
 
-		//	viewport.Unproject(mMousePosition, projMatrix, viewMatrix, worldMatrix, mMouseUIPosition);
-		//}
+			viewport.Unproject(mousePosition, projMatrix, viewMatrix, worldMatrix, mMouseUIPosition);
+		}
 	}
 }

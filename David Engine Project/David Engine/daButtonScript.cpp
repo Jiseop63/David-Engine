@@ -20,9 +20,7 @@ namespace da
 	ButtonScript::~ButtonScript()
 	{
 	}
-	void ButtonScript::Initialize()
-	{
-	}
+
 	void ButtonScript::Update()
 	{
 		focusCheck();
@@ -34,12 +32,6 @@ namespace da
 				dynamic_cast<UIObject*>(GetOwner())->ExcuteEvent();
 			}
 		}		
-	}
-	void ButtonScript::LateUpdate()
-	{
-	}
-	void ButtonScript::Render()
-	{
 	}
 
 	void ButtonScript::SetUITextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second)
@@ -64,7 +56,7 @@ namespace da
 
 	void ButtonScript::focusCheck()
 	{
-		Vector2 mousePosition = Input::GetMouseScreenPos();	
+		Vector2 mousePosition = Input::GetMouseScreenPosition();	
 
 		float left		= mScreenPosition.x - (mSize.x / 2);
 		float top		= mScreenPosition.y + (mSize.y / 2);

@@ -2,12 +2,18 @@
 
 namespace da
 {
+	class Camera;
 	class GameManager
 	{
 	public:
 
+
+
+
+
 	private:
-		
+		Camera* mMainCamera;
+		Camera* mUICamera;
 	};
 }
 

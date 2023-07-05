@@ -74,7 +74,7 @@ namespace da
 		// 스크린 변환할 행렬 가져오기
 		Matrix projMatrix = Camera::GetProjectionMatrix();
 		Matrix viewMatrix = Camera::GetViewMatrix();
-				
+		
 		viewport.Project(mPosition / 3.50f, projMatrix, viewMatrix, mWorld, mScreenPos);
 
 		return mScreenPos;

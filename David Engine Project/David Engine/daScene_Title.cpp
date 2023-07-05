@@ -3,6 +3,7 @@
 // resource
 #include "daResources.h"
 #include "daTexture.h"
+#include "daRenderer.h"
 
 // objects & components
 #include "daObjects.h"
@@ -20,6 +21,8 @@
 #include "daUIObject.h"
 #include "daButtonScript.h"
 
+#include "daCursorScript.h"
+
 namespace da
 {
 	Scene_Title::Scene_Title()
@@ -31,7 +34,10 @@ namespace da
 	void Scene_Title::Initialize()
 	{
 		CameraObject* mainCameraObj = objects::InstantiateMainCamera(this);
+		renderer::mainCamera = mainCameraObj->GetCameraComponent();
 		CameraObject* uiCameraObj = objects::InstantiateUICamera(this);
+		renderer::uiCamera = uiCameraObj->GetCameraComponent();
+
 		addBackgroundObjects();
 		addUIObjects();
 
@@ -103,6 +109,15 @@ namespace da
 
 	void Scene_Title::addUIObjects()
 	{
+		// mouse
+		{
+			GameObject* cursorObject = objects::InstantiateObject
+				<GameObject>(this, enums::eLayerType::UI, L"BasicCursorMaterial");
+			cursorObject->GetTransform()->SetScale(math::Vector3(0.190f * 4.0f, 0.190f * 4.0f, 1.0f));
+			cursorObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -0.0050f));
+			cursorObject->AddComponent<CursorScript>();
+		}
+		
 		// buttons
 		{
 			UIObject* playBtnObject = objects::InstantiateButtonObject<UIObject>(this, L"StartBtnMaterial", L"PlayOffTexture", L"PlayOnTexture");

@@ -152,6 +152,7 @@
     <ClInclude Include="daCreatureObject.h" />
     <ClInclude Include="daGameManager.h" />
     <ClInclude Include="daLoadScenes.h" />
+    <ClInclude Include="daCursorScript.h" />
     <ClInclude Include="daOverlayObject.h" />
     <ClInclude Include="daProjectileObject.h" />
     <ClInclude Include="daObjecsFastIncludeHeader.h" />
@@ -168,6 +169,7 @@
     <ClCompile Include="daCameraScript.cpp" />
     <ClCompile Include="daCreatureObject.cpp" />
     <ClCompile Include="daGameManager.cpp" />
+    <ClCompile Include="daCursorScript.cpp" />
     <ClCompile Include="daOverlayObject.cpp" />
     <ClCompile Include="daProjectileObject.cpp" />
     <ClCompile Include="daScene_Dungeon1F.cpp" />

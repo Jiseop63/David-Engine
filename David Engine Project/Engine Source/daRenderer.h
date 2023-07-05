@@ -32,6 +32,9 @@ namespace renderer
 	extern Microsoft::WRL::ComPtr<ID3D11BlendState> BlendStates[(UINT)da::graphics::eBSType::End];
 	extern da::graphics::ConstantBuffer* constantBuffer[(UINT)da::graphics::eCBType::End];
 	extern std::vector<da::Camera*> cameras;
+	
+	extern da::Camera* mainCamera;
+	extern da::Camera* uiCamera;
 
 	void Initialize();
 	void Render();

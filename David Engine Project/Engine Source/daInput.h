@@ -73,14 +73,14 @@ namespace da
 			return mKeys[static_cast<UINT>(keyCode)].state == eKeyState::Up;
 		}
 
-		static __forceinline Vector2 GetMouseScreenPos() { return mMousePosition; }
+		static __forceinline Vector2 GetMouseScreenPosition() { return mMousePosition; }
 
 	public:
 		static void CalculateMouseMatrix();
 		static Vector3& GetMouseWorldPosition() { return mMouseWorldPosition; }
 		static Vector3& GetMouseUIPosition() { return mMouseUIPosition; }
 
-
+		
 	private:
 		static std::vector<Key> mKeys;
 
