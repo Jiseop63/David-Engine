@@ -8,21 +8,10 @@
 #include "daResources.h"
 #include "daTexture.h"
 
-// objects & components
-#include "daObjects.h"
 
-#include "daGameObject.h"
-#include "daMeshRenderer.h"
-#include "daTransform.h"
+// UI, Object, Components and Camera
+#include "daObjecsFastIncludeHeader.h"
 
-#include "daCameraObject.h"
-#include "daCamera.h"
-#include "daCameraScript.h"
-
-#include "daTimeConstants.h"
-
-#include "daUIObject.h"
-#include "daButtonScript.h"
 
 
 namespace da
@@ -110,7 +99,7 @@ namespace da
 			float lifeWidthScaleHalf = lifeXScale / 2.0f;
 			float lifeHeightScaleHalf = lifeYScale / 2.0f;
 			float lifePanelPadding = 0.20f;
-			Vector3 lifePanelPosition = Vector3(-6.830f + lifeWidthScaleHalf + lifePanelPadding, 3.840f - lifeHeightScaleHalf - lifePanelPadding, -0.0050f);
+			Vector3 lifePanelPosition = Vector3(-MaxPositionX + lifeWidthScaleHalf + lifePanelPadding, MaxPositionY - lifeHeightScaleHalf - lifePanelPadding, -0.0050f);
 			lifePanelTransform->SetPosition(lifePanelPosition);
 
 
@@ -127,20 +116,23 @@ namespace da
 			float dashWidthScaleHalf = dashXScale / 2.0f;
 			float dashHeightScaleHalf = dashYScale / 2.0f;
 			float dashPanePadding = 0.050f;
-			Vector3 dashPanelPosition = Vector3(-6.830f + dashWidthScaleHalf + lifePanelPadding, 3.840f - (lifeHeightScaleHalf * 2) - dashHeightScaleHalf - lifePanelPadding, -0.0050f);
+			Vector3 dashPanelPosition = Vector3(-MaxPositionX + dashWidthScaleHalf + lifePanelPadding, MaxPositionY - (lifeHeightScaleHalf * 2) - dashHeightScaleHalf - lifePanelPadding, -0.0050f);
 			dashPanelTransform->SetPosition(dashPanelPosition);
-		}
-		// player dash panel
-		{
-
-
 		}
 		// player weapon panel
 		{
 			GameObject* weaponBase = objects::InstantiateObject
 				<GameObject>(this, enums::eLayerType::UI, L"WeaponBaseMaterial");
-			weaponBase->GetTransform()->SetScale(math::Vector3(1.70f, 1.20f, 1.0f));
-			weaponBase->GetTransform()->SetPosition(math::Vector3(4.5f, -2.5f, -0.005f));
+			Transform* weaponPanelTransform = weaponBase->GetTransform();
+			float weaponPanelScaleX = 1.70f;
+			float weaponPanelScaleY = 1.20f;
+			weaponPanelTransform ->SetScale(math::Vector3(weaponPanelScaleX, weaponPanelScaleY, 1.0f));
+			float weaponWidthScaleHalf = weaponPanelScaleX / 2.0f;
+			float weaponHeightScaleHalf = weaponPanelScaleY / 2.0f;
+			float dashPanePadding = 0.150f;
+
+			Vector3 weaponPanelPosition = Vector3(MaxPositionX - weaponWidthScaleHalf - dashPanePadding, -MaxPositionY + weaponHeightScaleHalf + dashPanePadding, -0.0050f);
+			weaponPanelTransform ->SetPosition(weaponPanelPosition);
 		}
 	}
 }

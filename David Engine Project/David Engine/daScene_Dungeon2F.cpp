@@ -1,6 +1,5 @@
 #include "daScene_Dungeon2F.h"
 
-
 // юс╫ц
 #include "daInput.h"
 #include "daSceneManager.h"
@@ -9,21 +8,8 @@
 #include "daResources.h"
 #include "daTexture.h"
 
-// objects & components
-#include "daObjects.h"
-
-#include "daGameObject.h"
-#include "daMeshRenderer.h"
-#include "daTransform.h"
-
-#include "daCameraObject.h"
-#include "daCamera.h"
-#include "daCameraScript.h"
-
-#include "daTimeConstants.h"
-
-#include "daUIObject.h"
-#include "daButtonScript.h"
+// UI, Object, Components and Camera
+#include "daObjecsFastIncludeHeader.h"
 
 
 namespace da

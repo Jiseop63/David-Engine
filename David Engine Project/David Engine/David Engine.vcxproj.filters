@@ -22,12 +22,6 @@
     <Filter Include="Objects">
       <UniqueIdentifier>{b830c822-eefd-4169-b782-76494287e4fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\System">
-      <UniqueIdentifier>{ef3ceb1d-d1c0-4ccf-a5ae-38c9d75f2594}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\System\Camera">
-      <UniqueIdentifier>{c2a9dbb2-d7e7-4d07-8cb8-8b3c24bfd115}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\Creature">
       <UniqueIdentifier>{f1d6c165-77b1-4600-bcad-69546ff9a36c}</UniqueIdentifier>
     </Filter>
@@ -37,16 +31,25 @@
     <Filter Include="Global">
       <UniqueIdentifier>{b9cf5647-e53a-4021-b1cf-90426a34c88b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\System\UI">
+    <Filter Include="Objects\Camera">
+      <UniqueIdentifier>{c2a9dbb2-d7e7-4d07-8cb8-8b3c24bfd115}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\UI">
       <UniqueIdentifier>{aebb06b9-71cf-448f-8710-95316a16a433}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\01 Title">
+      <UniqueIdentifier>{bf1f998b-abd5-4e70-bed1-8dbbca8a7d96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\02 Town">
+      <UniqueIdentifier>{bb7678ff-cc4e-49eb-ba3b-05f6c62dbdf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\03 Dungeon">
+      <UniqueIdentifier>{93894b0e-6b73-42aa-81ce-841f1733fc11}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
       <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="daScene_Title.h">
-      <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="daGameManager.h">
       <Filter>Global</Filter>
@@ -58,39 +61,42 @@
       <Filter>Objects\Projectile</Filter>
     </ClInclude>
     <ClInclude Include="daCameraObject.h">
-      <Filter>Objects\System\Camera</Filter>
+      <Filter>Objects\Camera</Filter>
     </ClInclude>
     <ClInclude Include="daCameraScript.h">
-      <Filter>Objects\System\Camera</Filter>
+      <Filter>Objects\Camera</Filter>
     </ClInclude>
     <ClInclude Include="daUIObject.h">
-      <Filter>Objects\System\UI</Filter>
+      <Filter>Objects\UI</Filter>
     </ClInclude>
     <ClInclude Include="daOverlayObject.h">
-      <Filter>Objects\System\UI</Filter>
+      <Filter>Objects\UI</Filter>
     </ClInclude>
     <ClInclude Include="daLoadScenes.h">
       <Filter>Load</Filter>
     </ClInclude>
+    <ClInclude Include="daButtonScript.h">
+      <Filter>Objects\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="daScene_Title.h">
+      <Filter>Scenes\01 Title</Filter>
+    </ClInclude>
     <ClInclude Include="daScene_Town.h">
-      <Filter>Scenes</Filter>
+      <Filter>Scenes\02 Town</Filter>
     </ClInclude>
     <ClInclude Include="daScene_Dungeon1F.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="daButtonScript.h">
-      <Filter>Objects\System\UI</Filter>
+      <Filter>Scenes\03 Dungeon</Filter>
     </ClInclude>
     <ClInclude Include="daScene_Dungeon2F.h">
-      <Filter>Scenes</Filter>
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="daObjecsFastIncludeHeader.h">
+      <Filter>Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="daScene_Title.cpp">
-      <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="daGameManager.cpp">
       <Filter>Global</Filter>
@@ -102,28 +108,31 @@
       <Filter>Objects\Projectile</Filter>
     </ClCompile>
     <ClCompile Include="daCameraObject.cpp">
-      <Filter>Objects\System\Camera</Filter>
+      <Filter>Objects\Camera</Filter>
     </ClCompile>
     <ClCompile Include="daCameraScript.cpp">
-      <Filter>Objects\System\Camera</Filter>
+      <Filter>Objects\Camera</Filter>
     </ClCompile>
     <ClCompile Include="daUIObject.cpp">
-      <Filter>Objects\System\UI</Filter>
+      <Filter>Objects\UI</Filter>
     </ClCompile>
     <ClCompile Include="daOverlayObject.cpp">
-      <Filter>Objects\System\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="daScene_Town.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="daScene_Dungeon1F.cpp">
-      <Filter>Scenes</Filter>
+      <Filter>Objects\UI</Filter>
     </ClCompile>
     <ClCompile Include="daButtonScript.cpp">
-      <Filter>Objects\System\UI</Filter>
+      <Filter>Objects\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="daScene_Title.cpp">
+      <Filter>Scenes\01 Title</Filter>
+    </ClCompile>
+    <ClCompile Include="daScene_Town.cpp">
+      <Filter>Scenes\02 Town</Filter>
+    </ClCompile>
+    <ClCompile Include="daScene_Dungeon1F.cpp">
+      <Filter>Scenes\03 Dungeon</Filter>
     </ClCompile>
     <ClCompile Include="daScene_Dungeon2F.cpp">
-      <Filter>Scenes</Filter>
+      <Filter>Scenes\03 Dungeon</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

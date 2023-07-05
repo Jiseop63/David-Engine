@@ -2,6 +2,11 @@
 #include "daEntity.h"
 #include "daLayer.h"
 
+
+#define MaxPositionX 6.830f 
+#define MaxPositionY 3.840f
+
+
 namespace da
 {
 	class GameObject;

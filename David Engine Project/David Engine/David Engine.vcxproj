@@ -154,6 +154,7 @@
     <ClInclude Include="daLoadScenes.h" />
     <ClInclude Include="daOverlayObject.h" />
     <ClInclude Include="daProjectileObject.h" />
+    <ClInclude Include="daObjecsFastIncludeHeader.h" />
     <ClInclude Include="daScene_Dungeon1F.h" />
     <ClInclude Include="daScene_Dungeon2F.h" />
     <ClInclude Include="daScene_Title.h" />
