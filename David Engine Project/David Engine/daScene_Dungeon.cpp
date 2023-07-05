@@ -44,7 +44,7 @@ namespace da
 	{
 		if (Input::GetKeyDown(eKeyCode::N))
 		{
-			SceneManager::LoadScene(L"Scene_Dungeon");
+			SceneManager::LoadScene(L"Scene_Dungeon2F");
 		}
 		Scene::Update();
 	}

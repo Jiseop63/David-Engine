@@ -28,7 +28,7 @@ namespace da
 		eButtonType GetButtonType() { return mButtonType; }
 	protected:
 		void changeTexture(std::shared_ptr<graphics::Texture> texture);
-		void mouseCollisionCheck();
+		void focusCheck();
 
 
 	protected:
@@ -39,6 +39,6 @@ namespace da
 		math::Vector2 mSize;
 
 		eButtonType mButtonType;
-		bool mMouseIn;
+		bool mFocusOn;
 	};
 }

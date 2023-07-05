@@ -81,6 +81,9 @@
     <ClInclude Include="daButtonScript.h">
       <Filter>Objects\System\UI</Filter>
     </ClInclude>
+    <ClInclude Include="daScene_Dungeon2F.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -118,6 +121,9 @@
     </ClCompile>
     <ClCompile Include="daButtonScript.cpp">
       <Filter>Objects\System\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="daScene_Dungeon2F.cpp">
+      <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -10,7 +10,7 @@ namespace da
 {
 	using namespace math;
 	ButtonScript::ButtonScript()
-		: mMouseIn(false)
+		: mFocusOn(false)
 		, mFirstTexture(nullptr)
 		, mSecondTexture(nullptr)
 		, mScreenPosition(Vector2::Zero)
@@ -25,12 +25,15 @@ namespace da
 	}
 	void ButtonScript::Update()
 	{
-		if ( true == mMouseIn && Input::GetKeyDown(eKeyCode::LBTN) )
+		focusCheck();
+		if (mFocusOn)
 		{
-			int a = 0;
-			dynamic_cast<UIObject*>(GetOwner())->ExcuteEvent();
-		}
-		mouseCollisionCheck();
+			if (Input::GetKeyDown(eKeyCode::LBTN)
+				|| Input::GetKeyDown(eKeyCode::F))
+			{
+				dynamic_cast<UIObject*>(GetOwner())->ExcuteEvent();
+			}
+		}		
 	}
 	void ButtonScript::LateUpdate()
 	{
@@ -59,7 +62,7 @@ namespace da
 		mScreenPosition = Vector2( myScreenPos.x, myScreenPos.y );
 	}
 
-	void ButtonScript::mouseCollisionCheck()
+	void ButtonScript::focusCheck()
 	{
 		Vector2 mousePosition = Input::GetMouseScreenPos();	
 
@@ -78,13 +81,13 @@ namespace da
 			&& mousePosition.y >= bottom)
 		{
 			changeTexture(mSecondTexture);
-			mMouseIn = true;
+			mFocusOn = true;
 		}
-		else if (mMouseIn = true)
+		else if (mFocusOn = true)
 		{
 			changeTexture(mFirstTexture);
-			mMouseIn = false;
-		}		
+			mFocusOn = false;
+		}
 	}
 	void ButtonScript::changeTexture(std::shared_ptr<graphics::Texture> texture)
 	{
