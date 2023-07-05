@@ -175,6 +175,48 @@ namespace renderer
 		}
 #pragma endregion
 
+#pragma region UI
+		// player life
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"PlayerLifeBackTexture", L"..\\Resources\\Texture\\UIs\\InGame\\Life\\PlayerLifeBack.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
+			Resources::Insert<Material>(L"PlayerLifeBackMaterial", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"PlayerLifeBaseTexture", L"..\\Resources\\Texture\\UIs\\InGame\\Life\\PlayerLifeBase 1.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"PlayerLifeBaseMaterial", spriteMaterial);
+		}
+		// dash count
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"DashCountBaseTexture", L"..\\Resources\\Texture\\UIs\\InGame\\DashCount\\DashCountBase.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
+			Resources::Insert<Material>(L"DashCountBaseMaterial", spriteMaterial);
+		}
+		// weapon panel
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"WeaponBaseTexture", L"..\\Resources\\Texture\\UIs\\InGame\\Weapon\\Base.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
+			Resources::Insert<Material>(L"WeaponBaseMaterial", spriteMaterial);
+		}
+#pragma endregion
+
 #pragma region Town :: Load Texture & Create material
 		// sky
 		{

@@ -38,6 +38,7 @@ namespace da
 		CameraObject* mainCameraObj = objects::InstantiateMainCamera(this);
 		CameraObject* uiCameraObj = objects::InstantiateUICamera(this);
 		addBackgroundObject();
+		addUIObjects();
 	}
 	void Scene_Town::Update()
 	{
@@ -89,5 +90,39 @@ namespace da
 			backGround->GetTransform()->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
 			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, -6.0f, -0.002f));
 		}
+	}
+	void Scene_Town::addUIObjects()
+	{
+		// player life bar
+		{
+			GameObject* LifeBack = objects::InstantiateObject
+				<GameObject>(this, enums::eLayerType::UI, L"PlayerLifeBackMaterial");
+			LifeBack->GetTransform()->SetScale(math::Vector3(2.220f, 0.480f, 1.0f));
+			LifeBack->GetTransform()->SetPosition(math::Vector3(-4.750f, 2.90f, -0.005f));
+			LifeBack->SetName(L"1");
+			GameObject* LifeBase = objects::InstantiateObject
+				<GameObject>(this, enums::eLayerType::UI, L"PlayerLifeBaseMaterial");
+			LifeBase->GetTransform()->SetScale(math::Vector3(2.220f, 0.480f, 1.0f));
+			LifeBase->GetTransform()->SetPosition(math::Vector3(-4.750f, 2.90f, -0.006f));
+			LifeBase->SetName(L"2");
+
+		}
+		// player dash panel
+		{
+			GameObject* dashCount = objects::InstantiateObject
+				<GameObject>(this, enums::eLayerType::UI, L"DashCountBaseMaterial");
+			dashCount->GetTransform()->SetScale(math::Vector3(1.890f, 0.240f, 1.0f));
+			dashCount->GetTransform()->SetPosition(math::Vector3(-4.80f, 2.50f, -0.005f));
+			dashCount->SetName(L"3");
+
+		}
+		// player weapon panel
+		{
+			GameObject* weaponBase = objects::InstantiateObject
+				<GameObject>(this, enums::eLayerType::UI, L"WeaponBaseMaterial");
+			weaponBase->GetTransform()->SetScale(math::Vector3(1.70f, 1.20f, 1.0f));
+			weaponBase->GetTransform()->SetPosition(math::Vector3(4.5f, -2.5f, -0.005f));
+		}
+
 	}
 }

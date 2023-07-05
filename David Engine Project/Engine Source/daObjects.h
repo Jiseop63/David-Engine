@@ -36,6 +36,21 @@ namespace da::objects
 	}
 
 	template <typename T>
+	static T* InstantiateUIObject(Scene* scene, enums::eLayerType layer, const std::wstring& material)
+	{
+		T* obj = new T();										// ÀÌ¶§ Transform Ãß°¡µÊ
+		Layer& myLayer = scene->GetLayer(layer);
+		myLayer.AddGameObject(obj);
+
+		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
+		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		meshRenderer->SetMaterial(Resources::Find<Material>(material));
+
+		obj->Initialize();
+		return obj;
+	}
+
+	template <typename T>
 	static T* InstantiateButtonObject(Scene* scene, const std::wstring& material, const std::wstring& first, const std::wstring& second)
 	{
 		T* obj = new T();
