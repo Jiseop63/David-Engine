@@ -32,9 +32,6 @@
     <ClCompile Include="Editor Window.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\David Engine\daButtonScript.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Editor Window.rc">

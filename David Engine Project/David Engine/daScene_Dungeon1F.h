@@ -3,11 +3,11 @@
 
 namespace da
 {
-	class Scene_Dungeon : public Scene
+	class Scene_Dungeon1F : public Scene
 	{
 	public:
-		Scene_Dungeon();
-		virtual ~Scene_Dungeon();
+		Scene_Dungeon1F();
+		virtual ~Scene_Dungeon1F();
 		virtual void Initialize() override;
 		virtual void Update() override;
 		virtual void LateUpdate() override;

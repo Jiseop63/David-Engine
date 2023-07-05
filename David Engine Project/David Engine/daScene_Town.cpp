@@ -44,7 +44,7 @@ namespace da
 	{
 		if (Input::GetKeyDown(eKeyCode::N))
 		{
-			SceneManager::LoadScene(L"Scene_Dungeon");
+			SceneManager::LoadScene(L"Scene_Dungeon1F");
 		}
 		Scene::Update();
 	}
@@ -93,27 +93,46 @@ namespace da
 	}
 	void Scene_Town::addUIObjects()
 	{
-		// player life bar
+		// player life panel, dash panel
 		{
-			GameObject* LifeBack = objects::InstantiateObject
-				<GameObject>(this, enums::eLayerType::UI, L"PlayerLifeBackMaterial");
-			LifeBack->GetTransform()->SetScale(math::Vector3(2.220f, 0.480f, 1.0f));
-			LifeBack->GetTransform()->SetPosition(math::Vector3(-4.750f, 2.90f, -0.005f));
-			LifeBack->SetName(L"1");
-			GameObject* LifeBase = objects::InstantiateObject
-				<GameObject>(this, enums::eLayerType::UI, L"PlayerLifeBaseMaterial");
-			LifeBase->GetTransform()->SetScale(math::Vector3(2.220f, 0.480f, 1.0f));
-			LifeBase->GetTransform()->SetPosition(math::Vector3(-4.750f, 2.90f, -0.006f));
-			LifeBase->SetName(L"2");
+			GameObject* lifePanel = objects::InstantiateObject
+				<GameObject>(this, enums::eLayerType::UI, L"PlayerLifePanelMaterial");
 
+			Transform* lifePanelTransform = lifePanel->GetTransform();
+
+
+			float lifeXScale = 2.960f;
+			float lifeYScale = 0.640f;
+
+
+
+			lifePanelTransform->SetScale(Vector3(lifeXScale, lifeYScale, 1.0f));
+			float lifeWidthScaleHalf = lifeXScale / 2.0f;
+			float lifeHeightScaleHalf = lifeYScale / 2.0f;
+			float lifePanelPadding = 0.20f;
+			Vector3 lifePanelPosition = Vector3(-6.830f + lifeWidthScaleHalf + lifePanelPadding, 3.840f - lifeHeightScaleHalf - lifePanelPadding, -0.0050f);
+			lifePanelTransform->SetPosition(lifePanelPosition);
+
+
+			GameObject* dashPanel = objects::InstantiateObject
+				<GameObject>(this, enums::eLayerType::UI, L"DashPanelMaterial");
+
+			Transform* dashPanelTransform = dashPanel->GetTransform();
+
+
+			float dashXScale = 0.880f;
+			float dashYScale = 0.640f;
+
+			dashPanelTransform->SetScale(Vector3(dashXScale, dashYScale, 1.0f));
+			float dashWidthScaleHalf = dashXScale / 2.0f;
+			float dashHeightScaleHalf = dashYScale / 2.0f;
+			float dashPanePadding = 0.050f;
+			Vector3 dashPanelPosition = Vector3(-6.830f + dashWidthScaleHalf + lifePanelPadding, 3.840f - (lifeHeightScaleHalf * 2) - dashHeightScaleHalf - lifePanelPadding, -0.0050f);
+			dashPanelTransform->SetPosition(dashPanelPosition);
 		}
 		// player dash panel
 		{
-			GameObject* dashCount = objects::InstantiateObject
-				<GameObject>(this, enums::eLayerType::UI, L"DashCountBaseMaterial");
-			dashCount->GetTransform()->SetScale(math::Vector3(1.890f, 0.240f, 1.0f));
-			dashCount->GetTransform()->SetPosition(math::Vector3(-4.80f, 2.50f, -0.005f));
-			dashCount->SetName(L"3");
+
 
 		}
 		// player weapon panel
@@ -123,6 +142,5 @@ namespace da
 			weaponBase->GetTransform()->SetScale(math::Vector3(1.70f, 1.20f, 1.0f));
 			weaponBase->GetTransform()->SetPosition(math::Vector3(4.5f, -2.5f, -0.005f));
 		}
-
 	}
 }

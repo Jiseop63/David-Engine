@@ -145,7 +145,6 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\David Engine\daButtonScript.cpp" />
     <ClCompile Include="Editor Window.cpp" />
   </ItemGroup>
   <ItemGroup>

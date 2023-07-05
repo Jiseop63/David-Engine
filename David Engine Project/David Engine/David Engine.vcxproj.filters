@@ -75,7 +75,7 @@
     <ClInclude Include="daScene_Town.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="daScene_Dungeon.h">
+    <ClInclude Include="daScene_Dungeon1F.h">
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="daButtonScript.h">
@@ -116,7 +116,7 @@
     <ClCompile Include="daScene_Town.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="daScene_Dungeon.cpp">
+    <ClCompile Include="daScene_Dungeon1F.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="daButtonScript.cpp">

@@ -179,31 +179,22 @@ namespace renderer
 		// player life
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"PlayerLifeBackTexture", L"..\\Resources\\Texture\\UIs\\InGame\\Life\\PlayerLifeBack.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
-			Resources::Insert<Material>(L"PlayerLifeBackMaterial", spriteMaterial);
-		}
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"PlayerLifeBaseTexture", L"..\\Resources\\Texture\\UIs\\InGame\\Life\\PlayerLifeBase 1.png");
+				= Resources::Load<Texture>(L"PlayerLifePanelTexture", L"..\\Resources\\Texture\\UIs\\InGame\\Life\\PlayerLifePanel.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
 			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
-			Resources::Insert<Material>(L"PlayerLifeBaseMaterial", spriteMaterial);
+			Resources::Insert<Material>(L"PlayerLifePanelMaterial", spriteMaterial);
 		}
 		// dash count
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"DashCountBaseTexture", L"..\\Resources\\Texture\\UIs\\InGame\\DashCount\\DashCountBase.png");
+				= Resources::Load<Texture>(L"DashPanelTexture", L"..\\Resources\\Texture\\UIs\\InGame\\DashCount\\DashPanel.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
-			spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
-			Resources::Insert<Material>(L"DashCountBaseMaterial", spriteMaterial);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"DashPanelMaterial", spriteMaterial);
 		}
 		// weapon panel
 		{

@@ -2,7 +2,7 @@
 #include "daSceneManager.h"
 #include "daScene_Title.h"
 #include "daScene_Town.h"
-#include "daScene_Dungeon.h"
+#include "daScene_Dungeon1F.h"
 #include "daScene_Dungeon2F.h"
 
 #ifdef _DEBUG
@@ -19,7 +19,7 @@ namespace da
 	{
 		SceneManager::CreateScene<Scene_Title>(L"Scene_Title");
 		SceneManager::CreateScene<Scene_Town>(L"Scene_Town");
-		SceneManager::CreateScene<Scene_Dungeon>(L"Scene_Dungeon");
+		SceneManager::CreateScene<Scene_Dungeon1F>(L"Scene_Dungeon1F");
 		SceneManager::CreateScene<Scene_Dungeon2F>(L"Scene_Dungeon2F");
 	}
 }

@@ -154,7 +154,7 @@
     <ClInclude Include="daLoadScenes.h" />
     <ClInclude Include="daOverlayObject.h" />
     <ClInclude Include="daProjectileObject.h" />
-    <ClInclude Include="daScene_Dungeon.h" />
+    <ClInclude Include="daScene_Dungeon1F.h" />
     <ClInclude Include="daScene_Dungeon2F.h" />
     <ClInclude Include="daScene_Title.h" />
     <ClInclude Include="daScene_Town.h" />
@@ -169,7 +169,7 @@
     <ClCompile Include="daGameManager.cpp" />
     <ClCompile Include="daOverlayObject.cpp" />
     <ClCompile Include="daProjectileObject.cpp" />
-    <ClCompile Include="daScene_Dungeon.cpp" />
+    <ClCompile Include="daScene_Dungeon1F.cpp" />
     <ClCompile Include="daScene_Dungeon2F.cpp" />
     <ClCompile Include="daScene_Title.cpp" />
     <ClCompile Include="daScene_Town.cpp" />

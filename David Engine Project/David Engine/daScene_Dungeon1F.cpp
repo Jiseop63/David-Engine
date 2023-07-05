@@ -1,4 +1,4 @@
-#include "daScene_Dungeon.h"
+#include "daScene_Dungeon1F.h"
 
 
 // юс╫ц
@@ -28,19 +28,19 @@
 
 namespace da
 {
-	Scene_Dungeon::Scene_Dungeon()
+	Scene_Dungeon1F::Scene_Dungeon1F()
 	{
 	}
-	Scene_Dungeon::~Scene_Dungeon()
+	Scene_Dungeon1F::~Scene_Dungeon1F()
 	{
 	}
-	void Scene_Dungeon::Initialize()
+	void Scene_Dungeon1F::Initialize()
 	{
 		CameraObject* mainCameraObj = objects::InstantiateMainCamera(this);
 		CameraObject* uiCameraObj = objects::InstantiateUICamera(this);
 		addBackgroundObjects();
 	}
-	void Scene_Dungeon::Update()
+	void Scene_Dungeon1F::Update()
 	{
 		if (Input::GetKeyDown(eKeyCode::N))
 		{
@@ -48,22 +48,22 @@ namespace da
 		}
 		Scene::Update();
 	}
-	void Scene_Dungeon::LateUpdate()
+	void Scene_Dungeon1F::LateUpdate()
 	{
 		Scene::LateUpdate();
 	}
-	void Scene_Dungeon::Render()
+	void Scene_Dungeon1F::Render()
 	{
 		Scene::Render();
 	}
 	
-	void Scene_Dungeon::OnEnter()
+	void Scene_Dungeon1F::OnEnter()
 	{
 	}
-	void Scene_Dungeon::OnExit()
+	void Scene_Dungeon1F::OnExit()
 	{
 	}
-	void Scene_Dungeon::addBackgroundObjects()
+	void Scene_Dungeon1F::addBackgroundObjects()
 	{
 		// TempDungeonMaterial
 		// town Layer : follow
