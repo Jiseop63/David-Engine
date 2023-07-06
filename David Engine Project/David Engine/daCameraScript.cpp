@@ -1,11 +1,13 @@
 #include "daCameraScript.h"
 
+#include "daRenderer.h"
 #include "daTime.h"
 #include "daInput.h"
 
 #include "daGameObject.h"
 #include "daTransform.h"
 #include "daCamera.h"
+
 
 namespace da
 {
@@ -77,12 +79,21 @@ namespace da
 		// num 0 : ProjectionType Change
 		else if (Input::GetKeyDown(eKeyCode::NUM_0))
 		{
-			Camera::eProjectionType projectionType = cameraComponent->GetProjectionType();
+			Camera* mainCam = renderer::mainCamera;
+			Camera* uiCam = renderer::uiCamera;
+
+			Camera::eProjectionType projectionType = mainCam->GetProjectionType();
 
 			if (Camera::eProjectionType::Orthographic == projectionType)
-				cameraComponent->SetProjectionType(Camera::eProjectionType::Perspective);
+			{
+				mainCam->SetProjectionType(Camera::eProjectionType::Perspective);
+				uiCam->SetProjectionType(Camera::eProjectionType::Perspective);
+			}
 			else
-				cameraComponent->SetProjectionType(Camera::eProjectionType::Orthographic);
+			{
+				mainCam->SetProjectionType(Camera::eProjectionType::Orthographic);
+				uiCam->SetProjectionType(Camera::eProjectionType::Orthographic);
+			}
 		}
 
 		// num 7 - 1 : size Up-Down

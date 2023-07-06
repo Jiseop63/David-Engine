@@ -72,11 +72,6 @@ namespace da
 		Width /= 100.0f;
 		float height = (float)application.GetClientHeight();
 		height /= 100.0f;
-		// 해상도 크기가 문제는 아닌듯
-		
-		//float width = application.GetFrameWidth();
-		//float height = application.GetFrameHeight();
-
 		
 		// just BG
 		{
