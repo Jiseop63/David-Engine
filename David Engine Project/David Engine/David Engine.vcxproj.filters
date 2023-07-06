@@ -140,5 +140,8 @@
     <ClCompile Include="daCursorScript.cpp">
       <Filter>Objects\UI</Filter>
     </ClCompile>
+    <ClCompile Include="daUIManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -176,6 +176,7 @@
     <ClCompile Include="daScene_Dungeon2F.cpp" />
     <ClCompile Include="daScene_Title.cpp" />
     <ClCompile Include="daScene_Town.cpp" />
+    <ClCompile Include="daUIManager.cpp" />
     <ClCompile Include="daUIObject.cpp" />
     <ClCompile Include="David Engine.cpp" />
   </ItemGroup>

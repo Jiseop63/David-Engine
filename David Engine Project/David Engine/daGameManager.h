@@ -2,7 +2,6 @@
 
 namespace da
 {
-	class Camera;
 	class GameManager
 	{
 	public:
@@ -12,8 +11,6 @@ namespace da
 
 
 	private:
-		Camera* mMainCamera;
-		Camera* mUICamera;
 	};
 }
 
