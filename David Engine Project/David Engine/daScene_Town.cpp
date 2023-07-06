@@ -3,6 +3,7 @@
 // 임시
 #include "daInput.h"
 #include "daSceneManager.h"
+#include "daApplication.h"
 
 // resource
 #include "daResources.h"
@@ -12,7 +13,7 @@
 // UI, Object, Components and Camera
 #include "daObjecsFastIncludeHeader.h"
 
-
+extern da::Application application;
 
 namespace da
 {
@@ -56,11 +57,14 @@ namespace da
 
 	void Scene_Town::addBackgroundObject()
 	{
+		float width = application.GetFrameWidth();
+		float height = application.GetFrameHeight();
+
 		// sky BG : stay
 		{
 			GameObject* backGround = objects::InstantiateObject
 				<GameObject>(this, enums::eLayerType::BackGround, L"SkyMaterial");
-			backGround->GetTransform()->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
+			backGround->GetTransform()->SetScale(math::Vector3(width, height, 1.0f));
 		}
 
 		// 레이어 역할을 하는 배경들은 스케일 값을 건드는게 아니라 카메라로부터 영향받는 수치를 낮추는 식으로 해야할듯?
