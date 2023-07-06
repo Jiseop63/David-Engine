@@ -23,6 +23,10 @@ namespace da
 
 	void ButtonScript::Update()
 	{
+		if (Input::GetKeyDown(eKeyCode::A))
+		{
+			int a = 0;
+		}
 		focusCheck();
 		if (mFocusOn)
 		{
@@ -41,15 +45,20 @@ namespace da
 		mSecondTexture = second;
 		meshRenderer->ChangeTexture(first);
 	}
+#define MaxPositionX 6.830f 
+#define MaxPositionY 3.840f
+
+#define MovePositionOne 1.00f
 
 	void ButtonScript::SetScreenPosision()
-	{
+	{		
 		Transform* myTransform = GetOwner()->GetComponent<Transform>();
 		// 내 크기 구하기
 		Vector3 myScale = myTransform->GetScale();
 		mSize = Vector2(myScale.x * 100, myScale.y * 100);
 
 		// 내 위치 구하기
+		Vector3 myPos = myTransform->GetPosition();
 		Vector3 myScreenPos = myTransform->GetScreenPosition();		 
 		mScreenPosition = Vector2( myScreenPos.x, myScreenPos.y );
 	}
@@ -59,18 +68,18 @@ namespace da
 		Vector2 mousePosition = Input::GetMouseScreenPosition();	
 
 		float left		= mScreenPosition.x - (mSize.x / 2);
-		float top		= mScreenPosition.y + (mSize.y / 2);
+		float top		= mScreenPosition.y - (mSize.y / 2);
 		Vector2 LT(left, top);
 
 		float right		= mScreenPosition.x + (mSize.x / 2);
-		float bottom	= mScreenPosition.y - (mSize.y / 2);
+		float bottom	= mScreenPosition.y + (mSize.y / 2);
 		Vector2 RB(right, bottom);
 
 		// 충돌중
 		if (mousePosition.x >= left
 			&& mousePosition.x <= right
-			&& mousePosition.y <= top
-			&& mousePosition.y >= bottom)
+			&& mousePosition.y >= top
+			&& mousePosition.y <= bottom)
 		{
 			changeTexture(mSecondTexture);
 			mFocusOn = true;

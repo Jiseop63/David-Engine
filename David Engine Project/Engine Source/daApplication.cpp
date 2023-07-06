@@ -8,8 +8,8 @@ namespace da
 	Application::Application()
 		: graphicDevice(nullptr)
 		, mHwnd(NULL)
-		, mWidth(-1)
-		, mHeight(-1)
+		, mClientWidth(-1)
+		, mClientHeight(-1)
 	{
 
 	}
@@ -50,7 +50,7 @@ namespace da
 	void Application::Render()
 	{
 		Time::Render();
-
+		Input::Render();
 		graphicDevice->ClearTarget();
 		graphicDevice->UpdateViewPort();
 		//SceneManager::Render();
@@ -60,20 +60,30 @@ namespace da
 
 	void Application::SetWindow(HWND hwnd, UINT width, UINT height)
 	{
+		// 최초 실행시 unique 객체를 초기화 해줌
 		if (graphicDevice == nullptr)
 		{
 			mHwnd = hwnd;
-			mWidth = width;
-			mHeight = height;
+			mClientWidth = width;
+			mClientHeight = height;
 
 			graphicDevice = std::make_unique<da::graphics::GraphicDevice_Dx11>();
 			da::graphics::GetDevice() = graphicDevice.get();
 		}
 
-		RECT rt = { 0, 0, (LONG)width , (LONG)height };
-		AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, false);
-		SetWindowPos(mHwnd, nullptr, 0, 0, rt.right - rt.left, rt.bottom - rt.top, 0);
+		CalculateWindowSize(width, height);
+
+		SetWindowPos(mHwnd, nullptr, 0, 0, mFrameWidth, mFrameHeight, 0);
 		ShowWindow(mHwnd, true);
 		UpdateWindow(mHwnd);
+	}
+
+	void Application::CalculateWindowSize(UINT width, UINT height)
+	{
+		// 윈도우 크기 구하기
+		RECT rt = { 0, 0, (LONG)width , (LONG)height };
+		AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, false);
+		mFrameWidth = UINT(rt.right - rt.left);
+		mFrameHeight = UINT(rt.bottom - rt.top);
 	}
 }

@@ -108,8 +108,15 @@ namespace da
 		}
 	}
 
-	void Input::Render(HDC hdc)
+	void Input::Render()
 	{
+		HDC hdc = application.GetHDC();
+		int size = 12;
+
+		wchar_t szFloat[12] = {};
+		swprintf_s(szFloat, size, L"%d, %d", (UINT)mMousePosition.x, (UINT)mMousePosition.y);
+
+		TextOut(hdc, 10, 10, szFloat, size);
 	}
 
 	void Input::CalculateMouseMatrix()
@@ -145,7 +152,7 @@ namespace da
 			// 뷰포트부터 월드좌표까지 역행렬을 적용해서 마우스 위치 구하기
 			Matrix projMatrix = renderer::uiCamera->GetProjectionMatrix();
 			Matrix viewMatrix = renderer::uiCamera->GetViewMatrix();
-			Vector3 mousePosition = Vector3(mMousePosition.x, mMousePosition.y, 0.0f);
+			Vector3 mousePosition = Vector3(mMousePosition.x, mMousePosition.y, -6.5f);
 
 			viewport.Unproject(mousePosition, projMatrix, viewMatrix, worldMatrix, mMouseUIPosition);
 		}

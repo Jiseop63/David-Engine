@@ -34,7 +34,7 @@ namespace da
 
 		if (Input::GetKey(eKeyCode::NUM_9))
 		{
-			pos += myTransform->Forward() * 5.0f * (float)Time::DeltaTime();			
+			pos += myTransform->Forward() * 5.0f * (float)Time::DeltaTime();
 			myTransform->SetPosition(pos);
 		}
 		else if (Input::GetKey(eKeyCode::NUM_3))

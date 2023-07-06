@@ -110,11 +110,9 @@ namespace da
 		return true;
 	}
 	bool Camera::createProjectionMatrix()
-	{
-		RECT rect = {};
-		GetClientRect(application.GetHwnd(), &rect);
-		float width = float(rect.right - rect.left);
-		float height = float(rect.bottom - rect.top);
+	{		
+		float width = (float)application.GetClientWidth();
+		float height = (float)application.GetClientHeight();
 		mAspectRatio = width / height;
 
 		if (mProjectionType == eProjectionType::Orthographic)

@@ -8,26 +8,25 @@ namespace da::graphics
 {
 	GraphicDevice_Dx11::GraphicDevice_Dx11()
 	{
-		// Device, Context 생성
+		// window handle
 		HWND hWnd = application.GetHwnd();
-		UINT deviceFlag = D3D11_CREATE_DEVICE_DEBUG;
-		D3D_FEATURE_LEVEL featureLevel = (D3D_FEATURE_LEVEL)0;
 
-		//ID3D11Device* pDevice = nullptr;
-		//ID3D11DeviceContext* pContext = nullptr;
-		//ID3D11DeviceContext** ppContext = &pContext;
+		// Device, Context 생성
+		D3D_FEATURE_LEVEL featureLevel = (D3D_FEATURE_LEVEL)0;
 		D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr
-			, deviceFlag, nullptr, 0
+			, D3D11_CREATE_DEVICE_DEBUG, nullptr, 0
 			, D3D11_SDK_VERSION
 			, mDevice.GetAddressOf(), &featureLevel
 			, mContext.GetAddressOf());
 
-		// SwapChain 화면에 렌더링을 할 수 있게 도와줌
+		UINT clientWidth = application.GetClientWidth();
+		UINT clientHeight = application.GetClientHeight();
+
+		// create swapchain
 		DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
 		swapChainDesc.BufferCount = 2;
-		swapChainDesc.BufferDesc.Width = application.GetWidth();
-		swapChainDesc.BufferDesc.Height = application.GetHeight();
-
+		swapChainDesc.BufferDesc.Width = clientWidth;
+		swapChainDesc.BufferDesc.Height = clientHeight;
 		if (!CreateSwapChain(&swapChainDesc, hWnd))
 			return;
 
@@ -42,13 +41,13 @@ namespace da::graphics
 
 		D3D11_TEXTURE2D_DESC depthStencilDesc = {};
 		depthStencilDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL;
-		depthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
+		depthStencilDesc.Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT;
 		depthStencilDesc.CPUAccessFlags = 0;
 
 		depthStencilDesc.Format = DXGI_FORMAT::DXGI_FORMAT_D24_UNORM_S8_UINT;
 		
-		depthStencilDesc.Width = application.GetWidth();
-		depthStencilDesc.Height = application.GetHeight();
+		depthStencilDesc.Width = clientWidth;
+		depthStencilDesc.Height = clientHeight;
 		depthStencilDesc.ArraySize = 1;
 		
 		depthStencilDesc.SampleDesc.Count = 1;
@@ -62,12 +61,12 @@ namespace da::graphics
 
 		RECT winRect = {};
 		GetClientRect(hWnd, &winRect);
-
+		int a = 0;
 		mViewPort =
 		{
 			0.0f, 0.0f
-			, (float)(winRect.right - winRect.left)
-			, (float)(winRect.bottom - winRect.top)
+			, (float)clientWidth
+			, (float)clientHeight
 			, 0.0f, 1.0f
 		};
 		BindViewPort(&mViewPort);

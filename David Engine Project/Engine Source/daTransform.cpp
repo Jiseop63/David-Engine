@@ -75,7 +75,7 @@ namespace da
 		Matrix projMatrix = Camera::GetProjectionMatrix();
 		Matrix viewMatrix = Camera::GetViewMatrix();
 		
-		viewport.Project(mPosition / 3.50f, projMatrix, viewMatrix, mWorld, mScreenPos);
+		viewport.Project(mPosition / 3.84150f, projMatrix, viewMatrix, mWorld, mScreenPos);
 
 		return mScreenPos;
 	}

@@ -23,6 +23,7 @@ namespace da
 		Vector3 mousePosition = Input::GetMouseUIPosition();
 		myPosition.x = mousePosition.x;
 		myPosition.y = mousePosition.y;
+		myPosition.z = 5.0f;
 
 		// 내위치를 마우스 위치로 옮기기
 		cursorTransform->SetPosition(myPosition);
