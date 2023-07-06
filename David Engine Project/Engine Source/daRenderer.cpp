@@ -95,6 +95,60 @@ namespace renderer
 		}
 #pragma endregion
 
+#pragma region UI
+		// Basic Cursor
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"BasicCursorTexture", L"..\\Resources\\Texture\\UIs\\Mouse\\BasicCursor.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"BasicCursorMaterial", spriteMaterial);
+		}
+		// Shooting Cursor
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"ShootingCursorTexture", L"..\\Resources\\Texture\\UIs\\Mouse\\ShootingCursor2.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"ShootingCursorMaterial", spriteMaterial);
+		}
+
+		// player life
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"PlayerLifePanelTexture", L"..\\Resources\\Texture\\UIs\\InGame\\Life\\PlayerLifePanel.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"PlayerLifePanelMaterial", spriteMaterial);
+		}
+		// dash count
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"DashPanelTexture", L"..\\Resources\\Texture\\UIs\\InGame\\DashCount\\DashPanel.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"DashPanelMaterial", spriteMaterial);
+		}
+		// weapon panel
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"WeaponBaseTexture", L"..\\Resources\\Texture\\UIs\\InGame\\Weapon\\Base.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
+			Resources::Insert<Material>(L"WeaponBaseMaterial", spriteMaterial);
+		}
+#pragma endregion
+
 #pragma region Title :: Load Texture & Create Material
 
 		// NoneTexture Material | Sprite Shader
@@ -177,61 +231,6 @@ namespace renderer
 			Resources::Load<Texture>(L"ExitOnTexture", L"..\\Resources\\Texture\\Scene_Title\\Button\\ExitOn_Kor.png");
 		}
 #pragma endregion
-
-#pragma region UI
-		// Basic Cursor
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"BasicCursorTexture", L"..\\Resources\\Texture\\UIs\\Mouse\\BasicCursor.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
-			Resources::Insert<Material>(L"BasicCursorMaterial", spriteMaterial);
-		}
-		// Shooting Cursor
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"ShootingCursorTexture", L"..\\Resources\\Texture\\UIs\\Mouse\\ShootingCursor2.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
-			Resources::Insert<Material>(L"ShootingCursorMaterial", spriteMaterial);
-		}
-
-		// player life
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"PlayerLifePanelTexture", L"..\\Resources\\Texture\\UIs\\InGame\\Life\\PlayerLifePanel.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
-			Resources::Insert<Material>(L"PlayerLifePanelMaterial", spriteMaterial);
-		}
-		// dash count
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"DashPanelTexture", L"..\\Resources\\Texture\\UIs\\InGame\\DashCount\\DashPanel.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
-			Resources::Insert<Material>(L"DashPanelMaterial", spriteMaterial);
-		}
-		// weapon panel
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"WeaponBaseTexture", L"..\\Resources\\Texture\\UIs\\InGame\\Weapon\\Base.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
-			Resources::Insert<Material>(L"WeaponBaseMaterial", spriteMaterial);
-		}
-#pragma endregion
-
 #pragma region Town :: Load Texture & Create material
 		// sky
 		{
@@ -264,7 +263,6 @@ namespace renderer
 			Resources::Insert<Material>(L"TownLayerMaterial", spriteMaterial);
 		}
 #pragma endregion
-
 #pragma region 1F :: Load Texture & Create material
 		// Temp dungeon
 		{

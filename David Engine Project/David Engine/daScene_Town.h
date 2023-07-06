@@ -3,6 +3,7 @@
 
 namespace da
 {
+	class CameraObject;
 	class Scene_Town : public Scene
 	{
 	public:
@@ -19,7 +20,6 @@ namespace da
 	private:
 		void addBackgroundObject();
 		void addUIObjects();
-
-	private:
+		
 	};
 }

@@ -14,3 +14,4 @@
 
 #include "daUIObject.h"
 #include "daButtonScript.h"
+#include "daCursorScript.h"

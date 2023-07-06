@@ -19,6 +19,7 @@
 namespace da
 {
 	class GameObject;
+	class CameraObject;
 	class Scene : public Entity
 	{
 	public:
@@ -30,8 +31,8 @@ namespace da
 		virtual void Render();
 
 	public:
-		virtual void OnEnter();
-		virtual void OnExit();
+		virtual void OnEnter() {}
+		virtual void OnExit() {}
 		
 		void AddGameObject(enums::eLayerType layerType, GameObject* target);
 		
@@ -53,6 +54,10 @@ namespace da
 		}
 
 		Layer& GetLayer(enums::eLayerType targetLayer) { return mLayers[(UINT)targetLayer]; }
+
+	protected:
+		CameraObject* mMainCamera;
+		CameraObject* mUICamera;
 
 	private:
 		std::vector<Layer> mLayers;

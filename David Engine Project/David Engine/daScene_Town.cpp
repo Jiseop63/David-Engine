@@ -4,6 +4,7 @@
 #include "daInput.h"
 #include "daSceneManager.h"
 #include "daApplication.h"
+#include "daRenderer.h"
 
 // resource
 #include "daResources.h"
@@ -25,8 +26,8 @@ namespace da
 	}
 	void Scene_Town::Initialize()
 	{
-		CameraObject* mainCameraObj = objects::InstantiateMainCamera(this);
-		CameraObject* uiCameraObj = objects::InstantiateUICamera(this);
+		mMainCamera = objects::InstantiateMainCamera(this);
+		mUICamera = objects::InstantiateUICamera(this);
 		addBackgroundObject();
 		addUIObjects();
 	}
@@ -49,7 +50,11 @@ namespace da
 	
 	void Scene_Town::OnEnter()
 	{
-		// 카메라 세팅, 플레이어 세팅
+		// 카메라 세팅
+		renderer::mainCamera = mMainCamera->GetCameraComponent();
+		renderer::uiCamera = mUICamera->GetCameraComponent();
+		
+		// 플레이어 세팅
 	}
 	void Scene_Town::OnExit()
 	{
@@ -57,8 +62,10 @@ namespace da
 
 	void Scene_Town::addBackgroundObject()
 	{
-		float width = application.GetFrameWidth();
-		float height = application.GetFrameHeight();
+		float width = (float)application.GetClientWidth();
+		width /= 100.0f;
+		float height = (float)application.GetClientHeight();
+		height /= 100.0f;
 
 		// sky BG : stay
 		{
@@ -137,6 +144,14 @@ namespace da
 
 			Vector3 weaponPanelPosition = Vector3(MaxPositionX - weaponWidthScaleHalf - dashPanePadding, -MaxPositionY + weaponHeightScaleHalf + dashPanePadding, -0.0050f);
 			weaponPanelTransform ->SetPosition(weaponPanelPosition);
+		}
+		// mouse
+		{
+			GameObject* cursorObject = objects::InstantiateObject
+				<GameObject>(this, enums::eLayerType::UI, L"ShootingCursorMaterial");
+			cursorObject->GetTransform()->SetScale(math::Vector3(0.210f * 4.0f, 0.210f * 4.0f, 1.0f));
+			cursorObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, CursorZ));
+			cursorObject->AddComponent<CursorScript>();
 		}
 	}
 }

@@ -6,6 +6,8 @@ namespace da
 {
 	using namespace enums;
 	Scene::Scene()
+		: mMainCamera(nullptr)
+		, mUICamera(nullptr)
 	{
 		mLayers.resize((int)eLayerType::End);
 	}
@@ -39,12 +41,6 @@ namespace da
 		{
 			targetLayer.Render();
 		}
-	}
-	void Scene::OnEnter()
-	{
-	}
-	void Scene::OnExit()
-	{
 	}
 	void Scene::AddGameObject(eLayerType layerType, GameObject* target)
 	{
