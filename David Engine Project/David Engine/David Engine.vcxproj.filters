@@ -126,6 +126,9 @@
     <ClInclude Include="daGridScript.h">
       <Filter>Objects\UI\Grid</Filter>
     </ClInclude>
+    <ClInclude Include="daItemScript.h">
+      <Filter>Objects\UI\Inventory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -184,6 +187,9 @@
     </ClCompile>
     <ClCompile Include="daGridScript.cpp">
       <Filter>Objects\UI\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="daItemScript.cpp">
+      <Filter>Objects\UI\Inventory</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

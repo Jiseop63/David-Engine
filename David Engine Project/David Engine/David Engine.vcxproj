@@ -154,6 +154,7 @@
     <ClInclude Include="daGameManagerScript.h" />
     <ClInclude Include="daGridScript.h" />
     <ClInclude Include="daInventoryScript.h" />
+    <ClInclude Include="daItemScript.h" />
     <ClInclude Include="daLoadScenes.h" />
     <ClInclude Include="daCursorScript.h" />
     <ClInclude Include="daOverlayObject.h" />
@@ -177,6 +178,7 @@
     <ClCompile Include="daGameManagerScript.cpp" />
     <ClCompile Include="daGridScript.cpp" />
     <ClCompile Include="daInventoryScript.cpp" />
+    <ClCompile Include="daItemScript.cpp" />
     <ClCompile Include="daOverlayObject.cpp" />
     <ClCompile Include="daProjectileObject.cpp" />
     <ClCompile Include="daScene_Dungeon1F.cpp" />
