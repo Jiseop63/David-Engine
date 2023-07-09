@@ -1,14 +1,15 @@
 #pragma once
-#include "daScript.h"
+#include "daUIScript.h"
 #include "daTexture.h"
 
 namespace da
 {
-	class ButtonScript : public Script
+	class ButtonScript : public UIScript
 	{
 	public:
 		enum eButtonType
 		{
+			None,
 			Play,
 			Exit,
 		};
@@ -20,23 +21,10 @@ namespace da
 		virtual void Update();
 
 	public:
-		void SetUITextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second);
-		void SetScreenPosision();
 		void SetButtonType(eButtonType buttonType) { mButtonType = buttonType; }
 		eButtonType GetButtonType() { return mButtonType; }
-	protected:
-		void changeTexture(std::shared_ptr<graphics::Texture> texture);
-		void focusCheck();
-
 
 	protected:
-		std::shared_ptr<graphics::Texture> mFirstTexture;
-		std::shared_ptr<graphics::Texture> mSecondTexture;
-
-		math::Vector2 mScreenPosition;
-		math::Vector2 mSize;
-
 		eButtonType mButtonType;
-		bool mFocusOn;
 	};
 }

@@ -13,7 +13,7 @@
 #define Objects		0.0f;
 
 #define HUDZ		-0.0010f
-#define OverlayZ	-0.0030f
+#define PanelZ		-0.0030f
 #define CursorZ		-0.0050f
 
 namespace da

@@ -93,6 +93,8 @@ namespace da
 	}
 	void Scene_Town::addUIObjects()
 	{
+
+#pragma region HUD
 		// player life panel, dash panel
 		{
 			GameObject* lifePanel = objects::InstantiateObject
@@ -103,8 +105,6 @@ namespace da
 
 			float lifeXScale = 2.960f;
 			float lifeYScale = 0.640f;
-
-
 
 			lifePanelTransform->SetScale(Vector3(lifeXScale, lifeYScale, 1.0f));
 			float lifeWidthScaleHalf = lifeXScale / 2.0f;
@@ -153,5 +153,26 @@ namespace da
 			cursorObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, CursorZ));
 			cursorObject->AddComponent<CursorScript>();
 		}
+#pragma endregion
+
+		// overlay
+#pragma region Inventory
+		float width = (float)application.GetClientWidth();
+		width /= 100.0f;
+		float height = (float)application.GetClientHeight();
+		height /= 100.0f;
+		// Inventory Base
+		{
+			float inventoryScaleX = 1.230f;
+			float inventoryScaleY = 1.80f;
+			GameObject* weaponSelect = objects::InstantiateObject<GameObject>
+				(this, enums::eLayerType::UI, L"InventoryBaseMaterial");
+			weaponSelect->GetTransform()->SetScale(math::Vector3(inventoryScaleX * 4.0f, inventoryScaleY * 4.0f, 1.0f));
+			weaponSelect->GetTransform()->SetPosition(math::Vector3(MaxPositionX - (inventoryScaleX * 2.0f), 0.0f, PanelZ));
+			
+		}
+
+#pragma endregion
+
 	}
 }

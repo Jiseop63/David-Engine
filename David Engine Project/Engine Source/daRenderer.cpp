@@ -95,11 +95,11 @@ namespace renderer
 		}
 #pragma endregion
 
-#pragma region UI
+#pragma region HUD
 		// Basic Cursor
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"BasicCursorTexture", L"..\\Resources\\Texture\\UIs\\Mouse\\BasicCursor.png");
+				= Resources::Load<Texture>(L"BasicCursorTexture", L"..\\Resources\\Texture\\UIs\\Hud\\Mouse\\BasicCursor.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
@@ -109,7 +109,7 @@ namespace renderer
 		// Shooting Cursor
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"ShootingCursorTexture", L"..\\Resources\\Texture\\UIs\\Mouse\\ShootingCursor2.png");
+				= Resources::Load<Texture>(L"ShootingCursorTexture", L"..\\Resources\\Texture\\UIs\\Hud\\Mouse\\ShootingCursor2.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
@@ -120,7 +120,7 @@ namespace renderer
 		// player life
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"PlayerLifePanelTexture", L"..\\Resources\\Texture\\UIs\\InGame\\Life\\PlayerLifePanel.png");
+				= Resources::Load<Texture>(L"PlayerLifePanelTexture", L"..\\Resources\\Texture\\UIs\\Hud\\Life\\PlayerLifePanel.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
@@ -130,7 +130,7 @@ namespace renderer
 		// dash count
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"DashPanelTexture", L"..\\Resources\\Texture\\UIs\\InGame\\DashCount\\DashPanel.png");
+				= Resources::Load<Texture>(L"DashPanelTexture", L"..\\Resources\\Texture\\UIs\\Hud\\DashCount\\DashPanel.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
@@ -140,7 +140,7 @@ namespace renderer
 		// weapon panel
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"WeaponBaseTexture", L"..\\Resources\\Texture\\UIs\\InGame\\Weapon\\Base.png");
+				= Resources::Load<Texture>(L"WeaponBaseTexture", L"..\\Resources\\Texture\\UIs\\Hud\\Weapon\\Base.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
@@ -148,18 +148,163 @@ namespace renderer
 			Resources::Insert<Material>(L"WeaponBaseMaterial", spriteMaterial);
 		}
 #pragma endregion
+#pragma region Overlay
+		// Inventory Base
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>
+				(L"InventoryBaseTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\InventoryBase.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"InventoryBaseMaterial", spriteMaterial);
+		}
+
+		// WeaponSelect : NoneTexture Material | Sprite Shader
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"WeaponSelectMaterial", spriteMaterial);
+		}
+
+		// WeaponSlot 1~2 : NoneTexture Material | Sprite Shader
+		{
+			std::shared_ptr<Material> slot1Material = std::make_shared<Material>();
+			slot1Material->SetShader(spriteShader);
+			slot1Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"WeaponSlot1Material", slot1Material);
+			std::shared_ptr<Material> slot2Material = std::make_shared<Material>();
+			slot2Material->SetShader(spriteShader);
+			slot2Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"WeaponSlot2Material", slot2Material);
+		}
+
+		// shiledSlot 1~2 : NoneTexture Material | Sprite Shader
+		{
+			std::shared_ptr<Material> slot1Material = std::make_shared<Material>();
+			slot1Material->SetShader(spriteShader);
+			slot1Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"ShiledSlot1Material", slot1Material);
+			std::shared_ptr<Material> slot2Material = std::make_shared<Material>();
+			slot2Material->SetShader(spriteShader);
+			slot2Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"ShiledSlot2Material", slot2Material);
+		}
+		// accessorySlot 1~4 : NoneTexture Material | Sprite Shader
+		{
+			std::shared_ptr<Material> slot1Material = std::make_shared<Material>(); 
+			slot1Material->SetShader(spriteShader);
+			slot1Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"AccessorySlot1Material", slot1Material);
+			std::shared_ptr<Material> slot2Material = std::make_shared<Material>();
+			slot2Material->SetShader(spriteShader);
+			slot2Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"AccessorySlot2Material", slot2Material);
+			std::shared_ptr<Material> slot3Material = std::make_shared<Material>();
+			slot3Material->SetShader(spriteShader);
+			slot3Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"AccessorySlot3Material", slot3Material);
+			std::shared_ptr<Material> slot4Material = std::make_shared<Material>();
+			slot4Material->SetShader(spriteShader);
+			slot4Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"AccessorySlot4Material", slot4Material);
+		}
+
+		// ItemSlot 1~ 15 : NoneTexture Material | Sprite Shader
+		{
+			std::shared_ptr<Material> slot00Material = std::make_shared<Material>();
+			slot00Material->SetShader(spriteShader);
+			slot00Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"ItemSlot00Material", slot00Material);
+			std::shared_ptr<Material> slot01Material = std::make_shared<Material>();
+			slot01Material->SetShader(spriteShader);
+			slot01Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"ItemSlot01Material", slot01Material);
+			std::shared_ptr<Material> slot02Material = std::make_shared<Material>();
+			slot02Material->SetShader(spriteShader);
+			slot02Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"ItemSlot02Material", slot02Material);
+			std::shared_ptr<Material> slot03Material = std::make_shared<Material>();
+			slot03Material->SetShader(spriteShader);
+			slot03Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"ItemSlot03Material", slot03Material);
+			std::shared_ptr<Material> slot04Material = std::make_shared<Material>();
+			slot04Material->SetShader(spriteShader);
+			slot04Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"ItemSlot04Material", slot04Material);
+			std::shared_ptr<Material> slot10Material = std::make_shared<Material>();
+			slot10Material->SetShader(spriteShader);
+			slot10Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"ItemSlot10Material", slot10Material);
+			std::shared_ptr<Material> slot11Material = std::make_shared<Material>();
+			slot11Material->SetShader(spriteShader);
+			slot11Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"ItemSlot11Material", slot11Material);
+			std::shared_ptr<Material> slot12Material = std::make_shared<Material>();
+			slot12Material->SetShader(spriteShader);
+			slot12Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"ItemSlot12Material", slot12Material);
+			std::shared_ptr<Material> slot13Material = std::make_shared<Material>();
+			slot13Material->SetShader(spriteShader);
+			slot13Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"ItemSlot13Material", slot13Material);
+			std::shared_ptr<Material> slot14Material = std::make_shared<Material>();
+			slot14Material->SetShader(spriteShader);
+			slot14Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"ItemSlot14Material", slot14Material);
+			std::shared_ptr<Material> slot20Material = std::make_shared<Material>();
+			slot20Material->SetShader(spriteShader);
+			slot20Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"ItemSlot20Material", slot20Material);
+			std::shared_ptr<Material> slot21Material = std::make_shared<Material>();
+			slot21Material->SetShader(spriteShader);
+			slot21Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"ItemSlot21Material", slot21Material);
+			std::shared_ptr<Material> slot22Material = std::make_shared<Material>();
+			slot22Material->SetShader(spriteShader);
+			slot22Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"ItemSlot22Material", slot22Material);
+			std::shared_ptr<Material> slot23Material = std::make_shared<Material>();
+			slot23Material->SetShader(spriteShader);
+			slot23Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"ItemSlot23Material", slot23Material);
+			std::shared_ptr<Material> slot24Material = std::make_shared<Material>();
+			slot24Material->SetShader(spriteShader);
+			slot24Material->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"ItemSlot24Material", slot24Material);			
+		}
+
+		// Select Weapon & Shiled Textures
+		{
+			Resources::Load<Texture>(L"WeaponSelectATexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\WeaponSelectA.png");
+			Resources::Load<Texture>(L"WeaponSelectBTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\WeaponSelectB.png");
+			Resources::Load<Texture>(L"WeaponSlotTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\weapon.png");
+			Resources::Load<Texture>(L"WeaponSlotSelectTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\weaponSelect.png");
+			Resources::Load<Texture>(L"ShiledSlotTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\shiled.png");
+			Resources::Load<Texture>(L"ShiledSlotSelectTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\shiledSelect.png");
+		}
+		// accessory & item slot
+		{
+			Resources::Load<Texture>(L"AccessorySlotTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\accessory.png");
+			Resources::Load<Texture>(L"AccessorySlotSelectTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\accessorySelect.png");
+			Resources::Load<Texture>(L"ItemSlotTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\ItemSlot.png");
+			Resources::Load<Texture>(L"ItemSlotSelectTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\ItemSlotSelect.png");
+		}
+#pragma endregion
 
 #pragma region Title :: Load Texture & Create Material
 
-		// NoneTexture Material | Sprite Shader
+		// TitleBtn : NoneTexture Material | Sprite Shader
 		{
-			std::shared_ptr<Material> uiMaterial = std::make_shared<Material>();
-			uiMaterial->SetShader(spriteShader);
-			uiMaterial->SetRenderingMode(eRenderingMode::Transparent);
+			std::shared_ptr<Material> slot00Material = std::make_shared<Material>();
+			slot00Material->SetShader(spriteShader);
+			slot00Material->SetRenderingMode(eRenderingMode::Cutout);
 			std::shared_ptr<Material> uiMaterial2 = std::make_shared<Material>();
-			uiMaterial->SetShader(spriteShader);
-			uiMaterial->SetRenderingMode(eRenderingMode::Transparent);
-			Resources::Insert<Material>(L"StartBtnMaterial", uiMaterial);
+			uiMaterial2->SetShader(spriteShader);
+			uiMaterial2->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"StartBtnMaterial", slot00Material);
 			Resources::Insert<Material>(L"ExitBtnMaterial", uiMaterial2);
 		}
 

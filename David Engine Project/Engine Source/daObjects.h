@@ -16,9 +16,23 @@
 
 #include "daUIObject.h"
 #include "daButtonScript.h"
+#include "daUIScript.h"
 
 namespace da::objects
 {
+	static GameObject* InstantiateGameManager(Scene* scene)
+	{
+		GameObject* gameMananger = new GameObject();
+		gameMananger->Initialize();
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::None);
+		myLayer.AddGameObject(gameMananger);
+		gameMananger->AddComponent<CameraScript>();
+		Camera* camera = gameMananger->GetCameraComponent();
+		camera->TurnLayerMask(enums::eLayerType::UI, false);
+
+		return cameraObj;
+	}
+
 #pragma region Basic GameObjects Func
 	template <typename T>
 	static T* InstantiateObject(Scene* scene, enums::eLayerType layer, const std::wstring& material)
@@ -36,7 +50,7 @@ namespace da::objects
 	}
 
 #pragma endregion
-#pragma region UI Objects
+#pragma region UI Object
 	template <typename T>
 	static T* InstantiateUIObject(Scene* scene, enums::eLayerType layer, const std::wstring& material)
 	{
@@ -64,6 +78,21 @@ namespace da::objects
 		ButtonScript* uiScript = obj->AddComponent<ButtonScript>();
 		obj->Initialize();
 
+		uiScript->SetUITextures(Resources::Find<graphics::Texture>(first), Resources::Find<graphics::Texture>(second));
+		return obj;
+	}
+
+	template <typename T>
+	static T* InstantiateMultiTextureUI(Scene* scene, const std::wstring& material, const std::wstring& first, const std::wstring& second)
+	{
+		T* obj = new T();
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::UI);
+		myLayer.AddGameObject(obj);
+		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
+		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		meshRenderer->SetMaterial(Resources::Find<Material>(material));
+		UIScript* uiScript = obj->AddComponent<UIScript>();
+		obj->Initialize();
 		uiScript->SetUITextures(Resources::Find<graphics::Texture>(first), Resources::Find<graphics::Texture>(second));
 		return obj;
 	}

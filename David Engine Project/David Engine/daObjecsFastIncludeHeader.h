@@ -13,5 +13,6 @@
 #include "daTimeConstants.h"
 
 #include "daUIObject.h"
+#include "daUIScript.h"
 #include "daButtonScript.h"
 #include "daCursorScript.h"
