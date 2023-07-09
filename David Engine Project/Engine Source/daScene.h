@@ -56,8 +56,9 @@ namespace da
 		Layer& GetLayer(enums::eLayerType targetLayer) { return mLayers[(UINT)targetLayer]; }
 
 	protected:
-		CameraObject* mMainCamera;
-		CameraObject* mUICamera;
+		GameObject*		mManagerObject;
+		CameraObject*	mMainCamera;
+		CameraObject*	mUICamera;
 
 	private:
 		std::vector<Layer> mLayers;

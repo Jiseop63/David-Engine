@@ -46,6 +46,18 @@
     <Filter Include="Scenes\03 Dungeon">
       <UniqueIdentifier>{93894b0e-6b73-42aa-81ce-841f1733fc11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\UI\Cursor">
+      <UniqueIdentifier>{11c52a41-4699-4397-bff7-ea4dd622bf72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\UI\Inventory">
+      <UniqueIdentifier>{ea11053a-df54-4bba-a85f-6a2a4a5fcc46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\UI\UIScript">
+      <UniqueIdentifier>{21d8f9ff-674d-4bd2-99ce-c831c35a43bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\UI\UIScript\Button">
+      <UniqueIdentifier>{cdf0a855-2657-4a1e-855f-98689970913a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -75,9 +87,6 @@
     <ClInclude Include="daLoadScenes.h">
       <Filter>Load</Filter>
     </ClInclude>
-    <ClInclude Include="daButtonScript.h">
-      <Filter>Objects\UI</Filter>
-    </ClInclude>
     <ClInclude Include="daScene_Title.h">
       <Filter>Scenes\01 Title</Filter>
     </ClInclude>
@@ -93,11 +102,20 @@
     <ClInclude Include="daObjecsFastIncludeHeader.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="daButtonScript.h">
+      <Filter>Objects\UI\UIScript\Button</Filter>
+    </ClInclude>
     <ClInclude Include="daCursorScript.h">
-      <Filter>Objects\UI</Filter>
+      <Filter>Objects\UI\Cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="daInventoryScript.h">
+      <Filter>Objects\UI\Inventory</Filter>
     </ClInclude>
     <ClInclude Include="daUIScript.h">
-      <Filter>Objects\UI</Filter>
+      <Filter>Objects\UI\UIScript</Filter>
+    </ClInclude>
+    <ClInclude Include="daGameManagerScript.h">
+      <Filter>Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -125,9 +143,6 @@
     <ClCompile Include="daOverlayObject.cpp">
       <Filter>Objects\UI</Filter>
     </ClCompile>
-    <ClCompile Include="daButtonScript.cpp">
-      <Filter>Objects\UI</Filter>
-    </ClCompile>
     <ClCompile Include="daScene_Title.cpp">
       <Filter>Scenes\01 Title</Filter>
     </ClCompile>
@@ -140,14 +155,23 @@
     <ClCompile Include="daScene_Dungeon2F.cpp">
       <Filter>Scenes\03 Dungeon</Filter>
     </ClCompile>
-    <ClCompile Include="daCursorScript.cpp">
-      <Filter>Objects\UI</Filter>
-    </ClCompile>
     <ClCompile Include="daUIManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="daButtonScript.cpp">
+      <Filter>Objects\UI\UIScript\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="daCursorScript.cpp">
+      <Filter>Objects\UI\Cursor</Filter>
+    </ClCompile>
     <ClCompile Include="daUIScript.cpp">
-      <Filter>Objects\UI</Filter>
+      <Filter>Objects\UI\UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="daGameManagerScript.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="daInventoryScript.cpp">
+      <Filter>Objects\UI\Inventory</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

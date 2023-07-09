@@ -1,6 +1,6 @@
 #pragma once
 #include "daScript.h"
-
+#include "daInventoryScript.h"
 namespace da
 {
 	class GameManagerScript : public Script
@@ -10,7 +10,16 @@ namespace da
 		virtual ~GameManagerScript();
 
 		virtual void Update() override;
-	private:
+		
+		void InventoryOpen();
+		void InventoryClose();
 
+	public:
+		void SetInventory(InventoryScript* script) { mInventory = script; }
+
+	private:
+		bool mInventoryOpen;
+
+		InventoryScript* mInventory;
 	};
 }

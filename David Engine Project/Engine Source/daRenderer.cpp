@@ -21,6 +21,7 @@ namespace renderer
 
 	da::Camera* mainCamera = nullptr;
 	da::Camera* uiCamera = nullptr;
+	da::GameObject* managerObject = nullptr;
 
 	void LoadMesh()
 	{

@@ -13,6 +13,7 @@
 #include "daCameraObject.h"
 #include "daCamera.h"
 #include "daCameraScript.h"
+#include "daGameManagerScript.h"
 
 #include "daUIObject.h"
 #include "daButtonScript.h"
@@ -20,17 +21,16 @@
 
 namespace da::objects
 {
+	// GameManager Object
 	static GameObject* InstantiateGameManager(Scene* scene)
 	{
 		GameObject* gameMananger = new GameObject();
 		gameMananger->Initialize();
 		Layer& myLayer = scene->GetLayer(enums::eLayerType::None);
 		myLayer.AddGameObject(gameMananger);
-		gameMananger->AddComponent<CameraScript>();
-		Camera* camera = gameMananger->GetCameraComponent();
-		camera->TurnLayerMask(enums::eLayerType::UI, false);
+		gameMananger->AddComponent<GameManagerScript>();
 
-		return cameraObj;
+		return gameMananger;
 	}
 
 #pragma region Basic GameObjects Func

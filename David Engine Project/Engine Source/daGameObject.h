@@ -25,6 +25,7 @@ namespace da
 			Paused,		// Update X
 			Hide,		// Render X
 			Inactive,	// Update, Render X
+			Destroy,
 		};
 
 		// 외부에서 오브젝트 타입에 따라 전용 호출이 가능할 수 있도록 타입을 나눔

@@ -28,6 +28,9 @@ namespace da
 	{
 		mMainCamera = objects::InstantiateMainCamera(this);
 		mUICamera = objects::InstantiateUICamera(this);
+
+		mManagerObject = objects::InstantiateGameManager(this);
+
 		addBackgroundObject();
 		addUIObjects();
 	}
@@ -50,10 +53,11 @@ namespace da
 	
 	void Scene_Town::OnEnter()
 	{
+		// 게임 매니저 세팅
+		renderer::managerObject = mManagerObject;
 		// 카메라 세팅
 		renderer::mainCamera = mMainCamera->GetCameraComponent();
 		renderer::uiCamera = mUICamera->GetCameraComponent();
-		
 		// 플레이어 세팅
 	}
 	void Scene_Town::OnExit()
@@ -110,7 +114,7 @@ namespace da
 			float lifeWidthScaleHalf = lifeXScale / 2.0f;
 			float lifeHeightScaleHalf = lifeYScale / 2.0f;
 			float lifePanelPadding = 0.20f;
-			Vector3 lifePanelPosition = Vector3(-MaxPositionX + lifeWidthScaleHalf + lifePanelPadding, MaxPositionY - lifeHeightScaleHalf - lifePanelPadding, -0.0050f);
+			Vector3 lifePanelPosition = Vector3(-MaxPositionX + lifeWidthScaleHalf + lifePanelPadding, MaxPositionY - lifeHeightScaleHalf - lifePanelPadding, HUDZ);
 			lifePanelTransform->SetPosition(lifePanelPosition);
 
 
@@ -127,7 +131,7 @@ namespace da
 			float dashWidthScaleHalf = dashXScale / 2.0f;
 			float dashHeightScaleHalf = dashYScale / 2.0f;
 			float dashPanePadding = 0.050f;
-			Vector3 dashPanelPosition = Vector3(-MaxPositionX + dashWidthScaleHalf + lifePanelPadding, MaxPositionY - (lifeHeightScaleHalf * 2) - dashHeightScaleHalf - lifePanelPadding, -0.0050f);
+			Vector3 dashPanelPosition = Vector3(-MaxPositionX + dashWidthScaleHalf + lifePanelPadding, MaxPositionY - (lifeHeightScaleHalf * 2) - dashHeightScaleHalf - lifePanelPadding, HUDZ);
 			dashPanelTransform->SetPosition(dashPanelPosition);
 		}
 		// player weapon panel
@@ -142,7 +146,7 @@ namespace da
 			float weaponHeightScaleHalf = weaponPanelScaleY / 2.0f;
 			float dashPanePadding = 0.150f;
 
-			Vector3 weaponPanelPosition = Vector3(MaxPositionX - weaponWidthScaleHalf - dashPanePadding, -MaxPositionY + weaponHeightScaleHalf + dashPanePadding, -0.0050f);
+			Vector3 weaponPanelPosition = Vector3(MaxPositionX - weaponWidthScaleHalf - dashPanePadding, -MaxPositionY + weaponHeightScaleHalf + dashPanePadding, HUDZ);
 			weaponPanelTransform ->SetPosition(weaponPanelPosition);
 		}
 		// mouse
@@ -165,11 +169,13 @@ namespace da
 		{
 			float inventoryScaleX = 1.230f;
 			float inventoryScaleY = 1.80f;
-			GameObject* weaponSelect = objects::InstantiateObject<GameObject>
+			GameObject* inventoryObject = objects::InstantiateObject<GameObject>
 				(this, enums::eLayerType::UI, L"InventoryBaseMaterial");
-			weaponSelect->GetTransform()->SetScale(math::Vector3(inventoryScaleX * 4.0f, inventoryScaleY * 4.0f, 1.0f));
-			weaponSelect->GetTransform()->SetPosition(math::Vector3(MaxPositionX - (inventoryScaleX * 2.0f), 0.0f, PanelZ));
-			
+			inventoryObject->GetTransform()->SetScale(math::Vector3(inventoryScaleX * 4.0f, inventoryScaleY * 4.0f, 1.0f));
+			inventoryObject->GetTransform()->SetPosition(math::Vector3(MaxPositionX - (inventoryScaleX * 2.0f), 0.0f, PanelZ));
+			InventoryScript* inventoryScript = inventoryObject->AddComponent<InventoryScript>();
+			inventoryObject->SetObjectState(GameObject::eObjectState::Hide);
+			mManagerObject->GetComponent<GameManagerScript>()->SetInventory(inventoryScript);
 		}
 
 #pragma endregion

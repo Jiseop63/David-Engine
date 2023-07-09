@@ -9,9 +9,12 @@ namespace da
 		InventoryScript();
 		virtual ~InventoryScript();
 
-		virtual void Update();
+		virtual void Update() override;
+		
+		void Open();
+		void Close();
 
 	protected:
-		bool mFocusOn;
+
 	};
 }

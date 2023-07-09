@@ -35,6 +35,7 @@ namespace renderer
 	
 	extern da::Camera* mainCamera;
 	extern da::Camera* uiCamera;
+	extern da::GameObject* managerObject;
 
 	void Initialize();
 	void Render();
