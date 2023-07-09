@@ -52,11 +52,17 @@
     <Filter Include="Objects\UI\Inventory">
       <UniqueIdentifier>{ea11053a-df54-4bba-a85f-6a2a4a5fcc46}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\UI\UIScript">
-      <UniqueIdentifier>{21d8f9ff-674d-4bd2-99ce-c831c35a43bc}</UniqueIdentifier>
+    <Filter Include="Objects\UI\미정">
+      <UniqueIdentifier>{2e8b3b4a-11dc-4060-9060-f12741d5ed99}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\UI\UIScript\Button">
+    <Filter Include="Objects\UI\base">
+      <UniqueIdentifier>{642355b9-3b93-404e-a2d5-b20318656b2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\UI\Button">
       <UniqueIdentifier>{cdf0a855-2657-4a1e-855f-98689970913a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\UI\Grid">
+      <UniqueIdentifier>{63de9362-d756-4b7c-b91c-43466ecce595}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -78,12 +84,6 @@
     <ClInclude Include="daCameraScript.h">
       <Filter>Objects\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="daUIObject.h">
-      <Filter>Objects\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="daOverlayObject.h">
-      <Filter>Objects\UI</Filter>
-    </ClInclude>
     <ClInclude Include="daLoadScenes.h">
       <Filter>Load</Filter>
     </ClInclude>
@@ -103,7 +103,7 @@
       <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="daButtonScript.h">
-      <Filter>Objects\UI\UIScript\Button</Filter>
+      <Filter>Objects\UI\Button</Filter>
     </ClInclude>
     <ClInclude Include="daCursorScript.h">
       <Filter>Objects\UI\Cursor</Filter>
@@ -111,11 +111,20 @@
     <ClInclude Include="daInventoryScript.h">
       <Filter>Objects\UI\Inventory</Filter>
     </ClInclude>
-    <ClInclude Include="daUIScript.h">
-      <Filter>Objects\UI\UIScript</Filter>
-    </ClInclude>
     <ClInclude Include="daGameManagerScript.h">
       <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="daOverlayObject.h">
+      <Filter>Objects\UI\미정</Filter>
+    </ClInclude>
+    <ClInclude Include="daUIObject.h">
+      <Filter>Objects\UI\base</Filter>
+    </ClInclude>
+    <ClInclude Include="daUIScript.h">
+      <Filter>Objects\UI\base</Filter>
+    </ClInclude>
+    <ClInclude Include="daGridScript.h">
+      <Filter>Objects\UI\Grid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -137,12 +146,6 @@
     <ClCompile Include="daCameraScript.cpp">
       <Filter>Objects\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="daUIObject.cpp">
-      <Filter>Objects\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="daOverlayObject.cpp">
-      <Filter>Objects\UI</Filter>
-    </ClCompile>
     <ClCompile Include="daScene_Title.cpp">
       <Filter>Scenes\01 Title</Filter>
     </ClCompile>
@@ -159,19 +162,28 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="daButtonScript.cpp">
-      <Filter>Objects\UI\UIScript\Button</Filter>
+      <Filter>Objects\UI\Button</Filter>
     </ClCompile>
     <ClCompile Include="daCursorScript.cpp">
       <Filter>Objects\UI\Cursor</Filter>
-    </ClCompile>
-    <ClCompile Include="daUIScript.cpp">
-      <Filter>Objects\UI\UIScript</Filter>
     </ClCompile>
     <ClCompile Include="daGameManagerScript.cpp">
       <Filter>Global</Filter>
     </ClCompile>
     <ClCompile Include="daInventoryScript.cpp">
       <Filter>Objects\UI\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="daOverlayObject.cpp">
+      <Filter>Objects\UI\미정</Filter>
+    </ClCompile>
+    <ClCompile Include="daUIObject.cpp">
+      <Filter>Objects\UI\base</Filter>
+    </ClCompile>
+    <ClCompile Include="daUIScript.cpp">
+      <Filter>Objects\UI\base</Filter>
+    </ClCompile>
+    <ClCompile Include="daGridScript.cpp">
+      <Filter>Objects\UI\Grid</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

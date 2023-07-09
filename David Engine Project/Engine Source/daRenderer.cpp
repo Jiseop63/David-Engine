@@ -65,9 +65,17 @@ namespace renderer
 		// background
 		constantBuffer[(UINT)eCBType::Time] = new ConstantBuffer(eCBType::Time);
 		constantBuffer[(UINT)eCBType::Time]->Create(sizeof(TimeCB));
+
+		// Grid
+		constantBuffer[(UINT)eCBType::Grid] = new ConstantBuffer(eCBType::Grid);
+		constantBuffer[(UINT)eCBType::Grid]->Create(sizeof(GridCB));
+
 		// fade
+		
 		// afterimage
+		
 		// blink
+
 #pragma endregion
 	}
 	void LoadResource()
@@ -88,15 +96,30 @@ namespace renderer
 			Resources::Insert<Shader>(L"SpriteShader", spriteShader);
 		}
 		// TitleBackground Shader
-		std::shared_ptr<Shader> MovingBGShader = std::make_shared<Shader>();
+		std::shared_ptr<Shader> movingBGShader = std::make_shared<Shader>();
 		{
-			MovingBGShader->Create(eShaderStage::VS, L"MovingBGShader.hlsl", "mainVS");
-			MovingBGShader->Create(eShaderStage::PS, L"MovingBGShader.hlsl", "mainPS");
-			Resources::Insert<Shader>(L"MovingBGShader", MovingBGShader);
+			movingBGShader->Create(eShaderStage::VS, L"MovingBGShader.hlsl", "mainVS");
+			movingBGShader->Create(eShaderStage::PS, L"MovingBGShader.hlsl", "mainPS");
+			Resources::Insert<Shader>(L"MovingBGShader", movingBGShader);
+		}
+		// Grid Shader
+		std::shared_ptr<Shader> gridShader = std::make_shared<Shader>();
+		{
+			gridShader->Create(eShaderStage::VS, L"GridShader.hlsl", "mainVS");
+			gridShader->Create(eShaderStage::PS, L"GridShader.hlsl", "mainPS");
+			Resources::Insert<Shader>(L"GridShader", gridShader);
 		}
 #pragma endregion
 
 #pragma region HUD
+
+		// Grid
+		{
+			std::shared_ptr<Material> gridMaterial = std::make_shared<Material>();
+			gridMaterial->SetShader(gridShader);
+			gridMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"GridMaterial", gridMaterial);
+		}
 		// Basic Cursor
 		{
 			std::shared_ptr<Texture> texture
@@ -325,7 +348,7 @@ namespace renderer
 				= Resources::Load<Texture>(L"BackCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\BackCloud.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(MovingBGShader);
+			spriteMaterial->SetShader(movingBGShader);
 			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
 			Resources::Insert<Material>(L"BackCloudMaterial", spriteMaterial);
 		}
@@ -334,7 +357,7 @@ namespace renderer
 				= Resources::Load<Texture>(L"FrontCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\FrontCloud.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(MovingBGShader);
+			spriteMaterial->SetShader(movingBGShader);
 			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
 			Resources::Insert<Material>(L"FrontCloudMaterial", spriteMaterial);
 		}
@@ -343,7 +366,7 @@ namespace renderer
 				= Resources::Load<Texture>(L"SmallCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\smallCloud.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(MovingBGShader);
+			spriteMaterial->SetShader(movingBGShader);
 			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
 			Resources::Insert<Material>(L"SmallCloudMaterial", spriteMaterial);
 		}
@@ -478,7 +501,10 @@ namespace renderer
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());
 
-
+		shader = Resources::Find<Shader>(L"GridShader");
+		GetDevice()->CreateInputLayout(arrLayout, numElement
+			, shader->GetVSCode()
+			, shader->GetInputLayoutAddressOf());
 
 #pragma endregion
 #pragma region Sampler State
@@ -564,7 +590,6 @@ namespace renderer
 	}
 	void Initialize()
 	{
-		
 		LoadMesh();
 		LoadBuffer();
 		LoadResource();

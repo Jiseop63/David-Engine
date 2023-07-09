@@ -25,6 +25,13 @@ namespace renderer
 		float Value;
 	};
 
+	CBUFFER(GridCB, CBSLOT_GRID)
+	{
+		da::math::Vector4 CameraPosition;
+		da::math::Vector2 CameraScale;
+		da::math::Vector2 Resolution;
+	};
+
 	extern Vertex vertexes[];
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[(UINT)da::graphics::eSamplerType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerStates[(UINT)da::graphics::eRSType::End];

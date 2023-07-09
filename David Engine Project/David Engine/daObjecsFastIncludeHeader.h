@@ -11,6 +11,7 @@
 #include "daCameraScript.h"
 
 #include "daTimeConstants.h"
+#include "daGridScript.h"
 
 #include "daUIObject.h"
 #include "daUIScript.h"

@@ -30,7 +30,10 @@ namespace da
 		mUICamera = objects::InstantiateUICamera(this);
 
 		mManagerObject = objects::InstantiateGameManager(this);
-
+		GameObject* gridObject = objects::InstantiateObject<GameObject>(this, enums::eLayerType::Grid, L"GridMaterial");
+		GridScript* gridScript = gridObject->AddComponent<GridScript>();
+		gridScript->SetCamera(mMainCamera->GetCameraComponent());
+		
 		addBackgroundObject();
 		addUIObjects();
 	}

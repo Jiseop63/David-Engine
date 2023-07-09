@@ -10,6 +10,9 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)SpriteShader.hlsl">
       <Filter>2 Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)GridShader.hlsl">
+      <Filter>3 Custom Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Globals.hlsli">

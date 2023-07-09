@@ -11,6 +11,7 @@
 
 #define CBSLOT_TRANSFORM		0;
 #define CBSLOT_TIME				2;
+#define CBSLOT_GRID				3;
 
 namespace da::graphics
 {
@@ -31,6 +32,7 @@ namespace da::graphics
 		Transform,
 		Material,
 		Time,
+		Grid,
 		End,
 	};
 

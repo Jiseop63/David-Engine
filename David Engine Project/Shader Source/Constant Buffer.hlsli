@@ -10,3 +10,10 @@ cbuffer cTime : register(b2)
     float cElapsedTime;
     float cValue;
 }
+
+cbuffer cGrid : register(b3)
+{
+    float4 cCameraPosition;
+    float2 cCameraScale;
+    float2 cResolution;
+}

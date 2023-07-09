@@ -1,5 +1,18 @@
 #include "Globals.hlsli"
 
+struct VSIn
+{
+    float3 Pos : POSITION;
+    float4 Color : COLOR;
+    float2 UV : TEXCOORD;
+};
+struct VSOut
+{
+    float4 Pos : SV_Position;
+    float4 Color : COLOR;
+    float2 UV : TEXCOORD;
+};
+
 VSOut mainVS(VSIn In)
 {
     VSOut Out = (VSOut) 0.0f;
