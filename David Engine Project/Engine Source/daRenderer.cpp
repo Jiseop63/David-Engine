@@ -70,6 +70,10 @@ namespace renderer
 		constantBuffer[(UINT)eCBType::Grid] = new ConstantBuffer(eCBType::Grid);
 		constantBuffer[(UINT)eCBType::Grid]->Create(sizeof(GridCB));
 
+		// BarValue
+		constantBuffer[(UINT)eCBType::Bar] = new ConstantBuffer(eCBType::Bar);
+		constantBuffer[(UINT)eCBType::Bar]->Create(sizeof(BarCB));
+
 		// fade
 		
 		// afterimage
@@ -109,9 +113,27 @@ namespace renderer
 			gridShader->Create(eShaderStage::PS, L"GridShader.hlsl", "mainPS");
 			Resources::Insert<Shader>(L"GridShader", gridShader);
 		}
+		std::shared_ptr<Shader> barShader = std::make_shared<Shader>();
+		{
+			barShader->Create(eShaderStage::VS, L"BarShader.hlsl", "mainVS");
+			barShader->Create(eShaderStage::PS, L"BarShader.hlsl", "mainPS");
+			Resources::Insert<Shader>(L"BarShader", barShader);
+		}
 #pragma endregion
 
-#pragma region HUD
+#pragma region Sample Material
+		// Basic Cursor
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"SampleTexture", L"..\\Resources\\Texture\\Sample\\smileTexture.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"SampleMaterial", spriteMaterial);
+		}
+#pragma endregion
+#pragma region HUD Material
 
 		// Grid
 		{
@@ -157,7 +179,7 @@ namespace renderer
 				= Resources::Load<Texture>(L"PlayerLifeBarTexture", L"..\\Resources\\Texture\\UIs\\Hud\\Life\\LifeBar.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetShader(barShader);
 			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
 			Resources::Insert<Material>(L"PlayerLifeBarMaterial", spriteMaterial);
 		}
@@ -167,7 +189,7 @@ namespace renderer
 				= Resources::Load<Texture>(L"DashPanelTexture", L"..\\Resources\\Texture\\UIs\\Hud\\DashCount\\DashPanel.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetShader(barShader);
 			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
 			Resources::Insert<Material>(L"DashPanelMaterial", spriteMaterial);
 		}
@@ -182,7 +204,7 @@ namespace renderer
 			Resources::Insert<Material>(L"WeaponBaseMaterial", spriteMaterial);
 		}
 #pragma endregion
-#pragma region Overlay
+#pragma region Inventory Material & Texture
 		// Inventory Base
 		{
 			std::shared_ptr<Texture> texture
@@ -326,7 +348,7 @@ namespace renderer
 			Resources::Load<Texture>(L"ItemSlotTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\ItemSlot.png");
 			Resources::Load<Texture>(L"ItemSlotSelectTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\ItemSlotSelect.png");
 		}
-#pragma endregion
+#pragma endregion 
 
 #pragma region Title :: Load Texture & Create Material
 
@@ -512,6 +534,11 @@ namespace renderer
 			, shader->GetInputLayoutAddressOf());
 
 		shader = Resources::Find<Shader>(L"GridShader");
+		GetDevice()->CreateInputLayout(arrLayout, numElement
+			, shader->GetVSCode()
+			, shader->GetInputLayoutAddressOf());
+
+		shader = Resources::Find<Shader>(L"BarShader");
 		GetDevice()->CreateInputLayout(arrLayout, numElement
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());

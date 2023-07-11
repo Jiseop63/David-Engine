@@ -155,9 +155,11 @@
     <ClInclude Include="daHUDScript.h" />
     <ClInclude Include="daInventoryScript.h" />
     <ClInclude Include="daItemScript.h" />
+    <ClInclude Include="daLifeBarScript.h" />
     <ClInclude Include="daLoadScenes.h" />
     <ClInclude Include="daCursorScript.h" />
     <ClInclude Include="daOverlayObject.h" />
+    <ClInclude Include="daPlayerScript.h" />
     <ClInclude Include="daProjectileObject.h" />
     <ClInclude Include="daScene_Dungeon1F.h" />
     <ClInclude Include="daScene_Dungeon2F.h" />
@@ -178,7 +180,9 @@
     <ClCompile Include="daHUDScript.cpp" />
     <ClCompile Include="daInventoryScript.cpp" />
     <ClCompile Include="daItemScript.cpp" />
+    <ClCompile Include="daLifeBarScript.cpp" />
     <ClCompile Include="daOverlayObject.cpp" />
+    <ClCompile Include="daPlayerScript.cpp" />
     <ClCompile Include="daProjectileObject.cpp" />
     <ClCompile Include="daScene_Dungeon1F.cpp" />
     <ClCompile Include="daScene_Dungeon2F.cpp" />

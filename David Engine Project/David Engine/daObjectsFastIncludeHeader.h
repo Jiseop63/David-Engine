@@ -16,5 +16,7 @@
 #include "daUIScript.h"
 #include "daButtonScript.h"
 #include "daCursorScript.h"
+#include "daLifeBarScript.h"
 
 #include "daInventoryScript.h"
+#include "daPlayerScript.h"

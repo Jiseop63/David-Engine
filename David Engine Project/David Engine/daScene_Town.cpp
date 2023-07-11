@@ -33,6 +33,7 @@ namespace da
 		objects::InstantiateGridObject(this, mMainCamera);		
 		addBackgroundObject();
 		addUIObjects();
+		addGameObjects();
 	}
 	void Scene_Town::Update()
 	{
@@ -95,7 +96,6 @@ namespace da
 	}
 	void Scene_Town::addUIObjects()
 	{
-
 #pragma region HUD
 		// player life panel, dash panel
 		{
@@ -138,7 +138,7 @@ namespace da
 			Vector3 lifeBarPosition = lifePanelPosition + Vector3(0.380f, 0.0f, -0.0001f);
 			lifeBarTransform->SetPosition(lifeBarPosition);
 
-
+			lifeBar->AddComponent<LifeBarScript>();
 			//GameObject* dashPanel = objects::InstantiateGameObject
 			//	<GameObject>(this, enums::eLayerType::UI, L"DashPanelMaterial");
 
@@ -183,7 +183,6 @@ namespace da
 			cursorObject->AddComponent<CursorScript>();
 		}
 #pragma endregion
-
 #pragma region Inventory
 		// Inventory Base
 		{
@@ -199,6 +198,13 @@ namespace da
 		}
 
 #pragma endregion
-
+	}
+	void Scene_Town::addGameObjects()
+	{
+		// sky BG : stay
+		{
+			GameObject* playerObject = objects::InstantiatePlayer(this, L"SampleMaterial");
+			playerObject->SetName(L"player");
+		}
 	}
 }

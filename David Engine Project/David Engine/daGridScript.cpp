@@ -50,6 +50,5 @@ namespace da
 
 		outCB->SetData(&data);
 		outCB->Bind(graphics::eShaderStage::VS);
-		outCB->Bind(graphics::eShaderStage::PS);
 	}
 }

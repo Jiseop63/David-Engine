@@ -31,6 +31,11 @@ namespace renderer
 		da::math::Vector2 CameraScale;
 		da::math::Vector2 Resolution;
 	};
+	CBUFFER(BarCB, CBSLOT_BARVALUE)
+	{
+		float MaxValue;
+		float CurrentValue;
+	};
 
 	extern Vertex vertexes[];
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[(UINT)da::graphics::eSamplerType::End];

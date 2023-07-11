@@ -127,7 +127,13 @@
       <Filter>Objects\UI\Inventory</Filter>
     </ClInclude>
     <ClInclude Include="daHUDScript.h">
+      <Filter>Objects\UI\미정</Filter>
+    </ClInclude>
+    <ClInclude Include="daLifeBarScript.h">
       <Filter>Objects\UI\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="daPlayerScript.h">
+      <Filter>Objects\Creature</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +196,12 @@
     </ClCompile>
     <ClCompile Include="daHUDScript.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="daLifeBarScript.cpp">
+      <Filter>Objects\UI\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="daPlayerScript.cpp">
+      <Filter>Objects\Creature</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

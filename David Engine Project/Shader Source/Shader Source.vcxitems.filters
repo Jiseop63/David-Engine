@@ -13,12 +13,12 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)GridShader.hlsl">
       <Filter>3 Custom Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)BarShader.hlsl">
+      <Filter>3 Custom Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Globals.hlsli">
-      <Filter>1 Common</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Structures.hlsli">
       <Filter>1 Common</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)Constant Buffer.hlsli">

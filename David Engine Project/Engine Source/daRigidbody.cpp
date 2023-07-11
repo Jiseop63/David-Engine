@@ -10,12 +10,12 @@ namespace da
 		: Component(enums::eComponentType::Rigidbody)
 		, mDimensionType(eDimensionType::SecondDimension)
 		, mMass(1.0f)
-		, mFriction(10.0f)
+		, mFriction(5.0f)
 		, mV2Force(Vector2::Zero)
 		, mV2Velocity(Vector2::Zero)
 		, mV2Accelation(Vector2::Zero)
 		, mV2Gravity(Vector2(0.0f, 10.0f))
-		, mV2LimitVelocity(Vector2(400.0f, 600.0f))
+		, mV2LimitVelocity(Vector2(12.0f, 98.0f))
 		, mV3Force(Vector3::Zero)
 		, mV3Velocity(Vector3::Zero)
 		, mV3Accelation(Vector3::Zero)
@@ -34,7 +34,7 @@ namespace da
 		if (eDimensionType::SecondDimension == mDimensionType)
 		{
 			mV2Accelation = mV2Force / mMass;
-			mV2Velocity += mV2Accelation * (float)Time::DeltaTime() * 300.0f;
+			mV2Velocity += mV2Accelation * (float)Time::DeltaTime();
 			v2FrictionAction();
 			v2MoveAction();
 			if (mUseGravity)
@@ -44,7 +44,7 @@ namespace da
 		else
 		{
 			mV3Accelation = mV3Force / mMass;
-			mV3Velocity += mV3Accelation * (float)Time::DeltaTime() * 300.0f;
+			mV3Velocity += mV3Accelation * (float)Time::DeltaTime();
 			v3FrictionAction();
 			v3MoveAction();
 			if (mUseGravity)
@@ -55,6 +55,7 @@ namespace da
 
 	void Rigidbody::v2FrictionAction()
 	{
+		// 이동중이라면
 		if (!(mV2Velocity == Vector2::Zero))
 		{
 			// 마찰 방향 구하기 (속도의 반대 방향)
@@ -78,17 +79,17 @@ namespace da
 	void Rigidbody::v2MoveAction()
 	{
 		// 오너 Position 가져오기
-		Vector3 ownerPosition = GetOwner()->GetComponent<Transform>()->GetPosition();
-		Vector2 movePosision(ownerPosition.x, ownerPosition.y);
+		Vector3 retPos = GetOwner()->GetComponent<Transform>()->GetPosition();
+		Vector2 calcPos(retPos.x, retPos.y);
 
 		// 내 위치에 속도 더해주기
-		movePosision += mV2Velocity * (float)Time::DeltaTime();
+		calcPos += mV2Velocity * (float)Time::DeltaTime();
 
 
 		// 변경된 위치를 갱신해주기
-		ownerPosition.x = movePosision.x;
-		ownerPosition.y = movePosision.y;
-		GetOwner()->GetComponent<Transform>()->SetPosition(ownerPosition);
+		retPos.x = calcPos.x;
+		retPos.y = calcPos.y;
+		GetOwner()->GetComponent<Transform>()->SetPosition(retPos);
 
 		// 힘 초기화
 		mV2Force = Vector2::Zero;
@@ -126,12 +127,12 @@ namespace da
 		if (verticalVelocity.Length() > mV2LimitVelocity.y)
 		{
 			verticalVelocity.Normalize();
-			verticalVelocity *= mV2LimitVelocity.y;
+			verticalVelocity.y = mV2LimitVelocity.y;
 		}
 		if (horizontalVelocity.Length() > mV2LimitVelocity.x)
 		{
 			horizontalVelocity.Normalize();
-			horizontalVelocity *= mV2LimitVelocity.x;
+			horizontalVelocity.x = mV2LimitVelocity.x;
 		}
 
 		// 다시 수평, 수직 속도를 합쳐서 갱신

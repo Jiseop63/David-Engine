@@ -12,7 +12,7 @@
 #define CBSLOT_TRANSFORM		0;
 #define CBSLOT_TIME				2;
 #define CBSLOT_GRID				3;
-
+#define CBSLOT_BARVALUE			4;
 namespace da::graphics
 {
 
@@ -33,6 +33,7 @@ namespace da::graphics
 		Material,
 		Time,
 		Grid,
+		Bar	,
 		End,
 	};
 

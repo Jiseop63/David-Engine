@@ -32,22 +32,22 @@ VSOut mainVS(VSIn In)
     return Out;
 }
 
-float4 mainPS(VSOut In) : SV_Target
+float4 mainPS(VSOut Out) : SV_Target
 {
-    float4 Out = float4(0.60f, 0.90f, 0.90f, 1.0f);
+    float4 result = float4(0.60f, 0.90f, 0.90f, 1.0f);
     
     const int width = 100;
     const int height = 100;
     
-    int gridX = (int) In.GridPos.x;
-    int gridY = (int) In.GridPos.y;
+    int gridX = (int) Out.GridPos.x;
+    int gridY = (int) Out.GridPos.y;
     
     if (abs( (gridX + 1) % width )  <= 1.0f)
-        return Out;
+        return result;
     if (abs( (gridY + 1) % height ) <= 1.0f)
-        return Out;
+        return result;
     
     discard;
     
-    return Out;
+    return result;
 }

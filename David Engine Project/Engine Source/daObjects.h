@@ -96,7 +96,21 @@ namespace da::objects
 		return obj;
 	}
 
-	
+	static GameObject* InstantiatePlayer(Scene* scene, const std::wstring& material)
+	{
+		GameObject* obj = new GameObject();
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::Playable);
+		myLayer.AddGameObject(obj);
+
+		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
+		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		meshRenderer->SetMaterial(Resources::Find<Material>(material));
+		obj->AddComponent<PlayerScript>();
+		obj->AddComponent<Rigidbody>();
+		obj->Initialize();
+		return obj;
+	}
+
 	static GameObject* InstantiateGridObject(Scene* scene, CameraObject* cameraObject)
 	{
 		GameObject* obj = new GameObject();

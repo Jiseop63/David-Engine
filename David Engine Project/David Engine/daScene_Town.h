@@ -20,6 +20,6 @@ namespace da
 	private:
 		void addBackgroundObject();
 		void addUIObjects();
-		
+		void addGameObjects();
 	};
 }

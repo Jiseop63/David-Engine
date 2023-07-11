@@ -17,3 +17,9 @@ cbuffer cGrid : register(b3)
     float2 cCameraScale;
     float2 cResolution;
 }
+
+cbuffer cBar : register(b4)
+{
+    float cMaxValue;
+    float cCurrentValue;
+}
