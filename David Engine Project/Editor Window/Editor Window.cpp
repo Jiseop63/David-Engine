@@ -7,6 +7,7 @@
 #include "daRenderer.h"
 #include "daSceneManager.h"
 #include "daLoadScenes.h"
+#include "daGameDataManager.h"
 
 #ifdef _DEBUG
 #pragma comment(lib, "..\\x64\\Debug\\David Engine.lib")
@@ -15,7 +16,7 @@
 #endif
 
 da::Application application;
-
+da::GameDataManager gameDataManager;
 
 #define MAX_LOADSTRING 100
 
@@ -77,6 +78,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     renderer::Release();
     da::SceneManager::Release();
+    
     return (int) msg.wParam;
 }
 
@@ -138,6 +140,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
     application.SetWindow(hWnd, WINDOW_WIDTH, WINDOW_HEIGHT);
     application.Initialize();
     da::InitializeScenes();
+    gameDataManager.Initialize();
     da::SceneManager::LoadScene(L"Scene_Title");
     return TRUE;
 }

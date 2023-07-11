@@ -1,18 +1,19 @@
 #include "daScene_Town.h"
 
+#include "daRenderer.h"
 // 임시
 #include "daInput.h"
 #include "daSceneManager.h"
 #include "daApplication.h"
-#include "daRenderer.h"
 
 // resource
 #include "daResources.h"
 #include "daTexture.h"
 
+#include "daObjects.h"
 
 // UI, Object, Components and Camera
-#include "daObjecsFastIncludeHeader.h"
+#include "daObjectsFastIncludeHeader.h"
 
 extern da::Application application;
 
@@ -28,12 +29,8 @@ namespace da
 	{
 		mMainCamera = objects::InstantiateMainCamera(this);
 		mUICamera = objects::InstantiateUICamera(this);
-		mManagerObject = objects::InstantiateGameManager(this);
 
-		GameObject* gridObject = objects::InstantiateGameObject<GameObject>(this, enums::eLayerType::Grid, L"GridMaterial");
-		GridScript* gridScript = gridObject->AddComponent<GridScript>();
-		gridScript->SetCamera(mMainCamera->GetCameraComponent());
-		
+		objects::InstantiateGridObject(this, mMainCamera);		
 		addBackgroundObject();
 		addUIObjects();
 	}
@@ -56,8 +53,6 @@ namespace da
 	
 	void Scene_Town::OnEnter()
 	{
-		// 게임 매니저 세팅
-		renderer::managerObject = mManagerObject;
 		// 카메라 세팅
 		renderer::mainCamera = mMainCamera->GetCameraComponent();
 		renderer::uiCamera = mUICamera->GetCameraComponent();
@@ -68,17 +63,12 @@ namespace da
 	}
 
 	void Scene_Town::addBackgroundObject()
-	{
-		float width = (float)application.GetClientWidth();
-		width /= 100.0f;
-		float height = (float)application.GetClientHeight();
-		height /= 100.0f;
-
+	{		
 		// sky BG : stay
 		{
 			GameObject* backGround = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::BackGround, L"SkyMaterial");
-			backGround->GetTransform()->SetScale(math::Vector3(width, height, 1.0f));
+			backGround->GetTransform()->SetScale(math::Vector3(MaxPositionX * 2.0f, MaxPositionY * 2.0f, 1.0f));
 		}
 
 		// 레이어 역할을 하는 배경들은 스케일 값을 건드는게 아니라 카메라로부터 영향받는 수치를 낮추는 식으로 해야할듯?
@@ -86,7 +76,7 @@ namespace da
 		{
 			GameObject* backGround = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::Layer, L"TownBGMaterial");
-			backGround->GetTransform()->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
+			backGround->GetTransform()->SetScale(math::Vector3(MaxPositionX * 2.0f, MaxPositionY * 2.0f, 1.0f));
 			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, -3.0f, -0.001f));
 		}
 
@@ -94,7 +84,7 @@ namespace da
 		{
 			GameObject* backGround = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::Layer, L"TownLayerMaterial");
-			backGround->GetTransform()->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
+			backGround->GetTransform()->SetScale(math::Vector3(MaxPositionX * 2.0f, MaxPositionY * 2.0f, 1.0f));
 			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, -6.0f, -0.002f));
 		}
 	}
@@ -139,21 +129,21 @@ namespace da
 			lifeBarTransform->SetPosition(lifeBarPosition);
 
 
-			GameObject* dashPanel = objects::InstantiateGameObject
-				<GameObject>(this, enums::eLayerType::UI, L"DashPanelMaterial");
+			//GameObject* dashPanel = objects::InstantiateGameObject
+			//	<GameObject>(this, enums::eLayerType::UI, L"DashPanelMaterial");
 
-			Transform* dashPanelTransform = dashPanel->GetTransform();
+			//Transform* dashPanelTransform = dashPanel->GetTransform();
 
 
-			float dashXScale = 0.880f;
-			float dashYScale = 0.640f;
+			//float dashXScale = 0.880f;
+			//float dashYScale = 0.640f;
 
-			dashPanelTransform->SetScale(Vector3(dashXScale, dashYScale, 1.0f));
-			float dashWidthScaleHalf = dashXScale / 2.0f;
-			float dashHeightScaleHalf = dashYScale / 2.0f;
-			float dashPanePadding = 0.050f;
-			Vector3 dashPanelPosition = Vector3(-MaxPositionX + dashWidthScaleHalf + padding, MaxPositionY - panelYScale - dashHeightScaleHalf - padding, HUDZ);
-			dashPanelTransform->SetPosition(dashPanelPosition);
+			//dashPanelTransform->SetScale(Vector3(dashXScale, dashYScale, 1.0f));
+			//float dashWidthScaleHalf = dashXScale / 2.0f;
+			//float dashHeightScaleHalf = dashYScale / 2.0f;
+			//float dashPanePadding = 0.050f;
+			//Vector3 dashPanelPosition = Vector3(-MaxPositionX + dashWidthScaleHalf + padding, MaxPositionY - panelYScale - dashHeightScaleHalf - padding, HUDZ);
+			//dashPanelTransform->SetPosition(dashPanelPosition);
 		}
 
 		
@@ -184,10 +174,6 @@ namespace da
 
 		// overlay
 #pragma region Inventory
-		float width = (float)application.GetClientWidth();
-		width /= 100.0f;
-		float height = (float)application.GetClientHeight();
-		height /= 100.0f;
 		// Inventory Base
 		{
 			float inventoryScaleX = 1.230f;
@@ -198,10 +184,8 @@ namespace da
 			inventoryObject->GetTransform()->SetPosition(math::Vector3(MaxPositionX - (inventoryScaleX * 2.0f), 0.0f, PanelZ));
 			InventoryScript* inventoryScript = inventoryObject->AddComponent<InventoryScript>();
 			inventoryObject->SetObjectState(GameObject::eObjectState::Hide);
-			mManagerObject->GetComponent<GameManagerScript>()->SetInventory(inventoryScript);
 		}
 
 #pragma endregion
-
 	}
 }

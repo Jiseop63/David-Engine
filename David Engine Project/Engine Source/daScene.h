@@ -56,7 +56,6 @@ namespace da
 		Layer& GetLayer(enums::eLayerType targetLayer) { return mLayers[(UINT)targetLayer]; }
 
 	protected:
-		GameObject*		mManagerObject;
 		CameraObject*	mMainCamera;
 		CameraObject*	mUICamera;
 

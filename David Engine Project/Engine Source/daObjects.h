@@ -7,33 +7,23 @@
 #include "daMesh.h"
 #include "daMaterial.h"
 
-#include "daGameObject.h"
-#include "daMeshRenderer.h"
-
-#include "daCameraObject.h"
-#include "daCamera.h"
-#include "daCameraScript.h"
-#include "daGameManagerScript.h"
-
-#include "daUIObject.h"
-#include "daButtonScript.h"
-#include "daUIScript.h"
+#include "daObjectsFastIncludeHeader.h"
 
 namespace da::objects
 {
-	// GameManager Object
-	static GameObject* InstantiateGameManager(Scene* scene)
-	{
-		GameObject* gameMananger = new GameObject();
-		gameMananger->Initialize();
-		Layer& myLayer = scene->GetLayer(enums::eLayerType::None);
-		myLayer.AddGameObject(gameMananger);
-		gameMananger->AddComponent<GameManagerScript>();
-
-		return gameMananger;
-	}
-
 #pragma region Basic GameObjects Func
+	
+	template <typename T>
+	static T* JustGameObject(const std::wstring& material)
+	{
+		T* obj = new T();
+		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
+		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		meshRenderer->SetMaterial(Resources::Find<Material>(material));
+
+		obj->Initialize();
+		return obj;
+	}
 	template <typename T>
 	static T* InstantiateObject(Scene* scene, enums::eLayerType layer)
 	{
@@ -42,7 +32,6 @@ namespace da::objects
 		myLayer.AddGameObject(obj);
 		return obj;
 	}
-
 	template <typename T>
 	static T* InstantiateGameObject(Scene* scene, enums::eLayerType layer, const std::wstring& material)
 	{
@@ -59,7 +48,8 @@ namespace da::objects
 	}
 
 #pragma endregion
-#pragma region UI Object
+#pragma region Quick Init objects
+	
 	template <typename T>
 	static T* InstantiateUIObject(Scene* scene, enums::eLayerType layer, const std::wstring& material)
 	{
@@ -106,45 +96,46 @@ namespace da::objects
 		return obj;
 	}
 
-#pragma endregion 
-#pragma region Camera Objects
-	// 덮어씌여저서 안보이는 문제가 있음(안쓰는게 나을지도)
-	static CameraObject* InstantiateBackGroundCamera(Scene* scene)
+	
+	static GameObject* InstantiateGridObject(Scene* scene, CameraObject* cameraObject)
 	{
-		CameraObject* cameraObj = new CameraObject();
-		cameraObj->Initialize();
-		Layer& myLayer = scene->GetLayer(enums::eLayerType::None);
-		myLayer.AddGameObject(cameraObj);
+		GameObject* obj = new GameObject();
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::Grid);
+		myLayer.AddGameObject(obj);
+		GridScript* gridScript = obj->AddComponent<GridScript>();
+		gridScript->SetCamera(cameraObject->GetCameraComponent());
 
-		Camera* camera = cameraObj->GetCameraComponent();
-		camera->DisableLayerMask();
-		camera->TurnLayerMask(enums::eLayerType::BackGround);
-
-		return cameraObj;
+		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
+		meshRenderer->SetMesh( Resources::Find<Mesh>(L"RectMesh") );
+		meshRenderer->SetMaterial( Resources::Find<Material>(L"GridMaterial") );
+		obj->Initialize();
+		return obj;
 	}
-
+#pragma endregion 
+#pragma region Camera objects
 	static CameraObject* InstantiateMainCamera(Scene* scene)
 	{
 		CameraObject* cameraObj = new CameraObject(); 
-		cameraObj->Initialize();
 		Layer& myLayer = scene->GetLayer(enums::eLayerType::None);
 		myLayer.AddGameObject(cameraObj);
-		cameraObj->AddComponent<CameraScript>();
 		Camera* camera = cameraObj->GetCameraComponent();
+		CameraScript* script = cameraObj->AddComponent<CameraScript>();
+		cameraObj->Initialize();
+		
 		camera->TurnLayerMask(enums::eLayerType::UI, false);
-
+		script->SetCamera(camera);
 		return cameraObj;
 	}
 	static CameraObject* InstantiateUICamera(Scene* scene)
 	{
 		CameraObject* cameraObj = new CameraObject();
-		cameraObj->Initialize();
 		Layer& myLayer = scene->GetLayer(enums::eLayerType::None);
 		myLayer.AddGameObject(cameraObj);
 
 		Camera* camera = cameraObj->GetCameraComponent();
 		camera->DisableLayerMask();
 		camera->TurnLayerMask(enums::eLayerType::UI);
+		cameraObj->Initialize();
 		return cameraObj;
 	}
 #pragma endregion

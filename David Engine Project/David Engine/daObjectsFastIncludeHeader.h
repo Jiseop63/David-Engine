@@ -1,10 +1,8 @@
 #pragma once
 // objects & components
-#include "daObjects.h"
 
 #include "daGameObject.h"
 #include "daMeshRenderer.h"
-#include "daSubMeshRenderer.h"
 #include "daTransform.h"
 
 #include "daCameraObject.h"
@@ -18,3 +16,5 @@
 #include "daUIScript.h"
 #include "daButtonScript.h"
 #include "daCursorScript.h"
+
+#include "daInventoryScript.h"

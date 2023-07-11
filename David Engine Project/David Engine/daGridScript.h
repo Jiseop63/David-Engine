@@ -10,10 +10,7 @@ namespace da
 		GridScript();
 		virtual ~GridScript();
 
-		virtual void Initialize();
-		virtual void Update();
 		virtual void LateUpdate();
-		virtual void Render();
 
 		void SetCamera(Camera* component) { mCamera = component; }
 

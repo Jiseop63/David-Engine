@@ -72,7 +72,7 @@
     <ClInclude Include="framework.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="daGameManager.h">
+    <ClInclude Include="daGameDataManager.h">
       <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="daCreatureObject.h">
@@ -102,9 +102,6 @@
     <ClInclude Include="daScene_Dungeon2F.h">
       <Filter>Scenes\03 Dungeon</Filter>
     </ClInclude>
-    <ClInclude Include="daObjecsFastIncludeHeader.h">
-      <Filter>Global</Filter>
-    </ClInclude>
     <ClInclude Include="daButtonScript.h">
       <Filter>Objects\UI\Button</Filter>
     </ClInclude>
@@ -113,9 +110,6 @@
     </ClInclude>
     <ClInclude Include="daInventoryScript.h">
       <Filter>Objects\UI\Inventory</Filter>
-    </ClInclude>
-    <ClInclude Include="daGameManagerScript.h">
-      <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="daOverlayObject.h">
       <Filter>Objects\UI\미정</Filter>
@@ -140,7 +134,7 @@
     <ClCompile Include="David Engine.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="daGameManager.cpp">
+    <ClCompile Include="daGameDataManager.cpp">
       <Filter>Global</Filter>
     </ClCompile>
     <ClCompile Include="daCreatureObject.cpp">
@@ -176,9 +170,6 @@
     <ClCompile Include="daCursorScript.cpp">
       <Filter>Objects\UI\Cursor</Filter>
     </ClCompile>
-    <ClCompile Include="daGameManagerScript.cpp">
-      <Filter>Global</Filter>
-    </ClCompile>
     <ClCompile Include="daInventoryScript.cpp">
       <Filter>Objects\UI\Inventory</Filter>
     </ClCompile>
@@ -196,6 +187,9 @@
     </ClCompile>
     <ClCompile Include="daItemScript.cpp">
       <Filter>Objects\UI\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="daHUDScript.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -174,8 +174,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daResources.h">
       <Filter>Graphics\Resource\Base</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daSubMeshRenderer.h">
-      <Filter>Contents\Component\Renderer</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daStructs.h">
+      <Filter>Common\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\David Engine\daObjectsFastIncludeHeader.h">
+      <Filter>Contents\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -253,9 +256,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daResources.cpp">
       <Filter>Graphics\Resource\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daSubMeshRenderer.cpp">
-      <Filter>Contents\Component\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,16 +1,19 @@
 #pragma once
-
+#include "daGameObject.h"
+// or David Engine.h
 namespace da
 {
-	class GameManager
+	class GameDataManager
 	{
 	public:
+		static void Initialize();
+		static void InitializePlayerStat();
 
-
-
-
+	public:
+		static structs::eCreatureStat& GetPlayerStat() { return mPlayerStat; }
 
 	private:
+		static structs::eCreatureStat mPlayerStat;
 	};
 }
 

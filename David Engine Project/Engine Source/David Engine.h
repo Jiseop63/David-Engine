@@ -17,5 +17,6 @@
 #include <filesystem> // 파일입출력 편하게 도와주는 라이브러리
 
 #include "CommonInclude.h"
-#include "daEnums.h"
 #include "daMath.h"
+#include "daEnums.h"
+#include "daStructs.h"

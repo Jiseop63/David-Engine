@@ -3,9 +3,9 @@
 #include "daComponent.h"
 #include "daScript.h"
 #include "daTransform.h"
+
 namespace da
 {
-	class Transform;
 	class GameObject : public Entity
 	{
 	public:
@@ -71,16 +71,18 @@ namespace da
 			return origin;
 		}
 
+	public:
 		void SetObjectState(eObjectState state) { mObjectState = state; }
 		eObjectState GetObjectState() { return mObjectState; }
-
 		Transform* GetTransform() { return mTransform; }
 		void SetParent(GameObject* parent) { mTransform->SetParent( parent->GetTransform() ); }
-
+		void SetGlobal() { mGlobal = true; }
+		bool IsGlobal() { return mGlobal; }
 	protected:
 		Transform* mTransform;
 
 	private:
+		bool mGlobal;
 		eObjectState mObjectState;
 		std::vector<Component*> mComponents;
 		std::vector<Script*> mScripts;

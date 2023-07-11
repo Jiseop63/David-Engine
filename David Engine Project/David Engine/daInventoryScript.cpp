@@ -2,9 +2,16 @@
 
 #include "daGameObject.h"
 
+#include "daInput.h"
+
 namespace da
 {
 	InventoryScript::InventoryScript()
+		: mInventoryOpen(false)
+		, mWeapon{}
+		, mShiled{}
+		, mAccessory{}
+		, mItem{}
 	{
 	}
 	InventoryScript::~InventoryScript()
@@ -12,6 +19,20 @@ namespace da
 	}
 	void InventoryScript::Update()
 	{
+		// 인벤토리
+		if (Input::GetKeyDown(eKeyCode::V))
+		{
+			if (false == mInventoryOpen)
+			{
+				mInventoryOpen = true;
+				Open();
+			}
+			else
+			{
+				mInventoryOpen = false;
+				Close();
+			}
+		}
 	}
 	void InventoryScript::Open()
 	{

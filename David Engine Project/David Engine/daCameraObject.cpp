@@ -8,14 +8,14 @@ namespace da
 	CameraObject::CameraObject()
 		: mCameraComponent(nullptr)
 	{
+		mCameraComponent = AddComponent<Camera>();
+		mTransform->SetPosition(math::Vector3(0.0f, 0.0f, -6.750f));
 	}
 	CameraObject::~CameraObject()
 	{
 	}
 	void CameraObject::Initialize()
-	{
-		mCameraComponent = AddComponent<Camera>();
-		mTransform->SetPosition(math::Vector3(0.0f, 0.0f, -6.750f));
+	{		
 		GameObject::Initialize();
 	}
 	void CameraObject::Update()

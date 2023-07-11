@@ -15,6 +15,7 @@ namespace da
 		void Close();
 
 	protected:
+		bool mInventoryOpen;
 		// 무기 2개
 		std::vector<GameObject*> mWeapon;
 		// 방패 2개

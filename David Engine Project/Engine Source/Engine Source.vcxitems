@@ -14,6 +14,7 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\David Engine\daObjectsFastIncludeHeader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daApplication.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daCamera.h" />
@@ -37,7 +38,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daSceneManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daScript.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daShader.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)daSubMeshRenderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daStructs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daTexture.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daTime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daTimeConstants.h" />
@@ -68,7 +69,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daSceneManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daScript.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daShader.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)daSubMeshRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daTexture.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daTime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daTimeConstants.cpp" />

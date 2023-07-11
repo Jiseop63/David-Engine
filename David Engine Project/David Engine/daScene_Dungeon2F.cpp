@@ -1,5 +1,6 @@
 #include "daScene_Dungeon2F.h"
 
+#include "daRenderer.h"
 // юс╫ц
 #include "daInput.h"
 #include "daSceneManager.h"
@@ -9,7 +10,8 @@
 #include "daTexture.h"
 
 // UI, Object, Components and Camera
-#include "daObjecsFastIncludeHeader.h"
+#include "daObjects.h"
+#include "daObjectsFastIncludeHeader.h"
 
 
 namespace da
@@ -22,8 +24,10 @@ namespace da
 	}
 	void Scene_Dungeon2F::Initialize()
 	{
-		CameraObject* mainCameraObj = objects::InstantiateMainCamera(this);
-		CameraObject* uiCameraObj = objects::InstantiateUICamera(this);
+		mMainCamera = objects::InstantiateMainCamera(this);
+		mUICamera = objects::InstantiateUICamera(this);
+
+		objects::InstantiateGridObject(this, mMainCamera);
 		addBackgroundObjects();
 	}
 	void Scene_Dungeon2F::Update()
@@ -45,6 +49,8 @@ namespace da
 
 	void Scene_Dungeon2F::OnEnter()
 	{
+		renderer::mainCamera = mMainCamera->GetCameraComponent();
+		renderer::uiCamera = mUICamera->GetCameraComponent();
 	}
 	void Scene_Dungeon2F::OnExit()
 	{

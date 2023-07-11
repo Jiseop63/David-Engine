@@ -19,7 +19,6 @@ namespace da::enums
 		TimeConstants,
 		Mesh,
 		Renderer,
-		SubRenderer,
 		Particle,
 		Script,
 		Camera,

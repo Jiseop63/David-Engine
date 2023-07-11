@@ -19,12 +19,6 @@ namespace da
 	{
 	}
 
-	void GridScript::Initialize()
-	{
-	}
-	void GridScript::Update()
-	{
-	}
 	void GridScript::LateUpdate()
 	{
 		if (nullptr == mCamera)
@@ -57,9 +51,5 @@ namespace da
 		outCB->SetData(&data);
 		outCB->Bind(graphics::eShaderStage::VS);
 		outCB->Bind(graphics::eShaderStage::PS);
-	}
-
-	void GridScript::Render()
-	{
 	}
 }

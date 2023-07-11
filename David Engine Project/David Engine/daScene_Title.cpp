@@ -7,22 +7,11 @@
 
 // objects & components
 #include "daObjects.h"
-
-#include "daGameObject.h"
-#include "daMeshRenderer.h"
-#include "daTransform.h"
-
-#include "daCameraObject.h"
-#include "daCamera.h"
-#include "daCameraScript.h"
-
+#include "daObjectsFastIncludeHeader.h"
 #include "daTimeConstants.h"
 
-#include "daUIObject.h"
-#include "daButtonScript.h"
-
-#include "daCursorScript.h"
 #include "daApplication.h"
+
 
 extern da::Application application;
 
@@ -36,11 +25,10 @@ namespace da
 	}
 	void Scene_Title::Initialize()
 	{
-		CameraObject* mainCameraObj = objects::InstantiateMainCamera(this);
-		renderer::mainCamera = mainCameraObj->GetCameraComponent();
-		CameraObject* uiCameraObj = objects::InstantiateUICamera(this);
-		renderer::uiCamera = uiCameraObj->GetCameraComponent();
-
+		mMainCamera = objects::InstantiateMainCamera(this);
+		mUICamera = objects::InstantiateUICamera(this);
+		
+		objects::InstantiateGridObject(this, mMainCamera);
 		addBackgroundObjects();
 		addUIObjects();
 
@@ -60,6 +48,8 @@ namespace da
 
 	void Scene_Title::OnEnter()
 	{
+		renderer::mainCamera = mMainCamera->GetCameraComponent();
+		renderer::uiCamera = mUICamera->GetCameraComponent();
 	}
 	void Scene_Title::OnExit()
 	{
