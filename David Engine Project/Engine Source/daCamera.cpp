@@ -28,7 +28,7 @@ namespace da
 
 	Camera::Camera()
 		: Component(enums::eComponentType::Camera)
-		, mProjectionType(eProjectionType::Perspective)
+		, mProjectionType(eProjectionType::Orthographic)
 		, mTransform(nullptr)
 		, mView(Matrix::Identity)
 		, mProjection(Matrix::Identity)

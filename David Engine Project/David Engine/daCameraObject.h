@@ -16,6 +16,7 @@ namespace da
 		virtual void Render() override;
 
 		Camera* GetCameraComponent() { return mCameraComponent; }
+		void SetCameraComponent(Camera* component) { mCameraComponent = component; }
 	private:
 		Camera* mCameraComponent;
 	};

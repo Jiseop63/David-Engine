@@ -55,7 +55,6 @@ namespace da
 	{
 	}
 
-
 	void Scene_Title::addBackgroundObjects()
 	{
 		float Width = (float)application.GetClientWidth();
@@ -105,7 +104,6 @@ namespace da
 			copyrightObj->GetTransform()->SetPosition(math::Vector3(0.0f, -(height / 2.0f) + 0.360f, HUDZ));
 		}
 	}
-
 	void Scene_Title::addUIObjects()
 	{
 		float Width = (float)application.GetClientWidth();

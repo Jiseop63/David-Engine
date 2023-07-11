@@ -38,7 +38,8 @@ namespace da
 	{
 		if (Input::GetKeyDown(eKeyCode::N))
 		{
-			SceneManager::LoadScene(L"Scene_Dungeon1F");
+			//SceneManager::LoadScene(L"Scene_Dungeon1F");
+			int a = 0;
 		}
 		Scene::Update();
 	}
@@ -63,12 +64,14 @@ namespace da
 	}
 
 	void Scene_Town::addBackgroundObject()
-	{		
+	{
 		// sky BG : stay
 		{
 			GameObject* backGround = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::BackGround, L"SkyMaterial");
 			backGround->GetTransform()->SetScale(math::Vector3(MaxPositionX * 2.0f, MaxPositionY * 2.0f, 1.0f));
+			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, BackgroundZ));
+			backGround->SetName(L"sky");
 		}
 
 		// 레이어 역할을 하는 배경들은 스케일 값을 건드는게 아니라 카메라로부터 영향받는 수치를 낮추는 식으로 해야할듯?
@@ -77,7 +80,8 @@ namespace da
 			GameObject* backGround = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::Layer, L"TownBGMaterial");
 			backGround->GetTransform()->SetScale(math::Vector3(MaxPositionX * 2.0f, MaxPositionY * 2.0f, 1.0f));
-			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, -3.0f, -0.001f));
+			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, -3.0f, BackLayerZ));
+			backGround->SetName(L"forest");
 		}
 
 		// town Layer : follow
@@ -85,7 +89,8 @@ namespace da
 			GameObject* backGround = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::Layer, L"TownLayerMaterial");
 			backGround->GetTransform()->SetScale(math::Vector3(MaxPositionX * 2.0f, MaxPositionY * 2.0f, 1.0f));
-			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, -6.0f, -0.002f));
+			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, -6.0f, FrontLayerZ));
+			backGround->SetName(L"trees");
 		}
 	}
 	void Scene_Town::addUIObjects()
@@ -97,13 +102,16 @@ namespace da
 			// HUD 객체 생성
 			GameObject* lifeHUD = objects::InstantiateObject
 				<GameObject>(this, enums::eLayerType::None);
+			lifeHUD->SetName(L"lifeHUD");
 			Transform* lifeHUDTransform = lifeHUD->GetTransform();
 			//  HUD 위치 조절 (좌상단)
 			lifeHUDTransform->SetPosition(Vector3(-MaxPositionX, MaxPositionY, HUDZ));
 			float padding = 0.20f;
+
 			// Panel 객체 생성
 			GameObject* lifePanel = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::UI, L"PlayerLifePanelMaterial");
+			lifePanel->SetName(L"lifePanel");
 			Transform* lifePanelTransform = lifePanel->GetTransform();
 			lifePanelTransform->SetParent(lifeHUDTransform);
 			// Panel 크기 조절
@@ -113,9 +121,11 @@ namespace da
 			// Panel 위치 조절
 			Vector3 lifePanelPosition = Vector3( (panelXScale / 2.0f) + padding, -(panelYScale / 2.0f) - padding, 0.f);
 			lifePanelTransform->SetPosition(lifePanelPosition);
+
 			// Bar 객체 생성
 			GameObject* lifeBar = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::UI, L"PlayerLifeBarMaterial");
+			lifeBar->SetName(L"lifeBar");
 			Transform* lifeBarTransform = lifeBar->GetTransform();
 			lifeBarTransform->SetParent(lifeHUDTransform);
 			// Bar 크기 조절
@@ -145,34 +155,35 @@ namespace da
 			//Vector3 dashPanelPosition = Vector3(-MaxPositionX + dashWidthScaleHalf + padding, MaxPositionY - panelYScale - dashHeightScaleHalf - padding, HUDZ);
 			//dashPanelTransform->SetPosition(dashPanelPosition);
 		}
-
-		
+				
 		// player weapon panel
 		{
-			GameObject* weaponBase = objects::InstantiateGameObject
+			GameObject* weaponPanel = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::UI, L"WeaponBaseMaterial");
-			Transform* weaponPanelTransform = weaponBase->GetTransform();
+			weaponPanel->SetName(L"weaponPanel");
+			Transform* weaponPanelTransform = weaponPanel->GetTransform();
 			float weaponPanelScaleX = 1.70f;
-			float weaponPanelScaleY = 1.20f;
+			float weaponPanelScaleY = 1.0f;
 			weaponPanelTransform ->SetScale(math::Vector3(weaponPanelScaleX, weaponPanelScaleY, 1.0f));
-			float weaponWidthScaleHalf = weaponPanelScaleX / 2.0f;
-			float weaponHeightScaleHalf = weaponPanelScaleY / 2.0f;
 			float dashPanePadding = 0.150f;
 
-			Vector3 weaponPanelPosition = Vector3(MaxPositionX - weaponWidthScaleHalf - dashPanePadding, -MaxPositionY + weaponHeightScaleHalf + dashPanePadding, HUDZ);
-			weaponPanelTransform ->SetPosition(weaponPanelPosition);
+			Vector3 weaponPanelPosition 
+				= Vector3(
+					MaxPositionX - (weaponPanelScaleX / 2.0f) - dashPanePadding
+					, -MaxPositionY + (weaponPanelScaleY / 2.0f) + dashPanePadding, HUDZ);
+			weaponPanelTransform->SetPosition(weaponPanelPosition);
 		}
 		// mouse
 		{
 			GameObject* cursorObject = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::UI, L"ShootingCursorMaterial");
+			cursorObject->SetName(L"cursor");
 			cursorObject->GetTransform()->SetScale(math::Vector3(0.210f * 4.0f, 0.210f * 4.0f, 1.0f));
 			cursorObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, CursorZ));
 			cursorObject->AddComponent<CursorScript>();
 		}
 #pragma endregion
 
-		// overlay
 #pragma region Inventory
 		// Inventory Base
 		{
@@ -180,12 +191,14 @@ namespace da
 			float inventoryScaleY = 1.80f;
 			GameObject* inventoryObject = objects::InstantiateGameObject<GameObject>
 				(this, enums::eLayerType::UI, L"InventoryBaseMaterial");
+			inventoryObject->SetName(L"inventory");
 			inventoryObject->GetTransform()->SetScale(math::Vector3(inventoryScaleX * 4.0f, inventoryScaleY * 4.0f, 1.0f));
-			inventoryObject->GetTransform()->SetPosition(math::Vector3(MaxPositionX - (inventoryScaleX * 2.0f), 0.0f, PanelZ));
+			inventoryObject->GetTransform()->SetPosition(math::Vector3(MaxPositionX - (inventoryScaleX * 2.0f), 0.0f, OverlayZ));
 			InventoryScript* inventoryScript = inventoryObject->AddComponent<InventoryScript>();
 			inventoryObject->SetObjectState(GameObject::eObjectState::Hide);
 		}
 
 #pragma endregion
+
 	}
 }

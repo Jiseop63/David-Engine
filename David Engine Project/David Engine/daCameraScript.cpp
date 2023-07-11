@@ -80,19 +80,19 @@ namespace da
 		else if (Input::GetKeyDown(eKeyCode::NUM_0))
 		{
 			Camera* mainCam = renderer::mainCamera;
-			Camera* uiCam = renderer::uiCamera;
+			Camera* uiCamera = renderer::uiCamera;
 
 			Camera::eProjectionType projectionType = mainCam->GetProjectionType();
 
 			if (Camera::eProjectionType::Orthographic == projectionType)
 			{
 				mainCam->SetProjectionType(Camera::eProjectionType::Perspective);
-				uiCam->SetProjectionType(Camera::eProjectionType::Perspective);
+				uiCamera->SetProjectionType(Camera::eProjectionType::Perspective);
 			}
 			else
 			{
 				mainCam->SetProjectionType(Camera::eProjectionType::Orthographic);
-				uiCam->SetProjectionType(Camera::eProjectionType::Orthographic);
+				uiCamera->SetProjectionType(Camera::eProjectionType::Orthographic);
 			}
 		}
 

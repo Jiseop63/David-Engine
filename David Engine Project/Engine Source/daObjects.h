@@ -116,26 +116,32 @@ namespace da::objects
 	static CameraObject* InstantiateMainCamera(Scene* scene)
 	{
 		CameraObject* cameraObj = new CameraObject(); 
+		cameraObj->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -6.750f));
 		Layer& myLayer = scene->GetLayer(enums::eLayerType::None);
 		myLayer.AddGameObject(cameraObj);
-		Camera* camera = cameraObj->GetCameraComponent();
+		Camera* camera = cameraObj->AddComponent<Camera>();
+		cameraObj->SetCameraComponent(camera);
 		CameraScript* script = cameraObj->AddComponent<CameraScript>();
-		cameraObj->Initialize();
-		
-		camera->TurnLayerMask(enums::eLayerType::UI, false);
 		script->SetCamera(camera);
+				
+		// 서순 중요함
+		cameraObj->Initialize();
+		camera->TurnLayerMask(enums::eLayerType::UI, false);
 		return cameraObj;
 	}
 	static CameraObject* InstantiateUICamera(Scene* scene)
 	{
 		CameraObject* cameraObj = new CameraObject();
+		cameraObj->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -6.750f));
 		Layer& myLayer = scene->GetLayer(enums::eLayerType::None);
 		myLayer.AddGameObject(cameraObj);
+		Camera* camera = cameraObj->AddComponent<Camera>();
+		cameraObj->SetCameraComponent(camera);
+		cameraObj->Initialize();
 
-		Camera* camera = cameraObj->GetCameraComponent();
+		// 서순 중요함
 		camera->DisableLayerMask();
 		camera->TurnLayerMask(enums::eLayerType::UI);
-		cameraObj->Initialize();
 		return cameraObj;
 	}
 #pragma endregion

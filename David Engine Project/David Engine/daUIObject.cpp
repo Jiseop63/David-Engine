@@ -28,7 +28,6 @@ namespace da
 	}
 	void UIObject::ExcuteEvent()
 	{
-		int a = 0;
 		ButtonScript* uiScript = GetComponent<ButtonScript>();
 		if (uiScript)
 		{

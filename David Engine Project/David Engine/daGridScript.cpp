@@ -35,8 +35,8 @@ namespace da
 		float scale = mCamera->GetSize();
 
 		// Resolution 가져오기
-		float width = application.GetClientWidth();
-		float height = application.GetClientHeight();
+		float width = (float)application.GetClientWidth();
+		float height = (float)application.GetClientHeight();
 		math::Vector2 resolution(width, height);
 
 		/// 상수버퍼 바인드

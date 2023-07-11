@@ -20,12 +20,9 @@ namespace da
 		Vector3 myPosition = cursorTransform->GetPosition();
 
 		// 마우스 위치 가져오기
-		Vector3 mousePosition = Input::GetMouseUIPosition();
-		myPosition.x = mousePosition.x;
-		myPosition.y = mousePosition.y;
-		myPosition.z = 0.0050f;
+		Vector3 worldMousePos = Input::GetMouseWorldPosition();
 
 		// 내위치를 마우스 위치로 옮기기
-		cursorTransform->SetPosition(mousePosition);
+		cursorTransform->SetPosition(worldMousePos);
 	}
 }

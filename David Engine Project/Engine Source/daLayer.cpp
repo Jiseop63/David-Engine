@@ -11,8 +11,6 @@ namespace da
 		{
 			if (nullptr == target)
 				continue;
-			if (true == target->IsGlobal())
-				continue;
 
 			delete target;
 			target = nullptr;
