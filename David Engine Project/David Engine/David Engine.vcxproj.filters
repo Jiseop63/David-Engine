@@ -64,6 +64,9 @@
     <Filter Include="Objects\UI\Grid">
       <UniqueIdentifier>{63de9362-d756-4b7c-b91c-43466ecce595}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\UI\HUD">
+      <UniqueIdentifier>{4192a0bb-a2e4-40a7-a284-769087984226}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -128,6 +131,9 @@
     </ClInclude>
     <ClInclude Include="daItemScript.h">
       <Filter>Objects\UI\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="daHUDScript.h">
+      <Filter>Objects\UI\HUD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-#include "daMeshRenderer.h"
+#include "daSubMeshRenderer.h"
 #include "daGameObject.h"
 #include "daTransform.h"
 #include "daTimeConstants.h"
@@ -6,16 +6,17 @@ namespace da
 {
 	using namespace enums;
 
-	MeshRenderer::MeshRenderer()
-		: Component(eComponentType::Renderer)
+	SubMeshRenderer::SubMeshRenderer()
+		: Component(eComponentType::SubRenderer)
 		, mMesh(nullptr)
 		, mMaterial(nullptr)
 	{
 	}
-	MeshRenderer::~MeshRenderer()
+	SubMeshRenderer ::~SubMeshRenderer()
 	{
 	}
-	void MeshRenderer::Render()
+
+	void SubMeshRenderer::Render()
 	{
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 		tr->BindConstantBuffer();

@@ -6,11 +6,12 @@
 
 namespace da
 {
-	class MeshRenderer : public Component
+	class SubMeshRenderer : public Component
 	{
 	public:
-		MeshRenderer();
-		virtual ~MeshRenderer();
+		SubMeshRenderer();
+		virtual ~SubMeshRenderer();
+
 		virtual void Render() override;
 
 		void SetMesh(std::shared_ptr<Mesh> mesh) { mMesh = mesh; }

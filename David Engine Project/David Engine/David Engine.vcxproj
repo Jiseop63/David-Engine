@@ -153,6 +153,7 @@
     <ClInclude Include="daGameManager.h" />
     <ClInclude Include="daGameManagerScript.h" />
     <ClInclude Include="daGridScript.h" />
+    <ClInclude Include="daHUDScript.h" />
     <ClInclude Include="daInventoryScript.h" />
     <ClInclude Include="daItemScript.h" />
     <ClInclude Include="daLoadScenes.h" />

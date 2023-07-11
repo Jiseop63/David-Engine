@@ -35,9 +35,18 @@ namespace da::objects
 
 #pragma region Basic GameObjects Func
 	template <typename T>
-	static T* InstantiateObject(Scene* scene, enums::eLayerType layer, const std::wstring& material)
+	static T* InstantiateObject(Scene* scene, enums::eLayerType layer)
 	{
-		T* obj = new T();										// ÀÌ¶§ Transform Ãß°¡µÊ
+		T* obj = new T();
+		Layer& myLayer = scene->GetLayer(layer);
+		myLayer.AddGameObject(obj);
+		return obj;
+	}
+
+	template <typename T>
+	static T* InstantiateGameObject(Scene* scene, enums::eLayerType layer, const std::wstring& material)
+	{
+		T* obj = new T();
 		Layer& myLayer = scene->GetLayer(layer);
 		myLayer.AddGameObject(obj);
 

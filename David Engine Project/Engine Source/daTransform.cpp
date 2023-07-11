@@ -19,12 +19,6 @@ namespace da
 	Transform::~Transform()
 	{
 	}
-	void Transform::Initialize()
-	{
-	}
-	void Transform::Update()
-	{
-	}
 	void Transform::LateUpdate()
 	{
 		mWorld = Matrix::Identity;
@@ -51,9 +45,6 @@ namespace da
 			mWorld *= mParent->mWorld;
 		}
 
-	}
-	void Transform::Render()
-	{
 	}
 	void Transform::BindConstantBuffer()
 	{

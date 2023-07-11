@@ -17,8 +17,10 @@ VSOut mainVS(VSIn In)
     VSOut Out = (VSOut) 0.0f;
     float2 gridPos = float2(0.0f, 0.0f);
     
-    gridPos.x = In.Pos.x * 1.0f * cResolution.x + cCameraPosition.x * cCameraScale.x;
-    gridPos.y = In.Pos.y * 1.0f * cResolution.y + cCameraPosition.y * cCameraScale.y;
+    float moveCoefficient = 100.0f;
+    
+    gridPos.x = In.Pos.x * 1.0f * cResolution.x + cCameraPosition.x * cCameraScale.x * moveCoefficient;
+    gridPos.y = In.Pos.y * 1.0f * cResolution.y + cCameraPosition.y * cCameraScale.y * moveCoefficient;
     
     // ±‚¡ÿ¡°
     const float meshScale = 2.0f;

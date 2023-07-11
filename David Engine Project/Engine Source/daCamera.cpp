@@ -50,9 +50,6 @@ namespace da
 		mTransform = GetOwner()->GetComponent<Transform>();
 		EnableLayerMask();
 	}
-	void Camera::Update()
-	{
-	}
 	void Camera::LateUpdate()
 	{
 		createViewMatrix();

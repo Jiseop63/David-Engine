@@ -14,18 +14,6 @@ namespace da
 	TimeConstants::~TimeConstants()
 	{
 	}
-	void TimeConstants::Initialize()
-	{
-	}
-	void TimeConstants::Update()
-	{
-	}
-	void TimeConstants::LateUpdate()
-	{
-	}
-	void TimeConstants::Render()
-	{
-	}
 	void TimeConstants::BindConstantBuffer()
 	{
 		mElapsedTime += (float)Time::DeltaTime();

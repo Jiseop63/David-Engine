@@ -141,7 +141,7 @@ namespace renderer
 			Resources::Insert<Material>(L"ShootingCursorMaterial", spriteMaterial);
 		}
 
-		// player life
+		// player lifePanel
 		{
 			std::shared_ptr<Texture> texture
 				= Resources::Load<Texture>(L"PlayerLifePanelTexture", L"..\\Resources\\Texture\\UIs\\Hud\\Life\\PlayerLifePanel.png");
@@ -150,6 +150,16 @@ namespace renderer
 			spriteMaterial->SetShader(spriteShader);
 			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
 			Resources::Insert<Material>(L"PlayerLifePanelMaterial", spriteMaterial);
+		}
+		// player lifeBar
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"PlayerLifeBarTexture", L"..\\Resources\\Texture\\UIs\\Hud\\Life\\LifeBar.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
+			Resources::Insert<Material>(L"PlayerLifeBarMaterial", spriteMaterial);
 		}
 		// dash count
 		{

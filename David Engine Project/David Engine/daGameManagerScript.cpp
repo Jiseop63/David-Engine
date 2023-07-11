@@ -27,7 +27,12 @@ namespace da
 				InventoryClose();
 		}
 
-
+		if (Input::GetKeyDown(eKeyCode::T))
+		{
+			int getDamage = 5.0f;
+			if (! (mPlayerStat.curHP <= getDamage) )
+				mPlayerStat.curHP -= 5.0f;
+		}
 	}
 	void GameManagerScript::InventoryOpen()
 	{

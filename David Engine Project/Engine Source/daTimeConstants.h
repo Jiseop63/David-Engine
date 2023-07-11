@@ -8,10 +8,7 @@ namespace da
 	public:
 		TimeConstants();
 		virtual ~TimeConstants();
-		virtual void Initialize();
-		virtual void Update();
-		virtual void LateUpdate();
-		virtual void Render();
+
 	public:
 		void SetValue(float value) { mValue = value; }
 

@@ -4,6 +4,7 @@
 
 #include "daGameObject.h"
 #include "daMeshRenderer.h"
+#include "daSubMeshRenderer.h"
 #include "daTransform.h"
 
 #include "daCameraObject.h"

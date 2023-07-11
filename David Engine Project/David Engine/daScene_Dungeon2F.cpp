@@ -54,7 +54,7 @@ namespace da
 		// TempDungeonMaterial
 		// town Layer : follow
 		{
-			GameObject* backGround = objects::InstantiateObject
+			GameObject* backGround = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::Layer, L"2FMaterial");
 			backGround->GetTransform()->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
 			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -0.002f));

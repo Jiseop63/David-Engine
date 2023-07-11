@@ -75,7 +75,7 @@ namespace da
 		
 		// just BG
 		{
-			GameObject* backGround = objects::InstantiateObject
+			GameObject* backGround = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::BackGround, L"TitleBackgroundMaterial");
 			backGround->GetTransform()->SetScale(math::Vector3(Width, height, 1.0f));
 			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, BackgroundZ));
@@ -84,7 +84,7 @@ namespace da
 		// moving background layer
 		{
 			// Back & Front Cloud Layer
-			GameObject* cloudObj = objects::InstantiateObject
+			GameObject* cloudObj = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::BackGround, L"BackCloudMaterial");
 			cloudObj->GetTransform()->SetScale(math::Vector3(Width, height, 1.0f));
 			cloudObj->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, BackLayerZ));
@@ -92,7 +92,7 @@ namespace da
 			cloudTimer->SetValue(0.05f);
 
 
-			GameObject* cloudObj2 = objects::InstantiateObject
+			GameObject* cloudObj2 = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::BackGround, L"FrontCloudMaterial");
 			cloudObj2->GetTransform()->SetScale(math::Vector3(Width, height, 1.0f));
 			cloudObj2->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, FrontLayerZ));
@@ -102,14 +102,14 @@ namespace da
 		}
 		// BGObj MainLogo
 		{
-			GameObject* titleLogoObj = objects::InstantiateObject
+			GameObject* titleLogoObj = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::BackGround, L"MainLogoMaterial");
 			titleLogoObj->GetTransform()->SetScale(math::Vector3(4.680f, 2.250f, 1.0f));
 			titleLogoObj->GetTransform()->SetPosition(math::Vector3(0.0f, (height / 2.0f) - 2.250f, HUDZ));
 		}
 		// BGObj Copyright
 		{
-			GameObject* copyrightObj = objects::InstantiateObject
+			GameObject* copyrightObj = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::BackGround, L"CopyrightMaterial");
 			copyrightObj->GetTransform()->SetScale(math::Vector3(5.010f, 0.360f, 1.0f));
 			copyrightObj->GetTransform()->SetPosition(math::Vector3(0.0f, -(height / 2.0f) + 0.360f, HUDZ));
@@ -143,7 +143,7 @@ namespace da
 
 		// mouse
 		{
-			GameObject* cursorObject = objects::InstantiateObject
+			GameObject* cursorObject = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::UI, L"BasicCursorMaterial");
 			cursorObject->GetTransform()->SetScale(math::Vector3(0.190f * 4.0f, 0.190f * 4.0f, 1.0f));
 			cursorObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, CursorZ));
