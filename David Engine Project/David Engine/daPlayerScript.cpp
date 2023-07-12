@@ -38,11 +38,29 @@ namespace da
         {
             GetDamage();
         }
-        
+        if (Input::GetKeyDown(eKeyCode::RBTN))
+        {
+            Dash();
+        }
     }
     void PlayerScript::MoveFunc(Vector2 dir)
     {
-        mRigidbody->V2AddForce(dir * mMoveSpeed);
+        //mRigidbody->ApplyV2Force(dir * mMoveSpeed);
+        mRigidbody->ApplyV2Velocity(dir * mMoveSpeed);
+    }
+    void PlayerScript::Dash()
+    {
+        // 마우스 방향 구하기
+        Vector3 mousePos = Input::GetMouseWorldPosition();
+        Vector2 calcVector(mousePos.x, mousePos.y);
+        calcVector.Normalize();
+        // 이동 거리 적용하기
+        float dash = 20.0f;
+        calcVector *= dash;
+        mRigidbody->ApplyV2Force(calcVector);
+    }
+    void PlayerScript::Jump()
+    {
     }
     void PlayerScript::GetDamage()
     {

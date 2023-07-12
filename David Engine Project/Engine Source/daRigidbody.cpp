@@ -34,7 +34,7 @@ namespace da
 		if (eDimensionType::SecondDimension == mDimensionType)
 		{
 			mV2Accelation = mV2Force / mMass;
-			mV2Velocity += mV2Accelation * (float)Time::DeltaTime();
+			mV2Velocity += mV2Accelation * (float)Time::DeltaTime() * 1.60f;
 			v2FrictionAction();
 			v2MoveAction();
 			if (mUseGravity)
@@ -66,8 +66,8 @@ namespace da
 			Vector2 friction = frictionUnit * mFriction * mMass * (float)Time::DeltaTime();
 
 			// 이동중이 아니라면 마찰력 증가
-			if (Vector2::Zero == mV2Force)
-				friction += friction;
+			//if (Vector2::Zero == mV2Force)
+				//friction += friction;
 
 			// 마찰력이 속도를 넘기면
 			if (friction.Length() > mV2Velocity.Length())

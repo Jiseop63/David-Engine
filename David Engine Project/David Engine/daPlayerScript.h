@@ -14,7 +14,8 @@ namespace da
 
 		void GetInput();
 		void MoveFunc(math::Vector2 dir);
-
+		void Dash();
+		void Jump();
 		// юс╫ц
 
 		void GetDamage();

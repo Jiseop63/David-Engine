@@ -25,20 +25,20 @@ namespace da
 
 		// unit : 속도 통제 방향, inner : 현재 속도
 		void EraseVelocity(math::Vector2 dir, math::Vector2 velocity);
-		void EraseVelocity(math::Vector3 dir, math::Vector3 velocity) {};
+		void EraseVelocity(math::Vector3 dir, math::Vector3 velocity) {}
 
-		void V2AddForce(math::Vector2 vector2) { mV2Force = vector2; };
-
+		void ApplyV2Force(math::Vector2 vector2) { mV2Force = vector2; }
+		void ApplyV2Velocity(math::Vector2 vector2) { mV2Velocity = vector2; }
 	private:
 		void v2FrictionAction();
 		void v2MoveAction();
 		void v2GravityAction();
 		void v2LimitVelocityAction();
 	private:
-		void v3FrictionAction() {};
-		void v3MoveAction() {};
-		void v3GravityAction() {};
-		void v3LimitVelocityAction() {};
+		void v3FrictionAction() {}
+		void v3MoveAction() {}
+		void v3GravityAction() {}
+		void v3LimitVelocityAction() {}
 
 
 	private:
