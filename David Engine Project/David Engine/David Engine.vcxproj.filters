@@ -167,9 +167,6 @@
     <ClCompile Include="daScene_Dungeon2F.cpp">
       <Filter>Scenes\03 Dungeon</Filter>
     </ClCompile>
-    <ClCompile Include="daUIManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="daButtonScript.cpp">
       <Filter>Objects\UI\Button</Filter>
     </ClCompile>
@@ -194,14 +191,17 @@
     <ClCompile Include="daItemScript.cpp">
       <Filter>Objects\UI\Inventory</Filter>
     </ClCompile>
-    <ClCompile Include="daHUDScript.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="daLifeBarScript.cpp">
       <Filter>Objects\UI\HUD</Filter>
     </ClCompile>
     <ClCompile Include="daPlayerScript.cpp">
       <Filter>Objects\Creature</Filter>
+    </ClCompile>
+    <ClCompile Include="daHUDScript.cpp">
+      <Filter>Objects\UI\미정</Filter>
+    </ClCompile>
+    <ClCompile Include="daUIManager.cpp">
+      <Filter>Objects\UI\미정</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

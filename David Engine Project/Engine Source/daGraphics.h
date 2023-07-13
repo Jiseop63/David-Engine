@@ -89,4 +89,8 @@ namespace da::graphics
 		{}
 		virtual ~GPUBuffer() = default;
 	};
+	struct DebugMesh
+	{
+
+	};
 };
