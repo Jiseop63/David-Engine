@@ -19,7 +19,7 @@ namespace da
 	public:
 
 		// 언젠가 써먹어야 하는 기능, 아직 확립안된 기준
-		enum eObjectState
+		enum class eObjectState
 		{
 			Active,		// 씬에서 동작함
 			Paused,		// Update X

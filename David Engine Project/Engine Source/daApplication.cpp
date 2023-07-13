@@ -23,6 +23,7 @@ namespace da
 		Update();
 		LateUpdate();
 		Render();
+		Destroy();
 	}
 
 	void Application::Initialize()
@@ -53,9 +54,13 @@ namespace da
 		Input::Render();
 		graphicDevice->ClearTarget();
 		graphicDevice->UpdateViewPort();
-		//SceneManager::Render();
 		renderer::Render();
 		graphicDevice->Present();
+	}
+
+	void Application::Destroy()
+	{
+		SceneManager::Destroy();
 	}
 
 	void Application::SetWindow(HWND hwnd, UINT width, UINT height)

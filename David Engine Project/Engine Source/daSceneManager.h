@@ -9,7 +9,7 @@ namespace da
 		static void Initialize();
 		static void Update();
 		static void LateUpdate();
-		static void Render();
+		static void Destroy();
 		static void Release();
 	public:
 		template <typename T>

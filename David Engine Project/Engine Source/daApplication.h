@@ -15,6 +15,7 @@ namespace da
 		void Update();
 		void LateUpdate();
 		void Render();
+		void Destroy();
 
 	public:
 		HWND GetHwnd() { return mHwnd; }

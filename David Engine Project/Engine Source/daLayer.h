@@ -13,6 +13,7 @@ namespace da
 		void Update();
 		void LateUpdate();
 		void Render();
+		void Destroy();
 
 		void AddGameObject(GameObject* target);
 

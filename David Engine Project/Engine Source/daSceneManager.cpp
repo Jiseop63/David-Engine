@@ -14,10 +14,10 @@ namespace da
 	void SceneManager::LateUpdate()
 	{
 		mActiveScene->LateUpdate();
-	}
-	void SceneManager::Render()
+	}	
+	void SceneManager::Destroy()
 	{
-		mActiveScene->Render();
+		mActiveScene->Destroy();
 	}
 	void SceneManager::Release()
 	{

@@ -15,7 +15,7 @@ namespace da
 		virtual void Update();
 		virtual void LateUpdate();
 		virtual void Render();
-
+		virtual void Destroy();
 	public:
 		virtual void OnEnter() {}
 		virtual void OnExit() {}
