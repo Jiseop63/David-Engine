@@ -33,6 +33,8 @@ namespace gui
 		//Editor Objects
 		EditorObject* grid = new EditorObject();
 		grid->SetName(L"Grid");
+		da::Transform* gridTransform = grid->GetTransform();
+
 
 		meshRenderer = grid->AddComponent<da::MeshRenderer>();
 		meshRenderer->SetMesh(da::Resources::Find<da::Mesh>(L"RectMesh"));

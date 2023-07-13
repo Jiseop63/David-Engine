@@ -1,15 +1,19 @@
 #pragma once
 #include "David Engine.h"
 
+// Screen Position
 #define MaxPositionX 6.830f 
 #define MaxPositionY 3.840f
 
+// BG
 #define BackgroundZ	0.0050f
 #define BackLayerZ	0.0040f
 #define FrontLayerZ 0.0030f
 
+// Object
 #define Objects		0.0f;
 
+// UI
 #define HUDZ		-0.0010f
 #define OverlayZ	-0.0030f
 #define CursorZ		-0.0050f
