@@ -20,12 +20,13 @@ namespace gui
 		// Debug Objects
 		mDebugObjects.resize((UINT)eColliderType::End);
 		std::shared_ptr<da::Mesh> mesh
-			= da::Resources::Find<da::Mesh>(L"DebugRect");
+			= da::Resources::Find<da::Mesh>(L"DebugCircle");
 		std::shared_ptr<da::Material> material
 			= da::Resources::Find<da::Material>(L"DebugMaterial");
 
 		mDebugObjects[(UINT)eColliderType::Rect] = new DebugObject();
-		da::MeshRenderer* meshRenderer = mDebugObjects[(UINT)eColliderType::Rect]->AddComponent<da::MeshRenderer>();
+		da::MeshRenderer* meshRenderer = 
+			mDebugObjects[(UINT)eColliderType::Rect]->AddComponent<da::MeshRenderer>();
 		meshRenderer->SetMesh(mesh);
 		meshRenderer->SetMaterial(material);
 
@@ -37,6 +38,7 @@ namespace gui
 		meshRenderer->SetMesh(da::Resources::Find<da::Mesh>(L"RectMesh"));
 		meshRenderer->SetMaterial(da::Resources::Find<da::Material>(L"GridMaterial"));
 		da::GridScript* gridSc = grid->AddComponent<da::GridScript>();
+		renderer::gridScript = gridSc;
 		// 0번째 카메라는 mainCamera
 		gridSc->SetCamera(renderer::mainCamera);
 

@@ -36,7 +36,7 @@ namespace da
 		void registerCameraInRanderer();
 
 
-		void alphaSortGameObjects();
+		void sortGameObjects();
 		void depthSortTransparencyGameobjects();
 		void divideAlphaBlendObjects(const std::vector<GameObject*> objects);
 		void renderOpaque();

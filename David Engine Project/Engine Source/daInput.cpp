@@ -134,7 +134,7 @@ namespace da
 			// 뷰포트부터 월드좌표까지 역행렬을 적용해서 마우스 위치 구하기
 			Matrix projMatrix = renderer::mainCamera->GetProjectionMatrix();
 			Matrix viewMatrix = renderer::mainCamera->GetViewMatrix();
-			Vector3 mousePosition = Vector3(mMousePosition.x, mMousePosition.y, 0.0f);
+			Vector3 mousePosition = Vector3(mMousePosition.x, mMousePosition.y, -6.50f);
 
 			viewport.Unproject(mousePosition, projMatrix, viewMatrix, worldMatrix, mMouseWorldPosition);
 		}
@@ -152,7 +152,7 @@ namespace da
 			// 뷰포트부터 월드좌표까지 역행렬을 적용해서 마우스 위치 구하기
 			Matrix projMatrix = renderer::uiCamera->GetProjectionMatrix();
 			Matrix viewMatrix = renderer::uiCamera->GetViewMatrix();
-			Vector3 mousePosition = Vector3(mMousePosition.x, mMousePosition.y, -6.5f);
+			Vector3 mousePosition = Vector3(mMousePosition.x, mMousePosition.y, -6.50f);
 
 			viewport.Unproject(mousePosition, projMatrix, viewMatrix, worldMatrix, mMouseUIPosition);
 		}

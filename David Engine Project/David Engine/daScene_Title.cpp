@@ -28,7 +28,6 @@ namespace da
 		mMainCamera = objects::InstantiateMainCamera(this);
 		mUICamera = objects::InstantiateUICamera(this);
 		
-		objects::InstantiateGridObject(this, mMainCamera);
 		addBackgroundObjects();
 		addUIObjects();
 		renderer::mainCamera = mMainCamera->GetCameraComponent();
@@ -58,16 +57,13 @@ namespace da
 
 	void Scene_Title::addBackgroundObjects()
 	{
-		float Width = (float)application.GetClientWidth();
-		Width /= 100.0f;
-		float height = (float)application.GetClientHeight();
-		height /= 100.0f;
-		
+		float width = MaxPositionX * 2.0f;
+		float height = MaxPositionY * 2.0f;
 		// just BG
 		{
 			GameObject* backGround = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::BackGround, L"TitleBackgroundMaterial");
-			backGround->GetTransform()->SetScale(math::Vector3(Width, height, 1.0f));
+			backGround->GetTransform()->SetScale(math::Vector3(width, height, 1.0f));
 			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, BackgroundZ));
 		}
 
@@ -76,7 +72,7 @@ namespace da
 			// Back & Front Cloud Layer
 			GameObject* cloudObj = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::BackGround, L"BackCloudMaterial");
-			cloudObj->GetTransform()->SetScale(math::Vector3(Width, height, 1.0f));
+			cloudObj->GetTransform()->SetScale(math::Vector3(width, height, 1.0f));
 			cloudObj->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, BackLayerZ));
 			TimeConstants* cloudTimer = cloudObj->AddComponent<TimeConstants>();
 			cloudTimer->SetValue(0.05f);
@@ -84,7 +80,7 @@ namespace da
 
 			GameObject* cloudObj2 = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::BackGround, L"FrontCloudMaterial");
-			cloudObj2->GetTransform()->SetScale(math::Vector3(Width, height, 1.0f));
+			cloudObj2->GetTransform()->SetScale(math::Vector3(width, height, 1.0f));
 			cloudObj2->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, FrontLayerZ));
 			TimeConstants* cloudTimer2 = cloudObj2->AddComponent<TimeConstants>();
 			cloudTimer2->SetValue(0.3f);

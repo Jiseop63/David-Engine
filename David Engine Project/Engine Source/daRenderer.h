@@ -3,6 +3,7 @@
 #include "daGraphicDevice Dx11.h"
 #include "daConstantBuffer.h"
 #include "daCamera.h"
+#include "..\\David Engine\daGridScript.h"
 
 namespace renderer
 {
@@ -49,6 +50,7 @@ namespace renderer
 	
 	extern da::Camera* mainCamera;
 	extern da::Camera* uiCamera;
+	extern da::GridScript* gridScript;
 
 	void Initialize();
 	void Render();

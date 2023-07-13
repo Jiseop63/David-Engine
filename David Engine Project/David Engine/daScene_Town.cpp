@@ -57,6 +57,8 @@ namespace da
 		// 카메라 세팅
 		renderer::mainCamera = mMainCamera->GetCameraComponent();
 		renderer::uiCamera = mUICamera->GetCameraComponent();
+		renderer::gridScript->SetCamera(renderer::mainCamera);
+
 		// 플레이어 세팅
 	}
 	void Scene_Town::OnExit()

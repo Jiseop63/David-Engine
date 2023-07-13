@@ -51,6 +51,7 @@ namespace da
 	{
 		renderer::mainCamera = mMainCamera->GetCameraComponent();
 		renderer::uiCamera = mUICamera->GetCameraComponent();
+		renderer::gridScript->SetCamera(renderer::mainCamera);
 	}
 	void Scene_Dungeon2F::OnExit()
 	{

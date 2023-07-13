@@ -23,6 +23,7 @@ namespace renderer
 	
 	Camera* mainCamera = nullptr;
 	Camera* uiCamera = nullptr;
+	GridScript* gridScript = nullptr;
 
 	void LoadMesh()
 	{

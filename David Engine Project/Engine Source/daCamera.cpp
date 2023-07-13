@@ -62,11 +62,12 @@ namespace da
 		Projection = mProjection;
 
 		// 씬의 오브젝트들을 렌더모드에 따라 렌더링배열에 추가
-		alphaSortGameObjects();
+		sortGameObjects();
 		// 오브젝트들을 z축으로 정렬
 		depthSortTransparencyGameobjects();
 		// 불투명 객체부터 우선 렌더
 		renderOpaque();
+
 		// depthState 설정 끄기
 		disableDepthStencilState();
 		// 일부 투명 객체 렌더
@@ -133,7 +134,7 @@ namespace da
 	{
 		renderer::cameras.push_back(this);
 	}
-	void Camera::alphaSortGameObjects()
+	void Camera::sortGameObjects()
 	{
 		// 각 렌더 오브젝트들 초기화
 		mOpaqueGameObjects.clear();
