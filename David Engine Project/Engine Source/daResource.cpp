@@ -3,7 +3,7 @@
 namespace da
 {
 	Resource::Resource(const enums::eResourceType type)
-		: mType(type)
+		: mColliderType(type)
 	{
 	}
 	Resource::~Resource()

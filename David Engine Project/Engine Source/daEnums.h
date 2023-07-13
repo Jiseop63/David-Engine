@@ -11,20 +11,6 @@ namespace da::enums
 		End,
 	};
 
-	enum class eComponentType
-	{
-		None,
-		Transform,
-		Rigidbody,
-		TimeConstants,
-		Mesh,
-		Renderer,
-		Particle,
-		Script,
-		Camera,
-		End,
-	};
-
 	enum class eLayerType
 	{
 		None, // ¼þµ¹ ¾ø°í ·»´õ ¾ÈÇÏ´Â °´Ã¼
@@ -41,11 +27,28 @@ namespace da::enums
 		End,
 	};
 
-	enum class eSceneType
+	enum class eComponentType
 	{
-		Title,
-		Select,
-		Play,
+		None,
+		Transform,
+		Rigidbody,
+		TimeConstants,
+		Mesh,
+		Collider,
+		Renderer,
+		Particle,
+		Script,
+		Camera,
 		End,
 	};
+
+	enum class eColliderType
+	{
+		Rect,
+		Circle,
+		Sphere,
+		Cube,
+		End,
+	};
+	
 }

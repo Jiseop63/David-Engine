@@ -5,7 +5,7 @@
 
 #include "guiWidget.h"
 #include "guiEditorObject.h"
-#include "guiDebugOjbect.h"
+#include "guiDebugObject.h"
 
 namespace gui
 {
@@ -25,6 +25,6 @@ namespace gui
 	private:
 		static std::vector<Widget*> mWidgets;
 		static std::vector<EditorObject*> mEditorObjects;
-		static std::vector<DebugOjbect*> mDebugOjbects;
+		static std::vector<DebugObject*> mDebugObjects;
 	};
 }

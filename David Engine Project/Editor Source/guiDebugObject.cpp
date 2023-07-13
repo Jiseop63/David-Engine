@@ -1,9 +1,11 @@
 #include "guiDebugObject.h"
+#include "daTransform.h"
 
 namespace gui
 {
 	DebugObject::DebugObject()
 	{
+		AddComponent<da::Transform>();
 	}
 
 	DebugObject::~DebugObject()

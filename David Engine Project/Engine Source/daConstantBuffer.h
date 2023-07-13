@@ -14,6 +14,6 @@ namespace da::graphics
 		void Bind(eShaderStage stage);
 
 	private:
-		const eCBType mType;
+		const eCBType mColliderType;
 	};
 }

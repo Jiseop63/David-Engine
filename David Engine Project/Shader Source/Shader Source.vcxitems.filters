@@ -16,6 +16,9 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)BarShader.hlsl">
       <Filter>3 Custom Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)DebugShader.hlsl">
+      <Filter>2 Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Globals.hlsli">

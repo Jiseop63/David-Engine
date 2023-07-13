@@ -27,7 +27,6 @@ namespace da
 		mMainCamera = objects::InstantiateMainCamera(this);
 		mUICamera = objects::InstantiateUICamera(this);
 
-		objects::InstantiateGridObject(this, mMainCamera);
 		addBackgroundObjects();
 		addUIObjects();
 	}

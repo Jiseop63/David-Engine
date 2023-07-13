@@ -5,7 +5,7 @@ namespace da::graphics
 {
 	ConstantBuffer::ConstantBuffer(const eCBType type)
 		: GPUBuffer()
-		, mType(type)
+		, mColliderType(type)
 	{
 	}
 	ConstantBuffer::~ConstantBuffer()
@@ -19,16 +19,16 @@ namespace da::graphics
 		desc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
 		desc.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
 
-		da::graphics::GetDevice()->CreateBuffer(buffer.GetAddressOf(), &desc, nullptr);
+		da::graphics::GetDevice()->CreateBuffer(Buffer.GetAddressOf(), &desc, nullptr);
 
 		return false;
 	}
 	void ConstantBuffer::SetData(void* data)
 	{
-		da::graphics::GetDevice()->SetConstantBuffer(buffer.Get(), data, desc.ByteWidth);
+		da::graphics::GetDevice()->SetConstantBuffer(Buffer.Get(), data, desc.ByteWidth);
 	}
 	void ConstantBuffer::Bind(eShaderStage stage)
 	{
-		da::graphics::GetDevice()->BindConstantBuffer(stage, mType, buffer.Get());
+		da::graphics::GetDevice()->BindConstantBuffer(stage, mColliderType, Buffer.Get());
 	}
 }

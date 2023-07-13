@@ -6,6 +6,9 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
+#include "daEnums.h"
+#include "daMath.h"
+
 #define CB_GETBINDSLOT(name) __CBUFFERBINDSLOT__##name##__
 #define CBUFFER(name, slot) static const int CB_GETBINDSLOT(name) = slot; struct alignas(16) name 
 
@@ -80,17 +83,23 @@ namespace da::graphics
 
 	struct GPUBuffer
 	{
-		Microsoft::WRL::ComPtr<ID3D11Buffer> buffer;
+		Microsoft::WRL::ComPtr<ID3D11Buffer> Buffer;
 		D3D11_BUFFER_DESC desc;
 
 		GPUBuffer()
-			: buffer(nullptr)
+			: Buffer(nullptr)
 			, desc{}
 		{}
 		virtual ~GPUBuffer() = default;
 	};
 	struct DebugMesh
 	{
-
+		enums::eColliderType Type;
+		math::Vector3 Position;
+		math::Vector3 Rotation;
+		math::Vector3 Scale;
+		float Radius;
+		float Duration;
+		float Time;
 	};
 };

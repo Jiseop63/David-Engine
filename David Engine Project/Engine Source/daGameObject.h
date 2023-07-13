@@ -51,6 +51,21 @@ namespace da
 			return nullptr;
 		}
 		template <typename T>
+		std::vector<T*> GetComponents()
+		{
+			std::vector<T*> retComponents;
+
+			T* findComponent;
+			for (Component* targetComponent : mComponents)
+			{
+				findComponent = dynamic_cast<T*>(targetComponent);
+				if (nullptr != findComponent)
+					retComponents.push_back(findComponent);
+			}
+
+			return findComponent;
+		}
+		template <typename T>
 		T* AddComponent()
 		{
 			T* origin = new T();

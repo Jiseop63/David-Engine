@@ -50,8 +50,8 @@ namespace da
 	{
 		renderer::TransformCB transformCB = {};
 		transformCB.World = mWorld;
-		transformCB.View = Camera::GetViewMatrix();
-		transformCB.Projection = Camera::GetProjectionMatrix();
+		transformCB.View = Camera::GetGPUViewMatrix();
+		transformCB.Projection = Camera::GetGPUProjectionMatrix();
 				
 		ConstantBuffer* bindTransform = renderer::constantBuffer[(UINT)graphics::eCBType::Transform];
 		bindTransform->SetData(&transformCB);
@@ -62,9 +62,9 @@ namespace da
 		// viewport 가져오기
 		Viewport viewport = GetViewport();
 
-		// 스크린 변환할 행렬 가져오기
-		Matrix projMatrix = Camera::GetProjectionMatrix();
-		Matrix viewMatrix = Camera::GetViewMatrix();
+		// 스크린 변환할 행렬 가져오기 ps)만약 문제가 있다면 main 혹은 ui 멤버 메트릭스를 가져오기
+		Matrix projMatrix = Camera::GetGPUProjectionMatrix();
+		Matrix viewMatrix = Camera::GetGPUViewMatrix();
 		
 		viewport.Project(mPosition / 3.84150f, projMatrix, viewMatrix, mWorld, mScreenPos);
 

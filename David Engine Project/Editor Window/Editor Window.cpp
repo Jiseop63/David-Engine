@@ -8,6 +8,7 @@
 #include "daSceneManager.h"
 #include "daLoadScenes.h"
 #include "daGameDataManager.h"
+#include "guiEditor.h"
 
 #ifdef _DEBUG
 #pragma comment(lib, "..\\x64\\Debug\\David Engine.lib")
@@ -73,12 +74,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         else
         {
             application.Run();
+            gui::Editor::Run();
+            application.Present();
         }
     }
 
     renderer::Release();
     da::SceneManager::Release();
-    
+    gui::Editor::Release();
     return (int) msg.wParam;
 }
 
@@ -137,11 +140,12 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
     if (!hWnd)
         return FALSE;
 
-    application.SetWindow(hWnd, WINDOW_WIDTH, WINDOW_HEIGHT);
-    application.Initialize();
-    da::InitializeScenes();
-    gameDataManager.Initialize();
-    da::SceneManager::LoadScene(L"Scene_Title");
+    application.SetWindow(hWnd, WINDOW_WIDTH, WINDOW_HEIGHT);   // 윈도우 생성
+    application.Initialize();                                   // GraphicDevice 생성
+    da::InitializeScenes();                                     // 씬, 오브젝트 객체 생성
+    gui::Editor::Initialize();                                  // Editor, Debug 객체 생성
+    gameDataManager.Initialize();                               // 플레이어 데이터 생성
+
     return TRUE;
 }
 

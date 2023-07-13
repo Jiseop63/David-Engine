@@ -82,6 +82,9 @@
     <Filter Include="Graphics\Resource\Texture">
       <UniqueIdentifier>{c8f35b83-b1cf-4cbb-bff3-2c69fa24c164}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents\Component\Collider">
+      <UniqueIdentifier>{9409970f-45e4-4ca4-948f-fa54f5e27ef7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)daMath.h">
@@ -180,6 +183,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\David Engine\daObjectsFastIncludeHeader.h">
       <Filter>Contents\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daCollider2D.h">
+      <Filter>Contents\Component\Collider</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp">
@@ -257,6 +263,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daResources.cpp">
       <Filter>Graphics\Resource\Base</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daCollider2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)daMath.inl">

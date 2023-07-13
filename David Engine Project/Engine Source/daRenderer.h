@@ -37,19 +37,21 @@ namespace renderer
 		float CurrentValue;
 	};
 
-	extern Vertex vertexes[];
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[(UINT)da::graphics::eSamplerType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerStates[(UINT)da::graphics::eRSType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11DepthStencilState> DepthStencilStates[(UINT)da::graphics::eDSType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11BlendState> BlendStates[(UINT)da::graphics::eBSType::End];
+
 	extern da::graphics::ConstantBuffer* constantBuffer[(UINT)da::graphics::eCBType::End];
+	
 	extern std::vector<da::Camera*> cameras;
+	extern std::vector<da::graphics::DebugMesh> debugMeshs;
 	
 	extern da::Camera* mainCamera;
 	extern da::Camera* uiCamera;
-	extern da::GameObject* managerObject;
 
 	void Initialize();
 	void Render();
 	void Release();
+	void PushDebugMeshAttribute(da::graphics::DebugMesh mesh);
 }

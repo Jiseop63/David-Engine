@@ -31,7 +31,8 @@ namespace da
 		objects::InstantiateGridObject(this, mMainCamera);
 		addBackgroundObjects();
 		addUIObjects();
-
+		renderer::mainCamera = mMainCamera->GetCameraComponent();
+		renderer::uiCamera = mUICamera->GetCameraComponent();
 	}
 	void Scene_Title::Update()
 	{

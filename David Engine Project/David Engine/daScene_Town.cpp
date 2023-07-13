@@ -30,7 +30,6 @@ namespace da
 		mMainCamera = objects::InstantiateMainCamera(this);
 		mUICamera = objects::InstantiateUICamera(this);
 
-		objects::InstantiateGridObject(this, mMainCamera);		
 		addBackgroundObject();
 		addUIObjects();
 		addGameObjects();
@@ -205,6 +204,7 @@ namespace da
 		{
 			GameObject* playerObject = objects::InstantiatePlayer(this, L"SampleMaterial");
 			playerObject->SetName(L"player");
+			playerObject->AddComponent<Collider2D>();
 		}
 	}
 }

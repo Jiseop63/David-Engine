@@ -51,11 +51,9 @@ namespace da
 		GetDevice()->BindPixelShader(mPS.Get());
 
 		Microsoft::WRL::ComPtr<ID3D11RasterizerState> rsState = renderer::RasterizerStates[(UINT)mRSType];
-		Microsoft::WRL::ComPtr<ID3D11DepthStencilState> dsState = renderer::DepthStencilStates[(UINT)mDSType];
 		Microsoft::WRL::ComPtr<ID3D11BlendState> bsState = renderer::BlendStates[(UINT)mBSType];
 
 		GetDevice()->BindRasterizerState(rsState.Get());
-		GetDevice()->BindDepthStencilState(dsState.Get());
 		GetDevice()->BindBlendState(bsState.Get());
 	}
 }

@@ -13,9 +13,10 @@ namespace da
 			Orthographic,
 		};
 	public:
-		static math::Matrix GetViewMatrix() { return View; }
-		static math::Matrix GetProjectionMatrix() { return Projection; }
-	
+		static math::Matrix GetGPUViewMatrix() { return View; }
+		static math::Matrix GetGPUProjectionMatrix() { return Projection; }
+		static void SetGPUViewMatrix(math::Matrix matrix) { View = matrix; }
+		static void SetGPUProjectionMatrix(math::Matrix matrix) { Projection = matrix; }
 	public:
 		Camera();
 		virtual ~Camera();
@@ -46,6 +47,9 @@ namespace da
 		void disableDepthStencilState();
 
 	public:
+		math::Matrix& GetViewMatrix() { return mView; }
+		math::Matrix& GetProjectionMatrix() { return mProjection; }
+
 		float GetSize() { return mSize; }
 		void SetSize(float size) { mSize = size; };
 		eProjectionType GetProjectionType() { return mProjectionType; }

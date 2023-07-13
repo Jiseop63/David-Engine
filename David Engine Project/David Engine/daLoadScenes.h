@@ -21,5 +21,7 @@ namespace da
 		SceneManager::CreateScene<Scene_Town>(L"Scene_Town");
 		SceneManager::CreateScene<Scene_Dungeon1F>(L"Scene_Dungeon1F");
 		SceneManager::CreateScene<Scene_Dungeon2F>(L"Scene_Dungeon2F");
+
+		da::SceneManager::LoadScene(L"Scene_Title");
 	}
 }

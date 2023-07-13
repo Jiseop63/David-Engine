@@ -202,6 +202,12 @@ namespace da
 		{
 			if (nullptr == opaqueObject)
 				continue;
+			if (opaqueObject->GetObjectState()
+				== GameObject::eObjectState::Hide)
+				continue;
+			if (opaqueObject->GetObjectState()
+				== GameObject::eObjectState::Inactive)
+				continue;
 
 			opaqueObject->Render();
 		}
@@ -212,6 +218,12 @@ namespace da
 		{
 			if (nullptr == cutoutObject)
 				continue;
+			if (cutoutObject->GetObjectState()
+				== GameObject::eObjectState::Hide)
+				continue;
+			if (cutoutObject->GetObjectState()
+				== GameObject::eObjectState::Inactive)
+				continue;
 
 			cutoutObject->Render();
 		}
@@ -221,6 +233,12 @@ namespace da
 		for (GameObject* transparentObject : mTransparentGameObjects)
 		{
 			if (nullptr == transparentObject)
+				continue;
+			if (transparentObject->GetObjectState()
+				== GameObject::eObjectState::Hide)
+				continue;
+			if (transparentObject->GetObjectState()
+				== GameObject::eObjectState::Inactive)
 				continue;
 
 			transparentObject->Render();

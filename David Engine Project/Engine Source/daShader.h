@@ -21,6 +21,7 @@ namespace da
 		ID3D11InputLayout* GetInputLayout() { return mInputLayout; }
 		ID3D11InputLayout** GetInputLayoutAddressOf() { return &mInputLayout; }
 
+		void SetTopology(D3D11_PRIMITIVE_TOPOLOGY topology) { mTopology = topology; }
 		void SetRatserizerState(eRSType state) { mRSType = state; }
 		void SetDepthStencilState(eDSType state) { mDSType = state; }
 		void SetBlendState(eBSType state) { mBSType = state; }

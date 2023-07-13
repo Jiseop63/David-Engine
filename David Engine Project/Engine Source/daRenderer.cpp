@@ -11,22 +11,26 @@ using namespace da::math;
 
 namespace renderer
 {
-	renderer::Vertex vertexes[4] = {};	
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[(UINT)eSamplerType::End] = {};
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerStates[(UINT)eRSType::End] = {};
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> DepthStencilStates[(UINT)eDSType::End] = {};
 	Microsoft::WRL::ComPtr<ID3D11BlendState> BlendStates[(UINT)eBSType::End] = {};
-	da::graphics::ConstantBuffer* constantBuffer[(UINT)eCBType::End] = {};
-	std::vector<da::Camera*> cameras = {};
 
-	da::Camera* mainCamera = nullptr;
-	da::Camera* uiCamera = nullptr;
-	da::GameObject* managerObject = nullptr;
+	ConstantBuffer* constantBuffer[(UINT)eCBType::End] = {};
+
+	std::vector<Camera*> cameras = {};
+	std::vector<DebugMesh> debugMeshs = {};
+	
+	Camera* mainCamera = nullptr;
+	Camera* uiCamera = nullptr;
 
 	void LoadMesh()
 	{
-#pragma region Create vertex & index buffer
+		std::vector<Vertex> vertexes = {};
+		std::vector<UINT> indexes = {};
 
+#pragma region Rect Mesh
+		vertexes.resize(4);
 		vertexes[0].pos = Vector3(-0.5f, 0.5f, 0.0f);
 		vertexes[0].color = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
 		vertexes[0].uv = Vector2(0.0f, 0.0f);
@@ -45,14 +49,53 @@ namespace renderer
 
 		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
 		Resources::Insert<Mesh>(L"RectMesh", mesh);
-		mesh->CreateVertexBuffer(vertexes, 4);
+		mesh->CreateVertexBuffer(vertexes.data(), (UINT)vertexes.size());
 
-		std::vector<UINT> indexes = {};
 		indexes.push_back(0); indexes.push_back(1); indexes.push_back(2);
 		indexes.push_back(0); indexes.push_back(2); indexes.push_back(3);
 
 		mesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
-#pragma endregion		
+#pragma endregion
+#pragma region Debug Mesh (rect, circle)
+		// Rect Debug Mesh
+		std::shared_ptr<Mesh> rectDebug = std::make_shared<Mesh>();
+		Resources::Insert(L"DebugRect", rectDebug);
+		rectDebug->CreateVertexBuffer(vertexes.data(), (UINT)vertexes.size());
+		rectDebug->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
+
+		// Circle Debug Mesh
+		vertexes.clear();
+		indexes.clear();
+
+		Vertex center = {};
+		center.pos = Vector3(0.0f, 0.0f, 0.0f);
+		center.color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+		vertexes.push_back(center);
+
+		int iSlice = 40;
+		float fRadius = 0.5f;
+		float fTheta = XM_2PI / (float)iSlice;
+
+		for (int i = 0; i < iSlice; ++i)
+		{
+			center.pos = Vector3(fRadius * cosf(fTheta * (float)i)
+				, fRadius * sinf(fTheta * (float)i)
+				, 0.0f);
+			center.color = Vector4(0.0f, 1.0f, 0.0f, 1.f);
+			vertexes.push_back(center);
+		}
+
+		for (int i = 0; i < vertexes.size() - 2; ++i)
+		{
+			indexes.push_back(i + 1);
+		}
+		indexes.push_back(1);
+
+		std::shared_ptr<Mesh> circleDebug = std::make_shared<Mesh>();
+		Resources::Insert(L"DebugCircle", circleDebug);
+		circleDebug->CreateVertexBuffer(vertexes.data(), (UINT)vertexes.size());
+		circleDebug->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
+#pragma endregion
 	}
 	void LoadBuffer()
 	{
@@ -119,6 +162,15 @@ namespace renderer
 			barShader->Create(eShaderStage::PS, L"BarShader.hlsl", "mainPS");
 			Resources::Insert<Shader>(L"BarShader", barShader);
 		}
+		std::shared_ptr<Shader> debugShader = std::make_shared<Shader>();
+		{
+			debugShader->Create(eShaderStage::VS, L"TriangleShader.hlsl", "mainVS");
+			debugShader->Create(eShaderStage::PS, L"DebugShader.hlsl", "mainPS");
+			debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_LINESTRIP);
+			debugShader->SetRatserizerState(eRSType::SolidNone);
+			//debugShader->SetDSState(eDSType::NoWrite);
+			Resources::Insert(L"DebugShader", debugShader);
+		}
 #pragma endregion
 
 #pragma region Sample Material
@@ -131,6 +183,14 @@ namespace renderer
 			spriteMaterial->SetShader(spriteShader);
 			spriteMaterial->SetRenderingMode(eRenderingMode::Cutout);
 			Resources::Insert<Material>(L"SampleMaterial", spriteMaterial);
+		}
+#pragma endregion
+#pragma region Debug Material
+		// rect
+		{			
+			std::shared_ptr<Material> debugMaterial = std::make_shared<Material>();
+			debugMaterial->SetShader(debugShader);
+			Resources::Insert<Material>(L"DebugMaterial", debugMaterial);
 		}
 #pragma endregion
 #pragma region HUD Material
@@ -348,7 +408,7 @@ namespace renderer
 			Resources::Load<Texture>(L"ItemSlotTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\ItemSlot.png");
 			Resources::Load<Texture>(L"ItemSlotSelectTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\ItemSlotSelect.png");
 		}
-#pragma endregion 
+#pragma endregion
 
 #pragma region Title :: Load Texture & Create Material
 
@@ -543,6 +603,11 @@ namespace renderer
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());
 
+		shader = Resources::Find<Shader>(L"DebugShader");
+		GetDevice()->CreateInputLayout(arrLayout, numElement
+			, shader->GetVSCode()
+			, shader->GetInputLayoutAddressOf());
+
 #pragma endregion
 #pragma region Sampler State
 
@@ -632,7 +697,6 @@ namespace renderer
 		LoadResource();
 		SetupState();
 	}
-
 	void Render()
 	{
 		for (Camera* camera : cameras)
@@ -644,6 +708,10 @@ namespace renderer
 		}
 
 		cameras.clear();
+	}
+	void PushDebugMeshAttribute(DebugMesh mesh)
+	{
+		debugMeshs.push_back(mesh);
 	}
 
 	void Release()
