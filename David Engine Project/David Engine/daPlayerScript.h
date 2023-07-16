@@ -20,10 +20,17 @@ namespace da
 
 		void GetDamage();
 		void GetHeal();
+
+		void regenDashCount();
+
 	protected:
 		Rigidbody* mRigidbody;
 		
 	private:
+		structs::sCreatureStat* mPlayerStat;
+		structs::sDashCount* mDashCount;
 		float mMoveSpeed;
+		float mDashCountTime;
+		float mRegenCountTime;
 	};
 }

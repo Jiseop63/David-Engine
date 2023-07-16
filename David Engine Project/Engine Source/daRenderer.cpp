@@ -115,8 +115,10 @@ namespace renderer
 		constantBuffer[(UINT)eCBType::Grid]->Create(sizeof(GridCB));
 
 		// BarValue
-		constantBuffer[(UINT)eCBType::Bar] = new ConstantBuffer(eCBType::Bar);
-		constantBuffer[(UINT)eCBType::Bar]->Create(sizeof(BarCB));
+		constantBuffer[(UINT)eCBType::Life] = new ConstantBuffer(eCBType::Life);
+		constantBuffer[(UINT)eCBType::Life]->Create(sizeof(LifeCB));
+		constantBuffer[(UINT)eCBType::Count] = new ConstantBuffer(eCBType::Count);
+		constantBuffer[(UINT)eCBType::Count]->Create(sizeof(CountCB));
 
 		// fade
 		
@@ -157,11 +159,17 @@ namespace renderer
 			gridShader->Create(eShaderStage::PS, L"GridShader.hlsl", "mainPS");
 			Resources::Insert<Shader>(L"GridShader", gridShader);
 		}
-		std::shared_ptr<Shader> barShader = std::make_shared<Shader>();
+		std::shared_ptr<Shader> lifeBarShader = std::make_shared<Shader>();
 		{
-			barShader->Create(eShaderStage::VS, L"BarShader.hlsl", "mainVS");
-			barShader->Create(eShaderStage::PS, L"BarShader.hlsl", "mainPS");
-			Resources::Insert<Shader>(L"BarShader", barShader);
+			lifeBarShader->Create(eShaderStage::VS, L"LifeBarShader.hlsl", "mainVS");
+			lifeBarShader->Create(eShaderStage::PS, L"LifeBarShader.hlsl", "mainPS");
+			Resources::Insert<Shader>(L"LifeBarShader", lifeBarShader);
+		}
+		std::shared_ptr<Shader> dashCountShader = std::make_shared<Shader>();
+		{
+			dashCountShader->Create(eShaderStage::VS, L"DashCountShader.hlsl", "mainVS");
+			dashCountShader->Create(eShaderStage::PS, L"DashCountShader.hlsl", "mainPS");
+			Resources::Insert<Shader>(L"DashCountShader", dashCountShader);
 		}
 		std::shared_ptr<Shader> debugShader = std::make_shared<Shader>();
 		{
@@ -169,7 +177,6 @@ namespace renderer
 			debugShader->Create(eShaderStage::PS, L"DebugShader.hlsl", "mainPS");
 			debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_LINESTRIP);
 			debugShader->SetRatserizerState(eRSType::SolidNone);
-			//debugShader->SetDSState(eDSType::NoWrite);
 			Resources::Insert(L"DebugShader", debugShader);
 		}
 #pragma endregion
@@ -220,7 +227,7 @@ namespace renderer
 			Resources::Insert<Material>(L"ShootingCursorMaterial", spriteMaterial);
 		}
 
-		// player lifePanel
+		// life Panel
 		{
 			std::shared_ptr<Texture> texture
 				= Resources::Load<Texture>(L"PlayerLifePanelTexture", L"..\\Resources\\Texture\\UIs\\Hud\\Life\\PlayerLifePanel.png");
@@ -229,23 +236,32 @@ namespace renderer
 			spriteMaterial->SetShader(spriteShader);
 			Resources::Insert<Material>(L"PlayerLifePanelMaterial", spriteMaterial);
 		}
-		// player lifeBar
+		// life Bar
 		{
 			std::shared_ptr<Texture> texture
 				= Resources::Load<Texture>(L"PlayerLifeBarTexture", L"..\\Resources\\Texture\\UIs\\Hud\\Life\\LifeBar.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(barShader);
+			spriteMaterial->SetShader(lifeBarShader);
 			Resources::Insert<Material>(L"PlayerLifeBarMaterial", spriteMaterial);
 		}
-		// dash count
+		// dashcount panel
 		{
 			std::shared_ptr<Texture> texture
 				= Resources::Load<Texture>(L"DashPanelTexture", L"..\\Resources\\Texture\\UIs\\Hud\\DashCount\\DashPanel.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(barShader);
+			spriteMaterial->SetShader(spriteShader);
 			Resources::Insert<Material>(L"DashPanelMaterial", spriteMaterial);
+		}
+		// dashcount bar
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"DashActivateTexture", L"..\\Resources\\Texture\\UIs\\Hud\\DashCount\\DashCountsActivate.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(dashCountShader);
+			Resources::Insert<Material>(L"DashActivateMaterial", spriteMaterial);
 		}
 		// weapon panel
 		{
@@ -557,7 +573,11 @@ namespace renderer
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());
 
-		shader = Resources::Find<Shader>(L"BarShader");
+		shader = Resources::Find<Shader>(L"LifeBarShader");
+		GetDevice()->CreateInputLayout(arrLayout, numElement
+			, shader->GetVSCode()
+			, shader->GetInputLayoutAddressOf());
+		shader = Resources::Find<Shader>(L"DashCountShader");
 		GetDevice()->CreateInputLayout(arrLayout, numElement
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());

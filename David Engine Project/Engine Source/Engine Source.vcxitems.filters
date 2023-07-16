@@ -263,7 +263,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daResources.cpp">
       <Filter>Graphics\Resource\Base</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daCollider2D.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daCollider2D.cpp">
+      <Filter>Contents\Component\Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)daMath.inl">

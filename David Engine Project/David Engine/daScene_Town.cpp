@@ -98,63 +98,85 @@ namespace da
 	void Scene_Town::addUIObjects()
 	{
 #pragma region HUD
-		// player life panel, dash panel
+		
+		// HUD 객체 생성
 		{
-			// HUD 객체 생성
-			GameObject* lifeHUD = objects::InstantiateObject
-				<GameObject>(this, enums::eLayerType::None);
-			lifeHUD->SetName(L"lifeHUD");
-			Transform* lifeHUDTransform = lifeHUD->GetTransform();
-			//  HUD 위치 조절 (좌상단)
-			lifeHUDTransform->SetPosition(Vector3(-MaxPositionX, MaxPositionY, HUDZ));
-			float padding = 0.20f;
-
-			// Panel 객체 생성
-			GameObject* lifePanel = objects::InstantiateGameObject
-				<GameObject>(this, enums::eLayerType::UI, L"PlayerLifePanelMaterial");
-			lifePanel->SetName(L"lifePanel");
-			Transform* lifePanelTransform = lifePanel->GetTransform();
-			lifePanelTransform->SetParent(lifeHUDTransform);
-			// Panel 크기 조절
-			float panelXScale = 2.960f;	// 74 * 4
-			float panelYScale = 0.640f;	// 16 * 4
-			lifePanelTransform->SetScale(Vector3(panelXScale, panelYScale, 1.0f));
-			// Panel 위치 조절
-			Vector3 lifePanelPosition = Vector3( (panelXScale / 2.0f) + padding, -(panelYScale / 2.0f) - padding, 0.f);
-			lifePanelTransform->SetPosition(lifePanelPosition);
-
-			// Bar 객체 생성
-			GameObject* lifeBar = objects::InstantiateGameObject
-				<GameObject>(this, enums::eLayerType::UI, L"PlayerLifeBarMaterial");
-			lifeBar->SetName(L"lifeBar");
-			Transform* lifeBarTransform = lifeBar->GetTransform();
-			lifeBarTransform->SetParent(lifeHUDTransform);
-			// Bar 크기 조절
-			float barXScale = 1.960f;	// 49 * 4
-			float barYScale = 0.40f;	// 10 * 4
-			lifeBarTransform->SetScale(Vector3(barXScale, barYScale, 1.0f));
-			// Bar 위치 조절하기
-			// 22 * 4
-			// hud 위치에서 panel size의 절반만큼 당긴다음에... bar offset만큼 더 당기면될듯?
-			Vector3 lifeBarPosition = lifePanelPosition + Vector3(0.380f, 0.0f, -0.0001f);
-			lifeBarTransform->SetPosition(lifeBarPosition);
-
-			lifeBar->AddComponent<LifeBarScript>();
-			//GameObject* dashPanel = objects::InstantiateGameObject
-			//	<GameObject>(this, enums::eLayerType::UI, L"DashPanelMaterial");
-
-			//Transform* dashPanelTransform = dashPanel->GetTransform();
+			// hpBar
+			{
+				GameObject* playerHUD = objects::InstantiateObject
+					<GameObject>(this, enums::eLayerType::None);
+				playerHUD->SetName(L"lifeHUD");
+				Transform* playerHUDTransform = playerHUD->GetTransform();
+				//  HUD 위치 조절 (좌상단)
+				playerHUDTransform->SetPosition(Vector3(-MaxPositionX, MaxPositionY, HUDZ));
+				float padding = 0.20f;
 
 
-			//float dashXScale = 0.880f;
-			//float dashYScale = 0.640f;
+				// Life Panel 객체 생성
+				GameObject* lifePanel = objects::InstantiateGameObject
+					<GameObject>(this, enums::eLayerType::UI, L"PlayerLifePanelMaterial");
+				lifePanel->SetName(L"lifePanel");
+				Transform* lifePanelTransform = lifePanel->GetTransform();
+				lifePanelTransform->SetParent(playerHUDTransform);
+				// Life Panel 크기 조절
+				float panelXScale = 2.960f;	// 74 * 4
+				float panelYScale = 0.640f;	// 16 * 4
+				lifePanelTransform->SetScale(Vector3(panelXScale, panelYScale, 1.0f));
+				// Life Panel 위치 조절
+				Vector3 lifePanelPosition = Vector3((panelXScale / 2.0f) + padding, -(panelYScale / 2.0f) - padding, 0.f);
+				lifePanelTransform->SetPosition(lifePanelPosition);
 
-			//dashPanelTransform->SetScale(Vector3(dashXScale, dashYScale, 1.0f));
-			//float dashWidthScaleHalf = dashXScale / 2.0f;
-			//float dashHeightScaleHalf = dashYScale / 2.0f;
-			//float dashPanePadding = 0.050f;
-			//Vector3 dashPanelPosition = Vector3(-MaxPositionX + dashWidthScaleHalf + padding, MaxPositionY - panelYScale - dashHeightScaleHalf - padding, HUDZ);
-			//dashPanelTransform->SetPosition(dashPanelPosition);
+				// Bar 객체 생성
+				GameObject* lifeBar = objects::InstantiateGameObject
+					<GameObject>(this, enums::eLayerType::UI, L"PlayerLifeBarMaterial");
+				lifeBar->SetName(L"lifeBar");
+				Transform* lifeBarTransform = lifeBar->GetTransform();
+				lifeBarTransform->SetParent(playerHUDTransform);
+				// Bar 크기 조절
+				float barXScale = 1.960f;	// 49 * 4
+				float barYScale = 0.40f;	// 10 * 4
+				lifeBarTransform->SetScale(Vector3(barXScale, barYScale, 1.0f));
+				// Bar 위치 조절하기
+				// 22 * 4
+				// hud 위치에서 panel size의 절반만큼 당긴다음에... bar offset만큼 더 당기면될듯?
+				Vector3 lifeBarPosition = lifePanelPosition + Vector3(0.380f, 0.0f, -0.0001f);
+				lifeBarTransform->SetPosition(lifeBarPosition);
+				lifeBar->AddComponent<LifeBarScript>();
+
+
+				// Dash Panel 객체 생성
+				GameObject* dashPanel = objects::InstantiateGameObject
+					<GameObject>(this, enums::eLayerType::UI, L"DashPanelMaterial");
+
+				Transform* dashPanelTransform = dashPanel->GetTransform();
+				dashPanelTransform->SetParent(playerHUDTransform);
+
+				// Dash Panel 크기 조절
+				// scale
+				float dashPanelXScale = 0.880f;	// 22 * 4
+				float dashPanelYScale = 0.320f;	// 8 * 4
+				dashPanelTransform->SetScale(Vector3(dashPanelXScale, dashPanelYScale, 1.0f));
+
+				// Dash Panel 위치 조절
+				Vector3 dashPanelPosition = Vector3((dashPanelXScale / 2.0f) + padding, lifePanelPosition.y -(dashPanelYScale / 2.0f) -(padding * 2.0f), 0.f);
+				dashPanelTransform->SetPosition(dashPanelPosition);
+				
+				// Dash Active 객체 생성
+				GameObject* dashActivate = objects::InstantiateGameObject
+					<GameObject>(this, enums::eLayerType::UI, L"DashActivateMaterial");
+				Transform* dashActivateTransform = dashActivate->GetTransform(); 
+				dashActivateTransform->SetParent(playerHUDTransform);
+
+				// Dash Active scale
+				float dashActiveXScale = 0.720f; // 18 * 4
+				float dashActiveYScale = 0.160f; // 4 * 4
+				dashActivateTransform->SetScale( Vector3(dashActiveXScale, dashActiveYScale, 1.0f) );
+
+				// Dash Active position
+				Vector3 dashActivePosition = dashPanelPosition + Vector3(0.0f, 0.0f, -0.0001f);
+				dashActivateTransform->SetPosition(dashActivePosition);
+				dashActivate->AddComponent<DashCountScript>();
+			}
 		}
 				
 		// player weapon panel
@@ -206,7 +228,6 @@ namespace da
 		{
 			GameObject* playerObject = objects::InstantiatePlayer(this, L"SampleMaterial");
 			playerObject->SetName(L"player");
-			playerObject->AddComponent<Collider2D>();
 		}
 	}
 }

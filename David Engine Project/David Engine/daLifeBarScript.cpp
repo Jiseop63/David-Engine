@@ -13,31 +13,25 @@ namespace da
 	LifeBarScript::~LifeBarScript()
 	{
 	}
-	void LifeBarScript::Initialize()
-	{
-	}
-	void LifeBarScript::Update()
-	{
-	}
 	void LifeBarScript::LateUpdate()
 	{
 		// value 가져오기
-		structs::eCreatureStat playerlife = GameDataManager::GetPlayerStat();
+		structs::sCreatureStat playerlife = GameDataManager::GetPlayerStat();
 
 		// 상수버퍼 만들기
 		graphics::ConstantBuffer* outCB
-			= renderer::constantBuffer[(UINT)graphics::eCBType::Bar];
+			= renderer::constantBuffer[(UINT)graphics::eCBType::Life];
 
 		// 데이터 채우기
-		renderer::BarCB data;
-		data.MaxValue = playerlife.maxHP;
-		data.CurrentValue = playerlife.curHP;
+		renderer::LifeCB data;
+		data.MaxHP = playerlife.MaxHP;
+		data.CurHP = playerlife.CurHP;
 
 		outCB->SetData(&data);
 		outCB->Bind(graphics::eShaderStage::VS);
 		outCB->Bind(graphics::eShaderStage::PS);
 	}
-	void LifeBarScript::Render()
+	void LifeBarScript::BindConstantBuffer()
 	{
 	}
 }

@@ -1,8 +1,14 @@
 namespace da::structs
 {
-	struct eCreatureStat
+	struct sCreatureStat
 	{
-		float maxHP;
-		float curHP;
+		float MaxHP;
+		float CurHP;
+		float MoveSpeed;
+	};
+	struct sDashCount
+	{
+		float MaxCount;
+		float CurCount;
 	};
 }

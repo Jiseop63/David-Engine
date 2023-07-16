@@ -6,14 +6,15 @@ namespace da
 	class GameDataManager
 	{
 	public:
-		static void Initialize();
+		static void Initialize();		
 		static void InitializePlayerStat();
 
 	public:
-		static structs::eCreatureStat& GetPlayerStat() { return mPlayerStat; }
-
+		static structs::sCreatureStat& GetPlayerStat() { return mPlayerStat; }
+		static structs::sDashCount& GetDashCount() { return mDashCount; }
 	private:
-		static structs::eCreatureStat mPlayerStat;
+		static structs::sCreatureStat mPlayerStat;
+		static structs::sDashCount mDashCount;
 	};
 }
 

@@ -13,11 +13,14 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)GridShader.hlsl">
       <Filter>3 Custom Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)BarShader.hlsl">
+    <FxCompile Include="$(MSBuildThisFileDirectory)LifeBarShader.hlsl">
       <Filter>3 Custom Shaders</Filter>
     </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)DebugShader.hlsl">
       <Filter>2 Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)DashCountShader.hlsl">
+      <Filter>3 Custom Shaders</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

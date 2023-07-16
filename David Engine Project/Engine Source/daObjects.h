@@ -107,6 +107,7 @@ namespace da::objects
 		meshRenderer->SetMaterial(Resources::Find<Material>(material));
 		obj->AddComponent<PlayerScript>();
 		obj->AddComponent<Rigidbody>();
+		obj->AddComponent<Collider2D>();
 		obj->Initialize();
 		return obj;
 	}

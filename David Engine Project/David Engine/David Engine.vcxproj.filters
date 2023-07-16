@@ -203,5 +203,13 @@
     <ClCompile Include="daUIManager.cpp">
       <Filter>Objects\UI\미정</Filter>
     </ClCompile>
+    <ClCompile Include="daDashCountScript.cpp">
+      <Filter>Objects\UI\HUD</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="daDashCountScript.h">
+      <Filter>Objects\UI\HUD</Filter>
+    </None>
   </ItemGroup>
 </Project>

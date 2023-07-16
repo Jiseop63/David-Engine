@@ -18,8 +18,13 @@ cbuffer cGrid : register(b3)
     float2 cResolution;
 }
 
-cbuffer cBar : register(b4)
+cbuffer cLife : register(b4)
 {
-    float cMaxValue;
-    float cCurrentValue;
+    float cMaxHP;
+    float cCurHP;
+}
+cbuffer cCount : register(b5)
+{
+    float cMaxCount;
+    float cCurCount;
 }

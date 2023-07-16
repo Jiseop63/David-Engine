@@ -3,11 +3,11 @@
 
 namespace da
 {
-	class LifeBarScript : public Script
+	class DashCountScript : public Script
 	{
 	public:
-		LifeBarScript();
-		virtual ~LifeBarScript();
+		DashCountScript ();
+		virtual ~DashCountScript ();
 
 		virtual void LateUpdate();
 		void BindConstantBuffer();

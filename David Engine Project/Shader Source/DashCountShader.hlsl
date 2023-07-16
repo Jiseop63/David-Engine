@@ -24,17 +24,6 @@ VSOut mainVS(VSIn In)
     
     Out.Pos = projection;
     Out.Color = In.Color;
-    //float ratio = 1.0f;
-    //float2 newUV;
-    //if (0 != cMaxValue)
-    //{
-    //    ratio = cCurrentValue / cMaxValue;
-    //}
-     
-    
-    //newUV.x = In.UV.x * (1 - ratio);
-    //newUV.y = In.UV.y;
-    //Out.UV = newUV;
     Out.UV = In.UV;
     return Out;
 }
@@ -42,9 +31,8 @@ VSOut mainVS(VSIn In)
 float4 mainPS(VSOut Out) : SV_Target
 {
     float4 color = (float) 0.0f;
-    //float4 color = float4(0.920f, 0.280f, 0.280f, 1.0f);
 
-    float ratio = cCurrentValue / cMaxValue;
+    float ratio = cCurCount / cMaxCount;
     if (Out.UV.x > ratio)
     {
         return float4(0.0f, 0.0f, 0.0f, 0.0f);

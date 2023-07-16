@@ -22,9 +22,12 @@
 #include "daUIScript.h"
 #include "daButtonScript.h"
 #include "daCursorScript.h"
+
+// HUD
 #include "daLifeBarScript.h"
+#include "daDashCountScript.h"
+#include "daInventoryScript.h"
 
 
 // Player
-#include "daInventoryScript.h"
 #include "daPlayerScript.h"

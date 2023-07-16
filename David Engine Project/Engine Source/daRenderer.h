@@ -32,10 +32,15 @@ namespace renderer
 		da::math::Vector2 CameraScale;
 		da::math::Vector2 Resolution;
 	};
-	CBUFFER(BarCB, CBSLOT_BARVALUE)
+	CBUFFER(LifeCB, CBSLOT_LIFE)
 	{
-		float MaxValue;
-		float CurrentValue;
+		float MaxHP;
+		float CurHP;
+	};
+	CBUFFER(CountCB, CBSLOT_COUNT)
+	{
+		float MaxCount;
+		float CurCount;
 	};
 
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[(UINT)da::graphics::eSamplerType::End];
