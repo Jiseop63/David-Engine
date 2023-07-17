@@ -274,24 +274,12 @@ namespace renderer
 		}
 #pragma endregion
 #pragma region Inventory Material & Texture
-		// Inventory Base
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>
-				(L"InventoryBaseTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\InventoryBase.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"InventoryBaseMaterial", spriteMaterial);
-		}
-
-		// WeaponSelect : NoneTexture Material | Sprite Shader
+		// InventorySelect : NoneTexture Material | Sprite Shader
 		{
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"WeaponSelectMaterial", spriteMaterial);
+			Resources::Insert<Material>(L"InventoryPanelMaterial", spriteMaterial);
 		}
-
 		// WeaponSlot 1~2 : NoneTexture Material | Sprite Shader
 		{
 			std::shared_ptr<Material> slot1Material = std::make_shared<Material>();
@@ -301,7 +289,6 @@ namespace renderer
 			slot2Material->SetShader(spriteShader);
 			Resources::Insert<Material>(L"WeaponSlot2Material", slot2Material);
 		}
-
 		// shiledSlot 1~2 : NoneTexture Material | Sprite Shader
 		{
 			std::shared_ptr<Material> slot1Material = std::make_shared<Material>();
@@ -376,10 +363,14 @@ namespace renderer
 			Resources::Insert<Material>(L"ItemSlot24Material", slot24Material);			
 		}
 
+		// Inventory Textures
+		{
+			Resources::Load<Texture>(L"InventoryPanelATexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\InventoryPanelA.png");
+			Resources::Load<Texture>(L"InventoryPanelBTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\InventoryPanelB.png");
+
+		}
 		// Select Weapon & Shiled Textures
 		{
-			Resources::Load<Texture>(L"WeaponSelectATexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\WeaponSelectA.png");
-			Resources::Load<Texture>(L"WeaponSelectBTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\WeaponSelectB.png");
 			Resources::Load<Texture>(L"WeaponSlotTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\weapon.png");
 			Resources::Load<Texture>(L"WeaponSlotSelectTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\weaponSelect.png");
 			Resources::Load<Texture>(L"ShiledSlotTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\shiled.png");

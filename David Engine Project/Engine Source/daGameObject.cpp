@@ -87,4 +87,9 @@ namespace da
 			script->Render();
 		}
 	}
+	void GameObject::SetObjectState(eObjectState state)
+	{
+		mObjectState = state;
+
+	}
 }

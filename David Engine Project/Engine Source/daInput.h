@@ -15,7 +15,7 @@ namespace da
 		//Special Key
 		ENTER, ESC, LSHIFT, LALT, LCTRL,
 		SPACE, LEFT, RIGHT, UP, DOWN,
-		LBTN, RBTN,
+		LBTN, RBTN, TILDE,
 
 		//Num Pad
 		NUM_0, NUM_1, NUM_2,

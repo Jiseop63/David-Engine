@@ -41,7 +41,7 @@ namespace da
 		Vector3 myScreenPos = myTransform->GetScreenPosition();
 		mScreenPosition = Vector2(myScreenPos.x, myScreenPos.y);
 	}
-	void ItemScript::changeTexture(std::shared_ptr<graphics::Texture> texture)
+	void ItemScript::ChangeTexture(std::shared_ptr<graphics::Texture> texture)
 	{
 		MeshRenderer* meshRenderer = GetOwner()->GetComponent<MeshRenderer>();
 		meshRenderer->ChangeTexture(texture);
@@ -64,12 +64,12 @@ namespace da
 			&& mousePosition.y >= top
 			&& mousePosition.y <= bottom)
 		{
-			changeTexture(mSecondTexture);
+			ChangeTexture(mSecondTexture);
 			mFocusOn = true;
 		}
 		else if (mFocusOn = true)
 		{
-			changeTexture(mFirstTexture);
+			ChangeTexture(mFirstTexture);
 			mFocusOn = false;
 		}
 	}

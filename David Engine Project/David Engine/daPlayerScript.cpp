@@ -121,7 +121,7 @@ namespace da
         if (mDashCount->MaxCount == mDashCount->CurCount)
             return;
 
-        mDashCountTime += Time::DeltaTime();
+        mDashCountTime += (float)Time::DeltaTime();
 
         if (mRegenCountTime <= mDashCountTime)
         {

@@ -3,11 +3,13 @@
 #include "daGameObject.h"
 
 #include "daInput.h"
+#include "daMeshRenderer.h"
 
 namespace da
 {
 	InventoryScript::InventoryScript()
 		: mInventoryOpen(false)
+		, mSelectLeft(true)
 		, mWeapon{}
 		, mShiled{}
 		, mAccessory{}
@@ -33,6 +35,19 @@ namespace da
 				Close();
 			}
 		}
+		if (Input::GetKeyDown(eKeyCode::TILDE))
+		{
+			if (true == mSelectLeft)
+			{
+				ChangeTexture(mSecondTexture);
+				mSelectLeft = false;
+			}
+			else
+			{
+				ChangeTexture(mFirstTexture);
+				mSelectLeft = true;
+			}
+		}
 	}
 	void InventoryScript::Open()
 	{
@@ -41,5 +56,17 @@ namespace da
 	void InventoryScript::Close()
 	{
 		GetOwner()->SetObjectState(GameObject::eObjectState::Hide);
+	}
+	void InventoryScript::SetUITextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second)
+	{
+		MeshRenderer* meshRenderer = GetOwner()->GetComponent<MeshRenderer>();
+		mFirstTexture = first;
+		mSecondTexture = second;
+		meshRenderer->ChangeTexture(first);
+	}
+	void InventoryScript::ChangeTexture(std::shared_ptr<graphics::Texture> texture)
+	{
+		MeshRenderer* meshRenderer = GetOwner()->GetComponent<MeshRenderer>();
+		meshRenderer->ChangeTexture(texture);
 	}
 }

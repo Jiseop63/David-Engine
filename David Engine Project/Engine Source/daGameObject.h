@@ -87,13 +87,13 @@ namespace da
 		}
 
 	public:
-		void SetObjectState(eObjectState state) { mObjectState = state; }
+		void SetObjectState(eObjectState state);
 		eObjectState GetObjectState() { return mObjectState; }
 		Transform* GetTransform() { return mTransform; }
 		void SetParent(GameObject* parent) { mTransform->SetParent( parent->GetTransform() ); }
+
 	protected:
 		Transform* mTransform;
-
 	private:
 		eObjectState mObjectState;
 		std::vector<Component*> mComponents;

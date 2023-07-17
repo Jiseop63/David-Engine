@@ -24,7 +24,7 @@ namespace da
 		void SetScreenPosision();
 
 	protected:
-		void changeTexture(std::shared_ptr<graphics::Texture> texture);
+		void ChangeTexture(std::shared_ptr<graphics::Texture> texture);
 		void focusCheck();
 
 

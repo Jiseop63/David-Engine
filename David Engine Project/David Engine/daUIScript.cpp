@@ -41,10 +41,15 @@ namespace da
 
 		// 내 위치 구하기
 		Vector3 myPos = myTransform->GetPosition();
-		Vector3 myScreenPos = myTransform->GetScreenPosition();
-		mScreenPosition = Vector2(myScreenPos.x, myScreenPos.y);
+
+		if (0 < myPos.x)
+			mScreenPosition.x = 683.0f + (myPos.x * 100.0f);
+		else
+			mScreenPosition.x = 683.0f - (myPos.x * 100.0f);
+
+		mScreenPosition.y = 384.0f - (myPos.y * 100.0f);
 	}
-	void UIScript::changeTexture(std::shared_ptr<graphics::Texture> texture)
+	void UIScript::ChangeTexture(std::shared_ptr<graphics::Texture> texture)
 	{
 		MeshRenderer* meshRenderer = GetOwner()->GetComponent<MeshRenderer>();
 		meshRenderer->ChangeTexture(texture);
@@ -61,18 +66,23 @@ namespace da
 		float bottom = mScreenPosition.y + (mSize.y / 2);
 		Vector2 RB(right, bottom);
 
+		if (Input::GetKeyDown(eKeyCode::LBTN))
+		{
+			int a = 0;
+		}
+
 		// 충돌중
 		if (mousePosition.x >= left
 			&& mousePosition.x <= right
 			&& mousePosition.y >= top
 			&& mousePosition.y <= bottom)
 		{
-			changeTexture(mSecondTexture);
+			ChangeTexture(mSecondTexture);
 			mFocusOn = true;
 		}
 		else if (mFocusOn = true)
 		{
-			changeTexture(mFirstTexture);
+			ChangeTexture(mFirstTexture);
 			mFocusOn = false;
 		}
 	}
