@@ -20,6 +20,11 @@ namespace da
 		void SetUITextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second);
 		void ChangeTexture(std::shared_ptr<graphics::Texture> texture);
 
+		void AddWeaonSlot(GameObject* weapon) { mWeapon.push_back(weapon); }
+		void AddShiledSlot(GameObject* shiled) { mShiled.push_back(shiled); }
+		void AddAccessorySlot(GameObject* accessory) { mAccessory.push_back(accessory); }
+		void AddItemSlot(GameObject* item) { mItem.push_back(item); }
+
 	protected:
 		bool mInventoryOpen;
 		bool mSelectLeft;
