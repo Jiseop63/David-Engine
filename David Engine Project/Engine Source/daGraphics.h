@@ -36,7 +36,7 @@ namespace da::graphics
 		Transform,
 		Material,
 		Time,
-		Grid,
+		Camera,
 		Life,
 		Count,
 		End,
@@ -45,6 +45,7 @@ namespace da::graphics
 	enum class eSamplerType
 	{
 		Point,
+		Linear,
 		Anisotropic,
 		End,
 	};

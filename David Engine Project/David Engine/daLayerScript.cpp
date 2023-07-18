@@ -1,4 +1,4 @@
-#include "daGridScript.h"
+#include "daLayerScript.h"
 #include "daApplication.h"
 
 #include "daRenderer.h"
@@ -9,21 +9,18 @@
 #include "daTransform.h"
 
 extern da::Application application;
+
 namespace da
 {
-	GridScript::GridScript()
-		: mCamera(nullptr)
+
+	LayerScript::LayerScript()
 	{
 	}
-	GridScript::~GridScript()
+	LayerScript::~LayerScript()
 	{
 	}
-
-	void GridScript::LateUpdate()
+	void LayerScript::LateUpdate()
 	{
-		if (nullptr == mCamera)
-			return;
-
 		// ÁØºñ¹°
 		GameObject* gridObject = mCamera->GetOwner();
 		Transform* gridTransform = gridObject->GetComponent<Transform>();

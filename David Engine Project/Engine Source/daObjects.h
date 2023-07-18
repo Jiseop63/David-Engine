@@ -115,7 +115,7 @@ namespace da::objects
 	static GameObject* InstantiateGridObject(Scene* scene, CameraObject* cameraObject)
 	{
 		GameObject* obj = new GameObject();
-		Layer& myLayer = scene->GetLayer(enums::eLayerType::Grid);
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::Camera);
 		myLayer.AddGameObject(obj);
 		GridScript* gridScript = obj->AddComponent<GridScript>();
 		gridScript->SetCamera(cameraObject->GetCameraComponent());
@@ -143,6 +143,7 @@ namespace da::objects
 		cameraObj->Initialize();
 		camera->TurnLayerMask(enums::eLayerType::UI, false);
 		camera->TurnLayerMask(enums::eLayerType::BackGround, false);
+		camera->TurnLayerMask(enums::eLayerType::Layer, false);
 		return cameraObj;
 	}
 	static CameraObject* InstantiateUICamera(Scene* scene)
@@ -169,11 +170,13 @@ namespace da::objects
 		myLayer.AddGameObject(cameraObj);
 		Camera* camera = cameraObj->AddComponent<Camera>();
 		cameraObj->SetCameraComponent(camera);
+		cameraObj->AddComponent<SubCameraScript>();
 		cameraObj->Initialize();
 
 		// 서순 중요함
 		camera->DisableLayerMask();
 		camera->TurnLayerMask(enums::eLayerType::BackGround);
+		camera->TurnLayerMask(enums::eLayerType::Layer);
 		return cameraObj;
 	}
 #pragma endregion

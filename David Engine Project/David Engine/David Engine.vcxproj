@@ -155,6 +155,7 @@
     <ClInclude Include="daHUDScript.h" />
     <ClInclude Include="daInventoryScript.h" />
     <ClInclude Include="daItemScript.h" />
+    <ClInclude Include="daLayerScript.h" />
     <ClInclude Include="daLifeBarScript.h" />
     <ClInclude Include="daLoadScenes.h" />
     <ClInclude Include="daCursorScript.h" />
@@ -165,6 +166,7 @@
     <ClInclude Include="daScene_Dungeon2F.h" />
     <ClInclude Include="daScene_Title.h" />
     <ClInclude Include="daScene_Town.h" />
+    <ClInclude Include="daSubCameraScript.h" />
     <ClInclude Include="daUIObject.h" />
     <ClInclude Include="daUIScript.h" />
     <ClInclude Include="framework.h" />
@@ -181,6 +183,7 @@
     <ClCompile Include="daHUDScript.cpp" />
     <ClCompile Include="daInventoryScript.cpp" />
     <ClCompile Include="daItemScript.cpp" />
+    <ClCompile Include="daLayerScript.cpp" />
     <ClCompile Include="daLifeBarScript.cpp" />
     <ClCompile Include="daOverlayObject.cpp" />
     <ClCompile Include="daPlayerScript.cpp" />
@@ -189,6 +192,7 @@
     <ClCompile Include="daScene_Dungeon2F.cpp" />
     <ClCompile Include="daScene_Title.cpp" />
     <ClCompile Include="daScene_Town.cpp" />
+    <ClCompile Include="daSubCameraScript.cpp" />
     <ClCompile Include="daUIManager.cpp" />
     <ClCompile Include="daUIObject.cpp" />
     <ClCompile Include="daUIScript.cpp" />

@@ -67,6 +67,9 @@
     <Filter Include="Objects\UI\HUD">
       <UniqueIdentifier>{4192a0bb-a2e4-40a7-a284-769087984226}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\UI\Layer">
+      <UniqueIdentifier>{267b491d-17d6-4e15-9f5d-fd11280f69ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -134,6 +137,12 @@
     </ClInclude>
     <ClInclude Include="daPlayerScript.h">
       <Filter>Objects\Creature</Filter>
+    </ClInclude>
+    <ClInclude Include="daLayerScript.h">
+      <Filter>Objects\UI\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="daSubCameraScript.h">
+      <Filter>Objects\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +214,12 @@
     </ClCompile>
     <ClCompile Include="daDashCountScript.cpp">
       <Filter>Objects\UI\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="daLayerScript.cpp">
+      <Filter>Objects\UI\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="daSubCameraScript.cpp">
+      <Filter>Objects\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

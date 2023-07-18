@@ -111,8 +111,8 @@ namespace renderer
 		constantBuffer[(UINT)eCBType::Time]->Create(sizeof(TimeCB));
 
 		// Grid
-		constantBuffer[(UINT)eCBType::Grid] = new ConstantBuffer(eCBType::Grid);
-		constantBuffer[(UINT)eCBType::Grid]->Create(sizeof(GridCB));
+		constantBuffer[(UINT)eCBType::Camera] = new ConstantBuffer(eCBType::Camera);
+		constantBuffer[(UINT)eCBType::Camera]->Create(sizeof(CameraCB));
 
 		// BarValue
 		constantBuffer[(UINT)eCBType::Life] = new ConstantBuffer(eCBType::Life);
@@ -178,6 +178,12 @@ namespace renderer
 			debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_LINESTRIP);
 			debugShader->SetRatserizerState(eRSType::SolidNone);
 			Resources::Insert(L"DebugShader", debugShader);
+		}
+		std::shared_ptr<Shader> tilingLayerShader = std::make_shared<Shader>();
+		{
+			tilingLayerShader->Create(eShaderStage::VS, L"TilingLayerShader.hlsl", "mainVS");
+			tilingLayerShader->Create(eShaderStage::PS, L"TilingLayerShader.hlsl", "mainPS");
+			Resources::Insert(L"TilingLayerShader", tilingLayerShader);
 		}
 #pragma endregion
 
@@ -474,7 +480,7 @@ namespace renderer
 				= Resources::Load<Texture>(L"TownBGTexture", L"..\\Resources\\Texture\\Scene_Town\\layer\\TownBG_Day.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetShader(tilingLayerShader);
 			Resources::Insert<Material>(L"TownBGMaterial", spriteMaterial);
 		}
 		// TownLayer
@@ -483,7 +489,7 @@ namespace renderer
 				= Resources::Load<Texture>(L"TownLayerDayTexture", L"..\\Resources\\Texture\\Scene_Town\\layer\\TownLayer_Day.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
+			spriteMaterial->SetShader(tilingLayerShader);
 			Resources::Insert<Material>(L"TownLayerMaterial", spriteMaterial);
 		}
 #pragma endregion
@@ -575,6 +581,11 @@ namespace renderer
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());
 
+		shader = Resources::Find<Shader>(L"TilingLayerShader");
+		GetDevice()->CreateInputLayout(arrLayout, numElement
+			, shader->GetVSCode()
+			, shader->GetInputLayoutAddressOf());
+
 #pragma endregion
 #pragma region Sampler State
 
@@ -585,10 +596,14 @@ namespace renderer
 		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 		GetDevice()->CreateSamplerState(&samplerDesc, samplerStates[(UINT)eSamplerType::Point].GetAddressOf());
 		GetDevice()->BindSamplers(eShaderStage::PS, 0, samplerStates[(UINT)eSamplerType::Point].GetAddressOf());
+		
+		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		GetDevice()->CreateSamplerState(&samplerDesc, samplerStates[(UINT)eSamplerType::Linear].GetAddressOf()); 
+		GetDevice()->BindSamplers(eShaderStage::PS, 1, samplerStates[(UINT)eSamplerType::Linear].GetAddressOf());
 
 		samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
 		GetDevice()->CreateSamplerState(&samplerDesc, samplerStates[(UINT)eSamplerType::Anisotropic].GetAddressOf());
-		GetDevice()->BindSamplers(eShaderStage::PS, 1, samplerStates[(UINT)eSamplerType::Anisotropic].GetAddressOf());
+		GetDevice()->BindSamplers(eShaderStage::PS, 2, samplerStates[(UINT)eSamplerType::Anisotropic].GetAddressOf());
 #pragma endregion
 #pragma region Rasterizer State
 		D3D11_RASTERIZER_DESC rasterizerDesc = {};

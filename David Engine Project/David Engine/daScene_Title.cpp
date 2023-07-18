@@ -25,8 +25,12 @@ namespace da
 	}
 	void Scene_Title::Initialize()
 	{
-		objects::InstantiateSubCamera(this);
+		CameraObject* subCameraObj = objects::InstantiateSubCamera(this);
 		mMainCamera = objects::InstantiateMainCamera(this);
+		// subCamera setting
+		SubCameraScript* subCamScript = subCameraObj->GetComponent<SubCameraScript>();
+		subCamScript->SetMainCameraTransfrom(mMainCamera->GetTransform());
+
 		mUICamera = objects::InstantiateUICamera(this);
 
 		addBackgroundObjects();

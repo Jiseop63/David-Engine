@@ -11,11 +11,11 @@
 #include "daCameraObject.h"
 #include "daCamera.h"
 #include "daCameraScript.h"
-
+#include "daSubCameraScript.h"
 // BG
 #include "daTimeConstants.h"
 #include "daGridScript.h"
-
+#include "daLayerScript.h"
 
 // UI
 #include "daUIObject.h"

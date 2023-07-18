@@ -28,10 +28,14 @@ namespace da
 	void Scene_Town::Initialize()
 	{
 		// sub
-		objects::InstantiateSubCamera(this);
+		CameraObject* subCameraObj = objects::InstantiateSubCamera(this);
 		// main
 		mMainCamera = objects::InstantiateMainCamera(this);
-		Camera* mainCamera = mMainCamera->GetCameraComponent();
+
+		// subCamera setting
+		SubCameraScript* subCamScript = subCameraObj->GetComponent<SubCameraScript>();
+		subCamScript->SetMainCameraTransfrom(mMainCamera->GetTransform());
+
 		// UI
 		mUICamera = objects::InstantiateUICamera(this);
 
@@ -81,23 +85,28 @@ namespace da
 			backGround->SetName(L"sky");
 		}
 
-		// 레이어 역할을 하는 배경들은 스케일 값을 건드는게 아니라 카메라로부터 영향받는 수치를 낮추는 식으로 해야할듯?
-		// town BG : follow
+		// forest Layer
 		{
 			GameObject* backGround = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::Layer, L"TownBGMaterial");
 			backGround->GetTransform()->SetScale(math::Vector3(MaxPositionX * 2.0f, MaxPositionY * 2.0f, 1.0f));
 			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, -3.0f, BackLayerZ));
 			backGround->SetName(L"forest");
+			LayerScript* bgLayerScript = backGround->AddComponent<LayerScript>();
+			bgLayerScript->SetCamera(mMainCamera->GetCameraComponent());
+			bgLayerScript->SetName(L"첫번째 레이어 스크립트");
 		}
 
-		// town Layer : follow
+		// trees Layer
 		{
 			GameObject* backGround = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::Layer, L"TownLayerMaterial");
 			backGround->GetTransform()->SetScale(math::Vector3(MaxPositionX * 2.0f, MaxPositionY * 2.0f, 1.0f));
 			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, -6.0f, FrontLayerZ));
 			backGround->SetName(L"trees");
+			LayerScript* bgLayerScript = backGround->AddComponent<LayerScript>();
+			bgLayerScript->SetCamera(mMainCamera->GetCameraComponent());
+			bgLayerScript->SetName(L"두번째 레이어 스크립트");
 		}
 	}
 	void Scene_Town::addUIObjects()

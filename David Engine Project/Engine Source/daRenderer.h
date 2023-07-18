@@ -26,7 +26,7 @@ namespace renderer
 		float Value;
 	};
 
-	CBUFFER(GridCB, CBSLOT_GRID)
+	CBUFFER(CameraCB, CBSLOT_GRID)
 	{
 		da::math::Vector4 CameraPosition;
 		da::math::Vector2 CameraScale;

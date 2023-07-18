@@ -10,7 +10,6 @@ namespace da
 		CameraScript();
 		virtual ~CameraScript();
 
-		virtual void Initialize() override;
 		virtual void Update() override;
 
 		void SetCamera(Camera* component) { mCameraComponent = component; }

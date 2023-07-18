@@ -20,10 +20,6 @@ namespace da
 	{
 	}
 
-	void CameraScript::Initialize()
-	{
-	}
-
 	void CameraScript::Update()
 	{
 		Camera* cameraComponent = GetOwner()->GetComponent<Camera>();
