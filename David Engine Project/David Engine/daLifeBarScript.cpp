@@ -31,7 +31,4 @@ namespace da
 		outCB->Bind(graphics::eShaderStage::VS);
 		outCB->Bind(graphics::eShaderStage::PS);
 	}
-	void LifeBarScript::BindConstantBuffer()
-	{
-	}
 }

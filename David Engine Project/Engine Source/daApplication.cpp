@@ -3,6 +3,8 @@
 #include "daTime.h"
 #include "daRenderer.h"
 #include "daSceneManager.h"
+#include "daCollisionManager.h"
+
 namespace da
 {
 	Application::Application()
@@ -39,7 +41,7 @@ namespace da
 	{
 		Time::Update();
 		Input::Update();
-
+		CollisionManager::Update();
 		SceneManager::Update();
 	}
 

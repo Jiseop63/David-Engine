@@ -38,8 +38,13 @@ namespace da
 
 		// 내 위치 구하기
 		Vector3 myPos = myTransform->GetPosition();
-		Vector3 myScreenPos = myTransform->GetScreenPosition();
-		mScreenPosition = Vector2(myScreenPos.x, myScreenPos.y);
+
+		if (0 < myPos.x)
+			mScreenPosition.x = MaxPositionX * 100.0f + (myPos.x * 100.0f);
+		else
+			mScreenPosition.x = MaxPositionX * 100.0f - (myPos.x * 100.0f);
+
+		mScreenPosition.y = MaxPositionY * 100.0f - (myPos.y * 100.0f);
 	}
 	void ItemScript::ChangeTexture(std::shared_ptr<graphics::Texture> texture)
 	{

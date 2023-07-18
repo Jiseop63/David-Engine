@@ -19,8 +19,10 @@ namespace da::enums
 		Layer,		// 카메라에 영향을 받음
 		Tile,
 		ENV,
+
 		Playable,
 		Creature,
+
 		Effect,
 		UI,
 		Button,

@@ -32,7 +32,9 @@ namespace da
 
 
 		void SetParent(Transform* parent) { mParent = parent; }
+		Transform* GetParent() { return mParent; }
 
+		math::Matrix& GetWorldMatrix() { return mWorld; }
 		// 내 스크린 좌표 반환하는 함수
 	public:
 		math::Vector3  GetScreenPosition();
@@ -52,6 +54,7 @@ namespace da
 		math::Vector3 mRight;
 
 	private:
+		// 안씀
 		math::Vector3 mScreenPos;
 
 	};

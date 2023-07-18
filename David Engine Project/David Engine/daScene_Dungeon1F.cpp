@@ -4,7 +4,6 @@
 
 // юс╫ц
 #include "daInput.h"
-#include "daSceneManager.h"
 
 // resource
 #include "daResources.h"

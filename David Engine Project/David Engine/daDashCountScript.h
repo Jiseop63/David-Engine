@@ -10,6 +10,5 @@ namespace da
 		virtual ~DashCountScript ();
 
 		virtual void LateUpdate();
-		void BindConstantBuffer();
 	};
 }

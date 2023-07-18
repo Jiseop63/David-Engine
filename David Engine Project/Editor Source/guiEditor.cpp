@@ -19,16 +19,27 @@ namespace gui
 	{
 		// Debug Objects
 		mDebugObjects.resize((UINT)eColliderType::End);
+		
+
+		// Rect
 		std::shared_ptr<da::Mesh> mesh
-			= da::Resources::Find<da::Mesh>(L"DebugCircle");
+			= da::Resources::Find<da::Mesh>(L"DebugRect");
 		std::shared_ptr<da::Material> material
 			= da::Resources::Find<da::Material>(L"DebugMaterial");
-
 		mDebugObjects[(UINT)eColliderType::Rect] = new DebugObject();
 		da::MeshRenderer* meshRenderer = 
 			mDebugObjects[(UINT)eColliderType::Rect]->AddComponent<da::MeshRenderer>();
 		meshRenderer->SetMesh(mesh);
 		meshRenderer->SetMaterial(material);
+
+		// Circle
+		mesh = da::Resources::Find<da::Mesh>(L"DebugCircle");
+		mDebugObjects[(UINT)eColliderType::Circle] = new DebugObject();
+		meshRenderer =
+			mDebugObjects[(UINT)eColliderType::Circle]->AddComponent<da::MeshRenderer>();
+		meshRenderer->SetMesh(mesh);
+		meshRenderer->SetMaterial(material);
+
 
 		//Editor Objects
 		EditorObject* grid = new EditorObject();

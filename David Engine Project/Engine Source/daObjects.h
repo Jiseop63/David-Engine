@@ -41,12 +41,27 @@ namespace da::objects
 
 		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
 		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-		meshRenderer->SetMaterial(Resources::Find<Material>(material));
-
+		meshRenderer->SetMaterial(Resources::Find<Material>(material));		
 		obj->Initialize();
 		return obj;
 	}
 
+	template <typename T>
+	static T* InstantiateCreature(Scene* scene, enums::eLayerType layer, const std::wstring& material)
+	{
+		T* obj = new T();
+		Layer& myLayer = scene->GetLayer(layer);
+		myLayer.AddGameObject(obj);
+
+		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
+		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		meshRenderer->SetMaterial(Resources::Find<Material>(material));
+		obj->AddComponent<Rigidbody>();
+		obj->AddComponent<Collider2D>();
+		obj->Initialize();
+		return obj;
+	}
+	
 #pragma endregion
 #pragma region Quick Init objects
 	

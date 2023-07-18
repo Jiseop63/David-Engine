@@ -24,14 +24,11 @@ namespace da
 
 		// 데이터 채우기
 		renderer::CountCB data;
-		data.MaxCount = (UINT)dashCount.MaxCount;
-		data.CurCount = (UINT)dashCount.CurCount;
+		data.MaxCount = dashCount.MaxCount;
+		data.CurCount = dashCount.CurCount;
 
 		outCB->SetData(&data);
 		outCB->Bind(graphics::eShaderStage::VS);
 		outCB->Bind(graphics::eShaderStage::PS);
-	}
-	void DashCountScript::BindConstantBuffer()
-	{
 	}
 }

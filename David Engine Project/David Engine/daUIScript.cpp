@@ -43,11 +43,11 @@ namespace da
 		Vector3 myPos = myTransform->GetPosition();
 
 		if (0 < myPos.x)
-			mScreenPosition.x = 683.0f + (myPos.x * 100.0f);
+			mScreenPosition.x = MaxPositionX * 100.0f + (myPos.x * 100.0f);
 		else
-			mScreenPosition.x = 683.0f - (myPos.x * 100.0f);
+			mScreenPosition.x = MaxPositionX * 100.0f - (myPos.x * 100.0f);
 
-		mScreenPosition.y = 384.0f - (myPos.y * 100.0f);
+		mScreenPosition.y = MaxPositionY * 100.0f - (myPos.y * 100.0f);
 	}
 	void UIScript::ChangeTexture(std::shared_ptr<graphics::Texture> texture)
 	{
@@ -65,11 +65,6 @@ namespace da
 		float right = mScreenPosition.x + (mSize.x / 2);
 		float bottom = mScreenPosition.y + (mSize.y / 2);
 		Vector2 RB(right, bottom);
-
-		if (Input::GetKeyDown(eKeyCode::LBTN))
-		{
-			int a = 0;
-		}
 
 		// Ãæµ¹Áß
 		if (mousePosition.x >= left

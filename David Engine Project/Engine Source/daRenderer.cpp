@@ -1,4 +1,4 @@
-#include "daRenderer.h"
+ï»¿#include "daRenderer.h"
 #include "daResources.h"
 #include "daMesh.h"
 #include "daTexture.h"
@@ -102,7 +102,7 @@ namespace renderer
 	{
 #pragma region Create constant buffer 
 
-		// Ãß°¡ÇÒ cbuffer ¸ñ·Ï
+		// ì¶”ê°€í•  cbuffer ëª©ë¡
 		constantBuffer[(UINT)eCBType::Transform] = new ConstantBuffer(eCBType::Transform);
 		constantBuffer[(UINT)eCBType::Transform]->Create(sizeof(TransformCB));
 
@@ -175,8 +175,8 @@ namespace renderer
 		{
 			debugShader->Create(eShaderStage::VS, L"TriangleShader.hlsl", "mainVS");
 			debugShader->Create(eShaderStage::PS, L"DebugShader.hlsl", "mainPS");
-			debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_LINESTRIP);
-			debugShader->SetRatserizerState(eRSType::SolidNone);
+			debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+			debugShader->SetRatserizerState(eRSType::Wireframe);
 			Resources::Insert(L"DebugShader", debugShader);
 		}
 		std::shared_ptr<Shader> tilingLayerShader = std::make_shared<Shader>();
@@ -607,38 +607,38 @@ namespace renderer
 #pragma endregion
 #pragma region Rasterizer State
 		D3D11_RASTERIZER_DESC rasterizerDesc = {};
-		// Soild Back	: µÞ¸éÀ» ·»´õ¸µÇÏÁö ¾ÊÀ½
+		// Soild Back	: ë’·ë©´ì„ ë Œë”ë§í•˜ì§€ ì•ŠìŒ
 		rasterizerDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_BACK;
 		GetDevice()->CreateRasterizerState(
 			&rasterizerDesc, RasterizerStates[(UINT)eRSType::SolidBack].GetAddressOf());
-		// Soild Front	: ¾Õ¸éÀ» ·»´õ¸µÇÏÁö ¾ÊÀ½
+		// Soild Front	: ì•žë©´ì„ ë Œë”ë§í•˜ì§€ ì•ŠìŒ
 		rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_FRONT;
 		GetDevice()->CreateRasterizerState(
 			&rasterizerDesc, RasterizerStates[(UINT)eRSType::SolidFront].GetAddressOf());
-		// Solid None	: ¸ðµç ¸éÀ» ·»´õ¸µÇÔ
+		// Solid None	: ëª¨ë“  ë©´ì„ ë Œë”ë§í•¨
 		rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
 		GetDevice()->CreateRasterizerState(
 			&rasterizerDesc, RasterizerStates[(UINT)eRSType::SolidNone].GetAddressOf());
-		// Wireframe	: »À´ë¸¸ ·»´õ¸µÇÔ
+		// Wireframe	: ë¼ˆëŒ€ë§Œ ë Œë”ë§í•¨
 		rasterizerDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME;
 		GetDevice()->CreateRasterizerState(
 			&rasterizerDesc, RasterizerStates[(UINT)eRSType::Wireframe].GetAddressOf());
 #pragma endregion
 #pragma region DepthStencil State
 		D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
-		// Less <- Z °ªÀÌ ³ªº¸´Ù ÀÛÀ¸¸é ¾È±×¸²
+		// Less <- Z ê°’ì´ ë‚˜ë³´ë‹¤ ìž‘ìœ¼ë©´ ì•ˆê·¸ë¦¼
 		depthStencilDesc.DepthEnable = true;
 		depthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
 		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		depthStencilDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(
 			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::Less].GetAddressOf());
-		// Greater <- Z °ªÀÌ ³ªº¸´Ù Å©¸é ¾È±×¸²
+		// Greater <- Z ê°’ì´ ë‚˜ë³´ë‹¤ í¬ë©´ ì•ˆê·¸ë¦¼
 		depthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER;
 		GetDevice()->CreateDepthStencilState(
 			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::Greater].GetAddressOf());
-		// No Write <- µ¤¾î¾²±â ¾ÈÇÔ
+		// No Write <- ë®ì–´ì“°ê¸° ì•ˆí•¨
 		depthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
 		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ZERO;
 		GetDevice()->CreateDepthStencilState(

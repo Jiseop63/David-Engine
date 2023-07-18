@@ -8,7 +8,7 @@ namespace da
 	{
 	public:
 		Collider2D();
-		~Collider2D();
+		virtual ~Collider2D();
 
 		virtual void Initialize() override;
 		virtual void LateUpdate() override;

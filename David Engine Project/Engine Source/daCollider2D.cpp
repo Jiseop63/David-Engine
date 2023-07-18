@@ -15,8 +15,7 @@ namespace da
 		, mCenter(math::Vector2::Zero)
 		, mSize(math::Vector2::One)
 	{
-		++ColliderNumber;
-		mColliderID = ColliderNumber;
+		mColliderID = ColliderNumber++;
 	}
 	Collider2D::~Collider2D()
 	{
@@ -50,7 +49,7 @@ namespace da
 	void Collider2D::OnCollisionEnter(Collider2D* other)
 	{
 		const std::vector<Script*>& scripts
-			= GetOwner()->GetComponents<Script>();
+			= GetOwner()->GetScripts();
 
 		for (Script* script : scripts)
 		{
@@ -60,7 +59,7 @@ namespace da
 	void Collider2D::OnCollisionStay(Collider2D* other)
 	{
 		const std::vector<Script*>& scripts
-			= GetOwner()->GetComponents<Script>();
+			= GetOwner()->GetScripts();
 
 		for (Script* script : scripts)
 		{
@@ -70,7 +69,7 @@ namespace da
 	void Collider2D::OnCollisionExit(Collider2D* other)
 	{
 		const std::vector<Script*>& scripts
-			= GetOwner()->GetComponents<Script>();
+			= GetOwner()->GetScripts();
 
 		for (Script* script : scripts)
 		{

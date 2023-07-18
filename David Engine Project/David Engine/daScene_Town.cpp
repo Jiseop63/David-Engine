@@ -3,7 +3,6 @@
 #include "daRenderer.h"
 // 임시
 #include "daInput.h"
-#include "daSceneManager.h"
 #include "daApplication.h"
 
 // resource
@@ -69,9 +68,11 @@ namespace da
 		renderer::gridScript->SetCamera(renderer::mainCamera);
 
 		// 플레이어 세팅
+		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Creature);
 	}
 	void Scene_Town::OnExit()
 	{
+		CollisionManager::Clear();
 	}
 
 	void Scene_Town::addBackgroundObject()
@@ -547,10 +548,17 @@ namespace da
 	}
 	void Scene_Town::addGameObjects()
 	{
-		// sky BG : stay
+		// player
 		{
 			GameObject* playerObject = objects::InstantiatePlayer(this, L"SampleMaterial");
 			playerObject->SetName(L"player");
+		}
+
+		// test enemy
+		{
+			GameObject* monsterObject = objects::InstantiateCreature<GameObject>(this, enums::eLayerType::Creature, L"SampleMaterial");
+			monsterObject->SetName(L"monster");
+			monsterObject->GetTransform()->SetPosition( Vector3(1.50f, 0.0f, ObjectZ) );
 		}
 	}
 }

@@ -129,4 +129,16 @@ namespace da
             mDashCountTime = 0.0f;
         }
     }
+    void PlayerScript::OnCollisionEnter(Collider2D* other)
+    {
+        int a = 0;
+    }
+    void PlayerScript::OnCollisionStay(Collider2D* other)
+    {
+        int b = 0;
+    }
+    void PlayerScript::OnCollisionExit(Collider2D* other)
+    {
+        int c = 0;
+    }
 }

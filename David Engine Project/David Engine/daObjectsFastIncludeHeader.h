@@ -1,4 +1,10 @@
 #pragma once
+
+// manager
+#include "daCollisionManager.h"
+#include "daSceneManager.h"
+
+
 // objects & components
 
 // Default
@@ -27,7 +33,6 @@
 #include "daLifeBarScript.h"
 #include "daDashCountScript.h"
 #include "daInventoryScript.h"
-
 
 // Player
 #include "daPlayerScript.h"

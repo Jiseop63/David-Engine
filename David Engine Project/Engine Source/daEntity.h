@@ -11,7 +11,7 @@
 #define FrontLayerZ 0.0030f
 
 // Object
-#define Objects		0.0f;
+#define ObjectZ		0.0f
 
 // UI
 #define HUDZ		-0.0010f
