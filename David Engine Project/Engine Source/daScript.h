@@ -1,5 +1,6 @@
 #pragma once
 #include "daComponent.h"
+#include "daCollider2D.h"
 
 namespace da
 {
@@ -13,5 +14,9 @@ namespace da
 		virtual void Update();
 		virtual void LateUpdate();
 		virtual void Render();
+
+		virtual void OnCollisionEnter(Collider2D* other) {}
+		virtual void OnCollisionStay(Collider2D* other) {}
+		virtual void OnCollisionExit(Collider2D* other) {}
 	};
 }

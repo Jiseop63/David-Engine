@@ -19,6 +19,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daApplication.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daCollider2D.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daCollisionManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daConstantBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daEntity.h" />
@@ -52,6 +53,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daApplication.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daCollider2D.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daCollisionManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daConstantBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daEntity.cpp" />

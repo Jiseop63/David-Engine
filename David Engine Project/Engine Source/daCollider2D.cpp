@@ -4,14 +4,19 @@
 
 namespace da
 {
+	UINT Collider2D::ColliderNumber = 0;
+
 	Collider2D::Collider2D()
 		: Component(enums::eComponentType::Collider)
 		, mTransform(nullptr)
+		, mColliderID(0)
 		, mColliderType(enums::eColliderType::Rect)
 		, mPosition(math::Vector2::Zero)
 		, mCenter(math::Vector2::Zero)
 		, mSize(math::Vector2::One)
 	{
+		++ColliderNumber;
+		mColliderID = ColliderNumber;
 	}
 	Collider2D::~Collider2D()
 	{
@@ -41,5 +46,35 @@ namespace da
 		mesh.Type = enums::eColliderType::Rect;
 
 		renderer::PushDebugMeshAttribute(mesh);
+	}
+	void Collider2D::OnCollisionEnter(Collider2D* other)
+	{
+		const std::vector<Script*>& scripts
+			= GetOwner()->GetComponents<Script>();
+
+		for (Script* script : scripts)
+		{
+			script->OnCollisionEnter(other);
+		}
+	}
+	void Collider2D::OnCollisionStay(Collider2D* other)
+	{
+		const std::vector<Script*>& scripts
+			= GetOwner()->GetComponents<Script>();
+
+		for (Script* script : scripts)
+		{
+			script->OnCollisionStay(other);
+		}
+	}
+	void Collider2D::OnCollisionExit(Collider2D* other)
+	{
+		const std::vector<Script*>& scripts
+			= GetOwner()->GetComponents<Script>();
+
+		for (Script* script : scripts)
+		{
+			script->OnCollisionExit(other);
+		}
 	}
 }

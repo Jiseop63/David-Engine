@@ -51,7 +51,7 @@ namespace da
 			return nullptr;
 		}
 		template <typename T>
-		std::vector<T*> GetComponents()
+		const std::vector<T*>& GetComponents()
 		{
 			std::vector<T*> retComponents;
 
@@ -62,8 +62,13 @@ namespace da
 				if (nullptr != findComponent)
 					retComponents.push_back(findComponent);
 			}
-
-			return findComponent;
+			for (Script* script : mScripts)
+			{
+				findComponent = dynamic_cast<T*>(script);
+				if (nullptr != findComponent)
+					retComponents.push_back(findComponent);
+			}
+			return retComponents;
 		}
 		template <typename T>
 		T* AddComponent()

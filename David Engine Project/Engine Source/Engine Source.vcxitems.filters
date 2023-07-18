@@ -34,36 +34,6 @@
     <Filter Include="Common\Header">
       <UniqueIdentifier>{bd8e1546-a87c-4305-95b9-23860e9e2307}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contents">
-      <UniqueIdentifier>{97b33a37-8828-44c3-b453-ba450772aeff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Objects">
-      <UniqueIdentifier>{46c23c26-967c-49e0-985e-34586d429acb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Scene">
-      <UniqueIdentifier>{46fd4bd1-1155-4ccd-a3ad-2046835ae239}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Component">
-      <UniqueIdentifier>{7cee5c22-89e2-4dce-84ee-df16f069108d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Component\Base">
-      <UniqueIdentifier>{b2ca6112-8d1e-4d84-9609-2dc605459ff3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Component\Transform">
-      <UniqueIdentifier>{be2a6527-992e-4c01-9529-59d74bb4a959}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Component\Renderer">
-      <UniqueIdentifier>{03157561-d664-4024-a0b2-abe712c651a9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Component\Camera">
-      <UniqueIdentifier>{87d37685-f8e6-4be7-bfb1-a87519d56eda}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Component\Rigidbody">
-      <UniqueIdentifier>{11b6a4ba-fdde-4e86-a39b-216372b410e3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Component\TimeConstants">
-      <UniqueIdentifier>{54b03e56-68ff-4f86-86ba-6e4ff7baa8e3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphics\Resource">
       <UniqueIdentifier>{42f0267c-f0c1-4ec6-84c6-b4deddc5fe5c}</UniqueIdentifier>
     </Filter>
@@ -82,8 +52,41 @@
     <Filter Include="Graphics\Resource\Texture">
       <UniqueIdentifier>{c8f35b83-b1cf-4cbb-bff3-2c69fa24c164}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contents\Component\Collider">
+    <Filter Include="System">
+      <UniqueIdentifier>{97b33a37-8828-44c3-b453-ba450772aeff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Objects">
+      <UniqueIdentifier>{46c23c26-967c-49e0-985e-34586d429acb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Scene">
+      <UniqueIdentifier>{46fd4bd1-1155-4ccd-a3ad-2046835ae239}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component">
+      <UniqueIdentifier>{7cee5c22-89e2-4dce-84ee-df16f069108d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component\Base">
+      <UniqueIdentifier>{b2ca6112-8d1e-4d84-9609-2dc605459ff3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component\Transform">
+      <UniqueIdentifier>{be2a6527-992e-4c01-9529-59d74bb4a959}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component\Renderer">
+      <UniqueIdentifier>{03157561-d664-4024-a0b2-abe712c651a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component\Camera">
+      <UniqueIdentifier>{87d37685-f8e6-4be7-bfb1-a87519d56eda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component\Rigidbody">
+      <UniqueIdentifier>{11b6a4ba-fdde-4e86-a39b-216372b410e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component\TimeConstants">
+      <UniqueIdentifier>{54b03e56-68ff-4f86-86ba-6e4ff7baa8e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component\Collider">
       <UniqueIdentifier>{9409970f-45e4-4ca4-948f-fa54f5e27ef7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Manager">
+      <UniqueIdentifier>{dc9c9783-7635-4c4c-9e12-192ea02af9b0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -115,19 +118,19 @@
       <Filter>Graphics\Resource\Material</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daComponent.h">
-      <Filter>Contents\Component\Base</Filter>
+      <Filter>System\Component\Base</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daScript.h">
-      <Filter>Contents\Component\Base</Filter>
+      <Filter>System\Component\Base</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daTransform.h">
-      <Filter>Contents\Component\Transform</Filter>
+      <Filter>System\Component\Transform</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daMeshRenderer.h">
-      <Filter>Contents\Component\Renderer</Filter>
+      <Filter>System\Component\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daCamera.h">
-      <Filter>Contents\Component\Camera</Filter>
+      <Filter>System\Component\Camera</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daConstantBuffer.h">
       <Filter>Graphics\Buffer</Filter>
@@ -142,10 +145,7 @@
       <Filter>Graphics\RenderObjects</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daScene.h">
-      <Filter>Contents\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daSceneManager.h">
-      <Filter>Contents\Scene</Filter>
+      <Filter>System\Scene</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h">
       <Filter>Common\Header</Filter>
@@ -157,19 +157,19 @@
       <Filter>Common\Header</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daGameObject.h">
-      <Filter>Contents\Objects</Filter>
+      <Filter>System\Objects</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daLayer.h">
-      <Filter>Contents\Objects</Filter>
+      <Filter>System\Objects</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daObjects.h">
-      <Filter>Contents\Objects</Filter>
+      <Filter>System\Objects</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daTimeConstants.h">
-      <Filter>Contents\Component\TimeConstants</Filter>
+      <Filter>System\Component\TimeConstants</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daRigidbody.h">
-      <Filter>Contents\Component\Rigidbody</Filter>
+      <Filter>System\Component\Rigidbody</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daResource.h">
       <Filter>Graphics\Resource\Base</Filter>
@@ -181,10 +181,16 @@
       <Filter>Common\Header</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\David Engine\daObjectsFastIncludeHeader.h">
-      <Filter>Contents\Objects</Filter>
+      <Filter>System\Objects</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daCollider2D.h">
-      <Filter>Contents\Component\Collider</Filter>
+      <Filter>System\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daSceneManager.h">
+      <Filter>System\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daCollisionManager.h">
+      <Filter>System\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -216,19 +222,19 @@
       <Filter>Graphics\Resource\Material</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daComponent.cpp">
-      <Filter>Contents\Component\Base</Filter>
+      <Filter>System\Component\Base</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daScript.cpp">
-      <Filter>Contents\Component\Base</Filter>
+      <Filter>System\Component\Base</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daTransform.cpp">
-      <Filter>Contents\Component\Transform</Filter>
+      <Filter>System\Component\Transform</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMeshRenderer.cpp">
-      <Filter>Contents\Component\Renderer</Filter>
+      <Filter>System\Component\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daCamera.cpp">
-      <Filter>Contents\Component\Camera</Filter>
+      <Filter>System\Component\Camera</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daConstantBuffer.cpp">
       <Filter>Graphics\Buffer</Filter>
@@ -240,22 +246,19 @@
       <Filter>Graphics\RenderObjects</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daScene.cpp">
-      <Filter>Contents\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daSceneManager.cpp">
-      <Filter>Contents\Scene</Filter>
+      <Filter>System\Scene</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daGameObject.cpp">
-      <Filter>Contents\Objects</Filter>
+      <Filter>System\Objects</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daLayer.cpp">
-      <Filter>Contents\Objects</Filter>
+      <Filter>System\Objects</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daTimeConstants.cpp">
-      <Filter>Contents\Component\TimeConstants</Filter>
+      <Filter>System\Component\TimeConstants</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daRigidbody.cpp">
-      <Filter>Contents\Component\Rigidbody</Filter>
+      <Filter>System\Component\Rigidbody</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daResource.cpp">
       <Filter>Graphics\Resource\Base</Filter>
@@ -264,7 +267,13 @@
       <Filter>Graphics\Resource\Base</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daCollider2D.cpp">
-      <Filter>Contents\Component\Collider</Filter>
+      <Filter>System\Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daSceneManager.cpp">
+      <Filter>System\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daCollisionManager.cpp">
+      <Filter>System\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

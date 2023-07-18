@@ -32,6 +32,11 @@ float4 mainPS(VSOut Out) : SV_Target
 {
     float4 color = (float) 0.0f;
     color = BindingTexture.Sample(pointSampler, Out.UV);
+            
+    if (0.0f > color.a)
+    {
+        return float4(0.0f, 0.0f, 0.0f, 0.0f);
+    }
     
     return color;
 }
