@@ -142,6 +142,7 @@ namespace da::objects
 		// 서순 중요함
 		cameraObj->Initialize();
 		camera->TurnLayerMask(enums::eLayerType::UI, false);
+		camera->TurnLayerMask(enums::eLayerType::BackGround, false);
 		return cameraObj;
 	}
 	static CameraObject* InstantiateUICamera(Scene* scene)
@@ -157,6 +158,22 @@ namespace da::objects
 		// 서순 중요함
 		camera->DisableLayerMask();
 		camera->TurnLayerMask(enums::eLayerType::UI);
+		return cameraObj;
+	}
+
+	static CameraObject* InstantiateSubCamera(Scene* scene)
+	{
+		CameraObject* cameraObj = new CameraObject();
+		cameraObj->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -6.750f));
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::None);
+		myLayer.AddGameObject(cameraObj);
+		Camera* camera = cameraObj->AddComponent<Camera>();
+		cameraObj->SetCameraComponent(camera);
+		cameraObj->Initialize();
+
+		// 서순 중요함
+		camera->DisableLayerMask();
+		camera->TurnLayerMask(enums::eLayerType::BackGround);
 		return cameraObj;
 	}
 #pragma endregion

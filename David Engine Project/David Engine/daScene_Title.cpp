@@ -25,9 +25,10 @@ namespace da
 	}
 	void Scene_Title::Initialize()
 	{
+		objects::InstantiateSubCamera(this);
 		mMainCamera = objects::InstantiateMainCamera(this);
 		mUICamera = objects::InstantiateUICamera(this);
-		
+
 		addBackgroundObjects();
 		addUIObjects();
 		renderer::mainCamera = mMainCamera->GetCameraComponent();

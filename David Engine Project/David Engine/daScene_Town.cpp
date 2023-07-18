@@ -27,7 +27,12 @@ namespace da
 	}
 	void Scene_Town::Initialize()
 	{
+		// sub
+		objects::InstantiateSubCamera(this);
+		// main
 		mMainCamera = objects::InstantiateMainCamera(this);
+		Camera* mainCamera = mMainCamera->GetCameraComponent();
+		// UI
 		mUICamera = objects::InstantiateUICamera(this);
 
 		addBackgroundObject();

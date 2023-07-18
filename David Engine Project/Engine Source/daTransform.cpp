@@ -52,7 +52,7 @@ namespace da
 		transformCB.World = mWorld;
 		transformCB.View = Camera::GetGPUViewMatrix();
 		transformCB.Projection = Camera::GetGPUProjectionMatrix();
-				
+		
 		ConstantBuffer* bindTransform = renderer::constantBuffer[(UINT)graphics::eCBType::Transform];
 		bindTransform->SetData(&transformCB);
 		bindTransform->Bind(eShaderStage::VS);

@@ -313,7 +313,6 @@ namespace renderer
 			slot4Material->SetShader(spriteShader);
 			Resources::Insert<Material>(L"AccessorySlot4Material", slot4Material);
 		}
-
 		// ItemSlot 1~ 15 : NoneTexture Material | Sprite Shader
 		{
 			std::shared_ptr<Material> slot00Material = std::make_shared<Material>();
@@ -389,12 +388,12 @@ namespace renderer
 
 		// TitleBtn : NoneTexture Material | Sprite Shader
 		{
-			std::shared_ptr<Material> slot00Material = std::make_shared<Material>();
-			slot00Material->SetShader(spriteShader);
-			std::shared_ptr<Material> uiMaterial2 = std::make_shared<Material>();
-			uiMaterial2->SetShader(spriteShader);
-			Resources::Insert<Material>(L"StartBtnMaterial", slot00Material);
-			Resources::Insert<Material>(L"ExitBtnMaterial", uiMaterial2);
+			std::shared_ptr<Material> startBtnMaterial = std::make_shared<Material>();
+			startBtnMaterial->SetShader(spriteShader);
+			std::shared_ptr<Material> exitBtnMaterial = std::make_shared<Material>();
+			exitBtnMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"StartBtnMaterial", startBtnMaterial);
+			Resources::Insert<Material>(L"ExitBtnMaterial", exitBtnMaterial);
 		}
 
 		// TitleScene BG layer | Sprite Shader	
@@ -404,7 +403,6 @@ namespace renderer
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
-			//spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
 			Resources::Insert<Material>(L"TitleBackgroundMaterial", spriteMaterial);
 		}
 		// Front Layer, Back Layer, Small Clouds | MovingBG Shader
@@ -468,7 +466,6 @@ namespace renderer
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
-			//spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
 			Resources::Insert<Material>(L"SkyMaterial", spriteMaterial);
 		}
 		// TownBG
