@@ -15,7 +15,7 @@ namespace da::enums
 	{
 		None, // 숭돌 없고 렌더 안하는 객체
 		Camera,
-		BackGround,	// 움직이지 않음
+		Background,	// 움직이지 않음
 		Layer,		// 카메라에 영향을 받음
 		Tile,
 		ENV,

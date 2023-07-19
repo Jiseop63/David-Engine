@@ -80,7 +80,7 @@ namespace da
 		// sky BG : stay
 		{
 			GameObject* backGround = objects::InstantiateGameObject
-				<GameObject>(this, enums::eLayerType::BackGround, L"SkyMaterial");
+				<GameObject>(this, enums::eLayerType::Background, L"SkyMaterial");
 			backGround->GetTransform()->SetScale(math::Vector3(MaxPositionX * 2.0f, MaxPositionY * 2.0f, 1.0f));
 			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, BackgroundZ));
 			backGround->SetName(L"sky");

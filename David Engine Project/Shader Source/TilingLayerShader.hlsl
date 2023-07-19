@@ -13,11 +13,6 @@ struct VSOut
     float2 UV : TEXCOORD;
 };
 
-float2 RepeatUV(float2 uv, float scale)
-{
-    return float2(frac(uv.x * scale), uv.y);
-}
-
 VSOut mainVS(VSIn In)
 {
     VSOut Out = (VSOut) 0.0f;

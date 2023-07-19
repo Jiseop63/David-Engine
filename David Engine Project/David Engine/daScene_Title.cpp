@@ -67,7 +67,7 @@ namespace da
 		// just BG
 		{
 			GameObject* backGround = objects::InstantiateGameObject
-				<GameObject>(this, enums::eLayerType::BackGround, L"TitleBackgroundMaterial");
+				<GameObject>(this, enums::eLayerType::Background, L"TitleBackgroundMaterial");
 			backGround->GetTransform()->SetScale(math::Vector3(width, height, 1.0f));
 			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, BackgroundZ));
 		}
@@ -76,7 +76,7 @@ namespace da
 		{
 			// Back & Front Cloud Layer
 			GameObject* cloudObj = objects::InstantiateGameObject
-				<GameObject>(this, enums::eLayerType::BackGround, L"BackCloudMaterial");
+				<GameObject>(this, enums::eLayerType::Background, L"BackCloudMaterial");
 			cloudObj->GetTransform()->SetScale(math::Vector3(width, height, 1.0f));
 			cloudObj->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, BackLayerZ));
 			TimeConstants* cloudTimer = cloudObj->AddComponent<TimeConstants>();
@@ -84,7 +84,7 @@ namespace da
 
 
 			GameObject* cloudObj2 = objects::InstantiateGameObject
-				<GameObject>(this, enums::eLayerType::BackGround, L"FrontCloudMaterial");
+				<GameObject>(this, enums::eLayerType::Background, L"FrontCloudMaterial");
 			cloudObj2->GetTransform()->SetScale(math::Vector3(width, height, 1.0f));
 			cloudObj2->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, FrontLayerZ));
 			TimeConstants* cloudTimer2 = cloudObj2->AddComponent<TimeConstants>();
@@ -94,14 +94,14 @@ namespace da
 		// BGObj MainLogo
 		{
 			GameObject* titleLogoObj = objects::InstantiateGameObject
-				<GameObject>(this, enums::eLayerType::BackGround, L"MainLogoMaterial");
+				<GameObject>(this, enums::eLayerType::Background, L"MainLogoMaterial");
 			titleLogoObj->GetTransform()->SetScale(math::Vector3(4.680f, 2.250f, 1.0f));
 			titleLogoObj->GetTransform()->SetPosition(math::Vector3(0.0f, (height / 2.0f) - 2.250f, HUDZ));
 		}
 		// BGObj Copyright
 		{
 			GameObject* copyrightObj = objects::InstantiateGameObject
-				<GameObject>(this, enums::eLayerType::BackGround, L"CopyrightMaterial");
+				<GameObject>(this, enums::eLayerType::Background, L"CopyrightMaterial");
 			copyrightObj->GetTransform()->SetScale(math::Vector3(5.010f, 0.360f, 1.0f));
 			copyrightObj->GetTransform()->SetPosition(math::Vector3(0.0f, -(height / 2.0f) + 0.360f, HUDZ));
 		}

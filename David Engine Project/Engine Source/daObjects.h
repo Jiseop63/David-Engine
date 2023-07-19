@@ -157,7 +157,7 @@ namespace da::objects
 		// 서순 중요함
 		cameraObj->Initialize();
 		camera->TurnLayerMask(enums::eLayerType::UI, false);
-		camera->TurnLayerMask(enums::eLayerType::BackGround, false);
+		camera->TurnLayerMask(enums::eLayerType::Background, false);
 		camera->TurnLayerMask(enums::eLayerType::Layer, false);
 		return cameraObj;
 	}
@@ -190,7 +190,7 @@ namespace da::objects
 
 		// 서순 중요함
 		camera->DisableLayerMask();
-		camera->TurnLayerMask(enums::eLayerType::BackGround);
+		camera->TurnLayerMask(enums::eLayerType::Background);
 		camera->TurnLayerMask(enums::eLayerType::Layer);
 		return cameraObj;
 	}

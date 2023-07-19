@@ -64,13 +64,12 @@ namespace da
 
 	void Scene_Dungeon1F::addBackgroundObjects()
 	{
-		// TempDungeonMaterial
-		// town Layer : follow
+		// SubBG : 타일에 가려짐
 		{
 			GameObject* backGround = objects::InstantiateGameObject
-				<GameObject>(this, enums::eLayerType::Layer, L"TempDungeonMaterial");
+				<GameObject>(this, enums::eLayerType::Background, L"DungeonSubBGMaterial");
 			backGround->GetTransform()->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
-			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -0.002f));
+			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, BackgroundZ));
 		}
 	}
 	void Scene_Dungeon1F::addUIObjects()

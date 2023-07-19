@@ -501,8 +501,16 @@ namespace renderer
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
-			//spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
 			Resources::Insert<Material>(L"TempDungeonMaterial", spriteMaterial);
+		}
+		// Sub BG
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"DungeonSubBGTexture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\SubBG.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"DungeonSubBGMaterial", spriteMaterial);
 		}
 
 #pragma endregion
