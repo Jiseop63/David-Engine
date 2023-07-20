@@ -492,16 +492,43 @@ namespace renderer
 			spriteMaterial->SetShader(tilingLayerShader);
 			Resources::Insert<Material>(L"TownLayerMaterial", spriteMaterial);
 		}
-#pragma endregion
-#pragma region 1F :: Load Texture & Create material
-		// Temp dungeon
+
+		// SecondFloor
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"TempDungeonTexture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\tempDungeon.png");
+				= Resources::Load<Texture>(L"TownMapTileTexture", L"..\\Resources\\Texture\\Scene_Town\\TownMapTile.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"TempDungeonMaterial", spriteMaterial);
+			Resources::Insert<Material>(L"TownMapTileMaterial", spriteMaterial);
+		}		
+		// platform
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"SecondFloor_OneWayTexture", L"..\\Resources\\Texture\\Scene_Town\\SecondFloor_OneWay.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"SecondFloor_OneWayMaterial", spriteMaterial);
+		}
+#pragma endregion
+#pragma region 1F :: Load Texture & Create material
+		// platform
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"Platform1FTexture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\Platform1F.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"Platform1FMaterial", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"Platform1Fx4Texture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\Platform1Fx4.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"Platform1Fx4Material", spriteMaterial);
 		}
 		// Sub BG
 		{
@@ -512,20 +539,62 @@ namespace renderer
 			spriteMaterial->SetShader(spriteShader);
 			Resources::Insert<Material>(L"DungeonSubBGMaterial", spriteMaterial);
 		}
-
-#pragma endregion
-#pragma region 2F :: Load Texture & Create material
-		// Temp dungeon
+		// close door
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"2FTexture", L"..\\Resources\\Texture\\Scene_Dungeon2F\\2F.png");
+				= Resources::Load<Texture>(L"Close1FTexture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\close1F.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
-			//spriteMaterial->SetRenderingMode(eRenderingMode::Opaque);
-			Resources::Insert<Material>(L"2FMaterial", spriteMaterial);
+			Resources::Insert<Material>(L"Close1FMaterial", spriteMaterial);
 		}
-
+		// open door
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"Open1FTexture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\open1F.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"Open1FMaterial", spriteMaterial);
+		}
+		// stage1
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"1FStage1Texture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\1FStage1.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"1FStage1Material", spriteMaterial);
+		}
+		//stage2
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"1FStage2Texture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\1FStage4.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"1FStage2Material", spriteMaterial);
+		}
+#pragma endregion
+#pragma region 2F :: Load Texture & Create material
+		// stage1
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"2FStage1Texture", L"..\\Resources\\Texture\\Scene_Dungeon2F\\EntranceBossroom.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"2FStage1Material", spriteMaterial);
+		}
+		// stage2
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"2FStage2Texture", L"..\\Resources\\Texture\\Scene_Dungeon2F\\Bossroom.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"2FStage2Material", spriteMaterial);
+		}
 #pragma endregion
 	}
 	void SetupState()

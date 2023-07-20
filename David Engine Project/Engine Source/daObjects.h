@@ -130,7 +130,7 @@ namespace da::objects
 	static GameObject* InstantiateGridObject(Scene* scene, CameraObject* cameraObject)
 	{
 		GameObject* obj = new GameObject();
-		Layer& myLayer = scene->GetLayer(enums::eLayerType::Camera);
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::None);
 		myLayer.AddGameObject(obj);
 		GridScript* gridScript = obj->AddComponent<GridScript>();
 		gridScript->SetCamera(cameraObject->GetCameraComponent());

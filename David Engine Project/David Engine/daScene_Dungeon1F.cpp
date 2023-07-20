@@ -34,6 +34,7 @@ namespace da
 
 		addBackgroundObjects();
 		addUIObjects();
+		addGameObjects();
 	}
 	void Scene_Dungeon1F::Update()
 	{
@@ -59,6 +60,33 @@ namespace da
 		renderer::gridScript->SetCamera(renderer::mainCamera);
 	}
 	void Scene_Dungeon1F::OnExit()
+	{
+	}
+
+	void Scene_Dungeon1F::State1()
+	{
+		// Close Door : 384 208
+		{
+			GameObject* stageObject = objects::InstantiateGameObject
+				<GameObject>(this, enums::eLayerType::Tile, L"1FStage1Material");
+			stageObject->GetTransform()->SetScale(math::Vector3(3.840f * 4.0f, 2.080f * 4.0f, 1.0f));
+			stageObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, ObjectZ));
+		}
+
+		// Close Door : 57, 65
+		{
+			GameObject* doorObject = objects::InstantiateGameObject
+				<GameObject>(this, enums::eLayerType::ENV, L"Close1FMaterial");
+			doorObject->GetTransform()->SetScale(math::Vector3(0.570f * 4.0f, 0.650f * 4.0f, 1.0f));
+			doorObject->GetTransform()->SetPosition(math::Vector3(-3.0f, -1.0f + 0.080f, ObjectZ));
+		}
+	}
+
+	void Scene_Dungeon1F::Stage2()
+	{
+	}
+
+	void Scene_Dungeon1F::EntryBossRoom()
 	{
 	}
 
@@ -509,5 +537,9 @@ namespace da
 
 #pragma endregion
 
+	}
+	void Scene_Dungeon1F::addGameObjects()
+	{
+		State1();
 	}
 }

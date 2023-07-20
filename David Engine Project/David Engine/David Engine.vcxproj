@@ -163,7 +163,10 @@
     <ClInclude Include="daPlayerScript.h" />
     <ClInclude Include="daProjectileObject.h" />
     <ClInclude Include="daScene_Dungeon1F.h" />
+    <ClInclude Include="daScene_Dungeon1F_Stage1.h" />
     <ClInclude Include="daScene_Dungeon2F.h" />
+    <ClInclude Include="daScene_Dungeon2F_Stage1.h" />
+    <ClInclude Include="daScene_Dungeon2F_Stage2.h" />
     <ClInclude Include="daScene_Title.h" />
     <ClInclude Include="daScene_Town.h" />
     <ClInclude Include="daSubCameraScript.h" />
@@ -189,7 +192,10 @@
     <ClCompile Include="daPlayerScript.cpp" />
     <ClCompile Include="daProjectileObject.cpp" />
     <ClCompile Include="daScene_Dungeon1F.cpp" />
+    <ClCompile Include="daScene_Dungeon1F_Stage1.cpp" />
     <ClCompile Include="daScene_Dungeon2F.cpp" />
+    <ClCompile Include="daScene_Dungeon2F_Stage1.cpp" />
+    <ClCompile Include="daScene_Dungeon2F_Stage2.cpp" />
     <ClCompile Include="daScene_Title.cpp" />
     <ClCompile Include="daScene_Town.cpp" />
     <ClCompile Include="daSubCameraScript.cpp" />

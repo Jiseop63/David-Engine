@@ -1,118 +1,77 @@
-#include "daScene_Town.h"
-
+#include "daScene_Dungeon1F_Stage1.h"
 #include "daRenderer.h"
+
 // 임시
 #include "daInput.h"
-#include "daApplication.h"
 
 // resource
 #include "daResources.h"
 #include "daTexture.h"
 
-#include "daObjects.h"
 
 // UI, Object, Components and Camera
+#include "daObjects.h"
 #include "daObjectsFastIncludeHeader.h"
-
-extern da::Application application;
-
 namespace da
 {
-	Scene_Town::Scene_Town()
+	Scene_Dungeon1F_Stage1::Scene_Dungeon1F_Stage1()
 	{
 	}
-	Scene_Town::~Scene_Town()
+	Scene_Dungeon1F_Stage1::~Scene_Dungeon1F_Stage1()
 	{
 	}
-	void Scene_Town::Initialize()
+	void Scene_Dungeon1F_Stage1::Initialize()
 	{
-		// sub
 		CameraObject* subCameraObj = objects::InstantiateSubCamera(this);
-		// main
 		mMainCamera = objects::InstantiateMainCamera(this);
-
 		// subCamera setting
 		SubCameraScript* subCamScript = subCameraObj->GetComponent<SubCameraScript>();
 		subCamScript->SetMainCameraTransfrom(mMainCamera->GetTransform());
-
-		// UI
 		mUICamera = objects::InstantiateUICamera(this);
 
-		addBackgroundObject();
+		addBackgroundObjects();
 		addUIObjects();
 		addGameObjects();
 	}
-	void Scene_Town::Update()
+	void Scene_Dungeon1F_Stage1::Update()
 	{
 		if (Input::GetKeyDown(eKeyCode::N))
 		{
-			SceneManager::LoadScene(L"Scene_Dungeon1F_Stage1");
+			SceneManager::LoadScene(L"Scene_Dungeon2F_Stage1");
 		}
 		Scene::Update();
 	}
-	void Scene_Town::LateUpdate()
+	void Scene_Dungeon1F_Stage1::LateUpdate()
 	{
 		Scene::LateUpdate();
 	}
-	void Scene_Town::Render()
+	void Scene_Dungeon1F_Stage1::Render()
 	{
 		Scene::Render();
 	}
-	
-	void Scene_Town::OnEnter()
+	void Scene_Dungeon1F_Stage1::OnEnter()
 	{
-		// 카메라 세팅
 		renderer::mainCamera = mMainCamera->GetCameraComponent();
 		renderer::uiCamera = mUICamera->GetCameraComponent();
 		renderer::gridScript->SetCamera(renderer::mainCamera);
-
-		// 플레이어 세팅
-		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Creature);
 	}
-	void Scene_Town::OnExit()
+	void Scene_Dungeon1F_Stage1::OnExit()
 	{
-		CollisionManager::Clear();
 	}
-
-	void Scene_Town::addBackgroundObject()
+	void Scene_Dungeon1F_Stage1::addBackgroundObjects()
 	{
-		// sky BG : stay
+		// SubBG : 타일에 가려짐
 		{
 			GameObject* backGround = objects::InstantiateGameObject
-				<GameObject>(this, enums::eLayerType::Background, L"SkyMaterial");
-			backGround->GetTransform()->SetScale(math::Vector3(MaxPositionX * 2.0f, MaxPositionY * 2.0f, 1.0f));
+				<GameObject>(this, enums::eLayerType::Background, L"DungeonSubBGMaterial");
+			backGround->GetTransform()->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
 			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, BackgroundZ));
-			backGround->SetName(L"sky");
-		}
-
-		// forest Layer
-		{
-			GameObject* backGround = objects::InstantiateGameObject
-				<GameObject>(this, enums::eLayerType::Layer, L"TownBGMaterial");
-			backGround->GetTransform()->SetScale(math::Vector3(MaxPositionX * 2.0f, MaxPositionY * 2.0f, 1.0f));
-			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, -2.0f, BackLayerZ));
-			backGround->SetName(L"forest");
-			LayerScript* bgLayerScript = backGround->AddComponent<LayerScript>();
-			bgLayerScript->SetCamera(mMainCamera->GetCameraComponent());
-			bgLayerScript->SetName(L"첫번째 레이어 스크립트");
-		}
-
-		// trees Layer
-		{
-			GameObject* backGround = objects::InstantiateGameObject
-				<GameObject>(this, enums::eLayerType::Layer, L"TownLayerMaterial");
-			backGround->GetTransform()->SetScale(math::Vector3(MaxPositionX * 2.0f, MaxPositionY * 2.0f, 1.0f));
-			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, -4.0f, FrontLayerZ));
-			backGround->SetName(L"trees");
-			LayerScript* bgLayerScript = backGround->AddComponent<LayerScript>();
-			bgLayerScript->SetCamera(mMainCamera->GetCameraComponent());
-			bgLayerScript->SetName(L"두번째 레이어 스크립트");
 		}
 	}
-	void Scene_Town::addUIObjects()
+	void Scene_Dungeon1F_Stage1::addUIObjects()
 	{
 #pragma region HUD
-		
+
 		// HUD 객체 생성
 		{
 			// hpBar
@@ -172,19 +131,19 @@ namespace da
 				dashPanelTransform->SetScale(Vector3(dashPanelXScale, dashPanelYScale, 1.0f));
 
 				// Dash Panel 위치 조절
-				Vector3 dashPanelPosition = Vector3((dashPanelXScale / 2.0f) + padding, lifePanelPosition.y -(dashPanelYScale / 2.0f) -(padding * 2.0f), 0.f);
+				Vector3 dashPanelPosition = Vector3((dashPanelXScale / 2.0f) + padding, lifePanelPosition.y - (dashPanelYScale / 2.0f) - (padding * 2.0f), 0.f);
 				dashPanelTransform->SetPosition(dashPanelPosition);
-				
+
 				// Dash Active 객체 생성
 				GameObject* dashActivate = objects::InstantiateGameObject
 					<GameObject>(this, enums::eLayerType::UI, L"DashActivateMaterial");
-				Transform* dashActivateTransform = dashActivate->GetTransform(); 
+				Transform* dashActivateTransform = dashActivate->GetTransform();
 				dashActivateTransform->SetParent(playerHUDTransform);
 
 				// Dash Active scale
 				float dashActiveXScale = 0.720f; // 18 * 4
 				float dashActiveYScale = 0.160f; // 4 * 4
-				dashActivateTransform->SetScale( Vector3(dashActiveXScale, dashActiveYScale, 1.0f) );
+				dashActivateTransform->SetScale(Vector3(dashActiveXScale, dashActiveYScale, 1.0f));
 
 				// Dash Active position
 				Vector3 dashActivePosition = dashPanelPosition + Vector3(0.0f, 0.0f, -0.0001f);
@@ -192,7 +151,7 @@ namespace da
 				dashActivate->AddComponent<DashCountScript>();
 			}
 		}
-				
+
 		// player weapon panel
 		{
 			GameObject* weaponPanel = objects::InstantiateGameObject
@@ -201,10 +160,10 @@ namespace da
 			Transform* weaponPanelTransform = weaponPanel->GetTransform();
 			float weaponPanelScaleX = 1.70f;
 			float weaponPanelScaleY = 1.0f;
-			weaponPanelTransform ->SetScale(math::Vector3(weaponPanelScaleX, weaponPanelScaleY, 1.0f));
+			weaponPanelTransform->SetScale(math::Vector3(weaponPanelScaleX, weaponPanelScaleY, 1.0f));
 			float dashPanePadding = 0.150f;
 
-			Vector3 weaponPanelPosition 
+			Vector3 weaponPanelPosition
 				= Vector3(
 					MaxPositionX - (weaponPanelScaleX / 2.0f) - dashPanePadding
 					, -MaxPositionY + (weaponPanelScaleY / 2.0f) + dashPanePadding, HUDZ);
@@ -240,7 +199,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"WeaponSlot1Material", L"WeaponSlotTexture", L"WeaponSlotSelectTexture");
-				slotObject ->SetObjectState(GameObject::eObjectState::Inactive);
+				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				// 19 * 4
 				Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
@@ -545,29 +504,22 @@ namespace da
 
 #pragma endregion
 	}
-	void Scene_Town::addGameObjects()
+	void Scene_Dungeon1F_Stage1::addGameObjects()
 	{
-		// floor
+		// Stage : 384 208
 		{
-			// 694 128
-			GameObject* floorObject = objects::InstantiateGameObject<GameObject>(this, enums::eLayerType::Tile, L"TownMapTileMaterial");
-			floorObject->SetName(L"Floor");
-			Transform* floorTr = floorObject->GetTransform();
-			floorTr->SetScale(Vector3(19.180f * 4.0f, 1.920f * 4.0f, 1.0f));
-			floorTr->SetPosition(Vector3(0.0f, -4.0f, ObjectZ));
-		}
-		
-		// player
-		{
-			GameObject* playerObject = objects::InstantiatePlayer(this, L"SampleMaterial");
-			playerObject->SetName(L"player");
+			GameObject* stageObject = objects::InstantiateGameObject
+				<GameObject>(this, enums::eLayerType::Tile, L"1FStage1Material");
+			stageObject->GetTransform()->SetScale(math::Vector3(3.840f * 4.0f, 2.080f * 4.0f, 1.0f));
+			stageObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, ObjectZ));
 		}
 
-		// test enemy
+		// Close Door : 57, 65
 		{
-			GameObject* monsterObject = objects::InstantiateCreature<GameObject>(this, enums::eLayerType::Creature, L"SampleMaterial");
-			monsterObject->SetName(L"monster");
-			monsterObject->GetTransform()->SetPosition( Vector3(1.50f, 0.0f, ObjectZ) );
+			GameObject* doorObject = objects::InstantiateGameObject
+				<GameObject>(this, enums::eLayerType::ENV, L"Close1FMaterial");
+			doorObject->GetTransform()->SetScale(math::Vector3(0.570f * 4.0f, 0.650f * 4.0f, 1.0f));
+			doorObject->GetTransform()->SetPosition(math::Vector3(-3.0f, -1.0f + 0.080f, ObjectZ));
 		}
 	}
 }

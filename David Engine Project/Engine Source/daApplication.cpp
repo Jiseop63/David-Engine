@@ -53,7 +53,7 @@ namespace da
 	void Application::Render()
 	{
 		Time::Render();
-		Input::Render();
+		//Input::Render();
 
 		graphicDevice->ClearTarget();
 		graphicDevice->UpdateViewPort();

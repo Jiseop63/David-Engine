@@ -144,6 +144,15 @@
     <ClInclude Include="daSubCameraScript.h">
       <Filter>Objects\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="daScene_Dungeon1F_Stage1.h">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="daScene_Dungeon2F_Stage1.h">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="daScene_Dungeon2F_Stage2.h">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -220,6 +229,15 @@
     </ClCompile>
     <ClCompile Include="daSubCameraScript.cpp">
       <Filter>Objects\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="daScene_Dungeon1F_Stage1.cpp">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="daScene_Dungeon2F_Stage1.cpp">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="daScene_Dungeon2F_Stage2.cpp">
+      <Filter>Scenes\03 Dungeon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

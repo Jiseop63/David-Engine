@@ -3,17 +3,11 @@
 
 namespace da
 {
-	class Scene_Dungeon1F : public Scene
+	class Scene_Dungeon2F_Stage1 : public Scene
 	{
 	public:
-		enum class Stage
-		{
-			Stage1,
-			Stage2,
-			EntryBossRoom,
-		};
-		Scene_Dungeon1F();
-		virtual ~Scene_Dungeon1F();
+		Scene_Dungeon2F_Stage1();
+		virtual ~Scene_Dungeon2F_Stage1();
 		virtual void Initialize() override;
 		virtual void Update() override;
 		virtual void LateUpdate() override;
@@ -22,16 +16,11 @@ namespace da
 		virtual void OnEnter() override;
 		virtual void OnExit() override;
 
-	public:
-		void State1();
-		void Stage2();
-		void EntryBossRoom();
-
-
 	private:
 		void addBackgroundObjects();
 		void addUIObjects();
 		void addGameObjects();
+
 	private:
 	};
 }
