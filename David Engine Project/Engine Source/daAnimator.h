@@ -29,10 +29,7 @@ namespace da
 
 		Animator();
 		virtual ~Animator();
-		virtual void Initialize();
-		virtual void Update();
 		virtual void LateUpdate();
-		virtual void Render();
 
 		void Create(const std::wstring& name, std::shared_ptr<graphics::Texture> atlas
 			, math::Vector2 leftTop
@@ -41,13 +38,20 @@ namespace da
 			, math::Vector2 offset = math::Vector2::Zero
 			, float duration = 0.0f);
 		Animation* FindAnimation(const std::wstring& name);
+		Events* FindEvents(const std::wstring& name);
+
 		void PlayAnimation(const std::wstring& name, bool loop = true);
 		void Binds();
+
+		std::function<void()>& StartEvent(const std::wstring& name);
+		std::function<void()>& CompleteEvent(const std::wstring& name);
+		std::function<void()>& EndEvent(const std::wstring& name);
 
 	private:
 		std::map<std::wstring, Animation*>	mAnimations;
 		std::map<std::wstring, Events*>		mEvents;
 		Animation*							mActiveAnimation;
 		bool								mLoop;
+
 	};
 }

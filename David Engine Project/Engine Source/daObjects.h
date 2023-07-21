@@ -120,10 +120,10 @@ namespace da::objects
 		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
 		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 		meshRenderer->SetMaterial(Resources::Find<Material>(material));
-		obj->AddComponent<PlayerScript>();
 		obj->AddComponent<Rigidbody>();
 		obj->AddComponent<Collider2D>();
 		obj->AddComponent<Animator>();
+		obj->AddComponent<PlayerScript>();
 		obj->Initialize();
 		return obj;
 	}

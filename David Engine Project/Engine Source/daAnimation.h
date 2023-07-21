@@ -31,9 +31,7 @@ namespace da
 
 		virtual HRESULT Load(const std::wstring& path) { return S_FALSE; }
 
-		void Update();
 		void LateUpdate();
-		void Render();
 
 		void Create(const std::wstring& name, std::shared_ptr<graphics::Texture> atlas
 			, math::Vector2 leftTop

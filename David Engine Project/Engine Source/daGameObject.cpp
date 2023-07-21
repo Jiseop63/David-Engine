@@ -33,14 +33,14 @@ namespace da
 	}
 	void GameObject::Initialize()
 	{
-		for (Component* component : mComponents)
+		/*for (Component* component : mComponents)
 		{
 			component->Initialize();
 		}
 		for (Script* script : mScripts)
 		{
 			script->Initialize();
-		}
+		}*/
 	}
 	void GameObject::Update()
 	{

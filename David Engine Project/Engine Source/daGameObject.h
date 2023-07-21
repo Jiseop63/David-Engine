@@ -82,7 +82,7 @@ namespace da
 				mScripts.push_back(script);
 
 			origin->SetOwner(this);
-
+			origin->Initialize();
 			return origin;
 		}
 

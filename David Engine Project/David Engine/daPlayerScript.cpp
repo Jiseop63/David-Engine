@@ -3,7 +3,7 @@
 #include "daInput.h"
 #include "daTime.h"
 #include "daGameDataManager.h"
-
+#include "daResources.h"
 #include "daGameObject.h"
 
 namespace da
@@ -23,8 +23,13 @@ namespace da
 	void PlayerScript::Initialize()
 	{
         mRigidbody = GetOwner()->GetComponent<Rigidbody>();
+        mAnimator = GetOwner()->GetComponent<Animator>();
         mPlayerStat = &GameDataManager::GetPlayerStat();
         mDashCount = &GameDataManager::GetDashCount();
+        std::shared_ptr<Texture> texture = Resources::Load<Texture>(L"PlayerSprite", L"..\\Resources\\Texture\\Adventurer\\SpriteSheet.png");
+        mAnimator->Create(L"playerIdle", texture, Vector2(0.0f, 0.0f), Vector2(32.0f, 32.0f), 5, Vector2(0.0f, 0.0f), 0.1f);
+        mAnimator->PlayAnimation(L"playerIdle");
+        mAnimator->CompleteEvent(L"playerIdle") = std::bind(&PlayerScript::Complete, this);
 	}
     void PlayerScript::Update()
     {
@@ -102,6 +107,10 @@ namespace da
             mDashCount->CurCount++;
             mDashCountTime = 0.0f;
         }
+    }
+
+    void PlayerScript::Complete()
+    {
     }
 
     void PlayerScript::OnCollisionEnter(Collider2D* other)

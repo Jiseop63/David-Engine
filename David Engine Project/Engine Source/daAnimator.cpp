@@ -23,10 +23,7 @@ namespace da
 			iter.second = nullptr;
 		}
 	}
-	void Animator::Initialize()
-	{
-	}
-	void Animator::Update()
+	void Animator::LateUpdate()
 	{
 		if (nullptr == mActiveAnimation)
 			return;
@@ -34,16 +31,14 @@ namespace da
 		if (mActiveAnimation->IsComplete()
 			&& true == mLoop)
 		{
+			Events* events = FindEvents(mActiveAnimation->GetKey());
+			if (events)
+				events->CompleteEvent();
+
 			mActiveAnimation->Reset();
 		}
 
 		mActiveAnimation->LateUpdate();
-	}
-	void Animator::LateUpdate()
-	{
-	}
-	void Animator::Render()
-	{
 	}
 	void Animator::Create(const std::wstring& name
 		, std::shared_ptr<graphics::Texture> atlas, math::Vector2 leftTop
@@ -57,6 +52,13 @@ namespace da
 		animation->SetKey(name);
 		animation->Create(name, atlas, leftTop, size, columnLength, offset, duration);
 		mAnimations.insert( std::make_pair(name, animation) );
+
+		Events* events = FindEvents(name);
+		if (events)
+			return;
+
+		events = new Events();
+		mEvents.insert( std::make_pair(name, events) );
 	}
 	Animation* Animator::FindAnimation(const std::wstring& name)
 	{
@@ -68,11 +70,39 @@ namespace da
 
 		return iter->second;
 	}
+	Animator::Events* Animator::FindEvents(const std::wstring& name)
+	{
+		std::map<std::wstring, Events*>::iterator iter
+			= mEvents.find(name);
+
+		if (iter == mEvents.end())
+			return nullptr;
+
+		return iter->second;
+	}
 	void Animator::PlayAnimation(const std::wstring& name, bool loop)
 	{
+		Animation* prevAnimation = mActiveAnimation;
+		Events* events;
+		if (prevAnimation)
+		{
+			events = FindEvents(prevAnimation->GetKey());
+			if (events)
+				events->EndEvent();
+		}
+
+		
+
 		Animation* animation = FindAnimation(name);
-		if (nullptr != animation)
+		if (animation)
+		{
 			mActiveAnimation = animation;
+
+			events = FindEvents(mActiveAnimation->GetKey());
+			if (events)
+				events->StartEvent();
+		}
+
 		mLoop = loop;
 		mActiveAnimation->Reset();
 	}
@@ -81,5 +111,20 @@ namespace da
 		if (mActiveAnimation == nullptr)
 			return;
 		mActiveAnimation->Binds();
+	}
+	std::function<void()>& Animator::StartEvent(const std::wstring& name)
+	{
+		Events* events = FindEvents(name);
+		return events->StartEvent.mEvent;
+	}
+	std::function<void()>& Animator::CompleteEvent(const std::wstring& name)
+	{
+		Events* events = FindEvents(name);
+		return events->CompleteEvent.mEvent;
+	}
+	std::function<void()>& Animator::EndEvent(const std::wstring& name)
+	{
+		Events* events = FindEvents(name);
+		return events->EndEvent.mEvent;
 	}
 }

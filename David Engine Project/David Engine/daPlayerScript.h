@@ -1,6 +1,8 @@
 #pragma once
 #include "daScript.h"
 #include "daRigidbody.h"
+#include "daAnimator.h"
+
 namespace da
 {
 	class PlayerScript : public Script
@@ -23,6 +25,8 @@ namespace da
 
 		void regenDashCount();
 
+		void Complete();
+
 	public:
 		virtual void OnCollisionEnter(Collider2D* other) override;
 		virtual void OnCollisionStay(Collider2D* other) override;
@@ -31,7 +35,7 @@ namespace da
 
 	protected:
 		Rigidbody* mRigidbody;
-		
+		Animator* mAnimator;
 	private:
 		structs::sCreatureStat* mPlayerStat;
 		structs::sDashCount* mDashCount;

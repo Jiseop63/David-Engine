@@ -18,10 +18,6 @@ namespace da
 	Animation::~Animation()
 	{
 	}
-	void Animation::Update()
-	{
-		
-	}
 	void Animation::LateUpdate()
 	{
 		if (mComplete)
@@ -39,9 +35,6 @@ namespace da
 				mComplete = true;
 			}
 		}
-	}
-	void Animation::Render()
-	{
 	}
 	void Animation::Create(const std::wstring& name
 		, std::shared_ptr<graphics::Texture> atlas
