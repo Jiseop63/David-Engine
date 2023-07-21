@@ -14,6 +14,7 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="$(MSBuildThisFileDirectory)AnimationShader.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)LifeBarShader.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)DashCountShader.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)DebugShader.hlsl" />

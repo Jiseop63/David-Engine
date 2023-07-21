@@ -557,7 +557,7 @@ namespace da
 		
 		// player
 		{
-			GameObject* playerObject = objects::InstantiatePlayer(this, L"SampleMaterial");
+			GameObject* playerObject = objects::InstantiatePlayer(this, L"AnimationMaterial");
 			playerObject->SetName(L"player");
 
 			std::shared_ptr<Texture> texture =  Resources::Load<Texture>(L"PlayerSprite", L"..\\Resources\\Texture\\Adventurer\\SpriteSheet.png");

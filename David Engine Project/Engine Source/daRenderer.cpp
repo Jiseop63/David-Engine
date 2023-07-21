@@ -189,10 +189,18 @@ namespace renderer
 			tilingLayerShader->Create(eShaderStage::PS, L"TilingLayerShader.hlsl", "mainPS");
 			Resources::Insert(L"TilingLayerShader", tilingLayerShader);
 		}
+
+		std::shared_ptr<Shader> animationShader = std::make_shared<Shader>();
+		{
+			animationShader->Create(eShaderStage::VS, L"AnimationShader.hlsl", "mainVS");
+			animationShader->Create(eShaderStage::PS, L"AnimationShader.hlsl", "mainPS");
+			Resources::Insert(L"AnimationShader", animationShader);
+		}
+
 #pragma endregion
 
 #pragma region Sample Material
-		// Basic Cursor
+		// smileTexture
 		{
 			std::shared_ptr<Texture> texture
 				= Resources::Load<Texture>(L"SampleTexture", L"..\\Resources\\Texture\\Sample\\smileTexture.png");
@@ -200,6 +208,12 @@ namespace renderer
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
 			Resources::Insert<Material>(L"SampleMaterial", spriteMaterial);
+		}
+		// 
+		{
+			std::shared_ptr<Material> animationMaterial = std::make_shared<Material>();
+			animationMaterial->SetShader(animationShader);
+			Resources::Insert<Material>(L"AnimationMaterial", animationMaterial);
 		}
 #pragma endregion
 #pragma region Debug Material
@@ -663,6 +677,11 @@ namespace renderer
 			, shader->GetInputLayoutAddressOf());
 
 		shader = Resources::Find<Shader>(L"TilingLayerShader");
+		GetDevice()->CreateInputLayout(arrLayout, numElement
+			, shader->GetVSCode()
+			, shader->GetInputLayoutAddressOf());
+
+		shader = Resources::Find<Shader>(L"AnimationShader");
 		GetDevice()->CreateInputLayout(arrLayout, numElement
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());

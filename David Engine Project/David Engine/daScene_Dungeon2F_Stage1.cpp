@@ -505,7 +505,7 @@ namespace da
 			stageObject->GetTransform()->SetScale(math::Vector3(3.360f * 4.0f, 2.080f * 4.0f, 1.0f));
 			stageObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, ObjectZ));
 		}
-
+		
 		// Close Door : 57, 65
 		{
 			GameObject* doorObject = objects::InstantiateGameObject

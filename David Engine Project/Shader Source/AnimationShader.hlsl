@@ -30,7 +30,16 @@ VSOut mainVS(VSIn In)
 
 float4 mainPS(VSOut Out) : SV_Target
 {
-    float4 color = (float) 0.0f;    
-    color = BindingTexture.Sample(pointSampler, Out.UV);
+    float4 color = (float) 0.0f;
+    
+    float2 diff = (cAtlasSize - cSpriteSize) / 2.0f;
+    float2 UV = (cSpriteLeftTop - diff - cSpriteOffset)
+                + (cAtlasSize * Out.UV);
+    
+    if (UV.x < cSpriteLeftTop.x || UV.x > cSpriteLeftTop.x + cSpriteSize.x
+        || UV.y < cSpriteLeftTop.y || UV.y > cSpriteLeftTop.y + cSpriteSize.y)
+        discard;
+        
+    color = AtlasTexture.Sample(pointSampler, UV);
     return color;
 }

@@ -25,6 +25,9 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)TilingLayerShader.hlsl">
       <Filter>3 Custom Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)AnimationShader.hlsl">
+      <Filter>2 Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Globals.hlsli">
