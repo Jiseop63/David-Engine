@@ -120,6 +120,10 @@ namespace renderer
 		constantBuffer[(UINT)eCBType::Count] = new ConstantBuffer(eCBType::Count);
 		constantBuffer[(UINT)eCBType::Count]->Create(sizeof(CountCB));
 
+		// Animator
+		constantBuffer[(UINT)eCBType::Animation] = new ConstantBuffer(eCBType::Animation);
+		constantBuffer[(UINT)eCBType::Animation]->Create(sizeof(AnimationCB));
+
 		// fade
 		
 		// afterimage

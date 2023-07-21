@@ -123,6 +123,7 @@ namespace da::objects
 		obj->AddComponent<PlayerScript>();
 		obj->AddComponent<Rigidbody>();
 		obj->AddComponent<Collider2D>();
+		obj->AddComponent<Animator>();
 		obj->Initialize();
 		return obj;
 	}

@@ -17,11 +17,12 @@ namespace da
 	void TimeConstants::BindConstantBuffer()
 	{
 		mElapsedTime += (float)Time::DeltaTime();
-		renderer::TimeCB timeCB = {};
-		timeCB.ElapsedTime = mElapsedTime;
-		timeCB.Value = mValue;
-		graphics::ConstantBuffer* cb = renderer::constantBuffer[(UINT)graphics::eCBType::Time];
-		cb->SetData(&timeCB);
-		cb->Bind(graphics::eShaderStage::VS);
+		renderer::TimeCB cbData = {};
+		cbData.ElapsedTime = mElapsedTime;
+		cbData.Value = mValue;
+
+		graphics::ConstantBuffer* timeCB = renderer::constantBuffer[(UINT)graphics::eCBType::Time];
+		timeCB->SetData(&cbData);
+		timeCB->Bind(graphics::eShaderStage::VS);
 	}
 }

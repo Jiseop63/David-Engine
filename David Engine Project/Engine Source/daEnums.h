@@ -8,6 +8,7 @@ namespace da::enums
 		Texture,
 		Shader,
 		Material,
+		Animation,
 		End,
 	};
 
@@ -39,6 +40,7 @@ namespace da::enums
 		Mesh,
 		Collider,
 		Renderer,
+		Animator,
 		Particle,
 		Script,
 		Camera,

@@ -28,3 +28,11 @@ cbuffer cCount : register(b5)
     float cMaxCount;
     float cCurCount;
 }
+
+cbuffer Animation : register(b6)
+{
+    float2 cSpriteLeftTop;
+    float2 cSpriteSize;
+    float2 cSpriteOffset;
+    float2 cAtlasSize;
+}

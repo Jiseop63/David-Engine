@@ -42,6 +42,13 @@ namespace renderer
 		float MaxCount;
 		float CurCount;
 	};
+	CBUFFER(AnimationCB, CBSLOT_ANIMATION)
+	{
+		da::math::Vector2 SpriteLeftTop;
+		da::math::Vector2 SpriteSize;
+		da::math::Vector2 SpriteOffset;
+		da::math::Vector2 AtlasSize;
+	};
 
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[(UINT)da::graphics::eSamplerType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerStates[(UINT)da::graphics::eRSType::End];

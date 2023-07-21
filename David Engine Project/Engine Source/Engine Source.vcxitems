@@ -16,6 +16,8 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\David Engine\daObjectsFastIncludeHeader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daAnimation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daAnimator.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daApplication.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daCollider2D.h" />
@@ -50,6 +52,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daAnimation.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daAnimator.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daApplication.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daCollider2D.cpp" />

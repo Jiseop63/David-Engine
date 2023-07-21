@@ -17,6 +17,8 @@
 #define CBSLOT_GRID				3;
 #define CBSLOT_LIFE				4;
 #define CBSLOT_COUNT			5;
+#define CBSLOT_ANIMATION			6;
+
 namespace da::graphics
 {
 
@@ -39,6 +41,7 @@ namespace da::graphics
 		Camera,
 		Life,
 		Count,
+		Animation,
 		End,
 	};
 

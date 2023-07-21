@@ -12,6 +12,7 @@
 #include "daMeshRenderer.h"
 #include "daTransform.h"
 #include "daCollider2D.h"
+#include "daAnimator.h"
 
 // Camera
 #include "daCameraObject.h"

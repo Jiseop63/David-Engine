@@ -4,8 +4,6 @@
 // юс╫ц
 #include "daInput.h"
 #include "daApplication.h"
-
-// resource
 #include "daResources.h"
 #include "daTexture.h"
 
@@ -561,6 +559,11 @@ namespace da
 		{
 			GameObject* playerObject = objects::InstantiatePlayer(this, L"SampleMaterial");
 			playerObject->SetName(L"player");
+
+			std::shared_ptr<Texture> texture =  Resources::Load<Texture>(L"PlayerSprite", L"..\\Resources\\Texture\\Adventurer\\SpriteSheet.png");
+			Animator* animator = playerObject->GetComponent<Animator>();
+			animator->Create(L"playerIdle", texture, Vector2(0.0f, 0.0f), Vector2(32.0f, 32.0f), 5, Vector2(0.0f, 0.0f), 0.1f);
+			animator->PlayAnimation(L"playerIdle");
 		}
 
 		// test enemy
