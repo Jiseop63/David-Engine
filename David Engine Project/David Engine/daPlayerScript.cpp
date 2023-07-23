@@ -95,8 +95,6 @@ namespace da
         if (Input::GetKeyDown(eKeyCode::RBTN))
         {
             Dash();
-            GetOwner()->Render();
-
         }
     }
 
@@ -104,6 +102,8 @@ namespace da
     {
         Vector3 mouseWorldPosition = Input::GetMouseWorldPosition();
         Vector2 mousePosition(mouseWorldPosition.x, mouseWorldPosition.y);
+        Vector2 mouseDir = mousePosition;
+        mouseDir.Normalize();
         Vector3 playerPosition = mTransform->GetPosition();
 
         Vector2 playerDir(mousePosition.x - playerPosition.x, mousePosition.y - playerPosition.y);
@@ -115,7 +115,11 @@ namespace da
             mAnimator->SetReverse(true);
 
         Vector3 weaponPosition(playerPosition.x, playerPosition.y, 0.0f);
+        float angle = atan2(mouseDir.y, mouseDir.x) - atan2(mTransform->Up().y, mTransform->Up().x);
+        
         mWeaponTransform->SetPosition(weaponPosition);
+        mWeaponTransform->SetRotation(Vector3(0.0f,0.0f, angle - 3.925f));
+
     }
 
     void PlayerScript::MoveFunc(Vector2 dir)
@@ -164,9 +168,10 @@ namespace da
         mWeaponRenderer = mWeaponObject->GetComponent<MeshRenderer>();
         
         std::shared_ptr<Material> weaponMaterial = mWeaponRenderer->GetMaterial();
-        weaponMaterial->SetTexture(Resources::Find<Texture>(L"LongSwordTexture"));
+        weaponMaterial->SetTexture(Resources::Find<Texture>(L"GreatSwordTexture"));
         // 9 22
-        mWeaponTransform->SetScale(Vector3(0.180f, 0.440f, 1.0f));
+        //mWeaponTransform->SetScale(Vector3(0.180f, 0.440f, 1.0f));
+        mWeaponTransform->SetScale(Vector3(2.0f, 2.0f, 1.0f));
     }
     void PlayerScript::regenDashCount()
     {

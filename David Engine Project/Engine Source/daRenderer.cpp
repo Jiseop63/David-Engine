@@ -421,6 +421,8 @@ namespace renderer
 		// weapon
 		{
 			Resources::Load<Texture>(L"LongSwordTexture", L"..\\Resources\\Texture\\Items\\LongSword.png");
+			Resources::Load<Texture>(L"GreatSwordTexture", L"..\\Resources\\Texture\\Items\\GreatSword0.png");
+			
 		}
 #pragma endregion
 #pragma region Title :: Load Texture & Create Material
