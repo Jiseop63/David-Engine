@@ -26,6 +26,8 @@ namespace da
         , mInventory(nullptr)
         , mMoveCondition(0)
         , mReverse(false)
+        , mAngle(0.0f)
+        , mAttacked(false)
 	{
 	}
 	PlayerScript::~PlayerScript()
@@ -96,6 +98,13 @@ namespace da
         {
             Dash();
         }
+        if (Input::GetKeyDown(eKeyCode::LBTN))
+        {
+            if (mAttacked)
+                mAttacked = false;
+            else
+                mAttacked = true;
+        }
     }
 
     void PlayerScript::GetMouse()
@@ -115,11 +124,8 @@ namespace da
             mAnimator->SetReverse(true);
 
         Vector3 weaponPosition(playerPosition.x, playerPosition.y, 0.0f);
-        float angle = atan2(mouseDir.y, mouseDir.x) - atan2(mTransform->Up().y, mTransform->Up().x);
-        
+        mAngle = atan2(mouseDir.y, mouseDir.x) - atan2(mTransform->Up().y, mTransform->Up().x);        
         mWeaponTransform->SetPosition(weaponPosition);
-        mWeaponTransform->SetRotation(Vector3(0.0f,0.0f, angle - 3.925f));
-
     }
 
     void PlayerScript::MoveFunc(Vector2 dir)
@@ -143,6 +149,11 @@ namespace da
     }
     void PlayerScript::WeaponMove()
     {
+        float rotateZ = mAngle - 3.925f;
+        if (mAttacked)
+            rotateZ += 2.335f;
+
+        mWeaponTransform->SetRotation(Vector3(0.0f, 0.0f, rotateZ));
     }
     void PlayerScript::GetDamage()
     {

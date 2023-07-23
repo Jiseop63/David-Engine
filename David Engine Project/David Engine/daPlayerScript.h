@@ -6,13 +6,13 @@
 namespace da
 {
 	// 라디안 방향
-#define RW		1.57f
+#define RW		1.570f
 #define RNW		0.785f
 #define RN		0
 #define RNE		-0.785f
-#define RE		-1.57f
+#define RE		-1.570f
 #define RSE		-2.335f
-#define RS		-3.14f
+#define RS		-3.140f
 #define RSW		-3.925f
 
 	class PlayerScript : public Script
@@ -74,5 +74,7 @@ namespace da
 	private:
 		int		mMoveCondition;
 		bool	mReverse;
+		float   mAngle;
+		bool	mAttacked;
 	};
 }
