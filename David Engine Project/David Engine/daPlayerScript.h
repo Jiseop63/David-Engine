@@ -13,8 +13,10 @@ namespace da
 
 		virtual void Initialize();
 		virtual void Update();
+		virtual void LateUpdate();
 
 		void GetInput();
+		void PlayAnimation();
 		void MoveFunc(math::Vector2 dir);
 		void Dash();
 		void Jump();
@@ -36,11 +38,15 @@ namespace da
 	protected:
 		Rigidbody* mRigidbody;
 		Animator* mAnimator;
+
 	private:
 		structs::sCreatureStat* mPlayerStat;
 		structs::sDashCount* mDashCount;
 		float mMoveSpeed;
 		float mDashCountTime;
 		float mRegenCountTime;
+
+	private:
+		int mMoveCondition;
 	};
 }

@@ -28,31 +28,56 @@ namespace da
         mDashCount = &GameDataManager::GetDashCount();
         std::shared_ptr<Texture> texture = Resources::Load<Texture>(L"PlayerSprite", L"..\\Resources\\Texture\\Adventurer\\SpriteSheet.png");
         mAnimator->Create(L"playerIdle", texture, Vector2(0.0f, 0.0f), Vector2(32.0f, 32.0f), 5, Vector2(0.0f, 0.0f), 0.1f);
+        mAnimator->Create(L"playerMove", texture, Vector2(0.0f, 64.0f), Vector2(32.0f, 32.0f), 8, Vector2(0.0f, 0.0f), 0.1f);
+        mAnimator->Create(L"playerJump", texture, Vector2(0.0f, 128.0f), Vector2(32.0f, 32.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
         mAnimator->PlayAnimation(L"playerIdle");
-        mAnimator->CompleteEvent(L"playerIdle") = std::bind(&PlayerScript::Complete, this);
 	}
     void PlayerScript::Update()
     {
         GetInput();
+        PlayAnimation();
         regenDashCount();
+
+       /* if (Vector2::Zero == mRigidbody->GetVelocity())
+            mAnimator->PlayAnimation(L"playerIdle");*/
+    }
+    void PlayerScript::LateUpdate()
+    {
     }
     void PlayerScript::GetInput()
     {
-        if (Input::GetKey(eKeyCode::D))
+        // move
         {
-            MoveFunc(Vector2::UnitX);
+            if (Input::GetKeyDown(eKeyCode::D)
+                || Input::GetKeyDown(eKeyCode::A))
+            {
+                mAnimator->PlayAnimation(L"playerMove");
+                mMoveCondition++;
+            }
+                
+            if (Input::GetKeyUp(eKeyCode::D)
+                || Input::GetKeyUp(eKeyCode::A))
+                mMoveCondition--;
+
+            if (Input::GetKey(eKeyCode::D))
+            {
+                MoveFunc(Vector2::UnitX);
+            }
+            if (Input::GetKey(eKeyCode::A))
+            {
+                MoveFunc(-Vector2::UnitX);
+            }
         }
-        if (Input::GetKey(eKeyCode::A))
+        // hp debug
         {
-            MoveFunc(-Vector2::UnitX);
-        }
-        if (Input::GetKeyDown(eKeyCode::R))
-        {
-            GetHeal();
-        }
-        if (Input::GetKeyDown(eKeyCode::T))
-        {
-            GetDamage();
+            if (Input::GetKeyDown(eKeyCode::R))
+            {
+                GetHeal();
+            }
+            if (Input::GetKeyDown(eKeyCode::T))
+            {
+                GetDamage();
+            }
         }
         if (Input::GetKeyDown(eKeyCode::RBTN))
         {
@@ -60,8 +85,14 @@ namespace da
         }
     }
 
+    void PlayerScript::PlayAnimation()
+    {
+        if (0 == mMoveCondition)
+            mAnimator->PlayAnimation(L"playerIdle");
+    }
+
     void PlayerScript::MoveFunc(Vector2 dir)
-    {        
+    {
         mRigidbody->ApplyForce(dir * mPlayerStat->MoveSpeed);
     }
 
