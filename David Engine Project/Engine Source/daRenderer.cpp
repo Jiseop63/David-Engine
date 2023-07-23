@@ -213,11 +213,17 @@ namespace renderer
 			spriteMaterial->SetShader(spriteShader);
 			Resources::Insert<Material>(L"SampleMaterial", spriteMaterial);
 		}
-		// 
+		// animation Material
 		{
 			std::shared_ptr<Material> animationMaterial = std::make_shared<Material>();
 			animationMaterial->SetShader(animationShader);
 			Resources::Insert<Material>(L"AnimationMaterial", animationMaterial);
+		}
+		// weapon material
+		{
+			std::shared_ptr<Material> weaponMaterial = std::make_shared<Material>();
+			weaponMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"WeaponMaterial", weaponMaterial);
 		}
 #pragma endregion
 #pragma region Debug Material
@@ -411,7 +417,12 @@ namespace renderer
 			Resources::Load<Texture>(L"ItemSlotSelectTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\ItemSlotSelect.png");
 		}
 #pragma endregion
-
+#pragma region Item Texture
+		// weapon
+		{
+			Resources::Load<Texture>(L"LongSwordTexture", L"..\\Resources\\Texture\\Items\\LongSword.png");
+		}
+#pragma endregion
 #pragma region Title :: Load Texture & Create Material
 
 		// TitleBtn : NoneTexture Material | Sprite Shader

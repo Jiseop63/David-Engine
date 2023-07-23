@@ -1,4 +1,6 @@
 #include "daAnimator.h"
+#include "daConstantBuffer.h"
+#include "daRenderer.h"
 
 namespace da
 {
@@ -8,6 +10,7 @@ namespace da
 		, mEvents{}
 		, mActiveAnimation(nullptr)
 		, mLoop(false)
+		, mReverse(false)
 	{
 	}
 	Animator::~Animator()
@@ -89,9 +92,7 @@ namespace da
 			events = FindEvents(prevAnimation->GetKey());
 			if (events)
 				events->EndEvent();
-		}
-
-		
+		}		
 
 		Animation* animation = FindAnimation(name);
 		if (animation)
@@ -111,6 +112,13 @@ namespace da
 		if (mActiveAnimation == nullptr)
 			return;
 		mActiveAnimation->Binds();
+
+		renderer::ReverseCB cbData = {};
+		cbData.Reverse = mReverse;
+
+		graphics::ConstantBuffer* reverseCB = renderer::constantBuffer[(UINT)graphics::eCBType::Reverse];
+		reverseCB->SetData(&cbData);
+		reverseCB->Bind(graphics::eShaderStage::VS);
 	}
 	std::function<void()>& Animator::StartEvent(const std::wstring& name)
 	{

@@ -56,4 +56,25 @@ namespace da::enums
 		End,
 	};
 	
+#pragma region Contents
+	enum class eWeaponType
+	{
+		None,
+		LongSword,
+	};
+	enum class eShieldType
+	{
+		None,
+		MagicShield,
+	};
+	enum class eAccessoryType
+	{
+		None,
+		SilverRing,
+	};
+	enum class eItemType
+	{
+		None,
+	};
+#pragma endregion
 }

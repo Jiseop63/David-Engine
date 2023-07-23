@@ -44,7 +44,7 @@ namespace da
 		SetKey(name);
 		mAtlas = atlas;
 
-		float scale = 50.0f;
+		float scale = 35.0f;
 
 		float width = (float)atlas->GetWidth();
 		float height = (float)atlas->GetHeight();

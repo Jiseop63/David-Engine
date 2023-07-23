@@ -12,9 +12,12 @@ namespace da
 	public:
 		static structs::sCreatureStat& GetPlayerStat() { return mPlayerStat; }
 		static structs::sDashCount& GetDashCount() { return mDashCount; }
+		static structs::sInventory& GetInventory() { return mInventory; }
+
 	private:
 		static structs::sCreatureStat mPlayerStat;
 		static structs::sDashCount mDashCount;
+		static structs::sInventory mInventory;
 	};
 }
 

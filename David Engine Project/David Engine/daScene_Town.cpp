@@ -559,6 +559,16 @@ namespace da
 		{
 			GameObject* playerObject = objects::InstantiatePlayer(this, L"AnimationMaterial");
 			playerObject->SetName(L"player");
+			PlayerScript* playerScript = playerObject->GetComponent<PlayerScript>();
+			
+			
+			GameObject* weaponObject 
+				= objects::InstantiateGameObject<GameObject>
+				(this, enums::eLayerType::Playable, L"WeaponMaterial");
+			playerScript->SetWeaponObject(weaponObject);
+			//MeshRenderer* mr = weaponObject->GetComponent<MeshRenderer>();
+			//std::shared_ptr<Material> weaponMaterial = mr->GetMaterial();
+			//weaponMaterial->SetTexture(Resources::Find<Texture>(L"LongSwordTexture"));
 		}
 
 		// test enemy

@@ -5,6 +5,7 @@ namespace da
 	using namespace math;
 	structs::sCreatureStat GameDataManager::mPlayerStat = {};
 	structs::sDashCount GameDataManager::mDashCount = {};
+	structs::sInventory GameDataManager::mInventory = {};
 
 	void GameDataManager::Initialize()
 	{
@@ -18,6 +19,8 @@ namespace da
 		mPlayerStat.MoveSpeed = 6.0f;
 		mDashCount.MaxCount = 2.0f;
 		mDashCount.CurCount = mDashCount.MaxCount;
+
+		mInventory.Armour1.Weapon = enums::eWeaponType::LongSword;
 	}
 
 }

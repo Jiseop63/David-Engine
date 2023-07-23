@@ -49,9 +49,6 @@
     <Filter Include="Objects\UI\Cursor">
       <UniqueIdentifier>{11c52a41-4699-4397-bff7-ea4dd622bf72}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\UI\Inventory">
-      <UniqueIdentifier>{ea11053a-df54-4bba-a85f-6a2a4a5fcc46}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\UI\미정">
       <UniqueIdentifier>{2e8b3b4a-11dc-4060-9060-f12741d5ed99}</UniqueIdentifier>
     </Filter>
@@ -69,6 +66,9 @@
     </Filter>
     <Filter Include="Objects\UI\Layer">
       <UniqueIdentifier>{267b491d-17d6-4e15-9f5d-fd11280f69ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Inventory">
+      <UniqueIdentifier>{ea11053a-df54-4bba-a85f-6a2a4a5fcc46}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -112,7 +112,7 @@
       <Filter>Objects\UI\Cursor</Filter>
     </ClInclude>
     <ClInclude Include="daInventoryScript.h">
-      <Filter>Objects\UI\Inventory</Filter>
+      <Filter>Objects\Inventory</Filter>
     </ClInclude>
     <ClInclude Include="daOverlayObject.h">
       <Filter>Objects\UI\미정</Filter>
@@ -127,7 +127,7 @@
       <Filter>Objects\UI\Grid</Filter>
     </ClInclude>
     <ClInclude Include="daItemScript.h">
-      <Filter>Objects\UI\Inventory</Filter>
+      <Filter>Objects\Inventory</Filter>
     </ClInclude>
     <ClInclude Include="daHUDScript.h">
       <Filter>Objects\UI\미정</Filter>
@@ -195,7 +195,7 @@
       <Filter>Objects\UI\Cursor</Filter>
     </ClCompile>
     <ClCompile Include="daInventoryScript.cpp">
-      <Filter>Objects\UI\Inventory</Filter>
+      <Filter>Objects\Inventory</Filter>
     </ClCompile>
     <ClCompile Include="daOverlayObject.cpp">
       <Filter>Objects\UI\미정</Filter>
@@ -210,7 +210,7 @@
       <Filter>Objects\UI\Grid</Filter>
     </ClCompile>
     <ClCompile Include="daItemScript.cpp">
-      <Filter>Objects\UI\Inventory</Filter>
+      <Filter>Objects\Inventory</Filter>
     </ClCompile>
     <ClCompile Include="daLifeBarScript.cpp">
       <Filter>Objects\UI\HUD</Filter>

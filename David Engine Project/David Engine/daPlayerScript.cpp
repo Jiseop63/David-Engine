@@ -13,12 +13,19 @@
 namespace da
 {
     PlayerScript::PlayerScript()
-        : mRigidbody(nullptr)
+        : mTransform(nullptr)
+        , mRigidbody(nullptr)
+        , mAnimator(nullptr)
+        , mWeaponTransform(nullptr)
+        , mWeaponRenderer(nullptr)
         , mMoveSpeed(6.0f)
         , mRegenCountTime(1.750f)
         , mDashCountTime(0.0f)
         , mPlayerStat(nullptr)
         , mDashCount(nullptr)
+        , mInventory(nullptr)
+        , mMoveCondition(0)
+        , mReverse(false)
 	{
 	}
 	PlayerScript::~PlayerScript()
@@ -26,36 +33,21 @@ namespace da
 	}
 	void PlayerScript::Initialize()
 	{
+        mTransform = GetOwner()->GetComponent<Transform>();
         mRigidbody = GetOwner()->GetComponent<Rigidbody>();
         mAnimator = GetOwner()->GetComponent<Animator>();
+        InitAnimation();
+
         mPlayerStat = &GameDataManager::GetPlayerStat();
         mDashCount = &GameDataManager::GetDashCount();
-        std::shared_ptr<Texture> texture = Resources::Load<Texture>(L"PlayerSprite", L"..\\Resources\\Texture\\Adventurer\\SpriteSheet.png");
-        mAnimator->Create(L"playerIdle", texture, Vector2(0.0f, 0.0f), Vector2(32.0f, 32.0f), 5, Vector2(0.0f, 0.0f), 0.1f);
-        mAnimator->Create(L"playerMove", texture, Vector2(0.0f, 64.0f), Vector2(32.0f, 32.0f), 8, Vector2(0.0f, 0.0f), 0.1f);
-        mAnimator->Create(L"playerJump", texture, Vector2(0.0f, 128.0f), Vector2(32.0f, 32.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
-        mAnimator->PlayAnimation(L"playerIdle");
+        mInventory = &GameDataManager::GetInventory();
 	}
     void PlayerScript::Update()
     {
         GetInput();
-        PlayAnimation();
+        GetMouse();
+        WeaponMove();
         regenDashCount();
-
-       /* if (Vector2::Zero == mRigidbody->GetVelocity())
-            mAnimator->PlayAnimation(L"playerIdle");*/
-    }
-    void PlayerScript::LateUpdate()
-    {
-        if (mReverse)
-        {
-            renderer::ReverseCB cbData = {};
-            cbData.Reverse = mReverse;            
-
-            graphics::ConstantBuffer* reverseCB = renderer::constantBuffer[(UINT)graphics::eCBType::Reverse];
-            reverseCB->SetData(&cbData);
-            reverseCB->Bind(graphics::eShaderStage::VS);
-        }
     }
     void PlayerScript::GetInput()
     {
@@ -70,16 +62,18 @@ namespace da
                 
             if (Input::GetKeyUp(eKeyCode::D)
                 || Input::GetKeyUp(eKeyCode::A))
+            {
                 mMoveCondition--;
+                if (0 == mMoveCondition)
+                    mAnimator->PlayAnimation(L"playerIdle");
+            }
 
             if (Input::GetKey(eKeyCode::D))
             {
-                mReverse = false;
                 MoveFunc(Vector2::UnitX);
             }
             if (Input::GetKey(eKeyCode::A))
             {
-                mReverse = true;
                 MoveFunc(-Vector2::UnitX);
             }
         }
@@ -88,22 +82,40 @@ namespace da
             if (Input::GetKeyDown(eKeyCode::R))
             {
                 GetHeal();
+                if (0 < mPlayerStat->CurHP)
+                    mAnimator->PlayAnimation(L"playerIdle");
             }
             if (Input::GetKeyDown(eKeyCode::T))
             {
                 GetDamage();
+                if (0 >= mPlayerStat->CurHP)
+                    mAnimator->PlayAnimation(L"playerDead");
             }
         }
         if (Input::GetKeyDown(eKeyCode::RBTN))
         {
             Dash();
+            GetOwner()->Render();
+
         }
     }
 
-    void PlayerScript::PlayAnimation()
+    void PlayerScript::GetMouse()
     {
-        if (0 == mMoveCondition)
-            mAnimator->PlayAnimation(L"playerIdle");
+        Vector3 mouseWorldPosition = Input::GetMouseWorldPosition();
+        Vector2 mousePosition(mouseWorldPosition.x, mouseWorldPosition.y);
+        Vector3 playerPosition = mTransform->GetPosition();
+
+        Vector2 playerDir(mousePosition.x - playerPosition.x, mousePosition.y - playerPosition.y);
+        
+        playerDir.Normalize();
+        if (0 <= playerDir.x)
+            mAnimator->SetReverse(false);
+        else
+            mAnimator->SetReverse(true);
+
+        Vector3 weaponPosition(playerPosition.x, playerPosition.y, 0.0f);
+        mWeaponTransform->SetPosition(weaponPosition);
     }
 
     void PlayerScript::MoveFunc(Vector2 dir)
@@ -119,9 +131,13 @@ namespace da
         mDashCount->CurCount--;
 
         // to do
+        Vector3 mousePosition = Input::GetMouseWorldPosition();
 
     }
     void PlayerScript::Jump()
+    {
+    }
+    void PlayerScript::WeaponMove()
     {
     }
     void PlayerScript::GetDamage()
@@ -141,6 +157,17 @@ namespace da
         if (mPlayerStat->MaxHP <= mPlayerStat->CurHP)
             mPlayerStat->CurHP = mPlayerStat->MaxHP;
     }
+    void PlayerScript::SetWeaponObject(GameObject* object)
+    {
+        mWeaponObject = object;
+        mWeaponTransform = mWeaponObject->GetComponent<Transform>();
+        mWeaponRenderer = mWeaponObject->GetComponent<MeshRenderer>();
+        
+        std::shared_ptr<Material> weaponMaterial = mWeaponRenderer->GetMaterial();
+        weaponMaterial->SetTexture(Resources::Find<Texture>(L"LongSwordTexture"));
+        // 9 22
+        mWeaponTransform->SetScale(Vector3(0.180f, 0.440f, 1.0f));
+    }
     void PlayerScript::regenDashCount()
     {
         if (mDashCount->MaxCount == mDashCount->CurCount)
@@ -155,17 +182,14 @@ namespace da
         }
     }
 
-    void PlayerScript::Complete()
+    void PlayerScript::InitAnimation()
     {
+        std::shared_ptr<Texture> texture = Resources::Load<Texture>(L"PlayerSprite", L"..\\Resources\\Texture\\Adventurer\\SpriteSheet.png");
+        mAnimator->Create(L"playerIdle", texture, Vector2(0.0f, 0.0f), Vector2(32.0f, 32.0f), 5, Vector2(0.0f, 0.0f), 0.1f);
+        mAnimator->Create(L"playerMove", texture, Vector2(0.0f, 32.0f), Vector2(32.0f, 32.0f), 8, Vector2(0.0f, 0.0f), 0.1f);
+        mAnimator->Create(L"playerJump", texture, Vector2(0.0f, 64.0f), Vector2(32.0f, 32.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
+        mAnimator->Create(L"playerDead", texture, Vector2(0.0f, 96.0f), Vector2(32.0f, 32.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
+        mAnimator->PlayAnimation(L"playerIdle");
     }
 
-    void PlayerScript::OnCollisionEnter(Collider2D* other)
-    {
-    }
-    void PlayerScript::OnCollisionStay(Collider2D* other)
-    {
-    }
-    void PlayerScript::OnCollisionExit(Collider2D* other)
-    {
-    }
 }
