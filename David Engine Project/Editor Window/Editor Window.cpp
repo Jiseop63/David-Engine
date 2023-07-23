@@ -145,7 +145,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
     da::InitializeScenes();                                     // 씬, 오브젝트 객체 생성
     gui::Editor::Initialize();                                  // Editor, Debug 객체 생성
     gameDataManager.Initialize();                               // 플레이어 데이터 생성
-
+    ShowCursor(FALSE);
     return TRUE;
 }
 

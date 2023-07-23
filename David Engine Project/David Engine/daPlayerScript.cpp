@@ -16,6 +16,7 @@ namespace da
         : mTransform(nullptr)
         , mRigidbody(nullptr)
         , mAnimator(nullptr)
+        , mWeaponObject(nullptr)
         , mWeaponTransform(nullptr)
         , mWeaponRenderer(nullptr)
         , mMoveSpeed(6.0f)
@@ -115,17 +116,33 @@ namespace da
         mouseDir.Normalize();
         Vector3 playerPosition = mTransform->GetPosition();
 
-        Vector2 playerDir(mousePosition.x - playerPosition.x, mousePosition.y - playerPosition.y);
-        
+        Vector2 playerDir(mousePosition.x - playerPosition.x, mousePosition.y - playerPosition.y);        
         playerDir.Normalize();
-        if (0 <= playerDir.x)
-            mAnimator->SetReverse(false);
-        else
-            mAnimator->SetReverse(true);
+        
 
         Vector3 weaponPosition(playerPosition.x, playerPosition.y, 0.0f);
         mAngle = atan2(mouseDir.y, mouseDir.x) - atan2(mTransform->Up().y, mTransform->Up().x);        
         mWeaponTransform->SetPosition(weaponPosition);
+
+
+
+
+        float rotateZ = mAngle;
+        if (0 <= playerDir.x)
+        {
+            mAnimator->SetReverse(false);
+            rotateZ -= 3.925f;
+            if (mAttacked)
+                rotateZ -= 2.335f;
+        }
+        else
+        {
+            mAnimator->SetReverse(true);
+            rotateZ -= 2.335f;
+            if (mAttacked)
+                rotateZ -= 2.335f;
+        }
+        mWeaponTransform->SetRotation(Vector3(0.0f, 0.0f, rotateZ));
     }
 
     void PlayerScript::MoveFunc(Vector2 dir)
@@ -149,11 +166,7 @@ namespace da
     }
     void PlayerScript::WeaponMove()
     {
-        float rotateZ = mAngle - 3.925f;
-        if (mAttacked)
-            rotateZ += 2.335f;
-
-        mWeaponTransform->SetRotation(Vector3(0.0f, 0.0f, rotateZ));
+        
     }
     void PlayerScript::GetDamage()
     {
