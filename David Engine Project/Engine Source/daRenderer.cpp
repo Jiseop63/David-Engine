@@ -124,6 +124,10 @@ namespace renderer
 		constantBuffer[(UINT)eCBType::Animation] = new ConstantBuffer(eCBType::Animation);
 		constantBuffer[(UINT)eCBType::Animation]->Create(sizeof(AnimationCB));
 
+		// Reverse
+		constantBuffer[(UINT)eCBType::Reverse] = new ConstantBuffer(eCBType::Reverse);
+		constantBuffer[(UINT)eCBType::Reverse]->Create(sizeof(ReverseCB));
+
 		// fade
 		
 		// afterimage

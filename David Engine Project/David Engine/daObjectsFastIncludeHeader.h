@@ -37,3 +37,6 @@
 
 // Player
 #include "daPlayerScript.h"
+
+// Monster
+#include "daCreatureScript.h"

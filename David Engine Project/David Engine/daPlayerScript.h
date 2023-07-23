@@ -41,12 +41,17 @@ namespace da
 
 	private:
 		structs::sCreatureStat* mPlayerStat;
-		structs::sDashCount* mDashCount;
-		float mMoveSpeed;
-		float mDashCountTime;
-		float mRegenCountTime;
+		structs::sDashCount* 	mDashCount;
 
+		// 임시 변수
 	private:
-		int mMoveCondition;
+		float	mMoveSpeed;
+		float	mDashCountTime;
+		float	mRegenCountTime;
+
+		// 조건 변수
+	private:
+		int		mMoveCondition;
+		bool	mReverse;
 	};
 }

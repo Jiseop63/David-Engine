@@ -21,8 +21,8 @@ namespace da
 		virtual void OnCollisionExit(Collider2D* other) override;
 
 	protected:
-		Rigidbody* mRigidbody;
-		Animator* mAnimator;
+		Rigidbody*	mRigidbody;
+		Animator*	mAnimator;
 
 
 	};

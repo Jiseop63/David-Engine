@@ -1,10 +1,14 @@
 #include "daPlayerScript.h"
 
+#include "daGameObject.h"
+
 #include "daInput.h"
 #include "daTime.h"
 #include "daGameDataManager.h"
+
+#include "daConstantBuffer.h"
+#include "daRenderer.h"
 #include "daResources.h"
-#include "daGameObject.h"
 
 namespace da
 {
@@ -43,6 +47,15 @@ namespace da
     }
     void PlayerScript::LateUpdate()
     {
+        if (mReverse)
+        {
+            renderer::ReverseCB cbData = {};
+            cbData.Reverse = mReverse;            
+
+            graphics::ConstantBuffer* reverseCB = renderer::constantBuffer[(UINT)graphics::eCBType::Reverse];
+            reverseCB->SetData(&cbData);
+            reverseCB->Bind(graphics::eShaderStage::VS);
+        }
     }
     void PlayerScript::GetInput()
     {
@@ -61,10 +74,12 @@ namespace da
 
             if (Input::GetKey(eKeyCode::D))
             {
+                mReverse = false;
                 MoveFunc(Vector2::UnitX);
             }
             if (Input::GetKey(eKeyCode::A))
             {
+                mReverse = true;
                 MoveFunc(-Vector2::UnitX);
             }
         }

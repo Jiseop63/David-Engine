@@ -36,3 +36,8 @@ cbuffer Animation : register(b6)
     float2 cSpriteOffset;
     float2 cAtlasSize;
 }
+
+cbuffer Reverse : register(b7)
+{
+    bool cReverse;
+}

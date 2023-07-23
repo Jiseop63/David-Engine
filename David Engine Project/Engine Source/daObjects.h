@@ -46,21 +46,7 @@ namespace da::objects
 		return obj;
 	}
 
-	template <typename T>
-	static T* InstantiateCreature(Scene* scene, enums::eLayerType layer, const std::wstring& material)
-	{
-		T* obj = new T();
-		Layer& myLayer = scene->GetLayer(layer);
-		myLayer.AddGameObject(obj);
-
-		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
-		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-		meshRenderer->SetMaterial(Resources::Find<Material>(material));
-		obj->AddComponent<Rigidbody>();
-		obj->AddComponent<Collider2D>();
-		obj->Initialize();
-		return obj;
-	}
+	
 	
 #pragma endregion
 #pragma region Quick Init objects
@@ -127,7 +113,22 @@ namespace da::objects
 		obj->Initialize();
 		return obj;
 	}
+	template <typename T>
+	static T* InstantiateCreature(Scene* scene, const std::wstring& material)
+	{
+		T* obj = new T();
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::Creature);
+		myLayer.AddGameObject(obj);
 
+		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
+		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		meshRenderer->SetMaterial(Resources::Find<Material>(material));
+		obj->AddComponent<Rigidbody>();
+		obj->AddComponent<Collider2D>();
+		obj->AddComponent<Animator>();
+		obj->Initialize();
+		return obj;
+	}
 	static GameObject* InstantiateGridObject(Scene* scene, CameraObject* cameraObject)
 	{
 		GameObject* obj = new GameObject();

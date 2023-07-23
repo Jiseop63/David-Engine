@@ -48,6 +48,10 @@ namespace renderer
 		da::math::Vector2 SpriteSize;
 		da::math::Vector2 SpriteOffset;
 		da::math::Vector2 AtlasSize;
+	};	
+	CBUFFER(ReverseCB, CBSLOT_REVERSE)
+	{
+		bool Reverse;
 	};
 
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[(UINT)da::graphics::eSamplerType::End];

@@ -7,6 +7,8 @@ namespace da
 	using namespace math;
 
 	CreatureScript::CreatureScript()
+		: mRigidbody(nullptr)
+		, mAnimator(nullptr)
 	{
 	}
 	CreatureScript::~CreatureScript()
@@ -19,7 +21,7 @@ namespace da
 
 		std::shared_ptr<Texture> texture = Resources::Load<Texture>(L"SkelSprite", L"..\\Resources\\Texture\\Monster\\Skel\\SpriteSheet.png");
 		mAnimator->Create(L"SkelIdle", texture, Vector2(0.0f, 0.0f), Vector2(32.0f, 32.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
-		mAnimator->Create(L"SkelMove", texture, Vector2(0.0f, 64.0f), Vector2(32.0f, 32.0f), 6, Vector2(0.0f, 0.0f), 0.1f);
+		mAnimator->Create(L"SkelMove", texture, Vector2(0.0f, 32.0f), Vector2(32.0f, 32.0f), 6, Vector2(0.0f, 0.0f), 0.1f);
 		mAnimator->Create(L"SkelAttact", texture, Vector2(0.0f, 0.0f), Vector2(32.0f, 32.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
 		mAnimator->PlayAnimation(L"SkelMove");
 	}
