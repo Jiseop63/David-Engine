@@ -1,6 +1,7 @@
 #include "daScene_Dungeon2F_Stage1.h"
 // юс╫ц
 #include "daInput.h"
+#include "daGameDataManager.h"
 
 // resource
 #include "daResources.h"
@@ -53,6 +54,11 @@ namespace da
 		renderer::mainCamera = mMainCamera->GetCameraComponent();
 		renderer::uiCamera = mUICamera->GetCameraComponent();
 		renderer::gridScript->SetCamera(renderer::mainCamera);
+
+
+		GameDataManager::SetInventoryObject(mInventory);
+		GameDataManager::SetPlayerObject(mPlayer);
+		GameDataManager::SetWeaponObject(mWeapon);
 	}
 	void Scene_Dungeon2F_Stage1::OnExit()
 	{
@@ -179,6 +185,7 @@ namespace da
 			GameObject* inventoryObject = objects::InstantiateGameObject<GameObject>
 				(this, enums::eLayerType::UI, L"InventoryPanelMaterial");
 			inventoryObject->SetName(L"inventory");
+			mInventory = inventoryObject;
 			Transform* inventoryTransform = inventoryObject->GetTransform();
 			inventoryTransform->SetScale(math::Vector3(inventoryScaleX * 4.0f, inventoryScaleY * 4.0f, 1.0f));
 			Vector3 inventoryPosition(MaxPositionX - (inventoryScaleX * 2.0f), 0.0f, OverlayZ);

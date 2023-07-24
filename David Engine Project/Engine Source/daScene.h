@@ -44,6 +44,10 @@ namespace da
 	protected:
 		CameraObject*	mMainCamera;
 		CameraObject*	mUICamera;
+		GameObject*		mInventory;
+		GameObject*		mWeapon;
+		GameObject*		mPlayer;
+
 
 	private:
 		std::vector<Layer> mLayers;

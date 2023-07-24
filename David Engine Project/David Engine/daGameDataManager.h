@@ -23,6 +23,16 @@ namespace da
 		static structs::sDashCount& GetDashCount() { return mDashCount; }
 		static structs::sInventory& GetInventory() { return mInventoryData; }
 
+
+
+
+	public:
+		static void CallInventory();
+		static void ChangeArmour();
+
+
+
+
 	private:
 		static structs::sCreatureStat mPlayerStat;
 		static structs::sDashCount mDashCount;

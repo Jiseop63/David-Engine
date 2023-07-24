@@ -163,9 +163,7 @@
     <ClInclude Include="daOverlayObject.h" />
     <ClInclude Include="daPlayerScript.h" />
     <ClInclude Include="daProjectileObject.h" />
-    <ClInclude Include="daScene_Dungeon1F.h" />
     <ClInclude Include="daScene_Dungeon1F_Stage1.h" />
-    <ClInclude Include="daScene_Dungeon2F.h" />
     <ClInclude Include="daScene_Dungeon2F_Stage1.h" />
     <ClInclude Include="daScene_Dungeon2F_Stage2.h" />
     <ClInclude Include="daScene_Title.h" />
@@ -194,9 +192,7 @@
     <ClCompile Include="daOverlayObject.cpp" />
     <ClCompile Include="daPlayerScript.cpp" />
     <ClCompile Include="daProjectileObject.cpp" />
-    <ClCompile Include="daScene_Dungeon1F.cpp" />
     <ClCompile Include="daScene_Dungeon1F_Stage1.cpp" />
-    <ClCompile Include="daScene_Dungeon2F.cpp" />
     <ClCompile Include="daScene_Dungeon2F_Stage1.cpp" />
     <ClCompile Include="daScene_Dungeon2F_Stage2.cpp" />
     <ClCompile Include="daScene_Title.cpp" />

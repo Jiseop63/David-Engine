@@ -8,6 +8,7 @@
 #include "daTexture.h"
 
 #include "daObjects.h"
+#include "daGameDataManager.h"
 
 // UI, Object, Components and Camera
 #include "daObjectsFastIncludeHeader.h"
@@ -66,6 +67,9 @@ namespace da
 
 		// 플레이어 세팅
 		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Creature);
+		GameDataManager::SetInventoryObject(mInventory);
+		GameDataManager::SetPlayerObject(mPlayer);
+		GameDataManager::SetWeaponObject(mWeapon);
 	}
 	void Scene_Town::OnExit()
 	{
@@ -226,6 +230,7 @@ namespace da
 			GameObject* inventoryObject = objects::InstantiateGameObject<GameObject>
 				(this, enums::eLayerType::UI, L"InventoryPanelMaterial");
 			inventoryObject->SetName(L"inventory");
+			mInventory = inventoryObject;
 			Transform* inventoryTransform = inventoryObject->GetTransform();
 			inventoryTransform->SetScale(math::Vector3(inventoryScaleX * 4.0f, inventoryScaleY * 4.0f, 1.0f));
 			Vector3 inventoryPosition(MaxPositionX - (inventoryScaleX * 2.0f), 0.0f, OverlayZ);
@@ -560,11 +565,12 @@ namespace da
 			GameObject* playerObject = objects::InstantiatePlayer(this, L"AnimationMaterial");
 			playerObject->SetName(L"player");
 			PlayerScript* playerScript = playerObject->GetComponent<PlayerScript>();
-			
+			mPlayer = playerObject;
 			
 			GameObject* weaponObject 
 				= objects::InstantiateGameObject<GameObject>
 				(this, enums::eLayerType::Playable, L"WeaponMaterial");
+			mWeapon = weaponObject;
 			playerScript->SetWeaponObject(weaponObject);
 			//MeshRenderer* mr = weaponObject->GetComponent<MeshRenderer>();
 			//std::shared_ptr<Material> weaponMaterial = mr->GetMaterial();

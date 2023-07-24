@@ -8,6 +8,9 @@ namespace da
 	Scene::Scene()
 		: mMainCamera(nullptr)
 		, mUICamera(nullptr)
+		, mInventory(nullptr)
+		, mWeapon(nullptr)
+		, mPlayer(nullptr)
 	{
 		mLayers.resize((int)eLayerType::End);
 	}

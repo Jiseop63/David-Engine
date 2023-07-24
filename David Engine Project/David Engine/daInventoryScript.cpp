@@ -21,34 +21,8 @@ namespace da
 	}
 	void InventoryScript::Update()
 	{
-		// 인벤토리
-		if (Input::GetKeyDown(eKeyCode::V))
-		{
-			if (false == mInventoryOpen)
-			{
-				mInventoryOpen = true;
-				Open();
-			}
-			else
-			{
-				mInventoryOpen = false;
-				Close();
-			}
-		}
-		if (Input::GetKeyDown(eKeyCode::TILDE))
-		{
-			if (true == mSelectLeft)
-			{
-				ChangeTexture(mSecondTexture);
-				mSelectLeft = false;
-			}
-			else
-			{
-				ChangeTexture(mFirstTexture);
-				mSelectLeft = true;
-			}
-		}
 	}
+
 	void InventoryScript::CallInventory()
 	{
 		if (false == mInventoryOpen)

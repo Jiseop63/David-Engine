@@ -119,11 +119,11 @@ namespace da
         // inventory
         if (Input::GetKeyDown(eKeyCode::V))
         {
-
+            GameDataManager::CallInventory();
         }
         if (Input::GetKeyDown(eKeyCode::TILDE))
         {
-
+            GameDataManager::ChangeArmour();
         }
     }
 
