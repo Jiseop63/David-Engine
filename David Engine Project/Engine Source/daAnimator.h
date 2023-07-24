@@ -48,15 +48,10 @@ namespace da
 		std::function<void()>& CompleteEvent(const std::wstring& name);
 		std::function<void()>& EndEvent(const std::wstring& name);
 
-	public:
-		void SetReverse(bool isReverse) { mReverse = isReverse; }
-		bool IsReverse() { return mReverse; }
-
 	private:
 		std::map<std::wstring, Animation*>	mAnimations;
 		std::map<std::wstring, Events*>		mEvents;
 		Animation*							mActiveAnimation;
 		bool								mLoop;
-		bool								mReverse;
 	};
 }

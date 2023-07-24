@@ -51,7 +51,8 @@ namespace renderer
 	};	
 	CBUFFER(ReverseCB, CBSLOT_REVERSE)
 	{
-		bool Reverse;
+		bool SideReverse;
+		bool VerticalReverse;
 	};
 
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[(UINT)da::graphics::eSamplerType::End];

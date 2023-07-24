@@ -16,6 +16,11 @@ namespace da
         : mTransform(nullptr)
         , mRigidbody(nullptr)
         , mAnimator(nullptr)
+        , mBodyCollider(nullptr)
+        , mFootCollider(nullptr)
+        , mRightCollider(nullptr)
+        , mLeftCollider(nullptr)
+        , mWeaponCollider(nullptr)
         , mWeaponObject(nullptr)
         , mWeaponTransform(nullptr)
         , mWeaponRenderer(nullptr)
@@ -38,9 +43,9 @@ namespace da
 	{
         mTransform = GetOwner()->GetComponent<Transform>();
         mRigidbody = GetOwner()->GetComponent<Rigidbody>();
-        mAnimator = GetOwner()->GetComponent<Animator>();
+        mRenderer = GetOwner()->GetComponent<MeshRenderer>();
         InitAnimation();
-
+        InitCollider();
         mPlayerStat = &GameDataManager::GetPlayerStat();
         mDashCount = &GameDataManager::GetDashCount();
         mInventory = &GameDataManager::GetInventory();
@@ -129,27 +134,31 @@ namespace da
         mAngle = atan2(playerDir.y, playerDir.x);
         // 무기 위치 변경
         mWeaponTransform->SetPosition(weaponPosition);
+        // 무기 회전 적용
+        mWeaponTransform->SetRotation(Vector3(0.0f, 0.0f, mAngle));
 
-
-
-        // 무기 회전값 계산
-        float rotateZ = mAngle;
+        // 위치에 따른 좌우 반전
         if (0 <= playerDir.x)
         {
-            mAnimator->SetReverse(false);
-            rotateZ -= 3.925f;
+            mRenderer->SetSideReverse(false);
+            mWeaponRenderer->SetSideReverse(true);
+            mWeaponRenderer->SetVerticalReverse(true);
             if (mAttacked)
-                rotateZ -= 2.335f;
+            {
+                // 이미지 변경
+            }
         }
         else
         {
-            mAnimator->SetReverse(true);
-            rotateZ -= 2.335f;
+            mRenderer->SetSideReverse(true);
+            mWeaponRenderer->SetSideReverse(true);
+            mWeaponRenderer->SetVerticalReverse(true);
             if (mAttacked)
-                rotateZ -= 2.335f;
+            {
+                // 이미지 변경
+            }
         }
-        // 무기 회전 적용
-        mWeaponTransform->SetRotation(Vector3(0.0f, 0.0f, rotateZ));
+        
     }
 
     void PlayerScript::MoveFunc(Vector2 dir)
@@ -197,7 +206,8 @@ namespace da
         mWeaponObject = object;
         mWeaponTransform = mWeaponObject->GetComponent<Transform>();
         mWeaponRenderer = mWeaponObject->GetComponent<MeshRenderer>();
-        
+        mWeaponCollider = mWeaponObject->AddComponent<Collider2D>();
+
         std::shared_ptr<Material> weaponMaterial = mWeaponRenderer->GetMaterial();
         weaponMaterial->SetTexture(Resources::Find<Texture>(L"GreatSwordTexture"));
         // 9 22
@@ -220,12 +230,42 @@ namespace da
 
     void PlayerScript::InitAnimation()
     {
+        mAnimator = GetOwner()->GetComponent<Animator>();
+
         std::shared_ptr<Texture> texture = Resources::Load<Texture>(L"PlayerSprite", L"..\\Resources\\Texture\\Adventurer\\SpriteSheet.png");
         mAnimator->Create(L"playerIdle", texture, Vector2(0.0f, 0.0f), Vector2(32.0f, 32.0f), 5, Vector2(0.0f, 0.0f), 0.1f);
         mAnimator->Create(L"playerMove", texture, Vector2(0.0f, 32.0f), Vector2(32.0f, 32.0f), 8, Vector2(0.0f, 0.0f), 0.1f);
         mAnimator->Create(L"playerJump", texture, Vector2(0.0f, 64.0f), Vector2(32.0f, 32.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
         mAnimator->Create(L"playerDead", texture, Vector2(0.0f, 96.0f), Vector2(32.0f, 32.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
         mAnimator->PlayAnimation(L"playerIdle");
+    }
+
+    void PlayerScript::InitCollider()
+    {
+        mBodyCollider = GetOwner()->GetComponent<Collider2D>();
+        mFootCollider = GetOwner()->AddComponent<Collider2D>();
+        mRightCollider = GetOwner()->AddComponent<Collider2D>();
+        mLeftCollider = GetOwner()->AddComponent<Collider2D>();
+
+        // body
+        {
+            mBodyCollider->SetSize(Vector2(0.30f, 0.40f));
+            mBodyCollider->SetCenter(Vector2(0.0f, -0.10f));
+        }
+        // foot
+        {
+            mFootCollider->SetSize(Vector2(0.050f, 0.050f));
+            mFootCollider->SetCenter(Vector2(0.0f, -0.50f));
+        }
+        // right & left
+        {
+
+            mRightCollider->SetSize(Vector2(0.050f, 0.050f));
+            mRightCollider->SetCenter(Vector2(0.150f, -0.350f));
+
+            mLeftCollider->SetSize(Vector2(0.050f, 0.050f));
+            mLeftCollider->SetCenter(Vector2(-0.150f, -0.350f));
+        }
     }
 
 }

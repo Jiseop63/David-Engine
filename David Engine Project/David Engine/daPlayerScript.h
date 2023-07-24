@@ -43,7 +43,7 @@ namespace da
 		void regenDashCount();
 	public:
 		void InitAnimation();
-
+		void InitCollider();
 	public:
 		virtual void OnCollisionEnter(Collider2D* other) override {};
 		virtual void OnCollisionStay(Collider2D* other) override {};
@@ -54,10 +54,18 @@ namespace da
 		Transform*		mTransform;
 		Rigidbody*		mRigidbody;
 		Animator*		mAnimator;
+		MeshRenderer*	mRenderer;
 		
+		Collider2D*		mBodyCollider;
+		Collider2D*		mFootCollider;
+		Collider2D*		mRightCollider;
+		Collider2D*		mLeftCollider;
+
+
 		GameObject*		mWeaponObject;
 		Transform*		mWeaponTransform;
 		MeshRenderer*	mWeaponRenderer;
+		Collider2D*		mWeaponCollider;
 
 	private:
 		structs::sCreatureStat* mPlayerStat;

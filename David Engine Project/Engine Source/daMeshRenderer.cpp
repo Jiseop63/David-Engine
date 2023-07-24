@@ -2,6 +2,7 @@
 #include "daGameObject.h"
 #include "daTransform.h"
 #include "daTimeConstants.h"
+#include "daRenderer.h"
 #include "daAnimator.h"
 
 namespace da
@@ -12,6 +13,8 @@ namespace da
 		: Component(eComponentType::Renderer)
 		, mMesh(nullptr)
 		, mMaterial(nullptr)
+		, mSideReverse(false)
+		, mVerticalReverse(false)
 	{
 	}
 	MeshRenderer::~MeshRenderer()
@@ -29,10 +32,21 @@ namespace da
 		Animator* animator = GetOwner()->GetComponent<Animator>();
 		if (animator)
 			animator->Binds();
-
+		BindReverseCB();
+		
 		mMesh->BindBuffer();
 		mMaterial->Binds();
 		mMesh->Render();
 		mMaterial->Clear();
+	}
+	void MeshRenderer::BindReverseCB()
+	{
+		renderer::ReverseCB cbData = {};
+		cbData.SideReverse = mSideReverse;
+		cbData.VerticalReverse = mVerticalReverse;
+
+		graphics::ConstantBuffer* reverseCB = renderer::constantBuffer[(UINT)graphics::eCBType::Reverse];
+		reverseCB->SetData(&cbData);
+		reverseCB->Bind(graphics::eShaderStage::VS);
 	}
 }

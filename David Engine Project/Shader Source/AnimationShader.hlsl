@@ -23,15 +23,16 @@ VSOut mainVS(VSIn In)
     
     Out.Pos = projection;
     Out.Color = In.Color;
+    Out.UV = In.UV;
     
-    if (cReverse)
+    if (cSideReverse)
     {
         Out.UV.x = 1.0f - In.UV.x;
-        Out.UV.y = In.UV.y;
     }
-    else
+    
+    if (cVerticalReverse)
     {
-        Out.UV = In.UV;
+        Out.UV.y = 1.0f - In.UV.y;
     }
     
     return Out;
