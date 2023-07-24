@@ -13,6 +13,8 @@ namespace da
 
 		virtual void Update() override;
 		
+		void CallInventory();
+		void ChangeArmour();
 		void Open();
 		void Close();
 

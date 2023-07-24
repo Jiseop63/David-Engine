@@ -72,7 +72,7 @@ namespace da
 	private:
 		structs::sCreatureStat* mPlayerStat;
 		structs::sDashCount* 	mDashCount;
-		structs::sInventory*	mInventory;
+		structs::sInventory*	mInventoryData;
 
 		// 임시 변수
 	private:

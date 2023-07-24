@@ -49,6 +49,32 @@ namespace da
 			}
 		}
 	}
+	void InventoryScript::CallInventory()
+	{
+		if (false == mInventoryOpen)
+		{
+			mInventoryOpen = true;
+			Open();
+		}
+		else
+		{
+			mInventoryOpen = false;
+			Close();
+		}
+	}
+	void InventoryScript::ChangeArmour()
+	{
+		if (true == mSelectLeft)
+		{
+			ChangeTexture(mSecondTexture);
+			mSelectLeft = false;
+		}
+		else
+		{
+			ChangeTexture(mFirstTexture);
+			mSelectLeft = true;
+		}
+	}
 	void InventoryScript::Open()
 	{
 		GetOwner()->SetObjectState(GameObject::eObjectState::Active);

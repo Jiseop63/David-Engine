@@ -9,15 +9,29 @@ namespace da
 		static void Initialize();		
 		static void InitializePlayerStat();
 
+
+
+
+		// Scene::Enter 에서 호출해줘야함
+	public:
+		static void SetInventoryObject(GameObject* obj) { mInventoryObject = obj; }
+		static void SetWeaponObject(GameObject* obj) { mWeaponObject = obj; }
+		static void SetPlayerObject(GameObject* obj) { mPlayerObject = obj; }
+
 	public:
 		static structs::sCreatureStat& GetPlayerStat() { return mPlayerStat; }
 		static structs::sDashCount& GetDashCount() { return mDashCount; }
-		static structs::sInventory& GetInventory() { return mInventory; }
+		static structs::sInventory& GetInventory() { return mInventoryData; }
 
 	private:
 		static structs::sCreatureStat mPlayerStat;
 		static structs::sDashCount mDashCount;
-		static structs::sInventory mInventory;
+		static structs::sInventory mInventoryData;
+
+	private:
+		static GameObject* mInventoryObject;
+		static GameObject* mWeaponObject;
+		static GameObject* mPlayerObject;
 	};
 }
 

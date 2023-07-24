@@ -30,7 +30,7 @@ namespace da
         , mDashCountTime(0.0f)
         , mPlayerStat(nullptr)
         , mDashCount(nullptr)
-        , mInventory(nullptr)
+        , mInventoryData(nullptr)
         , mMoveCondition(0)
         , mReverse(false)
         , mAngle(0.0f)
@@ -49,7 +49,7 @@ namespace da
         InitCollider();
         mPlayerStat = &GameDataManager::GetPlayerStat();
         mDashCount = &GameDataManager::GetDashCount();
-        mInventory = &GameDataManager::GetInventory();
+        mInventoryData = &GameDataManager::GetInventory();
 	}
     void PlayerScript::Update()
     {
@@ -115,6 +115,16 @@ namespace da
             else
                 mAttacked = true;
         }
+
+        // inventory
+        if (Input::GetKeyDown(eKeyCode::V))
+        {
+
+        }
+        if (Input::GetKeyDown(eKeyCode::TILDE))
+        {
+
+        }
     }
 
     void PlayerScript::GetMouse()
@@ -144,6 +154,7 @@ namespace da
             if (mAttacked)
             {
                 // 이미지 변경
+                
             }
         }
         else
