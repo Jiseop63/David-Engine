@@ -47,10 +47,15 @@ namespace da
 	}
     void PlayerScript::Update()
     {
+        // Time
+        regenDashCount();
+
+        // Input
         GetInput();
         GetMouse();
+
+        // 안씀
         WeaponMove();
-        regenDashCount();
     }
     void PlayerScript::GetInput()
     {
@@ -112,21 +117,22 @@ namespace da
     {
         Vector3 mouseWorldPosition = Input::GetMouseWorldPosition();
         Vector2 mousePosition(mouseWorldPosition.x, mouseWorldPosition.y);
-        Vector2 mouseDir = mousePosition;
-        mouseDir.Normalize();
         Vector3 playerPosition = mTransform->GetPosition();
 
+        // 플레이어 방향
         Vector2 playerDir(mousePosition.x - playerPosition.x, mousePosition.y - playerPosition.y);        
         playerDir.Normalize();
         
-
+        // 무기 위치
         Vector3 weaponPosition(playerPosition.x, playerPosition.y, 0.0f);
-        mAngle = atan2(mouseDir.y, mouseDir.x) - atan2(mTransform->Up().y, mTransform->Up().x);        
+        // 무기 회전값
+        mAngle = atan2(playerDir.y, playerDir.x);
+        // 무기 위치 변경
         mWeaponTransform->SetPosition(weaponPosition);
 
 
 
-
+        // 무기 회전값 계산
         float rotateZ = mAngle;
         if (0 <= playerDir.x)
         {
@@ -142,6 +148,7 @@ namespace da
             if (mAttacked)
                 rotateZ -= 2.335f;
         }
+        // 무기 회전 적용
         mWeaponTransform->SetRotation(Vector3(0.0f, 0.0f, rotateZ));
     }
 

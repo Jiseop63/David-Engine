@@ -45,7 +45,8 @@ namespace da
 	}
 	void Animator::Create(const std::wstring& name
 		, std::shared_ptr<graphics::Texture> atlas, math::Vector2 leftTop
-		, math::Vector2 size, UINT columnLength, math::Vector2 offset, float duration)
+		, math::Vector2 size, UINT columnLength, math::Vector2 offset
+		, float duration, float scale)
 	{
 		Animation* animation = FindAnimation(name);
 		if (nullptr != animation)

@@ -13,6 +13,7 @@ namespace da
 		, mComplete(false)
 		, mIndex(-1)
 		, mDurationTime(0.0f)
+		, mScale(0.0f)
 	{
 	}
 	Animation::~Animation()
@@ -39,12 +40,11 @@ namespace da
 	void Animation::Create(const std::wstring& name
 		, std::shared_ptr<graphics::Texture> atlas
 		, math::Vector2 leftTop, math::Vector2 size
-		, UINT columnLength, math::Vector2 offset, float duration)
+		, UINT columnLength, math::Vector2 offset, float duration, float scale)
 	{
 		SetKey(name);
 		mAtlas = atlas;
-
-		float scale = 35.0f;
+		mScale = scale;
 
 		float width = (float)atlas->GetWidth();
 		float height = (float)atlas->GetHeight();
@@ -57,7 +57,7 @@ namespace da
 			sprite.Size.x = size.x / width;
 			sprite.Size.y = size.y / height;
 			sprite.Offset = offset;
-			sprite.AtlasSize = math::Vector2(scale / width, scale /height);
+			sprite.AtlasSize = math::Vector2(mScale / width, mScale /height);
 			sprite.Duration = duration;
 
 			mSprites.push_back(sprite);
