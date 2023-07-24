@@ -16,6 +16,7 @@ namespace da
         : mTransform(nullptr)
         , mRigidbody(nullptr)
         , mAnimator(nullptr)
+        , mRenderer(nullptr)
         , mBodyCollider(nullptr)
         , mFootCollider(nullptr)
         , mRightCollider(nullptr)
@@ -24,7 +25,7 @@ namespace da
         , mWeaponObject(nullptr)
         , mWeaponTransform(nullptr)
         , mWeaponRenderer(nullptr)
-        , mMoveSpeed(6.0f)
+        , mWeaponScript(nullptr)
         , mRegenCountTime(1.750f)
         , mDashCountTime(0.0f)
         , mPlayerStat(nullptr)
@@ -59,8 +60,6 @@ namespace da
         GetInput();
         GetMouse();
 
-        // 안씀
-        WeaponMove();
     }
     void PlayerScript::GetInput()
     {
@@ -140,9 +139,8 @@ namespace da
         // 위치에 따른 좌우 반전
         if (0 <= playerDir.x)
         {
-            mRenderer->SetSideReverse(false);
-            mWeaponRenderer->SetSideReverse(true);
-            mWeaponRenderer->SetVerticalReverse(true);
+            mRenderer->SetReverse(false);
+            mWeaponRenderer->SetReverse(false);
             if (mAttacked)
             {
                 // 이미지 변경
@@ -150,9 +148,8 @@ namespace da
         }
         else
         {
-            mRenderer->SetSideReverse(true);
-            mWeaponRenderer->SetSideReverse(true);
-            mWeaponRenderer->SetVerticalReverse(true);
+            mRenderer->SetReverse(true);
+            mWeaponRenderer->SetReverse(true);
             if (mAttacked)
             {
                 // 이미지 변경
@@ -180,10 +177,6 @@ namespace da
     void PlayerScript::Jump()
     {
     }
-    void PlayerScript::WeaponMove()
-    {
-        
-    }
     void PlayerScript::GetDamage()
     {
         float value = 5.0f;
@@ -207,7 +200,7 @@ namespace da
         mWeaponTransform = mWeaponObject->GetComponent<Transform>();
         mWeaponRenderer = mWeaponObject->GetComponent<MeshRenderer>();
         mWeaponCollider = mWeaponObject->AddComponent<Collider2D>();
-
+        mWeaponScript = mWeaponObject->AddComponent<WeaponScript>();
         std::shared_ptr<Material> weaponMaterial = mWeaponRenderer->GetMaterial();
         weaponMaterial->SetTexture(Resources::Find<Texture>(L"GreatSwordTexture"));
         // 9 22

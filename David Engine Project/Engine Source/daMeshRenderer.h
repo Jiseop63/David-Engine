@@ -20,13 +20,11 @@ namespace da
 	public:
 		void ChangeTexture(std::shared_ptr<graphics::Texture> texture) { mMaterial->SetTexture(texture); }
 
-		void SetSideReverse(bool isReverse) { mSideReverse = isReverse; }
-		void SetVerticalReverse(bool isReverse) { mVerticalReverse = isReverse; }
+		void SetReverse(bool isReverse) { mReverse = isReverse; }
 		void BindReverseCB();
 	private:
 		std::shared_ptr<Mesh> mMesh;
 		std::shared_ptr<Material> mMaterial;
-		bool mSideReverse;
-		bool mVerticalReverse;
+		bool mReverse;
 	};
 }

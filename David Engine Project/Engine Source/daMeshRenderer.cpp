@@ -13,8 +13,7 @@ namespace da
 		: Component(eComponentType::Renderer)
 		, mMesh(nullptr)
 		, mMaterial(nullptr)
-		, mSideReverse(false)
-		, mVerticalReverse(false)
+		, mReverse(false)
 	{
 	}
 	MeshRenderer::~MeshRenderer()
@@ -42,8 +41,7 @@ namespace da
 	void MeshRenderer::BindReverseCB()
 	{
 		renderer::ReverseCB cbData = {};
-		cbData.SideReverse = mSideReverse;
-		cbData.VerticalReverse = mVerticalReverse;
+		cbData.Reverse = mReverse;
 
 		graphics::ConstantBuffer* reverseCB = renderer::constantBuffer[(UINT)graphics::eCBType::Reverse];
 		reverseCB->SetData(&cbData);

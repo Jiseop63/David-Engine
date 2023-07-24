@@ -25,12 +25,7 @@ VSOut mainVS(VSIn In)
     Out.Color = In.Color;
     Out.UV = In.UV;
     
-    if (cSideReverse)
-    {
-        Out.UV.x = 1.0f - In.UV.x;
-    }
-    
-    if (cVerticalReverse)
+    if (cReverse)
     {
         Out.UV.y = 1.0f - In.UV.y;
     }

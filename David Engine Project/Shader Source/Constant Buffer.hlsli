@@ -39,6 +39,5 @@ cbuffer Animation : register(b6)
 
 cbuffer Reverse : register(b7)
 {
-    bool cSideReverse;
-    bool cVerticalReverse;
+    bool cReverse;
 }

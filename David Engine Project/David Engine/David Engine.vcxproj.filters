@@ -156,6 +156,9 @@
     <ClInclude Include="daCreatureScript.h">
       <Filter>Objects\Creature</Filter>
     </ClInclude>
+    <ClInclude Include="daWeaponScript.h">
+      <Filter>Objects\Inventory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -244,6 +247,9 @@
     </ClCompile>
     <ClCompile Include="daCreatureScript.cpp">
       <Filter>Objects\Creature</Filter>
+    </ClCompile>
+    <ClCompile Include="daWeaponScript.cpp">
+      <Filter>Objects\Inventory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

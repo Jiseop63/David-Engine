@@ -3,6 +3,8 @@
 #include "daRigidbody.h"
 #include "daAnimator.h"
 #include "daMeshRenderer.h"
+#include "daWeaponScript.h"
+
 namespace da
 {
 	// 라디안 방향
@@ -29,9 +31,8 @@ namespace da
 		void MoveFunc(math::Vector2 dir);
 		void Dash();
 		void Jump();
-		// 임시
-		void WeaponMove();
 
+		// 임시
 	public:
 		void GetDamage();
 		void GetHeal();
@@ -61,11 +62,12 @@ namespace da
 		Collider2D*		mRightCollider;
 		Collider2D*		mLeftCollider;
 
-
+		// 이건 추후에 스크립트를 통해서만 제어할듯
 		GameObject*		mWeaponObject;
 		Transform*		mWeaponTransform;
 		MeshRenderer*	mWeaponRenderer;
 		Collider2D*		mWeaponCollider;
+		WeaponScript*	mWeaponScript;
 
 	private:
 		structs::sCreatureStat* mPlayerStat;
@@ -74,7 +76,6 @@ namespace da
 
 		// 임시 변수
 	private:
-		float	mMoveSpeed;
 		float	mDashCountTime;
 		float	mRegenCountTime;
 
