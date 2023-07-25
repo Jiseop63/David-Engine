@@ -154,8 +154,13 @@ namespace da
             if (mAttacked)
             {
                 // 이미지 변경
-                
+                mWeaponRenderer->ChangeSlotTexture(Resources::Find<Texture>(L"GreatSword1Texture"));
             }
+            else
+            {
+                mWeaponRenderer->ChangeSlotTexture(Resources::Find<Texture>(L"GreatSword0Texture"));
+            }
+
         }
         else
         {
@@ -164,6 +169,11 @@ namespace da
             if (mAttacked)
             {
                 // 이미지 변경
+                mWeaponRenderer->ChangeSlotTexture(Resources::Find<Texture>(L"GreatSword1Texture"));
+            }
+            else
+            {
+                mWeaponRenderer->ChangeSlotTexture(Resources::Find<Texture>(L"GreatSword0Texture"));
             }
         }
         
@@ -212,8 +222,7 @@ namespace da
         mWeaponRenderer = mWeaponObject->GetComponent<MeshRenderer>();
         mWeaponCollider = mWeaponObject->AddComponent<Collider2D>();
         mWeaponScript = mWeaponObject->AddComponent<WeaponScript>();
-        std::shared_ptr<Material> weaponMaterial = mWeaponRenderer->GetMaterial();
-        weaponMaterial->SetTexture(Resources::Find<Texture>(L"GreatSwordTexture"));
+        mWeaponRenderer->ChangeSlotTexture(Resources::Find<Texture>(L"GreatSword0Texture"));
         // 9 22
         //mWeaponTransform->SetScale(Vector3(0.180f, 0.440f, 1.0f));
         mWeaponTransform->SetScale(Vector3(2.0f, 2.0f, 1.0f));

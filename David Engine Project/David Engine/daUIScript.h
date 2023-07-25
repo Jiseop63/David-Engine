@@ -13,9 +13,9 @@ namespace da
 		virtual void Update();
 
 	public:
-		void SetUITextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second);
+		void SetSlotTextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second);
 		void SetScreenPosision();
-		void ChangeTexture(std::shared_ptr<graphics::Texture> texture);
+		void ChangeSlotTexture(std::shared_ptr<graphics::Texture> texture);
 
 	protected:
 		void focusCheck();

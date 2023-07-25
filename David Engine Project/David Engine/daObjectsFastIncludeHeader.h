@@ -33,6 +33,7 @@
 // HUD
 #include "daLifeBarScript.h"
 #include "daDashCountScript.h"
+#include "daArmourScript.h"
 #include "daInventoryScript.h"
 
 // Player

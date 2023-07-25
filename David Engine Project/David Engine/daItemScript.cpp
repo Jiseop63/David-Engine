@@ -1,7 +1,7 @@
 #include "daItemScript.h"
 
 #include "daGameObject.h"
-#include "daMeshRenderer.h"
+
 #include "daInput.h"
 namespace da
 {
@@ -22,12 +22,12 @@ namespace da
 	{
 		focusCheck();
 	}
-	void ItemScript::SetUITextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second)
+	void ItemScript::SetSlotTextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second)
 	{
-		MeshRenderer* meshRenderer = GetOwner()->GetComponent<MeshRenderer>();
+		mSlotRenderer = GetOwner()->GetComponent<MeshRenderer>();
 		mFirstTexture = first;
 		mSecondTexture = second;
-		meshRenderer->ChangeTexture(first);
+		mSlotRenderer->ChangeSlotTexture(first);
 	}
 	void ItemScript::SetScreenPosision()
 	{
@@ -46,10 +46,13 @@ namespace da
 
 		mScreenPosition.y = MaxPositionY * 100.0f - (myPos.y * 100.0f);
 	}
-	void ItemScript::ChangeTexture(std::shared_ptr<graphics::Texture> texture)
+	void ItemScript::ChangeItemTexture(std::shared_ptr<graphics::Texture> texture)
 	{
-		MeshRenderer* meshRenderer = GetOwner()->GetComponent<MeshRenderer>();
-		meshRenderer->ChangeTexture(texture);
+		mItemRenderer->ChangeSlotTexture(texture);
+	}
+	void ItemScript::ChangeSlotTexture(std::shared_ptr<graphics::Texture> texture)
+	{		
+		mSlotRenderer->ChangeSlotTexture(texture);
 	}
 	void ItemScript::focusCheck()
 	{
@@ -69,12 +72,12 @@ namespace da
 			&& mousePosition.y >= top
 			&& mousePosition.y <= bottom)
 		{
-			ChangeTexture(mSecondTexture);
+			ChangeSlotTexture(mSecondTexture);
 			mFocusOn = true;
 		}
 		else if (mFocusOn = true)
 		{
-			ChangeTexture(mFirstTexture);
+			ChangeSlotTexture(mFirstTexture);
 			mFocusOn = false;
 		}
 	}

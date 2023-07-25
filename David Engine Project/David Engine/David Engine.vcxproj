@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="daArmourScript.h" />
     <ClInclude Include="daButtonScript.h" />
     <ClInclude Include="daCameraObject.h" />
     <ClInclude Include="daCameraScript.h" />
@@ -175,6 +176,7 @@
     <ClInclude Include="daWeaponScript.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="daArmourScript.cpp" />
     <ClCompile Include="daButtonScript.cpp" />
     <ClCompile Include="daCameraObject.cpp" />
     <ClCompile Include="daCameraScript.cpp" />

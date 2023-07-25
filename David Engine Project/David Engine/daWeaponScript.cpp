@@ -32,7 +32,7 @@ namespace da
 	void WeaponScript::PlayAnimation()
 	{
 		// 근접인 경우 이미지 변경
-		ChangeTexture();
+		ChangeSlotTexture();
 		
 		// 원거리인 경우 애니메이션 재생
 		// to do...
@@ -41,7 +41,7 @@ namespace da
 		// to do...
 
 	}
-	void WeaponScript::ChangeTexture()
+	void WeaponScript::ChangeSlotTexture()
 	{
 	}
 	void WeaponScript::AttackLogic()

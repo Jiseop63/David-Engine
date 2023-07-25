@@ -245,7 +245,7 @@ namespace renderer
 		// Basic Cursor
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"BasicCursorTexture", L"..\\Resources\\Texture\\UIs\\Hud\\Mouse\\BasicCursor.png");
+				= Resources::Load<Texture>(L"BasicCursorTexture", L"..\\Resources\\Texture\\Hud\\Mouse\\BasicCursor.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
@@ -254,7 +254,7 @@ namespace renderer
 		// Shooting Cursor
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"ShootingCursorTexture", L"..\\Resources\\Texture\\UIs\\Hud\\Mouse\\ShootingCursor2.png");
+				= Resources::Load<Texture>(L"ShootingCursorTexture", L"..\\Resources\\Texture\\Hud\\Mouse\\ShootingCursor2.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
@@ -264,7 +264,7 @@ namespace renderer
 		// life Panel
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"PlayerLifePanelTexture", L"..\\Resources\\Texture\\UIs\\Hud\\Life\\PlayerLifePanel.png");
+				= Resources::Load<Texture>(L"PlayerLifePanelTexture", L"..\\Resources\\Texture\\Hud\\Life\\PlayerLifePanel.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
@@ -273,7 +273,7 @@ namespace renderer
 		// life Bar
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"PlayerLifeBarTexture", L"..\\Resources\\Texture\\UIs\\Hud\\Life\\LifeBar.png");
+				= Resources::Load<Texture>(L"PlayerLifeBarTexture", L"..\\Resources\\Texture\\Hud\\Life\\LifeBar.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(lifeBarShader);
@@ -282,7 +282,7 @@ namespace renderer
 		// dashcount panel
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"DashPanelTexture", L"..\\Resources\\Texture\\UIs\\Hud\\DashCount\\DashPanel.png");
+				= Resources::Load<Texture>(L"DashPanelTexture", L"..\\Resources\\Texture\\Hud\\DashCount\\DashPanel.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
@@ -291,7 +291,7 @@ namespace renderer
 		// dashcount bar
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"DashActivateTexture", L"..\\Resources\\Texture\\UIs\\Hud\\DashCount\\DashCountsActivate.png");
+				= Resources::Load<Texture>(L"DashActivateTexture", L"..\\Resources\\Texture\\Hud\\DashCount\\DashCountsActivate.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(dashCountShader);
@@ -300,11 +300,30 @@ namespace renderer
 		// weapon panel
 		{
 			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"WeaponBaseTexture", L"..\\Resources\\Texture\\UIs\\Hud\\Weapon\\Base.png");
+				= Resources::Load<Texture>(L"Armour1Texture", L"..\\Resources\\Texture\\Hud\\Armour\\Armour1.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"WeaponBaseMaterial", spriteMaterial);
+			Resources::Insert<Material>(L"Armour1Material", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"Armour2Texture", L"..\\Resources\\Texture\\Hud\\Armour\\Armour2.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"Armour2Material", spriteMaterial);
+		}
+		// weapon Icon Material
+		{			
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"WeaponIconMaterial", spriteMaterial);
+		}
+		// weapon Icon Texture
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"GreatSwordIconTexture", L"..\\Resources\\Texture\\Items\\GreatSword.png");
 		}
 #pragma endregion
 #pragma region Inventory Material & Texture
@@ -398,30 +417,31 @@ namespace renderer
 
 		// Inventory Textures
 		{
-			Resources::Load<Texture>(L"InventoryPanelATexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\InventoryPanelA.png");
-			Resources::Load<Texture>(L"InventoryPanelBTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\InventoryPanelB.png");
+			Resources::Load<Texture>(L"InventoryPanelATexture", L"..\\Resources\\Texture\\Inventory\\InventoryPanelA.png");
+			Resources::Load<Texture>(L"InventoryPanelBTexture", L"..\\Resources\\Texture\\Inventory\\InventoryPanelB.png");
 
 		}
 		// Select Weapon & Shiled Textures
 		{
-			Resources::Load<Texture>(L"WeaponSlotTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\weapon.png");
-			Resources::Load<Texture>(L"WeaponSlotSelectTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\weaponSelect.png");
-			Resources::Load<Texture>(L"ShiledSlotTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\shiled.png");
-			Resources::Load<Texture>(L"ShiledSlotSelectTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\shiledSelect.png");
+			Resources::Load<Texture>(L"WeaponSlotTexture", L"..\\Resources\\Texture\\Inventory\\weapon.png");
+			Resources::Load<Texture>(L"WeaponSlotSelectTexture", L"..\\Resources\\Texture\\Inventory\\weaponSelect.png");
+			Resources::Load<Texture>(L"ShiledSlotTexture", L"..\\Resources\\Texture\\Inventory\\shiled.png");
+			Resources::Load<Texture>(L"ShiledSlotSelectTexture", L"..\\Resources\\Texture\\Inventory\\shiledSelect.png");
 		}
 		// accessory & item slot
 		{
-			Resources::Load<Texture>(L"AccessorySlotTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\accessory.png");
-			Resources::Load<Texture>(L"AccessorySlotSelectTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\accessorySelect.png");
-			Resources::Load<Texture>(L"ItemSlotTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\ItemSlot.png");
-			Resources::Load<Texture>(L"ItemSlotSelectTexture", L"..\\Resources\\Texture\\UIs\\Overlay\\Inventory\\ItemSlotSelect.png");
+			Resources::Load<Texture>(L"AccessorySlotTexture", L"..\\Resources\\Texture\\Inventory\\accessory.png");
+			Resources::Load<Texture>(L"AccessorySlotSelectTexture", L"..\\Resources\\Texture\\Inventory\\accessorySelect.png");
+			Resources::Load<Texture>(L"ItemSlotTexture", L"..\\Resources\\Texture\\Inventory\\ItemSlot.png");
+			Resources::Load<Texture>(L"ItemSlotSelectTexture", L"..\\Resources\\Texture\\Inventory\\ItemSlotSelect.png");
 		}
 #pragma endregion
 #pragma region Item Texture
 		// weapon
 		{
 			Resources::Load<Texture>(L"LongSwordTexture", L"..\\Resources\\Texture\\Items\\LongSword.png");
-			Resources::Load<Texture>(L"GreatSwordTexture", L"..\\Resources\\Texture\\Items\\GreatSword0.png");
+			Resources::Load<Texture>(L"GreatSword0Texture", L"..\\Resources\\Texture\\Items\\GreatSword0.png");
+			Resources::Load<Texture>(L"GreatSword1Texture", L"..\\Resources\\Texture\\Items\\GreatSword1.png");
 			
 		}
 #pragma endregion

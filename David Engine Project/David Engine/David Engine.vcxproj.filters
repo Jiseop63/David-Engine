@@ -99,12 +99,6 @@
     <ClInclude Include="daScene_Town.h">
       <Filter>Scenes\02 Town</Filter>
     </ClInclude>
-    <ClInclude Include="daScene_Dungeon1F.h">
-      <Filter>Scenes\03 Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="daScene_Dungeon2F.h">
-      <Filter>Scenes\03 Dungeon</Filter>
-    </ClInclude>
     <ClInclude Include="daButtonScript.h">
       <Filter>Objects\UI\Button</Filter>
     </ClInclude>
@@ -159,6 +153,9 @@
     <ClInclude Include="daWeaponScript.h">
       <Filter>Objects\Inventory</Filter>
     </ClInclude>
+    <ClInclude Include="daArmourScript.h">
+      <Filter>Objects\UI\HUD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -184,12 +181,6 @@
     </ClCompile>
     <ClCompile Include="daScene_Town.cpp">
       <Filter>Scenes\02 Town</Filter>
-    </ClCompile>
-    <ClCompile Include="daScene_Dungeon1F.cpp">
-      <Filter>Scenes\03 Dungeon</Filter>
-    </ClCompile>
-    <ClCompile Include="daScene_Dungeon2F.cpp">
-      <Filter>Scenes\03 Dungeon</Filter>
     </ClCompile>
     <ClCompile Include="daButtonScript.cpp">
       <Filter>Objects\UI\Button</Filter>
@@ -250,6 +241,9 @@
     </ClCompile>
     <ClCompile Include="daWeaponScript.cpp">
       <Filter>Objects\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="daArmourScript.cpp">
+      <Filter>Objects\UI\HUD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

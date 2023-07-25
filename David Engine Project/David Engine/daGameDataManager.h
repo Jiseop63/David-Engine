@@ -25,18 +25,22 @@ namespace da
 
 
 
-
+#pragma region Inventory & HUD Func
 	public:
 		static void CallInventory();
 		static void ChangeArmour();
 
-
+#pragma endregion
 
 
 	private:
 		static structs::sCreatureStat mPlayerStat;
 		static structs::sDashCount mDashCount;
 		static structs::sInventory mInventoryData;
+
+		static structs::sArmour mActiveArmour;
+		static structs::sArmour mSubArmour;
+
 
 	private:
 		static GameObject* mInventoryObject;

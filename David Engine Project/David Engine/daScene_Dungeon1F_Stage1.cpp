@@ -199,7 +199,7 @@ namespace da
 			Vector3 inventoryPosition(MaxPositionX - (inventoryScaleX * 2.0f), 0.0f, OverlayZ);
 			inventoryTransform->SetPosition(inventoryPosition);
 			InventoryScript* inventoryScript = inventoryObject->AddComponent<InventoryScript>();
-			inventoryScript->SetUITextures(Resources::Find<graphics::Texture>(L"InventoryPanelATexture"), Resources::Find<graphics::Texture>(L"InventoryPanelBTexture"));
+			inventoryScript->SetSlotTextures(Resources::Find<graphics::Texture>(L"InventoryPanelATexture"), Resources::Find<graphics::Texture>(L"InventoryPanelBTexture"));
 			inventoryObject->SetObjectState(GameObject::eObjectState::Hide);
 
 			// SetA

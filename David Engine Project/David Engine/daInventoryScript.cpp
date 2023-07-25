@@ -40,12 +40,12 @@ namespace da
 	{
 		if (true == mSelectLeft)
 		{
-			ChangeTexture(mSecondTexture);
+			ChangeSlotTexture(mSecondTexture);
 			mSelectLeft = false;
 		}
 		else
 		{
-			ChangeTexture(mFirstTexture);
+			ChangeSlotTexture(mFirstTexture);
 			mSelectLeft = true;
 		}
 	}
@@ -91,16 +91,16 @@ namespace da
 			item->SetObjectState(GameObject::eObjectState::Inactive);
 		}
 	}
-	void InventoryScript::SetUITextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second)
+	void InventoryScript::SetSlotTextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second)
 	{
 		MeshRenderer* meshRenderer = GetOwner()->GetComponent<MeshRenderer>();
 		mFirstTexture = first;
 		mSecondTexture = second;
-		meshRenderer->ChangeTexture(first);
+		meshRenderer->ChangeSlotTexture(first);
 	}
-	void InventoryScript::ChangeTexture(std::shared_ptr<graphics::Texture> texture)
+	void InventoryScript::ChangeSlotTexture(std::shared_ptr<graphics::Texture> texture)
 	{
 		MeshRenderer* meshRenderer = GetOwner()->GetComponent<MeshRenderer>();
-		meshRenderer->ChangeTexture(texture);
+		meshRenderer->ChangeSlotTexture(texture);
 	}
 }

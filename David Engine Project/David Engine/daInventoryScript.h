@@ -19,8 +19,8 @@ namespace da
 		void Close();
 
 	public:
-		void SetUITextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second);
-		void ChangeTexture(std::shared_ptr<graphics::Texture> texture);
+		void SetSlotTextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second);
+		void ChangeSlotTexture(std::shared_ptr<graphics::Texture> texture);
 
 		void AddWeaonSlot(GameObject* weapon) { mWeapon.push_back(weapon); }
 		void AddShiledSlot(GameObject* shiled) { mShiled.push_back(shiled); }

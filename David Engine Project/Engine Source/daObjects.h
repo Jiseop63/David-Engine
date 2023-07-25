@@ -78,7 +78,7 @@ namespace da::objects
 		ButtonScript* uiScript = obj->AddComponent<ButtonScript>();
 		obj->Initialize();
 
-		uiScript->SetUITextures(Resources::Find<graphics::Texture>(first), Resources::Find<graphics::Texture>(second));
+		uiScript->SetSlotTextures(Resources::Find<graphics::Texture>(first), Resources::Find<graphics::Texture>(second));
 		return obj;
 	}
 
@@ -93,7 +93,7 @@ namespace da::objects
 		meshRenderer->SetMaterial(Resources::Find<Material>(material));
 		UIScript* uiScript = obj->AddComponent<UIScript>();
 		obj->Initialize();
-		uiScript->SetUITextures(Resources::Find<graphics::Texture>(first), Resources::Find<graphics::Texture>(second));
+		uiScript->SetSlotTextures(Resources::Find<graphics::Texture>(first), Resources::Find<graphics::Texture>(second));
 		return obj;
 	}
 

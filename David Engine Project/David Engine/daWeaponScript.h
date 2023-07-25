@@ -22,7 +22,7 @@ namespace da
 
 
 		void PlayAnimation();
-		void ChangeTexture();
+		void ChangeSlotTexture();
 
 		void AttackLogic();
 

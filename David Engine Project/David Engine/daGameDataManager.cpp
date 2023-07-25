@@ -9,6 +9,9 @@ namespace da
 	structs::sDashCount GameDataManager::mDashCount = {};
 	structs::sInventory GameDataManager::mInventoryData = {};
 
+	structs::sArmour GameDataManager::mActiveArmour = {};
+	structs::sArmour GameDataManager::mSubArmour = {};
+
 	GameObject* GameDataManager::mInventoryObject = nullptr;
 	GameObject* GameDataManager::mWeaponObject = nullptr;
 	GameObject* GameDataManager::mPlayerObject = nullptr;
@@ -27,16 +30,23 @@ namespace da
 		mDashCount.CurCount = mDashCount.MaxCount;
 
 		mInventoryData.Armour1.Weapon = enums::eWeaponType::LongSword;
+		mActiveArmour = mInventoryData.Armour1;
+		mSubArmour = mInventoryData.Armour2;
 	}
 
 	void GameDataManager::CallInventory()
 	{
-		mInventoryObject->GetComponent<InventoryScript>()->CallInventory();
+		mInventoryObject->GetComponent<InventoryScript>()->CallInventory();		
 	}
 
 	void GameDataManager::ChangeArmour()
 	{
+		// swap armour
+		structs::sArmour temp = mActiveArmour;
+		mActiveArmour = mSubArmour;
+		mSubArmour = temp;
+
+		// change UI
 		mInventoryObject->GetComponent<InventoryScript>()->ChangeArmour();
 	}
-
 }

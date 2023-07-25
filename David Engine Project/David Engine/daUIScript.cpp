@@ -25,12 +25,12 @@ namespace da
 		focusCheck();
 	}
 
-	void UIScript::SetUITextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second)
+	void UIScript::SetSlotTextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second)
 	{
 		MeshRenderer* meshRenderer = GetOwner()->GetComponent<MeshRenderer>();
 		mFirstTexture = first;
 		mSecondTexture = second;
-		meshRenderer->ChangeTexture(first);
+		meshRenderer->ChangeSlotTexture(first);
 	}
 	void UIScript::SetScreenPosision()
 	{
@@ -49,10 +49,10 @@ namespace da
 
 		mScreenPosition.y = MaxPositionY * 100.0f - (myPos.y * 100.0f);
 	}
-	void UIScript::ChangeTexture(std::shared_ptr<graphics::Texture> texture)
+	void UIScript::ChangeSlotTexture(std::shared_ptr<graphics::Texture> texture)
 	{
 		MeshRenderer* meshRenderer = GetOwner()->GetComponent<MeshRenderer>();
-		meshRenderer->ChangeTexture(texture);
+		meshRenderer->ChangeSlotTexture(texture);
 	}
 	void UIScript::focusCheck()
 	{
@@ -72,12 +72,12 @@ namespace da
 			&& mousePosition.y >= top
 			&& mousePosition.y <= bottom)
 		{
-			ChangeTexture(mSecondTexture);
+			ChangeSlotTexture(mSecondTexture);
 			mFocusOn = true;
 		}
 		else if (mFocusOn = true)
 		{
-			ChangeTexture(mFirstTexture);
+			ChangeSlotTexture(mFirstTexture);
 			mFocusOn = false;
 		}
 	}
