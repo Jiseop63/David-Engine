@@ -18,7 +18,7 @@ namespace da
 		void SetOwner(GameObject* target) { mOwner = target; }
 
 	private:
-		const enums::eComponentType mColliderType;
+		const enums::eComponentType mComponentType;
 		GameObject* mOwner;
 	};
 }

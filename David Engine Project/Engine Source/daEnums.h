@@ -49,7 +49,7 @@ namespace da::enums
 		End,
 	};
 
-	enum class eColliderType
+	enum class eColliderShape
 	{
 		Rect,
 		Circle,

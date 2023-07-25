@@ -10,7 +10,7 @@ namespace da
 		: Component(enums::eComponentType::Collider)
 		, mTransform(nullptr)
 		, mColliderID(0)
-		, mColliderType(enums::eColliderType::Rect)
+		, mColliderShape(enums::eColliderShape::Rect)
 		, mColorType(enums::eColliderColor::Magenta)
 		, mPosition(math::Vector2::Zero)
 		, mCenter(math::Vector2::Zero)
@@ -43,7 +43,7 @@ namespace da
 		mesh.Position = pos;
 		mesh.Scale = scale;
 		mesh.Rotation = tr->GetRotation();
-		mesh.Type = enums::eColliderType::Rect;
+		mesh.Type = enums::eColliderShape::Rect;
 
 		renderer::PushDebugMeshAttribute(mesh);
 	}

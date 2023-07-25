@@ -7,6 +7,11 @@ namespace da
 	class Collider2D : public Component
 	{
 	public:
+		enum class eCollider
+		{
+
+		};
+
 		Collider2D();
 		virtual ~Collider2D();
 
@@ -17,8 +22,8 @@ namespace da
 
 
 	public:
-		void SetColliderType(enums::eColliderType type) { mColliderType = type; }
-		enums::eColliderType GetColliderType() { return mColliderType; }
+		void SetColliderType(enums::eColliderShape type) { mColliderShape = type; }
+		enums::eColliderShape GetColliderType() { return mColliderShape; }
 		void SetColliderColor(enums::eColliderColor type) { mColorType = type; }
 		enums::eColliderColor GetColliderColor() { return mColorType; }
 
@@ -43,7 +48,7 @@ namespace da
 		static UINT				ColliderNumber;
 		UINT					mColliderID;
 
-		enums::eColliderType	mColliderType;
+		enums::eColliderShape	mColliderShape;
 		enums::eColliderColor	mColorType;
 
 		math::Vector3			mPosition;

@@ -5,7 +5,7 @@ namespace da
 	using namespace enums;
 
 	Component::Component(eComponentType type)
-		: mColliderType(type)
+		: mComponentType(type)
 		, mOwner(nullptr)
 	{
 	}

@@ -74,8 +74,8 @@ namespace da
 				if (GameObject::eObjectState::Active != left->GetOwner()->GetObjectState()
 					|| GameObject::eObjectState::Active != right->GetOwner()->GetObjectState())
 					return;
-				iter->second = true;
 				//Enter
+				iter->second = true;
 				left->OnCollisionEnter(right);
 				right->OnCollisionEnter(left);
 			}
@@ -84,8 +84,8 @@ namespace da
 				if (GameObject::eObjectState::Active != left->GetOwner()->GetObjectState()
 					|| GameObject::eObjectState::Active != right->GetOwner()->GetObjectState())
 				{
-					iter->second = false;
 					//Exit
+					iter->second = false;
 					left->OnCollisionExit(right);
 					right->OnCollisionExit(left);
 				}
@@ -99,8 +99,8 @@ namespace da
 		{
 			if (true == iter->second)
 			{
-				iter->second = false;
 				//Exit
+				iter->second = false;
 				left->OnCollisionExit(right);
 				right->OnCollisionExit(left);
 			}
@@ -111,15 +111,15 @@ namespace da
 	{
 		bool retValue = false;
 
-		if (left->GetColliderType() == enums::eColliderType::Rect
-			&& right->GetColliderType() == enums::eColliderType::Rect)
+		if (left->GetColliderType() == enums::eColliderShape::Rect
+			&& right->GetColliderType() == enums::eColliderShape::Rect)
 		{
 			// rect <-> rect
 			retValue = RectToRect(left, right);
 		}
 
-		if (left->GetColliderType() == enums::eColliderType::Circle
-			&& right->GetColliderType() == enums::eColliderType::Circle)
+		if (left->GetColliderType() == enums::eColliderShape::Circle
+			&& right->GetColliderType() == enums::eColliderShape::Circle)
 		{
 			// circle <-> circle
 			retValue = CircleToCircle(left, right);

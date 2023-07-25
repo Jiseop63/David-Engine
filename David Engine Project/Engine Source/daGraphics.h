@@ -105,7 +105,7 @@ namespace da::graphics
 	};
 	struct DebugMesh
 	{
-		enums::eColliderType Type;
+		enums::eColliderShape Type;
 		math::Vector3 Position;
 		math::Vector3 Rotation;
 		math::Vector3 Scale;

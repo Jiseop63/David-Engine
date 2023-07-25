@@ -18,7 +18,7 @@ namespace gui
 	void Editor::Initialize()
 	{
 		// Debug Objects
-		mDebugObjects.resize((UINT)eColliderType::End);
+		mDebugObjects.resize((UINT)eColliderShape::End);
 		
 
 		// Rect
@@ -26,17 +26,17 @@ namespace gui
 			= da::Resources::Find<da::Mesh>(L"DebugRect");
 		std::shared_ptr<da::Material> material
 			= da::Resources::Find<da::Material>(L"DebugMaterial");
-		mDebugObjects[(UINT)eColliderType::Rect] = new DebugObject();
+		mDebugObjects[(UINT)eColliderShape::Rect] = new DebugObject();
 		da::MeshRenderer* meshRenderer = 
-			mDebugObjects[(UINT)eColliderType::Rect]->AddComponent<da::MeshRenderer>();
+			mDebugObjects[(UINT)eColliderShape::Rect]->AddComponent<da::MeshRenderer>();
 		meshRenderer->SetMesh(mesh);
 		meshRenderer->SetMaterial(material);
 
 		// Circle
 		mesh = da::Resources::Find<da::Mesh>(L"DebugCircle");
-		mDebugObjects[(UINT)eColliderType::Circle] = new DebugObject();
+		mDebugObjects[(UINT)eColliderShape::Circle] = new DebugObject();
 		meshRenderer =
-			mDebugObjects[(UINT)eColliderType::Circle]->AddComponent<da::MeshRenderer>();
+			mDebugObjects[(UINT)eColliderShape::Circle]->AddComponent<da::MeshRenderer>();
 		meshRenderer->SetMesh(mesh);
 		meshRenderer->SetMaterial(material);
 

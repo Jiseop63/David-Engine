@@ -15,10 +15,10 @@ namespace da
 		const std::wstring& GetPath() { return mPath; }
 		void SetKey(const std::wstring& key) { mKey = key; }
 		void SetPath(const std::wstring& path) { mPath = path; }
-		enums::eResourceType GetResourceType() { return mColliderType; }
+		enums::eResourceType GetResourceType() { return mResourceType; }
 
 	private:
-		const enums::eResourceType mColliderType;
+		const enums::eResourceType mResourceType;
 		std::wstring mKey;
 		std::wstring mPath;
 	};

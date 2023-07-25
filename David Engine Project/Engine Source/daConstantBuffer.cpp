@@ -5,7 +5,7 @@ namespace da::graphics
 {
 	ConstantBuffer::ConstantBuffer(const eCBType type)
 		: GPUBuffer()
-		, mColliderType(type)
+		, mCBType(type)
 	{
 	}
 	ConstantBuffer::~ConstantBuffer()
@@ -29,6 +29,6 @@ namespace da::graphics
 	}
 	void ConstantBuffer::Bind(eShaderStage stage)
 	{
-		da::graphics::GetDevice()->BindConstantBuffer(stage, mColliderType, Buffer.Get());
+		da::graphics::GetDevice()->BindConstantBuffer(stage, mCBType, Buffer.Get());
 	}
 }
