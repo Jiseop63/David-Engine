@@ -67,6 +67,7 @@ namespace da
 
 		// 플레이어 세팅
 		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Creature);
+		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Land);
 		GameDataManager::SetInventoryObject(mInventory);
 		GameDataManager::SetPlayerObject(mPlayer);
 		GameDataManager::SetWeaponObject(mWeapon);
@@ -578,7 +579,7 @@ namespace da
 		// floor
 		{
 			// 694 128
-			GameObject* floorObject = objects::InstantiateGameObject<GameObject>(this, enums::eLayerType::Tile, L"TownMapTileMaterial");
+			GameObject* floorObject = objects::InstantiateGameObject<GameObject>(this, enums::eLayerType::FrontBackGround, L"TownMapTileMaterial");
 			floorObject->SetName(L"Floor");
 			Transform* floorTr = floorObject->GetTransform();
 			floorTr->SetScale(Vector3(19.180f * 4.0f, 1.920f * 4.0f, 1.0f));
@@ -594,7 +595,7 @@ namespace da
 			
 			GameObject* weaponObject 
 				= objects::InstantiateGameObject<GameObject>
-				(this, enums::eLayerType::Playable, L"WeaponMaterial");
+				(this, enums::eLayerType::PlayableAttackCollider, L"WeaponMaterial");
 			mWeapon = weaponObject;
 			playerScript->SetWeaponObject(weaponObject);			
 		}
@@ -606,5 +607,16 @@ namespace da
 			monsterObject->GetTransform()->SetPosition( Vector3(1.50f, 0.0f, ObjectZ) );
 			monsterObject->AddComponent<CreatureScript>();
 		}
+
+		// land
+		{
+			GameObject* landObject = objects::InstantiateLandObject(
+				this, Vector3(-1.0f, -1.0f, 0.0f), Vector3(2.0f, 1.0f, 1.0f));
+			landObject->SetName(L"LandObj");
+		}
+
+		Layer& landLayer = GetLayer(enums::eLayerType::Land);
+
+		int a = 0;
 	}
 }

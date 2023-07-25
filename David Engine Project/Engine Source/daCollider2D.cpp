@@ -12,6 +12,7 @@ namespace da
 		, mColliderID(0)
 		, mColliderShape(enums::eColliderShape::Rect)
 		, mColorType(enums::eColliderColor::Magenta)
+		, mDetectionType(eColliderDetection::None)
 		, mPosition(math::Vector2::Zero)
 		, mCenter(math::Vector2::Zero)
 		, mSize(math::Vector2::One)
@@ -69,6 +70,7 @@ namespace da
 	{
 		mColorType = enums::eColliderColor::Red;
 		BindConstantBuffer();
+		
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetScripts();
 
@@ -91,12 +93,51 @@ namespace da
 	{
 		mColorType = enums::eColliderColor::Green;
 		BindConstantBuffer();
+
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetScripts();
 
 		for (Script* script : scripts)
 		{
 			script->OnCollisionExit(other);
+		}
+	}
+
+
+	void Collider2D::OnLandEnter(Collider2D* other)
+	{
+		mColorType = enums::eColliderColor::White;
+		BindConstantBuffer();
+
+		const std::vector<Script*>& scripts
+			= GetOwner()->GetScripts();
+
+		for (Script* script : scripts)
+		{
+			script->OnLandEnter(other);
+		}
+	}
+	void Collider2D::OnLandStay(Collider2D* other)
+	{
+		const std::vector<Script*>& scripts
+			= GetOwner()->GetScripts();
+
+		for (Script* script : scripts)
+		{
+			script->OnLandStay(other);
+		}
+	}
+	void Collider2D::OnLandExit(Collider2D* other)
+	{
+		mColorType = enums::eColliderColor::Magenta;
+		BindConstantBuffer();
+
+		const std::vector<Script*>& scripts
+			= GetOwner()->GetScripts();
+
+		for (Script* script : scripts)
+		{
+			script->OnLandExit(other);
 		}
 	}
 }

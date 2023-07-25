@@ -129,6 +129,23 @@ namespace da::objects
 		obj->Initialize();
 		return obj;
 	}
+	static GameObject* InstantiateLandObject(Scene* scene, math::Vector3 location, math::Vector3 scale)
+	{
+		GameObject* obj = new GameObject();
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::Land);
+		myLayer.AddGameObject(obj);
+
+		Collider2D* collider = obj->AddComponent<Collider2D>();
+		collider->SetName(L"LandCollider");
+		collider->SetColliderDetection(Collider2D::eColliderDetection::Land);
+		obj->Initialize();
+
+		Transform* transform = obj->GetTransform();
+		transform->SetPosition(location);
+		transform->SetScale(scale);
+
+		return obj;
+	}
 	static GameObject* InstantiateGridObject(Scene* scene, CameraObject* cameraObject)
 	{
 		GameObject* obj = new GameObject();

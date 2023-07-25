@@ -18,8 +18,8 @@ namespace da::enums
 
 		Background,	// 움직이지 않음
 		Layer,		// 카메라에 영향을 받음
-
-		Tile,
+		FrontBackGround,
+		Land,
 		ENV,
 
 		Playable,
@@ -61,6 +61,7 @@ namespace da::enums
 	enum class eColliderColor
 	{
 		Magenta,
+		White,
 		Green,
 		Red,
 		

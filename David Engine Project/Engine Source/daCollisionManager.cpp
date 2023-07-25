@@ -33,21 +33,36 @@ namespace da
 		const std::vector<GameObject*>& lefts = activeScene->GetLayer(left).GetGameObjects();
 		const std::vector<GameObject*>& rights = activeScene->GetLayer(right).GetGameObjects();
 
+		if (enums::eLayerType::Land == left
+			|| enums::eLayerType::Land == right)
+			int b = 0;
 		for (GameObject* leftObject : lefts)
 		{
-			Collider2D* leftObjectCollider = leftObject->GetComponent<Collider2D>();
-			if (nullptr == leftObjectCollider)
+			std::vector<Collider2D*> leftObjectColliders = leftObject->GetComponents<Collider2D>();
+			if (leftObjectColliders.empty())
 				continue;
-			
-			for (GameObject* rightObject : rights)
+
+			for (Collider2D* leftObjectCollider : leftObjectColliders)
 			{
-				Collider2D* rightObjectCollider = rightObject->GetComponent<Collider2D>();
-				if (nullptr == rightObjectCollider)
-					continue;
-				if (rightObject == leftObject)
-					continue;
-				
-				ColliderCollision(leftObjectCollider, rightObjectCollider);
+
+				for (GameObject* rightObject : rights)
+				{
+					if (rightObject == leftObject)
+						continue;
+
+					std::vector<Collider2D*> rightObjectColliders = rightObject->GetComponents<Collider2D>();
+					if (leftObjectColliders.empty())
+						continue;
+					
+					if (enums::eLayerType::Playable == right
+						&& enums::eLayerType::Land == left)
+						int a = 0;
+
+					for (Collider2D* rightObjectCollider : rightObjectColliders)
+					{
+						ColliderCollision(leftObjectCollider, rightObjectCollider);
+					}
+				}
 			}
 		}
 	}
@@ -74,6 +89,16 @@ namespace da
 				if (GameObject::eObjectState::Active != left->GetOwner()->GetObjectState()
 					|| GameObject::eObjectState::Active != right->GetOwner()->GetObjectState())
 					return;
+
+				if (Collider2D::eColliderDetection::Land == left->GetColliderDetection()
+					&& Collider2D::eColliderDetection::Land == right->GetColliderDetection())
+				{
+					iter->second = true;
+					left->OnLandEnter(right);
+					right->OnLandEnter(left);
+					return;
+				}
+
 				//Enter
 				iter->second = true;
 				left->OnCollisionEnter(right);
@@ -84,12 +109,27 @@ namespace da
 				if (GameObject::eObjectState::Active != left->GetOwner()->GetObjectState()
 					|| GameObject::eObjectState::Active != right->GetOwner()->GetObjectState())
 				{
+					if (Collider2D::eColliderDetection::Land == left->GetColliderDetection()
+						&& Collider2D::eColliderDetection::Land == right->GetColliderDetection())
+					{
+						iter->second = false;
+						left->OnLandExit(right);
+						right->OnLandExit(left);
+						return;
+					}
 					//Exit
 					iter->second = false;
 					left->OnCollisionExit(right);
 					right->OnCollisionExit(left);
 				}
 
+				if (Collider2D::eColliderDetection::Land == left->GetColliderDetection()
+					&& Collider2D::eColliderDetection::Land == right->GetColliderDetection())
+				{
+					left->OnLandStay(right);
+					right->OnLandStay(left);
+					return;
+				}
 				//Stay
 				left->OnCollisionStay(right);
 				right->OnCollisionStay(left);
@@ -99,6 +139,14 @@ namespace da
 		{
 			if (true == iter->second)
 			{
+				if (Collider2D::eColliderDetection::Land == left->GetColliderDetection()
+					&& Collider2D::eColliderDetection::Land == right->GetColliderDetection())
+				{
+					iter->second = false;
+					left->OnLandExit(right);
+					right->OnLandExit(left);
+					return;
+				}
 				//Exit
 				iter->second = false;
 				left->OnCollisionExit(right);
@@ -116,6 +164,7 @@ namespace da
 		{
 			// rect <-> rect
 			retValue = RectToRect(left, right);
+			return retValue;
 		}
 
 		if (left->GetColliderType() == enums::eColliderShape::Circle
@@ -123,6 +172,7 @@ namespace da
 		{
 			// circle <-> circle
 			retValue = CircleToCircle(left, right);
+			return retValue;
 		}
 
 		return retValue;

@@ -88,6 +88,14 @@ namespace da
             {
                 MoveFunc(-Vector2::UnitX);
             }
+            if (Input::GetKey(eKeyCode::W))
+            {
+                MoveFunc(Vector2::UnitY);
+            }
+            if (Input::GetKey(eKeyCode::S))
+            {
+                MoveFunc(-Vector2::UnitY);
+            }
         }
         // hp debug
         {
@@ -215,7 +223,7 @@ namespace da
         mWeaponObject = object;
         mWeaponTransform = mWeaponObject->GetComponent<Transform>();
         mWeaponRenderer = mWeaponObject->GetComponent<MeshRenderer>();
-        mWeaponCollider = mWeaponObject->AddComponent<Collider2D>();
+        //mWeaponCollider = mWeaponObject->AddComponent<Collider2D>();
         mWeaponScript = mWeaponObject->AddComponent<WeaponScript>();
         mWeaponRenderer->ChangeSlotTexture(Resources::Find<Texture>(L"GreatSword0Texture"));
         // 9 22
@@ -256,22 +264,28 @@ namespace da
 
         // body
         {
+            mBodyCollider->SetName(L"BodyCollider");
             mBodyCollider->SetSize(Vector2(0.30f, 0.40f));
             mBodyCollider->SetCenter(Vector2(0.0f, -0.10f));
         }
         // foot
         {
+            mFootCollider->SetName(L"FootCollider");
             mFootCollider->SetSize(Vector2(0.050f, 0.050f));
             mFootCollider->SetCenter(Vector2(0.0f, -0.50f));
+            mFootCollider->SetColliderDetection(Collider2D::eColliderDetection::Land);
         }
         // right & left
         {
-
+            mRightCollider->SetName(L"RightCollider");
             mRightCollider->SetSize(Vector2(0.050f, 0.050f));
             mRightCollider->SetCenter(Vector2(0.150f, -0.350f));
+            mRightCollider->SetColliderDetection(Collider2D::eColliderDetection::Land);
 
+            mLeftCollider->SetName(L"LeftCollider");
             mLeftCollider->SetSize(Vector2(0.050f, 0.050f));
             mLeftCollider->SetCenter(Vector2(-0.150f, -0.350f));
+            mLeftCollider->SetColliderDetection(Collider2D::eColliderDetection::Land);
         }
     }
 

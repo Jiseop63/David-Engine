@@ -533,7 +533,7 @@ namespace da
 		// Stage : 352 304
 		{
 			GameObject* stageObject = objects::InstantiateGameObject
-				<GameObject>(this, enums::eLayerType::Tile, L"2FStage2Material");
+				<GameObject>(this, enums::eLayerType::FrontBackGround, L"2FStage2Material");
 			stageObject->GetTransform()->SetScale(math::Vector3(3.520f * 4.0f, 3.040f * 4.0f, 1.0f));
 			stageObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, ObjectZ));
 		}
