@@ -219,18 +219,23 @@ namespace da
 		   ,Vector3{-0.5f, -0.5f, 0.0f}
 		};
 
+		// Tr 가져오기
 		Transform* leftTr = left->GetOwner()->GetComponent<Transform>();
 		Transform* rightTr = right->GetOwner()->GetComponent<Transform>();
 
+		left->GetCenter();
+		right->GetCenter();
+
+		// 각 world matrix 가져오기
 		Matrix leftMatrix = leftTr->GetWorldMatrix();
 		Matrix rightMatrix = rightTr->GetWorldMatrix();
 
 		Vector3 Axis[4] = {};
 
+		// Collider 스케일을 적용한 최종 Scale 만들기
 		Vector3 leftScale = Vector3(left->GetSize().x, left->GetSize().y, 1.0f);
 		Matrix finalLeft = Matrix::CreateScale(leftScale);
 		finalLeft *= leftMatrix;
-
 		Vector3 rightScale = Vector3(right->GetSize().x, right->GetSize().y, 1.0f);
 		Matrix finalRight = Matrix::CreateScale(rightScale);
 		finalRight *= rightMatrix;
@@ -247,8 +252,7 @@ namespace da
 
 		for (size_t i = 0; i < 4; i++)
 			Axis[i].z = 0.0f;
-
-		Vector3 vc = leftTr->GetPosition() - rightTr->GetPosition();
+		Vector3 vc = left->GetColliderPosition() - right->GetColliderPosition(); 
 		vc.z = 0.0f;
 
 		Vector3 centerDir = vc;
