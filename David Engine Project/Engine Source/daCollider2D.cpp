@@ -1,7 +1,7 @@
 #include "daCollider2D.h"
 #include "daGameObject.h"
 #include "daRenderer.h"
-
+#include "daConstantBuffer.h"
 namespace da
 {
 	UINT Collider2D::ColliderNumber = 0;
@@ -11,6 +11,7 @@ namespace da
 		, mTransform(nullptr)
 		, mColliderID(0)
 		, mColliderType(enums::eColliderType::Rect)
+		, mColorType(enums::eColliderColor::Magenta)
 		, mPosition(math::Vector2::Zero)
 		, mCenter(math::Vector2::Zero)
 		, mSize(math::Vector2::One)
@@ -46,8 +47,28 @@ namespace da
 
 		renderer::PushDebugMeshAttribute(mesh);
 	}
+
+	void Collider2D::BindConstantBuffer()
+	{
+		// 상수버퍼 만들기
+		graphics::ConstantBuffer* outCB
+			= renderer::constantBuffer[(UINT)graphics::eCBType::Collider];
+
+		// 데이터 채우기
+		renderer::ColliderCB data;
+
+		data.ColliderColorType = (UINT)mColorType;
+
+		outCB->SetData(&data);
+		outCB->Bind(graphics::eShaderStage::VS);
+		outCB->Bind(graphics::eShaderStage::PS);
+	}
+
+
 	void Collider2D::OnCollisionEnter(Collider2D* other)
 	{
+		mColorType = enums::eColliderColor::Red;
+		BindConstantBuffer();
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetScripts();
 
@@ -68,6 +89,8 @@ namespace da
 	}
 	void Collider2D::OnCollisionExit(Collider2D* other)
 	{
+		mColorType = enums::eColliderColor::Green;
+		BindConstantBuffer();
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetScripts();
 

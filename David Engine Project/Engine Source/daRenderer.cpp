@@ -128,6 +128,10 @@ namespace renderer
 		constantBuffer[(UINT)eCBType::Reverse] = new ConstantBuffer(eCBType::Reverse);
 		constantBuffer[(UINT)eCBType::Reverse]->Create(sizeof(ReverseCB));
 
+		// ColliderColor
+		constantBuffer[(UINT)eCBType::Collider] = new ConstantBuffer(eCBType::Collider);
+		constantBuffer[(UINT)eCBType::Collider]->Create(sizeof(ColliderCB));
+		
 		// fade
 		
 		// afterimage

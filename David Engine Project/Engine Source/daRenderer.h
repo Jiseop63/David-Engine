@@ -54,6 +54,12 @@ namespace renderer
 		bool Reverse;
 	};
 
+	CBUFFER(ColliderCB, CBSLOT_COLLIDER)
+	{
+		UINT ColliderColorType;
+	};
+
+
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[(UINT)da::graphics::eSamplerType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerStates[(UINT)da::graphics::eRSType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11DepthStencilState> DepthStencilStates[(UINT)da::graphics::eDSType::End];

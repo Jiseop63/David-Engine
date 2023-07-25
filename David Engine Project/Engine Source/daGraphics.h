@@ -19,6 +19,7 @@
 #define CBSLOT_COUNT			5;
 #define CBSLOT_ANIMATION		6;
 #define CBSLOT_REVERSE			7;
+#define CBSLOT_COLLIDER			8;
 
 
 namespace da::graphics
@@ -45,6 +46,7 @@ namespace da::graphics
 		Count,
 		Animation,
 		Reverse,
+		Collider,
 		End,
 	};
 

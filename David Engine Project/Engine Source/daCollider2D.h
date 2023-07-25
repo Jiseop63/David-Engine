@@ -13,8 +13,14 @@ namespace da
 		virtual void Initialize() override;
 		virtual void LateUpdate() override;
 
+		void BindConstantBuffer();
+
+
+	public:
 		void SetColliderType(enums::eColliderType type) { mColliderType = type; }
 		enums::eColliderType GetColliderType() { return mColliderType; }
+		void SetColliderColor(enums::eColliderColor type) { mColorType = type; }
+		enums::eColliderColor GetColliderColor() { return mColorType; }
 
 		void SetSize(math::Vector2 size) { mSize = size; }
 		math::Vector2 GetSize() { return mSize; }
@@ -30,15 +36,20 @@ namespace da
 	public:
 		UINT GetColliderID() { return mColliderID; }
 
-	private:
-		static UINT ColliderNumber;
-		UINT mColliderID;
-		enums::eColliderType mColliderType;
+	protected:
 		Transform* mTransform;
 
-		math::Vector3 mPosition;
-		math::Vector2 mSize;
-		math::Vector2 mCenter;
+	private:
+		static UINT				ColliderNumber;
+		UINT					mColliderID;
 
+		enums::eColliderType	mColliderType;
+		enums::eColliderColor	mColorType;
+
+		math::Vector3			mPosition;
+		math::Vector2			mSize;
+		math::Vector2			mCenter;
+
+	private:
 	};
 }

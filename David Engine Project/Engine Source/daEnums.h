@@ -58,6 +58,15 @@ namespace da::enums
 		End,
 	};
 	
+	enum class eColliderColor
+	{
+		Magenta,
+		Green,
+		Red,
+		
+		End,
+	};
+
 #pragma region Contents
 	enum class eWeaponType
 	{

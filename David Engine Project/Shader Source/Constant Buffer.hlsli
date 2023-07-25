@@ -41,3 +41,7 @@ cbuffer Reverse : register(b7)
 {
     bool cReverse;
 }
+cbuffer Collider : register(b8)
+{
+    uint cColliderColorType;
+}
