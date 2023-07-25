@@ -48,6 +48,8 @@ namespace da
 		GameObject*		mWeapon;
 		GameObject*		mPlayer;
 
+		GameObject* mLifeBar;
+		GameObject* mDashCountBar;
 
 	private:
 		std::vector<Layer> mLayers;

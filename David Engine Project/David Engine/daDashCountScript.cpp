@@ -15,6 +15,10 @@ namespace da
 	}
 	void DashCountScript::LateUpdate()
 	{
+		
+	}
+	void DashCountScript::BindConstantBuffer()
+	{
 		// value 가져오기
 		structs::sDashCount dashCount = GameDataManager::GetDashCount();
 
@@ -24,8 +28,8 @@ namespace da
 
 		// 데이터 채우기
 		renderer::CountCB data;
-		data.MaxCount = dashCount.MaxCount;
-		data.CurCount = dashCount.CurCount;
+		data.MaxCount = (float)dashCount.MaxCount;
+		data.CurCount = (float)dashCount.CurCount;
 
 		outCB->SetData(&data);
 		outCB->Bind(graphics::eShaderStage::VS);

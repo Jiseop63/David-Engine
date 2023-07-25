@@ -59,6 +59,8 @@ namespace da
 		GameDataManager::SetInventoryObject(mInventory);
 		GameDataManager::SetPlayerObject(mPlayer);
 		GameDataManager::SetWeaponObject(mWeapon);
+		GameDataManager::SetHPBar(mLifeBar);
+		GameDataManager::SetDashCountBar(mDashCountBar);
 	}
 	void Scene_Dungeon2F_Stage1::OnExit()
 	{
@@ -72,7 +74,7 @@ namespace da
 
 		// HUD 按眉 积己
 		{
-			// hpBar
+			// hpBar, dashBar
 			{
 				GameObject* playerHUD = objects::InstantiateObject
 					<GameObject>(this, enums::eLayerType::None);
@@ -101,6 +103,7 @@ namespace da
 				GameObject* lifeBar = objects::InstantiateGameObject
 					<GameObject>(this, enums::eLayerType::UI, L"PlayerLifeBarMaterial");
 				lifeBar->SetName(L"lifeBar");
+				mLifeBar = lifeBar;
 				Transform* lifeBarTransform = lifeBar->GetTransform();
 				lifeBarTransform->SetParent(playerHUDTransform);
 				// Bar 农扁 炼例
@@ -135,6 +138,8 @@ namespace da
 				// Dash Active 按眉 积己
 				GameObject* dashActivate = objects::InstantiateGameObject
 					<GameObject>(this, enums::eLayerType::UI, L"DashActivateMaterial");
+				mDashCountBar = dashActivate;
+
 				Transform* dashActivateTransform = dashActivate->GetTransform();
 				dashActivateTransform->SetParent(playerHUDTransform);
 
@@ -148,25 +153,45 @@ namespace da
 				dashActivateTransform->SetPosition(dashActivePosition);
 				dashActivate->AddComponent<DashCountScript>();
 			}
+
+			// player Amour panel A, B
+			{
+				// Panel A 积己
+				GameObject* weaponPanelA = objects::InstantiateGameObject
+					<GameObject>(this, enums::eLayerType::UI, L"Armour1Material");
+				weaponPanelA->SetName(L"weaponPanelA");
+				weaponPanelA->AddComponent<ArmourScript>();
+				// Scale Position 技泼 34 24
+				Transform* weaponPanelATransform = weaponPanelA->GetTransform();
+				float weaponPanelScaleX = 0.340f * 4.0f;
+				float weaponPanelScaleY = 0.240f * 4.0f;
+				float armourPadding = 0.20f;
+
+				Vector3 armourPanelScale(weaponPanelScaleX, weaponPanelScaleY, 1.0f);
+				Vector3 armourPanelPosition(MaxPositionX - (weaponPanelScaleX / 2.0f) - armourPadding * 2.0f
+					, -MaxPositionY + (weaponPanelScaleY / 2.0f) + armourPadding, HUDZ);
+
+				weaponPanelATransform->SetScale(armourPanelScale);
+				weaponPanelATransform->SetPosition(armourPanelPosition);
+
+				// Panel B 积己
+				GameObject* weaponPanelB = objects::InstantiateGameObject
+					<GameObject>(this, enums::eLayerType::UI, L"Armour2Material");
+				weaponPanelB->SetName(L"weaponPanelB");
+				ArmourScript* armourBScript = weaponPanelB->AddComponent<ArmourScript>();
+				armourBScript->SetBackup(true);
+				Transform* weaponPanelBTransform = weaponPanelB->GetTransform();
+
+				weaponPanelBTransform->SetScale(armourPanelScale);
+				weaponPanelBTransform->SetPosition(
+					armourPanelPosition + Vector3(armourPadding, armourPadding, 0.0001f));
+
+				// A, B Padding 瞒捞
+				// X : armourPadding * 3, Y : armourPadding
+			}
 		}
 
-		// player weapon panel
-		{
-			GameObject* weaponPanel = objects::InstantiateGameObject
-				<GameObject>(this, enums::eLayerType::UI, L"WeaponBaseMaterial");
-			weaponPanel->SetName(L"weaponPanel");
-			Transform* weaponPanelTransform = weaponPanel->GetTransform();
-			float weaponPanelScaleX = 1.70f;
-			float weaponPanelScaleY = 1.0f;
-			weaponPanelTransform->SetScale(math::Vector3(weaponPanelScaleX, weaponPanelScaleY, 1.0f));
-			float dashPanePadding = 0.150f;
 
-			Vector3 weaponPanelPosition
-				= Vector3(
-					MaxPositionX - (weaponPanelScaleX / 2.0f) - dashPanePadding
-					, -MaxPositionY + (weaponPanelScaleY / 2.0f) + dashPanePadding, HUDZ);
-			weaponPanelTransform->SetPosition(weaponPanelPosition);
-		}
 		// mouse
 		{
 			GameObject* cursorObject = objects::InstantiateGameObject
@@ -519,6 +544,27 @@ namespace da
 				<GameObject>(this, enums::eLayerType::ENV, L"Close1FMaterial");
 			doorObject->GetTransform()->SetScale(math::Vector3(0.570f * 4.0f, 0.650f * 4.0f, 1.0f));
 			doorObject->GetTransform()->SetPosition(math::Vector3(-3.0f, -1.0f + 0.080f, ObjectZ));
+		}
+		// player
+		{
+			GameObject* playerObject = objects::InstantiatePlayer(this, L"AnimationMaterial");
+			playerObject->SetName(L"player");
+			PlayerScript* playerScript = playerObject->GetComponent<PlayerScript>();
+			mPlayer = playerObject;
+
+			GameObject* weaponObject
+				= objects::InstantiateGameObject<GameObject>
+				(this, enums::eLayerType::Playable, L"WeaponMaterial");
+			mWeapon = weaponObject;
+			playerScript->SetWeaponObject(weaponObject);
+		}
+
+		// test enemy
+		{
+			GameObject* monsterObject = objects::InstantiateCreature<GameObject>(this, L"AnimationMaterial");
+			monsterObject->SetName(L"monster");
+			monsterObject->GetTransform()->SetPosition(Vector3(1.50f, 0.0f, ObjectZ));
+			monsterObject->AddComponent<CreatureScript>();
 		}
 	}
 }

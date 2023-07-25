@@ -187,12 +187,13 @@ namespace da
     void PlayerScript::Dash()
     {
         // condition
-        if (0 >= mDashCount->CurCount)
-            return;
-        mDashCount->CurCount--;
+        if (GameDataManager::UseDash())
+        {
+            // to do
+            Vector3 mousePosition = Input::GetMouseWorldPosition();
+        }
 
-        // to do
-        Vector3 mousePosition = Input::GetMouseWorldPosition();
+        
 
     }
     void PlayerScript::Jump()
@@ -201,19 +202,13 @@ namespace da
     void PlayerScript::GetDamage()
     {
         float value = 5.0f;
-
-        mPlayerStat->CurHP -= value;
-        if (0 >= mPlayerStat->MaxHP)
-            mPlayerStat->CurHP = 0;
+        GameDataManager::GetDamage(value);
     }
 
     void PlayerScript::GetHeal()
     {
         float value = 5.0f;
-
-        mPlayerStat->CurHP += value;
-        if (mPlayerStat->MaxHP <= mPlayerStat->CurHP)
-            mPlayerStat->CurHP = mPlayerStat->MaxHP;
+        GameDataManager::GetHeal(value);
     }
     void PlayerScript::SetWeaponObject(GameObject* object)
     {
@@ -233,10 +228,9 @@ namespace da
             return;
 
         mDashCountTime += (float)Time::DeltaTime();
-
         if (mRegenCountTime <= mDashCountTime)
         {
-            mDashCount->CurCount++;
+            GameDataManager::RecoveryDash();
             mDashCountTime = 0.0f;
         }
     }

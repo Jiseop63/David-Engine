@@ -70,6 +70,8 @@ namespace da
 		GameDataManager::SetInventoryObject(mInventory);
 		GameDataManager::SetPlayerObject(mPlayer);
 		GameDataManager::SetWeaponObject(mWeapon);
+		GameDataManager::SetHPBar(mLifeBar);
+		GameDataManager::SetDashCountBar(mDashCountBar);
 	}
 	void Scene_Town::OnExit()
 	{
@@ -146,6 +148,7 @@ namespace da
 				GameObject* lifeBar = objects::InstantiateGameObject
 					<GameObject>(this, enums::eLayerType::UI, L"PlayerLifeBarMaterial");
 				lifeBar->SetName(L"lifeBar");
+				mLifeBar = lifeBar;
 				Transform* lifeBarTransform = lifeBar->GetTransform();
 				lifeBarTransform->SetParent(playerHUDTransform);
 				// Bar 农扁 炼例
@@ -180,6 +183,8 @@ namespace da
 				// Dash Active 按眉 积己
 				GameObject* dashActivate = objects::InstantiateGameObject
 					<GameObject>(this, enums::eLayerType::UI, L"DashActivateMaterial");
+				mDashCountBar = dashActivate;
+				
 				Transform* dashActivateTransform = dashActivate->GetTransform(); 
 				dashActivateTransform->SetParent(playerHUDTransform);
 
@@ -591,10 +596,7 @@ namespace da
 				= objects::InstantiateGameObject<GameObject>
 				(this, enums::eLayerType::Playable, L"WeaponMaterial");
 			mWeapon = weaponObject;
-			playerScript->SetWeaponObject(weaponObject);
-			//MeshRenderer* mr = weaponObject->GetComponent<MeshRenderer>();
-			//std::shared_ptr<Material> weaponMaterial = mr->GetMaterial();
-			//weaponMaterial->SetTexture(Resources::Find<Texture>(L"LongSwordTexture"));
+			playerScript->SetWeaponObject(weaponObject);			
 		}
 
 		// test enemy

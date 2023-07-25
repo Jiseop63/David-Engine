@@ -10,9 +10,6 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)SpriteShader.hlsl">
       <Filter>2 Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)GridShader.hlsl">
-      <Filter>3 Custom Shaders</Filter>
-    </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)LifeBarShader.hlsl">
       <Filter>3 Custom Shaders</Filter>
     </FxCompile>
@@ -26,6 +23,9 @@
       <Filter>3 Custom Shaders</Filter>
     </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)AnimationShader.hlsl">
+      <Filter>2 Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)GridShader.hlsl">
       <Filter>2 Shaders</Filter>
     </FxCompile>
   </ItemGroup>

@@ -12,8 +12,8 @@ namespace da::structs
 	};
 	struct sDashCount
 	{
-		float MaxCount;
-		float CurCount;
+		int MaxCount;
+		int CurCount;
 		sDashCount()
 			: MaxCount(0), CurCount(0)
 		{}

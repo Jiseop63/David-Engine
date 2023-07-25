@@ -17,6 +17,9 @@ namespace da
 		static void SetInventoryObject(GameObject* obj) { mInventoryObject = obj; }
 		static void SetWeaponObject(GameObject* obj) { mWeaponObject = obj; }
 		static void SetPlayerObject(GameObject* obj) { mPlayerObject = obj; }
+		
+		static void SetHPBar(GameObject* obj) { mHPBar = obj; }
+		static void SetDashCountBar(GameObject* obj) { mDashCountBar = obj; }
 
 	public:
 		static structs::sCreatureStat& GetPlayerStat() { return mPlayerStat; }
@@ -24,15 +27,23 @@ namespace da
 		static structs::sInventory& GetInventory() { return mInventoryData; }
 
 
+#pragma region HUD Func
+	public:
+		static void GetDamage(float value);
+		static void GetHeal(float value);
 
-#pragma region Inventory & HUD Func
+		static bool UseDash();
+		static void RecoveryDash();
+#pragma endregion
+
+#pragma region Inventory Func
 	public:
 		static void CallInventory();
 		static void ChangeArmour();
 
 #pragma endregion
 
-
+#pragma region Data
 	private:
 		static structs::sCreatureStat mPlayerStat;
 		static structs::sDashCount mDashCount;
@@ -40,12 +51,18 @@ namespace da
 
 		static structs::sArmour mActiveArmour;
 		static structs::sArmour mSubArmour;
+#pragma endregion
 
 
+#pragma region Objects
 	private:
 		static GameObject* mInventoryObject;
 		static GameObject* mWeaponObject;
 		static GameObject* mPlayerObject;
+
+		static GameObject* mHPBar;
+		static GameObject* mDashCountBar;
+#pragma endregion
 	};
 }
 

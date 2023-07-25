@@ -11,6 +11,8 @@ namespace da
 		, mInventory(nullptr)
 		, mWeapon(nullptr)
 		, mPlayer(nullptr)
+		, mLifeBar(nullptr)
+		, mDashCountBar(nullptr)
 	{
 		mLayers.resize((int)eLayerType::End);
 	}

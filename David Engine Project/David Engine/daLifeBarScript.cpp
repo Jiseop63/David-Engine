@@ -15,6 +15,10 @@ namespace da
 	}
 	void LifeBarScript::LateUpdate()
 	{
+		
+	}
+	void LifeBarScript::BindConstantBuffer()
+	{
 		// value 가져오기
 		structs::sCreatureStat playerlife = GameDataManager::GetPlayerStat();
 
