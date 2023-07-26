@@ -2,6 +2,7 @@
 #include "daTime.h"
 #include "daGameObject.h"
 #include "daTransform.h"
+#include "daCollider2D.h"
 
 namespace da
 {
@@ -11,12 +12,13 @@ namespace da
 		, mDimensionType(eDimensionType::SecondDimension)
 		, mMass(0.0f)
 		, mFriction(0.0f)
+		, mForceMagnitude(0.0f)
 		, mForce(Vector2::Zero)
 		, mAcceleration(Vector2::Zero)
 		, mVelocity(Vector2::Zero)		
 	{
 		mMass = 1.0f;
-		mFriction = 3.0f;
+		mFriction = 4.50f;
 	}
 	Rigidbody::~Rigidbody()
 	{
@@ -24,46 +26,98 @@ namespace da
 
 	void Rigidbody::Update()
 	{
+		
+		CalculateVelocity();
+
+		ApplyGravity();
+		ApplyLimitVelocity();
+		ApplyFriction();					
+		ApplyLocation();
+
+		// 힘 초기화
+		mForce = Vector2::Zero;
+		mAcceleration = Vector2::Zero;
+		mForceMagnitude = 0.0f;
+	}
+
+	void Rigidbody::CalculateVelocity()
+	{
 		// 가속도 구하기 (A = F / M)
-		mAcceleration = mForce / mMass;
-		mVelocity += mAcceleration * (float)Time::DeltaTime() * 2.0f;
+		mAcceleration = mForce * mForceMagnitude / mMass;
+		mVelocity += mAcceleration * (float)Time::DeltaTime() * 3.0f;
+	}
 
-		// gravity
+	void Rigidbody::ApplyGravity()
+	{
+		std::vector<Collider2D*> onwerColliders = GetOwner()->GetComponents<Collider2D>();
+
+		Collider2D* footCollider = nullptr;
+		for (Collider2D* collider : onwerColliders)
+		{
+			if (Collider2D::eColliderDetection::Land == collider->GetColliderDetection())
+				footCollider = collider;
+		}
+
+		if (nullptr == footCollider)
+		{
+			int a = 0;
+			return;
+		}
+		bool isGround = footCollider->IsGround();
+
 		Vector2 gravity(0.0f, 0.980f);
+		
+		if (isGround)
+		{
+			// y 속도 제거하기
+			gravity.Normalize();
+			// 땅에 파고들었으면 위로 올려주기
+			float dot = mVelocity.Dot(gravity);
+			mVelocity -= gravity * dot;
+		}
+		else
+		{
+			// 아래로 힘 적용
+			mVelocity += gravity * Time::DeltaTime();
+		}
+	}
 
-
-		// limit
-		float limitMagnitude = 2.5f;
+	void Rigidbody::ApplyLimitVelocity()
+	{
+		float limitVelocityMagnitude = 3.50f;
 
 		float totalVelocity = mVelocity.Length();
 
-		if (totalVelocity > limitMagnitude)
+		if (totalVelocity > limitVelocityMagnitude)
 		{
 			mVelocity.Normalize();
-			mVelocity *= limitMagnitude;
+			mVelocity *= limitVelocityMagnitude;
 		}
+	}
 
-
-		// friction
+	void Rigidbody::ApplyFriction()
+	{
 		if (0 < mVelocity.LengthSquared())
 		{
 			Vector2 frictionUnit = -mVelocity;
 			frictionUnit.Normalize();
 			Vector2 friction = frictionUnit * mFriction * mMass * (float)Time::DeltaTime();
-			
-			
-			// 추가 입력이 없으면 마찰력 8배
+
+
+			// 추가 입력이 없으면 마찰력 n배
 			if (0 >= mForce.LengthSquared())
-				friction *= 8.0f;
-			
+				friction *= 12.0f;
+
 			// 기본 마찰력
 			if (mVelocity.LengthSquared() < friction.LengthSquared())
 				mVelocity = Vector2::Zero;
 			else
 				mVelocity += friction;
-			
 		}
+	}
 
+	void Rigidbody::ApplyLocation()
+	{
 		// 오너 Position 가져오기
 		Vector3 retPos = GetOwner()->GetComponent<Transform>()->GetPosition();
 		Vector2 calcPos(retPos.x, retPos.y);
@@ -75,10 +129,6 @@ namespace da
 		retPos.x = calcPos.x;
 		retPos.y = calcPos.y;
 		GetOwner()->GetComponent<Transform>()->SetPosition(retPos);
-
-		// 힘 초기화
-		mForce = Vector2::Zero;
-
 	}
 
 	void Rigidbody::EraseVelocity(math::Vector2 dir, math::Vector2 velocity)

@@ -16,6 +16,7 @@ namespace da
 		, mCenter(math::Vector2::Zero)
 		, mSize(math::Vector2::One)
 		, mColliderColor(math::Vector4::Zero)
+		, mGrounded(false)
 	{
 		mColliderID = ColliderNumber++;
 		mColliderColor = math::Vector4(0.0f, 1.0f, 0.0f, 1.0f);
@@ -60,6 +61,7 @@ namespace da
 
 	void Collider2D::ChangingLandColor(bool isCollision)
 	{
+		mGrounded = isCollision;
 		if (isCollision)
 			mColliderColor = math::Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 		else
@@ -122,7 +124,6 @@ namespace da
 		ChangingLandColor(true);
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetScripts();
-
 		for (Script* script : scripts)
 		{
 			script->OnLandEnter(other);

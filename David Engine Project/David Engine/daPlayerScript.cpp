@@ -189,7 +189,7 @@ namespace da
 
     void PlayerScript::MoveFunc(Vector2 dir)
     {
-        mRigidbody->ApplyForce(dir * mPlayerStat->MoveSpeed);
+        mRigidbody->ApplyForce(dir, mPlayerStat->MoveSpeed);
     }
 
     void PlayerScript::Dash()

@@ -611,7 +611,7 @@ namespace da
 		// land
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
-				this, Vector3(-1.0f, -1.0f, 0.0f), Vector3(2.0f, 1.0f, 1.0f));
+				this, Vector3(-1.0f, -1.50f, 0.0f), Vector3(8.0f, 1.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
 
