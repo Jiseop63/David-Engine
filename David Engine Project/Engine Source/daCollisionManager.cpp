@@ -22,8 +22,8 @@ namespace da
 				{
 					LayerCollision((enums::eLayerType)row, (enums::eLayerType)column);
 				}
-			}			
-		}		
+			}
+		}
 	}
 
 	void CollisionManager::LayerCollision(enums::eLayerType left, enums::eLayerType right)
@@ -53,7 +53,7 @@ namespace da
 					std::vector<Collider2D*> rightObjectColliders = rightObject->GetComponents<Collider2D>();
 					if (leftObjectColliders.empty())
 						continue;
-					
+
 					if (enums::eLayerType::Playable == right
 						&& enums::eLayerType::Land == left)
 						int a = 0;
@@ -82,14 +82,14 @@ namespace da
 			iter = mCollisionMap.find(colliderID.id);
 		}
 
-		if ( Intersect(left, right) )
+		if (Intersect(left, right))
 		{
 			if (false == iter->second)
 			{
 				if (GameObject::eObjectState::Active != left->GetOwner()->GetObjectState()
 					|| GameObject::eObjectState::Active != right->GetOwner()->GetObjectState())
 					return;
-
+				
 				if (Collider2D::eColliderDetection::Land == left->GetColliderDetection()
 					&& Collider2D::eColliderDetection::Land == right->GetColliderDetection())
 				{
@@ -98,11 +98,16 @@ namespace da
 					right->OnLandEnter(left);
 					return;
 				}
-
-				//Enter
-				iter->second = true;
-				left->OnCollisionEnter(right);
-				right->OnCollisionEnter(left);
+				if (Collider2D::eColliderDetection::Default == left->GetColliderDetection()
+					&& Collider2D::eColliderDetection::Default == right->GetColliderDetection())
+				{
+					//Enter
+					iter->second = true;
+					left->OnCollisionEnter(right);
+					right->OnCollisionEnter(left);
+					return;
+				}
+				
 			}
 			else
 			{
@@ -117,10 +122,16 @@ namespace da
 						right->OnLandExit(left);
 						return;
 					}
-					//Exit
-					iter->second = false;
-					left->OnCollisionExit(right);
-					right->OnCollisionExit(left);
+					if (Collider2D::eColliderDetection::Default == left->GetColliderDetection()
+						&& Collider2D::eColliderDetection::Default == right->GetColliderDetection())
+					{
+						//Exit
+						iter->second = false;
+						left->OnCollisionExit(right);
+						right->OnCollisionExit(left);
+						return;
+					}
+					
 				}
 
 				if (Collider2D::eColliderDetection::Land == left->GetColliderDetection()
@@ -130,9 +141,15 @@ namespace da
 					right->OnLandStay(left);
 					return;
 				}
-				//Stay
-				left->OnCollisionStay(right);
-				right->OnCollisionStay(left);
+				if (Collider2D::eColliderDetection::Default == left->GetColliderDetection()
+					&& Collider2D::eColliderDetection::Default == right->GetColliderDetection())
+				{
+					//Stay
+					left->OnCollisionStay(right);
+					right->OnCollisionStay(left);
+					return;
+				}
+				
 			}
 		}
 		else
@@ -147,10 +164,15 @@ namespace da
 					right->OnLandExit(left);
 					return;
 				}
-				//Exit
-				iter->second = false;
-				left->OnCollisionExit(right);
-				right->OnCollisionExit(left);
+				if (Collider2D::eColliderDetection::Default == left->GetColliderDetection()
+					&& Collider2D::eColliderDetection::Default == right->GetColliderDetection())
+				{
+					//Exit
+					iter->second = false;
+					left->OnCollisionExit(right);
+					right->OnCollisionExit(left);
+					return;
+				}
 			}
 		}
 	}
@@ -252,7 +274,7 @@ namespace da
 
 		for (size_t i = 0; i < 4; i++)
 			Axis[i].z = 0.0f;
-		Vector3 vc = left->GetColliderPosition() - right->GetColliderPosition(); 
+		Vector3 vc = left->GetColliderPosition() - right->GetColliderPosition();
 		vc.z = 0.0f;
 
 		Vector3 centerDir = vc;
@@ -277,5 +299,4 @@ namespace da
 	{
 		return false;
 	}
-
 }

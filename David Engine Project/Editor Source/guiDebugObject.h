@@ -9,8 +9,6 @@ namespace gui
 		DebugObject();
 		virtual ~DebugObject();
 
-		virtual void Update() override;
-		virtual void LateUpdate() override;
-		virtual void Render() override;
+		void BindColor(da::math::Vector4 color);
 	};
 }

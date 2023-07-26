@@ -24,7 +24,7 @@ namespace da::structs
 		da::enums::eWeaponType Weapon;
 		da::enums::eShieldType Shield;
 		sArmour()
-			: Weapon(da::enums::eWeaponType::None), Shield(da::enums::eShieldType::None)
+			: Weapon(da::enums::eWeaponType::Default), Shield(da::enums::eShieldType::Default)
 		{}
 	};
 	struct sAccessorys
@@ -36,9 +36,9 @@ namespace da::structs
 		da::enums::eAccessoryType e;
 
 		sAccessorys()
-			: a(da::enums::eAccessoryType::None), b(da::enums::eAccessoryType::None)
-			, c(da::enums::eAccessoryType::None), d(da::enums::eAccessoryType::None)
-			, e(da::enums::eAccessoryType::None)
+			: a(da::enums::eAccessoryType::Default), b(da::enums::eAccessoryType::Default)
+			, c(da::enums::eAccessoryType::Default), d(da::enums::eAccessoryType::Default)
+			, e(da::enums::eAccessoryType::Default)
 		{}
 	};
 	struct sItems
@@ -62,15 +62,15 @@ namespace da::structs
 		da::enums::eItemType i24;
 
 		sItems()
-			: i00(da::enums::eItemType::None), i01(da::enums::eItemType::None)
-			, i02(da::enums::eItemType::None), i03(da::enums::eItemType::None)
-			, i04(da::enums::eItemType::None)
-			, i10(da::enums::eItemType::None), i11(da::enums::eItemType::None)
-			, i12(da::enums::eItemType::None), i13(da::enums::eItemType::None)
-			, i14(da::enums::eItemType::None)
-			, i20(da::enums::eItemType::None), i21(da::enums::eItemType::None)
-			, i22(da::enums::eItemType::None), i23(da::enums::eItemType::None)
-			, i24(da::enums::eItemType::None)
+			: i00(da::enums::eItemType::Default), i01(da::enums::eItemType::Default)
+			, i02(da::enums::eItemType::Default), i03(da::enums::eItemType::Default)
+			, i04(da::enums::eItemType::Default)
+			, i10(da::enums::eItemType::Default), i11(da::enums::eItemType::Default)
+			, i12(da::enums::eItemType::Default), i13(da::enums::eItemType::Default)
+			, i14(da::enums::eItemType::Default)
+			, i20(da::enums::eItemType::Default), i21(da::enums::eItemType::Default)
+			, i22(da::enums::eItemType::Default), i23(da::enums::eItemType::Default)
+			, i24(da::enums::eItemType::Default)
 		{}
 	};
 	struct sInventory

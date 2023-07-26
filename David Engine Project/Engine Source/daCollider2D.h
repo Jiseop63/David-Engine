@@ -9,9 +9,9 @@ namespace da
 	public:
 		enum class eColliderDetection
 		{
-			None,
-			Land,			// 바닥
-			Body,			// 피해를 입는 부분
+			Default,
+			Land,			// 바닥 충돌 전용
+			Inactive,
 			End,
 		};
 
@@ -21,15 +21,13 @@ namespace da
 		virtual void Initialize() override;
 		virtual void LateUpdate() override;
 
-		void BindConstantBuffer();
-
+		void ChangingCollisionColor(bool isCollision);
+		void ChangingLandColor(bool isCollision);
 
 	public:
 		void SetColliderType(enums::eColliderShape type) { mColliderShape = type; }
 		enums::eColliderShape GetColliderType() { return mColliderShape; }
-		void SetColliderColor(enums::eColliderColor type) { mColorType = type; }
-		enums::eColliderColor GetColliderColor() { return mColorType; }
-		void SetColliderDetection(eColliderDetection type) { mDetectionType = type; }
+		void SetColliderDetection(eColliderDetection type);
 		eColliderDetection GetColliderDetection() { return mDetectionType; }
 
 		void SetSize(math::Vector2 size) { mSize = size; }
@@ -60,12 +58,12 @@ namespace da
 		UINT					mColliderID;
 
 		enums::eColliderShape	mColliderShape;
-		enums::eColliderColor	mColorType;
 		eColliderDetection		mDetectionType;
 
 		math::Vector3			mPosition;
 		math::Vector2			mSize;
 		math::Vector2			mCenter;
+		math::Vector4			mColliderColor;
 
 	private:
 	};

@@ -33,19 +33,19 @@ namespace renderer
 #pragma region Rect Mesh
 		vertexes.resize(4);
 		vertexes[0].pos = Vector3(-0.5f, 0.5f, 0.0f);
-		vertexes[0].color = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
+		vertexes[0].color = Vector4(1.0f, 0.0f, 1.0f, 1.0f);
 		vertexes[0].uv = Vector2(0.0f, 0.0f);
 
 		vertexes[1].pos = Vector3(0.5f, 0.5f, 0.0f);
-		vertexes[1].color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+		vertexes[1].color = Vector4(1.0f, 0.0f, 1.0f, 1.0f);
 		vertexes[1].uv = Vector2(1.0f, 0.0f);
 
 		vertexes[2].pos = Vector3(0.5f, -0.5f, 0.0f);
-		vertexes[2].color = Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+		vertexes[2].color = Vector4(1.0f, 0.0f, 1.0f, 1.0f);
 		vertexes[2].uv = Vector2(1.0f, 1.0f);
 
 		vertexes[3].pos = Vector3(-0.5f, -0.5f, 0.0f);
-		vertexes[3].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+		vertexes[3].color = Vector4(1.0f, 0.0f, 1.0f, 1.0f);
 		vertexes[3].uv = Vector2(0.0f, 1.0f);
 
 		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
@@ -787,7 +787,7 @@ namespace renderer
 		// None 
 		depthStencilDesc.DepthEnable = false;
 		GetDevice()->CreateDepthStencilState(
-			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::None].GetAddressOf());
+			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::Default].GetAddressOf());
 #pragma endregion
 #pragma region Blend State
 		D3D11_BLEND_DESC blendDesc = {};

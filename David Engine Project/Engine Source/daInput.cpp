@@ -41,7 +41,7 @@ namespace da
 		{
 			Key keyInfo;
 			keyInfo.key = (eKeyCode)i;
-			keyInfo.state = eKeyState::None;
+			keyInfo.state = eKeyState::Default;
 			keyInfo.bPressed = false;
 
 			mKeys.push_back(keyInfo);
@@ -70,7 +70,7 @@ namespace da
 					if (mKeys[i].bPressed)
 						mKeys[i].state = eKeyState::Up;
 					else
-						mKeys[i].state = eKeyState::None;
+						mKeys[i].state = eKeyState::Default;
 
 					mKeys[i].bPressed = false;
 				}
@@ -100,7 +100,7 @@ namespace da
 				}
 				else if (eKeyState::Up == mKeys[i].state)
 				{
-					mKeys[i].state = eKeyState::None;
+					mKeys[i].state = eKeyState::Default;
 				}
 
 				mKeys[i].bPressed = false;

@@ -11,13 +11,14 @@ namespace da
 		, mTransform(nullptr)
 		, mColliderID(0)
 		, mColliderShape(enums::eColliderShape::Rect)
-		, mColorType(enums::eColliderColor::Magenta)
-		, mDetectionType(eColliderDetection::None)
+		, mDetectionType(eColliderDetection::Default)
 		, mPosition(math::Vector2::Zero)
 		, mCenter(math::Vector2::Zero)
 		, mSize(math::Vector2::One)
+		, mColliderColor(math::Vector4::Zero)
 	{
 		mColliderID = ColliderNumber++;
+		mColliderColor = math::Vector4(0.0f, 1.0f, 0.0f, 1.0f);
 	}
 	Collider2D::~Collider2D()
 	{
@@ -45,32 +46,46 @@ namespace da
 		mesh.Scale = scale;
 		mesh.Rotation = tr->GetRotation();
 		mesh.Type = enums::eColliderShape::Rect;
-
+		mesh.Color = mColliderColor;
 		renderer::PushDebugMeshAttribute(mesh);
 	}
 
-	void Collider2D::BindConstantBuffer()
+	void Collider2D::ChangingCollisionColor(bool isCollision)
 	{
-		// 상수버퍼 만들기
-		graphics::ConstantBuffer* outCB
-			= renderer::constantBuffer[(UINT)graphics::eCBType::Collider];
-
-		// 데이터 채우기
-		renderer::ColliderCB data;
-
-		data.ColliderColorType = (UINT)mColorType;
-
-		outCB->SetData(&data);
-		outCB->Bind(graphics::eShaderStage::VS);
-		outCB->Bind(graphics::eShaderStage::PS);
+		if (isCollision)
+			mColliderColor = math::Vector4(1.0f, 0.0f, 0.0f, 1.0f);
+		else
+			mColliderColor = math::Vector4(0.0f, 1.0f, 0.0f, 1.0f);
 	}
 
+	void Collider2D::ChangingLandColor(bool isCollision)
+	{
+		if (isCollision)
+			mColliderColor = math::Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+		else
+			mColliderColor = math::Vector4(1.0f, 0.0f, 1.0f, 1.0f);
+	}
+
+	void Collider2D::SetColliderDetection(eColliderDetection type)
+	{
+		mDetectionType = type;
+		if (eColliderDetection::Land == mDetectionType)
+		{
+			mColliderColor = math::Vector4(1.0f, 0.0f, 1.0f, 1.0f);
+		}
+		if (eColliderDetection::Default == mDetectionType)
+		{
+			mColliderColor = math::Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+		}
+		if (eColliderDetection::Inactive == mDetectionType)
+		{
+			mColliderColor = math::Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+		}
+	}
 
 	void Collider2D::OnCollisionEnter(Collider2D* other)
 	{
-		mColorType = enums::eColliderColor::Red;
-		BindConstantBuffer();
-		
+		ChangingCollisionColor(true);
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetScripts();
 
@@ -91,9 +106,7 @@ namespace da
 	}
 	void Collider2D::OnCollisionExit(Collider2D* other)
 	{
-		mColorType = enums::eColliderColor::Green;
-		BindConstantBuffer();
-
+		ChangingCollisionColor(false);
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetScripts();
 
@@ -106,9 +119,7 @@ namespace da
 
 	void Collider2D::OnLandEnter(Collider2D* other)
 	{
-		mColorType = enums::eColliderColor::White;
-		BindConstantBuffer();
-
+		ChangingLandColor(true);
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetScripts();
 
@@ -129,9 +140,7 @@ namespace da
 	}
 	void Collider2D::OnLandExit(Collider2D* other)
 	{
-		mColorType = enums::eColliderColor::Magenta;
-		BindConstantBuffer();
-
+		ChangingLandColor(false);
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetScripts();
 

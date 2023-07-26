@@ -1,5 +1,7 @@
 #include "guiDebugObject.h"
 #include "daTransform.h"
+#include "daConstantBuffer.h"
+#include "daRenderer.h"
 
 namespace gui
 {
@@ -11,19 +13,18 @@ namespace gui
 	DebugObject::~DebugObject()
 	{
 	}
-
-	void DebugObject::Update()
+	void DebugObject::BindColor(da::math::Vector4 color)
 	{
-		GameObject::Update();
-	}
+		da::graphics::ConstantBuffer* outCB
+			= renderer::constantBuffer[(UINT)da::graphics::eCBType::Collider];
 
-	void DebugObject::LateUpdate()
-	{
-		GameObject::LateUpdate();
-	}
+		// 데이터 채우기
+		renderer::ColliderCB data;
 
-	void DebugObject::Render()
-	{
-		GameObject::Render();
+		data.ColliderColor = color;
+
+		outCB->SetData(&data);
+		outCB->Bind(da::graphics::eShaderStage::VS);
+		outCB->Bind(da::graphics::eShaderStage::PS);
 	}
 }

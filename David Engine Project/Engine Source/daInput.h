@@ -34,7 +34,7 @@ namespace da
 		Down,
 		Pressed,
 		Up,
-		None,
+		Default,
 	};
 
 	class Input

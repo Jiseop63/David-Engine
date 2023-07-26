@@ -149,7 +149,7 @@ namespace da::objects
 	static GameObject* InstantiateGridObject(Scene* scene, CameraObject* cameraObject)
 	{
 		GameObject* obj = new GameObject();
-		Layer& myLayer = scene->GetLayer(enums::eLayerType::None);
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::Default);
 		myLayer.AddGameObject(obj);
 		GridScript* gridScript = obj->AddComponent<GridScript>();
 		gridScript->SetCamera(cameraObject->GetCameraComponent());
@@ -166,7 +166,7 @@ namespace da::objects
 	{
 		CameraObject* cameraObj = new CameraObject(); 
 		cameraObj->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -6.750f));
-		Layer& myLayer = scene->GetLayer(enums::eLayerType::None);
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::Default);
 		myLayer.AddGameObject(cameraObj);
 		Camera* camera = cameraObj->AddComponent<Camera>();
 		cameraObj->SetCameraComponent(camera);
@@ -184,7 +184,7 @@ namespace da::objects
 	{
 		CameraObject* cameraObj = new CameraObject();
 		cameraObj->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -6.750f));
-		Layer& myLayer = scene->GetLayer(enums::eLayerType::None);
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::Default);
 		myLayer.AddGameObject(cameraObj);
 		Camera* camera = cameraObj->AddComponent<Camera>();
 		cameraObj->SetCameraComponent(camera);
@@ -200,7 +200,7 @@ namespace da::objects
 	{
 		CameraObject* cameraObj = new CameraObject();
 		cameraObj->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -6.750f));
-		Layer& myLayer = scene->GetLayer(enums::eLayerType::None);
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::Default);
 		myLayer.AddGameObject(cameraObj);
 		Camera* camera = cameraObj->AddComponent<Camera>();
 		cameraObj->SetCameraComponent(camera);

@@ -77,7 +77,7 @@ namespace da
 			// hpBar, dashBar
 			{
 				GameObject* playerHUD = objects::InstantiateObject
-					<GameObject>(this, enums::eLayerType::None);
+					<GameObject>(this, enums::eLayerType::Default);
 				playerHUD->SetName(L"lifeHUD");
 				Transform* playerHUDTransform = playerHUD->GetTransform();
 				//  HUD 위치 조절 (좌상단)

@@ -223,7 +223,8 @@ namespace da
         mWeaponObject = object;
         mWeaponTransform = mWeaponObject->GetComponent<Transform>();
         mWeaponRenderer = mWeaponObject->GetComponent<MeshRenderer>();
-        //mWeaponCollider = mWeaponObject->AddComponent<Collider2D>();
+        mWeaponCollider = mWeaponObject->AddComponent<Collider2D>();
+        mWeaponCollider->SetColliderDetection(Collider2D::eColliderDetection::Inactive);
         mWeaponScript = mWeaponObject->AddComponent<WeaponScript>();
         mWeaponRenderer->ChangeSlotTexture(Resources::Find<Texture>(L"GreatSword0Texture"));
         // 9 22
@@ -288,5 +289,4 @@ namespace da
             mLeftCollider->SetColliderDetection(Collider2D::eColliderDetection::Land);
         }
     }
-
 }

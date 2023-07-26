@@ -14,7 +14,7 @@ namespace da::enums
 
 	enum class eLayerType
 	{
-		None, // 숭돌 없고 렌더 안하는 객체
+		Default, // 숭돌 없고 렌더 안하는 객체
 
 		Background,	// 움직이지 않음
 		Layer,		// 카메라에 영향을 받음
@@ -35,7 +35,7 @@ namespace da::enums
 
 	enum class eComponentType
 	{
-		None,
+		Default,
 		Transform,
 		Rigidbody,
 		TimeConstants,
@@ -58,35 +58,26 @@ namespace da::enums
 		End,
 	};
 	
-	enum class eColliderColor
-	{
-		Magenta,
-		White,
-		Green,
-		Red,
-		
-		End,
-	};
 
 #pragma region Contents
 	enum class eWeaponType
 	{
-		None,
+		Default,
 		LongSword,
 	};
 	enum class eShieldType
 	{
-		None,
+		Default,
 		MagicShield,
 	};
 	enum class eAccessoryType
 	{
-		None,
+		Default,
 		SilverRing,
 	};
 	enum class eItemType
 	{
-		None,
+		Default,
 	};
 #pragma endregion
 }

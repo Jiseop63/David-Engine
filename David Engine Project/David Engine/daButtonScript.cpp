@@ -10,7 +10,7 @@ namespace da
 {
 	using namespace math;
 	ButtonScript::ButtonScript()
-		: mButtonType(eButtonType::None)		
+		: mButtonType(eButtonType::Default)		
 	{
 	}
 	ButtonScript::~ButtonScript()

@@ -56,7 +56,7 @@ namespace renderer
 
 	CBUFFER(ColliderCB, CBSLOT_COLLIDER)
 	{
-		UINT ColliderColorType;
+		da::math::Vector4 ColliderColor;
 	};
 
 

@@ -9,7 +9,7 @@ namespace da
 	public:
 		enum eButtonType
 		{
-			None,
+			Default,
 			Play,
 			Exit,
 		};

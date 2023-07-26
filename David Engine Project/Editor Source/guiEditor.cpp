@@ -124,10 +124,13 @@ namespace gui
 		tr->SetRotation(mesh.Rotation);
 		tr->LateUpdate();
 
+		// 카메라 설정하기
 		da::Camera* mainCamera = renderer::mainCamera;
 		da::Camera::SetGPUViewMatrix(mainCamera->GetViewMatrix());
 		da::Camera::SetGPUProjectionMatrix(mainCamera->GetProjectionMatrix());
-
+		
+		// 색상 변경
+		debugObj->BindColor(mesh.Color);
 		debugObj->Render();
 	}
 }

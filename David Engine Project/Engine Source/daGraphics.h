@@ -72,7 +72,7 @@ namespace da::graphics
 		Less,
 		Greater,
 		NoWrite,
-		None,
+		Default,
 		End,
 	};
 
@@ -109,6 +109,8 @@ namespace da::graphics
 		math::Vector3 Position;
 		math::Vector3 Rotation;
 		math::Vector3 Scale;
+		math::Vector4 Color;
+
 		float Radius;
 		float Duration;
 		float Time;
