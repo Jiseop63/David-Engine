@@ -38,6 +38,9 @@ namespace da
 		math::Vector3 GetColliderPosition() { return mPosition; }
 		bool IsGround() { return mGrounded; }
 
+		math::Vector3 GetTotalPosition() { return mTotalPosition; }
+		math::Vector3 GetTotalScale() { return mTotalScale; }
+
 	public:
 		void OnCollisionEnter(Collider2D* other);
 		void OnCollisionStay(Collider2D* other);
@@ -60,10 +63,13 @@ namespace da
 		enums::eColliderShape	mColliderShape;
 		eColliderDetection		mDetectionType;
 
-		math::Vector3			mPosition;
 		math::Vector2			mSize;
 		math::Vector2			mCenter;
 		math::Vector4			mColliderColor;
+
+	public:
+		math::Vector3			mTotalPosition;
+		math::Vector3			mTotalScale;
 
 	private:
 		bool					mGrounded;

@@ -12,11 +12,12 @@ namespace da
 		, mColliderID(0)
 		, mColliderShape(enums::eColliderShape::Rect)
 		, mDetectionType(eColliderDetection::Default)
-		, mPosition(math::Vector2::Zero)
 		, mCenter(math::Vector2::Zero)
 		, mSize(math::Vector2::One)
 		, mColliderColor(math::Vector4::Zero)
 		, mGrounded(false)
+		, mTotalPosition(math::Vector3::Zero)
+		, mTotalScale(math::Vector3::One)
 	{
 		mColliderID = ColliderNumber++;
 		mColliderColor = math::Vector4(0.0f, 1.0f, 0.0f, 1.0f);
@@ -40,8 +41,6 @@ namespace da
 		pos.x += mCenter.x;
 		pos.y += mCenter.y;
 
-		mPosition = pos;
-
 		graphics::DebugMesh mesh = {};
 		mesh.Position = pos;
 		mesh.Scale = scale;
@@ -49,6 +48,9 @@ namespace da
 		mesh.Type = enums::eColliderShape::Rect;
 		mesh.Color = mColliderColor;
 		renderer::PushDebugMeshAttribute(mesh);
+
+		mTotalPosition = pos;
+		mTotalScale = scale;
 	}
 
 	void Collider2D::ChangingCollisionColor(bool isCollision)

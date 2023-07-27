@@ -12,7 +12,6 @@ namespace da
 		, mDimensionType(eDimensionType::SecondDimension)
 		, mMass(0.0f)
 		, mFriction(0.0f)
-		, mForceMagnitude(0.0f)
 		, mForce(Vector2::Zero)
 		, mAcceleration(Vector2::Zero)
 		, mVelocity(Vector2::Zero)		
@@ -27,7 +26,7 @@ namespace da
 	void Rigidbody::Update()
 	{
 		
-		CalculateVelocity();
+		CalculateAcceleration();
 
 		ApplyGravity();
 		ApplyLimitVelocity();
@@ -37,26 +36,18 @@ namespace da
 		// 힘 초기화
 		mForce = Vector2::Zero;
 		mAcceleration = Vector2::Zero;
-		mForceMagnitude = 0.0f;
 	}
 
-	void Rigidbody::CalculateVelocity()
+	void Rigidbody::CalculateAcceleration()
 	{
 		// 가속도 구하기 (A = F / M)
-		mAcceleration = mForce * mForceMagnitude / mMass;
+		mAcceleration = mForce / mMass;
 		mVelocity += mAcceleration * (float)Time::DeltaTime() * 3.0f;
 	}
 
 	void Rigidbody::ApplyGravity()
 	{
-		std::vector<Collider2D*> onwerColliders = GetOwner()->GetComponents<Collider2D>();
-
-		Collider2D* footCollider = nullptr;
-		for (Collider2D* collider : onwerColliders)
-		{
-			if (Collider2D::eColliderDetection::Land == collider->GetColliderDetection())
-				footCollider = collider;
-		}
+		Collider2D* footCollider = GetOwner()->GetFootCollider();
 
 		if (nullptr == footCollider)
 		{
@@ -65,20 +56,22 @@ namespace da
 		}
 		bool isGround = footCollider->IsGround();
 
-		Vector2 gravity(0.0f, 0.980f);
+		Vector2 gravity(0.0f, -98.0f);
 		
 		if (isGround)
 		{
 			// y 속도 제거하기
 			gravity.Normalize();
-			// 땅에 파고들었으면 위로 올려주기
 			float dot = mVelocity.Dot(gravity);
 			mVelocity -= gravity * dot;
+
+			// 땅에 파고들었으면 위로 올려주기
+			// 이건 개인이 하는게 맞을듯
 		}
 		else
 		{
 			// 아래로 힘 적용
-			mVelocity += gravity * Time::DeltaTime();
+			mVelocity += gravity * (float)Time::DeltaTime();
 		}
 	}
 

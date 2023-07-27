@@ -8,6 +8,7 @@ namespace da
 	GameObject::GameObject()
 		: mObjectState(eObjectState::Active)
 		, mTransform(nullptr)
+		, mFootCollider(nullptr)
 	{
 		mTransform = AddComponent<Transform>();
 	}

@@ -189,7 +189,7 @@ namespace da
 
     void PlayerScript::MoveFunc(Vector2 dir)
     {
-        mRigidbody->ApplyForce(dir, mPlayerStat->MoveSpeed);
+        mRigidbody->ApplyForce(dir * mPlayerStat->MoveSpeed);
     }
 
     void PlayerScript::Dash()
@@ -271,9 +271,10 @@ namespace da
         }
         // foot
         {
+            GetOwner()->SetFootCollider(mFootCollider);
             mFootCollider->SetName(L"FootCollider");
             mFootCollider->SetSize(Vector2(0.050f, 0.050f));
-            mFootCollider->SetCenter(Vector2(0.0f, -0.50f));
+            mFootCollider->SetCenter(Vector2(0.0f, -0.450f));
             mFootCollider->SetColliderDetection(Collider2D::eColliderDetection::Land);
         }
         // right & left
@@ -288,5 +289,14 @@ namespace da
             mLeftCollider->SetCenter(Vector2(-0.150f, -0.350f));
             mLeftCollider->SetColliderDetection(Collider2D::eColliderDetection::Land);
         }
+    }
+    void PlayerScript::OnLandStay(Collider2D* other)
+    {
+        // 상대 Pos Size 가져오기
+        Vector3 landPos = other->GetTotalPosition();
+        Vector3 landSize = other->GetTotalScale();
+        // 내 Pos Size 가져오기
+        Vector3 myPos = mFootCollider->GetTotalPosition();
+        Vector3 mySize = mFootCollider->GetTotalScale();
     }
 }

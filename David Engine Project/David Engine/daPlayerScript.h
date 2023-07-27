@@ -46,10 +46,12 @@ namespace da
 		void InitAnimation();
 		void InitCollider();
 	public:
-		virtual void OnCollisionEnter(Collider2D* other) override {};
-		virtual void OnCollisionStay(Collider2D* other) override {};
-		virtual void OnCollisionExit(Collider2D* other) override {};
-
+		virtual void OnCollisionEnter(Collider2D* other) override {}
+		virtual void OnCollisionStay(Collider2D* other) override {}
+		virtual void OnCollisionExit(Collider2D* other) override {}
+		virtual void OnLandEnter(Collider2D* other) override {}
+		virtual void OnLandStay(Collider2D* other) override;
+		virtual void OnLandExit(Collider2D* other) override {}
 
 	protected:
 		Transform*		mTransform;

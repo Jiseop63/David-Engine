@@ -86,6 +86,9 @@ namespace da
 			return origin;
 		}
 
+		void SetFootCollider(Collider2D* collider) { mFootCollider = collider; }
+		Collider2D* GetFootCollider() { return mFootCollider; }
+
 	public:
 		void SetObjectState(eObjectState state);
 		eObjectState GetObjectState() { return mObjectState; }
@@ -94,6 +97,8 @@ namespace da
 
 	protected:
 		Transform* mTransform;
+		Collider2D* mFootCollider;
+
 	private:
 		eObjectState mObjectState;
 		std::vector<Component*> mComponents;
