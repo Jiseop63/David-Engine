@@ -42,6 +42,17 @@ namespace da
 	{
 		// 가속도 구하기 (A = F / M)
 		mAcceleration = mForce / mMass;
+
+		// 조건 마구 추가해보리기
+
+		// 1. 공중에서 움직이는 힘 감소
+		// Ground 가 false인 경우, move로 들어오는 force가 감소
+		
+		// 2. 기본적인 속도 제한 적용 (Clamp)
+		// Move로 적용되는 가속도에 한계를 두기
+		// Jump, Dash 또한 속도 제한해주기..?
+
+
 		mVelocity += mAcceleration * (float)Time::DeltaTime() * 1.50f;
 	}
 
@@ -50,8 +61,7 @@ namespace da
 		Vector2 gravity(0.0f, -9.80f);
 		Collider2D* footCollider = GetOwner()->GetFootCollider();
 
-		bool isGround = footCollider->IsGround();		
-		if (isGround)
+		if (footCollider->IsGround())
 		{
 			// y 속도 제거하기
 			gravity.Normalize();
@@ -70,7 +80,7 @@ namespace da
 
 	void Rigidbody::ApplyLimitVelocity()
 	{
-		float limitVelocityMagnitude = 3.50f;
+		float limitVelocityMagnitude = 7.50f;
 
 		float totalVelocity = mVelocity.Length();
 
@@ -79,6 +89,11 @@ namespace da
 			mVelocity.Normalize();
 			mVelocity *= limitVelocityMagnitude;
 		}
+
+		// 속도제한 세부적으로 적용하기
+		// Jump Limit
+		// Dash Limit
+		// Move Limit
 	}
 
 	void Rigidbody::ApplyFriction()
@@ -92,13 +107,22 @@ namespace da
 
 			// 추가 입력이 없으면 마찰력 n배
 			if (0 >= mForce.LengthSquared())
-				friction *= 12.0f;
+			{
+				Collider2D* footCollider = GetOwner()->GetFootCollider();
+
+				if (footCollider->IsGround())
+					friction *= 12.0f;
+
+			}
 
 			// 기본 마찰력
 			// if (mVelocity.LengthSquared() < friction.LengthSquared())
 			// 	mVelocity = Vector2::Zero;
 			// else
 			// 	mVelocity += friction;
+
+
+			// 대시중인경우 x마찰력 줄이기
 			if (abs(mVelocity.x) < abs(friction.x))
 				mVelocity.x = 0.0f;
 			else

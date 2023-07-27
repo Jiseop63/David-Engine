@@ -26,6 +26,7 @@ namespace da
         , mWeaponTransform(nullptr)
         , mWeaponRenderer(nullptr)
         , mWeaponScript(nullptr)
+        , mPlayerDir(math::Vector2::Zero)
         , mRegenCountTime(1.750f)
         , mDashCountTime(0.0f)
         , mPlayerStat(nullptr)
@@ -148,7 +149,8 @@ namespace da
         // 플레이어 방향
         Vector2 playerDir(mousePosition.x - playerPosition.x, mousePosition.y - playerPosition.y);        
         playerDir.Normalize();
-        
+        mPlayerDir = playerDir;
+
         // 무기 위치
         Vector3 weaponPosition(playerPosition.x, playerPosition.y, 0.0f);
         // 무기 회전값
@@ -201,12 +203,10 @@ namespace da
         // condition
         if (GameDataManager::UseDash())
         {
-            // to do
-            Vector3 mousePosition = Input::GetMouseWorldPosition();
+            // to do            
+            mFootCollider->ApplyGround(false);
+            mRigidbody->ApplyVelocity(mPlayerDir * mPlayerStat->MoveSpeed * 3.0f);
         }
-
-        
-
     }
     void PlayerScript::Jump()
     {

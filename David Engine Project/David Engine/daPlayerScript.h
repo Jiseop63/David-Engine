@@ -78,6 +78,7 @@ namespace da
 
 		// 임시 변수
 	private:
+		math::Vector2 mPlayerDir;
 		float	mDashCountTime;
 		float	mRegenCountTime;
 
