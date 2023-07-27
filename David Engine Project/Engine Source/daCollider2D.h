@@ -35,7 +35,6 @@ namespace da
 		
 		void SetCenter(math::Vector2 size) { mCenter = size; }
 		math::Vector2 GetCenter() { return mCenter; }
-		math::Vector3 GetColliderPosition() { return mPosition; }
 		bool IsGround() { return mGrounded; }
 
 		math::Vector3 GetTotalPosition() { return mTotalPosition; }

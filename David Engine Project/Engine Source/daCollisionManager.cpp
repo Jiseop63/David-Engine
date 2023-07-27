@@ -274,7 +274,7 @@ namespace da
 
 		for (size_t i = 0; i < 4; i++)
 			Axis[i].z = 0.0f;
-		Vector3 vc = left->GetColliderPosition() - right->GetColliderPosition();
+		Vector3 vc = left->GetTotalPosition() - right->GetTotalPosition();
 		vc.z = 0.0f;
 
 		Vector3 centerDir = vc;

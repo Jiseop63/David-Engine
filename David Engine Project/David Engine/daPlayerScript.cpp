@@ -292,11 +292,39 @@ namespace da
     }
     void PlayerScript::OnLandStay(Collider2D* other)
     {
-        // 상대 Pos Size 가져오기
+        // Land Pos, Size 가져오기
         Vector3 landPos = other->GetTotalPosition();
         Vector3 landSize = other->GetTotalScale();
-        // 내 Pos Size 가져오기
+        // 내 Pos, Size 가져오기
         Vector3 myPos = mFootCollider->GetTotalPosition();
         Vector3 mySize = mFootCollider->GetTotalScale();
+
+        // A 상자의 최소/최대 위치
+        Vector3 minLand = landPos - landSize * 0.5f;
+        Vector3 maxLand = landPos + landSize * 0.5f;
+
+        // B 상자의 최소/최대 위치
+        Vector3 minMe = myPos - mySize * 0.5f;
+        Vector3 maxMe = myPos + mySize * 0.5f;
+
+        // 정황상 플레이어가 바닥에 파고들었음
+        if (minLand.x <= maxMe.x && maxLand.x >= minMe.x &&
+            minLand.y <= maxMe.y && maxLand.y >= minMe.y &&
+            minLand.z <= maxMe.z && maxLand.z >= minMe.z)
+        {
+            float landHeight = maxLand.y - minLand.y;
+            float myHeight = maxMe.y - minMe.y;
+            float totalHeight = landHeight / 2.0f + myHeight / 2.0f;
+
+            float collisionDepth = myPos.y - landPos.y;
+            float pushDistance = 0.0f;
+            if (collisionDepth < totalHeight)
+            {
+                pushDistance = totalHeight - collisionDepth;
+            }
+            Vector3 newPosition = mTransform->GetPosition();
+            newPosition.y += pushDistance;
+            mTransform->SetPosition(newPosition);            
+        }
     }
 }
