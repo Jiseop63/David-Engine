@@ -42,22 +42,15 @@ namespace da
 	{
 		// 가속도 구하기 (A = F / M)
 		mAcceleration = mForce / mMass;
-		mVelocity += mAcceleration * (float)Time::DeltaTime() * 3.0f;
+		mVelocity += mAcceleration * (float)Time::DeltaTime() * 1.50f;
 	}
 
 	void Rigidbody::ApplyGravity()
 	{
+		Vector2 gravity(0.0f, -9.80f);
 		Collider2D* footCollider = GetOwner()->GetFootCollider();
 
-		if (nullptr == footCollider)
-		{
-			int a = 0;
-			return;
-		}
-		bool isGround = footCollider->IsGround();
-
-		Vector2 gravity(0.0f, -98.0f);
-		
+		bool isGround = footCollider->IsGround();		
 		if (isGround)
 		{
 			// y 속도 제거하기
@@ -102,10 +95,14 @@ namespace da
 				friction *= 12.0f;
 
 			// 기본 마찰력
-			if (mVelocity.LengthSquared() < friction.LengthSquared())
-				mVelocity = Vector2::Zero;
+			// if (mVelocity.LengthSquared() < friction.LengthSquared())
+			// 	mVelocity = Vector2::Zero;
+			// else
+			// 	mVelocity += friction;
+			if (abs(mVelocity.x) < abs(friction.x))
+				mVelocity.x = 0.0f;
 			else
-				mVelocity += friction;
+				mVelocity.x += friction.x;
 		}
 	}
 

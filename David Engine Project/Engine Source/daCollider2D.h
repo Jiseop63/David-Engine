@@ -36,6 +36,7 @@ namespace da
 		void SetCenter(math::Vector2 size) { mCenter = size; }
 		math::Vector2 GetCenter() { return mCenter; }
 		bool IsGround() { return mGrounded; }
+		void ApplyGround(bool isGround) { mGrounded = isGround; }
 
 		math::Vector3 GetTotalPosition() { return mTotalPosition; }
 		math::Vector3 GetTotalScale() { return mTotalScale; }

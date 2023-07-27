@@ -96,6 +96,10 @@ namespace da
             {
                 MoveFunc(-Vector2::UnitY);
             }
+            if (Input::GetKeyDown(eKeyCode::SPACE))
+            {
+                Jump();
+            }
         }
         // hp debug
         {
@@ -206,6 +210,8 @@ namespace da
     }
     void PlayerScript::Jump()
     {
+        mFootCollider->ApplyGround(false);
+        mRigidbody->ApplyVelocity(Vector2::UnitY * mPlayerStat->MoveSpeed);
     }
     void PlayerScript::GetDamage()
     {

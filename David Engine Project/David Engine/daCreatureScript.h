@@ -23,7 +23,8 @@ namespace da
 	protected:
 		Rigidbody*	mRigidbody;
 		Animator*	mAnimator;
-
+		Collider2D* mBodyCollider;
+		Collider2D* mFootCollider;
 
 	};
 }

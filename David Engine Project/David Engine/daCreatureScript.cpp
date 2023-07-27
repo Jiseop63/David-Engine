@@ -18,6 +18,9 @@ namespace da
 	{
 		mRigidbody = GetOwner()->GetComponent<Rigidbody>();
 		mAnimator = GetOwner()->GetComponent<Animator>();
+		mBodyCollider = GetOwner()->GetComponent<Collider2D>();
+		mFootCollider = GetOwner()->AddComponent<Collider2D>();
+		GetOwner()->SetFootCollider(mFootCollider);
 
 		std::shared_ptr<Texture> texture = Resources::Load<Texture>(L"SkelSprite", L"..\\Resources\\Texture\\Monster\\Skel\\SpriteSheet.png");
 		mAnimator->Create(L"SkelIdle", texture, Vector2(0.0f, 0.0f), Vector2(32.0f, 32.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
