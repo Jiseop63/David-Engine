@@ -54,10 +54,6 @@ namespace da
 					if (leftObjectColliders.empty())
 						continue;
 
-					if (enums::eLayerType::Playable == right
-						&& enums::eLayerType::Land == left)
-						int a = 0;
-
 					for (Collider2D* rightObjectCollider : rightObjectColliders)
 					{
 						ColliderCollision(leftObjectCollider, rightObjectCollider);

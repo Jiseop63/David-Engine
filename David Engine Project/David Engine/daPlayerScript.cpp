@@ -219,7 +219,7 @@ namespace da
         GameDataManager::GetDamage(value);
     }
 
-    void PlayerScript::GetHeal()
+    void PlayerScript::GetHeal()    
     {
         float value = 5.0f;
         GameDataManager::GetHeal(value);

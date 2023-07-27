@@ -4,6 +4,7 @@
 #include "daTexture.h"
 #include "daShader.h"
 #include "daMaterial.h"
+#include "daStructuredBuffer.h"
 
 using namespace da;
 using namespace da::graphics;
@@ -17,10 +18,11 @@ namespace renderer
 	Microsoft::WRL::ComPtr<ID3D11BlendState> BlendStates[(UINT)eBSType::End] = {};
 
 	ConstantBuffer* constantBuffer[(UINT)eCBType::End] = {};
-
+	StructuredBuffer* lightsBuffer = nullptr;
 	std::vector<Camera*> cameras = {};
 	std::vector<DebugMesh> debugMeshs = {};
-	
+	std::vector<Light*> lights = {};
+
 	Camera* mainCamera = nullptr;
 	Camera* uiCamera = nullptr;
 	GridScript* gridScript = nullptr;
@@ -137,6 +139,10 @@ namespace renderer
 		// afterimage
 		
 		// blink
+
+		// light structed buffer
+		lightsBuffer = new StructuredBuffer();
+		lightsBuffer->Create(sizeof(LightAttribute), 2, eSRVType::None);
 
 #pragma endregion
 	}
@@ -822,6 +828,7 @@ namespace renderer
 	}
 	void Render()
 	{
+		BindLights();
 		for (Camera* camera : cameras)
 		{
 			if (nullptr == camera)
@@ -831,10 +838,25 @@ namespace renderer
 		}
 
 		cameras.clear();
+		lights.clear();
 	}
 	void PushDebugMeshAttribute(DebugMesh mesh)
 	{
 		debugMeshs.push_back(mesh);
+	}
+
+	void BindLights()
+	{
+		std::vector<LightAttribute> lightsAttributes = {};
+		for (Light* light : lights)
+		{
+			LightAttribute attribute = light->GetAttribute();
+			lightsAttributes.push_back(attribute);
+		}
+
+		lightsBuffer->SetData(lightsAttributes.data(), (UINT)lightsAttributes.size());
+		lightsBuffer->Bind(eShaderStage::VS, 13);
+		lightsBuffer->Bind(eShaderStage::PS, 13);
 	}
 
 	void Release()
@@ -847,5 +869,9 @@ namespace renderer
 			delete buff;
 			buff = nullptr;
 		}
+
+		delete lightsBuffer;
+		lightsBuffer = nullptr;
+
 	}
 }

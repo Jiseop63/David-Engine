@@ -14,18 +14,18 @@ namespace da::graphics
 
 	bool ConstantBuffer::Create(UINT size)
 	{
-		desc.ByteWidth = size;
-		desc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_CONSTANT_BUFFER;
-		desc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
-		desc.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
+		Desc.ByteWidth = size;
+		Desc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_CONSTANT_BUFFER;
+		Desc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
+		Desc.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
 
-		da::graphics::GetDevice()->CreateBuffer(Buffer.GetAddressOf(), &desc, nullptr);
+		da::graphics::GetDevice()->CreateBuffer(Buffer.GetAddressOf(), &Desc, nullptr);
 
 		return false;
 	}
 	void ConstantBuffer::SetData(void* data)
 	{
-		da::graphics::GetDevice()->SetConstantBuffer(Buffer.Get(), data, desc.ByteWidth);
+		da::graphics::GetDevice()->SetConstantBuffer(Buffer.Get(), data, Desc.ByteWidth);
 	}
 	void ConstantBuffer::Bind(eShaderStage stage)
 	{

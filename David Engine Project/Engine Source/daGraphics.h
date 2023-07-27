@@ -92,14 +92,19 @@ namespace da::graphics
 		End,
 	};
 
+	enum class eSRVType
+	{
+		None,
+		End,
+	};
 	struct GPUBuffer
 	{
 		Microsoft::WRL::ComPtr<ID3D11Buffer> Buffer;
-		D3D11_BUFFER_DESC desc;
+		D3D11_BUFFER_DESC Desc;
 
 		GPUBuffer()
 			: Buffer(nullptr)
-			, desc{}
+			, Desc{}
 		{}
 		virtual ~GPUBuffer() = default;
 	};
@@ -114,5 +119,17 @@ namespace da::graphics
 		float Radius;
 		float Duration;
 		float Time;
+	};
+
+	struct LightAttribute
+	{
+		math::Vector4		Color;
+		math::Vector4		Position;
+		math::Vector4		Direction;
+
+		enums::eLightType   LightType;
+		float				LightRadius;
+		float				LightAngle;
+		int					Padding;
 	};
 };

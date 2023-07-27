@@ -36,6 +36,9 @@
     <None Include="$(MSBuildThisFileDirectory)Constant Buffer.hlsli">
       <Filter>1 Common</Filter>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)Structured Buffer.hlsli">
+      <Filter>1 Common</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="2 Shaders">

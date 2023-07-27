@@ -94,6 +94,9 @@
     <Filter Include="Graphics\Resource\Animation">
       <UniqueIdentifier>{a91eec0f-663d-4e5f-aaf9-e3d28c31332c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System\Component\Light">
+      <UniqueIdentifier>{d9b4e6d2-1435-456e-ae62-f38a5d4d79ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)daMath.h">
@@ -204,6 +207,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daAnimation.h">
       <Filter>Graphics\Resource\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daLight.h">
+      <Filter>System\Component\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daStructuredBuffer.h">
+      <Filter>Graphics\Buffer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp">
@@ -292,6 +301,12 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daAnimation.cpp">
       <Filter>Graphics\Resource\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daLight.cpp">
+      <Filter>System\Component\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daStructuredBuffer.cpp">
+      <Filter>Graphics\Buffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

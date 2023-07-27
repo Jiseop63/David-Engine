@@ -28,6 +28,7 @@ namespace da::enums
 		CreatureAttackCollider,
 
 		Effect,
+		Light,
 		UI,
 		Button,
 		End,
@@ -45,6 +46,7 @@ namespace da::enums
 		Animator,
 		Particle,
 		Script,
+		Light,
 		Camera,
 		End,
 	};
@@ -58,7 +60,13 @@ namespace da::enums
 		End,
 	};
 	
-
+	enum class eLightType
+	{
+		Directional,
+		Point,
+		Spot,
+		End,
+	};
 #pragma region Contents
 	enum class eWeaponType
 	{

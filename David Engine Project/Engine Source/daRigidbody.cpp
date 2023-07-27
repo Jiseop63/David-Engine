@@ -27,7 +27,6 @@ namespace da
 	{
 		
 		CalculateAcceleration();
-
 		ApplyGravity();
 		ApplyLimitVelocity();
 		ApplyFriction();					

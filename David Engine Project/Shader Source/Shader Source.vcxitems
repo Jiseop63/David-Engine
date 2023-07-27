@@ -27,5 +27,6 @@
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Constant Buffer.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)Globals.hlsli" />
+    <None Include="$(MSBuildThisFileDirectory)Structured Buffer.hlsli" />
   </ItemGroup>
 </Project>

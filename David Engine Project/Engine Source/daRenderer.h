@@ -4,6 +4,7 @@
 #include "daConstantBuffer.h"
 #include "daCamera.h"
 #include "..\\David Engine\daGridScript.h"
+#include "daLight.h"
 
 namespace renderer
 {
@@ -69,7 +70,7 @@ namespace renderer
 	
 	extern std::vector<da::Camera*> cameras;
 	extern std::vector<da::graphics::DebugMesh> debugMeshs;
-	
+	extern std::vector<da::Light*> lights;
 	extern da::Camera* mainCamera;
 	extern da::Camera* uiCamera;
 	extern da::GridScript* gridScript;
@@ -78,4 +79,5 @@ namespace renderer
 	void Render();
 	void Release();
 	void PushDebugMeshAttribute(da::graphics::DebugMesh mesh);
+	void BindLights();
 }

@@ -30,6 +30,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daGraphics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daLayer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daLight.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daMaterial.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daMesh.h" />
@@ -43,6 +44,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daScript.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daShader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daStructs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daStructuredBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daTexture.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daTime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daTimeConstants.h" />
@@ -65,6 +67,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daGraphicDevice Dx11.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daInput.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daLayer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daLight.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daMaterial.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daMesh.cpp" />
@@ -77,6 +80,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daSceneManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daScript.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daShader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daStructuredBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daTexture.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daTime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daTimeConstants.cpp" />
