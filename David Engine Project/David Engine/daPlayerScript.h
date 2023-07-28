@@ -17,6 +17,15 @@ namespace da
 #define RS		-3.140f
 #define RSW		-3.925f
 
+	enum class ePlayerState
+	{
+		Idle,
+		Move,
+		Jump,
+		Attack,
+		Dead,
+	};
+
 	class PlayerScript : public Script
 	{
 	public:
@@ -31,6 +40,15 @@ namespace da
 		void MoveFunc(math::Vector2 dir);
 		void Dash();
 		void Jump();
+
+		void PlayerFSM();
+		void ChangeState(ePlayerState state);
+		void HandleIdle();
+		void HandleMove();
+		void HandleJump();
+		void HandleAttack();
+		void HandleDead();
+
 
 		// 임시
 	public:
@@ -79,14 +97,25 @@ namespace da
 		// 임시 변수
 	private:
 		math::Vector2 mPlayerDir;
-		float	mDashCountTime;
-		float	mRegenCountTime;
+		float	mAddDashTime;
+		float	mRegenDashTime;
 
 		// 조건 변수
 	private:
+		ePlayerState mActiveState;
+		ePlayerState mPrevState;
 		int		mMoveCondition;
 		bool	mReverse;
 		float   mAngle;
 		bool	mAttacked;
+
+		// Attack 관련 함수
+	private:
+		float	mAddAttackDelayTime;
+		// Jump 관련 변수
+	private:
+		float	mLimitJumpTime;
+		float	mAddJumpTime;
+
 	};
 }
