@@ -195,7 +195,7 @@ namespace da
 
     void PlayerScript::MoveFunc(Vector2 dir)
     {
-        mRigidbody->ApplyForce(dir * mPlayerStat->MoveSpeed);
+        mRigidbody->ApplyForce(dir, mPlayerStat->MoveSpeed);
     }
 
     void PlayerScript::Dash()
@@ -203,15 +203,15 @@ namespace da
         // condition
         if (GameDataManager::UseDash())
         {
-            // to do            
+            // to do
             mFootCollider->ApplyGround(false);
-            mRigidbody->ApplyVelocity(mPlayerDir * mPlayerStat->MoveSpeed * 3.0f);
+            mRigidbody->ApplyVelocity(mPlayerDir, mPlayerStat->MoveSpeed * 3.0f);
         }
     }
     void PlayerScript::Jump()
     {
         mFootCollider->ApplyGround(false);
-        mRigidbody->ApplyVelocity(Vector2::UnitY * mPlayerStat->MoveSpeed);
+        mRigidbody->ApplyVelocity(Vector2::UnitY, mPlayerStat->MoveSpeed);
     }
     void PlayerScript::GetDamage()
     {
