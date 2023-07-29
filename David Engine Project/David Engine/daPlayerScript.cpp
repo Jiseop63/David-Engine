@@ -200,7 +200,7 @@ namespace da
         mRigidbody->ApplyForce(dir, mPlayerStat->MoveSpeed);
     }
 
-    void PlayerScript::Dash()
+    void PlayerScript::ToDoDash()
     {
         // condition
         if (GameDataManager::UseDash())
@@ -229,9 +229,6 @@ namespace da
         case da::ePlayerState::Jump:
             HandleJump();
             break;
-        case da::ePlayerState::Attack:
-            HandleAttack();
-            break;
         case da::ePlayerState::Dead:
             HandleDead();
             break;
@@ -254,6 +251,8 @@ namespace da
         if (Input::GetKeyDown(eKeyCode::D)
             || Input::GetKeyDown(eKeyCode::A))
         {
+            mMoveCondition++;
+            mAnimator->PlayAnimation(L"playerMove");
             ChangeState(ePlayerState::Move);
         }
 
@@ -268,35 +267,30 @@ namespace da
         if (Input::GetKeyDown(eKeyCode::RBTN))
         {
             mAnimator->PlayAnimation(L"playerJump");
-            Dash();
+            ToDoDash();
             ChangeState(ePlayerState::Jump);
         }
         // ->Attack
+        if (Input::GetKeyDown(eKeyCode::LBTN))
+        {
+            // AttackOn
+        }
     }
     void PlayerScript::HandleMove()
     {
         // Todo
-        // 애니메이션 및 상태 조건
         if (Input::GetKeyDown(eKeyCode::D)
             || Input::GetKeyDown(eKeyCode::A))
         {
-            mAnimator->PlayAnimation(L"playerMove");
             mMoveCondition++;
         }
         if (Input::GetKeyUp(eKeyCode::D)
             || Input::GetKeyUp(eKeyCode::A))
         {
-            mMoveCondition--;            
+            mMoveCondition--;
         }
-        // 움직임 로직
-        if (Input::GetKey(eKeyCode::D))
-        {
-            MoveFunc(Vector2::UnitX);
-        }
-        if (Input::GetKey(eKeyCode::A))
-        {
-            MoveFunc(-Vector2::UnitX);
-        }
+        ToDoMove();
+
 
         // ->Idle
         if (0 == mMoveCondition)
@@ -316,33 +310,25 @@ namespace da
         if (Input::GetKeyDown(eKeyCode::RBTN))
         {
             mAnimator->PlayAnimation(L"playerJump");
-            Dash();
+            ToDoDash();
             ChangeState(ePlayerState::Jump);
         }
 
         // ->Attack
         if (Input::GetKeyDown(eKeyCode::LBTN))
         {
-            ChangeState(ePlayerState::Attack);
+            // AttackOn
         }
     }
     void PlayerScript::HandleJump()
     {
-        // 움직임 로직
-        if (Input::GetKey(eKeyCode::D))
-        {
-            MoveFunc(Vector2::UnitX);
-        }
-        if (Input::GetKey(eKeyCode::A))
-        {
-            MoveFunc(-Vector2::UnitX);
-        }
-        // ->Dash
+        ToDoMove();
+                
         if (Input::GetKeyDown(eKeyCode::RBTN))
         {
-            mAnimator->PlayAnimation(L"playerJump");
-            Dash();
+            ToDoDash();
         }
+
 
 
         // ->Idle
@@ -355,22 +341,24 @@ namespace da
         // ->Attack
         if (Input::GetKeyDown(eKeyCode::LBTN))
         {
-            ChangeState(ePlayerState::Attack);
+            // AttackOn
         }
     }
     void PlayerScript::HandleAttack()
     {
         // todo
         // GetMouse함수에서 진행
+        if (Collider2D::eColliderDetection::Inactive == mWeaponCollider->GetColliderDetection())
         {
+            mWeaponCollider->SetColliderDetection(Collider2D::eColliderDetection::Default);
             if (mAttacked)
                 mAttacked = false;
             else
                 mAttacked = true;
         }
-        {
-            mWeaponCollider->SetColliderDetection(Collider2D::eColliderDetection::Default);
-        }
+        ToDoMove();
+        
+        
         mAddAttackDelayTime += (float)Time::DeltaTime();
         if (0.80f <= mAddAttackDelayTime)
         {
@@ -378,6 +366,21 @@ namespace da
             mAddAttackDelayTime = 0.0f;
             ChangeState(mPrevState);
         }
+        
+        //// ->Dash
+        //if (Input::GetKeyDown(eKeyCode::RBTN))
+        //{
+        //    mAnimator->PlayAnimation(L"playerJump");
+        //    ToDoDash();
+        //    ChangeState(ePlayerState::Jump);
+        //}
+        //// ->Jump
+        //if (Input::GetKeyDown(eKeyCode::SPACE))
+        //{
+        //    mAnimator->PlayAnimation(L"playerJump");
+        //    Jump();
+        //    ChangeState(ePlayerState::Jump);
+        //}
         // ret 조건은 외부에서 해야할거같은데 임시로 구현할까?
 
         //// ->Jump
@@ -400,6 +403,17 @@ namespace da
     void PlayerScript::HandleDead()
     {
 
+    }
+    void PlayerScript::ToDoMove()
+    {
+        if (Input::GetKey(eKeyCode::D))
+        {
+            MoveFunc(Vector2::UnitX);
+        }
+        if (Input::GetKey(eKeyCode::A))
+        {
+            MoveFunc(-Vector2::UnitX);
+        }
     }
     void PlayerScript::GetDamage()
     {

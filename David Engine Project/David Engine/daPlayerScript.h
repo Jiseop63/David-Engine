@@ -22,7 +22,6 @@ namespace da
 		Idle,
 		Move,
 		Jump,
-		Attack,
 		Dead,
 	};
 
@@ -38,7 +37,6 @@ namespace da
 		void GetInput();
 		void GetMouse();
 		void MoveFunc(math::Vector2 dir);
-		void Dash();
 		void Jump();
 
 		void PlayerFSM();
@@ -46,10 +44,13 @@ namespace da
 		void HandleIdle();
 		void HandleMove();
 		void HandleJump();
-		void HandleAttack();
 		void HandleDead();
 
-
+		void ToDoMove();
+		void ToDoDash();
+		
+		// 고쳐야함
+		void HandleAttack();
 		// 임시
 	public:
 		void GetDamage();
