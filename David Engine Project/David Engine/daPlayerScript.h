@@ -21,7 +21,7 @@ namespace da
 	{
 		Idle,
 		Move,
-		Jump,
+		todoJump,
 		Dead,
 	};
 
@@ -36,21 +36,19 @@ namespace da
 
 		void GetInput();
 		void GetMouse();
-		void MoveFunc(math::Vector2 dir);
-		void Jump();
 
 		void PlayerFSM();
-		void ChangeState(ePlayerState state);
+		void ChangeState(ePlayerState state) { mActiveState = state; }
 		void HandleIdle();
 		void HandleMove();
 		void HandleJump();
 		void HandleDead();
 
-		void ToDoMove();
-		void ToDoDash();
+		void todoMove();
+		void todoJump();
+		void todoDash();
+		void todoAttack();
 		
-		// 고쳐야함
-		void HandleAttack();
 		// 임시
 	public:
 		void GetDamage();
@@ -60,10 +58,14 @@ namespace da
 		void SetWeaponObject(GameObject* object);
 		
 	private:
-		void regenDashCount();
+		void timeProcess();
+		void dashRegen();
+		void attackDelay();
+
 	public:
 		void InitAnimation();
 		void InitCollider();
+
 	public:
 		virtual void OnCollisionEnter(Collider2D* other) override {}
 		virtual void OnCollisionStay(Collider2D* other) override {}
@@ -72,6 +74,9 @@ namespace da
 		virtual void OnLandStay(Collider2D* other) override;
 		virtual void OnLandExit(Collider2D* other) override {}
 
+
+
+		// component val
 	protected:
 		Transform*		mTransform;
 		Rigidbody*		mRigidbody;
@@ -84,39 +89,39 @@ namespace da
 		Collider2D*		mLeftCollider;
 
 		// 이건 추후에 스크립트를 통해서만 제어할듯
+		WeaponScript*	mWeaponScript;
+
+
 		GameObject*		mWeaponObject;
 		Transform*		mWeaponTransform;
 		MeshRenderer*	mWeaponRenderer;
 		Collider2D*		mWeaponCollider;
-		WeaponScript*	mWeaponScript;
 
+
+		// data val
 	private:
 		structs::sCreatureStat* mPlayerStat;
 		structs::sDashCount* 	mDashCount;
 		structs::sInventory*	mInventoryData;
 
-		// 임시 변수
+		// common val
 	private:
 		math::Vector2 mPlayerDir;
-		float	mAddDashTime;
-		float	mRegenDashTime;
 
-		// 조건 변수
+		// time val
+	private:
+		float	mDashAccumulateTime;
+		float	mDashRegenTime;
+		float	mJumpAccumulateTime;
+		float	mJumpLimitTime;
+		// 이건 임시임
+		float	mAttackAccumulateTime;
+
+		// condition val
 	private:
 		ePlayerState mActiveState;
-		ePlayerState mPrevState;
 		int		mMoveCondition;
-		bool	mReverse;
-		float   mAngle;
 		bool	mAttacked;
-
-		// Attack 관련 함수
-	private:
-		float	mAddAttackDelayTime;
-		// Jump 관련 변수
-	private:
-		float	mLimitJumpTime;
-		float	mAddJumpTime;
 
 	};
 }

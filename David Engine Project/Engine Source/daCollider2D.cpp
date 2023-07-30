@@ -79,7 +79,7 @@ namespace da
 		}
 		if (eColliderDetection::Default == mDetectionType)
 		{
-			mColliderColor = math::Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+			mColliderColor = math::Vector4(0.0f, 1.0f, 0.0f, 1.0f);
 		}
 		if (eColliderDetection::Inactive == mDetectionType)
 		{

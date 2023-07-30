@@ -27,20 +27,20 @@ namespace da
         , mWeaponRenderer(nullptr)
         , mWeaponScript(nullptr)
         , mPlayerDir(math::Vector2::Zero)
-        , mRegenDashTime(1.750f)
-        , mAddDashTime(0.0f)
+        , mDashRegenTime()
+        , mDashAccumulateTime(0.0f)
         , mPlayerStat(nullptr)
         , mDashCount(nullptr)
         , mInventoryData(nullptr)
         , mMoveCondition(0)
-        , mReverse(false)
-        , mAngle(0.0f)
         , mAttacked(false)
 	{
 	}
 	PlayerScript::~PlayerScript()
 	{
 	}
+
+#pragma region Default Func
 	void PlayerScript::Initialize()
 	{
         mTransform = GetOwner()->GetComponent<Transform>();
@@ -55,55 +55,20 @@ namespace da
     void PlayerScript::Update()
     {
         // Time
-        regenDashCount();
+        timeProcess();
 
         // Input
         GetInput();
         GetMouse();
+
         // FSM
         PlayerFSM();
 
     }
+#pragma endregion
+#pragma region ETC Input Func
     void PlayerScript::GetInput()
-    {
-        //// move
-        //{
-        //    if (Input::GetKeyDown(eKeyCode::D)
-        //        || Input::GetKeyDown(eKeyCode::A))
-        //    {
-        //        mAnimator->PlayAnimation(L"playerMove");
-        //        mMoveCondition++;
-        //    }
-        //        
-        //    if (Input::GetKeyUp(eKeyCode::D)
-        //        || Input::GetKeyUp(eKeyCode::A))
-        //    {
-        //        mMoveCondition--;
-        //        if (0 == mMoveCondition)
-        //            mAnimator->PlayAnimation(L"playerIdle");
-        //    }
-
-        //    if (Input::GetKey(eKeyCode::D))
-        //    {
-        //        MoveFunc(Vector2::UnitX);
-        //    }
-        //    if (Input::GetKey(eKeyCode::A))
-        //    {
-        //        MoveFunc(-Vector2::UnitX);
-        //    }
-        //    if (Input::GetKey(eKeyCode::W))
-        //    {
-        //        MoveFunc(Vector2::UnitY);
-        //    }
-        //    if (Input::GetKey(eKeyCode::S))
-        //    {
-        //        MoveFunc(-Vector2::UnitY);
-        //    }
-        //    if (Input::GetKeyDown(eKeyCode::SPACE))
-        //    {
-        //        Jump();
-        //    }
-        //}
+    {        
         // hp debug
         {
             if (Input::GetKeyDown(eKeyCode::R))
@@ -119,18 +84,6 @@ namespace da
                     mAnimator->PlayAnimation(L"playerDead");
             }
         }
-        /*if (Input::GetKeyDown(eKeyCode::RBTN))
-        {
-            Dash();
-        }
-        if (Input::GetKeyDown(eKeyCode::LBTN))
-        {
-            if (mAttacked)
-                mAttacked = false;
-            else
-                mAttacked = true;
-        }*/
-
         // inventory
         if (Input::GetKeyDown(eKeyCode::V))
         {
@@ -141,7 +94,6 @@ namespace da
             GameDataManager::ChangeArmour();
         }
     }
-
     void PlayerScript::GetMouse()
     {
         Vector3 mouseWorldPosition = Input::GetMouseWorldPosition();
@@ -156,14 +108,14 @@ namespace da
         // 무기 위치
         Vector3 weaponPosition(playerPosition.x, playerPosition.y, 0.0f);
         // 무기 회전값
-        mAngle = atan2(playerDir.y, playerDir.x);
+        float angle = atan2(mPlayerDir.y, mPlayerDir.x);
         // 무기 위치 변경
         mWeaponTransform->SetPosition(weaponPosition);
         // 무기 회전 적용
-        mWeaponTransform->SetRotation(Vector3(0.0f, 0.0f, mAngle));
+        mWeaponTransform->SetRotation(Vector3(0.0f, 0.0f, angle));
 
         // 위치에 따른 좌우 반전
-        if (0 <= playerDir.x)
+        if (0 <= mPlayerDir.x)
         {
             mRenderer->SetReverse(false);
             mWeaponRenderer->SetReverse(false);
@@ -192,30 +144,9 @@ namespace da
                 mWeaponRenderer->ChangeSlotTexture(Resources::Find<Texture>(L"GreatSword0Texture"));
             }
         }
-        
     }
-
-    void PlayerScript::MoveFunc(Vector2 dir)
-    {
-        mRigidbody->ApplyForce(dir, mPlayerStat->MoveSpeed);
-    }
-
-    void PlayerScript::ToDoDash()
-    {
-        // condition
-        if (GameDataManager::UseDash())
-        {
-            // to do
-            mFootCollider->ApplyGround(false);
-            mRigidbody->ApplyVelocity(mPlayerDir, mPlayerStat->MoveSpeed * 2.0f);
-        }
-    }
-    void PlayerScript::Jump()
-    {
-        mFootCollider->ApplyGround(false);
-        mRigidbody->ApplyVelocity(Vector2::UnitY, mPlayerStat->MoveSpeed);
-    }
-
+#pragma endregion
+#pragma region FSM Func
     void PlayerScript::PlayerFSM()
     {
         switch (mActiveState)
@@ -226,7 +157,7 @@ namespace da
         case da::ePlayerState::Move:
             HandleMove();
             break;
-        case da::ePlayerState::Jump:
+        case da::ePlayerState::todoJump:
             HandleJump();
             break;
         case da::ePlayerState::Dead:
@@ -236,13 +167,6 @@ namespace da
             break;
         }
     }
-
-    void PlayerScript::ChangeState(ePlayerState state)
-    {
-        mPrevState = mActiveState;
-        mActiveState = state;
-    }
-
     void PlayerScript::HandleIdle()
     {
         // 조건
@@ -260,20 +184,19 @@ namespace da
         if (Input::GetKeyDown(eKeyCode::SPACE))
         {
             mAnimator->PlayAnimation(L"playerJump");
-            Jump();
-            ChangeState(ePlayerState::Jump);
+            todoJump();
+            ChangeState(ePlayerState::todoJump);
         }
         // ->Dash
         if (Input::GetKeyDown(eKeyCode::RBTN))
         {
             mAnimator->PlayAnimation(L"playerJump");
-            ToDoDash();
-            ChangeState(ePlayerState::Jump);
+            todoDash();
+            ChangeState(ePlayerState::todoJump);
         }
-        // ->Attack
-        if (Input::GetKeyDown(eKeyCode::LBTN))
+        if (Input::GetKey(eKeyCode::LBTN))
         {
-            // AttackOn
+            todoAttack();
         }
     }
     void PlayerScript::HandleMove()
@@ -289,7 +212,7 @@ namespace da
         {
             mMoveCondition--;
         }
-        ToDoMove();
+        todoMove();
 
 
         // ->Idle
@@ -303,33 +226,30 @@ namespace da
         if (Input::GetKeyDown(eKeyCode::SPACE))
         {
             mAnimator->PlayAnimation(L"playerJump");
-            Jump();
-            ChangeState(ePlayerState::Jump);
+            todoJump();
+            ChangeState(ePlayerState::todoJump);
         }
         // ->Dash
         if (Input::GetKeyDown(eKeyCode::RBTN))
         {
             mAnimator->PlayAnimation(L"playerJump");
-            ToDoDash();
-            ChangeState(ePlayerState::Jump);
+            todoDash();
+            ChangeState(ePlayerState::todoJump);
         }
 
-        // ->Attack
-        if (Input::GetKeyDown(eKeyCode::LBTN))
+        if (Input::GetKey(eKeyCode::LBTN))
         {
-            // AttackOn
+            todoAttack();
         }
     }
     void PlayerScript::HandleJump()
     {
-        ToDoMove();
+        todoMove();
                 
         if (Input::GetKeyDown(eKeyCode::RBTN))
         {
-            ToDoDash();
+            todoDash();
         }
-
-
 
         // ->Idle
         if (mFootCollider->IsGround())
@@ -337,121 +257,108 @@ namespace da
             mAnimator->PlayAnimation(L"playerIdle");
             ChangeState(ePlayerState::Idle);
         }
-       
-        // ->Attack
-        if (Input::GetKeyDown(eKeyCode::LBTN))
-        {
-            // AttackOn
-        }
-    }
-    void PlayerScript::HandleAttack()
-    {
-        // todo
-        // GetMouse함수에서 진행
-        if (Collider2D::eColliderDetection::Inactive == mWeaponCollider->GetColliderDetection())
-        {
-            mWeaponCollider->SetColliderDetection(Collider2D::eColliderDetection::Default);
-            if (mAttacked)
-                mAttacked = false;
-            else
-                mAttacked = true;
-        }
-        ToDoMove();
-        
-        
-        mAddAttackDelayTime += (float)Time::DeltaTime();
-        if (0.80f <= mAddAttackDelayTime)
-        {
-            mWeaponCollider->SetColliderDetection(Collider2D::eColliderDetection::Inactive);
-            mAddAttackDelayTime = 0.0f;
-            ChangeState(mPrevState);
-        }
-        
-        //// ->Dash
-        //if (Input::GetKeyDown(eKeyCode::RBTN))
-        //{
-        //    mAnimator->PlayAnimation(L"playerJump");
-        //    ToDoDash();
-        //    ChangeState(ePlayerState::Jump);
-        //}
-        //// ->Jump
-        //if (Input::GetKeyDown(eKeyCode::SPACE))
-        //{
-        //    mAnimator->PlayAnimation(L"playerJump");
-        //    Jump();
-        //    ChangeState(ePlayerState::Jump);
-        //}
-        // ret 조건은 외부에서 해야할거같은데 임시로 구현할까?
 
-        //// ->Jump
-        //if (Input::GetKeyDown(eKeyCode::SPACE))
-        //{
-        //    mAnimator->PlayAnimation(L"playerJump");
-        //    Jump();
-        //    ChangeState(ePlayerState::Jump);
-        //}
-        //// ->Dash
-        //if (Input::GetKeyDown(eKeyCode::RBTN))
-        //{
-        //    mAnimator->PlayAnimation(L"playerJump");
-        //    Dash();
-        //    ChangeState(ePlayerState::Jump);
-        //}
-
-
+        if (Input::GetKey(eKeyCode::LBTN))
+        {
+            todoAttack();
+        }
     }
     void PlayerScript::HandleDead()
     {
 
     }
-    void PlayerScript::ToDoMove()
+#pragma endregion
+#pragma region Common Func
+    void PlayerScript::todoMove()
     {
         if (Input::GetKey(eKeyCode::D))
         {
-            MoveFunc(Vector2::UnitX);
+            mRigidbody->ApplyForce(Vector2::UnitX, mPlayerStat->MoveSpeed);
         }
         if (Input::GetKey(eKeyCode::A))
         {
-            MoveFunc(-Vector2::UnitX);
+            mRigidbody->ApplyForce(-Vector2::UnitX, mPlayerStat->MoveSpeed);
         }
     }
+    void PlayerScript::todoJump()
+    {
+        mFootCollider->ApplyGround(false);
+        mRigidbody->ApplyVelocity(Vector2::UnitY, mPlayerStat->MoveSpeed);
+    }
+    void PlayerScript::todoDash()
+    {
+        // condition
+        if (GameDataManager::UseDash())
+        {
+            // to do
+            mFootCollider->ApplyGround(false);
+            mRigidbody->ApplyVelocity(mPlayerDir, mPlayerStat->MoveSpeed * 2.0f);
+        }
+    }
+    void PlayerScript::todoAttack()
+    {        
+        // 공격 가능
+        if (Collider2D::eColliderDetection::Inactive == mWeaponCollider->GetColliderDetection())
+        {
+            // 모션 바꿔주기
+            if (mAttacked)
+                mAttacked = false;
+            else
+                mAttacked = true;
+            // 공격 활성화 하기 (나중에 함수로 WeaponScript에 요청하기관리)
+            mWeaponCollider->SetColliderDetection(Collider2D::eColliderDetection::Default);
+            mWeaponCollider->LateUpdate();
+        }
+    }
+#pragma endregion
+#pragma region Debuging Func
     void PlayerScript::GetDamage()
     {
         float value = 5.0f;
         GameDataManager::GetDamage(value);
     }
-
     void PlayerScript::GetHeal()    
     {
         float value = 5.0f;
         GameDataManager::GetHeal(value);
     }
-    void PlayerScript::SetWeaponObject(GameObject* object)
+#pragma endregion
+#pragma region Auto Func
+    void PlayerScript::timeProcess()
     {
-        mWeaponObject = object;
-        mWeaponTransform = mWeaponObject->GetComponent<Transform>();
-        mWeaponRenderer = mWeaponObject->GetComponent<MeshRenderer>();
-        mWeaponCollider = mWeaponObject->AddComponent<Collider2D>();
-        mWeaponCollider->SetColliderDetection(Collider2D::eColliderDetection::Inactive);
-        mWeaponScript = mWeaponObject->AddComponent<WeaponScript>();
-        mWeaponRenderer->ChangeSlotTexture(Resources::Find<Texture>(L"GreatSword0Texture"));
-        // 9 22
-        //mWeaponTransform->SetScale(Vector3(0.180f, 0.440f, 1.0f));
-        mWeaponTransform->SetScale(Vector3(2.0f, 2.0f, 1.0f));
+        dashRegen();
+        attackDelay();
+        
     }
-    void PlayerScript::regenDashCount()
+    void PlayerScript::dashRegen()
     {
         if (mDashCount->MaxCount == mDashCount->CurCount)
             return;
 
-        mAddDashTime += (float)Time::DeltaTime();
-        if (mRegenDashTime <= mAddDashTime)
+        mDashAccumulateTime += (float)Time::DeltaTime();
+        if (mDashRegenTime <= mDashAccumulateTime)
         {
             GameDataManager::RecoveryDash();
-            mAddDashTime = 0.0f;
+            mDashAccumulateTime = 0.0f;
         }
     }
+    void PlayerScript::attackDelay()
+    {
+        if (Collider2D::eColliderDetection::Default == mWeaponCollider->GetColliderDetection())
+        {
+            mAttackAccumulateTime += (float)Time::DeltaTime();
+            float attackDelay = 0.80f;
 
+            if (attackDelay <= mAttackAccumulateTime)
+            {
+                mWeaponCollider->SetColliderDetection(Collider2D::eColliderDetection::Inactive);
+                mWeaponCollider->LateUpdate();
+                mAttackAccumulateTime = 0.0f;
+            }
+        }
+    }
+#pragma endregion
+#pragma region Init Func
     void PlayerScript::InitAnimation()
     {
         mAnimator = GetOwner()->GetComponent<Animator>();
@@ -463,7 +370,6 @@ namespace da
         mAnimator->Create(L"playerDead", texture, Vector2(0.0f, 96.0f), Vector2(32.0f, 32.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
         mAnimator->PlayAnimation(L"playerIdle");
     }
-
     void PlayerScript::InitCollider()
     {
         mBodyCollider = GetOwner()->GetComponent<Collider2D>();
@@ -498,6 +404,21 @@ namespace da
             mLeftCollider->SetColliderDetection(Collider2D::eColliderDetection::Land);
         }
     }
+    void PlayerScript::SetWeaponObject(GameObject* object)
+    {
+        mWeaponObject = object;
+        mWeaponTransform = mWeaponObject->GetComponent<Transform>();
+        mWeaponRenderer = mWeaponObject->GetComponent<MeshRenderer>();
+        mWeaponCollider = mWeaponObject->AddComponent<Collider2D>();
+        mWeaponCollider->SetColliderDetection(Collider2D::eColliderDetection::Inactive);
+        mWeaponScript = mWeaponObject->AddComponent<WeaponScript>();
+        mWeaponRenderer->ChangeSlotTexture(Resources::Find<Texture>(L"GreatSword0Texture"));
+        // 9 22
+        //mWeaponTransform->SetScale(Vector3(0.180f, 0.440f, 1.0f));
+        mWeaponTransform->SetScale(Vector3(2.0f, 2.0f, 1.0f));
+    }
+#pragma endregion
+#pragma region Collision Func
     void PlayerScript::OnLandStay(Collider2D* other)
     {
         // Land Pos, Size 가져오기
@@ -535,4 +456,5 @@ namespace da
             mTransform->SetPosition(newPosition);            
         }
     }
+#pragma endregion
 }
