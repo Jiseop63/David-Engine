@@ -119,9 +119,9 @@ namespace da
 
 		// condition val
 	private:
-		ePlayerState mActiveState;
-		int		mMoveCondition;
-		bool	mAttacked;
+		ePlayerState	mActiveState;
+		int				mMoveCondition;
+		bool			mAttacked;
 
 	};
 }

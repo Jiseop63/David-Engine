@@ -17,23 +17,33 @@ namespace da
         , mRigidbody(nullptr)
         , mAnimator(nullptr)
         , mRenderer(nullptr)
+
         , mBodyCollider(nullptr)
         , mFootCollider(nullptr)
         , mRightCollider(nullptr)
         , mLeftCollider(nullptr)
+
         , mWeaponCollider(nullptr)
         , mWeaponObject(nullptr)
         , mWeaponTransform(nullptr)
         , mWeaponRenderer(nullptr)
         , mWeaponScript(nullptr)
+        
         , mPlayerDir(math::Vector2::Zero)
-        , mDashRegenTime()
+        
         , mDashAccumulateTime(0.0f)
+        , mDashRegenTime(1.20f)
+        , mJumpAccumulateTime(0.0f)
+        , mJumpLimitTime(0.750f)
+        , mAttackAccumulateTime(0.0f)
+        
+        , mActiveState(ePlayerState::Idle)
+        , mMoveCondition(0)
+        , mAttacked(false)
+        
         , mPlayerStat(nullptr)
         , mDashCount(nullptr)
         , mInventoryData(nullptr)
-        , mMoveCondition(0)
-        , mAttacked(false)
 	{
 	}
 	PlayerScript::~PlayerScript()
@@ -169,9 +179,7 @@ namespace da
     }
     void PlayerScript::HandleIdle()
     {
-        // 조건
         // ->Move
-        // 키를 눌렀을때 KeyDonw 상태 바꿔주기
         if (Input::GetKeyDown(eKeyCode::D)
             || Input::GetKeyDown(eKeyCode::A))
         {
@@ -201,7 +209,6 @@ namespace da
     }
     void PlayerScript::HandleMove()
     {
-        // Todo
         if (Input::GetKeyDown(eKeyCode::D)
             || Input::GetKeyDown(eKeyCode::A))
         {
