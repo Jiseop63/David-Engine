@@ -354,7 +354,6 @@ namespace da
             // 조건에 맞으면 점프
             if (mJumpCount->JumpLimitTime <= mJumpCount->JumpAccumulateTime)
             {
-                mJumpCount->BufferedJump = false;
                 mJumpCount->JumpAccumulateTime = 0.0f;
                 mJumpCount->JumpForceRatio = 1.0f;
                 jumpProcess();
@@ -365,12 +364,19 @@ namespace da
     // 여기서 점프가 실행됨
     void PlayerScript::jumpProcess()
     {
+        // 이펙트 실행
+        mEffectScript->SetEffectPosition(mTransform->GetPosition() + Vector3(0.0f, -0.450f, 0.0f));
+        mEffectScript->PlayEffect(L"Jumping");
+
+        // 최소 높이 설정
         float minForce = 0.650f;
         if (minForce >= mJumpCount->JumpForceRatio)
             mJumpCount->JumpForceRatio = minForce;
+        
         mFootCollider->ApplyGround(false);
         mRigidbody->ApplyVelocity(Vector2::UnitY, mPlayerStat->JumpForce * mJumpCount->JumpForceRatio);
-        mJumpCount->JumpForceRatio = 0.0f;
+
+        GameDataManager::ClearJumpBuffer();
     }
 
 #pragma endregion
@@ -424,6 +430,11 @@ namespace da
     {
         mWeaponScript = object->AddComponent<WeaponScript>();
         return mWeaponScript;
+    }
+    EffectScript* PlayerScript::SetEffectObject(GameObject* object)
+    {
+        mEffectScript = object->AddComponent<EffectScript>();
+        return mEffectScript;
     }
 #pragma endregion
 #pragma region Collision Func

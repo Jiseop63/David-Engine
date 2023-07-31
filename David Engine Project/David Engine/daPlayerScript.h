@@ -61,7 +61,7 @@ namespace da
 	public:
 		math::Vector2 GetPlayerDir() { return mPlayerDir; }
 		WeaponScript* SetWeaponObject(GameObject* object);
-		EffectScript* SetEffectObject(GameObject* object) {}
+		EffectScript* SetEffectObject(GameObject* object);
 	private:
 		void timeProcess();
 		void dashRegen();
@@ -96,6 +96,7 @@ namespace da
 
 		// 이건 추후에 스크립트를 통해서만 제어할듯
 		WeaponScript*	mWeaponScript;
+		EffectScript*	mEffectScript;
 
 		// data val
 	private:

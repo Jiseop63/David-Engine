@@ -88,19 +88,10 @@ namespace da
 		}
 	}
 
-	bool GameDataManager::UseJump()
-	{
-		return false;
-	}
-
-	void GameDataManager::RecoveryJump()
-	{
-		mJumpCount.BufferedJump = true;
-	}
-
-	void GameDataManager::ResetJumpBuffer()
+	void GameDataManager::ClearJumpBuffer()
 	{
 		mJumpCount.BufferedJump = false;
+		mJumpCount.JumpForceRatio = 0.0f;
 		mJumpCount.JumpAccumulateTime = 0.0f;
 	}
 

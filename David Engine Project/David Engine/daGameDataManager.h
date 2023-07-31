@@ -35,9 +35,7 @@ namespace da
 
 		static bool UseDash();
 		static void RecoveryDash();
-		static bool UseJump();
-		static void RecoveryJump();
-		static void ResetJumpBuffer();
+		static void ClearJumpBuffer();
 #pragma endregion
 
 #pragma region Inventory Func

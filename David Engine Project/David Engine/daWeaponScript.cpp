@@ -70,7 +70,7 @@ namespace da
 	{
 		if (Collider2D::eColliderDetection::Inactive == mWeaponCollider->GetColliderDetection())
 		{
-			mEffectScript->PlayEffect();
+			mEffectScript->PlayEffect(L"GreatSwing");
 			// 모션 바꿔주기
 			if (mWeaponAttacked)
 				mWeaponAttacked = false;
