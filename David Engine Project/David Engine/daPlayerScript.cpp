@@ -275,11 +275,12 @@ namespace da
         else
         {
             // 점프 개수가 유효한지 확인
-            if (mJumpCount->BufferedJump)
+            if (mJumpCount->ExtraJump)
             {
                 if (Input::GetKeyDown(eKeyCode::SPACE))
                 {
-                    mJumpCount->BufferedJump = false;
+                    mJumpCount->ExtraJump = false;
+                    mJumpCount->JumpForceRatio = 0.80f;
                     // 점프하기
                     jumpProcess();
                 }
@@ -323,6 +324,7 @@ namespace da
     void PlayerScript::timeProcess()
     {
         dashRegen();
+        jumpRegen();
         bufferedJump();
     }
     void PlayerScript::dashRegen()
@@ -337,7 +339,8 @@ namespace da
 
     void PlayerScript::jumpRegen()
     {
-        
+        if (mFootCollider->IsGround())
+            mJumpCount->ExtraJump = true;
     }
     
     void PlayerScript::bufferedJump()
@@ -351,12 +354,12 @@ namespace da
             // 조건에 맞으면 점프
             if (mJumpCount->JumpLimitTime <= mJumpCount->JumpAccumulateTime)
             {
+                mJumpCount->BufferedJump = false;
+                mJumpCount->JumpAccumulateTime = 0.0f;
                 mJumpCount->JumpForceRatio = 1.0f;
                 jumpProcess();
             }
         }
-        else
-            GameDataManager::ResetJumpBuffer();
     }
 
     // 여기서 점프가 실행됨
@@ -367,7 +370,6 @@ namespace da
             mJumpCount->JumpForceRatio = minForce;
         mFootCollider->ApplyGround(false);
         mRigidbody->ApplyVelocity(Vector2::UnitY, mPlayerStat->JumpForce * mJumpCount->JumpForceRatio);
-        // 리셋하기
         mJumpCount->JumpForceRatio = 0.0f;
     }
 

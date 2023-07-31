@@ -48,7 +48,6 @@ namespace da
 		void HandleJump();
 		void HandleDead();
 
-
 		void todoMove();
 		void todoJump();
 		void todoDash();
