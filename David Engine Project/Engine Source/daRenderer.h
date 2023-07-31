@@ -40,8 +40,8 @@ namespace renderer
 	};
 	CBUFFER(CountCB, CBSLOT_COUNT)
 	{
-		float MaxCount;
-		float CurCount;
+		float MaxDashCount;
+		float CurDashCount;
 	};
 	CBUFFER(AnimationCB, CBSLOT_ANIMATION)
 	{

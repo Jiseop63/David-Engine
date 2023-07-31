@@ -15,7 +15,7 @@ namespace da
 
 		void PlayEffect();
 
-		void SetEffectPosition(math::Vector3 vector3) { mEffectTransform->SetPosition(vector3); }
+		void SetEffectPosition(math::Vector3 vector3) { mEffectTransform->SetPosition(vector3 + (mEffectTransform->Up() * 0.50f)); }
 		void SetEffectRotation(math::Vector3 vector3) { mEffectTransform->SetRotation(vector3 + math::Vector3(0.0f, 0.0f, -1.570f)); }
 
 	protected:

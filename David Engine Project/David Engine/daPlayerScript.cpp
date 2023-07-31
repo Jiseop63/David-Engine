@@ -31,10 +31,7 @@ namespace da
         , mDashRegenTime(0.0f)
         , mJumpAccumulateTime(0.0f)
         , mJumpLimitTime(0.0f)
-        , mAttackAccumulateTime(0.0f)
-        
         , mJumpForceRatio(0.0f)
-        , mAttacked(false)
 
         , mActiveState(ePlayerState::Idle)
         , mMoveCondition(0)
@@ -125,23 +122,20 @@ namespace da
         Vector3 mouseWorldPosition = Input::GetMouseWorldPosition();
         Vector2 mousePosition(mouseWorldPosition.x, mouseWorldPosition.y);
         Vector3 playerPosition = mTransform->GetPosition();
-
         // Player Dir
         Vector2 playerDir(mousePosition.x - playerPosition.x, mousePosition.y - playerPosition.y);        
         playerDir.Normalize();
         mPlayerDir = playerDir;
 
         // Texture Transform
-        Vector3 weaponPosition(playerPosition.x, playerPosition.y, 0.0f);
-        float angle = atan2(mPlayerDir.y, mPlayerDir.x);
-        mWeaponScript->SetWeaponPosition(weaponPosition);
-        mWeaponScript->SetWeaponRotation(Vector3(0.0f, 0.0f, angle));
-
         bool value = false;
         if (0 >= mPlayerDir.x)
             value = true;
         mRenderer->SetReverse(value);
         mWeaponScript->SetReverse(value);
+
+        mWeaponScript->SetWeaponPosition(Vector3(playerPosition.x, playerPosition.y, 0.0f));
+        mWeaponScript->SetPlayerDir(mPlayerDir);
     }
 
 #pragma endregion
@@ -292,7 +286,7 @@ namespace da
     }
     void PlayerScript::todoAttack()
     {
-        if (Input::GetKeyDown(eKeyCode::LBTN))
+        if (Input::GetKey(eKeyCode::LBTN))
             mWeaponScript->DoAttack();
     }
 #pragma endregion
@@ -317,7 +311,7 @@ namespace da
     }
     void PlayerScript::dashRegen()
     {
-        if (mDashCount->MaxCount == mDashCount->CurCount)
+        if (mDashCount->MaxDashCount == mDashCount->CurDashCount)
             return;
 
         mDashAccumulateTime += (float)Time::DeltaTime();

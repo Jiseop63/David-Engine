@@ -40,14 +40,40 @@ namespace da
 			mWeaponTransform->SetPosition(vector3); 
 			mEffectScript->SetEffectPosition(vector3);
 		}
+		void SetPlayerDir(math::Vector2 dir)
+		{ 
+			bool value = false;
+			if (0 >= dir.x)
+				value = true;
+			float angle = atan2(dir.y, dir.x);
+			mEffectScript->SetEffectRotation(math::Vector3(0.0f, 0.0f, angle));
+			if (mWeaponAttacked)
+			{
+				if (value)
+					angle += 0.7850f;
+				else
+					angle -= 0.7850f;
+			}
+			mWeaponTransform->SetRotation(math::Vector3(0.0f, 0.0f, angle));
+
+		}
 		void SetWeaponRotation(math::Vector3 vector3) 
 		{ 
 			mWeaponTransform->SetRotation(vector3);
 			mEffectScript->SetEffectRotation(vector3);
 		}
+		void SetWeaponRotation(float x, float y, float z)
+		{
+			if (mWeaponAttacked)
+			{
 
+			}
+
+		}
+		bool IsAttacked() { return mWeaponAttacked; }
 		void SetReverse(bool value) { mWeaponRenderer->SetReverse(value); }
 		void SetEffectObject(GameObject* object);
+
 	protected:
 		Transform*		mWeaponTransform;
 		Animator*		mWeaponAnimator;
@@ -57,7 +83,7 @@ namespace da
 		// 투사체 풀 만들기 (나중에)
 
 	private:
-		enums::eWeaponType mWeaponType;
+		enums::eWeaponType	mWeaponType;
 
 	protected:
 		std::shared_ptr<Texture> mFirstTexture;

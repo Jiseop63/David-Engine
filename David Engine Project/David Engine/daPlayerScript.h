@@ -58,8 +58,9 @@ namespace da
 		void GetHeal();
 
 	public:
+		math::Vector2 GetPlayerDir() { return mPlayerDir; }
 		WeaponScript* SetWeaponObject(GameObject* object);
-		
+		EffectScript* SetEffectObject(GameObject* object) {}
 	private:
 		void timeProcess();
 		void dashRegen();
@@ -97,7 +98,7 @@ namespace da
 
 		// data val
 	private:
-		structs::sCreatureStat* mPlayerStat;
+		structs::sPlayerStat* mPlayerStat;
 		structs::sDashCount* 	mDashCount;
 		structs::sInventory*	mInventoryData;
 
@@ -111,12 +112,10 @@ namespace da
 		float	mDashRegenTime;
 		float	mJumpAccumulateTime;
 		float	mJumpLimitTime;
-		float	mAttackAccumulateTime;
 		
 		// func val
 	private:
 		float			mJumpForceRatio;
-		bool			mAttacked;
 
 		// condition val
 	private:

@@ -18,9 +18,11 @@ namespace da
 		void SetPosition(math::Vector3 position) { mPosition = position; }
 		void SetRotation(math::Vector3 rotation) { mRotation = rotation;}
 		void SetScale(math::Vector3 scale) { mScale = scale;}
+		void SetOffset(math::Vector3 offset) { mOffset = offset; }
 		void SetPosition(float x, float y, float z) { mPosition = math::Vector3(x, y, z); }
 		void SetRotation(float x, float y, float z) { mRotation = math::Vector3(x, y, z); }
 		void SetScale(float x, float y, float z) { mScale = math::Vector3(x, y, z); }
+		void SetOffset(float x, float y, float z) { mOffset = math::Vector3(x, y, z); }
 
 		math::Vector3 GetPosition() { return mPosition; }
 		math::Vector3 GetRotation() { return mRotation; }
@@ -48,6 +50,7 @@ namespace da
 		math::Vector3 mPosition;
 		math::Vector3 mRotation;
 		math::Vector3 mScale;
+		math::Vector3 mOffset;
 		
 		math::Vector3 mUp;
 		math::Vector3 mForward;

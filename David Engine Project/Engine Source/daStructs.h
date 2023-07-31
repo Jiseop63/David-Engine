@@ -1,24 +1,41 @@
 namespace da::structs
 {
 
-	struct sCreatureStat
+	struct sPlayerStat
 	{
 		float MaxHP;
 		float CurHP;
 		float MoveSpeed;
 		float JumpForce;
 		float DashForce;
-		sCreatureStat()
+		sPlayerStat()
 			: MaxHP(0.0f), CurHP(0.0f), MoveSpeed(0.0f), JumpForce(0.0f), DashForce(0.0f)
+		{}
+	};
+	struct sJumpCount
+	{
+		int MaxJumpCount;
+		int CurJumpCount;
+		sJumpCount()
+			: MaxJumpCount(0), CurJumpCount(0)
 		{}
 	};
 	struct sDashCount
 	{
-		int MaxCount;
-		int CurCount;
+		int MaxDashCount;
+		int CurDashCount;
 		sDashCount()
-			: MaxCount(0), CurCount(0)
+			: MaxDashCount(0), CurDashCount(0)
 		{}
+	};
+
+	struct sWeaponStat
+	{
+		da::enums::eWeaponType WeaponType;
+		float	AtaackDamage;
+		float	AttackAccumulateTime;
+		float	AttackDelayTime;
+		bool	AttackReady;
 	};
 
 	struct sArmour

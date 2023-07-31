@@ -20,7 +20,7 @@ namespace da
 	void LifeBarScript::BindConstantBuffer()
 	{
 		// value 가져오기
-		structs::sCreatureStat playerlife = GameDataManager::GetPlayerStat();
+		structs::sPlayerStat playerlife = GameDataManager::GetPlayerStat();
 
 		// 상수버퍼 만들기
 		graphics::ConstantBuffer* outCB

@@ -22,7 +22,7 @@ namespace da
 		static void SetDashCountBar(GameObject* obj) { mDashCountBar = obj; }
 
 	public:
-		static structs::sCreatureStat& GetPlayerStat() { return mPlayerStat; }
+		static structs::sPlayerStat& GetPlayerStat() { return mPlayerStat; }
 		static structs::sDashCount& GetDashCount() { return mDashCount; }
 		static structs::sInventory& GetInventory() { return mInventoryData; }
 
@@ -45,7 +45,8 @@ namespace da
 
 #pragma region Data
 	private:
-		static structs::sCreatureStat mPlayerStat;
+		static structs::sPlayerStat mPlayerStat;
+		static structs::sJumpCount mJumpCount;
 		static structs::sDashCount mDashCount;
 		static structs::sInventory mInventoryData;
 

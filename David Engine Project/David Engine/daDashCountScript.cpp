@@ -28,8 +28,8 @@ namespace da
 
 		// 데이터 채우기
 		renderer::CountCB data;
-		data.MaxCount = (float)dashCount.MaxCount;
-		data.CurCount = (float)dashCount.CurCount;
+		data.MaxDashCount = (float)dashCount.MaxDashCount;
+		data.CurDashCount = (float)dashCount.CurDashCount;
 
 		outCB->SetData(&data);
 		outCB->Bind(graphics::eShaderStage::VS);

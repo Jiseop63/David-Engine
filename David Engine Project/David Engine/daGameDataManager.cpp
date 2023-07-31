@@ -7,7 +7,8 @@
 namespace da
 {
 	using namespace math;
-	structs::sCreatureStat GameDataManager::mPlayerStat = {};
+	structs::sPlayerStat GameDataManager::mPlayerStat = {};
+	structs::sJumpCount GameDataManager::mJumpCount = {};
 	structs::sDashCount GameDataManager::mDashCount = {};
 	structs::sInventory GameDataManager::mInventoryData = {};
 
@@ -30,11 +31,13 @@ namespace da
 		mPlayerStat.MaxHP = 30;
 		mPlayerStat.CurHP = mPlayerStat.MaxHP;
 		mPlayerStat.MoveSpeed = 2.0f;
-		mPlayerStat.JumpForce = 6.50f;
+		mPlayerStat.JumpForce = 4.50f;
 		mPlayerStat.DashForce = 6.0f;
-		mDashCount.MaxCount = 2;
-		mDashCount.CurCount = mDashCount.MaxCount;
-
+		mDashCount.MaxDashCount = 2;
+		mDashCount.CurDashCount = mDashCount.MaxDashCount;
+		mJumpCount.MaxJumpCount = 2;
+		mJumpCount.CurJumpCount = mJumpCount.MaxJumpCount;
+		
 		mInventoryData.Armour1.Weapon = enums::eWeaponType::LongSword;
 		mActiveArmour = mInventoryData.Armour1;
 		mSubArmour = mInventoryData.Armour2;
@@ -58,9 +61,9 @@ namespace da
 
 	bool GameDataManager::UseDash()
 	{		
-		if (0 < mDashCount.CurCount)
+		if (0 < mDashCount.CurDashCount)
 		{
-			mDashCount.CurCount -= 1;
+			mDashCount.CurDashCount -= 1;
 			mDashCountBar->GetComponent<DashCountScript>()->BindConstantBuffer();
 			return true;
 		}
@@ -70,9 +73,9 @@ namespace da
 
 	void GameDataManager::RecoveryDash()
 	{
-		if (mDashCount.MaxCount > mDashCount.CurCount)
+		if (mDashCount.MaxDashCount > mDashCount.CurDashCount)
 		{
-			mDashCount.CurCount += 1;
+			mDashCount.CurDashCount += 1;
 			mDashCountBar->GetComponent<DashCountScript>()->BindConstantBuffer();
 		}
 

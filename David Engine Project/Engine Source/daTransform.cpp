@@ -23,6 +23,8 @@ namespace da
 	{
 		mWorld = Matrix::Identity;
 		
+		Vector3 totalPos = mPosition + mOffset;
+
 		Matrix scaleMatrix;
 		scaleMatrix = Matrix::CreateScale(mScale);
 
@@ -36,7 +38,7 @@ namespace da
 		mRight = Vector3::TransformNormal(Vector3::Right, rotateMatrix);
 
 		Matrix positionMatrix;
-		positionMatrix.Translation(mPosition);
+		positionMatrix.Translation(totalPos);
 
 		mWorld = scaleMatrix * rotateMatrix * positionMatrix;
 
