@@ -6,8 +6,10 @@ namespace da::structs
 		float MaxHP;
 		float CurHP;
 		float MoveSpeed;
+		float JumpForce;
+		float DashForce;
 		sCreatureStat()
-			: MaxHP(0.0f), CurHP(0.0f), MoveSpeed(0.0f)
+			: MaxHP(0.0f), CurHP(0.0f), MoveSpeed(0.0f), JumpForce(0.0f), DashForce(0.0f)
 		{}
 	};
 	struct sDashCount

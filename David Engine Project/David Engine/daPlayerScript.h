@@ -21,7 +21,7 @@ namespace da
 	{
 		Idle,
 		Move,
-		todoJump,
+		jumpProcess,
 		Dead,
 	};
 
@@ -34,15 +34,18 @@ namespace da
 		virtual void Initialize();
 		virtual void Update();
 
-		void GetInput();
 		void GetMouse();
+		void GetInput();
+		void DebugInput();
+		void UIInput();
 
 		void PlayerFSM();
-		void ChangeState(ePlayerState state) { mActiveState = state; }
+		void ChangeState(ePlayerState state);
 		void HandleIdle();
 		void HandleMove();
 		void HandleJump();
 		void HandleDead();
+
 
 		void todoMove();
 		void todoJump();
@@ -61,7 +64,9 @@ namespace da
 		void timeProcess();
 		void dashRegen();
 		void attackDelay();
-
+		void bufferedJump();
+		void jumpProcess();
+		void resetJumpBuffer();
 	public:
 		void InitAnimation();
 		void InitCollider();
@@ -70,7 +75,7 @@ namespace da
 		virtual void OnCollisionEnter(Collider2D* other) override {}
 		virtual void OnCollisionStay(Collider2D* other) override {}
 		virtual void OnCollisionExit(Collider2D* other) override {}
-		virtual void OnLandEnter(Collider2D* other) override {}
+		virtual void OnLandEnter(Collider2D* other) override;
 		virtual void OnLandStay(Collider2D* other) override;
 		virtual void OnLandExit(Collider2D* other) override {}
 
@@ -114,14 +119,20 @@ namespace da
 		float	mDashRegenTime;
 		float	mJumpAccumulateTime;
 		float	mJumpLimitTime;
-		// 이건 임시임
 		float	mAttackAccumulateTime;
+		
+		// func val
+	private:
+		float			mJumpForceRatio;
+		bool			mAttacked;
 
 		// condition val
 	private:
 		ePlayerState	mActiveState;
 		int				mMoveCondition;
-		bool			mAttacked;
+		bool			mBufferedJump;
+		bool			mDead;
+
 
 	};
 }

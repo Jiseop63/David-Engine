@@ -18,40 +18,25 @@ namespace da
 		virtual void Update();
 
 	public:
-		void CalculateAcceleration();
-		void ApplyGravity();
-		void ApplyLimitVelocity();
-		void ApplyFriction();
-		void ApplyLocation();
-
-
-
 		void applyGravity();
-		void calculateInput();
-		void applyFriction();
+
 		void calculateVelocity();
+		void applyFriction();
 		void applyLocation();
 		void clearPower();
 
 	public:
 		void SetDimentionType(eDimensionType dimension) { mDimensionType = dimension; }
-
-		void ApplyForce(math::Vector2 vector2) { mForce = vector2; }
-		math::Vector2 GetVelocity() { return mVelocity; }
-		void ApplyVelocity(math::Vector2 vector2) { mVelocity += vector2; }
-
-
+		void SetMoving(bool isMove) { mMoving = isMove; }
 	public:
-		void ApplyForce(math::Vector2 dir, float magnitude) { mForceDir = dir * magnitude; mClampForce = magnitude; }
-		void ApplyVelocity(math::Vector2 dir, float magnitude) { mVelocityDir = dir * magnitude; mClampVelocity = magnitude; }
+		void ApplyForce(math::Vector2 dir, float magnitude) { mInputForceDir = dir; mInputForceMagnitude = magnitude; }
+		void ApplyVelocity(math::Vector2 dir, float magnitude) { mInputVelocityDir = dir; mInputVelocityMagnitude = magnitude; }
+		void OverrideVelocity(math::Vector2 dir, float magnitude) { mOverrideVelocity = dir * magnitude; }
+		math::Vector2 GetVelocity() { return mPreviousVelocity; }
+
 		// unit : 속도 통제 방향, inner : 현재 속도
 		void EraseVelocity(math::Vector2 dir, math::Vector2 velocity);
 
-	private:
-		void FrictionAction() {}
-		void MoveAction() {}
-		void GravityAction() {}
-		void LimitVelocityAction() {}
 
 	private:
 		eDimensionType	mDimensionType;
@@ -59,19 +44,28 @@ namespace da
 		float			mFriction;		// 마찰력
 
 	private:
-		math::Vector2 mForce;
-		math::Vector2 mAcceleration;
-		math::Vector2 mVelocity;
+		math::Vector2	mPreviousVelocity;
+		math::Vector2	mCalcVelocity;
+		// input
+		math::Vector2	mInputForceDir;
+		math::Vector2	mInputVelocityDir;
+		math::Vector2	mOverrideVelocity;
+
+		float			mInputForceMagnitude;
+		float			mInputVelocityMagnitude;
 
 	private:
-		math::Vector2	mTempVelocity;
-		math::Vector2	mAccelerationDir;
-		math::Vector2	mForceDir;
-		math::Vector2	mVelocityDir;
+		math::Vector2	mAccumulateAcceleration;
+		math::Vector2	mAccumulateVelocity;
 
-		float			mClampForce;
-		float			mClampVelocity;
 
-		math::Vector2	mTotalVelocity;
+
+
+		float			mLimitGravityForce;
+		float			mAccelerationMagnitude;
+		float			mMaxMagnitudeForce;
+		float			mVelocityMagnitude;
+		float			mMaxMagnitudeVelocity;
+		bool			mMoving;
 	};
 }

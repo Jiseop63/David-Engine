@@ -32,19 +32,25 @@ namespace da
         , mPlayerDir(math::Vector2::Zero)
         
         , mDashAccumulateTime(0.0f)
-        , mDashRegenTime(1.20f)
+        , mDashRegenTime(0.0f)
         , mJumpAccumulateTime(0.0f)
-        , mJumpLimitTime(0.750f)
+        , mJumpLimitTime(0.0f)
         , mAttackAccumulateTime(0.0f)
         
+        , mJumpForceRatio(0.0f)
+        , mAttacked(false)
+
         , mActiveState(ePlayerState::Idle)
         , mMoveCondition(0)
-        , mAttacked(false)
+        , mDead(false)
+        , mBufferedJump(false)
         
         , mPlayerStat(nullptr)
         , mDashCount(nullptr)
         , mInventoryData(nullptr)
 	{
+        mDashRegenTime = 1.20f;
+        mJumpLimitTime = 0.1250f;
 	}
 	PlayerScript::~PlayerScript()
 	{
@@ -78,23 +84,33 @@ namespace da
 #pragma endregion
 #pragma region ETC Input Func
     void PlayerScript::GetInput()
-    {        
-        // hp debug
+    {
+        DebugInput();
+        UIInput();
+        if (mDead)
+            return;
+        todoMove();
+        todoJump();
+        todoDash();
+        todoAttack();        
+    }
+    void PlayerScript::DebugInput()
+    {
+        if (Input::GetKeyDown(eKeyCode::R))
         {
-            if (Input::GetKeyDown(eKeyCode::R))
-            {
-                GetHeal();
-                if (0 < mPlayerStat->CurHP)
-                    mAnimator->PlayAnimation(L"playerIdle");
-            }
-            if (Input::GetKeyDown(eKeyCode::T))
-            {
-                GetDamage();
-                if (0 >= mPlayerStat->CurHP)
-                    mAnimator->PlayAnimation(L"playerDead");
-            }
+            GetHeal();
+            if (0 < mPlayerStat->CurHP)
+                ChangeState(ePlayerState::Idle);
         }
-        // inventory
+        if (Input::GetKeyDown(eKeyCode::T))
+        {
+            GetDamage();
+            if (0 >= mPlayerStat->CurHP)
+                ChangeState(ePlayerState::Dead);
+        }
+    }
+    void PlayerScript::UIInput()
+    {
         if (Input::GetKeyDown(eKeyCode::V))
         {
             GameDataManager::CallInventory();
@@ -106,55 +122,36 @@ namespace da
     }
     void PlayerScript::GetMouse()
     {
+        if (mDead)
+            return;
         Vector3 mouseWorldPosition = Input::GetMouseWorldPosition();
         Vector2 mousePosition(mouseWorldPosition.x, mouseWorldPosition.y);
         Vector3 playerPosition = mTransform->GetPosition();
 
-        // 플레이어 방향
+        // Player Dir
         Vector2 playerDir(mousePosition.x - playerPosition.x, mousePosition.y - playerPosition.y);        
         playerDir.Normalize();
         mPlayerDir = playerDir;
 
-        // 무기 위치
+        // Texture Transform
         Vector3 weaponPosition(playerPosition.x, playerPosition.y, 0.0f);
-        // 무기 회전값
         float angle = atan2(mPlayerDir.y, mPlayerDir.x);
-        // 무기 위치 변경
         mWeaponTransform->SetPosition(weaponPosition);
-        // 무기 회전 적용
         mWeaponTransform->SetRotation(Vector3(0.0f, 0.0f, angle));
 
-        // 위치에 따른 좌우 반전
-        if (0 <= mPlayerDir.x)
-        {
-            mRenderer->SetReverse(false);
-            mWeaponRenderer->SetReverse(false);
-            if (mAttacked)
-            {
-                // 이미지 변경
-                mWeaponRenderer->ChangeSlotTexture(Resources::Find<Texture>(L"GreatSword1Texture"));
-            }
-            else
-            {
-                mWeaponRenderer->ChangeSlotTexture(Resources::Find<Texture>(L"GreatSword0Texture"));
-            }
 
-        }
+        // Texture Change
+        if (mAttacked)
+            mWeaponRenderer->ChangeSlotTexture(Resources::Find<Texture>(L"GreatSword1Texture"));
         else
-        {
-            mRenderer->SetReverse(true);
-            mWeaponRenderer->SetReverse(true);
-            if (mAttacked)
-            {
-                // 이미지 변경
-                mWeaponRenderer->ChangeSlotTexture(Resources::Find<Texture>(L"GreatSword1Texture"));
-            }
-            else
-            {
-                mWeaponRenderer->ChangeSlotTexture(Resources::Find<Texture>(L"GreatSword0Texture"));
-            }
-        }
+            mWeaponRenderer->ChangeSlotTexture(Resources::Find<Texture>(L"GreatSword0Texture"));
+        bool value = false;
+        if (0 >= mPlayerDir.x)
+            value = true;
+        mRenderer->SetReverse(value);
+        mWeaponRenderer->SetReverse(value);
     }
+
 #pragma endregion
 #pragma region FSM Func
     void PlayerScript::PlayerFSM()
@@ -167,7 +164,7 @@ namespace da
         case da::ePlayerState::Move:
             HandleMove();
             break;
-        case da::ePlayerState::todoJump:
+        case da::ePlayerState::jumpProcess:
             HandleJump();
             break;
         case da::ePlayerState::Dead:
@@ -177,38 +174,73 @@ namespace da
             break;
         }
     }
+    void PlayerScript::ChangeState(ePlayerState state)
+    {
+        mActiveState = state;
+        switch (mActiveState)
+        {
+        case da::ePlayerState::Idle:
+            mAnimator->PlayAnimation(L"playerIdle");
+            break;
+        case da::ePlayerState::Move:
+            mAnimator->PlayAnimation(L"playerMove");
+            break;
+        case da::ePlayerState::jumpProcess:
+            mAnimator->PlayAnimation(L"playerJump");
+            break;
+        case da::ePlayerState::Dead:
+            mAnimator->PlayAnimation(L"playerDead");
+            break;
+        default:
+            break;
+        }
+
+    }
     void PlayerScript::HandleIdle()
     {
         // ->Move
         if (Input::GetKeyDown(eKeyCode::D)
             || Input::GetKeyDown(eKeyCode::A))
-        {
-            mMoveCondition++;
-            mAnimator->PlayAnimation(L"playerMove");
             ChangeState(ePlayerState::Move);
-        }
 
-        // ->Jump
         if (Input::GetKeyDown(eKeyCode::SPACE))
-        {
-            mAnimator->PlayAnimation(L"playerJump");
-            todoJump();
-            ChangeState(ePlayerState::todoJump);
-        }
-        // ->Dash
+            ChangeState(ePlayerState::jumpProcess);
         if (Input::GetKeyDown(eKeyCode::RBTN))
-        {
-            mAnimator->PlayAnimation(L"playerJump");
-            todoDash();
-            ChangeState(ePlayerState::todoJump);
-        }
-        if (Input::GetKey(eKeyCode::LBTN))
-        {
-            todoAttack();
-        }
+            ChangeState(ePlayerState::jumpProcess);
     }
     void PlayerScript::HandleMove()
+    {        
+        if (0 == mMoveCondition)
+        {
+            mRigidbody->SetMoving(false);
+            mAnimator->PlayAnimation(L"playerIdle");
+            ChangeState(ePlayerState::Idle);
+        }
+        else
+            mRigidbody->SetMoving(true);
+
+        if (Input::GetKeyDown(eKeyCode::SPACE))
+            ChangeState(ePlayerState::jumpProcess);
+        if (Input::GetKeyDown(eKeyCode::RBTN))
+            ChangeState(ePlayerState::jumpProcess);
+    }
+
+    void PlayerScript::HandleJump()
     {
+        if (mFootCollider->IsGround())
+            ChangeState(ePlayerState::Idle);
+    }
+    void PlayerScript::HandleDead()
+    {
+        mDead = true;
+    }
+    
+#pragma endregion
+#pragma region Common Func
+    void PlayerScript::todoMove()
+    {
+            Vector3 mPos = mTransform->GetPosition();
+        // moveAnimation
         if (Input::GetKeyDown(eKeyCode::D)
             || Input::GetKeyDown(eKeyCode::A))
         {
@@ -216,105 +248,65 @@ namespace da
         }
         if (Input::GetKeyUp(eKeyCode::D)
             || Input::GetKeyUp(eKeyCode::A))
-        {
             mMoveCondition--;
-        }
-        todoMove();
 
-
-        // ->Idle
-        if (0 == mMoveCondition)
-        {
-            mAnimator->PlayAnimation(L"playerIdle");
-            ChangeState(ePlayerState::Idle);
-        }
-
-        // ->Jump
-        if (Input::GetKeyDown(eKeyCode::SPACE))
-        {
-            mAnimator->PlayAnimation(L"playerJump");
-            todoJump();
-            ChangeState(ePlayerState::todoJump);
-        }
-        // ->Dash
-        if (Input::GetKeyDown(eKeyCode::RBTN))
-        {
-            mAnimator->PlayAnimation(L"playerJump");
-            todoDash();
-            ChangeState(ePlayerState::todoJump);
-        }
-
-        if (Input::GetKey(eKeyCode::LBTN))
-        {
-            todoAttack();
-        }
-    }
-    void PlayerScript::HandleJump()
-    {
-        todoMove();
-                
-        if (Input::GetKeyDown(eKeyCode::RBTN))
-        {
-            todoDash();
-        }
-
-        // ->Idle
-        if (mFootCollider->IsGround())
-        {
-            mAnimator->PlayAnimation(L"playerIdle");
-            ChangeState(ePlayerState::Idle);
-        }
-
-        if (Input::GetKey(eKeyCode::LBTN))
-        {
-            todoAttack();
-        }
-    }
-    void PlayerScript::HandleDead()
-    {
-
-    }
-#pragma endregion
-#pragma region Common Func
-    void PlayerScript::todoMove()
-    {
         if (Input::GetKey(eKeyCode::D))
         {
-            mRigidbody->ApplyForce(Vector2::UnitX, mPlayerStat->MoveSpeed);
+            //mRigidbody->ApplyForce(Vector2::UnitX, mPlayerStat->MoveSpeed);
+            mPos.x += mPlayerStat->MoveSpeed * (float)Time::DeltaTime();
+            mTransform->SetPosition(mPos);
         }
         if (Input::GetKey(eKeyCode::A))
         {
-            mRigidbody->ApplyForce(-Vector2::UnitX, mPlayerStat->MoveSpeed);
+            //mRigidbody->ApplyForce(-Vector2::UnitX, mPlayerStat->MoveSpeed);
+            mPos.x -= mPlayerStat->MoveSpeed * (float)Time::DeltaTime();
+            mTransform->SetPosition(mPos);
         }
     }
     void PlayerScript::todoJump()
     {
-        mFootCollider->ApplyGround(false);
-        mRigidbody->ApplyVelocity(Vector2::UnitY, mPlayerStat->MoveSpeed);
+        if (Input::GetKeyDown(eKeyCode::SPACE))
+        {
+            mBufferedJump = true;
+        }
+        if (Input::GetKeyUp(eKeyCode::SPACE))
+        {
+            if (mBufferedJump)
+            {
+                mJumpForceRatio = mJumpAccumulateTime / mJumpLimitTime;
+                resetJumpBuffer();
+                jumpProcess();
+            }
+        }
     }
     void PlayerScript::todoDash()
     {
-        // condition
-        if (GameDataManager::UseDash())
+        if (Input::GetKeyDown(eKeyCode::RBTN))
         {
-            // to do
-            mFootCollider->ApplyGround(false);
-            mRigidbody->ApplyVelocity(mPlayerDir, mPlayerStat->MoveSpeed * 2.0f);
+            // condition
+            if (GameDataManager::UseDash())
+            {
+                // to do
+                mFootCollider->ApplyGround(false);
+                mRigidbody->OverrideVelocity(mPlayerDir, mPlayerStat->DashForce);
+            }
         }
     }
     void PlayerScript::todoAttack()
-    {        
-        // 공격 가능
-        if (Collider2D::eColliderDetection::Inactive == mWeaponCollider->GetColliderDetection())
+    {
+        if (Input::GetKeyDown(eKeyCode::LBTN))
         {
-            // 모션 바꿔주기
-            if (mAttacked)
-                mAttacked = false;
-            else
-                mAttacked = true;
-            // 공격 활성화 하기 (나중에 함수로 WeaponScript에 요청하기관리)
-            mWeaponCollider->SetColliderDetection(Collider2D::eColliderDetection::Default);
-            mWeaponCollider->LateUpdate();
+            if (Collider2D::eColliderDetection::Inactive == mWeaponCollider->GetColliderDetection())
+            {
+                // 모션 바꿔주기
+                if (mAttacked)
+                    mAttacked = false;
+                else
+                    mAttacked = true;
+                // 공격 활성화 하기 (나중에 함수로 WeaponScript에 요청하기관리)
+                mWeaponCollider->SetColliderDetection(Collider2D::eColliderDetection::Default);
+                mWeaponCollider->LateUpdate();
+            }
         }
     }
 #pragma endregion
@@ -335,7 +327,7 @@ namespace da
     {
         dashRegen();
         attackDelay();
-        
+        bufferedJump();
     }
     void PlayerScript::dashRegen()
     {
@@ -364,6 +356,40 @@ namespace da
             }
         }
     }
+    void PlayerScript::bufferedJump()
+    {
+        if (mBufferedJump)
+        {
+            if (false == mFootCollider->IsGround())
+                resetJumpBuffer();
+
+            mJumpAccumulateTime += (float)Time::DeltaTime();
+
+            if (mJumpLimitTime <= mJumpAccumulateTime)
+            {                
+                resetJumpBuffer();
+                mJumpForceRatio = 1.0f;
+                jumpProcess();
+            }
+        }
+        else
+            resetJumpBuffer();
+    }
+    void PlayerScript::jumpProcess()
+    {
+        mFootCollider->ApplyGround(false);
+        if (0.50f >= mJumpForceRatio)
+            mJumpForceRatio = 0.50f;
+        mRigidbody->ApplyVelocity(Vector2::UnitY, mPlayerStat->JumpForce * mJumpForceRatio);
+        mJumpForceRatio = 0.0f;
+    }
+
+    void PlayerScript::resetJumpBuffer()
+    {
+        mBufferedJump = false;
+        mJumpAccumulateTime = 0.0f;        
+    }
+
 #pragma endregion
 #pragma region Init Func
     void PlayerScript::InitAnimation()
@@ -426,6 +452,9 @@ namespace da
     }
 #pragma endregion
 #pragma region Collision Func
+    void PlayerScript::OnLandEnter(Collider2D* other)
+    {        
+    }
     void PlayerScript::OnLandStay(Collider2D* other)
     {
         // Land Pos, Size 가져오기
