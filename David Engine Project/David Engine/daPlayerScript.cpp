@@ -26,24 +26,16 @@ namespace da
         , mWeaponScript(nullptr)
         
         , mPlayerDir(math::Vector2::Zero)
-        
-        , mDashAccumulateTime(0.0f)
-        , mDashRegenTime(0.0f)
-        , mJumpAccumulateTime(0.0f)
-        , mJumpLimitTime(0.0f)
-        , mJumpForceRatio(0.0f)
 
         , mActiveState(ePlayerState::Idle)
         , mMoveCondition(0)
         , mDead(false)
-        , mBufferedJump(false)
         
         , mPlayerStat(nullptr)
+        , mJumpCount(nullptr)
         , mDashCount(nullptr)
         , mInventoryData(nullptr)
 	{
-        mDashRegenTime = 1.20f;
-        mJumpLimitTime = 0.1250f;
 	}
 	PlayerScript::~PlayerScript()
 	{
@@ -58,6 +50,7 @@ namespace da
         InitAnimation();
         InitCollider();
         mPlayerStat = &GameDataManager::GetPlayerStat();
+        mJumpCount = &GameDataManager::GetJumpCount();
         mDashCount = &GameDataManager::GetDashCount();
         mInventoryData = &GameDataManager::GetInventory();
 
@@ -69,7 +62,7 @@ namespace da
         timeProcess();
 
         // Input
-        GetInput();
+        PlayerInput();
         GetMouse();
 
         // FSM
@@ -77,8 +70,8 @@ namespace da
 
     }
 #pragma endregion
-#pragma region ETC Input Func
-    void PlayerScript::GetInput()
+#pragma region Input Func
+    void PlayerScript::PlayerInput()
     {
         DebugInput();
         UIInput();
@@ -119,23 +112,29 @@ namespace da
     {
         if (mDead)
             return;
+        
+        CalcPlayerDir();
+        ReverseTexture();
+    }
+    void PlayerScript::CalcPlayerDir()
+    {
         Vector3 mouseWorldPosition = Input::GetMouseWorldPosition();
         Vector2 mousePosition(mouseWorldPosition.x, mouseWorldPosition.y);
         Vector3 playerPosition = mTransform->GetPosition();
         // Player Dir
-        Vector2 playerDir(mousePosition.x - playerPosition.x, mousePosition.y - playerPosition.y);        
+        Vector2 playerDir(mousePosition.x - playerPosition.x, mousePosition.y - playerPosition.y);
         playerDir.Normalize();
         mPlayerDir = playerDir;
-
-        // Texture Transform
+        mWeaponScript->SetWeaponPosition(Vector3(playerPosition.x, playerPosition.y, 0.0f));
+        mWeaponScript->SetPlayerDir(mPlayerDir);
+    }
+    void PlayerScript::ReverseTexture()
+    {
         bool value = false;
         if (0 >= mPlayerDir.x)
             value = true;
         mRenderer->SetReverse(value);
         mWeaponScript->SetReverse(value);
-
-        mWeaponScript->SetWeaponPosition(Vector3(playerPosition.x, playerPosition.y, 0.0f));
-        mWeaponScript->SetPlayerDir(mPlayerDir);
     }
 
 #pragma endregion
@@ -257,19 +256,36 @@ namespace da
     }
     void PlayerScript::todoJump()
     {
-        if (Input::GetKeyDown(eKeyCode::SPACE))
+        // 점프 개수가 유효하다는 뜻임
+        if (mFootCollider->IsGround())
         {
-            mBufferedJump = true;
-        }
-        if (Input::GetKeyUp(eKeyCode::SPACE))
-        {
-            if (mBufferedJump)
+            // 버퍼에 추가
+            if (Input::GetKeyDown(eKeyCode::SPACE))
             {
-                mJumpForceRatio = mJumpAccumulateTime / mJumpLimitTime;
-                resetJumpBuffer();
+                mJumpCount->BufferedJump = true;
+            }
+            if (Input::GetKeyUp(eKeyCode::SPACE))
+            {
+                // 버퍼 중단
+                mJumpCount->BufferedJump = false;
+                // 바로 점프
                 jumpProcess();
             }
         }
+        else
+        {
+            // 점프 개수가 유효한지 확인
+            if (mJumpCount->BufferedJump)
+            {
+                if (Input::GetKeyDown(eKeyCode::SPACE))
+                {
+                    mJumpCount->BufferedJump = false;
+                    // 점프하기
+                    jumpProcess();
+                }
+            }
+        }
+
     }
     void PlayerScript::todoDash()
     {
@@ -314,46 +330,45 @@ namespace da
         if (mDashCount->MaxDashCount == mDashCount->CurDashCount)
             return;
 
-        mDashAccumulateTime += (float)Time::DeltaTime();
-        if (mDashRegenTime <= mDashAccumulateTime)
-        {
+        mDashCount->DashAccumulateTime += (float)Time::DeltaTime();
+        if (mDashCount->DashRegenTime<= mDashCount->DashAccumulateTime)
             GameDataManager::RecoveryDash();
-            mDashAccumulateTime = 0.0f;
-        }
+    }
+
+    void PlayerScript::jumpRegen()
+    {
+        
     }
     
     void PlayerScript::bufferedJump()
     {
-        if (mBufferedJump)
+        // 버퍼에 등록되면
+        if (mJumpCount->BufferedJump)
         {
-            if (false == mFootCollider->IsGround())
-                resetJumpBuffer();
+            // 시간을 재다가
+            mJumpCount->JumpAccumulateTime += (float)Time::DeltaTime();
 
-            mJumpAccumulateTime += (float)Time::DeltaTime();
-
-            if (mJumpLimitTime <= mJumpAccumulateTime)
-            {                
-                resetJumpBuffer();
-                mJumpForceRatio = 1.0f;
+            // 조건에 맞으면 점프
+            if (mJumpCount->JumpLimitTime <= mJumpCount->JumpAccumulateTime)
+            {
+                mJumpCount->JumpForceRatio = 1.0f;
                 jumpProcess();
             }
         }
         else
-            resetJumpBuffer();
-    }
-    void PlayerScript::jumpProcess()
-    {
-        mFootCollider->ApplyGround(false);
-        if (0.50f >= mJumpForceRatio)
-            mJumpForceRatio = 0.50f;
-        mRigidbody->ApplyVelocity(Vector2::UnitY, mPlayerStat->JumpForce * mJumpForceRatio);
-        mJumpForceRatio = 0.0f;
+            GameDataManager::ResetJumpBuffer();
     }
 
-    void PlayerScript::resetJumpBuffer()
+    // 여기서 점프가 실행됨
+    void PlayerScript::jumpProcess()
     {
-        mBufferedJump = false;
-        mJumpAccumulateTime = 0.0f;        
+        float minForce = 0.650f;
+        if (minForce >= mJumpCount->JumpForceRatio)
+            mJumpCount->JumpForceRatio = minForce;
+        mFootCollider->ApplyGround(false);
+        mRigidbody->ApplyVelocity(Vector2::UnitY, mPlayerStat->JumpForce * mJumpCount->JumpForceRatio);
+        // 리셋하기
+        mJumpCount->JumpForceRatio = 0.0f;
     }
 
 #pragma endregion

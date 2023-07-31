@@ -34,10 +34,12 @@ namespace da
 		virtual void Initialize();
 		virtual void Update();
 
-		void GetMouse();
-		void GetInput();
+		void PlayerInput();
 		void DebugInput();
 		void UIInput();
+		void GetMouse();
+		void CalcPlayerDir();
+		void ReverseTexture();
 
 		void PlayerFSM();
 		void ChangeState(ePlayerState state);
@@ -64,9 +66,9 @@ namespace da
 	private:
 		void timeProcess();
 		void dashRegen();
+		void jumpRegen();
 		void bufferedJump();
 		void jumpProcess();
-		void resetJumpBuffer();
 	public:
 		void InitAnimation();
 		void InitCollider();
@@ -98,7 +100,8 @@ namespace da
 
 		// data val
 	private:
-		structs::sPlayerStat* mPlayerStat;
+		structs::sPlayerStat*	mPlayerStat;
+		structs::sJumpCount*	mJumpCount;
 		structs::sDashCount* 	mDashCount;
 		structs::sInventory*	mInventoryData;
 
@@ -106,22 +109,10 @@ namespace da
 	private:
 		math::Vector2 mPlayerDir;
 
-		// time val
-	private:
-		float	mDashAccumulateTime;
-		float	mDashRegenTime;
-		float	mJumpAccumulateTime;
-		float	mJumpLimitTime;
-		
-		// func val
-	private:
-		float			mJumpForceRatio;
-
 		// condition val
 	private:
 		ePlayerState	mActiveState;
 		int				mMoveCondition;
-		bool			mBufferedJump;
 		bool			mDead;
 
 

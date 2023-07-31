@@ -23,17 +23,21 @@ namespace da
 
 	public:
 		static structs::sPlayerStat& GetPlayerStat() { return mPlayerStat; }
+		static structs::sJumpCount& GetJumpCount() { return mJumpCount; }
 		static structs::sDashCount& GetDashCount() { return mDashCount; }
 		static structs::sInventory& GetInventory() { return mInventoryData; }
 
 
-#pragma region HUD Func
+#pragma region Player Func
 	public:
 		static void GetDamage(float value);
 		static void GetHeal(float value);
 
 		static bool UseDash();
 		static void RecoveryDash();
+		static bool UseJump();
+		static void RecoveryJump();
+		static void ResetJumpBuffer();
 #pragma endregion
 
 #pragma region Inventory Func

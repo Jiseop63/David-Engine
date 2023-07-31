@@ -33,11 +33,18 @@ namespace da
 		mPlayerStat.MoveSpeed = 2.0f;
 		mPlayerStat.JumpForce = 4.50f;
 		mPlayerStat.DashForce = 6.0f;
+		
 		mDashCount.MaxDashCount = 2;
 		mDashCount.CurDashCount = mDashCount.MaxDashCount;
-		mJumpCount.MaxJumpCount = 2;
-		mJumpCount.CurJumpCount = mJumpCount.MaxJumpCount;
-		
+		mDashCount.DashAccumulateTime = 0.0f;
+		mDashCount.DashRegenTime = 1.750f;
+
+		mJumpCount.JumpAccumulateTime = 0.0f;
+		mJumpCount.JumpLimitTime = 0.10f;
+		mJumpCount.JumpForceRatio = 0.0f;
+		mJumpCount.BufferedJump = false;
+		mJumpCount.ExtraJump = true;
+
 		mInventoryData.Armour1.Weapon = enums::eWeaponType::LongSword;
 		mActiveArmour = mInventoryData.Armour1;
 		mSubArmour = mInventoryData.Armour2;
@@ -75,11 +82,26 @@ namespace da
 	{
 		if (mDashCount.MaxDashCount > mDashCount.CurDashCount)
 		{
+			mDashCount.DashAccumulateTime = 0.0f;
 			mDashCount.CurDashCount += 1;
 			mDashCountBar->GetComponent<DashCountScript>()->BindConstantBuffer();
 		}
+	}
 
+	bool GameDataManager::UseJump()
+	{
+		return false;
+	}
 
+	void GameDataManager::RecoveryJump()
+	{
+		mJumpCount.BufferedJump = true;
+	}
+
+	void GameDataManager::ResetJumpBuffer()
+	{
+		mJumpCount.BufferedJump = false;
+		mJumpCount.JumpAccumulateTime = 0.0f;
 	}
 
 	void GameDataManager::CallInventory()

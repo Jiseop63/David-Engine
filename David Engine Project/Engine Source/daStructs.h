@@ -14,18 +14,24 @@ namespace da::structs
 	};
 	struct sJumpCount
 	{
-		int MaxJumpCount;
-		int CurJumpCount;
+		float	JumpAccumulateTime;
+		float	JumpLimitTime;
+		float	JumpForceRatio;
+		bool	BufferedJump;
+		bool	ExtraJump;
 		sJumpCount()
-			: MaxJumpCount(0), CurJumpCount(0)
+			: JumpAccumulateTime(0.0f), JumpLimitTime(0.0f), JumpForceRatio(0.0f)
+			, BufferedJump(false), ExtraJump(true)
 		{}
 	};
 	struct sDashCount
 	{
-		int MaxDashCount;
-		int CurDashCount;
+		int		MaxDashCount;
+		int		CurDashCount;
+		float	DashAccumulateTime;
+		float	DashRegenTime;
 		sDashCount()
-			: MaxDashCount(0), CurDashCount(0)
+			: MaxDashCount(0), CurDashCount(0), DashAccumulateTime(0.0f), DashRegenTime(0.0f)
 		{}
 	};
 
