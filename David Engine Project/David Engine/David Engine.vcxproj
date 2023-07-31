@@ -152,6 +152,7 @@
     <ClInclude Include="daCameraScript.h" />
     <ClInclude Include="daCreatureObject.h" />
     <ClInclude Include="daCreatureScript.h" />
+    <ClInclude Include="daEffectScript.h" />
     <ClInclude Include="daGameDataManager.h" />
     <ClInclude Include="daGridScript.h" />
     <ClInclude Include="daHUDScript.h" />
@@ -183,6 +184,7 @@
     <ClCompile Include="daCreatureObject.cpp" />
     <ClCompile Include="daCreatureScript.cpp" />
     <ClCompile Include="daDashCountScript.cpp" />
+    <ClCompile Include="daEffectScript.cpp" />
     <ClCompile Include="daGameDataManager.cpp" />
     <ClCompile Include="daCursorScript.cpp" />
     <ClCompile Include="daGridScript.cpp" />

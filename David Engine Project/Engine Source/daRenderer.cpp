@@ -229,6 +229,12 @@ namespace renderer
 			animationMaterial->SetShader(animationShader);
 			Resources::Insert<Material>(L"AnimationMaterial", animationMaterial);
 		}
+		// None material
+		{
+			std::shared_ptr<Material> noneMaterial = std::make_shared<Material>();
+			noneMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"NoneMaterial", noneMaterial);
+		}
 		// weapon material
 		{
 			std::shared_ptr<Material> weaponMaterial = std::make_shared<Material>();
@@ -455,6 +461,11 @@ namespace renderer
 			
 		}
 #pragma endregion
+#pragma region Effect Texture Atlas
+		Resources::Load<Texture>(L"GreatSwingFX", L"..\\Resources\\Texture\\Items\\GreatSword\\GreatSwingFX.png");
+
+#pragma endregion
+
 #pragma region Title :: Load Texture & Create Material
 
 		// TitleBtn : NoneTexture Material | Sprite Shader

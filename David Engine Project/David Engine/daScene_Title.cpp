@@ -71,7 +71,6 @@ namespace da
 			backGround->GetTransform()->SetScale(math::Vector3(width, height, 1.0f));
 			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, BackgroundZ));
 		}
-
 		// moving background layer
 		{
 			// Back & Front Cloud Layer
@@ -105,6 +104,12 @@ namespace da
 			copyrightObj->GetTransform()->SetScale(math::Vector3(5.010f, 0.360f, 1.0f));
 			copyrightObj->GetTransform()->SetPosition(math::Vector3(0.0f, -(height / 2.0f) + 0.360f, HUDZ));
 		}
+
+		GameObject* lightObj = objects::InstantiateGameObject
+			<GameObject>(this, enums::eLayerType::Light, L"NoneMaterial");
+		Light* light = lightObj->AddComponent<Light>();
+		light->SetLightType(enums::eLightType::Directional);
+		light->SetColor(math::Vector4(0.90f, 0.90f, 0.90f, 1.0f));
 	}
 	void Scene_Title::addUIObjects()
 	{

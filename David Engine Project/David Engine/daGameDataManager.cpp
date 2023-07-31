@@ -30,8 +30,8 @@ namespace da
 		mPlayerStat.MaxHP = 30;
 		mPlayerStat.CurHP = mPlayerStat.MaxHP;
 		mPlayerStat.MoveSpeed = 2.0f;
-		mPlayerStat.JumpForce = 4.0f;
-		mPlayerStat.DashForce = 4.0f;
+		mPlayerStat.JumpForce = 6.50f;
+		mPlayerStat.DashForce = 6.0f;
 		mDashCount.MaxCount = 2;
 		mDashCount.CurCount = mDashCount.MaxCount;
 

@@ -597,7 +597,13 @@ namespace da
 				= objects::InstantiateGameObject<GameObject>
 				(this, enums::eLayerType::PlayableAttackCollider, L"WeaponMaterial");
 			mWeapon = weaponObject;
-			playerScript->SetWeaponObject(weaponObject);			
+			WeaponScript* weaponScript = playerScript->SetWeaponObject(weaponObject);
+
+
+			GameObject* effectObject
+				= objects::InstantiateGameObject<GameObject>
+				(this, enums::eLayerType::Effect, L"AnimationMaterial");
+			weaponScript->SetEffectObject(effectObject);
 		}
 
 		// test enemy
@@ -611,12 +617,14 @@ namespace da
 		// land
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
-				this, Vector3(-1.0f, -1.50f, 0.0f), Vector3(8.0f, 1.0f, 1.0f));
+				this, Vector3(-1.0f, -2.50f, 0.0f), Vector3(10.0f, 1.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
 
-		Layer& landLayer = GetLayer(enums::eLayerType::Land);
-
-		int a = 0;
+		GameObject* lightObj = objects::InstantiateGameObject
+			<GameObject>(this, enums::eLayerType::Light, L"NoneMaterial");
+		Light* light = lightObj->AddComponent<Light>();
+		light->SetLightType(enums::eLightType::Directional);
+		light->SetColor(math::Vector4(0.90f, 0.90f, 0.90f, 1.0f));
 	}
 }

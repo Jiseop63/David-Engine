@@ -13,7 +13,7 @@
 #include "daTransform.h"
 #include "daCollider2D.h"
 #include "daAnimator.h"
-
+#include "daLight.h"
 // Camera
 #include "daCameraObject.h"
 #include "daCamera.h"

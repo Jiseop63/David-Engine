@@ -23,10 +23,6 @@ namespace da
         , mRightCollider(nullptr)
         , mLeftCollider(nullptr)
 
-        , mWeaponCollider(nullptr)
-        , mWeaponObject(nullptr)
-        , mWeaponTransform(nullptr)
-        , mWeaponRenderer(nullptr)
         , mWeaponScript(nullptr)
         
         , mPlayerDir(math::Vector2::Zero)
@@ -67,6 +63,8 @@ namespace da
         mPlayerStat = &GameDataManager::GetPlayerStat();
         mDashCount = &GameDataManager::GetDashCount();
         mInventoryData = &GameDataManager::GetInventory();
+
+        
 	}
     void PlayerScript::Update()
     {
@@ -136,20 +134,14 @@ namespace da
         // Texture Transform
         Vector3 weaponPosition(playerPosition.x, playerPosition.y, 0.0f);
         float angle = atan2(mPlayerDir.y, mPlayerDir.x);
-        mWeaponTransform->SetPosition(weaponPosition);
-        mWeaponTransform->SetRotation(Vector3(0.0f, 0.0f, angle));
+        mWeaponScript->SetWeaponPosition(weaponPosition);
+        mWeaponScript->SetWeaponRotation(Vector3(0.0f, 0.0f, angle));
 
-
-        // Texture Change
-        if (mAttacked)
-            mWeaponRenderer->ChangeSlotTexture(Resources::Find<Texture>(L"GreatSword1Texture"));
-        else
-            mWeaponRenderer->ChangeSlotTexture(Resources::Find<Texture>(L"GreatSword0Texture"));
         bool value = false;
         if (0 >= mPlayerDir.x)
             value = true;
         mRenderer->SetReverse(value);
-        mWeaponRenderer->SetReverse(value);
+        mWeaponScript->SetReverse(value);
     }
 
 #pragma endregion
@@ -233,6 +225,12 @@ namespace da
     void PlayerScript::HandleDead()
     {
         mDead = true;
+
+        if (0 < mPlayerStat->CurHP)
+        {
+            mDead = false;
+            ChangeState(ePlayerState::Idle);
+        }
     }
     
 #pragma endregion
@@ -295,19 +293,7 @@ namespace da
     void PlayerScript::todoAttack()
     {
         if (Input::GetKeyDown(eKeyCode::LBTN))
-        {
-            if (Collider2D::eColliderDetection::Inactive == mWeaponCollider->GetColliderDetection())
-            {
-                // 모션 바꿔주기
-                if (mAttacked)
-                    mAttacked = false;
-                else
-                    mAttacked = true;
-                // 공격 활성화 하기 (나중에 함수로 WeaponScript에 요청하기관리)
-                mWeaponCollider->SetColliderDetection(Collider2D::eColliderDetection::Default);
-                mWeaponCollider->LateUpdate();
-            }
-        }
+            mWeaponScript->DoAttack();
     }
 #pragma endregion
 #pragma region Debuging Func
@@ -320,13 +306,13 @@ namespace da
     {
         float value = 5.0f;
         GameDataManager::GetHeal(value);
+        
     }
 #pragma endregion
 #pragma region Auto Func
     void PlayerScript::timeProcess()
     {
         dashRegen();
-        attackDelay();
         bufferedJump();
     }
     void PlayerScript::dashRegen()
@@ -341,21 +327,7 @@ namespace da
             mDashAccumulateTime = 0.0f;
         }
     }
-    void PlayerScript::attackDelay()
-    {
-        if (Collider2D::eColliderDetection::Default == mWeaponCollider->GetColliderDetection())
-        {
-            mAttackAccumulateTime += (float)Time::DeltaTime();
-            float attackDelay = 0.80f;
-
-            if (attackDelay <= mAttackAccumulateTime)
-            {
-                mWeaponCollider->SetColliderDetection(Collider2D::eColliderDetection::Inactive);
-                mWeaponCollider->LateUpdate();
-                mAttackAccumulateTime = 0.0f;
-            }
-        }
-    }
+    
     void PlayerScript::bufferedJump()
     {
         if (mBufferedJump)
@@ -437,60 +409,52 @@ namespace da
             mLeftCollider->SetColliderDetection(Collider2D::eColliderDetection::Land);
         }
     }
-    void PlayerScript::SetWeaponObject(GameObject* object)
+    WeaponScript* PlayerScript::SetWeaponObject(GameObject* object)
     {
-        mWeaponObject = object;
-        mWeaponTransform = mWeaponObject->GetComponent<Transform>();
-        mWeaponRenderer = mWeaponObject->GetComponent<MeshRenderer>();
-        mWeaponCollider = mWeaponObject->AddComponent<Collider2D>();
-        mWeaponCollider->SetColliderDetection(Collider2D::eColliderDetection::Inactive);
-        mWeaponScript = mWeaponObject->AddComponent<WeaponScript>();
-        mWeaponRenderer->ChangeSlotTexture(Resources::Find<Texture>(L"GreatSword0Texture"));
-        // 9 22
-        //mWeaponTransform->SetScale(Vector3(0.180f, 0.440f, 1.0f));
-        mWeaponTransform->SetScale(Vector3(2.0f, 2.0f, 1.0f));
+        mWeaponScript = object->AddComponent<WeaponScript>();
+        return mWeaponScript;
     }
 #pragma endregion
 #pragma region Collision Func
     void PlayerScript::OnLandEnter(Collider2D* other)
-    {        
+    {
     }
     void PlayerScript::OnLandStay(Collider2D* other)
     {
-        // Land Pos, Size 가져오기
-        Vector3 landPos = other->GetTotalPosition();
-        Vector3 landSize = other->GetTotalScale();
-        // 내 Pos, Size 가져오기
-        Vector3 myPos = mFootCollider->GetTotalPosition();
-        Vector3 mySize = mFootCollider->GetTotalScale();
+        //// Land Pos, Size 가져오기
+        //Vector3 landPos = other->GetTotalPosition();
+        //Vector3 landSize = other->GetTotalScale();
+        //// 내 Pos, Size 가져오기
+        //Vector3 myPos = mFootCollider->GetTotalPosition();
+        //Vector3 mySize = mFootCollider->GetTotalScale();
 
-        // A 상자의 최소/최대 위치
-        Vector3 minLand = landPos - landSize * 0.5f;
-        Vector3 maxLand = landPos + landSize * 0.5f;
+        //// A 상자의 최소/최대 위치
+        //Vector3 minLand = landPos - landSize * 0.5f;
+        //Vector3 maxLand = landPos + landSize * 0.5f;
 
-        // B 상자의 최소/최대 위치
-        Vector3 minMe = myPos - mySize * 0.5f;
-        Vector3 maxMe = myPos + mySize * 0.5f;
+        //// B 상자의 최소/최대 위치
+        //Vector3 minMe = myPos - mySize * 0.5f;
+        //Vector3 maxMe = myPos + mySize * 0.5f;
 
-        // 정황상 플레이어가 바닥에 파고들었음
-        if (minLand.x <= maxMe.x && maxLand.x >= minMe.x &&
-            minLand.y <= maxMe.y && maxLand.y >= minMe.y &&
-            minLand.z <= maxMe.z && maxLand.z >= minMe.z)
-        {
-            float landHeight = maxLand.y - minLand.y;
-            float myHeight = maxMe.y - minMe.y;
-            float totalHeight = landHeight / 2.0f + myHeight / 2.0f;
+        //// 정황상 플레이어가 바닥에 파고들었음
+        //if (minLand.x <= maxMe.x && maxLand.x >= minMe.x &&
+        //    minLand.y <= maxMe.y && maxLand.y >= minMe.y &&
+        //    minLand.z <= maxMe.z && maxLand.z >= minMe.z)
+        //{
+        //    float landHeight = maxLand.y - minLand.y;
+        //    float myHeight = maxMe.y - minMe.y;
+        //    float totalHeight = landHeight / 2.0f + myHeight / 2.0f;
 
-            float collisionDepth = myPos.y - landPos.y;
-            float pushDistance = 0.0f;
-            if (collisionDepth < totalHeight)
-            {
-                pushDistance = totalHeight - collisionDepth;
-            }
-            Vector3 newPosition = mTransform->GetPosition();
-            newPosition.y += pushDistance;
-            mTransform->SetPosition(newPosition);            
-        }
+        //    float collisionDepth = myPos.y - landPos.y;
+        //    float pushDistance = 0.0f;
+        //    if (collisionDepth < totalHeight)
+        //    {
+        //        pushDistance = totalHeight - collisionDepth;
+        //    }
+        //    Vector3 newPosition = mTransform->GetPosition();
+        //    newPosition.y += pushDistance;
+        //    mTransform->SetPosition(newPosition);            
+        //}
     }
 #pragma endregion
 }

@@ -13,7 +13,7 @@ namespace da
 		virtual void LateUpdate() override;
 
 		graphics::LightAttribute GetAttribute() { return mAttribute; }
-		void SetLightType(enums::eLightType rype) { mAttribute.LightType = rype; }
+		void SetLightType(enums::eLightType type) { mAttribute.LightType = type; }
 		enums::eLightType GetLightType() { return mAttribute.LightType; }
 		void SetRadius(float radius) { mAttribute.LightRadius = radius; }
 		float GetRadius() { return mAttribute.LightRadius; }

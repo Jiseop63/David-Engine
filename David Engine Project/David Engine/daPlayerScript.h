@@ -58,12 +58,11 @@ namespace da
 		void GetHeal();
 
 	public:
-		void SetWeaponObject(GameObject* object);
+		WeaponScript* SetWeaponObject(GameObject* object);
 		
 	private:
 		void timeProcess();
 		void dashRegen();
-		void attackDelay();
 		void bufferedJump();
 		void jumpProcess();
 		void resetJumpBuffer();
@@ -95,13 +94,6 @@ namespace da
 
 		// 이건 추후에 스크립트를 통해서만 제어할듯
 		WeaponScript*	mWeaponScript;
-
-
-		GameObject*		mWeaponObject;
-		Transform*		mWeaponTransform;
-		MeshRenderer*	mWeaponRenderer;
-		Collider2D*		mWeaponCollider;
-
 
 		// data val
 	private:
