@@ -13,17 +13,7 @@ namespace da::objects
 {
 #pragma region Basic GameObjects Func
 	
-	template <typename T>
-	static T* JustGameObject(const std::wstring& material)
-	{
-		T* obj = new T();
-		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
-		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-		meshRenderer->SetMaterial(Resources::Find<Material>(material));
-
-		obj->Initialize();
-		return obj;
-	}
+	// 위치값을 잡아주는 Parent 구조로 사용
 	template <typename T>
 	static T* InstantiateObject(Scene* scene, enums::eLayerType layer)
 	{
@@ -32,6 +22,7 @@ namespace da::objects
 		myLayer.AddGameObject(obj);
 		return obj;
 	}
+	// 기본적으로 사용
 	template <typename T>
 	static T* InstantiateGameObject(Scene* scene, enums::eLayerType layer, const std::wstring& material)
 	{
@@ -51,37 +42,8 @@ namespace da::objects
 #pragma endregion
 #pragma region Quick Init objects
 	
-	template <typename T>
-	static T* InstantiateUIObject(Scene* scene, enums::eLayerType layer, const std::wstring& material)
-	{
-		T* obj = new T();										// 이때 Transform 추가됨
-		Layer& myLayer = scene->GetLayer(layer);
-		myLayer.AddGameObject(obj);
 
-		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
-		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-		meshRenderer->SetMaterial(Resources::Find<Material>(material));
-
-		obj->Initialize();
-		return obj;
-	}
-
-	template <typename T>
-	static T* InstantiateButtonObject(Scene* scene, const std::wstring& material, const std::wstring& first, const std::wstring& second)
-	{
-		T* obj = new T();
-		Layer& myLayer = scene->GetLayer(enums::eLayerType::UI);
-		myLayer.AddGameObject(obj);
-		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
-		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-		meshRenderer->SetMaterial(Resources::Find<Material>(material));
-		ButtonScript* uiScript = obj->AddComponent<ButtonScript>();
-		obj->Initialize();
-
-		uiScript->SetSlotTextures(Resources::Find<graphics::Texture>(first), Resources::Find<graphics::Texture>(second));
-		return obj;
-	}
-
+	// UI에 쓰임
 	template <typename T>
 	static T* InstantiateMultiTextureUI(Scene* scene, const std::wstring& material, const std::wstring& first, const std::wstring& second)
 	{

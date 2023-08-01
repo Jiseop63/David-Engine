@@ -16,13 +16,6 @@ namespace da
 			target = nullptr;
 		}
 	}
-	void Layer::Initialize()
-	{
-		for (GameObject* targetObject : mGameObjects)
-		{
-			targetObject->Initialize();
-		}
-	}
 	void Layer::Update()
 	{
 		for (GameObject* targetObject : mGameObjects)
@@ -102,5 +95,44 @@ namespace da
 	void Layer::AddGameObject(GameObject* target)
 	{
 		mGameObjects.push_back(target);
+	}
+
+	// 호출되는 시점에서, 레이어에 있는 common객체들을 옮긴다
+	std::vector<GameObject*> Layer::GetCommonObjects()
+	{
+		std::vector<GameObject*> retObjects;
+
+		for ( std::vector<GameObject*>::iterator iter = mGameObjects.begin()
+			; iter != mGameObjects.end(); )
+		{
+			if ((*iter)->IsCommonObject())
+			{
+				retObjects.push_back((*iter));
+				iter = mGameObjects.erase(iter);
+			}
+			else
+				iter++;
+		}
+		return retObjects;
+	}
+	void Layer::ObjectsActive()
+	{
+		for (GameObject* obj : mGameObjects)
+		{
+			if (obj == nullptr)
+				continue;
+
+			obj->SetObjectState(GameObject::eObjectState::Active);
+		}
+	}
+	void Layer::ObjectsPaused()
+	{
+		for (GameObject* obj : mGameObjects)
+		{
+			if (obj == nullptr)
+				continue;
+
+			obj->SetObjectState(GameObject::eObjectState::Paused);
+		}
 	}
 }

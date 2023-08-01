@@ -19,13 +19,6 @@ namespace da
 	Scene::~Scene()
 	{
 	}
-	void Scene::Initialize()
-	{
-		for (Layer& targetLayer : mLayers)
-		{
-			targetLayer.Initialize();
-		}
-	}
 	void Scene::Update()
 	{
 		for (Layer& targetLayer : mLayers)
@@ -56,6 +49,23 @@ namespace da
 	}
 	void Scene::AddGameObject(eLayerType layerType, GameObject* target)
 	{
+		target->SetLayerType(layerType);
 		mLayers[(UINT)layerType].AddGameObject(target);
+	}
+	std::vector<GameObject*> Scene::GetCommonObjects()
+	{
+		std::vector<GameObject*> retObjects;
+
+		for (Layer& layer : mLayers)
+		{
+			std::vector<GameObject*> commonObjects
+				= layer.GetCommonObjects();
+
+			retObjects.insert(retObjects.end()
+				, commonObjects.begin()
+				, commonObjects.end());
+		}
+
+		return retObjects;
 	}
 }

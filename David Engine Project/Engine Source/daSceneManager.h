@@ -27,9 +27,10 @@ namespace da
 
 			return true;
 		}
-
 		static Scene* GetActiveScene() { return mActiveScene; }
 		static Scene* LoadScene(std::wstring name);
+
+		static void MoveCommonObjects();
 
 	private:
 		static Scene* mActiveScene;

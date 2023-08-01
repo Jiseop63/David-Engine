@@ -11,7 +11,7 @@ namespace da
 	public:
 		Scene();
 		virtual ~Scene();
-		virtual void Initialize();
+		virtual void Initialize() {}
 		virtual void Update();
 		virtual void LateUpdate();
 		virtual void Render();
@@ -22,10 +22,11 @@ namespace da
 		
 		void AddGameObject(enums::eLayerType layerType, GameObject* target);
 		
+		std::vector<GameObject*> GetCommonObjects();
 		template <typename T>
-		std::vector<T*> FindObjectOfType()
+		std::vector<T*> GetTypeOfObjects()
 		{
-			std::vector<T*> findObjects = {};
+			std::vector<T*> retObjects = {};
 			for (Layer* layer : mLayers)
 			{
 				auto objectLayer = layer->GetGameObjects();
@@ -33,15 +34,15 @@ namespace da
 				{
 					T* target = dynamic_cast<T*>(object);
 					if (nullptr != target)
-						findObjects.push_back(target);
+						retObjects.push_back(target);
 				}
 			}
-			return findObjects;
+			return retObjects;
 		}
-
 		Layer& GetLayer(enums::eLayerType targetLayer) { return mLayers[(UINT)targetLayer]; }
 
 	protected:
+		// 다치워버려야 할 목표들
 		CameraObject*	mMainCamera;
 		CameraObject*	mUICamera;
 		GameObject*		mInventory;

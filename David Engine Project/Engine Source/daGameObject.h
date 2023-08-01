@@ -11,7 +11,7 @@ namespace da
 	public:
 		GameObject();
 		virtual ~GameObject();
-		virtual void Initialize();
+		virtual void Initialize() {}
 		virtual void Update();
 		virtual void LateUpdate();
 		virtual void Render();
@@ -23,8 +23,8 @@ namespace da
 		{
 			Active,		// 씬에서 동작함
 			Paused,		// Update X
-			Hide,		// Render X
-			Inactive,	// Update, Render X
+			Hide,		// LateUpdate, Render X
+			Inactive,	// Update, LateUpdate, Render X
 			Destroy,
 		};
 
@@ -92,16 +92,24 @@ namespace da
 	public:
 		void SetObjectState(eObjectState state);
 		eObjectState GetObjectState() { return mObjectState; }
-		Transform* GetTransform() { return mTransform; }
 		void SetParent(GameObject* parent) { mTransform->SetParent( parent->GetTransform() ); }
+		Transform* GetTransform() { return mTransform; }
+		void SetLayerType(enums::eLayerType layer) { mLayerType = layer; }
+		enums::eLayerType GetLayerType() { return mLayerType; }
+		void SetCommonObject(bool isCommonObject) { mIsCommonObject = isCommonObject; }
+		bool IsCommonObject() { return mIsCommonObject; }
 
 	protected:
-		Transform* mTransform;
-		Collider2D* mFootCollider;
+		Transform*				mTransform;
+		Collider2D*				mFootCollider;
 
 	private:
-		eObjectState mObjectState;
+		eObjectState			mObjectState;
 		std::vector<Component*> mComponents;
-		std::vector<Script*> mScripts;
+		std::vector<Script*>	mScripts;
+
+	private:
+		enums::eLayerType		mLayerType;
+		bool					mIsCommonObject;
 	};
 }

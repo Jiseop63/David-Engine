@@ -7,8 +7,12 @@ namespace da
 {
 	GameObject::GameObject()
 		: mObjectState(eObjectState::Active)
+		, mLayerType(enums::eLayerType::Default)
+		, mIsCommonObject(false)
 		, mTransform(nullptr)
 		, mFootCollider(nullptr)
+		, mComponents{}
+		, mScripts{}
 	{
 		mTransform = AddComponent<Transform>();
 	}
@@ -31,17 +35,6 @@ namespace da
 			delete script;
 			script = nullptr;
 		}
-	}
-	void GameObject::Initialize()
-	{
-		/*for (Component* component : mComponents)
-		{
-			component->Initialize();
-		}
-		for (Script* script : mScripts)
-		{
-			script->Initialize();
-		}*/
 	}
 	void GameObject::Update()
 	{
@@ -91,6 +84,5 @@ namespace da
 	void GameObject::SetObjectState(eObjectState state)
 	{
 		mObjectState = state;
-
 	}
 }
