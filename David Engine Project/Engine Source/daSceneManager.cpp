@@ -43,19 +43,28 @@ namespace da
 		if (iter == mScenes.end())
 			return nullptr;
 
-		// 이전 씬이 존재한다면
-		if (nullptr != mActiveScene)
+
+		std::vector<GameObject*> commonObjects;
+		// prev Scene이 있다면 진행할 절차
+		if (mActiveScene)
 		{
-			// 기존 씬 Exit 호출
-			MoveCommonObjects();
+			// Dont Destroy Object 가져오기
+			commonObjects = mActiveScene->GetCommonObjects();
+			// Exit 호출
 			mActiveScene->OnExit();
 		}
 
-			
-
-		// 현재 씬 변경
+		// 씬 변경하기
 		mActiveScene = iter->second;
 
+		// 오브젝트 옮기기
+		for (GameObject* target : commonObjects)
+		{
+			enums::eLayerType type = target->GetLayerType();
+			mActiveScene->AddGameObject(type, target);
+		}		
+
+		int a = 0;
 		// 현재 씬 Enter 호출
 		mActiveScene->OnEnter();
 
@@ -64,14 +73,9 @@ namespace da
 	}
 	void SceneManager::MoveCommonObjects()
 	{
-		// Dont Destroy Object 가져오기
-		std::vector<GameObject*> commonObjects = mActiveScene->GetCommonObjects();
+		
 
-		// 오브젝트 옮기기
-		for (GameObject* target : commonObjects)
-		{
-			enums::eLayerType type = target->GetLayerType();
-			mActiveScene->AddGameObject(type, target);
-		}
+
+		
 	}
 }
