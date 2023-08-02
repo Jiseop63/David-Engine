@@ -560,7 +560,7 @@ namespace da
 			GameObject* effectObject
 				= objects::InstantiateGameObject<GameObject>
 				(this, enums::eLayerType::Effect, L"AnimationMaterial");
-			weaponScript->SetEffectObject(effectObject);
+			weaponScript->AddEffectObject(effectObject);
 		}
 
 		// test enemy

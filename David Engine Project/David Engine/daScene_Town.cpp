@@ -603,12 +603,12 @@ namespace da
 			GameObject* effectObject
 				= objects::InstantiateGameObject<GameObject>
 				(this, enums::eLayerType::Effect, L"AnimationMaterial");
-			weaponScript->SetEffectObject(effectObject);
+			weaponScript->AddEffectObject(effectObject);
 
 			GameObject* effectObject1
 				= objects::InstantiateGameObject<GameObject>
 				(this, enums::eLayerType::Effect, L"AnimationMaterial");
-			playerScript->SetEffectObject(effectObject1);
+			playerScript->AddEffectObject(effectObject1);
 		}
 
 		// test enemy

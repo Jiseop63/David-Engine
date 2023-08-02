@@ -4,6 +4,7 @@
 #include "daAnimator.h"
 #include "daMeshRenderer.h"
 #include "daWeaponScript.h"
+#include "daEffectPlayerScript.h"
 
 namespace da
 {
@@ -34,6 +35,7 @@ namespace da
 		virtual void Initialize();
 		virtual void Update();
 
+		// 입력 함수
 		void PlayerInput();
 		void DebugInput();
 		void UIInput();
@@ -41,33 +43,45 @@ namespace da
 		void CalcPlayerDir();
 		void ReverseTexture();
 
-		void PlayerFSM();
+
+		// FSM 함수
 		void ChangeState(ePlayerState state);
+		void PlayerFSM();
 		void HandleIdle();
 		void HandleMove();
 		void HandleJump();
 		void HandleDead();
 
+
+		// 행동 함수
 		void todoMove();
 		void todoJump();
 		void todoDash();
 		void todoAttack();
-		
+		EffectScript* findEffects();
+
+
 		// 임시
 	public:
 		void GetDamage();
 		void GetHeal();
 
+		// 외부 변수
 	public:
 		math::Vector2 GetPlayerDir() { return mPlayerDir; }
 		WeaponScript* SetWeaponObject(GameObject* object);
-		EffectScript* SetEffectObject(GameObject* object);
+		EffectScript* AddEffectObject(GameObject* object);
+
+		// 시간 관련 변수
 	private:
 		void timeProcess();
 		void dashRegen();
 		void jumpRegen();
 		void bufferedJump();
 		void jumpProcess();
+
+
+		// 초기화
 	public:
 		void InitAnimation();
 		void InitCollider();
@@ -96,8 +110,10 @@ namespace da
 
 		// 이건 추후에 스크립트를 통해서만 제어할듯
 		WeaponScript*	mWeaponScript;
-		EffectScript*	mEffectScript;
 
+		// other script
+	private:
+		std::vector<EffectScript*> mEffects;
 		// data val
 	private:
 		structs::sPlayerStat*	mPlayerStat;

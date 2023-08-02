@@ -19,6 +19,7 @@ namespace da
 	private:
 		void addBackgroundObjects();
 		void addUIObjects();
+		void initializeCommonObjects();
 
 	private:
 	};

@@ -2,7 +2,7 @@
 #include "daScript.h"
 #include "daAnimator.h"
 #include "daMeshRenderer.h"
-#include "daEffectScript.h"
+#include "daEffectWeaponScript.h"
 
 namespace da
 {
@@ -35,18 +35,13 @@ namespace da
 
 		// 외부 함수
 	public:
-		void SetWeaponPosition(math::Vector3 vector3) 
-		{ 
-			mWeaponTransform->SetPosition(vector3); 
-			mEffectScript->SetEffectPosition(vector3);
-		}
 		void SetPlayerDir(math::Vector2 dir)
 		{ 
 			bool value = false;
 			if (0 >= dir.x)
 				value = true;
 			float angle = atan2(dir.y, dir.x);
-			mEffectScript->SetEffectRotation(math::Vector3(0.0f, 0.0f, angle));
+			mEffectAngle = angle;
 			if (mWeaponAttacked)
 			{
 				if (value)
@@ -57,10 +52,13 @@ namespace da
 			mWeaponTransform->SetRotation(math::Vector3(0.0f, 0.0f, angle));
 
 		}
+		void SetWeaponPosition(math::Vector3 vector3) 
+		{ 
+			mWeaponTransform->SetPosition(vector3); 
+		}
 		void SetWeaponRotation(math::Vector3 vector3) 
 		{ 
 			mWeaponTransform->SetRotation(vector3);
-			mEffectScript->SetEffectRotation(vector3);
 		}
 		void SetWeaponRotation(float x, float y, float z)
 		{
@@ -72,16 +70,14 @@ namespace da
 		}
 		bool IsAttacked() { return mWeaponAttacked; }
 		void SetReverse(bool value) { mWeaponRenderer->SetReverse(value); }
-		void SetEffectObject(GameObject* object);
+		void AddEffectObject(GameObject* object);
 
 	protected:
 		Transform*		mWeaponTransform;
 		Animator*		mWeaponAnimator;
 		MeshRenderer*	mWeaponRenderer;
 		Collider2D*		mWeaponCollider;
-		EffectScript*	mEffectScript;
-		// 투사체 풀 만들기 (나중에)
-
+		std::vector<EffectScript*> mEffects;
 	private:
 		enums::eWeaponType	mWeaponType;
 
@@ -93,6 +89,8 @@ namespace da
 		float	mAttackAccumulateTime;
 		float	mAttackDelayTime;
 		bool	mWeaponAttacked;
+
+		float	mEffectAngle;
 
 	};
 }

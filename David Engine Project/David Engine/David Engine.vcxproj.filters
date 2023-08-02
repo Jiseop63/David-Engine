@@ -70,6 +70,9 @@
     <Filter Include="Objects\Inventory">
       <UniqueIdentifier>{ea11053a-df54-4bba-a85f-6a2a4a5fcc46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Effect">
+      <UniqueIdentifier>{06f6a52b-f4ec-4386-bd42-84478a8fb1b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -157,7 +160,13 @@
       <Filter>Objects\UI\HUD</Filter>
     </ClInclude>
     <ClInclude Include="daEffectScript.h">
-      <Filter>Objects\Creature</Filter>
+      <Filter>Objects\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="daEffectPlayerScript.h">
+      <Filter>Objects\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="daEffectWeaponScript.h">
+      <Filter>Objects\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -249,7 +258,13 @@
       <Filter>Objects\UI\HUD</Filter>
     </ClCompile>
     <ClCompile Include="daEffectScript.cpp">
-      <Filter>Objects\Creature</Filter>
+      <Filter>Objects\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="daEffectPlayerScript.cpp">
+      <Filter>Objects\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="daEffectWeaponScript.cpp">
+      <Filter>Objects\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

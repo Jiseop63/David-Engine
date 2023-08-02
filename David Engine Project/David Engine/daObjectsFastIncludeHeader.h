@@ -14,11 +14,13 @@
 #include "daCollider2D.h"
 #include "daAnimator.h"
 #include "daLight.h"
+
 // Camera
 #include "daCameraObject.h"
 #include "daCamera.h"
 #include "daCameraScript.h"
 #include "daSubCameraScript.h"
+
 // BG
 #include "daTimeConstants.h"
 #include "daGridScript.h"
@@ -38,6 +40,8 @@
 
 // Player
 #include "daPlayerScript.h"
+#include "daEffectPlayerScript.h"
+#include "daEffectWeaponScript.h"
 
 // Monster
 #include "daCreatureScript.h"

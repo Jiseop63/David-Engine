@@ -24,7 +24,8 @@ namespace da
         , mLeftCollider(nullptr)
 
         , mWeaponScript(nullptr)
-        
+        , mEffects{}
+
         , mPlayerDir(math::Vector2::Zero)
 
         , mActiveState(ePlayerState::Idle)
@@ -45,7 +46,7 @@ namespace da
 	void PlayerScript::Initialize()
 	{
         mTransform = GetOwner()->GetComponent<Transform>();
-        mRigidbody = GetOwner()->GetComponent<Rigidbody>();
+        mRigidbody = GetOwner()->AddComponent<Rigidbody>();
         mRenderer = GetOwner()->GetComponent<MeshRenderer>();
         InitAnimation();
         InitCollider();
@@ -306,6 +307,15 @@ namespace da
         if (Input::GetKey(eKeyCode::LBTN))
             mWeaponScript->DoAttack();
     }
+    EffectScript* PlayerScript::findEffects()
+    {
+        for (size_t effect = 0; effect < mEffects.size(); effect++)
+        {
+            if (GameObject::eObjectState::Inactive ==
+                mEffects[effect]->GetOwner()->GetObjectState())
+                return mEffects[effect];
+        }
+    }
 #pragma endregion
 #pragma region Debuging Func
     void PlayerScript::GetDamage()
@@ -368,6 +378,10 @@ namespace da
         //mEffectScript->SetEffectPosition(mTransform->GetPosition() + Vector3(0.0f, -0.450f, 0.0f));
         //mEffectScript->PlayEffect(L"Jumping");
 
+        EffectScript* effect = findEffects();
+        if (nullptr != effect)
+            effect->PlayEffect(L"Jumping");
+
         // 최소 높이 설정
         float minForce = 0.650f;
         if (minForce >= mJumpCount->JumpForceRatio)
@@ -383,7 +397,7 @@ namespace da
 #pragma region Init Func
     void PlayerScript::InitAnimation()
     {
-        mAnimator = GetOwner()->GetComponent<Animator>();
+        mAnimator = GetOwner()->AddComponent<Animator>();
 
         std::shared_ptr<Texture> texture = Resources::Load<Texture>(L"PlayerSprite", L"..\\Resources\\Texture\\Adventurer\\SpriteSheet.png");
         mAnimator->Create(L"playerIdle", texture, Vector2(0.0f, 0.0f), Vector2(32.0f, 32.0f), 5, Vector2(0.0f, 0.0f), 0.1f);
@@ -394,7 +408,7 @@ namespace da
     }
     void PlayerScript::InitCollider()
     {
-        mBodyCollider = GetOwner()->GetComponent<Collider2D>();
+        mBodyCollider = GetOwner()->AddComponent<Collider2D>();
         mFootCollider = GetOwner()->AddComponent<Collider2D>();
         mRightCollider = GetOwner()->AddComponent<Collider2D>();
         mLeftCollider = GetOwner()->AddComponent<Collider2D>();
@@ -431,10 +445,11 @@ namespace da
         mWeaponScript = object->AddComponent<WeaponScript>();
         return mWeaponScript;
     }
-    EffectScript* PlayerScript::SetEffectObject(GameObject* object)
+    EffectScript* PlayerScript::AddEffectObject(GameObject* object)
     {
-        mEffectScript = object->AddComponent<EffectScript>();
-        return mEffectScript;
+        EffectPlayerScript* effect = object->AddComponent<EffectPlayerScript>();
+        mEffects.push_back(effect);
+        return effect;
     }
 #pragma endregion
 #pragma region Collision Func

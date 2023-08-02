@@ -9,6 +9,9 @@
 
 #include "daObjectsFastIncludeHeader.h"
 
+#define PLAYER_EFFECT_POOL 20
+#define WEAPON_EFFECT_POOL 5
+
 namespace da::objects
 {
 #pragma region Basic GameObjects Func
@@ -18,6 +21,8 @@ namespace da::objects
 	static T* InstantiateObject(Scene* scene, enums::eLayerType layer)
 	{
 		T* obj = new T();
+		GameObject* gameObject = dynamic_cast<GameObject*>(obj);
+		gameObject->SetLayerType(layer);
 		Layer& myLayer = scene->GetLayer(layer);
 		myLayer.AddGameObject(obj);
 		return obj;
@@ -27,12 +32,30 @@ namespace da::objects
 	static T* InstantiateGameObject(Scene* scene, enums::eLayerType layer, const std::wstring& material)
 	{
 		T* obj = new T();
+		GameObject* gameObject = dynamic_cast<GameObject*>(obj);
+		gameObject->SetLayerType(layer);
 		Layer& myLayer = scene->GetLayer(layer);
 		myLayer.AddGameObject(obj);
 
 		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
 		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 		meshRenderer->SetMaterial(Resources::Find<Material>(material));		
+		obj->Initialize();
+		return obj;
+	}
+	template <typename T>
+	static T* InstantiateCommonObject(Scene* scene, enums::eLayerType layer, const std::wstring& material)
+	{
+		T* obj = new T();
+		GameObject* gameObject = dynamic_cast<GameObject*>(obj);
+		gameObject->SetLayerType(layer);
+		gameObject->SetCommonObject(true);
+		Layer& myLayer = scene->GetLayer(layer);
+		myLayer.AddGameObject(obj);
+
+		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
+		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		meshRenderer->SetMaterial(Resources::Find<Material>(material));
 		obj->Initialize();
 		return obj;
 	}
@@ -46,6 +69,8 @@ namespace da::objects
 	static T* InstantiateButtonObject(Scene* scene, const std::wstring& material, const std::wstring& first, const std::wstring& second)
 	{
 		T* obj = new T();
+		GameObject* gameObject = dynamic_cast<GameObject*>(obj);
+		gameObject->SetLayerType(enums::eLayerType::UI);
 		Layer& myLayer = scene->GetLayer(enums::eLayerType::UI);
 		myLayer.AddGameObject(obj);
 		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
@@ -62,6 +87,8 @@ namespace da::objects
 	static T* InstantiateMultiTextureUI(Scene* scene, const std::wstring& material, const std::wstring& first, const std::wstring& second)
 	{
 		T* obj = new T();
+		GameObject* gameObject = dynamic_cast<GameObject*>(obj);
+		gameObject->SetLayerType(enums::eLayerType::UI);
 		Layer& myLayer = scene->GetLayer(enums::eLayerType::UI);
 		myLayer.AddGameObject(obj);
 		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
@@ -73,21 +100,61 @@ namespace da::objects
 		return obj;
 	}
 
-	static GameObject* InstantiatePlayer(Scene* scene, const std::wstring& material)
+	static GameObject* InstantiatePlayer(Scene* scene)
 	{
-		GameObject* obj = new GameObject();
+		// 플레이어 생성
+		GameObject* gameObject = new GameObject();
+		gameObject->SetLayerType(enums::eLayerType::Playable);
+		gameObject->SetCommonObject(true);
 		Layer& myLayer = scene->GetLayer(enums::eLayerType::Playable);
-		myLayer.AddGameObject(obj);
+		myLayer.AddGameObject(gameObject);
 
-		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
+		MeshRenderer* meshRenderer = gameObject->AddComponent<MeshRenderer>();
 		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-		meshRenderer->SetMaterial(Resources::Find<Material>(material));
-		obj->AddComponent<Rigidbody>();
-		obj->AddComponent<Collider2D>();
-		obj->AddComponent<Animator>();
-		obj->AddComponent<PlayerScript>();
-		obj->Initialize();
-		return obj;
+		meshRenderer->SetMaterial(Resources::Find<Material>(L"AnimationMaterial"));
+		PlayerScript* playerScript = gameObject->AddComponent<PlayerScript>();
+
+		for (int index = 0; index < PLAYER_EFFECT_POOL; index++)
+		{
+			GameObject* gameObject = new GameObject();
+			gameObject->SetLayerType(enums::eLayerType::Playable);
+			gameObject->SetCommonObject(true);
+			Layer& myLayer = scene->GetLayer(enums::eLayerType::Playable);
+			myLayer.AddGameObject(gameObject);
+
+			MeshRenderer* meshRenderer = gameObject->AddComponent<MeshRenderer>();
+			meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			meshRenderer->SetMaterial(Resources::Find<Material>(L"AnimationMaterial"));
+
+			playerScript->AddEffectObject(gameObject);
+
+		}
+
+		// weapon 추가
+		GameObject* weaponObject = new GameObject();
+		weaponObject->SetLayerType(enums::eLayerType::Playable);
+		weaponObject->SetCommonObject(true);
+		myLayer.AddGameObject(weaponObject);
+		MeshRenderer* weaponMR = weaponObject->AddComponent<MeshRenderer>();
+		weaponMR->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		weaponMR->SetMaterial(Resources::Find<Material>(L"WeaponMaterial"));
+		WeaponScript* weaponScript = playerScript->SetWeaponObject(weaponObject);
+		for (int index = 0; index < WEAPON_EFFECT_POOL; index++)
+		{
+			GameObject* gameObject = new GameObject();
+			gameObject->SetLayerType(enums::eLayerType::Playable);
+			gameObject->SetCommonObject(true);
+			Layer& myLayer = scene->GetLayer(enums::eLayerType::Playable);
+			myLayer.AddGameObject(gameObject);
+
+			MeshRenderer* meshRenderer = gameObject->AddComponent<MeshRenderer>();
+			meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			meshRenderer->SetMaterial(Resources::Find<Material>(L"AnimationMaterial"));
+
+			weaponScript->AddEffectObject(gameObject);
+		}
+
+		return gameObject;
 	}
 	template <typename T>
 	static T* InstantiateCreature(Scene* scene, const std::wstring& material)

@@ -10,11 +10,13 @@ namespace da
 		, mWeaponRenderer(nullptr)
 		, mWeaponCollider(nullptr)
 		, mWeaponAnimator(nullptr)
+		, mEffects{}
 
-		, mEffectScript(nullptr)
 		, mFirstTexture(nullptr)
 		, mSecondTexture(nullptr)
 		, mWeaponAttacked(false)
+		, mEffectAngle(0.0f)
+
 		, mWeaponType(enums::eWeaponType::LongSword)
 		, mAttackAccumulateTime(0.0f)
 		, mAttackDelayTime(0.40f)
@@ -70,7 +72,7 @@ namespace da
 	{
 		if (Collider2D::eColliderDetection::Inactive == mWeaponCollider->GetColliderDetection())
 		{
-			mEffectScript->PlayEffect(L"GreatSwing");
+			//mEffectScript->PlayEffect(L"GreatSwing");
 			// 모션 바꿔주기
 			if (mWeaponAttacked)
 				mWeaponAttacked = false;
@@ -105,9 +107,9 @@ namespace da
 			}
 		}
 	}
-	void WeaponScript::SetEffectObject(GameObject* object)
+	void WeaponScript::AddEffectObject(GameObject* object)
 	{
-		mEffectScript = object->AddComponent<EffectScript>();
+		mEffects.push_back(object->AddComponent<EffectWeaponScript>());
 	}
 #pragma endregion
 }
