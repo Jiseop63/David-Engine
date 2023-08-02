@@ -35,12 +35,15 @@ namespace da
 		if (iter == mScenes.end())
 			return nullptr;
 
-		// CommonObject 옮기기
-		MoveCommonObjects();
-
-		// 기존 씬 Exit 호출
+		// 이전 씬이 존재한다면
 		if (nullptr != mActiveScene)
+		{
+			// 기존 씬 Exit 호출
+			MoveCommonObjects();
 			mActiveScene->OnExit();
+		}
+
+			
 
 		// 현재 씬 변경
 		mActiveScene = iter->second;

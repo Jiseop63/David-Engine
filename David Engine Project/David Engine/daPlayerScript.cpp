@@ -365,8 +365,8 @@ namespace da
     void PlayerScript::jumpProcess()
     {
         // 이펙트 실행
-        mEffectScript->SetEffectPosition(mTransform->GetPosition() + Vector3(0.0f, -0.450f, 0.0f));
-        mEffectScript->PlayEffect(L"Jumping");
+        //mEffectScript->SetEffectPosition(mTransform->GetPosition() + Vector3(0.0f, -0.450f, 0.0f));
+        //mEffectScript->PlayEffect(L"Jumping");
 
         // 최소 높이 설정
         float minForce = 0.650f;

@@ -42,7 +42,21 @@ namespace da::objects
 #pragma endregion
 #pragma region Quick Init objects
 	
+	template <typename T>
+	static T* InstantiateButtonObject(Scene* scene, const std::wstring& material, const std::wstring& first, const std::wstring& second)
+	{
+		T* obj = new T();
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::UI);
+		myLayer.AddGameObject(obj);
+		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
+		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		meshRenderer->SetMaterial(Resources::Find<Material>(material));
+		ButtonScript* uiScript = obj->AddComponent<ButtonScript>();
+		obj->Initialize();
 
+		uiScript->SetSlotTextures(Resources::Find<graphics::Texture>(first), Resources::Find<graphics::Texture>(second));
+		return obj;
+	}
 	// UIø° æ≤¿”
 	template <typename T>
 	static T* InstantiateMultiTextureUI(Scene* scene, const std::wstring& material, const std::wstring& first, const std::wstring& second)

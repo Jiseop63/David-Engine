@@ -241,9 +241,6 @@ namespace da
 		Transform* leftTr = left->GetOwner()->GetComponent<Transform>();
 		Transform* rightTr = right->GetOwner()->GetComponent<Transform>();
 
-		left->GetCenter();
-		right->GetCenter();
-
 		// 각 world matrix 가져오기
 		Matrix leftMatrix = leftTr->GetWorldMatrix();
 		Matrix rightMatrix = rightTr->GetWorldMatrix();
