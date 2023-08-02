@@ -12,6 +12,7 @@ namespace da
 	}
 	void EffectWeaponScript::Initialize()
 	{
+		EffectScript::Initialize();
 		mEffectTransform->SetScale(2.50f, 2.50f, 1.0f);
 		mEffectAnimator->Create(L"GreatSwing", Resources::Find<Texture>(L"GreatSwingFX"), math::Vector2::Zero, math::Vector2(32.0f, 25.0f), 4, math::Vector2::Zero, 0.10f);
 		// 종료 이벤트 넣어주기

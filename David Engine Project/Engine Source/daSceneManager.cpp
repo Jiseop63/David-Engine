@@ -1,9 +1,17 @@
 #include "daSceneManager.h"
 
+
 namespace da
 {
 	Scene* SceneManager::mActiveScene = nullptr;
 	std::map<std::wstring, Scene*> SceneManager::mScenes = {};
+
+	CameraScript* SceneManager::mMainCameraScript = nullptr;
+	SubCameraScript* SceneManager::mSubCameraScript = nullptr;
+	PlayerScript* SceneManager::mPlayerScript = nullptr;
+	InventoryScript* SceneManager::mInventoryScript = nullptr;
+	LifeBarScript* SceneManager::mLifebarScript = nullptr;
+	DashCountScript* SceneManager::mDashCountScript = nullptr;
 	void SceneManager::Initialize()
 	{		
 	}

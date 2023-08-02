@@ -65,6 +65,7 @@ namespace da::objects
 #pragma endregion
 #pragma region Quick Init objects
 	
+	// UI에 쓰임
 	template <typename T>
 	static T* InstantiateButtonObject(Scene* scene, const std::wstring& material, const std::wstring& first, const std::wstring& second)
 	{
@@ -82,7 +83,6 @@ namespace da::objects
 		uiScript->SetSlotTextures(Resources::Find<graphics::Texture>(first), Resources::Find<graphics::Texture>(second));
 		return obj;
 	}
-	// UI에 쓰임
 	template <typename T>
 	static T* InstantiateMultiTextureUI(Scene* scene, const std::wstring& material, const std::wstring& first, const std::wstring& second)
 	{
@@ -99,6 +99,7 @@ namespace da::objects
 		uiScript->SetSlotTextures(Resources::Find<graphics::Texture>(first), Resources::Find<graphics::Texture>(second));
 		return obj;
 	}
+
 
 	static GameObject* InstantiatePlayer(Scene* scene)
 	{
@@ -117,9 +118,10 @@ namespace da::objects
 		for (int index = 0; index < PLAYER_EFFECT_POOL; index++)
 		{
 			GameObject* gameObject = new GameObject();
-			gameObject->SetLayerType(enums::eLayerType::Playable);
+			gameObject->SetLayerType(enums::eLayerType::Effect);
+			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
 			gameObject->SetCommonObject(true);
-			Layer& myLayer = scene->GetLayer(enums::eLayerType::Playable);
+			Layer& myLayer = scene->GetLayer(enums::eLayerType::Effect);
 			myLayer.AddGameObject(gameObject);
 
 			MeshRenderer* meshRenderer = gameObject->AddComponent<MeshRenderer>();
@@ -142,9 +144,10 @@ namespace da::objects
 		for (int index = 0; index < WEAPON_EFFECT_POOL; index++)
 		{
 			GameObject* gameObject = new GameObject();
-			gameObject->SetLayerType(enums::eLayerType::Playable);
+			gameObject->SetLayerType(enums::eLayerType::Effect);
+			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
 			gameObject->SetCommonObject(true);
-			Layer& myLayer = scene->GetLayer(enums::eLayerType::Playable);
+			Layer& myLayer = scene->GetLayer(enums::eLayerType::Effect);
 			myLayer.AddGameObject(gameObject);
 
 			MeshRenderer* meshRenderer = gameObject->AddComponent<MeshRenderer>();

@@ -307,7 +307,7 @@ namespace da
         if (Input::GetKey(eKeyCode::LBTN))
             mWeaponScript->DoAttack();
     }
-    EffectScript* PlayerScript::findEffects()
+    EffectScript* PlayerScript::callEffect()
     {
         for (size_t effect = 0; effect < mEffects.size(); effect++)
         {
@@ -315,6 +315,15 @@ namespace da
                 mEffects[effect]->GetOwner()->GetObjectState())
                 return mEffects[effect];
         }
+        return nullptr;
+    }
+    void PlayerScript::ActiveEffect(EffectScript* effect, const std::wstring name)
+    {
+        if (!effect)
+            return;
+        effect->SetEffectPosition(mTransform->GetPosition() + Vector3(0.0f, -0.450f, 0.0f));
+        effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+        effect->PlayEffect(name);
     }
 #pragma endregion
 #pragma region Debuging Func
@@ -378,9 +387,7 @@ namespace da
         //mEffectScript->SetEffectPosition(mTransform->GetPosition() + Vector3(0.0f, -0.450f, 0.0f));
         //mEffectScript->PlayEffect(L"Jumping");
 
-        EffectScript* effect = findEffects();
-        if (nullptr != effect)
-            effect->PlayEffect(L"Jumping");
+        ActiveEffect(callEffect(), L"Jumping");
 
         // 최소 높이 설정
         float minForce = 0.650f;

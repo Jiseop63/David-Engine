@@ -72,13 +72,17 @@ namespace da
 	{
 		if (Collider2D::eColliderDetection::Inactive == mWeaponCollider->GetColliderDetection())
 		{
-			//mEffectScript->PlayEffect(L"GreatSwing");
-			// 모션 바꿔주기
+			// 이펙트 적용하기
+			ActiveEffect(callEffect(), L"GreatSwing");
+
+			// 무기 이미지 & 애니메이션 적용하기
 			if (mWeaponAttacked)
 				mWeaponAttacked = false;
 			else
 				mWeaponAttacked = true;
 			ChangeWeaponTexture();
+
+			// 추후에 사라질 예정
 			mWeaponCollider->SetColliderDetection(Collider2D::eColliderDetection::Default);
 		}		
 	}
@@ -110,6 +114,26 @@ namespace da
 	void WeaponScript::AddEffectObject(GameObject* object)
 	{
 		mEffects.push_back(object->AddComponent<EffectWeaponScript>());
+	}
+	EffectScript* WeaponScript::callEffect()
+	{
+		for (size_t effect = 0; effect < mEffects.size(); effect++)
+		{
+			if (GameObject::eObjectState::Inactive ==
+				mEffects[effect]->GetOwner()->GetObjectState())
+				return mEffects[effect];
+		}
+		return nullptr;
+	}
+	void WeaponScript::ActiveEffect(EffectScript* effect, const std::wstring name)
+	{
+		if (!effect)
+			return;
+
+		effect->SetEffectPosition(mWeaponTransform->GetPosition());
+		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, mEffectAngle));
+		effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+		effect->PlayEffect(name);
 	}
 #pragma endregion
 }

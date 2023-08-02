@@ -58,8 +58,13 @@ namespace da
 		void todoJump();
 		void todoDash();
 		void todoAttack();
-		EffectScript* findEffects();
-
+		
+		// 이펙트 함수
+	public:
+		EffectScript* AddEffectObject(GameObject* object);
+	private:
+		EffectScript* callEffect();
+		void ActiveEffect(EffectScript* effect, const std::wstring name);
 
 		// 임시
 	public:
@@ -70,7 +75,6 @@ namespace da
 	public:
 		math::Vector2 GetPlayerDir() { return mPlayerDir; }
 		WeaponScript* SetWeaponObject(GameObject* object);
-		EffectScript* AddEffectObject(GameObject* object);
 
 		// 시간 관련 변수
 	private:

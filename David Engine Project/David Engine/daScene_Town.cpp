@@ -38,7 +38,7 @@ namespace da
 		mUICamera = objects::InstantiateUICamera(this);
 
 		addBackgroundObject();
-		addUIObjects();
+		// addUIObjects();
 		addGameObjects();
 	}
 	void Scene_Town::Update()
@@ -60,19 +60,9 @@ namespace da
 	
 	void Scene_Town::OnEnter()
 	{
-		// 카메라 세팅
-		renderer::mainCamera = mMainCamera->GetCameraComponent();
-		renderer::uiCamera = mUICamera->GetCameraComponent();
-		renderer::gridScript->SetCamera(renderer::mainCamera);
-
 		// 플레이어 세팅
 		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Creature);
 		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Land);
-		GameDataManager::SetInventoryObject(mInventory);
-		GameDataManager::SetPlayerObject(mPlayer);
-		GameDataManager::SetWeaponObject(mWeapon);
-		GameDataManager::SetHPBar(mLifeBar);
-		GameDataManager::SetDashCountBar(mDashCountBar);
 	}
 	void Scene_Town::OnExit()
 	{
@@ -585,39 +575,39 @@ namespace da
 			floorTr->SetScale(Vector3(19.180f * 4.0f, 1.920f * 4.0f, 1.0f));
 			floorTr->SetPosition(Vector3(0.0f, -4.0f, ObjectZ));
 		}
-		
-		// player
-		{
-			GameObject* playerObject = objects::InstantiatePlayer(this, L"AnimationMaterial");
-			playerObject->SetName(L"player");
-			PlayerScript* playerScript = playerObject->GetComponent<PlayerScript>();
-			mPlayer = playerObject;
-			
-			GameObject* weaponObject 
-				= objects::InstantiateGameObject<GameObject>
-				(this, enums::eLayerType::PlayableAttackCollider, L"WeaponMaterial");
-			mWeapon = weaponObject;
-			WeaponScript* weaponScript = playerScript->SetWeaponObject(weaponObject);
+		//
+		//// player
+		//{
+		//	GameObject* playerObject = objects::InstantiatePlayer(this, L"AnimationMaterial");
+		//	playerObject->SetName(L"player");
+		//	PlayerScript* playerScript = playerObject->GetComponent<PlayerScript>();
+		//	mPlayer = playerObject;
+		//	
+		//	GameObject* weaponObject 
+		//		= objects::InstantiateGameObject<GameObject>
+		//		(this, enums::eLayerType::PlayableAttackCollider, L"WeaponMaterial");
+		//	mWeapon = weaponObject;
+		//	WeaponScript* weaponScript = playerScript->SetWeaponObject(weaponObject);
 
 
-			GameObject* effectObject
-				= objects::InstantiateGameObject<GameObject>
-				(this, enums::eLayerType::Effect, L"AnimationMaterial");
-			weaponScript->AddEffectObject(effectObject);
+		//	GameObject* effectObject
+		//		= objects::InstantiateGameObject<GameObject>
+		//		(this, enums::eLayerType::Effect, L"AnimationMaterial");
+		//	weaponScript->AddEffectObject(effectObject);
 
-			GameObject* effectObject1
-				= objects::InstantiateGameObject<GameObject>
-				(this, enums::eLayerType::Effect, L"AnimationMaterial");
-			playerScript->AddEffectObject(effectObject1);
-		}
+		//	GameObject* effectObject1
+		//		= objects::InstantiateGameObject<GameObject>
+		//		(this, enums::eLayerType::Effect, L"AnimationMaterial");
+		//	playerScript->AddEffectObject(effectObject1);
+		//}
 
-		// test enemy
-		{
-			GameObject* monsterObject = objects::InstantiateCreature<GameObject>(this, L"AnimationMaterial");
-			monsterObject->SetName(L"monster");
-			monsterObject->GetTransform()->SetPosition( Vector3(1.50f, 0.0f, ObjectZ) );
-			monsterObject->AddComponent<CreatureScript>();
-		}
+		//// test enemy
+		//{
+		//	GameObject* monsterObject = objects::InstantiateCreature<GameObject>(this, L"AnimationMaterial");
+		//	monsterObject->SetName(L"monster");
+		//	monsterObject->GetTransform()->SetPosition( Vector3(1.50f, 0.0f, ObjectZ) );
+		//	monsterObject->AddComponent<CreatureScript>();
+		//}
 
 		// land
 		{

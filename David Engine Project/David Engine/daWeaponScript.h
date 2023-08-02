@@ -70,8 +70,12 @@ namespace da
 		}
 		bool IsAttacked() { return mWeaponAttacked; }
 		void SetReverse(bool value) { mWeaponRenderer->SetReverse(value); }
-		void AddEffectObject(GameObject* object);
 
+	public:
+		void AddEffectObject(GameObject* object);
+	private:
+		EffectScript* callEffect();
+		void ActiveEffect(EffectScript* effect, const std::wstring name);
 	protected:
 		Transform*		mWeaponTransform;
 		Animator*		mWeaponAnimator;

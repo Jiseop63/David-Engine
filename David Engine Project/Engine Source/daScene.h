@@ -48,7 +48,6 @@ namespace da
 		GameObject*		mInventory;
 		GameObject*		mWeapon;
 		GameObject*		mPlayer;
-
 		GameObject* mLifeBar;
 		GameObject* mDashCountBar;
 

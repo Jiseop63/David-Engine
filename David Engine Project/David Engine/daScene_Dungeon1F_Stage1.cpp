@@ -31,7 +31,7 @@ namespace da
 		mUICamera = objects::InstantiateUICamera(this);
 
 		addBackgroundObjects();
-		addUIObjects();
+		//addUIObjects();
 		addGameObjects();
 	}
 	void Scene_Dungeon1F_Stage1::Update()
@@ -52,16 +52,6 @@ namespace da
 	}
 	void Scene_Dungeon1F_Stage1::OnEnter()
 	{
-		renderer::mainCamera = mMainCamera->GetCameraComponent();
-		renderer::uiCamera = mUICamera->GetCameraComponent();
-		renderer::gridScript->SetCamera(renderer::mainCamera);
-		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Creature);
-
-		GameDataManager::SetInventoryObject(mInventory);
-		GameDataManager::SetPlayerObject(mPlayer);
-		GameDataManager::SetWeaponObject(mWeapon);
-		GameDataManager::SetHPBar(mLifeBar);
-		GameDataManager::SetDashCountBar(mDashCountBar);
 	}
 	void Scene_Dungeon1F_Stage1::OnExit()
 	{
@@ -554,39 +544,39 @@ namespace da
 			doorObject->GetTransform()->SetPosition(math::Vector3(-3.0f, -1.0f + 0.080f, ObjectZ));
 		}
 
-		// player
-		{
-			GameObject* playerObject = objects::InstantiatePlayer(this, L"AnimationMaterial");
-			playerObject->SetName(L"player");
-			PlayerScript* playerScript = playerObject->GetComponent<PlayerScript>();
-			mPlayer = playerObject;
+		//// player
+		//{
+		//	GameObject* playerObject = objects::InstantiatePlayer(this, L"AnimationMaterial");
+		//	playerObject->SetName(L"player");
+		//	PlayerScript* playerScript = playerObject->GetComponent<PlayerScript>();
+		//	mPlayer = playerObject;
 
-			Light* light = playerObject->AddComponent<Light>();
-			light->SetRadius(4.0f);
-			light->SetLightType(enums::eLightType::Point);
-			light->SetColor(math::Vector4(0.60f, 0.60f, 0.60f, 1.0f));
-
-
-			GameObject* weaponObject
-				= objects::InstantiateGameObject<GameObject>
-				(this, enums::eLayerType::PlayableAttackCollider, L"WeaponMaterial");
-			mWeapon = weaponObject;
-			WeaponScript* weaponScript = playerScript->SetWeaponObject(weaponObject);
+		//	Light* light = playerObject->AddComponent<Light>();
+		//	light->SetRadius(4.0f);
+		//	light->SetLightType(enums::eLightType::Point);
+		//	light->SetColor(math::Vector4(0.60f, 0.60f, 0.60f, 1.0f));
 
 
-			GameObject* effectObject
-				= objects::InstantiateGameObject<GameObject>
-				(this, enums::eLayerType::Effect, L"AnimationMaterial");
-			weaponScript->AddEffectObject(effectObject);
-		}
+		//	GameObject* weaponObject
+		//		= objects::InstantiateGameObject<GameObject>
+		//		(this, enums::eLayerType::PlayableAttackCollider, L"WeaponMaterial");
+		//	mWeapon = weaponObject;
+		//	WeaponScript* weaponScript = playerScript->SetWeaponObject(weaponObject);
 
-		// test enemy
-		{
-			GameObject* monsterObject = objects::InstantiateCreature<GameObject>(this, L"AnimationMaterial");
-			monsterObject->SetName(L"monster");
-			monsterObject->GetTransform()->SetPosition(Vector3(1.50f, 0.0f, ObjectZ));
-			monsterObject->AddComponent<CreatureScript>();
-		}
+
+		//	GameObject* effectObject
+		//		= objects::InstantiateGameObject<GameObject>
+		//		(this, enums::eLayerType::Effect, L"AnimationMaterial");
+		//	weaponScript->AddEffectObject(effectObject);
+		//}
+
+		//// test enemy
+		//{
+		//	GameObject* monsterObject = objects::InstantiateCreature<GameObject>(this, L"AnimationMaterial");
+		//	monsterObject->SetName(L"monster");
+		//	monsterObject->GetTransform()->SetPosition(Vector3(1.50f, 0.0f, ObjectZ));
+		//	monsterObject->AddComponent<CreatureScript>();
+		//}
 
 		// land
 		{

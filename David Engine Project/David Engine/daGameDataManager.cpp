@@ -1,5 +1,6 @@
 #include "daGameDataManager.h"
 
+#include "daSceneManager.h"
 #include "daInventoryScript.h"
 #include "daLifeBarScript.h"
 #include "daDashCountScript.h"
@@ -15,12 +16,7 @@ namespace da
 	structs::sArmour GameDataManager::mActiveArmour = {};
 	structs::sArmour GameDataManager::mSubArmour = {};
 
-	GameObject* GameDataManager::mInventoryObject = nullptr;
-	GameObject* GameDataManager::mWeaponObject = nullptr;
-	GameObject* GameDataManager::mPlayerObject = nullptr;
 
-	GameObject* GameDataManager::mHPBar = nullptr;
-	GameObject* GameDataManager::mDashCountBar = nullptr;
 	void GameDataManager::Initialize()
 	{
 		InitializePlayerStat();
@@ -55,7 +51,8 @@ namespace da
 		mPlayerStat.CurHP -= value;
 		if (0 >= mPlayerStat.CurHP)
 			mPlayerStat.CurHP = 0;
-		mHPBar->GetComponent<LifeBarScript>()->BindConstantBuffer();
+
+		SceneManager::GetLifebarScript()->BindConstantBuffer();
 	}
 
 	void GameDataManager::GetHeal(float value)
@@ -63,7 +60,7 @@ namespace da
 		mPlayerStat.CurHP += value;
 		if (mPlayerStat.MaxHP <= mPlayerStat.CurHP)
 			mPlayerStat.CurHP = mPlayerStat.MaxHP;
-		mHPBar->GetComponent<LifeBarScript>()->BindConstantBuffer();
+		SceneManager::GetLifebarScript()->BindConstantBuffer();
 	}
 
 	bool GameDataManager::UseDash()
@@ -71,10 +68,10 @@ namespace da
 		if (0 < mDashCount.CurDashCount)
 		{
 			mDashCount.CurDashCount -= 1;
-			mDashCountBar->GetComponent<DashCountScript>()->BindConstantBuffer();
+			SceneManager::GetDashCountScript()->BindConstantBuffer();
 			return true;
 		}
-		mDashCountBar->GetComponent<DashCountScript>()->BindConstantBuffer();
+		SceneManager::GetDashCountScript()->BindConstantBuffer(); 
 		return false;
 	}
 
@@ -84,7 +81,7 @@ namespace da
 		{
 			mDashCount.DashAccumulateTime = 0.0f;
 			mDashCount.CurDashCount += 1;
-			mDashCountBar->GetComponent<DashCountScript>()->BindConstantBuffer();
+			SceneManager::GetDashCountScript()->BindConstantBuffer();
 		}
 	}
 
@@ -97,7 +94,7 @@ namespace da
 
 	void GameDataManager::CallInventory()
 	{
-		mInventoryObject->GetComponent<InventoryScript>()->CallInventory();		
+		SceneManager::GetInventoryScript()->CallInventory();
 	}
 
 	void GameDataManager::ChangeArmour()
@@ -108,6 +105,6 @@ namespace da
 		mSubArmour = temp;
 
 		// change UI
-		mInventoryObject->GetComponent<InventoryScript>()->ChangeArmour();
+		SceneManager::GetInventoryScript()->ChangeArmour();
 	}
 }
