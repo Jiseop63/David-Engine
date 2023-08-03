@@ -104,16 +104,16 @@ namespace da::objects
 	static GameObject* InstantiatePlayer(Scene* scene)
 	{
 		// 플레이어 생성
-		GameObject* gameObject = new GameObject();
-		gameObject->SetLayerType(enums::eLayerType::Playable);
-		gameObject->SetCommonObject(true);
+		GameObject* player = new GameObject();
+		player->SetLayerType(enums::eLayerType::Playable);
+		player->SetCommonObject(true);
 		Layer& myLayer = scene->GetLayer(enums::eLayerType::Playable);
-		myLayer.AddGameObject(gameObject);
+		myLayer.AddGameObject(player);
 
-		MeshRenderer* meshRenderer = gameObject->AddComponent<MeshRenderer>();
+		MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>();
 		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 		meshRenderer->SetMaterial(Resources::Find<Material>(L"AnimationMaterial"));
-		PlayerScript* playerScript = gameObject->AddComponent<PlayerScript>();
+		PlayerScript* playerScript = player->AddComponent<PlayerScript>();
 
 		for (int index = 0; index < PLAYER_EFFECT_POOL; index++)
 		{
@@ -129,11 +129,12 @@ namespace da::objects
 			meshRenderer->SetMaterial(Resources::Find<Material>(L"AnimationMaterial"));
 
 			playerScript->AddEffectObject(gameObject);
-
+			player->AddChildObject(gameObject);
 		}
 
 		// weapon 추가
 		GameObject* weaponObject = new GameObject();
+		player->AddChildObject(weaponObject);
 		weaponObject->SetLayerType(enums::eLayerType::Playable);
 		weaponObject->SetCommonObject(true);
 		myLayer.AddGameObject(weaponObject);
@@ -155,9 +156,10 @@ namespace da::objects
 			meshRenderer->SetMaterial(Resources::Find<Material>(L"AnimationMaterial"));
 
 			weaponScript->AddEffectObject(gameObject);
+			player->AddChildObject(gameObject);
 		}
 
-		return gameObject;
+		return player;
 	}
 	template <typename T>
 	static T* InstantiateCreature(Scene* scene, const std::wstring& material)
@@ -211,6 +213,7 @@ namespace da::objects
 	static CameraObject* InstantiateMainCamera(Scene* scene)
 	{
 		CameraObject* cameraObj = new CameraObject(); 
+		cameraObj->SetCommonObject(true);
 		cameraObj->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -6.750f));
 		Layer& myLayer = scene->GetLayer(enums::eLayerType::Default);
 		myLayer.AddGameObject(cameraObj);
@@ -229,6 +232,7 @@ namespace da::objects
 	static CameraObject* InstantiateUICamera(Scene* scene)
 	{
 		CameraObject* cameraObj = new CameraObject();
+		cameraObj->SetCommonObject(true);
 		cameraObj->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -6.750f));
 		Layer& myLayer = scene->GetLayer(enums::eLayerType::Default);
 		myLayer.AddGameObject(cameraObj);
@@ -245,6 +249,7 @@ namespace da::objects
 	static CameraObject* InstantiateSubCamera(Scene* scene)
 	{
 		CameraObject* cameraObj = new CameraObject();
+		cameraObj->SetCommonObject(true);
 		cameraObj->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, -6.750f));
 		Layer& myLayer = scene->GetLayer(enums::eLayerType::Default);
 		myLayer.AddGameObject(cameraObj);

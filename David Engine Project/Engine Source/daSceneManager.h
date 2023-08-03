@@ -7,7 +7,7 @@
 #include "..\\David Engine\\daInventoryScript.h"
 #include "..\\David Engine\\daLifeBarScript.h"
 #include "..\\David Engine\\daDashCountScript.h"
-
+#include "..\\David Engine\\daCursorScript.h"
 
 namespace da
 {
@@ -38,39 +38,52 @@ namespace da
 		static Scene* GetActiveScene() { return mActiveScene; }
 		static Scene* LoadScene(std::wstring name);
 
-		static void MoveCommonObjects();
-
-
 	public:
-		static void SetMainCameraObject(GameObject* mainCamera) { mMainCameraScript = mainCamera->GetComponent<CameraScript>(); }
+		static void SetLightObject(GameObject* light) { mLightObject = light; }
+		static GameObject* GetLightObject() { return mLightObject; }
+
+		static void SetMainCameraScript(GameObject* mainCamera) { mMainCameraScript = mainCamera->GetComponent<CameraScript>(); }
 		static CameraScript* GetMainCameraScript() { return mMainCameraScript; }
-		static void SetSubCameraObject(GameObject* subCamera) { mSubCameraScript = subCamera->GetComponent<SubCameraScript>(); }
+		static void SetSubCameraScript(GameObject* subCamera) { mSubCameraScript = subCamera->GetComponent<SubCameraScript>(); }
 		static SubCameraScript* GetSubCameraScript() { return mSubCameraScript; }
 
-		static void SetPlayerObject(GameObject* player) { mPlayerScript = player->GetComponent<PlayerScript>(); }
+		static void SetPlayerScript(GameObject* player) { mPlayerScript = player->GetComponent<PlayerScript>(); }
 		static PlayerScript* GetPlayerScript() { return mPlayerScript; }
-		static void SetInventoryObject(GameObject* inventory) { mInventoryScript = inventory->GetComponent<InventoryScript>(); }
+		static void SetInventoryObject(GameObject* inventory) { mInventoryObject = inventory; }
+		static GameObject* GetInventoryObject() { return mInventoryObject; }
+		static void SetInventoryScript(GameObject* inventory) { mInventoryScript = inventory->GetComponent<InventoryScript>(); }
 		static InventoryScript* GetInventoryScript() { return mInventoryScript; }
 
-		static void SetLifebarObject(GameObject* lifebar) { mLifebarScript = lifebar->GetComponent<LifeBarScript>(); }
+		static void SetHUDObject(GameObject* hud) { mHUDObject = hud; }
+		static GameObject* GetHUDObject() { return mHUDObject; }
+		static void SetLifebarScript(GameObject* lifebar) { mLifebarScript = lifebar->GetComponent<LifeBarScript>(); }
 		static LifeBarScript* GetLifebarScript() { return mLifebarScript; }
-		static void SetDashCountObject(GameObject* dashCount) { mDashCountScript = dashCount->GetComponent<DashCountScript>(); }
+		static void SetDashCountScript(GameObject* dashCount) { mDashCountScript = dashCount->GetComponent<DashCountScript>(); }
 		static DashCountScript* GetDashCountScript() { return mDashCountScript; }
-
+		
+		static void SetCursourScript(GameObject* cursour) { mCursourScrip = cursour->GetComponent<CursorScript>(); }
+		static CursorScript* GetCursourScrip() { return mCursourScrip; }
 
 	private:
 		static Scene* mActiveScene;
 		static std::map<std::wstring, Scene*> mScenes;
 
 	private:
+		// light
+		static GameObject*		mLightObject;
 		// camera
 		static CameraScript*	mMainCameraScript;
 		static SubCameraScript* mSubCameraScript;
 		// player & inventory
 		static PlayerScript*	mPlayerScript;
+		static GameObject*		mInventoryObject;
 		static InventoryScript* mInventoryScript;
 		// hud
-		static LifeBarScript* mLifebarScript;
+		static GameObject*		mHUDObject;
+		static LifeBarScript*	mLifebarScript;
 		static DashCountScript* mDashCountScript;
+
+		//cursour
+		static CursorScript*	mCursourScrip;
 	};
 }

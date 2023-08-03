@@ -41,16 +41,6 @@ namespace da
 		}
 		Layer& GetLayer(enums::eLayerType targetLayer) { return mLayers[(UINT)targetLayer]; }
 
-	protected:
-		// 다치워버려야 할 목표들
-		CameraObject*	mMainCamera;
-		CameraObject*	mUICamera;
-		GameObject*		mInventory;
-		GameObject*		mWeapon;
-		GameObject*		mPlayer;
-		GameObject* mLifeBar;
-		GameObject* mDashCountBar;
-
 	private:
 		std::vector<Layer> mLayers;
 	};

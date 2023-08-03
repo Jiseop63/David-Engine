@@ -4,6 +4,8 @@
 
 #include "daGameObject.h"
 #include "daTransform.h"
+#include "daMeshRenderer.h"
+#include "daResources.h"
 
 namespace da
 {
@@ -24,5 +26,15 @@ namespace da
 
 		// 내위치를 마우스 위치로 옮기기
 		cursorTransform->SetPosition(uiMousePos);
+	}
+	void CursorScript::IsIngame(bool value)
+	{
+		std::shared_ptr<Texture> texture;
+		if (value)
+			texture = Resources::Find<Texture>(L"ShootingCursorTexture");
+		else
+			texture = Resources::Find<Texture>(L"BasicCursorTexture");
+		MeshRenderer* mr = GetOwner()->GetComponent<MeshRenderer>();
+		mr->ChangeSlotTexture(texture);
 	}
 }

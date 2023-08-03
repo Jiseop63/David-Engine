@@ -250,7 +250,7 @@ namespace renderer
 			Resources::Insert<Material>(L"DebugMaterial", debugMaterial);
 		}
 #pragma endregion
-#pragma region HUD Material
+#pragma region HUD Material & Texture
 
 		// Grid
 		{
@@ -262,19 +262,11 @@ namespace renderer
 		{
 			std::shared_ptr<Texture> texture
 				= Resources::Load<Texture>(L"BasicCursorTexture", L"..\\Resources\\Texture\\Hud\\Mouse\\BasicCursor.png");
+			Resources::Load<Texture>(L"ShootingCursorTexture", L"..\\Resources\\Texture\\Hud\\Mouse\\ShootingCursor2.png");
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"BasicCursorMaterial", spriteMaterial);
-		}
-		// Shooting Cursor
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"ShootingCursorTexture", L"..\\Resources\\Texture\\Hud\\Mouse\\ShootingCursor2.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"ShootingCursorMaterial", spriteMaterial);
+			Resources::Insert<Material>(L"CursorMaterial", spriteMaterial);
 		}
 
 		// life Panel
@@ -856,7 +848,6 @@ namespace renderer
 	{
 		debugMeshs.push_back(mesh);
 	}
-
 	void BindLights()
 	{
 		std::vector<LightAttribute> lightsAttributes = {};
@@ -870,7 +861,6 @@ namespace renderer
 		lightsBuffer->Bind(eShaderStage::VS, 13);
 		lightsBuffer->Bind(eShaderStage::PS, 13);
 	}
-
 	void Release()
 	{
 		for (ConstantBuffer* buff : constantBuffer)

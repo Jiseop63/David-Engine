@@ -6,12 +6,20 @@ namespace da
 	Scene* SceneManager::mActiveScene = nullptr;
 	std::map<std::wstring, Scene*> SceneManager::mScenes = {};
 
+	GameObject* SceneManager::mLightObject = nullptr;
 	CameraScript* SceneManager::mMainCameraScript = nullptr;
 	SubCameraScript* SceneManager::mSubCameraScript = nullptr;
+
 	PlayerScript* SceneManager::mPlayerScript = nullptr;
+	GameObject* SceneManager::mInventoryObject = nullptr;
 	InventoryScript* SceneManager::mInventoryScript = nullptr;
+	
+	GameObject* SceneManager::mHUDObject = nullptr;
 	LifeBarScript* SceneManager::mLifebarScript = nullptr;
 	DashCountScript* SceneManager::mDashCountScript = nullptr;
+	
+	CursorScript* SceneManager::mCursourScrip = nullptr;
+	
 	void SceneManager::Initialize()
 	{		
 	}
@@ -70,12 +78,5 @@ namespace da
 
 
 		return mActiveScene;
-	}
-	void SceneManager::MoveCommonObjects()
-	{
-		
-
-
-		
 	}
 }

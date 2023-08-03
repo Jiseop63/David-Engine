@@ -90,7 +90,7 @@ namespace da
 		Collider2D* GetFootCollider() { return mFootCollider; }
 
 	public:
-		void SetObjectState(eObjectState state);
+		void SetObjectState(eObjectState state) { mObjectState = state; }
 		eObjectState GetObjectState() { return mObjectState; }
 		void SetParent(GameObject* parent) { mTransform->SetParent( parent->GetTransform() ); }
 		Transform* GetTransform() { return mTransform; }
@@ -98,6 +98,11 @@ namespace da
 		enums::eLayerType GetLayerType() { return mLayerType; }
 		void SetCommonObject(bool isCommonObject) { mIsCommonObject = isCommonObject; }
 		bool IsCommonObject() { return mIsCommonObject; }
+
+		// 상속 구조..?
+	public:
+		void AddChildObject(GameObject* other) { mChildren.push_back(other); }
+		void SetObjectStates(eObjectState state);
 
 	protected:
 		Transform*				mTransform;
@@ -107,7 +112,7 @@ namespace da
 		eObjectState			mObjectState;
 		std::vector<Component*> mComponents;
 		std::vector<Script*>	mScripts;
-
+		std::vector<GameObject*>mChildren;
 	private:
 		enums::eLayerType		mLayerType;
 		bool					mIsCommonObject;

@@ -11,6 +11,5 @@ namespace da
 
 		virtual void Initialize() override;
 		
-		void retInactive();
 	};
 }

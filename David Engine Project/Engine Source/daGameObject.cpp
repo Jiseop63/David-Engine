@@ -81,8 +81,12 @@ namespace da
 			script->Render();
 		}
 	}
-	void GameObject::SetObjectState(eObjectState state)
+	void GameObject::SetObjectStates(eObjectState state)
 	{
+		for (size_t index = 0; index < mChildren.size(); index++)
+		{
+			mChildren[index]->SetObjectState(state);
+		}
 		mObjectState = state;
 	}
 }

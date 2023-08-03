@@ -20,5 +20,4 @@ namespace da
 	{
 		mEffectAnimator->PlayAnimation(name, false);
 	}
-
 }

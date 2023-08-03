@@ -28,18 +28,6 @@ namespace da
 	}
 	void Scene_Title::Initialize()
 	{
-		// camera Init
-		CameraObject* subCameraObj = objects::InstantiateSubCamera(this);
-		SceneManager::SetSubCameraObject(subCameraObj);
-		CameraObject* mainCameraObj = objects::InstantiateMainCamera(this);
-		SceneManager::SetMainCameraObject(mainCameraObj);
-		CameraObject* uiCameraObj = objects::InstantiateUICamera(this);
-		renderer::mainCamera = mainCameraObj->GetCameraComponent();
-		renderer::uiCamera = uiCameraObj->GetCameraComponent();
-		// subCamera setting
-		SubCameraScript* subCamScript = subCameraObj->GetComponent<SubCameraScript>();
-		subCamScript->SetMainCameraTransfrom(mainCameraObj->GetTransform());
-
 		initializeCommonObjects();
 		addBackgroundObjects();
 		addUIObjects();
@@ -60,6 +48,8 @@ namespace da
 	void Scene_Title::OnEnter()
 	{
 		// 각종 객체들 Inactive 해주기
+		SceneManager::GetPlayerScript()->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
+		SceneManager::GetHUDObject()->SetObjectStates(GameObject::eObjectState::Inactive);
 	}
 	void Scene_Title::OnExit()
 	{
@@ -135,36 +125,45 @@ namespace da
 			exitBtnScript->SetButtonType(ButtonScript::eButtonType::Exit);
 		}
 
-		// mouse
-		{
-			GameObject* cursorObject = objects::InstantiateGameObject
-				<GameObject>(this, enums::eLayerType::UI, L"BasicCursorMaterial");
-			cursorObject->GetTransform()->SetScale(math::Vector3(0.190f * 4.0f, 0.190f * 4.0f, 1.0f));
-			cursorObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, CursorZ));
-			cursorObject->AddComponent<CursorScript>();
-		}
+		
 	}
 	void Scene_Title::initializeCommonObjects()
 	{
-		// Light
+		// camera Init
+		CameraObject* subCameraObj = objects::InstantiateSubCamera(this);
+		SceneManager::SetSubCameraScript(subCameraObj);
+		CameraObject* mainCameraObj = objects::InstantiateMainCamera(this);
+		SceneManager::SetMainCameraScript(mainCameraObj);
+		CameraObject* uiCameraObj = objects::InstantiateUICamera(this);
+		renderer::mainCamera = mainCameraObj->GetCameraComponent();
+		renderer::uiCamera = uiCameraObj->GetCameraComponent();
+		// subCamera setting
+		SubCameraScript* subCamScript = subCameraObj->GetComponent<SubCameraScript>();
+		subCamScript->SetMainCameraTransfrom(mainCameraObj->GetTransform());
+
+		// light - done
 		GameObject* lightObj = objects::InstantiateCommonObject
 			<GameObject>(this, enums::eLayerType::Light, L"NoneMaterial");
-		Light* light = lightObj->AddComponent<Light>();
-		light->SetLightType(enums::eLightType::Directional);
-		light->SetColor(math::Vector4(0.90f, 0.90f, 0.90f, 1.0f));
-		
+		SceneManager::SetLightObject(lightObj);
+		{
+			Light* light = lightObj->AddComponent<Light>();
+			light->SetLightType(enums::eLightType::Directional);
+			light->SetColor(math::Vector4(0.90f, 0.90f, 0.90f, 1.0f));
+		}
+		// player - done
 		GameObject* playerObject = objects::InstantiatePlayer(this);
+		SceneManager::SetPlayerScript(playerObject);
 
-		SceneManager::SetPlayerObject(playerObject);
 #pragma region HUD
 
-		// HUD 객체 생성
+		// hud - done
+		GameObject* playerHUD = objects::InstantiateObject
+			<GameObject>(this, enums::eLayerType::Default);
+		playerHUD->SetCommonObject(true);
+		SceneManager::SetHUDObject(playerHUD);
 		{
 			// hpBar, dashBar
 			{
-				GameObject* playerHUD = objects::InstantiateObject
-					<GameObject>(this, enums::eLayerType::Default);
-				playerHUD->SetCommonObject(true);
 				Transform* playerHUDTransform = playerHUD->GetTransform();
 				//  HUD 위치 조절 (좌상단)
 				playerHUDTransform->SetPosition(math::Vector3(-MaxPositionX, MaxPositionY, HUDZ));
@@ -174,6 +173,7 @@ namespace da
 				// Life Panel 객체 생성
 				GameObject* lifePanel = objects::InstantiateCommonObject
 					<GameObject>(this, enums::eLayerType::UI, L"PlayerLifePanelMaterial");
+				playerHUD->AddChildObject(lifePanel);
 				Transform* lifePanelTransform = lifePanel->GetTransform();
 				lifePanelTransform->SetParent(playerHUDTransform);
 				// Life Panel 크기 조절
@@ -187,7 +187,8 @@ namespace da
 				// Bar 객체 생성
 				GameObject* lifeBar = objects::InstantiateCommonObject
 					<GameObject>(this, enums::eLayerType::UI, L"PlayerLifeBarMaterial");
-				mLifeBar = lifeBar;
+				playerHUD->AddChildObject(lifeBar);
+				SceneManager::SetLifebarScript(lifeBar);	
 				Transform* lifeBarTransform = lifeBar->GetTransform();
 				lifeBarTransform->SetParent(playerHUDTransform);
 				// Bar 크기 조절
@@ -200,12 +201,11 @@ namespace da
 				math::Vector3 lifeBarPosition = lifePanelPosition + math::Vector3(0.380f, 0.0f, -0.0001f);
 				lifeBarTransform->SetPosition(lifeBarPosition);
 				lifeBar->AddComponent<LifeBarScript>();
-				SceneManager::SetLifebarObject(lifeBar);
 
 				// Dash Panel 객체 생성
 				GameObject* dashPanel = objects::InstantiateCommonObject
 					<GameObject>(this, enums::eLayerType::UI, L"DashPanelMaterial");
-
+				playerHUD->AddChildObject(dashPanel);
 				Transform* dashPanelTransform = dashPanel->GetTransform();
 				dashPanelTransform->SetParent(playerHUDTransform);
 
@@ -222,7 +222,8 @@ namespace da
 				// Dash Active 객체 생성
 				GameObject* dashActivate = objects::InstantiateCommonObject
 					<GameObject>(this, enums::eLayerType::UI, L"DashActivateMaterial");
-				mDashCountBar = dashActivate;
+				playerHUD->AddChildObject(dashActivate);
+				SceneManager::SetDashCountScript(dashActivate);
 
 				Transform* dashActivateTransform = dashActivate->GetTransform();
 				dashActivateTransform->SetParent(playerHUDTransform);
@@ -236,15 +237,13 @@ namespace da
 				math::Vector3 dashActivePosition = dashPanelPosition + math::Vector3(0.0f, 0.0f, -0.0001f);
 				dashActivateTransform->SetPosition(dashActivePosition);
 				dashActivate->AddComponent<DashCountScript>();
-				SceneManager::SetDashCountObject(dashActivate);
 			}
-
 			// player Amour panel A, B
 			{
 				// Panel A 생성
 				GameObject* weaponPanelA = objects::InstantiateCommonObject
 					<GameObject>(this, enums::eLayerType::UI, L"Armour1Material");
-				weaponPanelA->SetName(L"weaponPanelA");
+				playerHUD->AddChildObject(weaponPanelA);
 				weaponPanelA->AddComponent<ArmourScript>();
 				// Scale Position 세팅 34 24
 				Transform* weaponPanelATransform = weaponPanelA->GetTransform();
@@ -262,7 +261,7 @@ namespace da
 				// Panel B 생성
 				GameObject* weaponPanelB = objects::InstantiateCommonObject
 					<GameObject>(this, enums::eLayerType::UI, L"Armour2Material");
-				weaponPanelB->SetName(L"weaponPanelB");
+				playerHUD->AddChildObject(weaponPanelB);
 				ArmourScript* armourBScript = weaponPanelB->AddComponent<ArmourScript>();
 				armourBScript->SetBackup(true);
 				Transform* weaponPanelBTransform = weaponPanelB->GetTransform();
@@ -270,39 +269,37 @@ namespace da
 				weaponPanelBTransform->SetScale(armourPanelScale);
 				weaponPanelBTransform->SetPosition(
 					armourPanelPosition + math::Vector3(armourPadding, armourPadding, 0.0001f));
-
 				// A, B Padding 차이
 				// X : armourPadding * 3, Y : armourPadding
 			}
 		}
-
-
-		// mouse
+		// mouse - done
+		GameObject* cursorObject = objects::InstantiateCommonObject
+			<GameObject>(this, enums::eLayerType::UI, L"CursorMaterial");
+		SceneManager::SetCursourScript(cursorObject);
 		{
-			GameObject* cursorObject = objects::InstantiateCommonObject
-				<GameObject>(this, enums::eLayerType::UI, L"ShootingCursorMaterial");
-			cursorObject->SetName(L"cursor");
-			cursorObject->GetTransform()->SetScale(math::Vector3(0.210f * 4.0f, 0.210f * 4.0f, 1.0f));
+			cursorObject->GetTransform()->SetScale(math::Vector3(0.190f * 4.0f, 0.190f * 4.0f, 1.0f));
 			cursorObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, CursorZ));
 			cursorObject->AddComponent<CursorScript>();
 		}
+
+
 #pragma endregion
 #pragma region Inventory
+		GameObject* inventoryObject = objects::InstantiateCommonObject<GameObject>
+			(this, enums::eLayerType::UI, L"InventoryPanelMaterial");
+		SceneManager::SetInventoryObject(inventoryObject);
 		// Inventory Base
 		{
 			float inventoryScaleX = 1.230f;
 			float inventoryScaleY = 1.80f;
-			GameObject* inventoryObject = objects::InstantiateCommonObject<GameObject>
-				(this, enums::eLayerType::UI, L"InventoryPanelMaterial");
-			inventoryObject->SetName(L"inventory");
-			mInventory = inventoryObject;
 			Transform* inventoryTransform = inventoryObject->GetTransform();
 			inventoryTransform->SetScale(math::Vector3(inventoryScaleX * 4.0f, inventoryScaleY * 4.0f, 1.0f));
 			math::Vector3 inventoryPosition(MaxPositionX - (inventoryScaleX * 2.0f), 0.0f, OverlayZ);
 			inventoryTransform->SetPosition(inventoryPosition);
 			InventoryScript* inventoryScript = inventoryObject->AddComponent<InventoryScript>();
 
-			SceneManager::SetInventoryObject(inventoryObject);
+			SceneManager::SetInventoryScript(inventoryObject);
 
 			inventoryScript->SetSlotTextures(Resources::Find<graphics::Texture>(L"InventoryPanelATexture"), Resources::Find<graphics::Texture>(L"InventoryPanelBTexture"));
 			inventoryObject->SetObjectState(GameObject::eObjectState::Hide);
@@ -311,6 +308,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"WeaponSlot1Material", L"WeaponSlotTexture", L"WeaponSlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -325,6 +323,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"ShiledSlot1Material", L"ShiledSlotTexture", L"ShiledSlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -340,6 +339,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"WeaponSlot2Material", L"WeaponSlotTexture", L"WeaponSlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -354,6 +354,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"ShiledSlot2Material", L"ShiledSlotTexture", L"ShiledSlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -369,6 +370,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"AccessorySlot1Material", L"AccessorySlotTexture", L"AccessorySlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -383,6 +385,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"AccessorySlot2Material", L"AccessorySlotTexture", L"AccessorySlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -397,6 +400,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"AccessorySlot3Material", L"AccessorySlotTexture", L"AccessorySlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -411,6 +415,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"AccessorySlot4Material", L"AccessorySlotTexture", L"AccessorySlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -426,6 +431,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"ItemSlot00Material", L"ItemSlotTexture", L"ItemSlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -440,6 +446,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"ItemSlot01Material", L"ItemSlotTexture", L"ItemSlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -454,6 +461,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"ItemSlot02Material", L"ItemSlotTexture", L"ItemSlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -468,6 +476,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"ItemSlot03Material", L"ItemSlotTexture", L"ItemSlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -482,6 +491,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"ItemSlot04Material", L"ItemSlotTexture", L"ItemSlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -497,6 +507,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"ItemSlot10Material", L"ItemSlotTexture", L"ItemSlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -511,6 +522,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"ItemSlot11Material", L"ItemSlotTexture", L"ItemSlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -525,6 +537,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"ItemSlot12Material", L"ItemSlotTexture", L"ItemSlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -539,6 +552,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"ItemSlot13Material", L"ItemSlotTexture", L"ItemSlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -553,6 +567,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"ItemSlot14Material", L"ItemSlotTexture", L"ItemSlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -568,6 +583,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"ItemSlot20Material", L"ItemSlotTexture", L"ItemSlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -582,6 +598,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"ItemSlot21Material", L"ItemSlotTexture", L"ItemSlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -596,6 +613,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"ItemSlot22Material", L"ItemSlotTexture", L"ItemSlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -610,6 +628,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"ItemSlot23Material", L"ItemSlotTexture", L"ItemSlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -624,6 +643,7 @@ namespace da
 			{
 				GameObject* slotObject = objects::InstantiateMultiTextureUI<GameObject>
 					(this, L"ItemSlot24Material", L"ItemSlotTexture", L"ItemSlotSelectTexture");
+				inventoryObject->AddChildObject(slotObject);
 				slotObject->SetObjectState(GameObject::eObjectState::Inactive);
 				slotObject->SetCommonObject(true);
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
@@ -636,7 +656,6 @@ namespace da
 				inventoryScript->AddItemSlot(slotObject);
 			}
 		}
-
 #pragma endregion
 	}
 }

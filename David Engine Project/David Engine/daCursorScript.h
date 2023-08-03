@@ -10,6 +10,7 @@ namespace da
 		virtual ~CursorScript();
 		virtual void LateUpdate();
 
+		void IsIngame(bool value);
 	protected:
 	};
 }

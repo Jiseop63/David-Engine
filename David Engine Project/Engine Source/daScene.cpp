@@ -6,13 +6,6 @@ namespace da
 {
 	using namespace enums;
 	Scene::Scene()
-		: mMainCamera(nullptr)
-		, mUICamera(nullptr)
-		, mInventory(nullptr)
-		, mWeapon(nullptr)
-		, mPlayer(nullptr)
-		, mLifeBar(nullptr)
-		, mDashCountBar(nullptr)
 	{
 		mLayers.resize((int)eLayerType::End);
 	}

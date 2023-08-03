@@ -75,7 +75,8 @@ namespace da
 	public:
 		math::Vector2 GetPlayerDir() { return mPlayerDir; }
 		WeaponScript* SetWeaponObject(GameObject* object);
-
+		WeaponScript* GetWeaponScript() { return mWeaponScript; }
+		void SetPlayerPosition(math::Vector3 vector3) { mTransform->SetPosition(vector3); }
 		// 시간 관련 변수
 	private:
 		void timeProcess();
