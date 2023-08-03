@@ -22,75 +22,74 @@ namespace da
 	{
 		Idle,
 		Move,
-		jumpProcess,
+		Jump,
 		Dead,
 	};
-
 	class PlayerScript : public Script
 	{
 	public:
 		PlayerScript();
 		virtual ~PlayerScript();
-
+		// 임시
+	public:
+		void GetDamage();
+		void GetHeal();
+#pragma region Default Func
 		virtual void Initialize();
 		virtual void Update();
-
-		// 입력 함수
+#pragma endregion
+#pragma region common Func
 		void PlayerInput();
 		void DebugInput();
 		void UIInput();
 		void GetMouse();
 		void CalcPlayerDir();
 		void ReverseTexture();
-
-
-		// FSM 함수
+		void timeProcess();
+		EffectPlayerScript* callEffect();
+		void activeEffect(EffectPlayerScript* effect, const std::wstring name);
+#pragma endregion
+#pragma region FSM Func
 		void ChangeState(ePlayerState state);
 		void PlayerFSM();
 		void HandleIdle();
 		void HandleMove();
 		void HandleJump();
 		void HandleDead();
-
-
-		// 행동 함수
-		void todoMove();
-		void todoJump();
-		void todoDash();
-		void todoAttack();
-		
-		// 이펙트 함수
+#pragma endregion
+#pragma region public Func
 	public:
 		EffectPlayerScript* AddEffectObject(GameObject* object);
-	private:
-		EffectPlayerScript* callEffect();
-		void ActiveEffect(EffectPlayerScript* effect, const std::wstring name);
-
-		// 임시
-	public:
-		void GetDamage();
-		void GetHeal();
-
-		// 외부 변수
-	public:
 		math::Vector2 GetPlayerDir() { return mPlayerDir; }
 		WeaponScript* SetWeaponObject(GameObject* object);
 		WeaponScript* GetWeaponScript() { return mWeaponScript; }
 		void SetPlayerPosition(math::Vector3 vector3) { mTransform->SetPosition(vector3); }
-		// 시간 관련 변수
+#pragma endregion		
+#pragma region Attack Logic
 	private:
-		void timeProcess();
-		void dashRegen();
-		void jumpRegen();
-		void bufferedJump();
-		void jumpProcess();
+		// 행동 함수
+		void InputAttack();
+#pragma endregion
+#pragma region Move Logic
+		void InputMove();
 		void walkDust();
+#pragma endregion
+#pragma region Jump & Dash Logic
+	private:
+		void jumpRegen();
+		void dashRegen();
 
-		// 초기화
+		void inputDash();
+		void inputJump();
+		void bufferedJump();
+		void todoJump();
+#pragma endregion
+#pragma region Initialize Player
 	public:
 		void InitAnimation();
 		void InitCollider();
-
+#pragma endregion
+#pragma region Collision Func
 	public:
 		virtual void OnCollisionEnter(Collider2D* other) override {}
 		virtual void OnCollisionStay(Collider2D* other) override {}
@@ -98,9 +97,9 @@ namespace da
 		virtual void OnLandEnter(Collider2D* other) override;
 		virtual void OnLandStay(Collider2D* other) override;
 		virtual void OnLandExit(Collider2D* other) override {}
-
-
-
+#pragma endregion
+// value
+#pragma region Components
 		// component val
 	protected:
 		Transform*		mTransform;
@@ -112,35 +111,27 @@ namespace da
 		Collider2D*		mFootCollider;
 		Collider2D*		mRightCollider;
 		Collider2D*		mLeftCollider;
-
-		// 이건 추후에 스크립트를 통해서만 제어할듯
-		WeaponScript*	mWeaponScript;
-
-		// other script
+#pragma endregion
+#pragma region Other Scripts
 	private:
+		WeaponScript*	mWeaponScript;
 		std::vector<EffectPlayerScript*> mEffects;
-		// data val
+#pragma endregion
+#pragma region Global Data
 	private:
 		structs::sPlayerStat*	mPlayerStat;
 		structs::sJumpCount*	mJumpCount;
 		structs::sDashCount* 	mDashCount;
 		structs::sInventory*	mInventoryData;
-
-		// common val
+#pragma endregion
+#pragma region Condition value
 	private:
 		math::Vector2 mPlayerDir;
-
-
-		// effect val
-	private:
-		float			mDustAccumulateTime;
-
-		// condition val
-	private:
 		ePlayerState	mActiveState;
+		ePlayerState	mpreviousState;
 		int				mMoveCondition;
+		float			mDustAccumulateTime;
 		bool			mDead;
-
-
+#pragma endregion
 	};
 }

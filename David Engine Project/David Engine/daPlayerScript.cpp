@@ -29,6 +29,7 @@ namespace da
         , mPlayerDir(math::Vector2::Zero)
 
         , mActiveState(ePlayerState::Idle)
+        , mpreviousState(ePlayerState::Idle)
         , mMoveCondition(0)
         , mDead(false)
         , mDustAccumulateTime(0.0f)
@@ -72,17 +73,17 @@ namespace da
 
     }
 #pragma endregion
-#pragma region Input Func
+#pragma region Common Func
     void PlayerScript::PlayerInput()
     {
         DebugInput();
         UIInput();
         if (mDead)
             return;
-        todoMove();
-        todoJump();
-        todoDash();
-        todoAttack();        
+        InputMove();
+        inputJump();
+        inputDash();
+        InputAttack();        
     }
     void PlayerScript::DebugInput()
     {
@@ -141,31 +142,49 @@ namespace da
         mRenderer->SetReverse(value);
         mWeaponScript->SetReverse(value);
     }
-
+    void PlayerScript::timeProcess()
+    {
+        dashRegen();
+        jumpRegen();
+        bufferedJump();
+        walkDust();
+    }
+    EffectPlayerScript* PlayerScript::callEffect()
+    {
+        for (size_t effect = 0; effect < mEffects.size(); effect++)
+        {
+            if (GameObject::eObjectState::Inactive ==
+                mEffects[effect]->GetOwner()->GetObjectState())
+                return mEffects[effect];
+        }
+        return nullptr;
+    }
+    void PlayerScript::activeEffect(EffectPlayerScript* effect, const std::wstring name)
+    {
+        if (!effect)
+            return;
+        effect->SetEffectPosition(mTransform->GetPosition() + Vector3(0.0f, -0.20f, 0.0f));
+        effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+        effect->PlayEffect(name);
+    }
+#pragma endregion
+#pragma region Debuging Func
+    void PlayerScript::GetDamage()
+    {
+        float value = 5.0f;
+        GameDataManager::GetDamage(value);
+    }
+    void PlayerScript::GetHeal()    
+    {
+        float value = 5.0f;
+        GameDataManager::GetHeal(value);
+        
+    }
 #pragma endregion
 #pragma region FSM Func
-    void PlayerScript::PlayerFSM()
-    {
-        switch (mActiveState)
-        {
-        case da::ePlayerState::Idle:
-            HandleIdle();
-            break;
-        case da::ePlayerState::Move:
-            HandleMove();
-            break;
-        case da::ePlayerState::jumpProcess:
-            HandleJump();
-            break;
-        case da::ePlayerState::Dead:
-            HandleDead();
-            break;
-        default:
-            break;
-        }
-    }
     void PlayerScript::ChangeState(ePlayerState state)
     {
+        mpreviousState = mActiveState;
         mActiveState = state;
         switch (mActiveState)
         {
@@ -175,7 +194,7 @@ namespace da
         case da::ePlayerState::Move:
             mAnimator->PlayAnimation(L"playerMove");
             break;
-        case da::ePlayerState::jumpProcess:
+        case da::ePlayerState::Jump:
             mAnimator->PlayAnimation(L"playerJump");
             break;
         case da::ePlayerState::Dead:
@@ -186,17 +205,32 @@ namespace da
         }
 
     }
+    void PlayerScript::PlayerFSM()
+    {
+        switch (mActiveState)
+        {
+        case da::ePlayerState::Idle:
+            HandleIdle();
+            break;
+        case da::ePlayerState::Move:
+            HandleMove();
+            break;
+        case da::ePlayerState::Jump:
+            HandleJump();
+            break;
+        case da::ePlayerState::Dead:
+            HandleDead();
+            break;
+        default:
+            break;
+        }
+    }
     void PlayerScript::HandleIdle()
     {
         // ->Move
         if (Input::GetKeyDown(eKeyCode::D)
             || Input::GetKeyDown(eKeyCode::A))
             ChangeState(ePlayerState::Move);
-
-        if (Input::GetKeyDown(eKeyCode::SPACE))
-            ChangeState(ePlayerState::jumpProcess);
-        if (Input::GetKeyDown(eKeyCode::RBTN))
-            ChangeState(ePlayerState::jumpProcess);
     }
     void PlayerScript::HandleMove()
     {        
@@ -208,28 +242,28 @@ namespace da
         }
         else
             mRigidbody->SetMoving(true);
-
-        if (Input::GetKeyDown(eKeyCode::SPACE))
-            ChangeState(ePlayerState::jumpProcess);
-        if (Input::GetKeyDown(eKeyCode::RBTN))
-            ChangeState(ePlayerState::jumpProcess);
     }
-
     void PlayerScript::HandleJump()
     {
         if (mFootCollider->IsGround())
-            ChangeState(ePlayerState::Idle);
+            ChangeState(mpreviousState);
     }
     void PlayerScript::HandleDead()
     {
         mDead = true;
     }
-    
 #pragma endregion
-#pragma region Common Func
-    void PlayerScript::todoMove()
+#pragma region Attack Logic
+    void PlayerScript::InputAttack()
     {
-            Vector3 mPos = mTransform->GetPosition();
+        if (Input::GetKey(eKeyCode::LBTN))
+            mWeaponScript->DoAttack();
+    }
+#pragma endregion
+#pragma region Move Logic
+    void PlayerScript::InputMove()
+    {
+        Vector3 mPos = mTransform->GetPosition();
         // moveAnimation
         if (Input::GetKeyDown(eKeyCode::D)
             || Input::GetKeyDown(eKeyCode::A))
@@ -253,153 +287,6 @@ namespace da
             mTransform->SetPosition(mPos);
         }
     }
-    void PlayerScript::todoJump()
-    {
-        // 점프 개수가 유효하다는 뜻임
-        if (mFootCollider->IsGround())
-        {
-            // 버퍼에 추가
-            if (Input::GetKeyDown(eKeyCode::SPACE))
-            {
-                mJumpCount->BufferedJump = true;
-            }
-            if (Input::GetKeyUp(eKeyCode::SPACE))
-            {
-                // 버퍼 중단
-                mJumpCount->BufferedJump = false;
-                // 바로 점프
-                jumpProcess();
-            }
-        }
-        else
-        {
-            // 점프 개수가 유효한지 확인
-            if (mJumpCount->ExtraJump)
-            {
-                if (Input::GetKeyDown(eKeyCode::SPACE))
-                {
-                    mJumpCount->ExtraJump = false;
-                    mJumpCount->JumpForceRatio = 0.80f;
-                    // 점프하기
-                    jumpProcess();
-                }
-            }
-        }
-
-    }
-    void PlayerScript::todoDash()
-    {
-        if (Input::GetKeyDown(eKeyCode::RBTN))
-        {
-            // condition
-            if (GameDataManager::UseDash())
-            {
-                // to do
-                mFootCollider->ApplyGround(false);
-                mRigidbody->OverrideVelocity(mPlayerDir, mPlayerStat->DashForce);
-            }
-        }
-    }
-    void PlayerScript::todoAttack()
-    {
-        if (Input::GetKey(eKeyCode::LBTN))
-            mWeaponScript->DoAttack();
-    }
-    EffectPlayerScript* PlayerScript::callEffect()
-    {
-        for (size_t effect = 0; effect < mEffects.size(); effect++)
-        {
-            if (GameObject::eObjectState::Inactive ==
-                mEffects[effect]->GetOwner()->GetObjectState())
-                return mEffects[effect];
-        }
-        return nullptr;
-    }
-    void PlayerScript::ActiveEffect(EffectPlayerScript* effect, const std::wstring name)
-    {
-        if (!effect)
-            return;
-        effect->SetEffectPosition(mTransform->GetPosition() + Vector3(0.0f, -0.20f, 0.0f));
-        effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-        effect->PlayEffect(name);
-    }
-#pragma endregion
-#pragma region Debuging Func
-    void PlayerScript::GetDamage()
-    {
-        float value = 5.0f;
-        GameDataManager::GetDamage(value);
-    }
-    void PlayerScript::GetHeal()    
-    {
-        float value = 5.0f;
-        GameDataManager::GetHeal(value);
-        
-    }
-#pragma endregion
-#pragma region Auto Func
-    void PlayerScript::timeProcess()
-    {
-        dashRegen();
-        jumpRegen();
-        bufferedJump();
-        walkDust();
-    }
-    void PlayerScript::dashRegen()
-    {
-        if (mDashCount->MaxDashCount == mDashCount->CurDashCount)
-            return;
-
-        mDashCount->DashAccumulateTime += (float)Time::DeltaTime();
-        if (mDashCount->DashRegenTime<= mDashCount->DashAccumulateTime)
-            GameDataManager::RecoveryDash();
-    }
-
-    void PlayerScript::jumpRegen()
-    {
-        if (!mJumpCount->ExtraJump)
-            if (mFootCollider->IsGround())
-                mJumpCount->ExtraJump = true;
-    }
-    
-    void PlayerScript::bufferedJump()
-    {
-        // 버퍼에 등록되면
-        if (mJumpCount->BufferedJump)
-        {
-            // 시간을 재다가
-            mJumpCount->JumpAccumulateTime += (float)Time::DeltaTime();
-
-            // 조건에 맞으면 점프
-            if (mJumpCount->JumpLimitTime <= mJumpCount->JumpAccumulateTime)
-            {
-                mJumpCount->JumpAccumulateTime = 0.0f;
-                mJumpCount->JumpForceRatio = 1.0f;
-                jumpProcess();
-            }
-        }
-    }
-
-    // 여기서 점프가 실행됨
-    void PlayerScript::jumpProcess()
-    {
-
-        ActiveEffect(callEffect(), L"Jumping");
-
-        // 최소 높이 설정
-        float minForce = 0.650f;
-        if (minForce >= mJumpCount->JumpForceRatio)
-            mJumpCount->JumpForceRatio = minForce;
-        
-        mFootCollider->ApplyGround(false);
-        
-        if (mJumpCount->ExtraJump)
-            mRigidbody->ApplyVelocity(Vector2::UnitY, mPlayerStat->JumpForce * mJumpCount->JumpForceRatio);
-        else
-            mRigidbody->OverrideVelocity(Vector2::UnitY, mPlayerStat->JumpForce * mJumpCount->JumpForceRatio);
-        GameDataManager::ClearJumpBuffer();
-    }
-
     void PlayerScript::walkDust()
     {
         if (ePlayerState::Move != mActiveState)
@@ -408,13 +295,12 @@ namespace da
         mDustAccumulateTime += (float)Time::DeltaTime();
         if (0.20f <= mDustAccumulateTime)
         {
-            ActiveEffect(callEffect(), L"Walking");
+            activeEffect(callEffect(), L"Walking");
             mDustAccumulateTime = 0.0f;
         }
     }
-
 #pragma endregion
-#pragma region Init Func
+#pragma region Initialize Player
     void PlayerScript::InitAnimation()
     {
         mAnimator = GetOwner()->AddComponent<Animator>();
@@ -460,17 +346,106 @@ namespace da
             mLeftCollider->SetColliderDetection(Collider2D::eColliderDetection::Land);
         }
     }
-    WeaponScript* PlayerScript::SetWeaponObject(GameObject* object)
-    {
-        mWeaponScript = object->AddComponent<WeaponScript>();
-        return mWeaponScript;
-    }
-    EffectPlayerScript* PlayerScript::AddEffectObject(GameObject* object)
-    {
-        EffectPlayerScript* effect = object->AddComponent<EffectPlayerScript>();
-        mEffects.push_back(effect);
-        return effect;
-    }
+#pragma endregion
+#pragma region Jump & Dash Logic
+        void PlayerScript::jumpRegen()
+        {
+            if (!mJumpCount->ExtraJump)
+                if (mFootCollider->IsGround())
+                    mJumpCount->ExtraJump = true;
+        }
+        void PlayerScript::dashRegen()
+        {
+            if (mDashCount->MaxDashCount == mDashCount->CurDashCount)
+                return;
+
+            mDashCount->DashAccumulateTime += (float)Time::DeltaTime();
+            if (mDashCount->DashRegenTime <= mDashCount->DashAccumulateTime)
+                GameDataManager::RecoveryDash();
+        }
+        void PlayerScript::inputDash()
+        {
+            if (Input::GetKeyDown(eKeyCode::RBTN))
+            {
+                // condition
+                if (GameDataManager::UseDash())
+                {
+                    if (ePlayerState::Jump != mActiveState)
+                        ChangeState(ePlayerState::Jump);
+                    mFootCollider->ApplyGround(false);
+                    mRigidbody->OverrideVelocity(mPlayerDir, mPlayerStat->DashForce);
+                }
+            }
+        }
+        void PlayerScript::inputJump()
+        {
+            if (mFootCollider->IsGround())
+            {
+                // 버퍼에 추가
+                if (Input::GetKeyDown(eKeyCode::SPACE))
+                {
+                    mJumpCount->BufferedJump = true;
+                }
+                if (Input::GetKeyUp(eKeyCode::SPACE))
+                {
+                    // 버퍼 중단
+                    mJumpCount->BufferedJump = false;
+                    // 바로 점프
+                    todoJump();
+                }
+            }
+            else
+            {
+                // 점프 개수가 유효한지 확인
+                if (mJumpCount->ExtraJump)
+                {
+                    if (Input::GetKeyDown(eKeyCode::SPACE))
+                    {
+                        mJumpCount->ExtraJump = false;
+                        mJumpCount->JumpForceRatio = 0.80f;
+                        // 점프하기
+                        todoJump();
+                    }
+                }
+            }
+
+        }
+        void PlayerScript::bufferedJump()
+        {
+            // 버퍼에 등록되면
+            if (mJumpCount->BufferedJump)
+            {
+                // 시간을 재다가
+                mJumpCount->JumpAccumulateTime += (float)Time::DeltaTime();
+
+                // 조건에 맞으면 점프
+                if (mJumpCount->JumpLimitTime <= mJumpCount->JumpAccumulateTime)
+                {
+                    mJumpCount->JumpAccumulateTime = 0.0f;
+                    mJumpCount->JumpForceRatio = 1.0f;
+                    todoJump();
+                }
+            }
+        }
+        void PlayerScript::todoJump()
+        {
+            if (ePlayerState::Jump != mActiveState)
+                ChangeState(ePlayerState::Jump);
+            activeEffect(callEffect(), L"Jumping");
+
+            // 최소 높이 설정
+            float minForce = 0.650f;
+            if (minForce >= mJumpCount->JumpForceRatio)
+                mJumpCount->JumpForceRatio = minForce;
+
+            mFootCollider->ApplyGround(false);
+
+            if (mJumpCount->ExtraJump)
+                mRigidbody->ApplyVelocity(Vector2::UnitY, mPlayerStat->JumpForce * mJumpCount->JumpForceRatio);
+            else
+                mRigidbody->OverrideVelocity(Vector2::UnitY, mPlayerStat->JumpForce * mJumpCount->JumpForceRatio);
+            GameDataManager::ClearJumpBuffer();
+        }
 #pragma endregion
 #pragma region Collision Func
     void PlayerScript::OnLandEnter(Collider2D* other)
@@ -512,6 +487,19 @@ namespace da
         //    newPosition.y += pushDistance;
         //    mTransform->SetPosition(newPosition);            
         //}
+    }
+#pragma endregion
+#pragma region public Func
+    EffectPlayerScript* PlayerScript::AddEffectObject(GameObject* object)
+    {
+        EffectPlayerScript* effect = object->AddComponent<EffectPlayerScript>();
+        mEffects.push_back(effect);
+        return effect;
+    }
+    WeaponScript* PlayerScript::SetWeaponObject(GameObject* object)
+    {
+        mWeaponScript = object->AddComponent<WeaponScript>();
+        return mWeaponScript;
     }
 #pragma endregion
 }
