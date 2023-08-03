@@ -3,7 +3,7 @@
 #include "daAnimator.h"
 #include "daMeshRenderer.h"
 #include "daEffectWeaponScript.h"
-
+#include "daProjectileScript.h"
 namespace da
 {
 	class WeaponScript : public Script
@@ -82,6 +82,7 @@ namespace da
 		MeshRenderer*	mWeaponRenderer;
 		Collider2D*		mWeaponCollider;
 		std::vector<EffectWeaponScript*> mEffects;
+		std::vector<ProjectileScript*> mProjectiles;
 	private:
 		enums::eWeaponType	mWeaponType;
 

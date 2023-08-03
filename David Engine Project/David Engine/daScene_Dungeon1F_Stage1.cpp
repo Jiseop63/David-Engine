@@ -44,9 +44,18 @@ namespace da
 	}
 	void Scene_Dungeon1F_Stage1::OnEnter()
 	{
+		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.50f, 0.50f, 0.50f, 1.0f));
+		PlayerScript* player = SceneManager::GetPlayerScript();
+		player->SetPlayerPosition(math::Vector3::Zero);
+		player->IsPlayerInDungeon(true);
+		// 충돌 세팅
+		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Creature);
+		CollisionManager::SetLayer(enums::eLayerType::Land, enums::eLayerType::Playable);
+		CollisionManager::SetLayer(enums::eLayerType::Land, enums::eLayerType::Creature);
 	}
 	void Scene_Dungeon1F_Stage1::OnExit()
 	{
+		SceneManager::GetPlayerScript()->PlayerIsNotGround();
 	}
 	void Scene_Dungeon1F_Stage1::addBackgroundObjects()
 	{

@@ -11,6 +11,7 @@
 
 #define PLAYER_EFFECT_POOL 20
 #define WEAPON_EFFECT_POOL 5
+#define PLAYER_PROJECTILE_POOL 30
 
 namespace da::objects
 {
@@ -103,7 +104,7 @@ namespace da::objects
 
 	static GameObject* InstantiatePlayer(Scene* scene)
 	{
-		// 플레이어 생성
+		// 플레이어 세팅
 		GameObject* player = new GameObject();
 		player->SetLayerType(enums::eLayerType::Playable);
 		player->SetCommonObject(true);
@@ -113,8 +114,12 @@ namespace da::objects
 		MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>();
 		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 		meshRenderer->SetMaterial(Resources::Find<Material>(L"AnimationMaterial"));
+		Light* playerLight = player->AddComponent<Light>();
+		playerLight->SetRadius(2.5f);
+		playerLight->SetLightType(enums::eLightType::Point);
+		playerLight->SetColor(math::Vector4(0.40f, 0.40f, 0.40f, 1.0f));
 		PlayerScript* playerScript = player->AddComponent<PlayerScript>();
-
+		// 플레이어 이펙트 세팅
 		for (int index = 0; index < PLAYER_EFFECT_POOL; index++)
 		{
 			GameObject* gameObject = new GameObject();
@@ -132,7 +137,7 @@ namespace da::objects
 			player->AddChildObject(gameObject);
 		}
 
-		// weapon 추가
+		// weapon 세팅
 		GameObject* weaponObject = new GameObject();
 		player->AddChildObject(weaponObject);
 		weaponObject->SetLayerType(enums::eLayerType::Playable);
@@ -142,6 +147,8 @@ namespace da::objects
 		weaponMR->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 		weaponMR->SetMaterial(Resources::Find<Material>(L"WeaponMaterial"));
 		WeaponScript* weaponScript = playerScript->SetWeaponObject(weaponObject);
+
+		// weapon 이펙트 세팅
 		for (int index = 0; index < WEAPON_EFFECT_POOL; index++)
 		{
 			GameObject* gameObject = new GameObject();
@@ -158,7 +165,22 @@ namespace da::objects
 			weaponScript->AddEffectObject(gameObject);
 			player->AddChildObject(gameObject);
 		}
+		/*for (int index = 0; index < PLAYER_PROJECTILE_POOL; index++)
+		{
+			GameObject* gameObject = new GameObject();
+			gameObject->SetLayerType(enums::eLayerType::PlayableAttackCollider);
+			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
+			gameObject->SetCommonObject(true);
+			Layer& myLayer = scene->GetLayer(enums::eLayerType::PlayableAttackCollider);
+			myLayer.AddGameObject(gameObject);
 
+			MeshRenderer* meshRenderer = gameObject->AddComponent<MeshRenderer>();
+			meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			meshRenderer->SetMaterial(Resources::Find<Material>(L"ProjectileMaterial"));
+
+			weaponScript->AddEffectObject(gameObject);
+			player->AddChildObject(gameObject);
+		}*/
 		return player;
 	}
 	template <typename T>

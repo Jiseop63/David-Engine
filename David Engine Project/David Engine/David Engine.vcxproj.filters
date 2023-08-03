@@ -168,6 +168,9 @@
     <ClInclude Include="daEffectWeaponScript.h">
       <Filter>Objects\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="daProjectileScript.h">
+      <Filter>Objects\Projectile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -265,6 +268,9 @@
     </ClCompile>
     <ClCompile Include="daEffectWeaponScript.cpp">
       <Filter>Objects\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="daProjectileScript.cpp">
+      <Filter>Objects\Projectile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

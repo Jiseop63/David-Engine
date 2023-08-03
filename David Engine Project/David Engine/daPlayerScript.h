@@ -3,6 +3,8 @@
 #include "daRigidbody.h"
 #include "daAnimator.h"
 #include "daMeshRenderer.h"
+#include "daLight.h"
+
 #include "daWeaponScript.h"
 #include "daEffectPlayerScript.h"
 
@@ -59,12 +61,21 @@ namespace da
 #pragma endregion
 #pragma region public Func
 	public:
-		EffectPlayerScript* AddEffectObject(GameObject* object);
-		math::Vector2 GetPlayerDir() { return mPlayerDir; }
 		WeaponScript* SetWeaponObject(GameObject* object);
 		WeaponScript* GetWeaponScript() { return mWeaponScript; }
+		EffectPlayerScript* AddEffectObject(GameObject* object);
+		bool IsPlayerGround() { return mFootCollider->IsGround(); }
+		void PlayerIsNotGround() { mFootCollider->ApplyGround(false); }
+		math::Vector2 GetPlayerDir() { return mPlayerDir; }
 		void SetPlayerPosition(math::Vector3 vector3) { mTransform->SetPosition(vector3); }
-#pragma endregion		
+		void IsPlayerInDungeon(bool value) 
+		{ 
+			if (value)
+				mLight->SetColor(math::Vector4(0.550f, 0.550f, 0.550f, 1.0f));
+			else
+				mLight->SetColor(math::Vector4::Zero);
+		}
+#pragma endregion
 #pragma region Attack Logic
 	private:
 		// 행동 함수
@@ -106,6 +117,7 @@ namespace da
 		Rigidbody*		mRigidbody;
 		Animator*		mAnimator;
 		MeshRenderer*	mRenderer;
+		Light*			mLight;
 		
 		Collider2D*		mBodyCollider;
 		Collider2D*		mFootCollider;

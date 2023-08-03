@@ -48,6 +48,7 @@ namespace da
 	void Scene_Title::OnEnter()
 	{
 		// 각종 객체들 Inactive 해주기
+		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.9f, 0.9f, 0.9f, 1.0f));
 		SceneManager::GetPlayerScript()->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
 		SceneManager::GetHUDObject()->SetObjectStates(GameObject::eObjectState::Inactive);
 	}
@@ -276,11 +277,11 @@ namespace da
 		// mouse - done
 		GameObject* cursorObject = objects::InstantiateCommonObject
 			<GameObject>(this, enums::eLayerType::UI, L"CursorMaterial");
+		cursorObject->AddComponent<CursorScript>();
 		SceneManager::SetCursourScript(cursorObject);
 		{
 			cursorObject->GetTransform()->SetScale(math::Vector3(0.190f * 4.0f, 0.190f * 4.0f, 1.0f));
 			cursorObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, CursorZ));
-			cursorObject->AddComponent<CursorScript>();
 		}
 
 

@@ -15,9 +15,8 @@ namespace da
 		virtual void retInactive() override { GetOwner()->SetObjectState(GameObject::eObjectState::Inactive); }
 
 	public:
-		virtual void SetEffectPosition(math::Vector3 vector3) override { mEffectTransform->SetPosition(vector3 + (mEffectTransform->Up() * 0.20f)); }
+		virtual void SetEffectPosition(math::Vector3 vector3) override { mEffectTransform->SetPosition(vector3 + (mEffectTransform->Up() * 0.60f)); }
 		virtual void SetEffectRotation(math::Vector3 vector3) override { mEffectTransform->SetRotation(vector3 + math::Vector3(0.0f, 0.0f, -1.570f)); }
-
 
 	};
 }

@@ -50,6 +50,7 @@ namespace da
         mTransform = GetOwner()->GetComponent<Transform>();
         mRigidbody = GetOwner()->AddComponent<Rigidbody>();
         mRenderer = GetOwner()->GetComponent<MeshRenderer>();
+        mLight = GetOwner()->GetComponent<Light>();
         InitAnimation();
         InitCollider();
         mPlayerStat = &GameDataManager::GetPlayerStat();
@@ -257,7 +258,11 @@ namespace da
     void PlayerScript::InputAttack()
     {
         if (Input::GetKey(eKeyCode::LBTN))
+        {
+            if (GameObject::eObjectState::Active != mWeaponScript->GetOwner()->GetObjectState())
+                mWeaponScript->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
             mWeaponScript->DoAttack();
+        }
     }
 #pragma endregion
 #pragma region Move Logic

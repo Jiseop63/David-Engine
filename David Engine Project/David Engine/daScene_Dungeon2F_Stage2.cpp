@@ -43,9 +43,13 @@ namespace da
 	}
 	void Scene_Dungeon2F_Stage2::OnEnter()
 	{
+		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.4f, 0.4f, 0.4f, 1.0f));
+		PlayerScript* player = SceneManager::GetPlayerScript();
+		player->SetPlayerPosition(math::Vector3::Zero);
 	}
 	void Scene_Dungeon2F_Stage2::OnExit()
 	{
+		SceneManager::GetPlayerScript()->PlayerIsNotGround();
 	}
 	void Scene_Dungeon2F_Stage2::addBackgroundObjects()
 	{

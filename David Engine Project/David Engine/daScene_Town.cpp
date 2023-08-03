@@ -47,10 +47,15 @@ namespace da
 	
 	void Scene_Town::OnEnter()
 	{
+		// static 按眉 技泼
 		PlayerScript* player = SceneManager::GetPlayerScript();
+		player->SetPlayerPosition(math::Vector3::Zero);
 		player->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-		player->GetWeaponScript()->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+		player->IsPlayerInDungeon(false);
 		SceneManager::GetHUDObject()->SetObjectStates(GameObject::eObjectState::Active);
+		SceneManager::GetCursourScrip()->IsIngame(true);
+
+
 		// 面倒 技泼
 		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Creature);
 		CollisionManager::SetLayer(enums::eLayerType::Land, enums::eLayerType::Playable);
@@ -58,7 +63,7 @@ namespace da
 	}
 	void Scene_Town::OnExit()
 	{
-		CollisionManager::Clear();
+		SceneManager::GetPlayerScript()->PlayerIsNotGround();
 	}
 
 	void Scene_Town::addBackgroundObject()

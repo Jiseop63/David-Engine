@@ -241,6 +241,12 @@ namespace renderer
 			weaponMaterial->SetShader(spriteShader);
 			Resources::Insert<Material>(L"WeaponMaterial", weaponMaterial);
 		}
+		// projectile material
+		{
+			std::shared_ptr<Material> projectileMaterial = std::make_shared<Material>();
+			projectileMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"ProjectileMaterial", projectileMaterial);
+		}
 #pragma endregion
 #pragma region Debug Material
 		// rect
