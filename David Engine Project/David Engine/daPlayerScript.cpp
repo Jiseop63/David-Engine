@@ -90,7 +90,10 @@ namespace da
         {
             GetHeal();
             if (0 < mPlayerStat->CurHP)
+            {
+                mDead = false;
                 ChangeState(ePlayerState::Idle);
+            }
         }
         if (Input::GetKeyDown(eKeyCode::T))
         {
@@ -220,12 +223,6 @@ namespace da
     void PlayerScript::HandleDead()
     {
         mDead = true;
-
-        if (0 < mPlayerStat->CurHP)
-        {
-            mDead = false;
-            ChangeState(ePlayerState::Idle);
-        }
     }
     
 #pragma endregion
@@ -322,7 +319,7 @@ namespace da
     {
         if (!effect)
             return;
-        effect->SetEffectPosition(mTransform->GetPosition() + Vector3(0.0f, -0.450f, 0.0f));
+        effect->SetEffectPosition(mTransform->GetPosition() + Vector3(0.0f, -0.20f, 0.0f));
         effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
         effect->PlayEffect(name);
     }
@@ -386,9 +383,6 @@ namespace da
     // 여기서 점프가 실행됨
     void PlayerScript::jumpProcess()
     {
-        // 이펙트 실행
-        //mEffectScript->SetEffectPosition(mTransform->GetPosition() + Vector3(0.0f, -0.450f, 0.0f));
-        //mEffectScript->PlayEffect(L"Jumping");
 
         ActiveEffect(callEffect(), L"Jumping");
 
@@ -398,8 +392,11 @@ namespace da
             mJumpCount->JumpForceRatio = minForce;
         
         mFootCollider->ApplyGround(false);
-        mRigidbody->ApplyVelocity(Vector2::UnitY, mPlayerStat->JumpForce * mJumpCount->JumpForceRatio);
-
+        
+        if (mJumpCount->ExtraJump)
+            mRigidbody->ApplyVelocity(Vector2::UnitY, mPlayerStat->JumpForce * mJumpCount->JumpForceRatio);
+        else
+            mRigidbody->OverrideVelocity(Vector2::UnitY, mPlayerStat->JumpForce * mJumpCount->JumpForceRatio);
         GameDataManager::ClearJumpBuffer();
     }
 
@@ -409,7 +406,7 @@ namespace da
             return;
 
         mDustAccumulateTime += (float)Time::DeltaTime();
-        if (0.30f <= mDustAccumulateTime)
+        if (0.20f <= mDustAccumulateTime)
         {
             ActiveEffect(callEffect(), L"Walking");
             mDustAccumulateTime = 0.0f;

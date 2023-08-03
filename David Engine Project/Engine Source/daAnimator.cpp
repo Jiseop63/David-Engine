@@ -27,17 +27,18 @@ namespace da
 	}
 	void Animator::LateUpdate()
 	{
-		if (nullptr == mActiveAnimation)
+		if (!mActiveAnimation)
 			return;
+		// 애니메이션에 있는 이벤트 가져오기
+		Events* events = FindEvents(mActiveAnimation->GetKey());
 
-		if (mActiveAnimation->IsComplete()
-			&& true == mLoop)
+		// 애니메이션 재생이 완료됨
+		if (mActiveAnimation->IsComplete())
 		{
-			Events* events = FindEvents(mActiveAnimation->GetKey());
 			if (events)
 				events->CompleteEvent();
-
-			mActiveAnimation->Reset();
+			if (mLoop)
+				mActiveAnimation->Reset();
 		}
 
 		mActiveAnimation->LateUpdate();
