@@ -10,6 +10,8 @@ namespace da
 		virtual ~EffectWeaponScript();
 
 		virtual void Initialize() override;
-		void retInactive();
+
+		virtual void PlayEffect(const std::wstring name) override;
+		virtual void retInactive() override { GetOwner()->SetObjectState(GameObject::eObjectState::Inactive); }
 	};
 }

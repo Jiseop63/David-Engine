@@ -74,14 +74,14 @@ namespace da
 	public:
 		void AddEffectObject(GameObject* object);
 	private:
-		EffectScript* callEffect();
-		void ActiveEffect(EffectScript* effect, const std::wstring name);
+		EffectWeaponScript* callEffect();
+		void ActiveEffect(EffectWeaponScript* effect, const std::wstring name);
 	protected:
 		Transform*		mWeaponTransform;
 		Animator*		mWeaponAnimator;
 		MeshRenderer*	mWeaponRenderer;
 		Collider2D*		mWeaponCollider;
-		std::vector<EffectScript*> mEffects;
+		std::vector<EffectWeaponScript*> mEffects;
 	private:
 		enums::eWeaponType	mWeaponType;
 

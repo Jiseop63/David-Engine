@@ -18,8 +18,8 @@ namespace da
 		// 종료 이벤트 넣어주기
 		mEffectAnimator->CompleteEvent(L"GreatSwing") = std::bind(&EffectWeaponScript::retInactive, this);
 	}
-	void EffectWeaponScript::retInactive()
+	void EffectWeaponScript::PlayEffect(const std::wstring name)
 	{
-		GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
+		mEffectAnimator->PlayAnimation(name, false);
 	}
 }

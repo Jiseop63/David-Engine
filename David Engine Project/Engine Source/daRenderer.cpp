@@ -456,6 +456,7 @@ namespace renderer
 #pragma region Effect Texture Atlas
 		Resources::Load<Texture>(L"GreatSwingFX", L"..\\Resources\\Texture\\Items\\GreatSword\\GreatSwingFX.png");
 		Resources::Load<Texture>(L"JumpFX", L"..\\Resources\\Texture\\Adventurer\\FX\\JumpFX.png");
+		Resources::Load<Texture>(L"DustFX", L"..\\Resources\\Texture\\Adventurer\\FX\\DustFX.png");
 
 #pragma endregion
 

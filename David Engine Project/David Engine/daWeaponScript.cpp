@@ -115,7 +115,7 @@ namespace da
 	{
 		mEffects.push_back(object->AddComponent<EffectWeaponScript>());
 	}
-	EffectScript* WeaponScript::callEffect()
+	EffectWeaponScript* WeaponScript::callEffect()
 	{
 		for (size_t effect = 0; effect < mEffects.size(); effect++)
 		{
@@ -125,7 +125,7 @@ namespace da
 		}
 		return nullptr;
 	}
-	void WeaponScript::ActiveEffect(EffectScript* effect, const std::wstring name)
+	void WeaponScript::ActiveEffect(EffectWeaponScript* effect, const std::wstring name)
 	{
 		if (!effect)
 			return;

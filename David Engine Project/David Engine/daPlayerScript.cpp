@@ -31,6 +31,7 @@ namespace da
         , mActiveState(ePlayerState::Idle)
         , mMoveCondition(0)
         , mDead(false)
+        , mDustAccumulateTime(0.0f)
         
         , mPlayerStat(nullptr)
         , mJumpCount(nullptr)
@@ -307,7 +308,7 @@ namespace da
         if (Input::GetKey(eKeyCode::LBTN))
             mWeaponScript->DoAttack();
     }
-    EffectScript* PlayerScript::callEffect()
+    EffectPlayerScript* PlayerScript::callEffect()
     {
         for (size_t effect = 0; effect < mEffects.size(); effect++)
         {
@@ -317,7 +318,7 @@ namespace da
         }
         return nullptr;
     }
-    void PlayerScript::ActiveEffect(EffectScript* effect, const std::wstring name)
+    void PlayerScript::ActiveEffect(EffectPlayerScript* effect, const std::wstring name)
     {
         if (!effect)
             return;
@@ -345,6 +346,7 @@ namespace da
         dashRegen();
         jumpRegen();
         bufferedJump();
+        walkDust();
     }
     void PlayerScript::dashRegen()
     {
@@ -358,8 +360,9 @@ namespace da
 
     void PlayerScript::jumpRegen()
     {
-        if (mFootCollider->IsGround())
-            mJumpCount->ExtraJump = true;
+        if (!mJumpCount->ExtraJump)
+            if (mFootCollider->IsGround())
+                mJumpCount->ExtraJump = true;
     }
     
     void PlayerScript::bufferedJump()
@@ -398,6 +401,19 @@ namespace da
         mRigidbody->ApplyVelocity(Vector2::UnitY, mPlayerStat->JumpForce * mJumpCount->JumpForceRatio);
 
         GameDataManager::ClearJumpBuffer();
+    }
+
+    void PlayerScript::walkDust()
+    {
+        if (ePlayerState::Move != mActiveState)
+            return;
+
+        mDustAccumulateTime += (float)Time::DeltaTime();
+        if (0.30f <= mDustAccumulateTime)
+        {
+            ActiveEffect(callEffect(), L"Walking");
+            mDustAccumulateTime = 0.0f;
+        }
     }
 
 #pragma endregion
@@ -452,7 +468,7 @@ namespace da
         mWeaponScript = object->AddComponent<WeaponScript>();
         return mWeaponScript;
     }
-    EffectScript* PlayerScript::AddEffectObject(GameObject* object)
+    EffectPlayerScript* PlayerScript::AddEffectObject(GameObject* object)
     {
         EffectPlayerScript* effect = object->AddComponent<EffectPlayerScript>();
         mEffects.push_back(effect);

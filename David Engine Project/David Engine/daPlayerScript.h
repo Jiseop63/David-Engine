@@ -61,10 +61,10 @@ namespace da
 		
 		// 이펙트 함수
 	public:
-		EffectScript* AddEffectObject(GameObject* object);
+		EffectPlayerScript* AddEffectObject(GameObject* object);
 	private:
-		EffectScript* callEffect();
-		void ActiveEffect(EffectScript* effect, const std::wstring name);
+		EffectPlayerScript* callEffect();
+		void ActiveEffect(EffectPlayerScript* effect, const std::wstring name);
 
 		// 임시
 	public:
@@ -84,7 +84,7 @@ namespace da
 		void jumpRegen();
 		void bufferedJump();
 		void jumpProcess();
-
+		void walkDust();
 
 		// 초기화
 	public:
@@ -118,7 +118,7 @@ namespace da
 
 		// other script
 	private:
-		std::vector<EffectScript*> mEffects;
+		std::vector<EffectPlayerScript*> mEffects;
 		// data val
 	private:
 		structs::sPlayerStat*	mPlayerStat;
@@ -129,6 +129,11 @@ namespace da
 		// common val
 	private:
 		math::Vector2 mPlayerDir;
+
+
+		// effect val
+	private:
+		float			mDustAccumulateTime;
 
 		// condition val
 	private:
