@@ -18,10 +18,14 @@ namespace da
 
 	public:
 		void attackConditionCheck();
-
+		void calcWeaponAngle();
 	public:
 		void playWeaponImage();
 		void setTextures(std::shared_ptr<Texture> first, std::shared_ptr<Texture> second) { mFirstTexture = first; mSecondTexture = second; }
+
+		// 로직 함수
+	private:
+		void activeAttack();
 
 
 		// 외부 기능 함수
@@ -41,40 +45,7 @@ namespace da
 		{
 			mPlayerDir.x = dir.x;
 			mPlayerDir.y = dir.y;
-		}
-		void calcWeaponAngle()
-		{
-			// 좌, 우 방향에 따른 angle 계산
-			bool value = false;
-			if (0 >= mPlayerDir.x)
-				value = true;
-			float angle = atan2(mPlayerDir.y, mPlayerDir.x);
-			mEffectAngle = angle;
-
-			if (mWeaponAttacked)
-			{
-				if (value)
-					angle += 0.7850f;
-				else
-					angle -= 0.7850f;
-			}
-			mWeaponTransform->SetRotation(math::Vector3(0.0f, 0.0f, angle));
-		}
-		void initWeaponRotate()
-		{
-			float angle = atan2(mPlayerDir.y, mPlayerDir.x);
-			mEffectAngle = angle;
-
-			if (mWeaponAttacked)
-			{
-				if (value)
-					angle += 0.7850f;
-				else
-					angle -= 0.7850f;
-			}
-			mWeaponTransform->SetRotation(math::Vector3(0.0f, 0.0f, angle));
-		}
-
+		}		
 		void SetWeaponPosition(math::Vector3 vector3) { mWeaponTransform->SetPosition(vector3); }
 		void SetWeaponRotation(math::Vector3 vector3) { mWeaponTransform->SetRotation(vector3); }
 		bool IsAttacked() { return mWeaponAttacked; }

@@ -14,6 +14,5 @@ namespace da
 		void PlayEffect(enums::eWeaponType weaponType);
 		void MeleeEffect(const std::wstring name);
 		void retInactive() { GetOwner()->SetObjectState(GameObject::eObjectState::Inactive); }
-
 	};
 }

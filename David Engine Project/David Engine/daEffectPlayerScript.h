@@ -11,7 +11,7 @@ namespace da
 
 		virtual void Initialize() override;
 
-		virtual void PlayEffect(const std::wstring name) override;
-		virtual void retInactive() override { GetOwner()->SetObjectState(GameObject::eObjectState::Inactive); }
+		void PlayEffect(const std::wstring name);
+		void retInactive() { GetOwner()->SetObjectState(GameObject::eObjectState::Inactive); }
 	};
 }

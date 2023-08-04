@@ -13,8 +13,12 @@ namespace da
 		virtual void Initialize();
 
 	public:
-		virtual void SetEffectPosition(math::Vector3 vector3) { mEffectTransform->SetPosition(vector3); }
-		virtual void SetEffectRotation(math::Vector3 vector3) { mEffectTransform->SetRotation(vector3); }
+		Transform* GetTransform() { return mEffectTransform; }
+		
+		void SetEffectPosition(math::Vector3 vector3) { mEffectTransform->SetPosition(vector3); }
+		math::Vector3 GetEffectPosition() { return mEffectTransform->GetPosition(); }
+		void SetEffectRotation(math::Vector3 vector3) { mEffectTransform->SetRotation(vector3); }
+		math::Vector3 GetEffectRotation() { return mEffectTransform->GetRotation(); }
 
 	protected:
 		Transform*	mEffectTransform;

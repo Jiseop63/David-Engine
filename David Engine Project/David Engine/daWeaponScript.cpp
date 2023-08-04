@@ -43,11 +43,12 @@ namespace da
 		mWeaponAnimator = GetOwner()->AddComponent<Animator>();
 
 		mInventoryData = &GameDataManager::GetInventory();
-
+		WeaponInit(true);
 	}
 	void WeaponScript::Update()
 	{
 		attackConditionCheck();
+		calcWeaponAngle();
 	}
 	
 	void WeaponScript::playWeaponImage()
@@ -83,15 +84,33 @@ namespace da
 			}
 		}
 	}
+	void WeaponScript::calcWeaponAngle()
+	{
+		// 원본 회전값 저장
+		float angle = atan2(mPlayerDir.y, mPlayerDir.x);
+		mEffectAngle = angle;
+
+		// 조금 변경된 각도로 무기 회전값 적용
+		bool value = false;
+		if (0 >= mPlayerDir.x)
+			value = true;
+		if (!mWeaponAttacked)
+		{
+			if (value)
+				angle += 0.7850f;
+			else
+				angle -= 0.7850f;
+		}
+		mWeaponTransform->SetRotation(math::Vector3(0.0f, 0.0f, angle));
+	}
 #pragma region 외부 호출
 	void WeaponScript::DoAttack()
 	{
 		if (mAttackReady)
 		{
-			// 이펙트 적용하기
-			callEffect()->PlayEffect(mWeaponType);
-			// 투사체 적용하기
-			//callProjectile()->PlayProjectile();
+			// 공격 활성화 (Tr 세팅, 이펙트, 충돌 객체 세팅)
+			activeAttack();
+			
 			// 무기 텍스쳐 & 애니메이션 적용하기			
 			playWeaponImage();
 			
@@ -126,6 +145,25 @@ namespace da
 			}
 		}
 	}
+	void WeaponScript::activeAttack()
+	{
+		// 이펙트 적용하기
+		EffectWeaponScript* effect = callEffect();
+		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, mEffectAngle - 1.570f));
+		
+		math::Vector3 playerDir(mPlayerDir.x, mPlayerDir.y, 0.0f);
+		effect->SetEffectPosition(mWeaponTransform->GetPosition() + (playerDir * 0.60f));
+		effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+		effect->PlayEffect(mWeaponType);
+
+		// 투사체 적용하기
+		//ProjectileScript* projectile = callProjectile();
+		
+		
+		//projectile->PlayProjectile();
+
+	}
+
 	void WeaponScript::AddEffectObject(GameObject* object)
 	{
 		mEffects.push_back(object->AddComponent<EffectWeaponScript>());

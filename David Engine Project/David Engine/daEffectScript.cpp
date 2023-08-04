@@ -15,9 +15,4 @@ namespace da
 		mEffectTransform = GetOwner()->GetTransform();
 		mEffectAnimator = GetOwner()->AddComponent<Animator>();
 	}
-	
-	void EffectScript::PlayEffect(const std::wstring name)
-	{
-		mEffectAnimator->PlayAnimation(name, false);
-	}
 }

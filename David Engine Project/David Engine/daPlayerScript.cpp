@@ -251,7 +251,7 @@ namespace da
         mDead = true;
     }
 #pragma endregion
-#pragma region Attack Logic
+#pragma region Weapon Logic
     void PlayerScript::InputAttack()
     {
         if (Input::GetKey(eKeyCode::LBTN))
@@ -265,7 +265,7 @@ namespace da
     void PlayerScript::ChangeWeapon()
     {
         // 일단 임시로 무기 세팅
-        mWeaponScript->ChangeWeapon(enums::eWeaponType::LongSword);
+        //mWeaponScript->ChangeWeapon(enums::eWeaponType::LongSword);
     }
 #pragma endregion
 #pragma region Move Logic
