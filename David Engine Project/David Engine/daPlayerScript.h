@@ -76,10 +76,11 @@ namespace da
 				mLight->SetColor(math::Vector4::Zero);
 		}
 #pragma endregion
-#pragma region Attack Logic
+#pragma region Weapon Logic
 	private:
 		// 행동 함수
 		void InputAttack();
+		void ChangeWeapon();
 #pragma endregion
 #pragma region Move Logic
 		void InputMove();
@@ -134,7 +135,6 @@ namespace da
 		structs::sPlayerStat*	mPlayerStat;
 		structs::sJumpCount*	mJumpCount;
 		structs::sDashCount* 	mDashCount;
-		structs::sInventory*	mInventoryData;
 #pragma endregion
 #pragma region Condition value
 	private:

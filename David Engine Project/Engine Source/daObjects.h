@@ -165,7 +165,7 @@ namespace da::objects
 			weaponScript->AddEffectObject(gameObject);
 			player->AddChildObject(gameObject);
 		}
-		/*for (int index = 0; index < PLAYER_PROJECTILE_POOL; index++)
+		for (int index = 0; index < PLAYER_PROJECTILE_POOL; index++)
 		{
 			GameObject* gameObject = new GameObject();
 			gameObject->SetLayerType(enums::eLayerType::PlayableAttackCollider);
@@ -180,7 +180,7 @@ namespace da::objects
 
 			weaponScript->AddEffectObject(gameObject);
 			player->AddChildObject(gameObject);
-		}*/
+		}
 		return player;
 	}
 	template <typename T>

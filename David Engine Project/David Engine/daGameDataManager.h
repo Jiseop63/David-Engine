@@ -29,7 +29,7 @@ namespace da
 	public:
 		static void CallInventory();
 		static void ChangeArmour();
-
+		static enums::eWeaponType GetWeaponType();
 #pragma endregion
 
 #pragma region Data

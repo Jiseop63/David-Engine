@@ -12,11 +12,9 @@ namespace da
 
 		virtual void Initialize();
 
-		virtual void PlayEffect(const std::wstring name);
+	public:
 		virtual void SetEffectPosition(math::Vector3 vector3) { mEffectTransform->SetPosition(vector3); }
 		virtual void SetEffectRotation(math::Vector3 vector3) { mEffectTransform->SetRotation(vector3); }
-
-		virtual void retInactive() { GetOwner()->SetObjectState(GameObject::eObjectState::Inactive); }
 
 	protected:
 		Transform*	mEffectTransform;

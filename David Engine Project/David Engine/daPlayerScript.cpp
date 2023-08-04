@@ -37,7 +37,6 @@ namespace da
         , mPlayerStat(nullptr)
         , mJumpCount(nullptr)
         , mDashCount(nullptr)
-        , mInventoryData(nullptr)
 	{
 	}
 	PlayerScript::~PlayerScript()
@@ -56,9 +55,7 @@ namespace da
         mPlayerStat = &GameDataManager::GetPlayerStat();
         mJumpCount = &GameDataManager::GetJumpCount();
         mDashCount = &GameDataManager::GetDashCount();
-        mInventoryData = &GameDataManager::GetInventory();
-
-        
+        ChangeWeapon();
 	}
     void PlayerScript::Update()
     {
@@ -259,10 +256,16 @@ namespace da
     {
         if (Input::GetKey(eKeyCode::LBTN))
         {
+            // 비활성이라면 활성화 시켜줌
             if (GameObject::eObjectState::Active != mWeaponScript->GetOwner()->GetObjectState())
                 mWeaponScript->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
             mWeaponScript->DoAttack();
         }
+    }
+    void PlayerScript::ChangeWeapon()
+    {
+        // 일단 임시로 무기 세팅
+        mWeaponScript->ChangeWeapon(enums::eWeaponType::LongSword);
     }
 #pragma endregion
 #pragma region Move Logic

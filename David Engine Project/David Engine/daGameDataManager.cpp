@@ -107,4 +107,9 @@ namespace da
 		// change UI
 		SceneManager::GetInventoryScript()->ChangeArmour();
 	}
+
+	enums::eWeaponType GameDataManager::GetWeaponType()
+	{
+		return mActiveArmour.Weapon;
+	}
 }
