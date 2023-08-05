@@ -36,7 +36,7 @@ namespace da
 		mDashCount.DashRegenTime = 1.750f;
 
 		mJumpCount.JumpAccumulateTime = 0.0f;
-		mJumpCount.JumpLimitTime = 0.10f;
+		mJumpCount.JumpLimitTime = 0.150f;
 		mJumpCount.JumpForceRatio = 0.0f;
 		mJumpCount.BufferedJump = false;
 		mJumpCount.ExtraJump = true;

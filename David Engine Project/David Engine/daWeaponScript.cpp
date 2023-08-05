@@ -3,7 +3,8 @@
 #include "daResources.h"
 #include "daTime.h"
 #include "daGameDataManager.h"
-
+#include "daEffectWeaponScript.h"
+#include "daProjectileScript.h"
 namespace da
 {
 	WeaponScript::WeaponScript()
@@ -18,7 +19,7 @@ namespace da
 		, mSecondTexture(nullptr)
 
 		, mWeaponType(enums::eWeaponType::LongSword)
-		, mPlayerDir(math::Vector3::Zero)
+		, mPlayerDir(math::Vector2::Zero)
 		, mAttackReady(true)
 		, mWeaponAttacked(false)
 		, mEffectAngle(0.0f)
@@ -43,33 +44,15 @@ namespace da
 		mWeaponAnimator = GetOwner()->AddComponent<Animator>();
 
 		mInventoryData = &GameDataManager::GetInventory();
-		WeaponInit(true);
+		weaponInit();
 	}
 	void WeaponScript::Update()
 	{
 		attackConditionCheck();
 		calcWeaponAngle();
 	}
-	
-	void WeaponScript::playWeaponImage()
-	{
-		// Change Weapon Texture
-		{
-			if (mWeaponAttacked)
-			{
-				mWeaponAttacked = false;
-				mWeaponRenderer->ChangeSlotTexture(mFirstTexture);
-			}
-			else
-			{
-				mWeaponAttacked = true;
-				mWeaponRenderer->ChangeSlotTexture(mSecondTexture);
-			}
-		}
-
-	}
-	
-	// 이건 안쓸예정
+		
+#pragma region common func
 	void WeaponScript::attackConditionCheck()
 	{		
 		if (!mAttackReady)
@@ -103,7 +86,23 @@ namespace da
 		}
 		mWeaponTransform->SetRotation(math::Vector3(0.0f, 0.0f, angle));
 	}
-#pragma region 외부 호출
+#pragma endregion
+
+#pragma region weapon func
+	void WeaponScript::ChangeWeapon(enums::eWeaponType weaponType)
+	{
+		mWeaponType = weaponType;
+		switch (weaponType)
+		{
+		case da::enums::eWeaponType::Default:
+			break;
+		case da::enums::eWeaponType::LongSword:
+			weaponInit();
+			break;
+		default:
+			break;
+		}
+	}
 	void WeaponScript::DoAttack()
 	{
 		if (mAttackReady)
@@ -117,21 +116,7 @@ namespace da
 			mAttackReady = false;
 		}		
 	}
-	void WeaponScript::ChangeWeapon(enums::eWeaponType weaponType)
-	{
-		mWeaponType = weaponType;
-		switch (weaponType)
-		{
-		case da::enums::eWeaponType::Default:
-			break;
-		case da::enums::eWeaponType::LongSword:
-			WeaponInit();
-			break;
-		default:
-			break;
-		}
-	}
-	void WeaponScript::WeaponInit(bool isMelee)
+	void WeaponScript::weaponInit(bool isMelee)
 	{
 		if (isMelee)
 		{
@@ -147,30 +132,47 @@ namespace da
 	}
 	void WeaponScript::activeAttack()
 	{
+		// 방향 구하기
+		math::Vector3 playerDir(mPlayerDir.x, mPlayerDir.y, 0.0f);
 		// 이펙트 적용하기
 		EffectWeaponScript* effect = callEffect();
-		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, mEffectAngle - 1.570f));
-		
-		math::Vector3 playerDir(mPlayerDir.x, mPlayerDir.y, 0.0f);
+		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, mEffectAngle - 1.570f));		
 		effect->SetEffectPosition(mWeaponTransform->GetPosition() + (playerDir * 0.60f));
 		effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 		effect->PlayEffect(mWeaponType);
 
 		// 투사체 적용하기
-		//ProjectileScript* projectile = callProjectile();
-		
-		
-		//projectile->PlayProjectile();
+		ProjectileScript* projectile = callProjectile();
+		projectile->SetProjectileRotation(math::Vector3(0.0f, 0.0f, mEffectAngle - 1.570f));
+		projectile->SetProjectilePosition(mWeaponTransform->GetPosition());
+		projectile->SetProjectileCollider(math::Vector2(2.50f, 1.50f), mPlayerDir * 0.60f);
+		projectile->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+	}
+	void WeaponScript::playWeaponImage()
+	{
+		// Change Weapon Texture
+		{
+			if (mWeaponAttacked)
+			{
+				mWeaponAttacked = false;
+				mWeaponRenderer->ChangeSlotTexture(mFirstTexture);
+			}
+			else
+			{
+				mWeaponAttacked = true;
+				mWeaponRenderer->ChangeSlotTexture(mSecondTexture);
+			}
+		}
 
 	}
+#pragma endregion
 
+#pragma region Effect Func
 	void WeaponScript::AddEffectObject(GameObject* object)
 	{
-		mEffects.push_back(object->AddComponent<EffectWeaponScript>());
-	}
-	void WeaponScript::AddProjectileObject(GameObject* object)
-	{
-		mProjectiles.push_back(object->AddComponent<ProjectileScript>());
+		EffectWeaponScript* weaponEffect = object->AddComponent<EffectWeaponScript>();
+		weaponEffect->SetReqWeapon(this);
+		mEffects.push_back(weaponEffect);
 	}
 	EffectWeaponScript* WeaponScript::callEffect()
 	{
@@ -182,6 +184,14 @@ namespace da
 		}
 		return nullptr;
 	}
+#pragma endregion
+#pragma region Projectile Func
+	void WeaponScript::AddProjectileObject(GameObject* object)
+	{
+		ProjectileScript* weaponProjectile = object->AddComponent<ProjectileScript>();
+		weaponProjectile->SetReqWeapon(this);
+		mProjectiles.push_back(weaponProjectile);
+	}
 	ProjectileScript* WeaponScript::callProjectile()
 	{
 		for (size_t projectile = 0; projectile < mProjectiles.size(); ++projectile)
@@ -191,23 +201,6 @@ namespace da
 				return mProjectiles[projectile];
 		}
 		return nullptr;
-	}
-	void WeaponScript::ActiveEffect(EffectWeaponScript* effect, const std::wstring name)
-	{
-		if (!effect)
-			return;
-
-		// Position 바꾸는 함수
-
-		// Rotate 바꾸는 함수
-
-		// 활성화 함수
-
-
-		effect->SetEffectPosition(mWeaponTransform->GetPosition() + (mWeaponTransform->Up() * 0.60f));
-		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, mEffectAngle));
-		effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-		
 	}
 #pragma endregion
 }

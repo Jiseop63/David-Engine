@@ -148,7 +148,7 @@ namespace da::objects
 		weaponMR->SetMaterial(Resources::Find<Material>(L"WeaponMaterial"));
 		WeaponScript* weaponScript = playerScript->SetWeaponObject(weaponObject);
 
-		// weapon 이펙트 세팅
+		// weapon effect 세팅
 		for (int index = 0; index < WEAPON_EFFECT_POOL; index++)
 		{
 			GameObject* gameObject = new GameObject();
@@ -165,6 +165,8 @@ namespace da::objects
 			weaponScript->AddEffectObject(gameObject);
 			player->AddChildObject(gameObject);
 		}
+
+		// Weapon Projectile 세팅
 		for (int index = 0; index < PLAYER_PROJECTILE_POOL; index++)
 		{
 			GameObject* gameObject = new GameObject();
@@ -178,7 +180,7 @@ namespace da::objects
 			meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			meshRenderer->SetMaterial(Resources::Find<Material>(L"ProjectileMaterial"));
 
-			weaponScript->AddEffectObject(gameObject);
+			weaponScript->AddProjectileObject(gameObject);
 			player->AddChildObject(gameObject);
 		}
 		return player;

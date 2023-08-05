@@ -22,12 +22,12 @@ namespace da::enums
 		Land,
 		ENV,
 
+		Effect,
 		Playable,
 		PlayableAttackCollider,
 		Creature,
 		CreatureAttackCollider,
 
-		Effect,
 		Light,
 		UI,
 		Button,

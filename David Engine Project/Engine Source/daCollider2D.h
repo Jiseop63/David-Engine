@@ -60,14 +60,16 @@ namespace da
 		static UINT				ColliderNumber;
 		UINT					mColliderID;
 
+		// type value
 		enums::eColliderShape	mColliderShape;
 		eColliderDetection		mDetectionType;
-
+		math::Vector4			mColliderColor;
+		// in value
 		math::Vector2			mSize;
 		math::Vector2			mCenter;
-		math::Vector4			mColliderColor;
 
-	public:
+	private:
+		// ret Value
 		math::Vector3			mTotalPosition;
 		math::Vector3			mTotalScale;
 

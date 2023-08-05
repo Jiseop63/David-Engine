@@ -2,10 +2,11 @@
 #include "daScript.h"
 #include "daAnimator.h"
 #include "daMeshRenderer.h"
-#include "daEffectWeaponScript.h"
-#include "daProjectileScript.h"
+
 namespace da
 {
+	class EffectWeaponScript;
+	class ProjectileScript;
 	class WeaponScript : public Script
 	{
 	public:
@@ -15,50 +16,39 @@ namespace da
 		virtual void Initialize() override;
 		virtual void Update() override;
 
-
+#pragma region Common Func
 	public:
+		void SetPlayerDir(math::Vector2 dir) { mPlayerDir = dir; }
+		void ApplyProjectileCollision(bool value) { mProjectileCollision = value; }
+		bool IsProjectileCollision() { return mProjectileCollision; }
+
+	private:
 		void attackConditionCheck();
 		void calcWeaponAngle();
-	public:
-		void playWeaponImage();
 		void setTextures(std::shared_ptr<Texture> first, std::shared_ptr<Texture> second) { mFirstTexture = first; mSecondTexture = second; }
-
-		// 로직 함수
-	private:
-		void activeAttack();
-
-
-		// 외부 기능 함수
+#pragma region Weapon Func
 	public:
-		void DoAttack();
-		void ChangeWeapon(enums::eWeaponType weaponType);
-
-
-		// 초기화 함수
-	private:
-		void WeaponInit(bool isMelee = true);
-
-
-		// 외부 함수
-	public:
-		void SetPlayerDir(math::Vector2 dir)
-		{
-			mPlayerDir.x = dir.x;
-			mPlayerDir.y = dir.y;
-		}		
 		void SetWeaponPosition(math::Vector3 vector3) { mWeaponTransform->SetPosition(vector3); }
 		void SetWeaponRotation(math::Vector3 vector3) { mWeaponTransform->SetRotation(vector3); }
-		bool IsAttacked() { return mWeaponAttacked; }
 		void SetReverse(bool value) { mWeaponRenderer->SetReverse(value); }
+		void ChangeWeapon(enums::eWeaponType weaponType);
+		void DoAttack();
 
+	private:
+		void weaponInit(bool isMelee = true);
+		void activeAttack();
+		void playWeaponImage();
+#pragma endregion
+#pragma region Effect Func
 	public:
 		void AddEffectObject(GameObject* object);
-		void AddProjectileObject(GameObject* object);
-	private:
 		EffectWeaponScript* callEffect();
+#pragma endregion
+#pragma region Projectile Func
+	public:
+		void AddProjectileObject(GameObject* object);
 		ProjectileScript* callProjectile();
-		void ActiveEffect(EffectWeaponScript* effect, const std::wstring name);
-
+#pragma endregion
 
 	protected:
 		Transform*							mWeaponTransform;
@@ -74,9 +64,10 @@ namespace da
 
 	private:
 		enums::eWeaponType					mWeaponType;
-		math::Vector4						mPlayerDir;
+		math::Vector2						mPlayerDir;
 		bool								mAttackReady;
 		bool								mWeaponAttacked;
+		bool								mProjectileCollision;
 
 		// 개선의 여지가 있음
 		float	mEffectAngle;

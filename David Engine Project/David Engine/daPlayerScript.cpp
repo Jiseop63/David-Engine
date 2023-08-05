@@ -442,9 +442,9 @@ namespace da
             activeEffect(callEffect(), L"Jumping");
 
             // 최소 높이 설정
-            float minForce = 0.650f;
-            if (minForce >= mJumpCount->JumpForceRatio)
-                mJumpCount->JumpForceRatio = minForce;
+            float minForceRatio = 0.850f;
+            if (minForceRatio >= mJumpCount->JumpForceRatio)
+                mJumpCount->JumpForceRatio = minForceRatio;
 
             mFootCollider->ApplyGround(false);
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "daEffectScript.h"
+#include "daWeaponScript.h"
 
 namespace da
 {
@@ -13,6 +14,13 @@ namespace da
 
 		void PlayEffect(enums::eWeaponType weaponType);
 		void MeleeEffect(const std::wstring name);
-		void retInactive() { GetOwner()->SetObjectState(GameObject::eObjectState::Inactive); }
+		void retInactive();
+
+		// 외부 세팅 함수
+	public:
+		void SetReqWeapon(WeaponScript* weapon) { mReqWeapon = weapon; }
+
+	private:
+		WeaponScript* mReqWeapon;
 	};
 }
