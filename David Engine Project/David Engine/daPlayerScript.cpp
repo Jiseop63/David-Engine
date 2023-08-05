@@ -17,11 +17,9 @@ namespace da
         , mRigidbody(nullptr)
         , mAnimator(nullptr)
         , mRenderer(nullptr)
-
+        , mLight(nullptr)
         , mBodyCollider(nullptr)
         , mFootCollider(nullptr)
-        , mRightCollider(nullptr)
-        , mLeftCollider(nullptr)
 
         , mWeaponScript(nullptr)
         , mEffects{}
@@ -47,11 +45,13 @@ namespace da
 	void PlayerScript::Initialize()
 	{
         mTransform = GetOwner()->GetComponent<Transform>();
-        mRigidbody = GetOwner()->AddComponent<Rigidbody>();
         mRenderer = GetOwner()->GetComponent<MeshRenderer>();
         mLight = GetOwner()->GetComponent<Light>();
+
+        mRigidbody = GetOwner()->AddComponent<Rigidbody>();
         InitAnimation();
         InitCollider();
+
         mPlayerStat = &GameDataManager::GetPlayerStat();
         mJumpCount = &GameDataManager::GetJumpCount();
         mDashCount = &GameDataManager::GetDashCount();
@@ -134,9 +134,7 @@ namespace da
     }
     void PlayerScript::ReverseTexture()
     {
-        bool value = false;
-        if (0 >= mPlayerDir.x)
-            value = true;
+        bool value = IsRight();
         mRenderer->SetReverse(value);
         mWeaponScript->SetReverse(value);
     }
@@ -201,7 +199,6 @@ namespace da
         default:
             break;
         }
-
     }
     void PlayerScript::PlayerFSM()
     {
@@ -284,13 +281,11 @@ namespace da
 
         if (Input::GetKey(eKeyCode::D))
         {
-            //mRigidbody->ApplyForce(Vector2::UnitX, mPlayerStat->MoveSpeed);
             mPos.x += mPlayerStat->MoveSpeed * (float)Time::DeltaTime();
             mTransform->SetPosition(mPos);
         }
         if (Input::GetKey(eKeyCode::A))
         {
-            //mRigidbody->ApplyForce(-Vector2::UnitX, mPlayerStat->MoveSpeed);
             mPos.x -= mPlayerStat->MoveSpeed * (float)Time::DeltaTime();
             mTransform->SetPosition(mPos);
         }
@@ -302,56 +297,11 @@ namespace da
 
         mDustAccumulateTime += (float)Time::DeltaTime();
         if (0.20f <= mDustAccumulateTime)
-        {
-            activeEffect(callEffect(), L"Walking");
+        {            
+            EffectPlayerScript* playerEffect = callEffect();
+            playerEffect->SetReverse(IsRight());
+            activeEffect(playerEffect, L"Walking");
             mDustAccumulateTime = 0.0f;
-        }
-    }
-#pragma endregion
-#pragma region Initialize Player
-    void PlayerScript::InitAnimation()
-    {
-        mAnimator = GetOwner()->AddComponent<Animator>();
-
-        std::shared_ptr<Texture> texture = Resources::Load<Texture>(L"PlayerSprite", L"..\\Resources\\Texture\\Adventurer\\SpriteSheet.png");
-        mAnimator->Create(L"playerIdle", texture, Vector2(0.0f, 0.0f), Vector2(32.0f, 32.0f), 5, Vector2(0.0f, 0.0f), 0.1f);
-        mAnimator->Create(L"playerMove", texture, Vector2(0.0f, 32.0f), Vector2(32.0f, 32.0f), 8, Vector2(0.0f, 0.0f), 0.1f);
-        mAnimator->Create(L"playerJump", texture, Vector2(0.0f, 64.0f), Vector2(32.0f, 32.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
-        mAnimator->Create(L"playerDead", texture, Vector2(0.0f, 96.0f), Vector2(32.0f, 32.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
-        mAnimator->PlayAnimation(L"playerIdle");
-    }
-    void PlayerScript::InitCollider()
-    {
-        mBodyCollider = GetOwner()->AddComponent<Collider2D>();
-        mFootCollider = GetOwner()->AddComponent<Collider2D>();
-        mRightCollider = GetOwner()->AddComponent<Collider2D>();
-        mLeftCollider = GetOwner()->AddComponent<Collider2D>();
-
-        // body
-        {
-            mBodyCollider->SetName(L"BodyCollider");
-            mBodyCollider->SetSize(Vector2(0.30f, 0.40f));
-            mBodyCollider->SetCenter(Vector2(0.0f, -0.10f));
-        }
-        // foot
-        {
-            GetOwner()->SetFootCollider(mFootCollider);
-            mFootCollider->SetName(L"FootCollider");
-            mFootCollider->SetSize(Vector2(0.050f, 0.050f));
-            mFootCollider->SetCenter(Vector2(0.0f, -0.450f));
-            mFootCollider->SetColliderDetection(Collider2D::eColliderDetection::Land);
-        }
-        // right & left
-        {
-            mRightCollider->SetName(L"RightCollider");
-            mRightCollider->SetSize(Vector2(0.050f, 0.050f));
-            mRightCollider->SetCenter(Vector2(0.150f, -0.350f));
-            mRightCollider->SetColliderDetection(Collider2D::eColliderDetection::Land);
-
-            mLeftCollider->SetName(L"LeftCollider");
-            mLeftCollider->SetSize(Vector2(0.050f, 0.050f));
-            mLeftCollider->SetCenter(Vector2(-0.150f, -0.350f));
-            mLeftCollider->SetColliderDetection(Collider2D::eColliderDetection::Land);
         }
     }
 #pragma endregion
@@ -439,7 +389,9 @@ namespace da
         {
             if (ePlayerState::Jump != mActiveState)
                 ChangeState(ePlayerState::Jump);
-            activeEffect(callEffect(), L"Jumping");
+            EffectPlayerScript* playerEffect = callEffect();
+            playerEffect->SetReverse(IsRight());
+            activeEffect(playerEffect, L"Jumping");
 
             // 최소 높이 설정
             float minForceRatio = 0.850f;
@@ -454,6 +406,39 @@ namespace da
                 mRigidbody->OverrideVelocity(Vector2::UnitY, mPlayerStat->JumpForce * mJumpCount->JumpForceRatio);
             GameDataManager::ClearJumpBuffer();
         }
+#pragma endregion
+#pragma region Initialize Player
+    void PlayerScript::InitAnimation()
+    {
+        mAnimator = GetOwner()->AddComponent<Animator>();
+
+        std::shared_ptr<Texture> texture = Resources::Load<Texture>(L"PlayerSprite", L"..\\Resources\\Texture\\Adventurer\\SpriteSheet.png");
+        mAnimator->Create(L"playerIdle", texture, Vector2(0.0f, 0.0f), Vector2(32.0f, 32.0f), 5, Vector2(0.0f, 0.0f), 0.1f);
+        mAnimator->Create(L"playerMove", texture, Vector2(0.0f, 32.0f), Vector2(32.0f, 32.0f), 8, Vector2(0.0f, 0.0f), 0.1f);
+        mAnimator->Create(L"playerJump", texture, Vector2(0.0f, 64.0f), Vector2(32.0f, 32.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
+        mAnimator->Create(L"playerDead", texture, Vector2(0.0f, 96.0f), Vector2(32.0f, 32.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
+        mAnimator->PlayAnimation(L"playerIdle");
+    }
+    void PlayerScript::InitCollider()
+    {
+        mBodyCollider = GetOwner()->AddComponent<Collider2D>();
+        mFootCollider = GetOwner()->AddComponent<Collider2D>();
+
+        // body
+        {
+            mBodyCollider->SetName(L"BodyCollider");
+            mBodyCollider->SetSize(Vector2(0.30f, 0.40f));
+            mBodyCollider->SetCenter(Vector2(0.0f, -0.10f));
+        }
+        // foot
+        {
+            GetOwner()->SetFootCollider(mFootCollider);
+            mFootCollider->SetName(L"FootCollider");
+            mFootCollider->SetSize(Vector2(0.050f, 0.050f));
+            mFootCollider->SetCenter(Vector2(0.0f, -0.450f));
+            mFootCollider->SetColliderDetection(Collider2D::eColliderDetection::Land);
+        }
+    }
 #pragma endregion
 #pragma region Collision Func
     void PlayerScript::OnLandEnter(Collider2D* other)

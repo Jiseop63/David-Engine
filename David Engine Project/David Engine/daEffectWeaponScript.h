@@ -18,7 +18,11 @@ namespace da
 
 		// 외부 세팅 함수
 	public:
-		void SetReqWeapon(WeaponScript* weapon) { mReqWeapon = weapon; }
+		void SetReqWeapon(WeaponScript* weapon) 
+		{ 
+			mReqWeapon = weapon; 
+			int a = 0;
+		}
 
 	private:
 		WeaponScript* mReqWeapon;

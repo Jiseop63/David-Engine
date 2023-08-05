@@ -64,6 +64,7 @@ namespace da
 		WeaponScript* SetWeaponObject(GameObject* object);
 		WeaponScript* GetWeaponScript() { return mWeaponScript; }
 		EffectPlayerScript* AddEffectObject(GameObject* object);
+		bool IsRight() { if (0 <= mPlayerDir.x) return true; return false; }
 		bool IsPlayerGround() { return mFootCollider->IsGround(); }
 		void PlayerIsNotGround() { mFootCollider->ApplyGround(false); }
 		math::Vector2 GetPlayerDir() { return mPlayerDir; }
@@ -122,8 +123,6 @@ namespace da
 		
 		Collider2D*		mBodyCollider;
 		Collider2D*		mFootCollider;
-		Collider2D*		mRightCollider;
-		Collider2D*		mLeftCollider;
 #pragma endregion
 #pragma region Other Scripts
 	private:
