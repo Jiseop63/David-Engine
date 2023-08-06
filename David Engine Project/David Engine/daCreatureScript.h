@@ -6,6 +6,13 @@
 
 namespace da
 {
+	enum class eCreatureState
+	{
+		Idle,
+		Chase,
+		Attack,
+		Dead,
+	};
 	class CreatureScript : public Script
 	{
 	public:

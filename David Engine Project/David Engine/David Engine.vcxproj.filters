@@ -189,6 +189,9 @@
     <ClInclude Include="daEnemyWeaponScript.h">
       <Filter>Objects\Creature\Enemy\Base</Filter>
     </ClInclude>
+    <ClInclude Include="daSkelScript.h">
+      <Filter>Objects\Creature\Enemy\Skel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -292,6 +295,9 @@
     </ClCompile>
     <ClCompile Include="daEnemyWeaponScript.cpp">
       <Filter>Objects\Creature\Enemy\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="daSkelScript.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

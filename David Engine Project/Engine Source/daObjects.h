@@ -146,25 +146,27 @@ namespace da::objects
 		}
 		return player;
 	}
+
 	template <typename T>
 	static T* InstantiateCreature(Scene* scene, const std::wstring& material)
 	{
+		// enemyObject 추가
 		GameObject* enemyObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, material);
-		//T* enemyObject = new T();
-		//// 레이어 세팅
-		//Layer& myLayer = scene->GetLayer(enums::eLayerType::Creature);
-		//myLayer.AddGameObject(enemyObjectobj);
-		//// 렌더러 세팅
-		//MeshRenderer* meshRenderer = enemyObject->AddComponent<MeshRenderer>();
-		//meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-		//meshRenderer->SetMaterial(Resources::Find<Material>(material));
-
 		CreatureScript* creatureScript = enemyObject->AddComponent<CreatureScript>();
+
+
 		GameObject* enemyWeaponObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, L"WeaponMaterial");
 		creatureScript->SetEnemyWeaponScript(enemyWeaponObj);
 
 		return enemyObject;
 	}
+
+	static GameObject* InstantiateSkel(Scene* scene)
+	{
+		GameObject* enemyObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, L"AnimationMaterial");
+
+	}
+
 	static GameObject* InstantiateLandObject(Scene* scene, math::Vector3 location, math::Vector3 scale)
 	{
 		GameObject* obj = new GameObject();

@@ -10,6 +10,8 @@
 #include "daRenderer.h"
 #include "daResources.h"
 
+#include "daCreatureScript.h"
+
 namespace da
 {
     PlayerScript::PlayerScript()
@@ -134,9 +136,9 @@ namespace da
     }
     void PlayerScript::ReverseTexture()
     {
-        bool value = IsRight();
-        mRenderer->SetReverse(!value);
-        mWeaponScript->SetReverse(!value);
+        bool value = IsLeft();
+        mRenderer->SetReverse(value);
+        mWeaponScript->SetReverse(value);
     }
     void PlayerScript::timeProcess()
     {
@@ -173,8 +175,7 @@ namespace da
     void PlayerScript::GetHeal()    
     {
         float value = 5.0f;
-        GameDataManager::GetHeal(value);
-        
+        GameDataManager::GetHeal(value);        
     }
 #pragma endregion
 #pragma region FSM Func
@@ -245,6 +246,13 @@ namespace da
     }
     void PlayerScript::HandleDead()
     {
+        if (!mDead)
+        {
+            EffectPlayerScript* playerEffect = callEffect();
+            playerEffect->SetReverse(IsLeft());
+            activeEffect(playerEffect, L"Dying");
+        }
+            
         mDead = true;
     }
 #pragma endregion
@@ -299,7 +307,7 @@ namespace da
         if (0.20f <= mDustAccumulateTime)
         {            
             EffectPlayerScript* playerEffect = callEffect();
-            playerEffect->SetReverse(IsRight());
+            playerEffect->SetReverse(IsLeft());
             activeEffect(playerEffect, L"Walking");
             mDustAccumulateTime = 0.0f;
         }
@@ -390,7 +398,7 @@ namespace da
             if (ePlayerState::Jump != mActiveState)
                 ChangeState(ePlayerState::Jump);
             EffectPlayerScript* playerEffect = callEffect();
-            playerEffect->SetReverse(IsRight());
+            playerEffect->SetReverse(IsLeft());
             activeEffect(playerEffect, L"Jumping");
 
             // 최소 높이 설정
@@ -407,6 +415,7 @@ namespace da
             GameDataManager::ClearJumpBuffer();
         }
 #pragma endregion
+
 #pragma region Initialize Player
     void PlayerScript::InitAnimation()
     {
@@ -439,7 +448,7 @@ namespace da
     }
 #pragma endregion
 #pragma region Collision Func
-    void PlayerScript::OnLandEnter(Collider2D* other)
+    void PlayerScript::OnCollisionEnter(Collider2D* other)
     {
     }
     void PlayerScript::OnLandStay(Collider2D* other)

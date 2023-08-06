@@ -64,7 +64,7 @@ namespace da
 		WeaponScript* SetWeaponObject(GameObject* object);
 		WeaponScript* GetWeaponScript() { return mWeaponScript; }
 		EffectPlayerScript* AddEffectObject(GameObject* object);
-		bool IsRight() { if (0 <= mPlayerDir.x) return true; return false; }
+		bool IsLeft() { if (0 >= mPlayerDir.x) return true; return false; }
 		bool IsPlayerGround() { return mFootCollider->IsGround(); }
 		void PlayerIsNotGround() { mFootCollider->ApplyGround(false); }
 		math::Vector2 GetPlayerDir() { return mPlayerDir; }
@@ -104,10 +104,10 @@ namespace da
 #pragma endregion
 #pragma region Collision Func
 	public:
-		virtual void OnCollisionEnter(Collider2D* other) override {}
+		virtual void OnCollisionEnter(Collider2D* other) override;
 		virtual void OnCollisionStay(Collider2D* other) override {}
 		virtual void OnCollisionExit(Collider2D* other) override {}
-		virtual void OnLandEnter(Collider2D* other) override;
+		virtual void OnLandEnter(Collider2D* other) override {}
 		virtual void OnLandStay(Collider2D* other) override;
 		virtual void OnLandExit(Collider2D* other) override {}
 #pragma endregion
