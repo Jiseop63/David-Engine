@@ -135,8 +135,8 @@ namespace da
     void PlayerScript::ReverseTexture()
     {
         bool value = IsRight();
-        mRenderer->SetReverse(value);
-        mWeaponScript->SetReverse(value);
+        mRenderer->SetReverse(!value);
+        mWeaponScript->SetReverse(!value);
     }
     void PlayerScript::timeProcess()
     {
@@ -426,14 +426,12 @@ namespace da
 
         // body
         {
-            mBodyCollider->SetName(L"BodyCollider");
             mBodyCollider->SetSize(Vector2(0.30f, 0.40f));
             mBodyCollider->SetCenter(Vector2(0.0f, -0.10f));
         }
         // foot
         {
             GetOwner()->SetFootCollider(mFootCollider);
-            mFootCollider->SetName(L"FootCollider");
             mFootCollider->SetSize(Vector2(0.050f, 0.050f));
             mFootCollider->SetCenter(Vector2(0.0f, -0.450f));
             mFootCollider->SetColliderDetection(Collider2D::eColliderDetection::Land);

@@ -37,10 +37,10 @@ namespace da::objects
 		gameObject->SetLayerType(layer);
 		Layer& myLayer = scene->GetLayer(layer);
 		myLayer.AddGameObject(obj);
-
 		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
 		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 		meshRenderer->SetMaterial(Resources::Find<Material>(material));		
+
 		obj->Initialize();
 		return obj;
 	}
@@ -60,9 +60,6 @@ namespace da::objects
 		obj->Initialize();
 		return obj;
 	}
-
-	
-	
 #pragma endregion
 #pragma region Quick Init objects
 	
@@ -78,6 +75,7 @@ namespace da::objects
 		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
 		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 		meshRenderer->SetMaterial(Resources::Find<Material>(material));
+
 		ButtonScript* uiScript = obj->AddComponent<ButtonScript>();
 		obj->Initialize();
 
@@ -100,68 +98,40 @@ namespace da::objects
 		uiScript->SetSlotTextures(Resources::Find<graphics::Texture>(first), Resources::Find<graphics::Texture>(second));
 		return obj;
 	}
-
-
 	static GameObject* InstantiatePlayer(Scene* scene)
 	{
-		// 플레이어 세팅
-		GameObject* player = new GameObject();
-		player->SetLayerType(enums::eLayerType::Playable);
-		player->SetCommonObject(true);
-		Layer& myLayer = scene->GetLayer(enums::eLayerType::Playable);
-		myLayer.AddGameObject(player);
 
-		MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>();
-		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-		meshRenderer->SetMaterial(Resources::Find<Material>(L"AnimationMaterial"));
-		Light* playerLight = player->AddComponent<Light>();
-		playerLight->SetRadius(2.5f);
-		playerLight->SetLightType(enums::eLightType::Point);
-		playerLight->SetColor(math::Vector4(0.40f, 0.40f, 0.40f, 1.0f));
+		GameObject* player = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Playable, L"AnimationMaterial");
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::Playable);
+		
+		// 라이트
+		{
+			Light* playerLight = player->AddComponent<Light>();
+			playerLight->SetRadius(2.5f);
+			playerLight->SetLightType(enums::eLightType::Point);
+			playerLight->SetColor(math::Vector4(0.40f, 0.40f, 0.40f, 1.0f));
+		}
+		// 플레이어 스크립트 추가
 		PlayerScript* playerScript = player->AddComponent<PlayerScript>();
 		// 플레이어 이펙트 세팅
 		for (int index = 0; index < PLAYER_EFFECT_POOL; index++)
 		{
-			GameObject* gameObject = new GameObject();
-			gameObject->SetLayerType(enums::eLayerType::Effect);
-			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
-			gameObject->SetCommonObject(true);
-			Layer& myLayer = scene->GetLayer(enums::eLayerType::Effect);
-			myLayer.AddGameObject(gameObject);
-
-			MeshRenderer* meshRenderer = gameObject->AddComponent<MeshRenderer>();
-			meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			meshRenderer->SetMaterial(Resources::Find<Material>(L"AnimationMaterial"));
-
-			playerScript->AddEffectObject(gameObject);
+			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
 			player->AddChildObject(gameObject);
+			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
+			playerScript->AddEffectObject(gameObject);
 		}
 
 		// weapon 세팅
-		GameObject* weaponObject = new GameObject();
+		GameObject* weaponObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Playable, L"WeaponMaterial");
 		player->AddChildObject(weaponObject);
-		weaponObject->SetLayerType(enums::eLayerType::Playable);
-		weaponObject->SetCommonObject(true);
-		myLayer.AddGameObject(weaponObject);
-		MeshRenderer* weaponMR = weaponObject->AddComponent<MeshRenderer>();
-		weaponMR->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-		weaponMR->SetMaterial(Resources::Find<Material>(L"WeaponMaterial"));
 		WeaponScript* weaponScript = playerScript->SetWeaponObject(weaponObject);
 
 		// weapon effect 세팅
 		for (int index = 0; index < WEAPON_EFFECT_POOL; index++)
 		{
-			GameObject* gameObject = new GameObject();
-			gameObject->SetLayerType(enums::eLayerType::Effect);
+			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
 			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
-			gameObject->SetCommonObject(true);
-			Layer& myLayer = scene->GetLayer(enums::eLayerType::Effect);
-			myLayer.AddGameObject(gameObject);
-
-			MeshRenderer* meshRenderer = gameObject->AddComponent<MeshRenderer>();
-			meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			meshRenderer->SetMaterial(Resources::Find<Material>(L"AnimationMaterial"));
-
 			weaponScript->AddEffectObject(gameObject);
 			player->AddChildObject(gameObject);
 		}
@@ -169,17 +139,8 @@ namespace da::objects
 		// Weapon Projectile 세팅
 		for (int index = 0; index < PLAYER_PROJECTILE_POOL; index++)
 		{
-			GameObject* gameObject = new GameObject();
-			gameObject->SetLayerType(enums::eLayerType::PlayableAttackCollider);
+			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::PlayableAttackCollider, L"ProjectileMaterial");
 			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
-			gameObject->SetCommonObject(true);
-			Layer& myLayer = scene->GetLayer(enums::eLayerType::PlayableAttackCollider);
-			myLayer.AddGameObject(gameObject);
-
-			MeshRenderer* meshRenderer = gameObject->AddComponent<MeshRenderer>();
-			meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			meshRenderer->SetMaterial(Resources::Find<Material>(L"ProjectileMaterial"));
-
 			weaponScript->AddProjectileObject(gameObject);
 			player->AddChildObject(gameObject);
 		}
@@ -188,18 +149,21 @@ namespace da::objects
 	template <typename T>
 	static T* InstantiateCreature(Scene* scene, const std::wstring& material)
 	{
-		T* obj = new T();
-		Layer& myLayer = scene->GetLayer(enums::eLayerType::Creature);
-		myLayer.AddGameObject(obj);
+		GameObject* enemyObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, material);
+		//T* enemyObject = new T();
+		//// 레이어 세팅
+		//Layer& myLayer = scene->GetLayer(enums::eLayerType::Creature);
+		//myLayer.AddGameObject(enemyObjectobj);
+		//// 렌더러 세팅
+		//MeshRenderer* meshRenderer = enemyObject->AddComponent<MeshRenderer>();
+		//meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		//meshRenderer->SetMaterial(Resources::Find<Material>(material));
 
-		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
-		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-		meshRenderer->SetMaterial(Resources::Find<Material>(material));
-		obj->AddComponent<Rigidbody>();
-		obj->AddComponent<Collider2D>();
-		obj->AddComponent<Animator>();
-		obj->Initialize();
-		return obj;
+		CreatureScript* creatureScript = enemyObject->AddComponent<CreatureScript>();
+		GameObject* enemyWeaponObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, L"WeaponMaterial");
+		creatureScript->SetEnemyWeaponScript(enemyWeaponObj);
+
+		return enemyObject;
 	}
 	static GameObject* InstantiateLandObject(Scene* scene, math::Vector3 location, math::Vector3 scale)
 	{

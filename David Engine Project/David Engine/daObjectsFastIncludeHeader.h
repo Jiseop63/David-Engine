@@ -47,3 +47,4 @@
 
 // Monster
 #include "daCreatureScript.h"
+#include "daEnemyWeaponScript.h"

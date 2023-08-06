@@ -2,6 +2,7 @@
 #include "daScript.h"
 #include "daRigidbody.h"
 #include "daAnimator.h"
+#include "daEnemyWeaponScript.h"
 
 namespace da
 {
@@ -12,19 +13,18 @@ namespace da
 		virtual ~CreatureScript();
 
 		virtual void Initialize();
-		virtual void Update();
-		virtual void LateUpdate();
 
-	public:
-		virtual void OnCollisionEnter(Collider2D* other) override;
-		virtual void OnCollisionStay(Collider2D* other) override;
-		virtual void OnCollisionExit(Collider2D* other) override;
+		Transform* GetCreatureTransform() { return mTransform; }
+		EnemyWeaponScript* SetEnemyWeaponScript(GameObject* creature);
 
 	protected:
+		Transform*	mTransform;
 		Rigidbody*	mRigidbody;
 		Animator*	mAnimator;
 		Collider2D* mBodyCollider;
 		Collider2D* mFootCollider;
 
+	protected:
+		EnemyWeaponScript* mWeaponScript;
 	};
 }
