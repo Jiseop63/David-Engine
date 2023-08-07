@@ -23,7 +23,7 @@ namespace da::structs
 		float AttackRange;
 		
 		sCreatureStat()
-			: MaxHP(0.0f), CurHP(0.0f), MoveSpeed(0.0f)
+			: MaxHP(0.0f), CurHP(0.0f), MoveSpeed(0.0f), detectRange(0.0f), AttackRange(0.0f)
 		{}
 	};
 	struct sJumpCount

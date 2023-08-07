@@ -23,19 +23,20 @@ namespace da
 
 		virtual void Initialize() override;
 		virtual void LateUpdate() override;
-		virtual void Render() override;
-		
+		virtual void Render() override;		
+#pragma region layerMask Func
 	public:
 		void TurnLayerMask(enums::eLayerType layer, bool enable = true);
 		void EnableLayerMask() { mLayerMask.set(); }
 		void DisableLayerMask() { mLayerMask.reset(); }
-
+#pragma endregion
+#pragma region create Matrix
 	private:
 		bool createViewMatrix();
 		bool createProjectionMatrix();
 		void registerCameraInRanderer();
-
-
+#pragma endregion
+#pragma region Object sort
 		void sortGameObjects();
 		void depthSortTransparencyGameobjects();
 		void divideAlphaBlendObjects(const std::vector<GameObject*> objects);
@@ -45,7 +46,7 @@ namespace da
 
 		void enableDepthStencilState();
 		void disableDepthStencilState();
-
+#pragma endregion
 	public:
 		math::Matrix& GetViewMatrix() { return mView; }
 		math::Matrix& GetProjectionMatrix() { return mProjection; }

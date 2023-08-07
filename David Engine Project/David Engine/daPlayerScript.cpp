@@ -134,18 +134,6 @@ namespace da
         mPlayerDir = playerDir;
 
         mWeaponScript->SetWeaponTransform(playerPosition, mPlayerDir);
-
-        Vector3 paddingWeaponPos(0.0f, 0.0f, 0.0f);
-        if (IsLeft())
-        {
-            paddingWeaponPos.x = -0.3f;
-        }
-        else
-        {
-            paddingWeaponPos.x = 0.3f;
-        }
-        mWeaponScript->SetWeaponPosition(Vector3(playerPosition.x, playerPosition.y, 0.0f) + paddingWeaponPos);
-        mWeaponScript->SetPlayerDir(mPlayerDir);
     }
     void PlayerScript::ReverseTexture()
     {

@@ -37,7 +37,7 @@ namespace da
 			, UINT columnLength
 			, math::Vector2 offset = math::Vector2::Zero
 			, float duration = 0.0f
-			, float scale = 35.0f);
+			, float scale = 30.0f);
 		Animation* FindAnimation(const std::wstring& name);
 		Events* FindEvents(const std::wstring& name);
 

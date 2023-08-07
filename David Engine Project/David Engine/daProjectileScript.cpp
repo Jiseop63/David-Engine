@@ -26,9 +26,4 @@ namespace da
 		if (!mReqWeapon->IsProjectileCollision())
 			GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
 	}
-	void ProjectileScript::SetProjectileCollider(math::Vector2 size, math::Vector2 center)
-	{
-		mProjectileCollider->SetSize(size);
-		mProjectileCollider->SetCenter(center);
-	}
 }

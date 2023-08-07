@@ -22,8 +22,10 @@ namespace da
 		// 콜라이더 세팅 (외부에서)
 		void SetProjectilePosition(math::Vector3 vector3) { mProjectileTransform->SetPosition(vector3); }
 		void SetProjectileRotation(math::Vector3 vector3) { mProjectileTransform->SetRotation(vector3); }
-		void SetProjectileCollider(math::Vector2 size, math::Vector2 center);
+		void SetProjectileSize(math::Vector2 vector2) { mProjectileCollider->SetSize(vector2); }
+		void SetProjectileCenter(math::Vector2 center) { mProjectileCollider->SetCenter(center); }
 		
+
 		// 외부 세팅 함수
 	public:
 		void SetReqWeapon(WeaponScript* weapon) { mReqWeapon = weapon; }

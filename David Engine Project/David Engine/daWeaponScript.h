@@ -67,21 +67,17 @@ namespace da
 
 	private:
 		enums::eWeaponName					mWeaponType;
+		math::Vector3						mPlayerPosition;
 		math::Vector2						mPlayerDir;
+		math::Vector2						mWeaponOffset;
 		bool								mAttackReady;
 		bool								mWeaponAttacked;
 		// 이건 아직 용도를 모르겠음
 		bool								mProjectileCollision;
 
 	private:
-		math::Vector2						mWeaponOffset;
-
 
 		// 개선의 여지가 있음
 		float	mEffectAngle;
-		// 추후에 사라질 예정
-		float	mAttackAccumulateTime;
-		float	mAttackDelayTime;
-
 	};
 }

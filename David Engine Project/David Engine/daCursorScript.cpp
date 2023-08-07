@@ -19,7 +19,6 @@ namespace da
 	{
 		// 내(cursor) Tr 가져오기
 		Transform* cursorTransform = GetOwner()->GetComponent<Transform>();
-		Vector3 myPosition = cursorTransform->GetPosition();
 
 		// 마우스 위치 가져오기
 		Vector3 uiMousePos = Input::GetMouseUIPosition();

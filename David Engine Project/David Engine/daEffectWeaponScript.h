@@ -12,7 +12,7 @@ namespace da
 
 		virtual void Initialize() override;
 
-		void PlayEffect(enums::eWeaponType weaponType);
+		void PlayEffect(enums::eWeaponName weaponType);
 		void MeleeEffect(const std::wstring name);
 		void retInactive();
 

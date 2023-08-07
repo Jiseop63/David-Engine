@@ -454,6 +454,7 @@ namespace renderer
 		// weapon
 		{
 			Resources::Load<Texture>(L"LongSwordTexture", L"..\\Resources\\Texture\\Items\\LongSword.png");
+			Resources::Load<Texture>(L"LongSwordTestTexture", L"..\\Resources\\Texture\\Items\\LongSwordTest.png");
 			Resources::Load<Texture>(L"GreatSwordTexture", L"..\\Resources\\Texture\\Items\\GreatSword.png");
 			Resources::Load<Texture>(L"GreatSword0Texture", L"..\\Resources\\Texture\\Items\\GreatSword0.png");
 			Resources::Load<Texture>(L"GreatSword1Texture", L"..\\Resources\\Texture\\Items\\GreatSword1.png");

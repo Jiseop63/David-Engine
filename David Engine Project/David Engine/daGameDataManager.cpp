@@ -118,6 +118,6 @@ namespace da
 	}
 	structs::sArmour* GameDataManager::GetActiveArmour()
 	{
-		return nullptr;
+		return mActiveArmour;
 	}
 }
