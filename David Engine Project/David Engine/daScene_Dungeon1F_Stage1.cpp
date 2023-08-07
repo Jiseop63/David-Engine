@@ -49,9 +49,10 @@ namespace da
 		player->SetPlayerPosition(math::Vector3::Zero);
 		player->IsPlayerInDungeon(true);
 		// 충돌 세팅
-		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Creature);
 		CollisionManager::SetLayer(enums::eLayerType::Land, enums::eLayerType::Playable);
 		CollisionManager::SetLayer(enums::eLayerType::Land, enums::eLayerType::Creature);
+
+		CollisionManager::SetLayer(enums::eLayerType::PlayableAttackCollider, enums::eLayerType::Creature);
 	}
 	void Scene_Dungeon1F_Stage1::OnExit()
 	{
@@ -87,8 +88,8 @@ namespace da
 
 		// test enemy
 		{
-			GameObject* monsterObject = objects::InstantiateCreature<GameObject>(this, L"AnimationMaterial");
-			monsterObject->GetTransform()->SetPosition(Vector3(1.50f, 0.0f, ObjectZ));
+			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
+			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(1.50f, 0.0f, ObjectZ));
 		}
 
 		//// test enemy

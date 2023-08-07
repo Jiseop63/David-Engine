@@ -138,12 +138,12 @@ namespace da::objects
 	}
 
 	template <typename T>
-	static T* InstantiateCreature(Scene* scene, const std::wstring& material)
+	static T* InstantiateCreature(Scene* scene)
 	{
 		// enemyObject 추가
-		GameObject* enemyObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, material);
-		CreatureScript* creatureScript = enemyObject->AddComponent<CreatureScript>();
-
+		GameObject* enemyObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, L"AnimationMaterial");
+		T* enemyScript = enemyObject->AddComponent<T>();
+		CreatureScript* creatureScript = dynamic_cast<CreatureScript*>(enemyScript);
 		GameObject* effectObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
 		enemyObject->AddChildObject(effectObject);
 		effectObject->SetObjectState(GameObject::eObjectState::Inactive);
@@ -155,7 +155,7 @@ namespace da::objects
 		// life Bar 추가해야함
 
 
-		return enemyObject;
+		return enemyScript;
 	}
 
 	static GameObject* InstantiateSkel(Scene* scene)

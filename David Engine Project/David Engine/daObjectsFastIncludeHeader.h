@@ -48,3 +48,4 @@
 // Monster
 #include "daCreatureScript.h"
 #include "daEnemyWeaponScript.h"
+#include "daSkelScript.h"

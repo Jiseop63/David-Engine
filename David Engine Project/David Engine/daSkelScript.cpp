@@ -144,7 +144,7 @@ namespace da
 		{
 			// »ç¸Á ÀÌÆåÆ® ½ÇÇà
 			mEnemyEffectScript->PlayEffect(L"Dying");
-			mCreatureWeaponScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
+			//mCreatureWeaponScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
 		}
 		mIsDead = true;
 	}
