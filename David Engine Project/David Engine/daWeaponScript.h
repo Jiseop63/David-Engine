@@ -16,28 +16,17 @@ namespace da
 		virtual void Initialize() override;
 		virtual void Update() override;
 
-#pragma region Common Func
-	public:
-		void SetPlayerDir(math::Vector2 dir) { mPlayerDir = dir; }
-		void ApplyProjectileCollision(bool value) { mProjectileCollision = value; }
-		bool IsProjectileCollision() { return mProjectileCollision; }
-
-	private:
-		void attackConditionCheck();
-		void calcWeaponAngle();
-		void setTextures(std::shared_ptr<Texture> first, std::shared_ptr<Texture> second) { mFirstTexture = first; mSecondTexture = second; }
 #pragma region Weapon Func
 	public:
 		void SetWeaponTransform(math::Vector3 playerPos, math::Vector2 playerDir);
-		void SetWeaponPosition(math::Vector3 vector3) { mWeaponTransform->SetPosition(vector3); }
-		void SetWeaponRotation(math::Vector3 vector3) { mWeaponTransform->SetRotation(vector3); }
 		void SetReverse(bool value) { mWeaponRenderer->SetReverse(value); }
 		void ChangeWeapon();
 		void DoAttack();
 
 	private:
-		void weaponInit();
+		void attackConditionCheck();
 		void activeAttack();
+		void weaponInit();
 		void playWeaponImage();
 #pragma endregion
 #pragma region Effect Func
@@ -49,6 +38,8 @@ namespace da
 	public:
 		void AddProjectileObject(GameObject* object);
 		ProjectileScript* callProjectile();
+		void ApplyProjectileCollision(bool value) { mProjectileCollision = value; }
+		bool IsProjectileCollision() { return mProjectileCollision; }
 #pragma endregion
 
 	protected:
@@ -69,9 +60,11 @@ namespace da
 		enums::eWeaponName					mWeaponType;
 		math::Vector3						mPlayerPosition;
 		math::Vector2						mPlayerDir;
-		math::Vector2						mWeaponOffset;
 		bool								mAttackReady;
 		bool								mWeaponAttacked;
+
+		math::Vector2						mProjectileSize;
+		float								mProjectileCenterPadding;
 		// 이건 아직 용도를 모르겠음
 		bool								mProjectileCollision;
 

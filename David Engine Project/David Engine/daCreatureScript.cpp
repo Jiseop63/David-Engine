@@ -57,10 +57,17 @@ namespace da
 		mCreatureStat.AttackDelay = 3.0f;		
 	}
 
+	void CreatureScript::ReverseTexture()
+	{
+		bool value = IsLeft();
+		mCreatureRenderer->SetReverse(value);
+		mCreatureWeaponScript->SetReverse(value);
+	}
+
 	EnemyWeaponScript* CreatureScript::SetEnemyWeaponScript(GameObject* creature)
 	{
-		EnemyWeaponScript* enemyWeaponScript = creature->AddComponent<EnemyWeaponScript>();
-		return enemyWeaponScript;
+		mCreatureWeaponScript = creature->AddComponent<EnemyWeaponScript>();
+		return mCreatureWeaponScript;
 	}
 	EffectEnemyScript* CreatureScript::AddEffectObject(GameObject* effectObject)
 	{

@@ -142,13 +142,16 @@ namespace da::objects
 	{
 		// enemyObject 추가
 		GameObject* enemyObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, L"AnimationMaterial");
+		// CreatureScript 추가
 		T* enemyScript = enemyObject->AddComponent<T>();
 		CreatureScript* creatureScript = dynamic_cast<CreatureScript*>(enemyScript);
+		// Effect 추가
 		GameObject* effectObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
 		enemyObject->AddChildObject(effectObject);
 		effectObject->SetObjectState(GameObject::eObjectState::Inactive);
 		creatureScript->AddEffectObject(effectObject);
 
+		// weapon 추가
 		GameObject* enemyWeaponObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, L"WeaponMaterial");
 		creatureScript->SetEnemyWeaponScript(enemyWeaponObj);
 

@@ -133,13 +133,10 @@ namespace da
         playerDir.Normalize();
         mPlayerDir = playerDir;
 
-        mWeaponScript->SetWeaponTransform(playerPosition, mPlayerDir);
-    }
-    void PlayerScript::ReverseTexture()
-    {
         bool value = IsLeft();
         mRenderer->SetReverse(value);
-        mWeaponScript->SetReverse(value);
+
+        mWeaponScript->SetWeaponTransform(playerPosition, mPlayerDir);
     }
     void PlayerScript::timeProcess()
     {
@@ -148,6 +145,7 @@ namespace da
         bufferedJump();
         walkDust();
     }
+
     EffectPlayerScript* PlayerScript::callEffect()
     {
         for (size_t effect = 0; effect < mEffects.size(); effect++)

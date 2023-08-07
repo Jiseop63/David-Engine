@@ -22,6 +22,10 @@ namespace da
 		virtual ~CreatureScript();
 
 		virtual void Initialize();
+#pragma region common Func
+		void ReverseTexture();
+		bool IsLeft() { if (0 >= mCreatureDir.x) return true; else return false;; }
+#pragma endregion
 
 
 #pragma region public Func
@@ -37,6 +41,7 @@ namespace da
 #pragma region Components
 	protected:
 		Transform*			mCreatureTransform;
+		MeshRenderer*		mCreatureRenderer;
 		Rigidbody*			mCreatureRigidbody;
 		Animator*			mCreatureAnimator;
 		Collider2D*			mCreatureBodyCollider;
@@ -53,6 +58,7 @@ namespace da
 
 #pragma region condition
 	protected:
+		math::Vector2	mCreatureDir;
 		eCreatureState	mCreatureActiveState;
 		bool			mIsDead;
 #pragma endregion

@@ -20,9 +20,11 @@ namespace da
 
 		, mWeaponType(enums::eWeaponName::LongSword)
 		, mPlayerDir(math::Vector2::Zero)
-		, mWeaponOffset(math::Vector2::Zero)
 		, mAttackReady(true)
 		, mWeaponAttacked(false)
+		, mProjectileSize(math::Vector2::Zero)
+		, mProjectileCenterPadding(0.0f)
+
 		, mProjectileCollision(false)
 		, mEffectAngle(0.0f)
 	{		
@@ -40,7 +42,7 @@ namespace da
 		mWeaponRenderer = GetOwner()->GetComponent<MeshRenderer>();
 		// 애니메이터 (원거리에만 쓰임) 세팅
 		mWeaponAnimator = GetOwner()->AddComponent<Animator>();
-
+		SetReverse(false);
 		// 무기 세팅
 		ChangeWeapon();
 	}
@@ -70,27 +72,6 @@ namespace da
 	}
 #pragma endregion
 
-	void WeaponScript::calcWeaponAngle()
-	{
-		// 여기서 회전하는게 아니라 플레이어에 의해 회전이 적용되도록 변경할 예정임
-				
-		// 원본 회전값 저장
-		float angle = atan2(mPlayerDir.y, mPlayerDir.x);
-		mEffectAngle = angle;
-
-		// 조금 변경된 각도로 무기 회전값 적용
-		bool value = false;
-		if (0 >= mPlayerDir.x)
-			value = true;
-		if (!mWeaponAttacked)
-		{
-			if (value)
-				angle += 0.7850f;
-			else
-				angle -= 0.7850f;
-		}
-		mWeaponTransform->SetRotation(math::Vector3(0.0f, 0.0f, angle));
-	}
 #pragma region player Call
 	void WeaponScript::SetWeaponTransform(math::Vector3 playerPos, math::Vector2 playerDir)
 	{
@@ -115,6 +96,7 @@ namespace da
 		// 공격할때마다 무기 회전값과 위치값 적용
 		if (isLeft)
 		{
+			SetReverse(isLeft);
 			if (!mWeaponAttacked)
 			{
 				angle += 2.5710f;
@@ -170,24 +152,20 @@ namespace da
 		}
 	}
 	void WeaponScript::weaponInit()
-	{
-		
+	{		
 		if (mActiveArmour->Weapon.IsMeleeWeapon)
 		{
 			if (enums::eWeaponName::LongSword == mWeaponType)
 			{
-				// offset 세팅 / 플레이어 충돌체 크기 0.15+ 무기 텍스쳐 크기? 
-				mWeaponOffset = math::Vector2(0.10f, -0.30f);
+				// 무기 데이터 & Scale 세팅 
 				mActiveArmour->Weapon.AttackDelayTime = 0.40f;
 				mWeaponTransform->SetScale(math::Vector3(0.090f * 4.0f, 0.440f * 4.0f, 1.0f));
 				// Texture 세팅
 				mWeaponTexture = Resources::Find<Texture>(L"LongSwordTestTexture");
-				//setTextures(Resources::Find<Texture>(L"GreatSword1Texture"), Resources::Find<Texture>(L"GreatSword0Texture"));
-				//mWeaponRenderer->ChangeSlotTexture(mFirstTexture);
 				
-				// Effect 세팅
-				
-				// Collider 세팅
+				// Effect & Collider 세팅
+				mProjectileSize = math::Vector2(2.50f, 1.750f);
+				mProjectileCenterPadding = 0.750f;
 
 			}
 
@@ -217,16 +195,17 @@ namespace da
 		// 이펙트 적용하기
 		EffectWeaponScript* effect = callEffect();
 		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, mEffectAngle - 1.570f));		
-		effect->SetEffectPosition(mPlayerPosition + (playerDir * 0.60f));
+		effect->SetEffectPosition(mPlayerPosition + (playerDir * mProjectileCenterPadding));
 		effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 		effect->PlayEffect(mWeaponType);
-
+		
+			
 		// 투사체 적용하기
 		ProjectileScript* projectile = callProjectile();
 		projectile->SetProjectileRotation(math::Vector3(0.0f, 0.0f, mEffectAngle - 1.570f));
 		projectile->SetProjectilePosition(mPlayerPosition);
-		projectile->SetProjectileCenter(mPlayerDir * 0.90f);
-		projectile->SetProjectileSize(math::Vector2(2.50f, 1.50f));		
+		projectile->SetProjectileCenter(mPlayerDir * mProjectileCenterPadding);
+		projectile->SetProjectileSize(mProjectileSize);
 		projectile->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 	}
 	void WeaponScript::playWeaponImage()

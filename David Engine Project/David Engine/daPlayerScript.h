@@ -46,7 +46,6 @@ namespace da
 		void UIInput();
 		void GetMouse();
 		void CalcPlayerDir();
-		void ReverseTexture();
 		void timeProcess();
 		EffectPlayerScript* callEffect();
 		void activeEffect(EffectPlayerScript* effect, const std::wstring name);

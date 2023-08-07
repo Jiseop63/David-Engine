@@ -133,7 +133,7 @@ namespace da
 
 	void SkelScript::SkelHandleAttack()
 	{
-		// DOAttack!
+		// DoAttack!
 		
 		// retChase
 	}
@@ -143,8 +143,10 @@ namespace da
 		if (!mIsDead)
 		{
 			// »ç¸Á ÀÌÆåÆ® ½ÇÇà
+			mCreatureWeaponScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
+			mEnemyEffectScript->SetEffectPosition(mCreatureTransform->GetPosition() + math::Vector3(0.0f, -0.20f, 0.0f));
+			mEnemyEffectScript->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 			mEnemyEffectScript->PlayEffect(L"Dying");
-			//mCreatureWeaponScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
 		}
 		mIsDead = true;
 	}
