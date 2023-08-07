@@ -26,7 +26,7 @@ namespace da
 
 	protected:
 		Transform*		mEffectTransform;
-		MeshRenderer*	mRenderer;
+		MeshRenderer*	mEffectRenderer;
 		Animator*		mEffectAnimator;
 
 	private:

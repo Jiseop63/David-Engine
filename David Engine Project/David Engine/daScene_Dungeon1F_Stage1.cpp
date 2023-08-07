@@ -85,6 +85,12 @@ namespace da
 			doorObject->GetTransform()->SetPosition(math::Vector3(-3.0f, -1.0f + 0.080f, ObjectZ));
 		}
 
+		// test enemy
+		{
+			GameObject* monsterObject = objects::InstantiateCreature<GameObject>(this, L"AnimationMaterial");
+			monsterObject->GetTransform()->SetPosition(Vector3(1.50f, 0.0f, ObjectZ));
+		}
+
 		//// test enemy
 		//{
 		//	GameObject* monsterObject = objects::InstantiateCreature<GameObject>(this, L"AnimationMaterial");

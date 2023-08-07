@@ -67,34 +67,24 @@ namespace da::objects
 	template <typename T>
 	static T* InstantiateButtonObject(Scene* scene, const std::wstring& material, const std::wstring& first, const std::wstring& second)
 	{
-		T* obj = new T();
-		GameObject* gameObject = dynamic_cast<GameObject*>(obj);
-		gameObject->SetLayerType(enums::eLayerType::UI);
-		Layer& myLayer = scene->GetLayer(enums::eLayerType::UI);
-		myLayer.AddGameObject(obj);
+		T* obj = InstantiateObject<T>(scene, enums::eLayerType::UI);
 		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
 		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 		meshRenderer->SetMaterial(Resources::Find<Material>(material));
 
 		ButtonScript* uiScript = obj->AddComponent<ButtonScript>();
-		obj->Initialize();
-
 		uiScript->SetSlotTextures(Resources::Find<graphics::Texture>(first), Resources::Find<graphics::Texture>(second));
+
 		return obj;
 	}
 	template <typename T>
 	static T* InstantiateMultiTextureUI(Scene* scene, const std::wstring& material, const std::wstring& first, const std::wstring& second)
 	{
-		T* obj = new T();
-		GameObject* gameObject = dynamic_cast<GameObject*>(obj);
-		gameObject->SetLayerType(enums::eLayerType::UI);
-		Layer& myLayer = scene->GetLayer(enums::eLayerType::UI);
-		myLayer.AddGameObject(obj);
+		T* obj = InstantiateObject<T>(scene, enums::eLayerType::UI);
 		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
 		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 		meshRenderer->SetMaterial(Resources::Find<Material>(material));
 		UIScript* uiScript = obj->AddComponent<UIScript>();
-		obj->Initialize();
 		uiScript->SetSlotTextures(Resources::Find<graphics::Texture>(first), Resources::Find<graphics::Texture>(second));
 		return obj;
 	}
@@ -154,9 +144,16 @@ namespace da::objects
 		GameObject* enemyObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, material);
 		CreatureScript* creatureScript = enemyObject->AddComponent<CreatureScript>();
 
+		GameObject* effectObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
+		enemyObject->AddChildObject(effectObject);
+		effectObject->SetObjectState(GameObject::eObjectState::Inactive);
+		creatureScript->AddEffectObject(effectObject);
 
 		GameObject* enemyWeaponObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, L"WeaponMaterial");
 		creatureScript->SetEnemyWeaponScript(enemyWeaponObj);
+
+		// life Bar 추가해야함
+
 
 		return enemyObject;
 	}

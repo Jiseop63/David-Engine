@@ -10,12 +10,15 @@ namespace da
 		virtual ~SkelScript();
 
 		virtual void Initialize() override;
+		virtual void Update() override;
 
 #pragma region FSM
-		void HandleIdle();
-		void HandleChase();
-		void HandleAttack();
-		void HandleDead();
+		void ChangeState(eCreatureState state);
+		void SkelFSM();
+		void SkelHandleIdle();
+		void SkelHandleChase();
+		void SkelHandleAttack();
+		void SkelHandleDead();
 #pragma endregion
 
 #pragma region Collision

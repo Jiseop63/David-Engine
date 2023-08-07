@@ -4,6 +4,7 @@ namespace da
 {
 	EffectScript::EffectScript()
 		: mEffectTransform(nullptr)
+		, mEffectRenderer(nullptr)
 		, mEffectAnimator(nullptr)
 		, mReverse(false)
 	{
@@ -14,11 +15,11 @@ namespace da
 	void EffectScript::Initialize()
 	{
 		mEffectTransform = GetOwner()->GetTransform();
-		mRenderer = GetOwner()->GetComponent<MeshRenderer>();
+		mEffectRenderer = GetOwner()->GetComponent<MeshRenderer>();
 		mEffectAnimator = GetOwner()->AddComponent<Animator>();
 	}
 	void EffectScript::LateUpdate()
 	{
-		mRenderer->SetReverse(mReverse);
+		mEffectRenderer->SetReverse(mReverse);
 	}
 }

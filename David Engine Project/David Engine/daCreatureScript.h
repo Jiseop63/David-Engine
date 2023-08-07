@@ -3,6 +3,8 @@
 #include "daRigidbody.h"
 #include "daAnimator.h"
 #include "daEnemyWeaponScript.h"
+#include "daEffectEnemyScript.h"
+#include "daPlayerScript.h"
 
 namespace da
 {
@@ -21,28 +23,39 @@ namespace da
 
 		virtual void Initialize();
 
+
+#pragma region public Func
 	public:
-		Transform* GetCreatureTransform() { return mTransform; }
+		Transform* GetCreatureTransform() { return mCreatureTransform; }
 		EnemyWeaponScript* SetEnemyWeaponScript(GameObject* creature);
+		EffectEnemyScript* AddEffectObject(GameObject* effectObject);
+#pragma endregion
 
 	protected:
 		void OnDamaged();
 
 #pragma region Components
 	protected:
-		Transform*	mTransform;
-		Rigidbody*	mRigidbody;
-		Animator*	mAnimator;
-		Collider2D* mBodyCollider;
-		Collider2D* mFootCollider;
+		Transform*			mCreatureTransform;
+		Rigidbody*			mCreatureRigidbody;
+		Animator*			mCreatureAnimator;
+		Collider2D*			mCreatureBodyCollider;
+		Collider2D*			mCreatureFootCollider;
 
-		EnemyWeaponScript* mWeaponScript;
+		EnemyWeaponScript*	mCreatureWeaponScript;
+		EffectEnemyScript*	mEnemyEffectScript;
+		PlayerScript*		mPlayerScript;
 #pragma endregion
 #pragma region Datas
 	protected:
-		//structs::sPlayerStat
+		structs::sCreatureStat mCreatureStat;
 #pragma endregion
 
+#pragma region condition
+	protected:
+		eCreatureState	mCreatureActiveState;
+		bool			mIsDead;
+#pragma endregion
 
 	};
 }
