@@ -43,4 +43,7 @@ namespace da
 		EnemyWeaponScript* enemyWeaponScript = creature->AddComponent<EnemyWeaponScript>();
 		return enemyWeaponScript;
 	}
+	void CreatureScript::OnDamaged()
+	{
+	}
 }

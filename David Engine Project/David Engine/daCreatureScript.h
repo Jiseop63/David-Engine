@@ -21,9 +21,14 @@ namespace da
 
 		virtual void Initialize();
 
+	public:
 		Transform* GetCreatureTransform() { return mTransform; }
 		EnemyWeaponScript* SetEnemyWeaponScript(GameObject* creature);
 
+	protected:
+		void OnDamaged();
+
+#pragma region Components
 	protected:
 		Transform*	mTransform;
 		Rigidbody*	mRigidbody;
@@ -31,7 +36,13 @@ namespace da
 		Collider2D* mBodyCollider;
 		Collider2D* mFootCollider;
 
-	protected:
 		EnemyWeaponScript* mWeaponScript;
+#pragma endregion
+#pragma region Datas
+	protected:
+		//structs::sPlayerStat
+#pragma endregion
+
+
 	};
 }

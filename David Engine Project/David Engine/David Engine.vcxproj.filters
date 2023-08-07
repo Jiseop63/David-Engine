@@ -297,7 +297,7 @@
       <Filter>Objects\Creature\Enemy\Base</Filter>
     </ClCompile>
     <ClCompile Include="daSkelScript.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Objects\Creature\Enemy\Skel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

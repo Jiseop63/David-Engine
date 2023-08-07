@@ -13,15 +13,16 @@ namespace da
 		, mWeaponAnimator(nullptr)
 		, mEffects{}
 		, mProjectiles{}
-
-		, mInventoryData{}
+		, mActiveArmour(nullptr)
+		, mWeaponTexture(nullptr)
 		, mFirstTexture(nullptr)
 		, mSecondTexture(nullptr)
 
-		, mWeaponType(enums::eWeaponType::LongSword)
+		, mWeaponType(enums::eWeaponName::LongSword)
 		, mPlayerDir(math::Vector2::Zero)
 		, mAttackReady(true)
 		, mWeaponAttacked(false)
+		, mProjectileCollision(false)
 		, mEffectAngle(0.0f)
 
 		, mAttackAccumulateTime(0.0f)
@@ -39,16 +40,17 @@ namespace da
 
 		// 텍스쳐 (근거리에만 쓰임) 세팅
 		mWeaponRenderer = GetOwner()->GetComponent<MeshRenderer>();
-		ChangeWeapon(enums::eWeaponType::LongSword);
 		// 애니메이터 (원거리에만 쓰임) 세팅
 		mWeaponAnimator = GetOwner()->AddComponent<Animator>();
 
-		mInventoryData = &GameDataManager::GetInventory();
-		weaponInit();
+		// 무기 세팅
+		ChangeWeapon();
 	}
 	void WeaponScript::Update()
 	{
+		// 공격 조건
 		attackConditionCheck();
+		// 무기 회전 (개편 예정)
 		calcWeaponAngle();
 	}
 		
@@ -69,6 +71,8 @@ namespace da
 	}
 	void WeaponScript::calcWeaponAngle()
 	{
+		// 여기서 회전하는게 아니라 플레이어에 의해 회전이 적용되도록 변경할 예정임
+				
 		// 원본 회전값 저장
 		float angle = atan2(mPlayerDir.y, mPlayerDir.x);
 		mEffectAngle = angle;
@@ -86,17 +90,23 @@ namespace da
 		}
 		mWeaponTransform->SetRotation(math::Vector3(0.0f, 0.0f, angle));
 	}
+	void WeaponScript::SetWeaponTransform(math::Vector3 playerPos, math::Vector2 playerDir)
+	{
+		// offset 적용된 위치로 세팅
+
+		// 무기 상태에 따른 회전값 적용
+	}
 #pragma endregion
 
 #pragma region weapon func
-	void WeaponScript::ChangeWeapon(enums::eWeaponType weaponType)
+	void WeaponScript::ChangeWeapon()
 	{
-		mWeaponType = weaponType;
-		switch (weaponType)
+		mActiveArmour = GameDataManager::GetActiveArmour();
+		switch (mActiveArmour->Weapon.WeaponName)
 		{
-		case da::enums::eWeaponType::Default:
+		case da::enums::eWeaponName::Default:
 			break;
-		case da::enums::eWeaponType::LongSword:
+		case da::enums::eWeaponName::LongSword:
 			weaponInit();
 			break;
 		default:
@@ -114,20 +124,31 @@ namespace da
 			playWeaponImage();
 			
 			mAttackReady = false;
-		}		
+		}
 	}
-	void WeaponScript::weaponInit(bool isMelee)
+	void WeaponScript::weaponInit()
 	{
-		if (isMelee)
+		
+		if (mActiveArmour->Weapon.IsMeleeWeapon)
 		{
-			if (enums::eWeaponType::LongSword == mWeaponType)
+			if (enums::eWeaponName::LongSword == mWeaponType)
 			{
-				// 이미지 세팅
-				setTextures(Resources::Find<Texture>(L"GreatSword1Texture"), Resources::Find<Texture>(L"GreatSword0Texture"));
-				mWeaponRenderer->ChangeSlotTexture(mFirstTexture);
-				// 이펙트 세팅
-				// 충돌체 세팅
+				// offset 세팅 / 플레이어 충돌체 크기 0.15+ 무기 텍스쳐 크기? 
+				mWeaponOffset = math::Vector2(0.3f, 0.3f);
+
+				// Texture 세팅
+				mWeaponTexture = Resources::Find<Texture>(L"LongSwordTexture");
+				//setTextures(Resources::Find<Texture>(L"GreatSword1Texture"), Resources::Find<Texture>(L"GreatSword0Texture"));
+				//mWeaponRenderer->ChangeSlotTexture(mFirstTexture);
+				
+				// Effect 세팅
+				
+				// Collider 세팅
+
 			}
+
+			if (mWeaponTexture)
+				mWeaponRenderer->ChangeSlotTexture(mWeaponTexture);
 		}
 	}
 	void WeaponScript::activeAttack()
@@ -145,23 +166,26 @@ namespace da
 		ProjectileScript* projectile = callProjectile();
 		projectile->SetProjectileRotation(math::Vector3(0.0f, 0.0f, mEffectAngle - 1.570f));
 		projectile->SetProjectilePosition(mWeaponTransform->GetPosition());
-		projectile->SetProjectileCollider(math::Vector2(2.50f, 1.50f), mPlayerDir * 0.60f);
+		projectile->SetProjectileCollider(math::Vector2(2.50f, 1.50f), mPlayerDir * 0.90f);
 		projectile->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 	}
 	void WeaponScript::playWeaponImage()
 	{
-		// Change Weapon Texture
+		if (mActiveArmour->Weapon.IsMeleeWeapon)
 		{
+			// Weapon Texture
 			if (mWeaponAttacked)
 			{
 				mWeaponAttacked = false;
-				mWeaponRenderer->ChangeSlotTexture(mFirstTexture);
 			}
 			else
 			{
 				mWeaponAttacked = true;
-				mWeaponRenderer->ChangeSlotTexture(mSecondTexture);
 			}
+		}
+		else
+		{
+			// Animation Play
 		}
 
 	}

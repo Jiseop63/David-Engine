@@ -68,12 +68,12 @@ namespace da::enums
 		End,
 	};
 #pragma region Contents
-	enum class eWeaponType
+	enum class eWeaponName
 	{
 		Default,
 		LongSword,
 	};
-	enum class eShieldType
+	enum class eShieldName
 	{
 		Default,
 		MagicShield,

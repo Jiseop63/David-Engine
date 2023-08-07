@@ -29,7 +29,7 @@ namespace da
 	public:
 		static void CallInventory();
 		static void ChangeArmour();
-		static enums::eWeaponType GetWeaponType();
+		static structs::sArmour* GetActiveArmour();
 #pragma endregion
 
 #pragma region Data
@@ -39,8 +39,8 @@ namespace da
 		static structs::sDashCount mDashCount;
 		static structs::sInventory mInventoryData;
 
-		static structs::sArmour mActiveArmour;
-		static structs::sArmour mSubArmour;
+		static structs::sArmour* mActiveArmour;
+		static structs::sArmour* mSubArmour;
 #pragma endregion
 	};
 }

@@ -13,8 +13,8 @@ namespace da
 	structs::sDashCount GameDataManager::mDashCount = {};
 	structs::sInventory GameDataManager::mInventoryData = {};
 
-	structs::sArmour GameDataManager::mActiveArmour = {};
-	structs::sArmour GameDataManager::mSubArmour = {};
+	structs::sArmour* GameDataManager::mActiveArmour = nullptr;
+	structs::sArmour* GameDataManager::mSubArmour = nullptr;
 
 
 	void GameDataManager::Initialize()
@@ -27,23 +27,26 @@ namespace da
 		mPlayerStat.MaxHP = 30;
 		mPlayerStat.CurHP = mPlayerStat.MaxHP;
 		mPlayerStat.MoveSpeed = 2.0f;
-		mPlayerStat.JumpForce = 4.50f;
-		mPlayerStat.DashForce = 6.0f;
+		mPlayerStat.JumpForce = 5.50f;
+		mPlayerStat.DashForce = 5.0f;
 		
 		mDashCount.MaxDashCount = 2;
 		mDashCount.CurDashCount = mDashCount.MaxDashCount;
 		mDashCount.DashAccumulateTime = 0.0f;
-		mDashCount.DashRegenTime = 1.750f;
+		mDashCount.DashRegenTime = 2.250f;
 
 		mJumpCount.JumpAccumulateTime = 0.0f;
-		mJumpCount.JumpLimitTime = 0.150f;
+		mJumpCount.JumpLimitTime = 0.1750f;
 		mJumpCount.JumpForceRatio = 0.0f;
 		mJumpCount.BufferedJump = false;
 		mJumpCount.ExtraJump = true;
 
-		mInventoryData.Armour1.Weapon = enums::eWeaponType::LongSword;
-		mActiveArmour = mInventoryData.Armour1;
-		mSubArmour = mInventoryData.Armour2;
+		mActiveArmour = new structs::sArmour();
+		mActiveArmour->Weapon.WeaponName = enums::eWeaponName::LongSword;
+		mSubArmour = new structs::sArmour();
+
+		mInventoryData.Armour1 = *mActiveArmour;
+		mInventoryData.Armour2 = *mSubArmour;
 	}
 
 	void GameDataManager::GetDamage(float value)
@@ -100,16 +103,21 @@ namespace da
 	void GameDataManager::ChangeArmour()
 	{
 		// swap armour
-		structs::sArmour temp = mActiveArmour;
+		structs::sArmour temp = *mActiveArmour;
 		mActiveArmour = mSubArmour;
-		mSubArmour = temp;
+		mSubArmour = &temp;
 
 		// change UI
 		SceneManager::GetInventoryScript()->ChangeArmour();
+		// 패널 이미지 변경해주기
+		// SceneManager::GetHUDObject()->Get
+		
+		
+		// control weaponScript
+		SceneManager::GetPlayerScript()->GetWeaponScript()->ChangeWeapon();
 	}
-
-	enums::eWeaponType GameDataManager::GetWeaponType()
+	structs::sArmour* GameDataManager::GetActiveArmour()
 	{
-		return mActiveArmour.Weapon;
+		return nullptr;
 	}
 }

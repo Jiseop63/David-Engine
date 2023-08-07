@@ -27,6 +27,8 @@ namespace da
 		math::Vector3 GetPosition() { return mPosition; }
 		math::Vector3 GetRotation() { return mRotation; }
 		math::Vector3 GetScale() { return mScale; }
+		math::Vector3 GetOffset() { return mOffset; }
+		math::Vector3 GetTotalPosition() { return mTotalPosition; }
 
 		math::Vector3 Forward() { return mForward; }
 		math::Vector3 Right() { return mRight; }
@@ -51,7 +53,8 @@ namespace da
 		math::Vector3 mRotation;
 		math::Vector3 mScale;
 		math::Vector3 mOffset;
-		
+		math::Vector3 mTotalPosition;
+
 		math::Vector3 mUp;
 		math::Vector3 mForward;
 		math::Vector3 mRight;

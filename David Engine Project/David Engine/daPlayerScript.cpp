@@ -94,6 +94,7 @@ namespace da
             {
                 mDead = false;
                 ChangeState(ePlayerState::Idle);
+                mWeaponScript->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
             }
         }
         if (Input::GetKeyDown(eKeyCode::T))
@@ -131,7 +132,19 @@ namespace da
         Vector2 playerDir(mousePosition.x - playerPosition.x, mousePosition.y - playerPosition.y);
         playerDir.Normalize();
         mPlayerDir = playerDir;
-        mWeaponScript->SetWeaponPosition(Vector3(playerPosition.x, playerPosition.y, 0.0f));
+
+        mWeaponScript->SetWeaponTransform(playerPosition, mPlayerDir);
+
+        Vector3 paddingWeaponPos(0.0f, 0.0f, 0.0f);
+        if (IsLeft())
+        {
+            paddingWeaponPos.x = -0.3f;
+        }
+        else
+        {
+            paddingWeaponPos.x = 0.3f;
+        }
+        mWeaponScript->SetWeaponPosition(Vector3(playerPosition.x, playerPosition.y, 0.0f) + paddingWeaponPos);
         mWeaponScript->SetPlayerDir(mPlayerDir);
     }
     void PlayerScript::ReverseTexture()
@@ -251,6 +264,7 @@ namespace da
             EffectPlayerScript* playerEffect = callEffect();
             playerEffect->SetReverse(IsLeft());
             activeEffect(playerEffect, L"Dying");
+            mWeaponScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
         }
             
         mDead = true;
@@ -304,7 +318,7 @@ namespace da
             return;
 
         mDustAccumulateTime += (float)Time::DeltaTime();
-        if (0.20f <= mDustAccumulateTime)
+        if (0.30f <= mDustAccumulateTime)
         {            
             EffectPlayerScript* playerEffect = callEffect();
             playerEffect->SetReverse(IsLeft());
@@ -402,7 +416,7 @@ namespace da
             activeEffect(playerEffect, L"Jumping");
 
             // 최소 높이 설정
-            float minForceRatio = 0.850f;
+            float minForceRatio = 0.750f;
             if (minForceRatio >= mJumpCount->JumpForceRatio)
                 mJumpCount->JumpForceRatio = minForceRatio;
 

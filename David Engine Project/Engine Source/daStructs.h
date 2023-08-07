@@ -12,6 +12,20 @@ namespace da::structs
 			: MaxHP(0.0f), CurHP(0.0f), MoveSpeed(0.0f), JumpForce(0.0f), DashForce(0.0f)
 		{}
 	};
+
+	struct sCreatureStat
+	{
+		float MaxHP;
+		float CurHP;
+		float MoveSpeed;
+
+		float detectRange;
+		float AttackRange;
+		
+		sCreatureStat()
+			: MaxHP(0.0f), CurHP(0.0f), MoveSpeed(0.0f)
+		{}
+	};
 	struct sJumpCount
 	{
 		float	JumpAccumulateTime;
@@ -37,19 +51,36 @@ namespace da::structs
 
 	struct sWeaponStat
 	{
-		da::enums::eWeaponType WeaponType;
-		float	AtaackDamage;
-		float	AttackAccumulateTime;
-		float	AttackDelayTime;
-		bool	AttackReady;
+		da::enums::eWeaponName	WeaponName;
+		bool					IsMeleeWeapon;
+		bool					AttackReady;
+		float					AtaackDamage;
+		float					AttackAccumulateTime;
+		float					AttackDelayTime;
+		sWeaponStat()
+			: WeaponName(da::enums::eWeaponName::Default)
+			, IsMeleeWeapon(true)
+			, AttackReady(true)
+			, AtaackDamage(0.0f)
+			, AttackAccumulateTime(0.0f)
+			, AttackDelayTime(0.0f)
+		{}
+	};
+	struct sShieldStat
+	{
+		da::enums::eShieldName	ShieldName;
+		float					BlockPower;
+		sShieldStat()
+			: ShieldName(da::enums::eShieldName::Default), BlockPower(0.0f)
+		{}
 	};
 
 	struct sArmour
 	{
-		da::enums::eWeaponType Weapon;
-		da::enums::eShieldType Shield;
+		sWeaponStat Weapon;
+		sShieldStat Shield;
 		sArmour()
-			: Weapon(da::enums::eWeaponType::Default), Shield(da::enums::eShieldType::Default)
+			: Weapon{}, Shield{}
 		{}
 	};
 	struct sAccessorys

@@ -14,6 +14,9 @@ namespace da
 		, mPosition(Vector3::Zero)
 		, mRotation(Vector3::Zero)
 		, mScale(Vector3::One)
+		, mOffset(Vector3::Zero)
+		, mTotalPosition(Vector3::Zero)
+
 	{
 	}
 	Transform::~Transform()
@@ -23,7 +26,7 @@ namespace da
 	{
 		mWorld = Matrix::Identity;
 		
-		Vector3 totalPos = mPosition + mOffset;
+		mTotalPosition = mPosition + mOffset;
 
 		Matrix scaleMatrix;
 		scaleMatrix = Matrix::CreateScale(mScale);
@@ -38,7 +41,7 @@ namespace da
 		mRight = Vector3::TransformNormal(Vector3::Right, rotateMatrix);
 
 		Matrix positionMatrix;
-		positionMatrix.Translation(totalPos);
+		positionMatrix.Translation(mTotalPosition);
 
 		mWorld = scaleMatrix * rotateMatrix * positionMatrix;
 

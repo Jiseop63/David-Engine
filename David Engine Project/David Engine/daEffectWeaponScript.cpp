@@ -19,13 +19,13 @@ namespace da
 		// 종료 이벤트 넣어주기
 		mEffectAnimator->CompleteEvent(L"GreatSwing") = std::bind(&EffectWeaponScript::retInactive, this);
 	}
-	void EffectWeaponScript::PlayEffect(enums::eWeaponType weaponType)
+	void EffectWeaponScript::PlayEffect(enums::eWeaponName weaponType)
 	{
 		switch (weaponType)
 		{
-		case da::enums::eWeaponType::Default:
+		case da::enums::eWeaponName::Default:
 			break;
-		case da::enums::eWeaponType::LongSword:
+		case da::enums::eWeaponName::LongSword:
 			MeleeEffect(L"GreatSwing");
 			break;
 		default:
