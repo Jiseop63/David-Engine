@@ -1,6 +1,9 @@
 #include "daSkelScript.h"
 #include "daResources.h"
 #include "daGameObject.h"
+#include "daProjectileScript.h"
+#include "daWeaponScript.h"
+#include "daEffectWeaponScript.h"
 
 namespace da
 {
@@ -150,15 +153,4 @@ namespace da
 		}
 		mIsDead = true;
 	}
-
-	void SkelScript::OnCollisionEnter(Collider2D* other)
-	{
-		if (enums::eLayerType::PlayableAttackCollider == other->GetOwner()->GetLayerType())
-		{
-			// 피격 호출
-			OnDamaged();
-		}
-
-	}
-
 }

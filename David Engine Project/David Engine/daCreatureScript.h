@@ -35,7 +35,7 @@ namespace da
 		EffectEnemyScript* AddEffectObject(GameObject* effectObject);
 #pragma endregion
 
-	protected:
+	public:
 		void OnDamaged();
 
 #pragma region Components

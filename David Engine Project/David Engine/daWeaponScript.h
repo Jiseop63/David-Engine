@@ -20,6 +20,8 @@ namespace da
 
 #pragma region Weapon Func
 	public:
+		void CallHitEffect(math::Vector3 position);
+		
 		void SetWeaponTransform(math::Vector3 playerPos, math::Vector2 playerDir);
 		void SetReverse(bool value) { mWeaponRenderer->SetReverse(value); }
 		void ChangeWeapon();
@@ -78,8 +80,10 @@ namespace da
 
 	private:
 		enums::eWeaponName					mWeaponType;
+		math::Vector3						mEffectScale;
 		math::Vector3						mPlayerPosition;
 		math::Vector2						mPlayerDir;
+		//float								mHitEffectAngle;
 		bool								mAttackReady;
 		bool								mWeaponAttacked;
 

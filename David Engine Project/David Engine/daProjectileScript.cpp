@@ -3,6 +3,7 @@
 #include "daTime.h"
 #include "daWeaponScript.h"
 #include "daPlayerScript.h"
+#include "daCreatureScript.h"
 
 namespace da
 {
@@ -64,5 +65,16 @@ namespace da
 	{
 		if (!mReqWeapon->IsProjectileCollision())
 			GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
+	}
+	void ProjectileScript::OnCollisionEnter(Collider2D* other)
+	{
+		if (enums::eLayerType::Creature == other->GetOwner()->GetLayerType())
+		{
+			// 피격 호출
+			GameObject* creatureObj = other->GetOwner();
+			CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
+			creatureScript->OnDamaged();			
+			mReqWeapon->CallHitEffect(creatureScript->GetCreatureTransform()->GetPosition());
+		}
 	}
 }

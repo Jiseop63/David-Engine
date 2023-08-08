@@ -165,9 +165,6 @@
     <ClInclude Include="daArmourScript.h">
       <Filter>Objects\UI\HUD</Filter>
     </ClInclude>
-    <ClInclude Include="daProjectileScript.h">
-      <Filter>Objects\Projectile</Filter>
-    </ClInclude>
     <ClInclude Include="daPlayerScript.h">
       <Filter>Objects\Creature\Player</Filter>
     </ClInclude>
@@ -194,6 +191,9 @@
     </ClInclude>
     <ClInclude Include="daEffectEnemyScript.h">
       <Filter>Objects\Creature\Enemy\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="daProjectileScript.h">
+      <Filter>Objects\Creature\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -275,9 +275,6 @@
     <ClCompile Include="daArmourScript.cpp">
       <Filter>Objects\UI\HUD</Filter>
     </ClCompile>
-    <ClCompile Include="daProjectileScript.cpp">
-      <Filter>Objects\Projectile</Filter>
-    </ClCompile>
     <ClCompile Include="daPlayerScript.cpp">
       <Filter>Objects\Creature\Player</Filter>
     </ClCompile>
@@ -304,6 +301,9 @@
     </ClCompile>
     <ClCompile Include="daEffectEnemyScript.cpp">
       <Filter>Objects\Creature\Enemy\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="daProjectileScript.cpp">
+      <Filter>Objects\Creature\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

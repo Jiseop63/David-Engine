@@ -22,7 +22,6 @@ namespace da
 #pragma endregion
 
 #pragma region Collision
-		virtual void OnCollisionEnter(Collider2D* other);
 
 #pragma endregion
 

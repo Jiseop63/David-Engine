@@ -20,7 +20,6 @@ namespace da
 
 		void turnOffCollision();
 
-
 	public:
 		// 콜라이더 세팅 (외부에서)
 		void SetProjectilePosition(math::Vector3 vector3) { mProjectileTransform->SetPosition(vector3); }
@@ -33,6 +32,12 @@ namespace da
 		// 외부 세팅 함수
 	public:
 		void SetReqWeapon(WeaponScript* weapon) { mReqWeapon = weapon; }
+		WeaponScript* GetReqWeapon() { return mReqWeapon; }
+
+
+
+	public:
+		virtual void OnCollisionEnter(Collider2D* other) override;
 
 	protected:
 		Transform*				mProjectileTransform;

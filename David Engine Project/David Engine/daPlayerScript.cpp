@@ -345,7 +345,6 @@ namespace da
         }
         void PlayerScript::todoDash()
         {
-            mFootCollider->ApplyGround(false);
             mRigidbody->OverrideVelocity(mPlayerDir, mPlayerStat->DashForce);
 
             // 투사체 정보 갱신

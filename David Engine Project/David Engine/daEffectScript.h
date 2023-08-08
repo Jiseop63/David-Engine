@@ -22,6 +22,8 @@ namespace da
 		math::Vector3 GetEffectPosition() { return mEffectTransform->GetPosition(); }
 		void SetEffectRotation(math::Vector3 vector3) { mEffectTransform->SetRotation(vector3); }
 		math::Vector3 GetEffectRotation() { return mEffectTransform->GetRotation(); }
+		void SetEffectScale(math::Vector3 vector3) { mEffectTransform->SetScale(vector3); }
+		math::Vector3 GetEffectScale() { return mEffectTransform->GetScale(); }
 		void SetReverse(bool value) { mReverse = value; }
 
 	protected:

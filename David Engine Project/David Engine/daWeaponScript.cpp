@@ -13,6 +13,7 @@ namespace da
 		: mWeaponTransform(nullptr)
 		, mWeaponRenderer(nullptr)
 		, mWeaponAnimator(nullptr)
+		, mPlayerScript(nullptr)
 		, mEffects{}
 		, mProjectiles{}
 		, mActiveArmour(nullptr)
@@ -22,6 +23,7 @@ namespace da
 
 		, mWeaponType(enums::eWeaponName::LongSword)
 		, mPlayerDir(math::Vector2::Zero)
+		//, mHitEffectAngle(0.0f)
 		, mAttackReady(true)
 		, mWeaponAttacked(false)
 		, mProjectileSize(math::Vector2::Zero)
@@ -193,6 +195,8 @@ namespace da
 			mProjectileCenterPadding = 0.750f;
 			mProjectileValidTime = 0.30f;
 			mProjectileType = enums::eProjectileType::Melee;
+
+			mEffectScale = math::Vector3(2.50f, 2.50f, 1.0f);
 		}
 	}
 	void WeaponScript::ModifyProjectile(math::Vector2 size, float dirPadding, float validTime, enums::eProjectileType projectileType)
@@ -223,11 +227,26 @@ namespace da
 		// 방향 구하기
 		math::Vector3 playerDir(mPlayerDir.x, mPlayerDir.y, 0.0f);
 		EffectWeaponScript* effect = callEffect();
+		effect->SetEffectScale(mEffectScale);
 		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, mEffectAngle - 1.570f));
 		effect->SetEffectPosition(mPlayerPosition + (playerDir * mProjectileCenterPadding));
 		effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 		effect->PlayEffect(mWeaponType);
 	}
+	void WeaponScript::CallHitEffect(math::Vector3 position)
+	{
+		/*if (7 <= mHitEffectAngle)
+			mHitEffectAngle = 0.0f;
+		mHitEffectAngle += 0.450f;*/
+		// 방향 구하기
+		EffectWeaponScript* effect = callEffect();
+		effect->SetEffectScale(math::Vector3(1.50f, 1.50f, 1.0f));
+		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, 0));
+		effect->SetEffectPosition(position - math::Vector3(0.0f, 0.2f, 0.0f));
+		effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+		effect->PlayEffect(L"Slash");
+	}
+
 	void WeaponScript::ActiveProjectile()
 	{
 		mProjectileCollision = true;

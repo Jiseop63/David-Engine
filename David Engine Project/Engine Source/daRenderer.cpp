@@ -465,6 +465,7 @@ namespace renderer
 		Resources::Load<Texture>(L"GreatSwingFX", L"..\\Resources\\Texture\\Items\\GreatSword\\GreatSwingFX.png");
 		Resources::Load<Texture>(L"JumpFX", L"..\\Resources\\Texture\\Adventurer\\FX\\JumpFX.png");
 		Resources::Load<Texture>(L"DustFX", L"..\\Resources\\Texture\\Adventurer\\FX\\DustFX.png");
+		Resources::Load<Texture>(L"SlashFX", L"..\\Resources\\Texture\\Adventurer\\FX\\SlashFX.png");
 		Resources::Load<Texture>(L"DyingFX", L"..\\Resources\\Texture\\Adventurer\\FX\\DyingFX.png");
 
 #pragma endregion
