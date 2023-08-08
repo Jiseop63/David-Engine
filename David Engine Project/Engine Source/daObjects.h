@@ -170,11 +170,12 @@ namespace da::objects
 	static GameObject* InstantiateLandObject(Scene* scene, math::Vector3 location, math::Vector3 scale)
 	{
 		GameObject* obj = new GameObject();
+		obj->SetLayerType(enums::eLayerType::Land);
+		obj->SetName(L"LandCollider");
 		Layer& myLayer = scene->GetLayer(enums::eLayerType::Land);
 		myLayer.AddGameObject(obj);
 
 		Collider2D* collider = obj->AddComponent<Collider2D>();
-		collider->SetName(L"LandCollider");
 		collider->SetColliderDetection(Collider2D::eColliderDetection::Land);
 		obj->Initialize();
 

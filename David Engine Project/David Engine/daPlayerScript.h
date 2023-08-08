@@ -107,9 +107,9 @@ namespace da
 		virtual void OnCollisionEnter(Collider2D* other) override;
 		virtual void OnCollisionStay(Collider2D* other) override {}
 		virtual void OnCollisionExit(Collider2D* other) override {}
-		virtual void OnLandEnter(Collider2D* other) override {}
-		virtual void OnLandStay(Collider2D* other) override;
-		virtual void OnLandExit(Collider2D* other) override {}
+		virtual void OnGroundEnter(Collider2D* other) override {}
+		virtual void OnGroundStay(Collider2D* other) override;
+		virtual void OnGroundExit(Collider2D* other) override {}
 #pragma endregion
 // value
 #pragma region Components

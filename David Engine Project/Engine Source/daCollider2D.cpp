@@ -53,7 +53,7 @@ namespace da
 		mTotalScale = scale;
 	}
 
-	void Collider2D::ChangingCollisionColor(bool isCollision)
+	void Collider2D::ChangeCollisionColor(bool isCollision)
 	{
 		if (isCollision)
 			mColliderColor = math::Vector4(1.0f, 0.0f, 0.0f, 1.0f);
@@ -61,9 +61,8 @@ namespace da
 			mColliderColor = math::Vector4(0.0f, 1.0f, 0.0f, 1.0f);
 	}
 
-	void Collider2D::ChangingLandColor(bool isCollision)
+	void Collider2D::ChangeLandColor(bool isCollision)
 	{
-		mGrounded = isCollision;
 		if (isCollision)
 			mColliderColor = math::Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 		else
@@ -89,7 +88,7 @@ namespace da
 
 	void Collider2D::OnCollisionEnter(Collider2D* other)
 	{
-		ChangingCollisionColor(true);
+		ChangeCollisionColor(true);
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetScripts();
 
@@ -110,7 +109,7 @@ namespace da
 	}
 	void Collider2D::OnCollisionExit(Collider2D* other)
 	{
-		ChangingCollisionColor(false);
+		ChangeCollisionColor(false);
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetScripts();
 
@@ -121,35 +120,43 @@ namespace da
 	}
 
 
-	void Collider2D::OnLandEnter(Collider2D* other)
+	void Collider2D::OnGroundEnter(Collider2D* other)
 	{
-		ChangingLandColor(true);
+		int a = 0;
+		if (enums::eLayerType::Land == other->GetOwner()->GetLayerType()
+			&& enums::eLayerType::Land != GetOwner()->GetLayerType())			
+			mGrounded = true;
+
+		ChangeLandColor(true);
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetScripts();
 		for (Script* script : scripts)
 		{
-			script->OnLandEnter(other);
+			script->OnGroundEnter(other);
 		}
 	}
-	void Collider2D::OnLandStay(Collider2D* other)
+	void Collider2D::OnGroundStay(Collider2D* other)
 	{
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetScripts();
 
 		for (Script* script : scripts)
 		{
-			script->OnLandStay(other);
+			script->OnGroundStay(other);
 		}
 	}
-	void Collider2D::OnLandExit(Collider2D* other)
+	void Collider2D::OnGroundExit(Collider2D* other)
 	{
-		ChangingLandColor(false);
+		if (enums::eLayerType::Land == other->GetOwner()->GetLayerType()
+			&& enums::eLayerType::Land != GetOwner()->GetLayerType())
+			mGrounded = false;
+		ChangeLandColor(false);
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetScripts();
 
 		for (Script* script : scripts)
 		{
-			script->OnLandExit(other);
+			script->OnGroundExit(other);
 		}
 	}
 }

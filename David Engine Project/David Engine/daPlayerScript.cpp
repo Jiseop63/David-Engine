@@ -462,7 +462,7 @@ namespace da
     void PlayerScript::OnCollisionEnter(Collider2D* other)
     {
     }
-    void PlayerScript::OnLandStay(Collider2D* other)
+    void PlayerScript::OnGroundStay(Collider2D* other)
     {
         //// Land Pos, Size 가져오기
         //Vector3 landPos = other->GetTotalPosition();

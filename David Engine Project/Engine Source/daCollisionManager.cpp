@@ -90,8 +90,8 @@ namespace da
 					&& Collider2D::eColliderDetection::Land == right->GetColliderDetection())
 				{
 					iter->second = true;
-					left->OnLandEnter(right);
-					right->OnLandEnter(left);
+					left->OnGroundEnter(right);
+					right->OnGroundEnter(left);
 					return;
 				}
 				if (Collider2D::eColliderDetection::Default == left->GetColliderDetection()
@@ -114,8 +114,8 @@ namespace da
 						&& Collider2D::eColliderDetection::Land == right->GetColliderDetection())
 					{
 						iter->second = false;
-						left->OnLandExit(right);
-						right->OnLandExit(left);
+						left->OnGroundExit(right);
+						right->OnGroundExit(left);
 						return;
 					}
 					if (Collider2D::eColliderDetection::Default == left->GetColliderDetection()
@@ -133,8 +133,8 @@ namespace da
 				if (Collider2D::eColliderDetection::Land == left->GetColliderDetection()
 					&& Collider2D::eColliderDetection::Land == right->GetColliderDetection())
 				{
-					left->OnLandStay(right);
-					right->OnLandStay(left);
+					left->OnGroundStay(right);
+					right->OnGroundStay(left);
 					return;
 				}
 				if (Collider2D::eColliderDetection::Default == left->GetColliderDetection()
@@ -156,8 +156,8 @@ namespace da
 					&& Collider2D::eColliderDetection::Land == right->GetColliderDetection())
 				{
 					iter->second = false;
-					left->OnLandExit(right);
-					right->OnLandExit(left);
+					left->OnGroundExit(right);
+					right->OnGroundExit(left);
 					return;
 				}
 				if (Collider2D::eColliderDetection::Default == left->GetColliderDetection()

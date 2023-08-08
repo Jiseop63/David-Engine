@@ -21,8 +21,8 @@ namespace da
 		virtual void Initialize() override;
 		virtual void LateUpdate() override;
 
-		void ChangingCollisionColor(bool isCollision);
-		void ChangingLandColor(bool isCollision);
+		void ChangeCollisionColor(bool isCollision);
+		void ChangeLandColor(bool isCollision);
 
 	public:
 		void SetColliderType(enums::eColliderShape type) { mColliderShape = type; }
@@ -46,9 +46,9 @@ namespace da
 		void OnCollisionStay(Collider2D* other);
 		void OnCollisionExit(Collider2D* other);
 
-		void OnLandEnter(Collider2D* other);
-		void OnLandStay(Collider2D* other);
-		void OnLandExit(Collider2D* other);
+		void OnGroundEnter(Collider2D* other);
+		void OnGroundStay(Collider2D* other);
+		void OnGroundExit(Collider2D* other);
 		
 	public:
 		UINT GetColliderID() { return mColliderID; }

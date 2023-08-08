@@ -57,7 +57,6 @@ namespace da
 
 
 		// 충돌 세팅
-		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Creature);
 		CollisionManager::SetLayer(enums::eLayerType::Land, enums::eLayerType::Playable);
 		CollisionManager::SetLayer(enums::eLayerType::Land, enums::eLayerType::Creature);
 	}

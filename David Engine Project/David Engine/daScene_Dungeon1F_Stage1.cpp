@@ -49,9 +49,6 @@ namespace da
 		player->SetPlayerPosition(math::Vector3::Zero);
 		player->IsPlayerInDungeon(true);
 		// 충돌 세팅
-		CollisionManager::SetLayer(enums::eLayerType::Land, enums::eLayerType::Playable);
-		CollisionManager::SetLayer(enums::eLayerType::Land, enums::eLayerType::Creature);
-
 		CollisionManager::SetLayer(enums::eLayerType::PlayableAttackCollider, enums::eLayerType::Creature);
 	}
 	void Scene_Dungeon1F_Stage1::OnExit()
