@@ -4,10 +4,7 @@
 #include "daAnimator.h"
 #include "daMeshRenderer.h"
 #include "daLight.h"
-
 #include "daWeaponScript.h"
-#include "daEffectPlayerScript.h"
-
 namespace da
 {
 	// 라디안 방향
@@ -27,6 +24,8 @@ namespace da
 		Jump,
 		Dead,
 	};
+
+	class EffectPlayerScript;
 	class PlayerScript : public Script
 	{
 	public:
@@ -90,10 +89,12 @@ namespace da
 	private:
 		void jumpRegen();
 		void dashRegen();
+		void bufferedJump();
 
 		void inputDash();
+		void todoDash();
+
 		void inputJump();
-		void bufferedJump();
 		void todoJump();
 #pragma endregion
 #pragma region Initialize Player
@@ -136,12 +137,13 @@ namespace da
 #pragma endregion
 #pragma region Condition value
 	private:
-		math::Vector2 mPlayerDir;
+		math::Vector2	mPlayerDir;
 		ePlayerState	mActiveState;
 		ePlayerState	mpreviousState;
 		int				mMoveCondition;
 		float			mDustAccumulateTime;
 		bool			mDead;
+
 #pragma endregion
 	};
 }

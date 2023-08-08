@@ -5,6 +5,8 @@
 #include "daGameDataManager.h"
 #include "daEffectWeaponScript.h"
 #include "daProjectileScript.h"
+#include "daPlayerScript.h"
+
 namespace da
 {
 	WeaponScript::WeaponScript()
@@ -25,7 +27,10 @@ namespace da
 		, mProjectileSize(math::Vector2::Zero)
 		, mProjectileCenterPadding(0.0f)
 
+		, mProjectileType(enums::eProjectileType::Melee)
 		, mProjectileCollision(false)
+		, mProjectileValidTime(0.0f)
+		, mProjectileAccumulate(0.0f)
 		, mEffectAngle(0.0f)
 	{		
 	}
@@ -48,10 +53,8 @@ namespace da
 	}
 	void WeaponScript::Update()
 	{
-		// 공격 조건
 		attackConditionCheck();
-		// 무기 회전 (개편 예정)
-		//calcWeaponAngle();
+		projectileConditionCheck();
 	}
 		
 #pragma region common func
@@ -67,6 +70,18 @@ namespace da
 				mAttackReady = true;
 				// 충돌체 설정 해주기
 				mActiveArmour->Weapon.AttackAccumulateTime = 0.0f;
+			}
+		}
+	}
+	void WeaponScript::projectileConditionCheck()
+	{
+		if (mProjectileCollision)
+		{
+			mProjectileAccumulate += (float)Time::DeltaTime();
+			if (mProjectileValidTime <= mProjectileAccumulate)
+			{
+				mProjectileAccumulate = 0.0f;
+				mProjectileCollision = false;
 			}
 		}
 	}
@@ -99,7 +114,7 @@ namespace da
 			SetReverse(isLeft);
 			if (!mWeaponAttacked)
 			{
-				angle += 2.5710f;
+				angle += 2.710f;
 				weaponPosistion.x += armUp.x;
 				weaponPosistion.y += armDown.y;
 			}
@@ -113,7 +128,7 @@ namespace da
 		{
 			if (!mWeaponAttacked)
 			{
-				angle -= 2.5710f;
+				angle -= 2.710f;
 				weaponPosistion.x -= armUp.x;
 				weaponPosistion.y += armDown.y;
 
@@ -157,16 +172,10 @@ namespace da
 		{
 			if (enums::eWeaponName::LongSword == mWeaponType)
 			{
-				// 무기 데이터 & Scale 세팅 
+				// 무기 정보 세팅
 				mActiveArmour->Weapon.AttackDelayTime = 0.40f;
 				mWeaponTransform->SetScale(math::Vector3(0.090f * 4.0f, 0.440f * 4.0f, 1.0f));
-				// Texture 세팅
 				mWeaponTexture = Resources::Find<Texture>(L"LongSwordTestTexture");
-				
-				// Effect & Collider 세팅
-				mProjectileSize = math::Vector2(2.50f, 1.750f);
-				mProjectileCenterPadding = 0.750f;
-
 			}
 
 			if (mWeaponTexture)
@@ -175,10 +184,31 @@ namespace da
 	}
 #pragma endregion
 #pragma region Attack Process
+	void WeaponScript::ModifyData()
+	{
+		if (enums::eWeaponName::LongSword == mWeaponType)
+		{
+			// Effect & Collider 세팅
+			mProjectileSize = math::Vector2(2.50f, 1.750f);
+			mProjectileCenterPadding = 0.750f;
+			mProjectileValidTime = 0.30f;
+			mProjectileType = enums::eProjectileType::Melee;
+		}
+	}
+	void WeaponScript::ModifyProjectile(math::Vector2 size, float dirPadding, float validTime, enums::eProjectileType projectileType)
+	{
+		mProjectileSize = size;
+		mProjectileCenterPadding = dirPadding;
+		mProjectileValidTime = validTime;
+		mProjectileType = projectileType;
+	}
 	void WeaponScript::DoAttack()
 	{
 		if (mAttackReady)
 		{
+			// 공격 정보 갱신하기
+			ModifyData();
+
 			// 공격 활성화 (Tr 세팅, 이펙트, 충돌 객체 세팅)
 			activeAttack();
 			
@@ -188,25 +218,35 @@ namespace da
 			mAttackReady = false;
 		}
 	}
-	void WeaponScript::activeAttack()
+	void WeaponScript::ActiveEffect()
 	{
 		// 방향 구하기
 		math::Vector3 playerDir(mPlayerDir.x, mPlayerDir.y, 0.0f);
-		// 이펙트 적용하기
 		EffectWeaponScript* effect = callEffect();
-		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, mEffectAngle - 1.570f));		
+		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, mEffectAngle - 1.570f));
 		effect->SetEffectPosition(mPlayerPosition + (playerDir * mProjectileCenterPadding));
 		effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 		effect->PlayEffect(mWeaponType);
-		
-			
-		// 투사체 적용하기
+	}
+	void WeaponScript::ActiveProjectile()
+	{
+		mProjectileCollision = true;
+
 		ProjectileScript* projectile = callProjectile();
 		projectile->SetProjectileRotation(math::Vector3(0.0f, 0.0f, mEffectAngle - 1.570f));
 		projectile->SetProjectilePosition(mPlayerPosition);
 		projectile->SetProjectileCenter(mPlayerDir * mProjectileCenterPadding);
 		projectile->SetProjectileSize(mProjectileSize);
+		projectile->SetProjectileType(mProjectileType);
 		projectile->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+
+	}
+	void WeaponScript::activeAttack()
+	{
+		// 이펙트 적용하기
+		ActiveEffect();
+		// 투사체 적용하기
+		ActiveProjectile();
 	}
 	void WeaponScript::playWeaponImage()
 	{

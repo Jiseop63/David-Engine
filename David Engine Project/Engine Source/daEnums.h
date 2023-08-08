@@ -87,5 +87,12 @@ namespace da::enums
 	{
 		Default,
 	};
+
+	enum class eProjectileType
+	{
+		Melee,
+		Range,
+		Body,
+	};
 #pragma endregion
 }

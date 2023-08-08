@@ -11,6 +11,8 @@
 #include "daResources.h"
 
 #include "daCreatureScript.h"
+#include "daWeaponScript.h"
+#include "daEffectPlayerScript.h"
 
 namespace da
 {
@@ -33,7 +35,7 @@ namespace da
         , mMoveCondition(0)
         , mDead(false)
         , mDustAccumulateTime(0.0f)
-        
+                
         , mPlayerStat(nullptr)
         , mJumpCount(nullptr)
         , mDashCount(nullptr)
@@ -121,7 +123,6 @@ namespace da
             return;
         
         CalcPlayerDir();
-        ReverseTexture();
     }
     void PlayerScript::CalcPlayerDir()
     {
@@ -338,10 +339,20 @@ namespace da
                 {
                     if (ePlayerState::Jump != mActiveState)
                         ChangeState(ePlayerState::Jump);
-                    mFootCollider->ApplyGround(false);
-                    mRigidbody->OverrideVelocity(mPlayerDir, mPlayerStat->DashForce);
+                    todoDash();
                 }
             }
+        }
+        void PlayerScript::todoDash()
+        {
+            mFootCollider->ApplyGround(false);
+            mRigidbody->OverrideVelocity(mPlayerDir, mPlayerStat->DashForce);
+
+            // 투사체 정보 갱신
+            mWeaponScript->ModifyProjectile(
+                math::Vector2(0.80f, 1.20f), 0.0f, 0.30f, enums::eProjectileType::Body);
+            // 투사체 활성화
+            mWeaponScript->ActiveProjectile();
         }
         void PlayerScript::inputJump()
         {
@@ -486,16 +497,17 @@ namespace da
     }
 #pragma endregion
 #pragma region public Func
+    WeaponScript* PlayerScript::SetWeaponObject(GameObject* object)
+    {
+        mWeaponScript = object->AddComponent<WeaponScript>();
+        mWeaponScript->SetPlayerScript(this);
+        return mWeaponScript;
+    }
     EffectPlayerScript* PlayerScript::AddEffectObject(GameObject* object)
     {
         EffectPlayerScript* effect = object->AddComponent<EffectPlayerScript>();
         mEffects.push_back(effect);
         return effect;
-    }
-    WeaponScript* PlayerScript::SetWeaponObject(GameObject* object)
-    {
-        mWeaponScript = object->AddComponent<WeaponScript>();
-        return mWeaponScript;
     }
 #pragma endregion
 }

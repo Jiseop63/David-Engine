@@ -5,8 +5,10 @@
 
 namespace da
 {
-	class EffectWeaponScript;
+	// WeaponScript -> CombatScript 로 변경할 것 !!
+	class PlayerScript;
 	class ProjectileScript;
+	class EffectWeaponScript;
 	class WeaponScript : public Script
 	{
 	public:
@@ -21,14 +23,31 @@ namespace da
 		void SetWeaponTransform(math::Vector3 playerPos, math::Vector2 playerDir);
 		void SetReverse(bool value) { mWeaponRenderer->SetReverse(value); }
 		void ChangeWeapon();
+
+		void ModifyData();
+		void ModifyProjectile(math::Vector2 size, float dirPadding, float validTime, enums::eProjectileType projectileType);
 		void DoAttack();
+
+	public:
+		void ActiveEffect();
+		void ActiveProjectile();
 
 	private:
 		void attackConditionCheck();
+		void projectileConditionCheck();
 		void activeAttack();
+
+		
 		void weaponInit();
 		void playWeaponImage();
 #pragma endregion
+
+#pragma region Player Set
+	public:
+		void SetPlayerScript(PlayerScript* player) { mPlayerScript = player; }
+		PlayerScript* GetPlayerScript() { return mPlayerScript; }
+#pragma endregion
+
 #pragma region Effect Func
 	public:
 		void AddEffectObject(GameObject* object);
@@ -46,6 +65,7 @@ namespace da
 		Transform*							mWeaponTransform;
 		Animator*							mWeaponAnimator;
 		MeshRenderer*						mWeaponRenderer;
+		PlayerScript*						mPlayerScript;
 		std::vector<EffectWeaponScript*>	mEffects;
 		std::vector<ProjectileScript*>		mProjectiles;
 
@@ -65,9 +85,11 @@ namespace da
 
 		math::Vector2						mProjectileSize;
 		float								mProjectileCenterPadding;
-		// 이건 아직 용도를 모르겠음
+		// 외부에서 조건체크용으로 사용하는 변수
 		bool								mProjectileCollision;
-
+		float								mProjectileValidTime;
+		float								mProjectileAccumulate;
+		enums::eProjectileType				mProjectileType;
 	private:
 
 		// 개선의 여지가 있음

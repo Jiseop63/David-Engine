@@ -1,6 +1,7 @@
 #include "daEffectWeaponScript.h"
 #include "daGameObject.h"
 #include "daResources.h"
+#include "daWeaponScript.h"
 
 namespace da
 {
@@ -34,12 +35,10 @@ namespace da
 	}
 	void EffectWeaponScript::MeleeEffect(const std::wstring name)
 	{
-		mReqWeapon->ApplyProjectileCollision(true);
 		mEffectAnimator->PlayAnimation(name, false);
 	}
 	void EffectWeaponScript::retInactive()
 	{
 		GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
-		mReqWeapon->ApplyProjectileCollision(false);
 	}
 }

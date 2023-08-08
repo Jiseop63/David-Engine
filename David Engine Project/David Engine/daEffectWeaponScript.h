@@ -1,9 +1,9 @@
 #pragma once
 #include "daEffectScript.h"
-#include "daWeaponScript.h"
 
 namespace da
 {
+	class WeaponScript;
 	class EffectWeaponScript : public EffectScript
 	{
 	public:
