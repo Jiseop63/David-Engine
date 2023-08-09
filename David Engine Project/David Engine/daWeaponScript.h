@@ -83,7 +83,7 @@ namespace da
 		math::Vector3						mEffectScale;
 		math::Vector3						mPlayerPosition;
 		math::Vector2						mPlayerDir;
-		//float								mHitEffectAngle;
+		float								mHitEffectAngle;
 		bool								mAttackReady;
 		bool								mWeaponAttacked;
 

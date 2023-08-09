@@ -23,7 +23,7 @@ namespace da
 
 		, mWeaponType(enums::eWeaponName::LongSword)
 		, mPlayerDir(math::Vector2::Zero)
-		//, mHitEffectAngle(0.0f)
+		, mHitEffectAngle(0.0f)
 		, mAttackReady(true)
 		, mWeaponAttacked(false)
 		, mProjectileSize(math::Vector2::Zero)
@@ -235,13 +235,13 @@ namespace da
 	}
 	void WeaponScript::CallHitEffect(math::Vector3 position)
 	{
-		/*if (7 <= mHitEffectAngle)
+		if (7 <= mHitEffectAngle)
 			mHitEffectAngle = 0.0f;
-		mHitEffectAngle += 0.450f;*/
+		mHitEffectAngle += 1.80f;
 		// 방향 구하기
 		EffectWeaponScript* effect = callEffect();
 		effect->SetEffectScale(math::Vector3(1.50f, 1.50f, 1.0f));
-		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, 0));
+		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, mHitEffectAngle));
 		effect->SetEffectPosition(position - math::Vector3(0.0f, 0.2f, 0.0f));
 		effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 		effect->PlayEffect(L"Slash");

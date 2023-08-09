@@ -359,9 +359,8 @@ namespace da
             {
                 // 버퍼에 추가
                 if (Input::GetKeyDown(eKeyCode::SPACE))
-                {
                     mJumpCount->BufferedJump = true;
-                }
+
                 if (Input::GetKeyUp(eKeyCode::SPACE))
                 {
                     // 버퍼 중단

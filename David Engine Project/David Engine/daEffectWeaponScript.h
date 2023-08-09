@@ -21,7 +21,7 @@ namespace da
 	public:
 		void SetReqWeapon(WeaponScript* weapon) 
 		{ 
-			mReqWeapon = weapon; 
+			mReqWeapon = weapon;
 			int a = 0;
 		}
 
