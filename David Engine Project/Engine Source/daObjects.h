@@ -156,6 +156,9 @@ namespace da::objects
 		creatureScript->SetEnemyWeaponScript(enemyWeaponObj);
 
 		// life Bar 추가해야함
+		GameObject* enemyLifeObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, L"CreatureLifeBarMaterial");
+		CreatureLifebarScript* creatureLifeScript = creatureScript->SetCreatureLifeScript(enemyLifeObj);
+		enemyLifeObj->GetTransform()->SetScale(1.0f, 0.250f, 1.0f);
 
 
 		return enemyScript;

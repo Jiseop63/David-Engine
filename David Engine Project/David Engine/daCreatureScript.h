@@ -1,10 +1,8 @@
 #pragma once
 #include "daScript.h"
+#include "daMeshRenderer.h"
 #include "daRigidbody.h"
 #include "daAnimator.h"
-#include "daEnemyWeaponScript.h"
-#include "daEffectEnemyScript.h"
-#include "daPlayerScript.h"
 
 namespace da
 {
@@ -15,6 +13,10 @@ namespace da
 		Attack,
 		Dead,
 	};
+	class PlayerScript;
+	class EnemyWeaponScript;
+	class EffectEnemyScript;
+	class CreatureLifebarScript;
 	class CreatureScript : public Script
 	{
 	public:
@@ -32,7 +34,9 @@ namespace da
 	public:
 		Transform* GetCreatureTransform() { return mCreatureTransform; }
 		EnemyWeaponScript* SetEnemyWeaponScript(GameObject* creature);
+		CreatureLifebarScript* SetCreatureLifeScript(GameObject* creature);
 		EffectEnemyScript* AddEffectObject(GameObject* effectObject);
+		structs::sCreatureStat GetCreatureStat() { return mCreatureStat; }
 #pragma endregion
 
 	public:
@@ -40,29 +44,29 @@ namespace da
 
 #pragma region Components
 	protected:
-		Transform*			mCreatureTransform;
-		MeshRenderer*		mCreatureRenderer;
-		Rigidbody*			mCreatureRigidbody;
-		Animator*			mCreatureAnimator;
-		Collider2D*			mCreatureBodyCollider;
-		Collider2D*			mCreatureFootCollider;
+		Transform*				mCreatureTransform;
+		MeshRenderer*			mCreatureRenderer;
+		Rigidbody*				mCreatureRigidbody;
+		Animator*				mCreatureAnimator;
+		Collider2D*				mCreatureBodyCollider;
+		Collider2D*				mCreatureFootCollider;
 
-		EnemyWeaponScript*	mCreatureWeaponScript;
-		EffectEnemyScript*	mEnemyEffectScript;
-		PlayerScript*		mPlayerScript;
-
+		PlayerScript*			mPlayerScript;
+		EnemyWeaponScript*		mCreatureWeaponScript;
+		EffectEnemyScript*		mEnemyEffectScript;
+		CreatureLifebarScript*	mCreatureLifeScript;
 
 #pragma endregion
 #pragma region Datas
 	protected:
-		structs::sCreatureStat mCreatureStat;
+		structs::sCreatureStat	mCreatureStat;
 #pragma endregion
 
 #pragma region condition
 	protected:
-		math::Vector2	mCreatureDir;
-		eCreatureState	mCreatureActiveState;
-		bool			mIsDead;
+		math::Vector2			mCreatureDir;
+		eCreatureState			mCreatureActiveState;
+		bool					mIsDead;
 #pragma endregion
 
 	};

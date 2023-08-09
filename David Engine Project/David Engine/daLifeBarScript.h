@@ -9,8 +9,6 @@ namespace da
 		LifeBarScript();
 		virtual ~LifeBarScript();
 
-		virtual void LateUpdate();
-
 		void BindConstantBuffer();
 	};
 }

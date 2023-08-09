@@ -3,6 +3,10 @@
 #include "daGameObject.h"
 #include "daResources.h"
 #include "daSceneManager.h"
+#include "daEnemyWeaponScript.h"
+#include "daEffectEnemyScript.h"
+#include "daCreatureLifebarScript.h"
+
 namespace da
 {
 	using namespace math;
@@ -16,6 +20,7 @@ namespace da
 
 		, mCreatureWeaponScript(nullptr)
 		, mEnemyEffectScript(nullptr)
+		, mCreatureLifeScript(nullptr)
 		, mPlayerScript(nullptr)
 		, mCreatureStat{}
 		, mCreatureActiveState(eCreatureState::Idle)
@@ -69,6 +74,13 @@ namespace da
 		mCreatureWeaponScript = creature->AddComponent<EnemyWeaponScript>();
 		return mCreatureWeaponScript;
 	}
+	CreatureLifebarScript* CreatureScript::SetCreatureLifeScript(GameObject* creature)
+	{
+		mCreatureLifeScript = creature->AddComponent<CreatureLifebarScript>();
+		mCreatureLifeScript->SetCreatureScript(this);
+		
+		return mCreatureLifeScript;
+	}
 	EffectEnemyScript* CreatureScript::AddEffectObject(GameObject* effectObject)
 	{
 		mEnemyEffectScript = effectObject->AddComponent<EffectEnemyScript>();
@@ -77,8 +89,9 @@ namespace da
 	void CreatureScript::OnDamaged()
 	{
 		if (0 >= mCreatureStat.CurHP)
-			mCreatureStat.CurHP = 0;
-		
+			mCreatureStat.CurHP = 0;		
 		mCreatureStat.CurHP -= 5.0f;
+
+		mCreatureLifeScript->BindConstantBuffer();
 	}
 }

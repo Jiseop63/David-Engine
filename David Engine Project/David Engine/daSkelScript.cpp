@@ -5,6 +5,10 @@
 #include "daWeaponScript.h"
 #include "daEffectWeaponScript.h"
 
+#include "daEnemyWeaponScript.h"
+#include "daEffectEnemyScript.h"
+#include "daPlayerScript.h"
+
 namespace da
 {
 	SkelScript::SkelScript()

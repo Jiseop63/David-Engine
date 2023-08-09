@@ -293,6 +293,15 @@ namespace renderer
 			spriteMaterial->SetShader(lifeBarShader);
 			Resources::Insert<Material>(L"PlayerLifeBarMaterial", spriteMaterial);
 		}
+		// Monster life Bar
+		{
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"PlayerLifeBarTexture", L"..\\Resources\\Texture\\Hud\\Life\\LifeBar.png");
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(texture);
+			spriteMaterial->SetShader(lifeBarShader);
+			Resources::Insert<Material>(L"CreatureLifeBarMaterial", spriteMaterial);
+		}
 		// dashcount panel
 		{
 			std::shared_ptr<Texture> texture

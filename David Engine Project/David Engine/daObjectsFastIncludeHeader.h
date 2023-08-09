@@ -49,3 +49,4 @@
 #include "daCreatureScript.h"
 #include "daEnemyWeaponScript.h"
 #include "daSkelScript.h"
+#include "daCreatureLifebarScript.h"

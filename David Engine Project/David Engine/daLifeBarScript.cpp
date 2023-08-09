@@ -13,10 +13,6 @@ namespace da
 	LifeBarScript::~LifeBarScript()
 	{
 	}
-	void LifeBarScript::LateUpdate()
-	{
-		
-	}
 	void LifeBarScript::BindConstantBuffer()
 	{
 		// value 가져오기

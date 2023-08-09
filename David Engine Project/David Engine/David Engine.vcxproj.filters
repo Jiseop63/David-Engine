@@ -195,6 +195,9 @@
     <ClInclude Include="daProjectileScript.h">
       <Filter>Objects\Creature\Player</Filter>
     </ClInclude>
+    <ClInclude Include="daCreatureLifebarScript.h">
+      <Filter>Objects\Creature\Enemy\Base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -304,6 +307,9 @@
     </ClCompile>
     <ClCompile Include="daProjectileScript.cpp">
       <Filter>Objects\Creature\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="daCreatureLifebarScript.cpp">
+      <Filter>Objects\Creature\Enemy\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
