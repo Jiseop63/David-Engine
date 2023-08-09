@@ -10,5 +10,11 @@ namespace da
 		virtual ~LifeBarScript();
 
 		void BindConstantBuffer();
+
+		void SetValue(float max, float cur) { mMaxValue = max, mCurValue = cur; }
+
+	protected:
+		float mMaxValue;
+		float mCurValue;
 	};
 }

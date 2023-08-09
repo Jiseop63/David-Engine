@@ -24,16 +24,14 @@ namespace da
 
 	void CreatureLifebarScript::BindConstantBuffer()
 	{
-		structs::sCreatureStat creatureStat = mCreatureScript->GetCreatureStat();
-
 		// 상수버퍼 만들기
 		graphics::ConstantBuffer* outCB
 			= renderer::constantBuffer[(UINT)graphics::eCBType::Life];
 
 		// 데이터 채우기
 		renderer::LifeCB data;
-		data.MaxHP = creatureStat.MaxHP;
-		data.CurHP = creatureStat.CurHP;
+		data.MaxHP = mMaxValue;
+		data.CurHP = mCurValue;
 
 		outCB->SetData(&data);
 		outCB->Bind(graphics::eShaderStage::VS);

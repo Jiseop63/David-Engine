@@ -55,7 +55,7 @@ namespace da
 		if (0 >= mPlayerStat.CurHP)
 			mPlayerStat.CurHP = 0;
 
-		SceneManager::GetLifebarScript()->BindConstantBuffer();
+		SceneManager::GetLifebarScript()->SetValue(mPlayerStat.MaxHP, mPlayerStat.CurHP);
 	}
 
 	void GameDataManager::GetHeal(float value)
@@ -63,7 +63,8 @@ namespace da
 		mPlayerStat.CurHP += value;
 		if (mPlayerStat.MaxHP <= mPlayerStat.CurHP)
 			mPlayerStat.CurHP = mPlayerStat.MaxHP;
-		SceneManager::GetLifebarScript()->BindConstantBuffer();
+	
+		SceneManager::GetLifebarScript()->SetValue(mPlayerStat.MaxHP, mPlayerStat.CurHP);
 	}
 
 	bool GameDataManager::UseDash()

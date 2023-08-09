@@ -1,10 +1,10 @@
 #pragma once
-#include "daScript.h"
+#include "daLifeBarScript.h"
 
 namespace da
 {
 	class CreatureScript;
-	class CreatureLifebarScript : public Script
+	class CreatureLifebarScript : public LifeBarScript
 	{
 	public:
 		CreatureLifebarScript();

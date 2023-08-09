@@ -8,6 +8,8 @@
 namespace da
 {
 	LifeBarScript::LifeBarScript()
+		: mMaxValue(0.0f)
+		, mCurValue(0.0f)
 	{
 	}
 	LifeBarScript::~LifeBarScript()
@@ -15,17 +17,14 @@ namespace da
 	}
 	void LifeBarScript::BindConstantBuffer()
 	{
-		// value 가져오기
-		structs::sPlayerStat playerlife = GameDataManager::GetPlayerStat();
-
 		// 상수버퍼 만들기
 		graphics::ConstantBuffer* outCB
 			= renderer::constantBuffer[(UINT)graphics::eCBType::Life];
 
 		// 데이터 채우기
 		renderer::LifeCB data;
-		data.MaxHP = playerlife.MaxHP;
-		data.CurHP = playerlife.CurHP;
+		data.MaxHP = mMaxValue;
+		data.CurHP = mCurValue;
 
 		outCB->SetData(&data);
 		outCB->Bind(graphics::eShaderStage::VS);

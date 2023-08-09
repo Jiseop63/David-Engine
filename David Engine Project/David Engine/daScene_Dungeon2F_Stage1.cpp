@@ -43,9 +43,16 @@ namespace da
 	}
 	void Scene_Dungeon2F_Stage1::OnEnter()
 	{
-		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.4f, 0.4f, 0.4f, 1.0f));
+		// Camera 세팅
+		SceneManager::GetMainCameraScript()->GetOwner()->GetComponent<Transform>()->SetPosition(math::Vector3::Zero);
+		// player 세팅
 		PlayerScript* player = SceneManager::GetPlayerScript();
 		player->SetPlayerPosition(math::Vector3::Zero);
+		player->SetPlayerVelocity(math::Vector2::Zero);
+		player->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+		player->IsPlayerInDungeon(true);
+		// light 세팅
+		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.50f, 0.50f, 0.50f, 1.0f));
 	}
 	void Scene_Dungeon2F_Stage1::OnExit()
 	{

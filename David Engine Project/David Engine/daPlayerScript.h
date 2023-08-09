@@ -66,6 +66,7 @@ namespace da
 		bool IsPlayerGround() { return mFootCollider->IsGround(); }
 		void PlayerIsNotGround() { mFootCollider->ApplyGround(false); }
 		math::Vector2 GetPlayerDir() { return mPlayerDir; }
+		void SetPlayerVelocity(math::Vector2 vector2) { mRigidbody->OverrideVelocity(vector2, 0.0f); }
 		void SetPlayerPosition(math::Vector3 vector3) { mTransform->SetPosition(vector3); }
 		void IsPlayerInDungeon(bool value) 
 		{ 

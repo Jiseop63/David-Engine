@@ -48,7 +48,7 @@ namespace da
 	void Scene_Title::OnEnter()
 	{
 		// 각종 객체들 Inactive 해주기
-		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.9f, 0.9f, 0.9f, 1.0f));
+		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.80f, 0.80f, 0.80f, 1.0f));
 		SceneManager::GetPlayerScript()->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
 		SceneManager::GetHUDObject()->SetObjectStates(GameObject::eObjectState::Inactive);
 	}
@@ -151,9 +151,7 @@ namespace da
 			light->SetLightType(enums::eLightType::Directional);
 			light->SetColor(math::Vector4(0.90f, 0.90f, 0.90f, 1.0f));
 		}
-		// player - done
-		GameObject* playerObject = objects::InstantiatePlayer(this);
-		SceneManager::SetPlayerScript(playerObject);
+
 #pragma region HUD
 
 		// hud - done
@@ -188,6 +186,7 @@ namespace da
 				GameObject* lifeBar = objects::InstantiateCommonObject
 					<GameObject>(this, enums::eLayerType::UI, L"PlayerLifeBarMaterial");
 				playerHUD->AddChildObject(lifeBar);
+				lifeBar->AddComponent<LifeBarScript>();
 				SceneManager::SetLifebarScript(lifeBar);	
 				Transform* lifeBarTransform = lifeBar->GetTransform();
 				lifeBarTransform->SetParent(playerHUDTransform);
@@ -200,7 +199,6 @@ namespace da
 				// hud 위치에서 panel size의 절반만큼 당긴다음에... bar offset만큼 더 당기면될듯?
 				math::Vector3 lifeBarPosition = lifePanelPosition + math::Vector3(0.380f, 0.0f, -0.0001f);
 				lifeBarTransform->SetPosition(lifeBarPosition);
-				lifeBar->AddComponent<LifeBarScript>();
 
 				// Dash Panel 객체 생성
 				GameObject* dashPanel = objects::InstantiateCommonObject
@@ -657,5 +655,9 @@ namespace da
 			}
 		}
 #pragma endregion
+
+		// player - done
+		GameObject* playerObject = objects::InstantiatePlayer(this);
+		SceneManager::SetPlayerScript(playerObject);
 	}
 }

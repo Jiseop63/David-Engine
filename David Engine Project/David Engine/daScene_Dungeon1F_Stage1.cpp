@@ -44,10 +44,16 @@ namespace da
 	}
 	void Scene_Dungeon1F_Stage1::OnEnter()
 	{
-		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.50f, 0.50f, 0.50f, 1.0f));
+		// Camera 技泼
+		SceneManager::GetMainCameraScript()->GetOwner()->GetComponent<Transform>()->SetPosition(math::Vector3::Zero);
+		// player 技泼
 		PlayerScript* player = SceneManager::GetPlayerScript();
 		player->SetPlayerPosition(math::Vector3::Zero);
+		player->SetPlayerVelocity(math::Vector2::Zero);
+		player->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 		player->IsPlayerInDungeon(true);
+		// light 技泼
+		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.50f, 0.50f, 0.50f, 1.0f));
 		// 面倒 技泼
 		CollisionManager::SetLayer(enums::eLayerType::PlayableAttackCollider, enums::eLayerType::Creature);
 	}
@@ -88,7 +94,16 @@ namespace da
 			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
 			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(1.50f, 0.0f, ObjectZ));
 		}
-
+		// test enemy
+		{
+			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
+			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(2.50f, 0.0f, ObjectZ));
+		}
+		// test enemy
+		{
+			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
+			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(-0.50f, 0.0f, ObjectZ));
+		}
 		//// test enemy
 		//{
 		//	GameObject* monsterObject = objects::InstantiateCreature<GameObject>(this, L"AnimationMaterial");

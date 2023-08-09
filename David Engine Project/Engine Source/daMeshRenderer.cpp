@@ -1,9 +1,10 @@
 #include "daMeshRenderer.h"
 #include "daGameObject.h"
+#include "daRenderer.h"
 #include "daTransform.h"
 #include "daTimeConstants.h"
-#include "daRenderer.h"
 #include "daAnimator.h"
+#include "../David Engine/daLifeBarScript.h"
 
 namespace da
 {
@@ -28,9 +29,14 @@ namespace da
 		if (timeConstants)
 			timeConstants->BindConstantBuffer();
 
+		LifeBarScript* lifebar = GetOwner()->GetComponent<LifeBarScript>();
+		if (lifebar)
+			lifebar->BindConstantBuffer();
+
 		Animator* animator = GetOwner()->GetComponent<Animator>();
 		if (animator)
 			animator->Binds();
+
 		BindReverseCB();
 		
 		mMesh->BindBuffer();

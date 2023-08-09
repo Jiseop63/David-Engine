@@ -78,7 +78,7 @@ namespace da
 	{
 		mCreatureLifeScript = creature->AddComponent<CreatureLifebarScript>();
 		mCreatureLifeScript->SetCreatureScript(this);
-		
+		mCreatureLifeScript->SetValue(mCreatureStat.MaxHP, mCreatureStat.CurHP);
 		return mCreatureLifeScript;
 	}
 	EffectEnemyScript* CreatureScript::AddEffectObject(GameObject* effectObject)
@@ -92,6 +92,6 @@ namespace da
 			mCreatureStat.CurHP = 0;		
 		mCreatureStat.CurHP -= 5.0f;
 
-		mCreatureLifeScript->BindConstantBuffer();
+		mCreatureLifeScript->SetValue(mCreatureStat.MaxHP, mCreatureStat.CurHP);
 	}
 }

@@ -47,14 +47,19 @@ namespace da
 	
 	void Scene_Town::OnEnter()
 	{
-		// static 按眉 技泼
+		// Camera 技泼
+		SceneManager::GetMainCameraScript()->GetOwner()->GetComponent<Transform>()->SetPosition(math::Vector3::Zero);
+		// player 技泼
 		PlayerScript* player = SceneManager::GetPlayerScript();
 		player->SetPlayerPosition(math::Vector3::Zero);
+		player->SetPlayerVelocity(math::Vector2::Zero);
 		player->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 		player->IsPlayerInDungeon(false);
+		// UI 技泼
+		structs::sPlayerStat playerStat = GameDataManager::GetPlayerStat();
+		SceneManager::GetLifebarScript()->SetValue(playerStat.MaxHP, playerStat.CurHP);
 		SceneManager::GetHUDObject()->SetObjectStates(GameObject::eObjectState::Active);
 		SceneManager::GetCursourScrip()->IsIngame(true);
-
 
 		// 面倒 技泼
 		CollisionManager::SetLayer(enums::eLayerType::Land, enums::eLayerType::Playable);
