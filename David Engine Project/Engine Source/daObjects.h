@@ -164,7 +164,6 @@ namespace da::objects
 	static GameObject* InstantiateSkel(Scene* scene)
 	{
 		GameObject* enemyObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, L"AnimationMaterial");
-
 	}
 
 	static GameObject* InstantiateLandObject(Scene* scene, math::Vector3 location, math::Vector3 scale)

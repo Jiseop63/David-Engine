@@ -24,7 +24,7 @@ namespace da
 		virtual void Initialize();
 #pragma region common Func
 		void ReverseTexture();
-		bool IsLeft() { if (0 >= mCreatureDir.x) return true; else return false;; }
+		bool IsLeft() { if (0 >= mCreatureDir.x) return true; else return false; }
 #pragma endregion
 
 
@@ -50,6 +50,8 @@ namespace da
 		EnemyWeaponScript*	mCreatureWeaponScript;
 		EffectEnemyScript*	mEnemyEffectScript;
 		PlayerScript*		mPlayerScript;
+
+
 #pragma endregion
 #pragma region Datas
 	protected:

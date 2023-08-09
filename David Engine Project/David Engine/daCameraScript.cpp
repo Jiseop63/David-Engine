@@ -13,6 +13,11 @@ namespace da
 {
 	CameraScript::CameraScript()
 		: mCameraComponent(nullptr)
+		, mCameraShaking(false)
+		, mOriginPosition(math::Vector3::Zero)
+		, mOscillationPower(0.0f)
+		, mShakeAccumulateTime(0.0f)
+		, mShakeValidTime(0.0f)
 	{
 	}
 
@@ -21,6 +26,11 @@ namespace da
 	}
 
 	void CameraScript::Update()
+	{		
+		debugInputCamera();
+		CameraShake();
+	}
+	void CameraScript::debugInputCamera()
 	{
 		Camera* cameraComponent = GetOwner()->GetComponent<Camera>();
 		float viewSize = cameraComponent->GetSize();
@@ -33,11 +43,13 @@ namespace da
 		if (Input::GetKey(eKeyCode::NUM_9))
 		{
 			pos += myTransform->Forward() * 5.0f * (float)Time::DeltaTime();
+			mOriginPosition = pos;
 			myTransform->SetPosition(pos);
 		}
 		else if (Input::GetKey(eKeyCode::NUM_3))
 		{
 			pos += -myTransform->Forward() * 5.0f * (float)Time::DeltaTime();
+			mOriginPosition = pos;
 			myTransform->SetPosition(pos);
 		}
 		else if (Input::GetKey(eKeyCode::NUM_4))
@@ -46,6 +58,7 @@ namespace da
 				pos += -myTransform->Right() * viewSize * 5.0f * (float)Time::DeltaTime();
 			else
 				pos += -myTransform->Right() * -pos.z * (float)Time::DeltaTime();
+			mOriginPosition = pos;
 			myTransform->SetPosition(pos);
 		}
 		else if (Input::GetKey(eKeyCode::NUM_6))
@@ -54,6 +67,7 @@ namespace da
 				pos += myTransform->Right() * viewSize * 5.0f * (float)Time::DeltaTime();
 			else
 				pos += myTransform->Right() * -pos.z * (float)Time::DeltaTime();
+			mOriginPosition = pos;
 			myTransform->SetPosition(pos);
 		}
 		else if (Input::GetKey(eKeyCode::NUM_8))
@@ -62,6 +76,7 @@ namespace da
 				pos += myTransform->Up() * viewSize * 5.0f * (float)Time::DeltaTime();
 			else
 				pos += myTransform->Up() * -pos.z * (float)Time::DeltaTime();
+			mOriginPosition = pos;
 			myTransform->SetPosition(pos);
 		}
 		else if (Input::GetKey(eKeyCode::NUM_2))
@@ -70,6 +85,7 @@ namespace da
 				pos += -myTransform->Up() * viewSize * 5.0f * (float)Time::DeltaTime();
 			else
 				pos += -myTransform->Up() * -pos.z * (float)Time::DeltaTime();
+			mOriginPosition = pos;
 			myTransform->SetPosition(pos);
 		}
 		// num 0 : ProjectionType Change
@@ -91,10 +107,9 @@ namespace da
 				uiCamera->SetProjectionType(Camera::eProjectionType::Orthographic);
 			}
 		}
-
 		// num 7 - 1 : size Up-Down
 		else if (Input::GetKey(eKeyCode::NUM_7))
-		{			
+		{
 			viewSize -= 1.f * (float)Time::DeltaTime();
 			if (0.001 <= viewSize)
 				cameraComponent->SetSize(viewSize);
@@ -104,8 +119,31 @@ namespace da
 			viewSize += 1.f * (float)Time::DeltaTime();
 			cameraComponent->SetSize(viewSize);
 		}
-
 		// num 5 : Debug On-Off
+	}
+	void CameraScript::CameraShake()
+	{
+		if (false == mCameraShaking)
+			return;
 
+		Transform* cameraTr = GetOwner()->GetComponent<Transform>();
+		if (mShakeAccumulateTime >= mShakeValidTime)
+		{
+			mShakeAccumulateTime = 0.0f;
+			mCameraShaking = false;
+			cameraTr->SetPosition(mOriginPosition);
+		}
+		else
+			mShakeAccumulateTime += (float)Time::DeltaTime();
+
+		// Do
+		float oscillationX = cos(mShakeAccumulateTime * mOscillationPower);
+		float oscillationY = sin(mShakeAccumulateTime * mOscillationPower);
+
+		Vector3 position = cameraTr->GetPosition();
+		Vector3  oscillationPosition = Vector3(position.x + oscillationX / 250.0f, position.y + oscillationY / 250.0f, position.z);
+
+		
+		cameraTr->SetPosition(oscillationPosition);
 	}
 }

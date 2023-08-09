@@ -4,6 +4,7 @@
 #include "daWeaponScript.h"
 #include "daPlayerScript.h"
 #include "daCreatureScript.h"
+#include "daSceneManager.h"
 
 namespace da
 {
@@ -73,8 +74,9 @@ namespace da
 			// 피격 호출
 			GameObject* creatureObj = other->GetOwner();
 			CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
-			creatureScript->OnDamaged();			
+			creatureScript->OnDamaged();
 			mReqWeapon->CallHitEffect(creatureScript->GetCreatureTransform()->GetPosition());
+			SceneManager::GetMainCameraScript()->SetOscillation(60.0f, 0.10f);
 		}
 	}
 }

@@ -154,7 +154,6 @@ namespace da
 		// player - done
 		GameObject* playerObject = objects::InstantiatePlayer(this);
 		SceneManager::SetPlayerScript(playerObject);
-
 #pragma region HUD
 
 		// hud - done
