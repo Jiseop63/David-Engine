@@ -122,7 +122,6 @@ namespace da
 
 	void Collider2D::OnGroundEnter(Collider2D* other)
 	{
-		int a = 0;
 		if (enums::eLayerType::Land == other->GetOwner()->GetLayerType()
 			&& enums::eLayerType::Land != GetOwner()->GetLayerType())			
 			mGrounded = true;

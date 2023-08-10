@@ -138,12 +138,16 @@ namespace da
 #pragma endregion
 #pragma region Condition value
 	private:
+		bool			mDead;
 		math::Vector2	mPlayerDir;
 		ePlayerState	mActiveState;
 		ePlayerState	mpreviousState;
+
 		int				mMoveCondition;
 		float			mDustAccumulateTime;
-		bool			mDead;
+
+		bool			mDashRunning;
+		float			mHoldingDashTime;
 
 #pragma endregion
 	};

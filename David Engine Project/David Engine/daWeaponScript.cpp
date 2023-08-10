@@ -175,7 +175,7 @@ namespace da
 			if (enums::eWeaponName::LongSword == mWeaponType)
 			{
 				// 무기 정보 세팅
-				mActiveArmour->Weapon.AttackDelayTime = 0.40f;
+				mActiveArmour->Weapon.AttackDelayTime = 0.450f;
 				mWeaponTransform->SetScale(math::Vector3(0.090f * 4.0f, 0.440f * 4.0f, 1.0f));
 				mWeaponTexture = Resources::Find<Texture>(L"LongSwordTestTexture");
 			}

@@ -28,6 +28,7 @@ namespace da
 	public:
 		void SetDimentionType(eDimensionType dimension) { mDimensionType = dimension; }
 		void SetMoving(bool isMove) { mMoving = isMove; }
+		void GravityAble(bool value) { mGravityAble = value; }
 	public:
 		void ApplyForce(math::Vector2 dir, float magnitude) { mInputForceDir = dir; mInputForceMagnitude = magnitude; }
 		void ApplyVelocity(math::Vector2 dir, float magnitude) { mInputVelocityDir = dir; mInputVelocityMagnitude = magnitude; }
@@ -67,5 +68,6 @@ namespace da
 		float			mVelocityMagnitude;
 		float			mMaxMagnitudeVelocity;
 		bool			mMoving;
+		bool			mGravityAble;
 	};
 }

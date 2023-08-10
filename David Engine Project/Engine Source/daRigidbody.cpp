@@ -20,6 +20,7 @@ namespace da
 		, mMaxMagnitudeVelocity(0.0f)
 		, mLimitGravityForce(0.0f)
 		, mMoving(false)
+		, mGravityAble(true)
 	{
 		mMass = 1.0f;
 		mFriction = 1.0f;
@@ -49,6 +50,7 @@ namespace da
 
 		if (footCollider->IsGround())
 		{
+			
 			// y 속도 제거하기
 			gravity.Normalize();
 			float dot = mCalcVelocity.Dot(gravity);
@@ -56,9 +58,12 @@ namespace da
 		}
 		else
 		{
-			// 아래로 힘 적용
-			mCalcVelocity += gravity * (float)Time::DeltaTime();
-			mCalcVelocity.y = std::clamp(mCalcVelocity.y, -mLimitGravityForce, mLimitGravityForce);
+			if (mGravityAble)
+			{
+				// 아래로 힘 적용
+				mCalcVelocity += gravity * (float)Time::DeltaTime();
+				mCalcVelocity.y = std::clamp(mCalcVelocity.y, -mLimitGravityForce, mLimitGravityForce);
+			}
 		}
 	}
 

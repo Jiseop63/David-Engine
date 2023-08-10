@@ -145,7 +145,18 @@ namespace da
         jumpRegen();
         bufferedJump();
         walkDust();
-    }
+
+        if (mDashRunning)
+        {
+            mHoldingDashTime += (float)Time::DeltaTime();
+            if (0.150f <= mHoldingDashTime)
+            {
+                mHoldingDashTime = 0.0f;
+                mDashRunning = false;
+                mRigidbody->GravityAble(true);
+            }
+        }
+    }       
 
     EffectPlayerScript* PlayerScript::callEffect()
     {
@@ -260,7 +271,7 @@ namespace da
 #pragma region Weapon Logic
     void PlayerScript::InputAttack()
     {
-        if (Input::GetKey(eKeyCode::LBTN))
+        if (Input::GetKeyDown(eKeyCode::LBTN))
         {
             // 비활성이라면 활성화 시켜줌
             if (GameObject::eObjectState::Active != mWeaponScript->GetOwner()->GetObjectState())
@@ -345,7 +356,11 @@ namespace da
         }
         void PlayerScript::todoDash()
         {
+            // 이동시키기
             mRigidbody->OverrideVelocity(mPlayerDir, mPlayerStat->DashForce);
+            mHoldingDashTime = 0.0f;
+            mDashRunning = true;
+            mRigidbody->GravityAble(false);
 
             // 투사체 정보 갱신
             mWeaponScript->ModifyProjectile(
