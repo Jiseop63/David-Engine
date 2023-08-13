@@ -15,10 +15,11 @@ namespace da
 
 	private:
 		void projectileProcess();
+		void meleeProcess();
 		void rangeProcess();
 		void bodyProcess();
 
-		void turnOffCollision();
+		void outOfTime();
 
 	public:
 		// 콜라이더 세팅 (외부에서)
@@ -33,8 +34,12 @@ namespace da
 	public:
 		void SetReqWeapon(WeaponScript* weapon) { mReqWeapon = weapon; }
 		WeaponScript* GetReqWeapon() { return mReqWeapon; }
-
-
+		void SetWeaponProjectile(structs::sWeaponStat weaponStat) 
+		{ 
+			mWeaponStat = weaponStat; 
+			mWeaponStat.ProjectileActive = true;
+		}
+		void SetBeginProjectile(math::Vector3 vector3) { mBeginPosition = vector3; }
 
 	public:
 		virtual void OnCollisionEnter(Collider2D* other) override;
@@ -42,11 +47,15 @@ namespace da
 	protected:
 		Transform*				mProjectileTransform;
 		Collider2D*				mProjectileCollider;
+		Transform*				mPlayerTransform;
 
 	private:
 		WeaponScript*			mReqWeapon;
+		structs::sWeaponStat	mWeaponStat;
+
 		enums::eProjectileType	mProjectileType;
 		math::Vector3			mProjectileDir;
+		math::Vector3			mBeginPosition;
 		bool					mIsCollision;
 	};
 }

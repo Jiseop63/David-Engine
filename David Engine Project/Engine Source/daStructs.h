@@ -1,6 +1,6 @@
+#include "daMath.h"
 namespace da::structs
 {
-
 	struct sPlayerStat
 	{
 		float MaxHP;
@@ -54,12 +54,21 @@ namespace da::structs
 
 	struct sWeaponStat
 	{
-		da::enums::eWeaponName	WeaponName;
-		bool					IsMeleeWeapon;
-		bool					AttackReady;
-		float					AtaackDamage;
-		float					AttackAccumulateTime;
-		float					AttackDelayTime;
+		da::enums::eWeaponName		WeaponName;
+		bool						IsMeleeWeapon;
+		bool						AttackReady;
+		float						AtaackDamage;
+		float						AttackAccumulateTime;
+		float						AttackDelayTime;
+
+		bool						ProjectileActive;
+		bool						ProjectileCollision;
+		float						ProjectileRange;
+		float						ProjectileValidTime;
+		float						ProjectileAccumulate;
+		float						ProjectileCenterPadding;
+		da::enums::eProjectileType	ProjectileType;
+
 		sWeaponStat()
 			: WeaponName(da::enums::eWeaponName::Default)
 			, IsMeleeWeapon(true)
@@ -67,6 +76,13 @@ namespace da::structs
 			, AtaackDamage(0.0f)
 			, AttackAccumulateTime(0.0f)
 			, AttackDelayTime(0.0f)
+			, ProjectileActive(false)
+			, ProjectileCollision(false)
+			, ProjectileRange(0.0f)
+			, ProjectileValidTime(0.0f)
+			, ProjectileAccumulate(0.0f)
+			, ProjectileCenterPadding(0.0f)
+			, ProjectileType(enums::eProjectileType::Melee)
 		{}
 	};
 	struct sShieldStat

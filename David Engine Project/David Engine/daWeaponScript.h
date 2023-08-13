@@ -26,8 +26,6 @@ namespace da
 		void SetReverse(bool value) { mWeaponRenderer->SetReverse(value); }
 		void ChangeWeapon();
 
-		void ModifyData();
-		void ModifyProjectile(math::Vector2 size, float dirPadding, float validTime, enums::eProjectileType projectileType);
 		void DoAttack();
 
 	public:
@@ -59,8 +57,6 @@ namespace da
 	public:
 		void AddProjectileObject(GameObject* object);
 		ProjectileScript* callProjectile();
-		void ApplyProjectileCollision(bool value) { mProjectileCollision = value; }
-		bool IsProjectileCollision() { return mProjectileCollision; }
 #pragma endregion
 
 	protected:
@@ -79,21 +75,13 @@ namespace da
 		std::shared_ptr<Texture>			mSecondTexture;
 
 	private:
-		enums::eWeaponName					mWeaponType;
 		math::Vector3						mEffectScale;
+		math::Vector2						mProjectileScale;
 		math::Vector3						mPlayerPosition;
 		math::Vector2						mPlayerDir;
 		float								mHitEffectAngle;
-		bool								mAttackReady;
 		bool								mWeaponAttacked;
 
-		math::Vector2						mProjectileSize;
-		float								mProjectileCenterPadding;
-		// 외부에서 조건체크용으로 사용하는 변수
-		bool								mProjectileCollision;
-		float								mProjectileValidTime;
-		float								mProjectileAccumulate;
-		enums::eProjectileType				mProjectileType;
 	private:
 
 		// 개선의 여지가 있음

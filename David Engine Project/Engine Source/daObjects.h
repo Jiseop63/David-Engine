@@ -164,6 +164,7 @@ namespace da::objects
 		return enemyScript;
 	}
 
+	// ¿Ã∞« æ»æ∏
 	static GameObject* InstantiateSkel(Scene* scene)
 	{
 		GameObject* enemyObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, L"AnimationMaterial");

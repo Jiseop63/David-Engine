@@ -134,7 +134,7 @@ namespace da
 				friction *= 30.0f;
 				/*if ((0 < mCalcVelocity.x && 0 > mInputForceDir.x)
 					|| (0 > mCalcVelocity.x && 0 < mInputForceDir.x)
-					|| false == mMoving)*/					
+					|| false == mMoving)*/
 			}
 			
 			// 마찰력이 현재속도보다 큰경우

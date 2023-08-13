@@ -153,7 +153,7 @@ namespace da
         if (mDashRunning)
         {
             mHoldingDashTime += (float)Time::DeltaTime();
-            if (0.150f <= mHoldingDashTime)
+            if (0.40f <= mHoldingDashTime)
             {
                 mHoldingDashTime = 0.0f;
                 mDashRunning = false;
@@ -310,8 +310,13 @@ namespace da
             mMoveCondition--;
 
         Collider2D::eWallCollisionState wallCollisionState = mBodyCollider->IsWallCollision();
+
+        if (mDashRunning)
+            return;
+
         if (Input::GetKey(eKeyCode::D))
         {
+            // 왼쪽 벽충돌이 아니라면, 왼쪽으로 이동 가능
             if (Collider2D::eWallCollisionState::Right != wallCollisionState)
                 mPos.x += moveMagnitude;
         }
@@ -374,11 +379,11 @@ namespace da
             mDashRunning = true;
             mRigidbody->GravityAble(false);
 
-            // 투사체 정보 갱신
-            mWeaponScript->ModifyProjectile(
-                math::Vector2(0.80f, 1.20f), 0.0f, 0.30f, enums::eProjectileType::Body);
-            // 투사체 활성화
-            mWeaponScript->ActiveProjectile();
+            //// 투사체 정보 갱신
+            //mWeaponScript->ModifyProjectile(
+            //    math::Vector2(0.80f, 1.20f), 0.0f, 0.30f, enums::eProjectileType::Body);
+            //// 투사체 활성화
+            //mWeaponScript->ActiveProjectile();
         }
         void PlayerScript::inputJump()
         {

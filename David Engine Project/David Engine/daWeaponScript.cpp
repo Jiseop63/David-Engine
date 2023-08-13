@@ -21,18 +21,12 @@ namespace da
 		, mFirstTexture(nullptr)
 		, mSecondTexture(nullptr)
 
-		, mWeaponType(enums::eWeaponName::LongSword)
+		, mEffectScale(math::Vector3::One)
+		, mProjectileScale(math::Vector2::One)
+
 		, mPlayerDir(math::Vector2::Zero)
 		, mHitEffectAngle(0.0f)
-		, mAttackReady(true)
 		, mWeaponAttacked(false)
-		, mProjectileSize(math::Vector2::Zero)
-		, mProjectileCenterPadding(0.0f)
-
-		, mProjectileType(enums::eProjectileType::Melee)
-		, mProjectileCollision(false)
-		, mProjectileValidTime(0.0f)
-		, mProjectileAccumulate(0.0f)
 		, mEffectAngle(0.0f)
 	{		
 	}
@@ -62,14 +56,14 @@ namespace da
 #pragma region common func
 	void WeaponScript::attackConditionCheck()
 	{		
-		if (!mAttackReady)
+		if (!mActiveArmour->Weapon.AttackReady)
 		{
 			
 			mActiveArmour->Weapon.AttackAccumulateTime += (float)Time::DeltaTime();
 
 			if (mActiveArmour->Weapon.AttackDelayTime <= mActiveArmour->Weapon.AttackAccumulateTime)
 			{			
-				mAttackReady = true;
+				mActiveArmour->Weapon.AttackReady = true;
 				// 충돌체 설정 해주기
 				mActiveArmour->Weapon.AttackAccumulateTime = 0.0f;
 			}
@@ -77,13 +71,16 @@ namespace da
 	}
 	void WeaponScript::projectileConditionCheck()
 	{
-		if (mProjectileCollision)
+		if (mActiveArmour)
 		{
-			mProjectileAccumulate += (float)Time::DeltaTime();
-			if (mProjectileValidTime <= mProjectileAccumulate)
+			if (mActiveArmour->Weapon.ProjectileCollision)
 			{
-				mProjectileAccumulate = 0.0f;
-				mProjectileCollision = false;
+				mActiveArmour->Weapon.ProjectileAccumulate += (float)Time::DeltaTime();
+				if (mActiveArmour->Weapon.ProjectileValidTime <= mActiveArmour->Weapon.ProjectileAccumulate)
+				{
+					mActiveArmour->Weapon.ProjectileAccumulate = 0.0f;
+					mActiveArmour->Weapon.ProjectileCollision = false;
+				}
 			}
 		}
 	}
@@ -157,27 +154,26 @@ namespace da
 			mActiveArmour->Weapon.AttackAccumulateTime = 0.0f;
 
 		mActiveArmour = GameDataManager::GetActiveArmour();
-		switch (mActiveArmour->Weapon.WeaponName)
-		{
-		case da::enums::eWeaponName::Default:
-			break;
-		case da::enums::eWeaponName::LongSword:
-			weaponInit();
-			break;
-		default:
-			break;
-		}
+		weaponInit();
+
 	}
 	void WeaponScript::weaponInit()
 	{		
 		if (mActiveArmour->Weapon.IsMeleeWeapon)
 		{
-			if (enums::eWeaponName::LongSword == mWeaponType)
+			if (enums::eWeaponName::LongSword == mActiveArmour->Weapon.WeaponName)
 			{
 				// 무기 정보 세팅
 				mActiveArmour->Weapon.AttackDelayTime = 0.450f;
+				mActiveArmour->Weapon.AtaackDamage = 10.0f;
+				mActiveArmour->Weapon.ProjectileValidTime = 0.250f;
+				mActiveArmour->Weapon.ProjectileCenterPadding = 0.750f;
+				mActiveArmour->Weapon.ProjectileRange = 3.5f;
+				mProjectileScale = math::Vector2(2.50f, 1.750f);
 				mWeaponTransform->SetScale(math::Vector3(0.090f * 4.0f, 0.440f * 4.0f, 1.0f));
 				mWeaponTexture = Resources::Find<Texture>(L"LongSwordTestTexture");
+
+				mEffectScale = math::Vector3(2.50f, 2.50f, 1.0f);
 			}
 
 			if (mWeaponTexture)
@@ -185,41 +181,18 @@ namespace da
 		}
 	}
 #pragma endregion
-#pragma region Attack Process
-	void WeaponScript::ModifyData()
-	{
-		if (enums::eWeaponName::LongSword == mWeaponType)
-		{
-			// Effect & Collider 세팅
-			mProjectileSize = math::Vector2(2.50f, 1.750f);
-			mProjectileCenterPadding = 0.750f;
-			mProjectileValidTime = 0.30f;
-			mProjectileType = enums::eProjectileType::Melee;
-
-			mEffectScale = math::Vector3(2.50f, 2.50f, 1.0f);
-		}
-	}
-	void WeaponScript::ModifyProjectile(math::Vector2 size, float dirPadding, float validTime, enums::eProjectileType projectileType)
-	{
-		mProjectileSize = size;
-		mProjectileCenterPadding = dirPadding;
-		mProjectileValidTime = validTime;
-		mProjectileType = projectileType;
-	}
+#pragma region Attack Process	
 	void WeaponScript::DoAttack()
 	{
-		if (mAttackReady)
+		if (mActiveArmour->Weapon.AttackReady)
 		{
-			// 공격 정보 갱신하기
-			ModifyData();
-
 			// 공격 활성화 (Tr 세팅, 이펙트, 충돌 객체 세팅)
 			activeAttack();
 			
 			// 무기 텍스쳐 & 애니메이션 적용하기			
 			playWeaponImage();
 			
-			mAttackReady = false;
+			mActiveArmour->Weapon.AttackReady = false;
 		}
 	}
 	void WeaponScript::ActiveEffect()
@@ -229,9 +202,9 @@ namespace da
 		EffectWeaponScript* effect = callEffect();
 		effect->SetEffectScale(mEffectScale);
 		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, mEffectAngle - 1.570f));
-		effect->SetEffectPosition(mPlayerPosition + (playerDir * mProjectileCenterPadding));
+		effect->SetEffectPosition(mPlayerPosition + (playerDir * mActiveArmour->Weapon.ProjectileCenterPadding));
 		effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-		effect->PlayEffect(mWeaponType);
+		effect->PlayEffect(mActiveArmour->Weapon.WeaponName);
 	}
 	void WeaponScript::CallHitEffect(math::Vector3 position)
 	{
@@ -249,14 +222,16 @@ namespace da
 
 	void WeaponScript::ActiveProjectile()
 	{
-		mProjectileCollision = true;
+		mActiveArmour->Weapon.ProjectileCollision = true;
 
 		ProjectileScript* projectile = callProjectile();
 		projectile->SetProjectileRotation(math::Vector3(0.0f, 0.0f, mEffectAngle - 1.570f));
 		projectile->SetProjectilePosition(mPlayerPosition);
-		projectile->SetProjectileCenter(mPlayerDir * mProjectileCenterPadding);
-		projectile->SetProjectileSize(mProjectileSize);
-		projectile->SetProjectileType(mProjectileType);
+		projectile->SetProjectileCenter(mPlayerDir * mActiveArmour->Weapon.ProjectileCenterPadding);
+		projectile->SetProjectileSize(mProjectileScale);
+		projectile->SetProjectileType(mActiveArmour->Weapon.ProjectileType);
+		projectile->SetWeaponProjectile(mActiveArmour->Weapon);
+		projectile->SetBeginProjectile(mPlayerPosition);
 		projectile->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 
 	}
@@ -283,7 +258,6 @@ namespace da
 		}
 	}
 #pragma endregion
-
 #pragma region Effect Func
 	void WeaponScript::AddEffectObject(GameObject* object)
 	{
