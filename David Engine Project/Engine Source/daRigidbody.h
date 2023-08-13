@@ -59,13 +59,10 @@ namespace da
 		math::Vector2	mAccumulateAcceleration;
 		math::Vector2	mAccumulateVelocity;
 
-
-
-
 		float			mLimitGravityForce;
 		float			mAccelerationMagnitude;
-		float			mMaxMagnitudeForce;
 		float			mVelocityMagnitude;
+		float			mMaxMagnitudeForce;
 		float			mMaxMagnitudeVelocity;
 		bool			mMoving;
 		bool			mGravityAble;

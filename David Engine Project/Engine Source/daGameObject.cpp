@@ -10,6 +10,7 @@ namespace da
 		, mLayerType(enums::eLayerType::Default)
 		, mIsCommonObject(false)
 		, mTransform(nullptr)
+		, mBodyCollider(nullptr)
 		, mFootCollider(nullptr)
 		, mComponents{}
 		, mScripts{}

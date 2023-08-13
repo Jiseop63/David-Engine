@@ -76,7 +76,7 @@ namespace da
 			CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
 			creatureScript->OnDamaged();
 			mReqWeapon->CallHitEffect(creatureScript->GetCreatureTransform()->GetPosition());
-			SceneManager::GetMainCameraScript()->SetOscillation(60.0f, 0.10f);
+			SceneManager::GetMainCameraScript()->SetOscillation(120.0f, 0.150f);
 		}
 	}
 }

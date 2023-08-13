@@ -5,6 +5,7 @@
 #include "daMeshRenderer.h"
 #include "daLight.h"
 #include "daWeaponScript.h"
+
 namespace da
 {
 	// 라디안 방향
@@ -35,10 +36,12 @@ namespace da
 	public:
 		void GetDamage();
 		void GetHeal();
+
 #pragma region Default Func
 		virtual void Initialize();
 		virtual void Update();
 #pragma endregion
+
 #pragma region common Func
 		void PlayerInput();
 		void DebugInput();
@@ -49,6 +52,7 @@ namespace da
 		EffectPlayerScript* callEffect();
 		void activeEffect(EffectPlayerScript* effect, const std::wstring name);
 #pragma endregion
+
 #pragma region FSM Func
 		void ChangeState(ePlayerState state);
 		void PlayerFSM();
@@ -57,6 +61,7 @@ namespace da
 		void HandleJump();
 		void HandleDead();
 #pragma endregion
+
 #pragma region public Func
 	public:
 		WeaponScript* SetWeaponObject(GameObject* object);
@@ -76,17 +81,20 @@ namespace da
 				mLight->SetColor(math::Vector4::Zero);
 		}
 #pragma endregion
+
 #pragma region Weapon Logic
 	private:
 		// 행동 함수
 		void InputAttack();
 		void ChangeWeapon();
 #pragma endregion
+
 #pragma region Move Logic
 		void CameraMove();
 		void InputMove();
 		void walkDust();
 #pragma endregion
+
 #pragma region Jump & Dash Logic
 	private:
 		void jumpRegen();
@@ -104,6 +112,7 @@ namespace da
 		void InitAnimation();
 		void InitCollider();
 #pragma endregion
+
 #pragma region Collision Func
 	public:
 		virtual void OnCollisionEnter(Collider2D* other) override;
@@ -126,17 +135,20 @@ namespace da
 		Collider2D*		mBodyCollider;
 		Collider2D*		mFootCollider;
 #pragma endregion
+
 #pragma region Other Scripts
 	private:
 		WeaponScript*	mWeaponScript;
 		std::vector<EffectPlayerScript*> mEffects;
 #pragma endregion
+
 #pragma region Global Data
 	private:
 		structs::sPlayerStat*	mPlayerStat;
 		structs::sJumpCount*	mJumpCount;
 		structs::sDashCount* 	mDashCount;
 #pragma endregion
+
 #pragma region Condition value
 	private:
 		bool			mDead;

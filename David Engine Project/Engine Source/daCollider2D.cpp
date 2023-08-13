@@ -16,6 +16,7 @@ namespace da
 		, mSize(math::Vector2::One)
 		, mColliderColor(math::Vector4::Zero)
 		, mGrounded(false)
+		, mWallCollision(eWallCollisionState::None)
 		, mTotalPosition(math::Vector3::Zero)
 		, mTotalScale(math::Vector3::One)
 	{
@@ -84,6 +85,18 @@ namespace da
 		{
 			mColliderColor = math::Vector4(0.0f, 0.0f, 1.0f, 1.0f);
 		}
+	}
+
+	void Collider2D::WallCollitionCkeck(Transform* wallTransform)
+	{
+		// 위치 비교하기
+		if (GetOwner()->GetTransform()->GetPosition().x >= wallTransform->GetPosition().x)
+		{
+			mWallCollision = eWallCollisionState::Right;
+		}
+		else
+			mWallCollision = eWallCollisionState::Left;
+
 	}
 
 	void Collider2D::OnCollisionEnter(Collider2D* other)
@@ -156,6 +169,48 @@ namespace da
 		for (Script* script : scripts)
 		{
 			script->OnGroundExit(other);
+		}
+	}
+	void Collider2D::OnWallEnter(Collider2D* other)
+	{
+		if (enums::eLayerType::Land == other->GetOwner()->GetLayerType()
+			&& enums::eLayerType::Land != GetOwner()->GetLayerType())
+		{
+			// 충돌 반별하기
+			WallCollitionCkeck(other->GetOwner()->GetTransform());
+		}
+
+		const std::vector<Script*>& scripts
+			= GetOwner()->GetScripts();
+		for (Script* script : scripts)
+		{
+			script->OnWallEnter(other);
+		}
+	}
+	void Collider2D::OnWallStay(Collider2D* other)
+	{
+		const std::vector<Script*>& scripts
+			= GetOwner()->GetScripts();
+
+		for (Script* script : scripts)
+		{
+			script->OnWallStay(other);
+		}
+	}
+	void Collider2D::OnWallExit(Collider2D* other)
+	{
+		if (enums::eLayerType::Land == other->GetOwner()->GetLayerType()
+			&& enums::eLayerType::Land != GetOwner()->GetLayerType())
+		{
+			mWallCollision = eWallCollisionState::None;
+		}
+
+		const std::vector<Script*>& scripts
+			= GetOwner()->GetScripts();
+
+		for (Script* script : scripts)
+		{
+			script->OnWallExit(other);
 		}
 	}
 }

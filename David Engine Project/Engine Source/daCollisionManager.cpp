@@ -94,13 +94,21 @@ namespace da
 					right->OnGroundEnter(left);
 					return;
 				}
-				if (Collider2D::eColliderDetection::Default == left->GetColliderDetection()
+				else if (Collider2D::eColliderDetection::Default == left->GetColliderDetection()
 					&& Collider2D::eColliderDetection::Default == right->GetColliderDetection())
 				{
 					//Enter
 					iter->second = true;
 					left->OnCollisionEnter(right);
 					right->OnCollisionEnter(left);
+					return;
+				}
+				else
+				{
+					//Enter
+					iter->second = true;
+					left->OnWallEnter(right);
+					right->OnWallEnter(left);
 					return;
 				}
 				
@@ -118,7 +126,7 @@ namespace da
 						right->OnGroundExit(left);
 						return;
 					}
-					if (Collider2D::eColliderDetection::Default == left->GetColliderDetection()
+					else if (Collider2D::eColliderDetection::Default == left->GetColliderDetection()
 						&& Collider2D::eColliderDetection::Default == right->GetColliderDetection())
 					{
 						//Exit
@@ -127,7 +135,14 @@ namespace da
 						right->OnCollisionExit(left);
 						return;
 					}
-					
+					else
+					{
+						//Exit
+						iter->second = false;
+						left->OnWallExit(right);
+						right->OnWallExit(left);
+						return;
+					}					
 				}
 
 				if (Collider2D::eColliderDetection::Land == left->GetColliderDetection()
@@ -137,7 +152,7 @@ namespace da
 					right->OnGroundStay(left);
 					return;
 				}
-				if (Collider2D::eColliderDetection::Default == left->GetColliderDetection()
+				else if (Collider2D::eColliderDetection::Default == left->GetColliderDetection()
 					&& Collider2D::eColliderDetection::Default == right->GetColliderDetection())
 				{
 					//Stay
@@ -145,7 +160,12 @@ namespace da
 					right->OnCollisionStay(left);
 					return;
 				}
-				
+				else
+				{
+					left->OnWallStay(right);
+					right->OnWallStay(left);
+					return;
+				}
 			}
 		}
 		else
@@ -160,7 +180,7 @@ namespace da
 					right->OnGroundExit(left);
 					return;
 				}
-				if (Collider2D::eColliderDetection::Default == left->GetColliderDetection()
+				else if (Collider2D::eColliderDetection::Default == left->GetColliderDetection()
 					&& Collider2D::eColliderDetection::Default == right->GetColliderDetection())
 				{
 					//Exit

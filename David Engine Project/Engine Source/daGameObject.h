@@ -86,6 +86,8 @@ namespace da
 			return origin;
 		}
 
+		void SetBodyCollider(Collider2D* collider) { mBodyCollider = collider; }
+		Collider2D* GetBodyCollider() { return mBodyCollider; }
 		void SetFootCollider(Collider2D* collider) { mFootCollider = collider; }
 		Collider2D* GetFootCollider() { return mFootCollider; }
 
@@ -106,6 +108,7 @@ namespace da
 
 	protected:
 		Transform*				mTransform;
+		Collider2D*				mBodyCollider;
 		Collider2D*				mFootCollider;
 
 	private:

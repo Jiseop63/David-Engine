@@ -20,6 +20,8 @@ namespace da
 		void SetScale(math::Vector3 scale) { mScale = scale;}
 		void SetOffset(math::Vector3 offset) { mOffset = offset; }
 		void SetPosition(float x, float y, float z) { mPosition = math::Vector3(x, y, z); }
+		void SetPosition(math::Vector2 vector2) { mPosition.x = vector2.x; mPosition.y = vector2.y; }
+
 		void SetRotation(float x, float y, float z) { mRotation = math::Vector3(x, y, z); }
 		void SetScale(float x, float y, float z) { mScale = math::Vector3(x, y, z); }
 		void SetOffset(float x, float y, float z) { mOffset = math::Vector3(x, y, z); }

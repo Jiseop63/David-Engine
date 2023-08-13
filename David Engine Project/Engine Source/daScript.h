@@ -22,5 +22,9 @@ namespace da
 		virtual void OnGroundEnter(Collider2D* other) {}
 		virtual void OnGroundStay(Collider2D* other) {}
 		virtual void OnGroundExit(Collider2D* other) {}
+
+		virtual void OnWallEnter(Collider2D* other) {}
+		virtual void OnWallStay(Collider2D* other) {}
+		virtual void OnWallExit(Collider2D* other) {}
 	};
 }

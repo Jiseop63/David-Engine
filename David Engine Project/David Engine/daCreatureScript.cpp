@@ -37,6 +37,7 @@ namespace da
 		mCreatureRigidbody = GetOwner()->AddComponent<Rigidbody>();
 		mCreatureAnimator = GetOwner()->AddComponent<Animator>();
 		mCreatureBodyCollider = GetOwner()->AddComponent<Collider2D>();
+		GetOwner()->SetBodyCollider(mCreatureBodyCollider);
 		mCreatureFootCollider = GetOwner()->AddComponent<Collider2D>();
 		GetOwner()->SetFootCollider(mCreatureFootCollider);
 

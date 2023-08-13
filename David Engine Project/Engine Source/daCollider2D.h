@@ -15,6 +15,13 @@ namespace da
 			End,
 		};
 
+		enum class eWallCollisionState
+		{
+			None,
+			Left,
+			Right,
+		};
+
 		Collider2D();
 		virtual ~Collider2D();
 
@@ -37,9 +44,14 @@ namespace da
 		math::Vector2 GetCenter() { return mCenter; }
 		bool IsGround() { return mGrounded; }
 		void ApplyGround(bool isGround) { mGrounded = isGround; }
+		eWallCollisionState IsWallCollision() { return mWallCollision; }
 
 		math::Vector3 GetTotalPosition() { return mTotalPosition; }
 		math::Vector3 GetTotalScale() { return mTotalScale; }
+
+
+	private:
+		void WallCollitionCkeck(Transform* wallTransform);
 
 	public:
 		void OnCollisionEnter(Collider2D* other);
@@ -49,7 +61,11 @@ namespace da
 		void OnGroundEnter(Collider2D* other);
 		void OnGroundStay(Collider2D* other);
 		void OnGroundExit(Collider2D* other);
-		
+
+		void OnWallEnter(Collider2D* other);
+		void OnWallStay(Collider2D* other);
+		void OnWallExit(Collider2D* other);
+
 	public:
 		UINT GetColliderID() { return mColliderID; }
 
@@ -75,5 +91,6 @@ namespace da
 
 	private:
 		bool					mGrounded;
+		eWallCollisionState		mWallCollision;
 	};
 }

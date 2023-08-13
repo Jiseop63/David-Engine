@@ -21,6 +21,10 @@ namespace da
 		, mLimitGravityForce(0.0f)
 		, mMoving(false)
 		, mGravityAble(true)
+		, mInputForceMagnitude(0.0f)
+		, mInputVelocityMagnitude(0.0f)
+		, mAccelerationMagnitude(0.0f)
+		, mVelocityMagnitude(0.0f)
 	{
 		mMass = 1.0f;
 		mFriction = 1.0f;
@@ -92,6 +96,22 @@ namespace da
 			mCalcVelocity = mOverrideVelocity;
 			mOverrideVelocity = Vector2::Zero;
 		}
+
+		// 벽 충돌 구현하려면
+
+		// 어디 충돌인지를 파악해서
+
+		// 방향에 주어지는 힘을 제거해야함
+		Collider2D* bodyCollider = GetOwner()->GetBodyCollider();
+		if (Collider2D::eWallCollisionState::None != bodyCollider->IsWallCollision())
+		{
+			if (Collider2D::eWallCollisionState::Right == bodyCollider->IsWallCollision()
+				&& 0 <= mCalcVelocity.x)
+				mCalcVelocity.x = 0.0f; 
+			else if (Collider2D::eWallCollisionState::Left == bodyCollider->IsWallCollision()
+				&& 0 >= mCalcVelocity.x)
+				mCalcVelocity.x = 0.0f;
+		}
 	}
 
 	void Rigidbody::applyFriction()
@@ -114,8 +134,7 @@ namespace da
 				friction *= 30.0f;
 				/*if ((0 < mCalcVelocity.x && 0 > mInputForceDir.x)
 					|| (0 > mCalcVelocity.x && 0 < mInputForceDir.x)
-					|| false == mMoving)*/
-					
+					|| false == mMoving)*/					
 			}
 			
 			// 마찰력이 현재속도보다 큰경우

@@ -39,6 +39,9 @@ namespace da
         , mPlayerStat(nullptr)
         , mJumpCount(nullptr)
         , mDashCount(nullptr)
+
+        , mDashRunning(false)
+        , mHoldingDashTime(0.0f)
 	{
 	}
 	PlayerScript::~PlayerScript()
@@ -462,6 +465,7 @@ namespace da
 
         // body
         {
+            GetOwner()->SetBodyCollider(mBodyCollider);
             mBodyCollider->SetSize(Vector2(0.30f, 0.40f));
             mBodyCollider->SetCenter(Vector2(0.0f, -0.10f));
         }
