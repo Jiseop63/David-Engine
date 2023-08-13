@@ -82,6 +82,7 @@ namespace da
         UIInput();
         if (mDead)
             return;
+        CameraMove();
         InputMove();
         inputJump();
         inputDash();
@@ -286,29 +287,31 @@ namespace da
     }
 #pragma endregion
 #pragma region Move Logic
-    void PlayerScript::InputMove()
+    void PlayerScript::CameraMove()
     {
+        Vector3 playerPos = mTransform->GetPosition();
+        
+        GameDataManager::SetCameraMovaPosition(math::Vector2(playerPos.x, playerPos.y));
+    }
+    void PlayerScript::InputMove()
+    {        
         Vector3 mPos = mTransform->GetPosition();
+        float moveMagnitude = mPlayerStat->MoveSpeed * (float)Time::DeltaTime();
+
         // moveAnimation
         if (Input::GetKeyDown(eKeyCode::D)
             || Input::GetKeyDown(eKeyCode::A))
-        {
             mMoveCondition++;
-        }
         if (Input::GetKeyUp(eKeyCode::D)
             || Input::GetKeyUp(eKeyCode::A))
             mMoveCondition--;
 
         if (Input::GetKey(eKeyCode::D))
-        {
-            mPos.x += mPlayerStat->MoveSpeed * (float)Time::DeltaTime();
-            mTransform->SetPosition(mPos);
-        }
+            mPos.x += moveMagnitude;
         if (Input::GetKey(eKeyCode::A))
-        {
-            mPos.x -= mPlayerStat->MoveSpeed * (float)Time::DeltaTime();
-            mTransform->SetPosition(mPos);
-        }
+            mPos.x -= moveMagnitude;
+
+        mTransform->SetPosition(mPos);
     }
     void PlayerScript::walkDust()
     {

@@ -49,6 +49,9 @@ namespace da
 	{
 		// Camera 세팅
 		SceneManager::GetMainCameraScript()->GetOwner()->GetComponent<Transform>()->SetPosition(math::Vector3::Zero);
+		GameDataManager::SetCameraMovableRange(math::Vector2(38.360f, 3.840f));
+		GameDataManager::SetCameraMovaPosition(math::Vector2::Zero);
+
 		// player 세팅
 		PlayerScript* player = SceneManager::GetPlayerScript();
 		player->SetPlayerPosition(math::Vector3::Zero);

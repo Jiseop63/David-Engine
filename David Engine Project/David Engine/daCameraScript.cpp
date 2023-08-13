@@ -8,6 +8,8 @@
 #include "daTransform.h"
 #include "daCamera.h"
 
+#include "daGameDataManager.h"
+
 
 namespace da
 {
@@ -26,10 +28,41 @@ namespace da
 	}
 
 	void CameraScript::Update()
-	{		
+	{
+		moveCamera();
 		debugInputCamera();
 		CameraShake();
 	}
+	void CameraScript::moveCamera()
+	{
+		// 내 위치
+		Transform* myTransform = GetOwner()->GetComponent<Transform>();
+		Vector3 pos = myTransform->GetPosition();
+		// 최대 이동가능한 거리
+		math::Vector2 maxRange = GameDataManager::GetCameraMovableRange();
+		// 이동시킨 카메라 위치
+		math::Vector2 currentPosition = GameDataManager::GetCameraMovaPosition();
+		
+		// 이동시킬 위치에 따른 변경할 위치값 설정
+		if (currentPosition.x <= maxRange.x
+			&& currentPosition.x >= -maxRange.x)
+			pos.x = currentPosition.x;
+		else if (-1 >= currentPosition.x)
+			pos.x = -maxRange.x;
+		else if (1 <= currentPosition.x)
+			pos.x = maxRange.x;
+
+		if (currentPosition.y <= maxRange.y
+			&& currentPosition.y >= -maxRange.y)
+			pos.y = currentPosition.y;
+		else if (-1 >= currentPosition.y)
+			pos.y = -maxRange.y;
+		else if (1 <= currentPosition.y)
+			pos.y = maxRange.y;
+
+		myTransform->SetPosition(pos);
+	}
+
 	void CameraScript::debugInputCamera()
 	{
 		Camera* cameraComponent = GetOwner()->GetComponent<Camera>();

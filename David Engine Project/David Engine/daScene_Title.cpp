@@ -2,6 +2,7 @@
 
 // Init
 #include "daSceneManager.h"
+#include "daGameDataManager.h"
 
 // resource
 #include "daResources.h"
@@ -51,6 +52,9 @@ namespace da
 		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.80f, 0.80f, 0.80f, 1.0f));
 		SceneManager::GetPlayerScript()->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
 		SceneManager::GetHUDObject()->SetObjectStates(GameObject::eObjectState::Inactive);
+
+		GameDataManager::SetCameraMovableRange(math::Vector2(0.0f, 0.0f));
+		GameDataManager::SetCameraMovaPosition(math::Vector2::Zero);
 	}
 	void Scene_Title::OnExit()
 	{

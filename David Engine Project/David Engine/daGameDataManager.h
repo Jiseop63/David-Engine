@@ -25,6 +25,16 @@ namespace da
 		static void ClearJumpBuffer();
 #pragma endregion
 
+#pragma region Scene Enter Func
+	public:
+		// Dx기준 좌표계 사용 ㄱㄱ
+		static void SetCameraMovableRange(da::math::Vector2 vector2) { mCameraMovableRange = vector2; }
+		static da::math::Vector2 GetCameraMovableRange() { return mCameraMovableRange; }
+
+		static void SetCameraMovaPosition(da::math::Vector2 vector2) { mCameraMovePosition = vector2; }
+		static da::math::Vector2 GetCameraMovaPosition() { return mCameraMovePosition; }
+#pragma endregion
+
 #pragma region Inventory Func
 	public:
 		static void CallInventory();
@@ -41,6 +51,9 @@ namespace da
 
 		static structs::sArmour* mActiveArmour;
 		static structs::sArmour* mSubArmour;
+
+		static da::math::Vector2 mCameraMovableRange;
+		static da::math::Vector2 mCameraMovePosition;
 #pragma endregion
 	};
 }

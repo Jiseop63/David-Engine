@@ -83,6 +83,7 @@ namespace da
 		void ChangeWeapon();
 #pragma endregion
 #pragma region Move Logic
+		void CameraMove();
 		void InputMove();
 		void walkDust();
 #pragma endregion

@@ -16,6 +16,8 @@ namespace da
 	structs::sArmour* GameDataManager::mActiveArmour = nullptr;
 	structs::sArmour* GameDataManager::mSubArmour = nullptr;
 
+	da::math::Vector2 GameDataManager::mCameraMovableRange = Vector2::Zero;
+	da::math::Vector2 GameDataManager::mCameraMovePosition = Vector2::Zero;
 
 	void GameDataManager::Initialize()
 	{

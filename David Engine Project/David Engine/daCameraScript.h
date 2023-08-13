@@ -12,6 +12,7 @@ namespace da
 
 		virtual void Update() override;
 
+		void moveCamera();
 		void debugInputCamera();
 
 		void SetCamera(Camera* component) { mCameraComponent = component; }
