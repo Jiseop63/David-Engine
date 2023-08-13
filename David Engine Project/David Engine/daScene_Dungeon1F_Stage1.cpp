@@ -46,7 +46,7 @@ namespace da
 	{
 		// Camera 세팅
 		SceneManager::GetMainCameraScript()->GetOwner()->GetComponent<Transform>()->SetPosition(math::Vector3::Zero);
-		GameDataManager::SetCameraMovableRange(math::Vector2(7.680f, 4.160f));
+		GameDataManager::SetCameraMovableRange(math::Vector2(0.80f, 0.0f));
 		GameDataManager::SetCameraMovaPosition(math::Vector2::Zero);
 		// player 세팅
 		PlayerScript* player = SceneManager::GetPlayerScript();
@@ -107,22 +107,22 @@ namespace da
 			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(-0.50f, 0.0f, ObjectZ));
 		}
 		
-		// land
+		// ground
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
-				this, Vector3(-1.0f, -2.50f, 0.0f), Vector3(15.0f, 1.0f, 1.0f));
+				this, Vector3(0.30f, -2.750f, 0.0f), Vector3(12.40f, 1.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
-		// land
+		// left
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
-				this, Vector3(-7.0f, -2.50f, 0.0f), Vector3(1.0f, 10.0f, 1.0f));
+				this, Vector3(-6.250f, -0.50f, 0.0f), Vector3(1.0f, 5.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
-		// land
+		// right
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
-				this, Vector3(7.0f, -2.50f, 0.0f), Vector3(1.0f, 10.0f, 1.0f));
+				this, Vector3(7.150f, -2.60f, 0.0f), Vector3(1.50f, 2.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
 	}

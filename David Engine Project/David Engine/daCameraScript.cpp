@@ -28,45 +28,100 @@ namespace da
 	}
 
 	void CameraScript::Update()
-	{
+	{		
 		moveCamera();
-		CameraShake();
-		debugInputCamera();
+		cameraShake();
+		//debugInputCamera();
 	}
 	void CameraScript::moveCamera()
 	{
+		// 카메라가 진동중이면 사용안함
 		if (mCameraShaking)
 			return;
 
-		// 내 위치
+		// 내 위치 가져오기
 		Transform* myTransform = GetOwner()->GetComponent<Transform>();
-		Vector3 pos = myTransform->GetPosition();
+		Vector3 pos;
+
 		// 최대 이동가능한 거리
 		math::Vector2 maxRange = GameDataManager::GetCameraMovableRange();
 		// 이동시킨 카메라 위치
 		math::Vector2 currentPosition = GameDataManager::GetCameraMovaPosition();
 		
-		// 이동시킬 위치에 따른 변경할 위치값 설정
 		if (currentPosition.x <= maxRange.x
 			&& currentPosition.x >= -maxRange.x)
 			pos.x = currentPosition.x;
-		else if (-1 >= currentPosition.x)
+		else if (currentPosition.x <= -maxRange.x)
 			pos.x = -maxRange.x;
-		else if (1 <= currentPosition.x)
+		else if (currentPosition.x >= maxRange.x)
 			pos.x = maxRange.x;
 
 		if (currentPosition.y <= maxRange.y
 			&& currentPosition.y >= -maxRange.y)
 			pos.y = currentPosition.y;
-		else if (-1 >= currentPosition.y)
+		else if (currentPosition.y <= -maxRange.y)
 			pos.y = -maxRange.y;
-		else if (1 <= currentPosition.y)
+		else if (currentPosition.y >= maxRange.y)
 			pos.y = maxRange.y;
 
 		mOriginPosition = pos;
 		myTransform->SetPosition(pos);
 	}
 
+
+	void CameraScript::cameraShake()
+	{
+		if (!mCameraShaking)
+			return;
+
+		// 진동이 끝나면 원래 위치로 돌아가기
+		if (mShakeAccumulateTime >= mShakeValidTime)
+		{
+			mShakeAccumulateTime = 0.0f;
+			mCameraShaking = false;
+			GameDataManager::SetCameraMovaPosition(math::Vector2(mOriginPosition.x, mOriginPosition.y));
+		}
+		else
+			mShakeAccumulateTime += (float)Time::DeltaTime();
+
+		// X흔들림 크기 (누적된 시간)
+		float oscillationX = cos(mShakeAccumulateTime * mOscillationPower);
+		// Y흔들림 크기 (누적된 시간)
+		float oscillationY = sin(mShakeAccumulateTime * mOscillationPower);
+
+		// 카메라 위치 구하기
+		math::Vector2 maxRange = GameDataManager::GetCameraMovableRange();
+		math::Vector2 currentPosition = GameDataManager::GetCameraMovaPosition();
+
+		math::Vector2 oscillationPosition;
+
+
+		if (currentPosition.x <= maxRange.x
+			&& currentPosition.x >= -maxRange.x)
+			oscillationPosition.x = currentPosition.x;
+		else if (currentPosition.x <= -maxRange.x)
+			oscillationPosition.x = -maxRange.x;
+		else if (currentPosition.x >= maxRange.x)
+			oscillationPosition.x = maxRange.x;
+
+		if (currentPosition.y <= maxRange.y
+			&& currentPosition.y >= -maxRange.y)
+			oscillationPosition.y = currentPosition.y;
+		else if (currentPosition.y <= -maxRange.y)
+			oscillationPosition.y = -maxRange.y;
+		else if (currentPosition.y >= maxRange.y)
+			oscillationPosition.y = maxRange.y;
+
+
+		// 흔들림 보정
+		float oscillationRatio = 35.0f;
+		Vector2 setPosition = Vector2(
+			currentPosition.x + oscillationX / oscillationRatio, currentPosition.y + oscillationY / oscillationRatio);
+		
+		GameDataManager::SetCameraMovaPosition(setPosition, true);
+		Transform* cameraTr = GetOwner()->GetComponent<Transform>();
+		cameraTr->SetPosition(setPosition);
+	}
 	void CameraScript::debugInputCamera()
 	{
 		Camera* cameraComponent = GetOwner()->GetComponent<Camera>();
@@ -157,36 +212,5 @@ namespace da
 			cameraComponent->SetSize(viewSize);
 		}
 		// num 5 : Debug On-Off
-	}
-	void CameraScript::CameraShake()
-	{
-		if (!mCameraShaking)
-			return;
-
-		
-		if (mShakeAccumulateTime >= mShakeValidTime)
-		{
-			mShakeAccumulateTime = 0.0f;
-			mCameraShaking = false;
-			GameDataManager::SetCameraMovaPosition(math::Vector2(mOriginPosition.x, mOriginPosition.y));
-		}
-		else
-			mShakeAccumulateTime += (float)Time::DeltaTime();
-
-		// X흔들림 크기 (누적된 시간)
-		float oscillationX = cos(mShakeAccumulateTime * mOscillationPower);
-		// Y흔들림 크기 (누적된 시간)
-		float oscillationY = sin(mShakeAccumulateTime * mOscillationPower);
-
-		// 씬 내에서의 카메라 위치
-		math::Vector2 currentPosition = GameDataManager::GetCameraMovaPosition();
-		// 흔들림 보정
-		float oscillationRatio = 35.0f;
-		Vector2 oscillationPosition = Vector2(
-			currentPosition.x + oscillationX / oscillationRatio, currentPosition.y + oscillationY / oscillationRatio);
-
-		GameDataManager::SetCameraMovaPosition(oscillationPosition);
-		Transform* cameraTr = GetOwner()->GetComponent<Transform>();
-		cameraTr->SetPosition(oscillationPosition);
 	}
 }

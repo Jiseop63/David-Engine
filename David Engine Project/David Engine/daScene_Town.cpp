@@ -49,12 +49,12 @@ namespace da
 	{
 		// Camera 세팅
 		SceneManager::GetMainCameraScript()->GetOwner()->GetComponent<Transform>()->SetPosition(math::Vector3::Zero);
-		GameDataManager::SetCameraMovableRange(math::Vector2(38.360f, 3.840f));
+		GameDataManager::SetCameraMovableRange(math::Vector2(22.0f, 1.80f));
 		GameDataManager::SetCameraMovaPosition(math::Vector2::Zero);
 
 		// player 세팅
 		PlayerScript* player = SceneManager::GetPlayerScript();
-		player->SetPlayerPosition(math::Vector3::Zero);
+		player->SetPlayerPosition(math::Vector3(0.0f, 2.50f, 0.0f));
 		player->SetPlayerVelocity(math::Vector2::Zero);
 		player->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 		player->IsPlayerInDungeon(false);
@@ -81,7 +81,7 @@ namespace da
 			GameObject* backGround = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::Background, L"SkyMaterial");
 			backGround->GetTransform()->SetScale(math::Vector3(MaxPositionX * 2.0f, MaxPositionY * 2.0f, 1.0f));
-			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, BackgroundZ));
+			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, 1.920f, BackgroundZ));
 			backGround->SetName(L"sky");
 		}
 		// forest Layer
@@ -89,7 +89,7 @@ namespace da
 			GameObject* backGround = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::Layer, L"TownBGMaterial");
 			backGround->GetTransform()->SetScale(math::Vector3(MaxPositionX * 2.0f, MaxPositionY * 2.0f, 1.0f));
-			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, -2.0f, BackLayerZ));
+			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, 1.0f, BackLayerZ));
 			backGround->SetName(L"forest");
 			LayerScript* bgLayerScript = backGround->AddComponent<LayerScript>();
 			bgLayerScript->SetCamera(mainCameraObject->GetCameraComponent());
@@ -100,7 +100,7 @@ namespace da
 			GameObject* backGround = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::Layer, L"TownLayerMaterial");
 			backGround->GetTransform()->SetScale(math::Vector3(MaxPositionX * 2.0f, MaxPositionY * 2.0f, 1.0f));
-			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, -4.0f, FrontLayerZ));
+			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, FrontLayerZ));
 			backGround->SetName(L"trees");
 			LayerScript* bgLayerScript = backGround->AddComponent<LayerScript>();
 			
@@ -120,21 +120,55 @@ namespace da
 			floorObject->SetName(L"Floor");
 			Transform* floorTr = floorObject->GetTransform();
 			floorTr->SetScale(Vector3(19.180f * 4.0f, 1.920f * 4.0f, 1.0f));
-			floorTr->SetPosition(Vector3(0.0f, -4.0f, ObjectZ));
+			floorTr->SetPosition(Vector3(0.0f, -1.920f, ObjectZ));
 		}
 
-		//// test enemy
-		//{
-		//	GameObject* monsterObject = objects::InstantiateCreature<GameObject>(this, L"AnimationMaterial");
-		//	monsterObject->SetName(L"monster");
-		//	monsterObject->GetTransform()->SetPosition( Vector3(1.50f, 0.0f, ObjectZ) );
-		//	monsterObject->AddComponent<CreatureScript>();
-		//}
+		// test enemy
+		{
+			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
+			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(1.50f, 0.0f, ObjectZ));
+		}
 
 		// land
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
-				this, Vector3(-1.0f, -2.50f, 0.0f), Vector3(10.0f, 1.0f, 1.0f));
+				this, Vector3(0.0f, -4.350f, 0.0f), Vector3(62.0f, 1.0f, 1.0f));
+			landObject->SetName(L"LandObj");
+		}
+
+		// 62 / 2 = 31
+
+
+		// right rimit
+		{
+			GameObject* landObject = objects::InstantiateLandObject(
+				this, Vector3(30.50f, 2.950f, 0.0f), Vector3(1.0f, 14.0f, 1.0f));
+			landObject->SetName(L"LandObj");
+		}
+		// left rimit
+		{
+			GameObject* landObject = objects::InstantiateLandObject(
+				this, Vector3(-30.50f, 2.950f, 0.0f), Vector3(1.0f, 14.0f, 1.0f));
+			landObject->SetName(L"LandObj");
+		}
+
+		// first
+		{
+			GameObject* landObject = objects::InstantiateLandObject(
+				this, Vector3(-26.60f, 1.40f, 0.0f), Vector3(8.50f, 1.0f, 1.0f));
+			landObject->SetName(L"LandObj");
+		}
+
+		// second
+		{
+			GameObject* landObject = objects::InstantiateLandObject(
+				this, Vector3(-0.350f, 0.150f, 0.0f), Vector3(17.30f, 1.0f, 1.0f));
+			landObject->SetName(L"LandObj");
+		}
+		// third
+		{
+			GameObject* landObject = objects::InstantiateLandObject(
+				this, Vector3(25.70f, 1.40f, 0.0f), Vector3(8.0f, 1.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
 	}

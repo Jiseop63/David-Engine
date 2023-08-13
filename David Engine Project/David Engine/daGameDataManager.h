@@ -31,7 +31,7 @@ namespace da
 		static void SetCameraMovableRange(da::math::Vector2 vector2) { mCameraMovableRange = vector2; }
 		static da::math::Vector2 GetCameraMovableRange() { return mCameraMovableRange; }
 
-		static void SetCameraMovaPosition(da::math::Vector2 vector2) { mCameraMovePosition = vector2; }
+		static void SetCameraMovaPosition(da::math::Vector2 vector2, bool shake = false);
 		static da::math::Vector2 GetCameraMovaPosition() { return mCameraMovePosition; }
 #pragma endregion
 

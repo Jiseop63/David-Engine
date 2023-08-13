@@ -98,6 +98,31 @@ namespace da
 		mJumpCount.JumpAccumulateTime = 0.0f;
 	}
 
+	void GameDataManager::SetCameraMovaPosition(da::math::Vector2 vector2, bool shake)
+	{		
+		math::Vector2 calcPos;
+		if (vector2.x <= mCameraMovableRange.x
+			&& vector2.x >= -mCameraMovableRange.x)
+			calcPos.x = vector2.x;
+		else if (vector2.x <= -mCameraMovableRange.x)
+			calcPos.x = -mCameraMovableRange.x;
+		else if (vector2.x >= mCameraMovableRange.x)
+			calcPos.x = mCameraMovableRange.x;
+
+		if (vector2.y <= mCameraMovableRange.y
+			&& vector2.y >= -mCameraMovableRange.y)
+			calcPos.y = vector2.y;
+		else if (vector2.y <= -mCameraMovableRange.y)
+			calcPos.y = -mCameraMovableRange.y;
+		else if (vector2.y >= mCameraMovableRange.y)
+			calcPos.y = mCameraMovableRange.y;
+		
+		if (shake)
+			mCameraMovePosition = vector2;
+		else
+			mCameraMovePosition = calcPos;
+	}
+
 	void GameDataManager::CallInventory()
 	{
 		SceneManager::GetInventoryScript()->CallInventory();

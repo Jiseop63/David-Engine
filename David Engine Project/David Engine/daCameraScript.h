@@ -12,12 +12,8 @@ namespace da
 
 		virtual void Update() override;
 
-		void moveCamera();
-		void debugInputCamera();
-
+	public:
 		void SetCamera(Camera* component) { mCameraComponent = component; }
-
-		void CameraShake();
 		// 흔들리는정도, 흔들림 유지시간
 		void SetOscillation(float oscillationPower, float time)
 		{
@@ -25,8 +21,14 @@ namespace da
 			mOscillationPower = oscillationPower;
 			mShakeValidTime = time;
 		}
+	private:
+		void moveCamera();
+		void cameraShake();
 
 
+
+	private:
+		void debugInputCamera();
 	public:
 		Camera* mCameraComponent;
 
@@ -36,6 +38,5 @@ namespace da
 		float	mOscillationPower;
 		float	mShakeAccumulateTime;
 		float	mShakeValidTime;
-
 	};
 }
