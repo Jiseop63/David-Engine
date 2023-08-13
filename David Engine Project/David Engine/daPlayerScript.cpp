@@ -309,11 +309,17 @@ namespace da
             || Input::GetKeyUp(eKeyCode::A))
             mMoveCondition--;
 
+        Collider2D::eWallCollisionState wallCollisionState = mBodyCollider->IsWallCollision();
         if (Input::GetKey(eKeyCode::D))
-            mPos.x += moveMagnitude;
+        {
+            if (Collider2D::eWallCollisionState::Right != wallCollisionState)
+                mPos.x += moveMagnitude;
+        }
         if (Input::GetKey(eKeyCode::A))
-            mPos.x -= moveMagnitude;
-
+        {
+            if (Collider2D::eWallCollisionState::Left != wallCollisionState)
+                mPos.x -= moveMagnitude;
+        }
         mTransform->SetPosition(mPos);
     }
     void PlayerScript::walkDust()
@@ -466,12 +472,14 @@ namespace da
         // body
         {
             GetOwner()->SetBodyCollider(mBodyCollider);
+            mBodyCollider->SetName(L"BodyCollider");
             mBodyCollider->SetSize(Vector2(0.30f, 0.40f));
             mBodyCollider->SetCenter(Vector2(0.0f, -0.10f));
         }
         // foot
         {
             GetOwner()->SetFootCollider(mFootCollider);
+            mFootCollider->SetName(L"FootCollider");
             mFootCollider->SetSize(Vector2(0.050f, 0.050f));
             mFootCollider->SetCenter(Vector2(0.0f, -0.450f));
             mFootCollider->SetColliderDetection(Collider2D::eColliderDetection::Land);

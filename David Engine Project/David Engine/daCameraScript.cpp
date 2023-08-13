@@ -163,13 +163,11 @@ namespace da
 		if (!mCameraShaking)
 			return;
 
-		Transform* cameraTr = GetOwner()->GetComponent<Transform>();
 		
 		if (mShakeAccumulateTime >= mShakeValidTime)
 		{
 			mShakeAccumulateTime = 0.0f;
 			mCameraShaking = false;
-			//cameraTr->SetPosition(mOriginPosition);
 			GameDataManager::SetCameraMovaPosition(math::Vector2(mOriginPosition.x, mOriginPosition.y));
 		}
 		else
@@ -187,8 +185,8 @@ namespace da
 		Vector2 oscillationPosition = Vector2(
 			currentPosition.x + oscillationX / oscillationRatio, currentPosition.y + oscillationY / oscillationRatio);
 
-		//cameraTr->SetPosition(oscillationPosition);
 		GameDataManager::SetCameraMovaPosition(oscillationPosition);
+		Transform* cameraTr = GetOwner()->GetComponent<Transform>();
 		cameraTr->SetPosition(oscillationPosition);
 	}
 }

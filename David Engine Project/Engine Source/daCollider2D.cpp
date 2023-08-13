@@ -90,7 +90,7 @@ namespace da
 	void Collider2D::WallCollitionCkeck(Transform* wallTransform)
 	{
 		// 위치 비교하기
-		if (GetOwner()->GetTransform()->GetPosition().x >= wallTransform->GetPosition().x)
+		if (GetOwner()->GetTransform()->GetPosition().x <= wallTransform->GetPosition().x)
 		{
 			mWallCollision = eWallCollisionState::Right;
 		}

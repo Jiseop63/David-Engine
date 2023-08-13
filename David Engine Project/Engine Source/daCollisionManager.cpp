@@ -86,6 +86,7 @@ namespace da
 					|| GameObject::eObjectState::Active != right->GetOwner()->GetObjectState())
 					return;
 				
+				// 충돌함, 충돌한적 없음, Enter 호출
 				if (Collider2D::eColliderDetection::Land == left->GetColliderDetection()
 					&& Collider2D::eColliderDetection::Land == right->GetColliderDetection())
 				{
@@ -115,6 +116,7 @@ namespace da
 			}
 			else
 			{
+				// 둘중 하나가 비활성 상태임, Exit 호출
 				if (GameObject::eObjectState::Active != left->GetOwner()->GetObjectState()
 					|| GameObject::eObjectState::Active != right->GetOwner()->GetObjectState())
 				{
@@ -145,6 +147,7 @@ namespace da
 					}					
 				}
 
+				// 충돌함, 충돌한적 있음, Stay 호출
 				if (Collider2D::eColliderDetection::Land == left->GetColliderDetection()
 					&& Collider2D::eColliderDetection::Land == right->GetColliderDetection())
 				{
@@ -170,6 +173,7 @@ namespace da
 		}
 		else
 		{
+			// 충돌아님, 충돌했었음, Exit호출
 			if (true == iter->second)
 			{
 				if (Collider2D::eColliderDetection::Land == left->GetColliderDetection()
@@ -187,6 +191,13 @@ namespace da
 					iter->second = false;
 					left->OnCollisionExit(right);
 					right->OnCollisionExit(left);
+					return;
+				}
+				else
+				{
+					iter->second = false;
+					left->OnWallExit(right);
+					right->OnWallExit(left);
 					return;
 				}
 			}

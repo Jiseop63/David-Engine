@@ -106,19 +106,24 @@ namespace da
 			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
 			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(-0.50f, 0.0f, ObjectZ));
 		}
-		//// test enemy
-		//{
-		//	GameObject* monsterObject = objects::InstantiateCreature<GameObject>(this, L"AnimationMaterial");
-		//	monsterObject->SetName(L"monster");
-		//	monsterObject->GetTransform()->SetPosition(Vector3(1.50f, 0.0f, ObjectZ));
-		//	monsterObject->AddComponent<CreatureScript>();
-		//}
-
+		
 		// land
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
-				this, Vector3(-1.0f, -2.50f, 0.0f), Vector3(10.0f, 1.0f, 1.0f));
+				this, Vector3(-1.0f, -2.50f, 0.0f), Vector3(15.0f, 1.0f, 1.0f));
 			landObject->SetName(L"LandObj");
-		}		
+		}
+		// land
+		{
+			GameObject* landObject = objects::InstantiateLandObject(
+				this, Vector3(-7.0f, -2.50f, 0.0f), Vector3(1.0f, 10.0f, 1.0f));
+			landObject->SetName(L"LandObj");
+		}
+		// land
+		{
+			GameObject* landObject = objects::InstantiateLandObject(
+				this, Vector3(7.0f, -2.50f, 0.0f), Vector3(1.0f, 10.0f, 1.0f));
+			landObject->SetName(L"LandObj");
+		}
 	}
 }
