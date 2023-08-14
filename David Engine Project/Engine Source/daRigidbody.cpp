@@ -4,6 +4,8 @@
 #include "daTransform.h"
 #include "daCollider2D.h"
 #include "daInput.h"
+#include "daSceneManager.h"
+
 namespace da
 {
 	using namespace math;
@@ -136,7 +138,13 @@ namespace da
 					|| (0 > mCalcVelocity.x && 0 < mInputForceDir.x)
 					|| false == mMoving)*/
 			}
-			
+			PlayerScript* playerScript = SceneManager::GetPlayerScript();
+			if (playerScript->GetOwner() == GetOwner())
+			{
+				if (!playerScript->IsDashRunning())
+					friction *= 30.0f;;
+			}
+
 			// 마찰력이 현재속도보다 큰경우
 			if (abs(mCalcVelocity.x) < abs(friction.x))
 				mCalcVelocity.x = 0.0f;

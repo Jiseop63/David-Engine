@@ -153,7 +153,7 @@ namespace da
         if (mDashRunning)
         {
             mHoldingDashTime += (float)Time::DeltaTime();
-            if (0.40f <= mHoldingDashTime)
+            if (0.150f <= mHoldingDashTime)
             {
                 mHoldingDashTime = 0.0f;
                 mDashRunning = false;
