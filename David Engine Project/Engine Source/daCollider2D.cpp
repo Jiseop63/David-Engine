@@ -129,6 +129,8 @@ namespace da
 	{		
 		if (!mFoot)
 			return;
+		if (eDetectionType::Env != other->GetDetectionType())
+			return;
 
 		if (isEnter)
 			mGrounded = true;
@@ -139,6 +141,8 @@ namespace da
 	{
 		// 일단 내가 Body타입인지 확인
 		if (!mBody)
+			return;
+		if (eDetectionType::Env != other->GetDetectionType())
 			return;
 
 		if (!isEnter)

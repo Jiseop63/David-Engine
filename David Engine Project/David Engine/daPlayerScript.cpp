@@ -158,7 +158,7 @@ namespace da
                 mHoldingDashTime = 0.0f;
                 mDashRunning = false;
                 mRigidbody->GravityAble(true);
-                mRigidbody->OverrideVelocity(math::Vector2::Zero, 0.0f);
+                mRigidbody->OverrideVelocity(math::Vector2::UnitY, 0.010f);
             }
         }
     }       
