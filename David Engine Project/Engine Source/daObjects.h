@@ -163,6 +163,16 @@ namespace da::objects
 
 		return enemyScript;
 	}
+	template <typename T>
+	static T* InstantiateBoss(Scene* scene)
+	{
+		// enemyObject 추가
+		GameObject* enemyObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Boss, L"AnimationMaterial");
+		// CreatureScript 추가
+		T* enemyScript = enemyObject->AddComponent<T>();
+
+		return enemyScript;
+	}
 
 	// 이건 안씀
 	static GameObject* InstantiateSkel(Scene* scene)

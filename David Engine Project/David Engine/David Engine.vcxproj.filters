@@ -88,6 +88,9 @@
     <Filter Include="Objects\Creature\Enemy\Skel">
       <UniqueIdentifier>{f178a37d-bc73-4a5a-9021-f616faca9fc4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Creature\Enemy\SkellBoss">
+      <UniqueIdentifier>{d6d4c006-4444-4d83-8954-e28b06655882}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -197,6 +200,9 @@
     </ClInclude>
     <ClInclude Include="daCreatureLifebarScript.h">
       <Filter>Objects\Creature\Enemy\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="daSkellBossScript.h">
+      <Filter>Objects\Creature\Enemy\SkellBoss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -310,6 +316,9 @@
     </ClCompile>
     <ClCompile Include="daCreatureLifebarScript.cpp">
       <Filter>Objects\Creature\Enemy\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="daSkellBossScript.cpp">
+      <Filter>Objects\Creature\Enemy\SkellBoss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

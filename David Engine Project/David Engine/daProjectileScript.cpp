@@ -99,6 +99,12 @@ namespace da
 
 	void ProjectileScript::OnCollisionEnter(Collider2D* other)
 	{
+		if (enums::eLayerType::Boss == other->GetOwner()->GetLayerType())
+		{
+			mWeaponStat.ProjectileCollision = true;
+			// 보스 피격 호출
+		}
+
 		if (enums::eLayerType::Creature == other->GetOwner()->GetLayerType())
 		{
 			mWeaponStat.ProjectileCollision = true;
@@ -109,5 +115,6 @@ namespace da
 			mReqWeapon->CallHitEffect(creatureScript->GetCreatureTransform()->GetPosition());
 			SceneManager::GetMainCameraScript()->SetOscillation(20.0f, 0.150f);
 		}
+		
 	}
 }

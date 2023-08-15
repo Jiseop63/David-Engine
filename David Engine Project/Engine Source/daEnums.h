@@ -30,6 +30,8 @@ namespace da::enums
 		Creature,
 		CreatureAttackCollider,
 		Effect,
+		
+		Boss,
 		Playable,
 		PlayableAttackCollider,
 

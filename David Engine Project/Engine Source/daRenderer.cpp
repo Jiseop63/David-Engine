@@ -684,6 +684,16 @@ namespace renderer
 			spriteMaterial->SetShader(spriteShader);
 			Resources::Insert<Material>(L"2FStage2Material", spriteMaterial);
 		}
+
+		// monster texture
+		{
+			Resources::Load<Texture>(L"SkelSprite", L"..\\Resources\\Texture\\Monster\\Skel\\SpriteSheet.png");
+			Resources::Load<Texture>(L"EnemyGreatSword", L"..\\Resources\\Texture\\Monster\\Skel\\GreatSwordSpriteSheet.png");
+		}
+		// boss texture
+		{
+			Resources::Load<Texture>(L"BossSpriteSheet", L"..\\Resources\\Texture\\Scene_Dungeon2F\\SkellBossSpriteSheet.png");
+		}
 #pragma endregion
 	}
 	void SetupState()

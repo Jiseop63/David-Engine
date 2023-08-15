@@ -56,6 +56,9 @@ namespace da
 		GameDataManager::SetCameraMovaPosition(math::Vector2(playerPos.x, playerPos.y));
 		// light ¼¼ÆÃ
 		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.40f, 0.40f, 0.40f, 1.0f));
+
+		CollisionManager::SetLayer(enums::eLayerType::PlayableAttackCollider, enums::eLayerType::Boss);
+
 	}
 	void Scene_Dungeon2F_Stage2::OnExit()
 	{
@@ -63,20 +66,12 @@ namespace da
 	}
 	void Scene_Dungeon2F_Stage2::addBackgroundObjects()
 	{
-	}
-	void Scene_Dungeon2F_Stage2::addGameObjects()
-	{
 		// Stage : 352 304
 		{
 			GameObject* stageObject = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::FrontBackGround, L"2FStage2Material");
 			stageObject->GetTransform()->SetScale(math::Vector3(3.520f * 4.0f, 3.040f * 4.0f, 1.0f));
 			stageObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, ObjectZ));
-		}
-		// test enemy
-		{
-			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
-			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(-0.50f, 0.0f, ObjectZ));
 		}
 
 		// Ground
@@ -115,7 +110,7 @@ namespace da
 				this, Vector3(0.0f, 5.90f, 0.0f), Vector3(12.0f, 1.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
-		
+
 		// 1F Platform
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
@@ -163,6 +158,22 @@ namespace da
 			GameObject* landObject = objects::InstantiateLandObject(
 				this, Vector3(0.0f, 2.650f, 0.0f), Vector3(3.80f, 0.450f, 1.0f));
 			landObject->SetName(L"PlatformObj");
+		}
+
+	}
+	void Scene_Dungeon2F_Stage2::addGameObjects()
+	{
+		
+		// test enemy
+		{
+			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
+			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(-0.50f, 0.0f, ObjectZ));
+		}
+
+		// skell Boss
+		{
+			SkellBossScript* skelScript = objects::InstantiateBoss<SkellBossScript>(this);
+			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(0.0f, 0.0f, ObjectZ));
 		}
 	}
 }

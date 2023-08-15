@@ -176,6 +176,7 @@
     <ClInclude Include="daScene_Dungeon2F_Stage2.h" />
     <ClInclude Include="daScene_Title.h" />
     <ClInclude Include="daScene_Town.h" />
+    <ClInclude Include="daSkellBossScript.h" />
     <ClInclude Include="daSkelScript.h" />
     <ClInclude Include="daSubCameraScript.h" />
     <ClInclude Include="daUIObject.h" />
@@ -214,6 +215,7 @@
     <ClCompile Include="daScene_Dungeon2F_Stage2.cpp" />
     <ClCompile Include="daScene_Title.cpp" />
     <ClCompile Include="daScene_Town.cpp" />
+    <ClCompile Include="daSkellBossScript.cpp" />
     <ClCompile Include="daSkelScript.cpp" />
     <ClCompile Include="daSubCameraScript.cpp" />
     <ClCompile Include="daUIManager.cpp" />

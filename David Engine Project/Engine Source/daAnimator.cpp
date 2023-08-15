@@ -54,7 +54,7 @@ namespace da
 
 		animation = new Animation();
 		animation->SetKey(name);
-		animation->Create(name, atlas, leftTop, size, columnLength, offset, duration);
+		animation->Create(name, atlas, leftTop, size, columnLength, offset, duration, scale);
 		mAnimations.insert( std::make_pair(name, animation) );
 
 		Events* events = FindEvents(name);

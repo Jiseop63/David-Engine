@@ -50,3 +50,5 @@
 #include "daEnemyWeaponScript.h"
 #include "daSkelScript.h"
 #include "daCreatureLifebarScript.h"
+
+#include "daSkellBossScript.h"
