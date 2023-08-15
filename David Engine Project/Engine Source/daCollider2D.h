@@ -20,8 +20,6 @@ namespace da
 			Left,
 			Right,
 			Top,
-			LT,
-			RT,
 		};
 
 		Collider2D();

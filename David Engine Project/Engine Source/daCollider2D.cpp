@@ -140,74 +140,47 @@ namespace da
 		// 일단 내가 Body타입인지 확인
 		if (!mBody)
 			return;
+
 		if (!isEnter)
 		{
 			mWallCollision = eWallCollisionState::None;
 			return;
 		}
-
-		// 상대꺼
+		// 충돌체 정보 가져오기
 		math::Vector3 envPosition = other->GetTotalPosition();
 		math::Vector3 envSize = other->GetTotalScale();
-
-		// 내꺼
 		math::Vector3 bodyPosition = GetTotalPosition();
 		math::Vector3 bodySize = GetTotalScale();
 		
-		// ScreenPos로 변환해서 비교해야할듯?
+		// 기준값 가져오기
+		float wallTop = envPosition.y - (envSize.y / 2.0f);
+		float bodyTop = bodyPosition.y + (bodySize.y / 2.0f);
+		float wallLeft = envPosition.x + (envSize.x / 2.0f);
+		float bodyLeft = bodyPosition.x - (bodySize.x / 2.0f);
+		float wallRight = envPosition.x - (envSize.x / 2.0f);
+		float bodyRight = bodyPosition.x + (bodySize.x / 2.0f);
+
+		// 더 작은쪽이 충돌한부분임
+		float left = abs(wallLeft) - abs(bodyLeft);
+		float right = abs(wallRight) - abs(bodyRight);
+
+		// 충돌 오차값
+		float Xlength = (envSize.x / 2.0f) + (bodySize.x / 2.0f);
+		float XPos = abs(envPosition.x) - abs(bodyPosition.x);
+		float Ylength = (envSize.y / 2.0f) + (bodySize.y / 2.0f);
+		float YPos = abs(envPosition.y) - abs(bodyPosition.y);
 
 
-		float wallPosX = envPosition.x - (envSize.x / 2.0f);
-		float bodyPosX = bodySize.x + (bodySize.x / 2.0f);
-		float wallPosY = envPosition.y - (envSize.y / 2.0f);
-		float bodyPosY = bodyPosition.y + (bodySize.y / 2.0f);
-
-		// 왼쪽인지 확인
-		if (envPosition.x <= bodySize.x)
+		if (Xlength - XPos <= 0.10f)
 		{
-			// 천장에 닿았는지 확인
-			if (abs(wallPosY) <= abs(bodyPosY))
-				mWallCollision = eWallCollisionState::LT;
-			else
+			if (Xlength >= left)
 				mWallCollision = eWallCollisionState::Left;
-		}
-		else if (envPosition.x >= bodySize.x)
-		{
-			if (abs(wallPosY) <= abs(bodyPosY))
-				mWallCollision = eWallCollisionState::RT;
-			else
+			else if (Xlength >= right)
 				mWallCollision = eWallCollisionState::Right;
 		}
 		else
-			mWallCollision = eWallCollisionState::Top;
-
-
-
-		// 내가 천장에 머리를 박았음
-		//if (wallPosY <= bodyPosY)
-		//{
-		//	// 근데 왼쪽임 LT
-		//	if (envPosition.x + (envSize.x / 2.0f)
-		//		<= bodySize.x - (bodySize.x / 2.0f))
-		//		mWallCollision = eWallCollisionState::LT;
-		//	// 아님 오른쪽 RT
-		//	else if(envPosition.x - (envSize.x / 2.0f)
-		//		>= bodySize.x + (bodySize.x / 2.0f))
-		//		mWallCollision = eWallCollisionState::RT;
-		//	else
-		//		mWallCollision = eWallCollisionState::Top;
-		//}
-		//else
-		//{
-		//	// 그냥 왼쪽
-		//	if (envPosition.x + (envSize.x / 2.0f)
-		//		<= bodySize.x - (bodySize.x / 2.0f))
-		//		mWallCollision = eWallCollisionState::Left;
-		//	// 그냥 오른쪽
-		//	else if (envPosition.x - (envSize.x / 2.0f)
-		//		>= bodySize.x + (bodySize.x / 2.0f))
-		//		mWallCollision = eWallCollisionState::Right;
-		//}
+			if (Ylength - YPos <= 0.10f)
+				mWallCollision = eWallCollisionState::Top;
 	}
 
 	void Collider2D::OnCollisionEnter(Collider2D* other)

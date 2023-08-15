@@ -125,5 +125,11 @@ namespace da
 				this, Vector3(7.150f, -2.60f, 0.0f), Vector3(1.50f, 2.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
+		// Top
+		{
+			GameObject* landObject = objects::InstantiateLandObject(
+				this, Vector3(0.30f, 2.250f, 0.0f), Vector3(12.40f, 1.0f, 1.0f));
+			landObject->SetName(L"LandObj");
+		}
 	}
 }

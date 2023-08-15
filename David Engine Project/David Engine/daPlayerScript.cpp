@@ -158,7 +158,7 @@ namespace da
                 mHoldingDashTime = 0.0f;
                 mDashRunning = false;
                 mRigidbody->GravityAble(true);
-                mRigidbody->OverrideVelocity(mPlayerDir, 1.0f);
+                mRigidbody->OverrideVelocity(math::Vector2::Zero, 0.0f);
             }
         }
     }       
@@ -317,21 +317,17 @@ namespace da
 
         if (Input::GetKey(eKeyCode::D))
         {        
-            if (Collider2D::eWallCollisionState::Left != wallCollisionState
-                || Collider2D::eWallCollisionState::LT != wallCollisionState)
+            if (Collider2D::eWallCollisionState::Right == wallCollisionState)
+                return;
+            else
                 mPos.x += moveMagnitude;
         }
         if (Input::GetKey(eKeyCode::A))
         {
-            if (Collider2D::eWallCollisionState::Right != wallCollisionState
-                || Collider2D::eWallCollisionState::RT != wallCollisionState)
-            {
-                mPos.x -= moveMagnitude;
-            }
+            if (Collider2D::eWallCollisionState::Left == wallCollisionState)
+                return;
             else
-            {
-                int a = 0;
-            }
+                mPos.x -= moveMagnitude;
         }
         
        
