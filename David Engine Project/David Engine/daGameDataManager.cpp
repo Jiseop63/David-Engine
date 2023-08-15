@@ -29,8 +29,8 @@ namespace da
 		mPlayerStat.MaxHP = 30;
 		mPlayerStat.CurHP = mPlayerStat.MaxHP;
 		mPlayerStat.MoveSpeed = 3.50f;
-		mPlayerStat.JumpForce = 5.50f;
-		mPlayerStat.DashForce = 7.50f;
+		mPlayerStat.JumpForce = 6.50f;
+		mPlayerStat.DashForce = 8.50f;
 		
 		mDashCount.MaxDashCount = 2;
 		mDashCount.CurDashCount = mDashCount.MaxDashCount;
@@ -38,7 +38,7 @@ namespace da
 		mDashCount.DashRegenTime = 2.250f;
 
 		mJumpCount.JumpAccumulateTime = 0.0f;
-		mJumpCount.JumpLimitTime = 0.1750f;
+		mJumpCount.JumpLimitTime = 0.1250f;
 		mJumpCount.JumpForceRatio = 0.0f;
 		mJumpCount.BufferedJump = false;
 		mJumpCount.ExtraJump = true;

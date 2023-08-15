@@ -450,7 +450,7 @@ namespace da
             activeEffect(playerEffect, L"Jumping");
 
             // 최소 높이 설정
-            float minForceRatio = 0.750f;
+            float minForceRatio = 0.650f;
             if (minForceRatio >= mJumpCount->JumpForceRatio)
                 mJumpCount->JumpForceRatio = minForceRatio;
 
@@ -486,8 +486,8 @@ namespace da
             GetOwner()->SetBodyCollider(mBodyCollider);
             mBodyCollider->SetName(L"BodyCollider");
             mBodyCollider->ImBody();
-            mBodyCollider->SetSize(Vector2(0.30f, 0.40f));
-            mBodyCollider->SetCenter(Vector2(0.0f, -0.10f));
+            mBodyCollider->SetSize(Vector2(0.30f, 0.50f));
+            mBodyCollider->SetCenter(Vector2(0.0f, -0.150f));
             mBodyCollider->SetDetectionType(Collider2D::eDetectionType::Default);
         }
         // foot

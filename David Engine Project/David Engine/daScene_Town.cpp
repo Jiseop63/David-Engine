@@ -52,6 +52,7 @@ namespace da
 		PlayerScript* player = SceneManager::GetPlayerScript();
 		player->SetPlayerPosition(math::Vector3(0.0f, 2.50f, 0.0f));
 		player->SetPlayerVelocity(math::Vector2::Zero);
+		player->ChangeState(ePlayerState::Idle);
 		player->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 		player->IsPlayerInDungeon(false);
 		math::Vector3 playerPos = player->GetOwner()->GetTransform()->GetPosition();
@@ -63,7 +64,7 @@ namespace da
 		SceneManager::GetLifebarScript()->SetValue(playerStat.MaxHP, playerStat.CurHP);
 		SceneManager::GetHUDObject()->SetObjectStates(GameObject::eObjectState::Active);
 		SceneManager::GetCursourScrip()->IsIngame(true);
-
+		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.70f, 0.70f, 0.70f, 1.0f));
 		// 충돌 세팅
 		CollisionManager::SetLayer(enums::eLayerType::Land, enums::eLayerType::Playable);
 		CollisionManager::SetLayer(enums::eLayerType::Land, enums::eLayerType::Creature);

@@ -171,19 +171,53 @@ namespace da
 		// 충돌 오차값
 		float Xlength = (envSize.x / 2.0f) + (bodySize.x / 2.0f);
 		float XPos = abs(envPosition.x) - abs(bodyPosition.x);
+
+		// 두 값이 -인 경우
+		if ((0 >= bodyPosition.x && 0 >= envPosition.x))
+		{
+			// 둘중 큰 값으로 계산
+			if (bodyPosition.x <= envPosition.x)
+				XPos = abs(bodyPosition.x) - abs(envPosition.x);
+		}
+
+		// 둘중 하나만 -인 경우
+		if ((0 >= bodyPosition.x && 0 <= envPosition.x)
+			|| (0 <= bodyPosition.x && 0 >= envPosition.x))
+			XPos = abs(bodyPosition.x) - abs(envPosition.x);
+
+		if (0 >= XPos)
+			XPos = abs(XPos);
+
+			
 		float Ylength = (envSize.y / 2.0f) + (bodySize.y / 2.0f);
 		float YPos = abs(envPosition.y) - abs(bodyPosition.y);
 
-
-		if (Xlength - XPos <= 0.10f)
+		// 두 값이 -인 경우
+		if ((0 >= bodyPosition.y && 0 >= envPosition.y))
 		{
-			if (Xlength >= left)
+			// 둘중 큰 값으로 계산
+			if (bodyPosition.y <= envPosition.y)
+				YPos = abs(bodyPosition.y) - abs(envPosition.y);
+		}
+		// 둘중 하나만 -인 경우
+		else if ((0 >= bodyPosition.y || 0 >= envPosition.y))
+			YPos = abs(envPosition.y) + abs(bodyPosition.y);
+
+		if (0 >= YPos)
+			YPos = abs(YPos);
+
+
+		if ((Xlength - XPos <= 0.10f)
+			&& (Xlength - XPos >= -0.10f))
+		{
+			if (abs(left) <= abs(right))
 				mWallCollision = eWallCollisionState::Left;
-			else if (Xlength >= right)
+			else
 				mWallCollision = eWallCollisionState::Right;
 		}
 		else
-			if (Ylength - YPos <= 0.10f)
+			if ((Ylength - YPos <= 0.10f)
+				&& (Ylength - YPos >= -0.10f))
 				mWallCollision = eWallCollisionState::Top;
 	}
 

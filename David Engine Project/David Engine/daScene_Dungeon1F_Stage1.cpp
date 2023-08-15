@@ -48,6 +48,7 @@ namespace da
 		PlayerScript* player = SceneManager::GetPlayerScript();
 		player->SetPlayerPosition(math::Vector3::Zero);
 		player->SetPlayerVelocity(math::Vector2::Zero);
+		player->ChangeState(ePlayerState::Idle);
 		player->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 		player->IsPlayerInDungeon(true);
 		math::Vector3 playerPos = player->GetOwner()->GetTransform()->GetPosition();
@@ -55,7 +56,7 @@ namespace da
 		GameDataManager::SetCameraMovableRange(math::Vector2(0.80f, 0.0f));
 		GameDataManager::SetCameraMovaPosition(math::Vector2(playerPos.x, playerPos.y));
 		// light 세팅
-		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.50f, 0.50f, 0.50f, 1.0f));
+		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.40f, 0.40f, 0.40f, 1.0f));
 		// 충돌 세팅
 		CollisionManager::SetLayer(enums::eLayerType::PlayableAttackCollider, enums::eLayerType::Creature);
 	}
@@ -129,6 +130,13 @@ namespace da
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
 				this, Vector3(0.30f, 2.050f, 0.0f), Vector3(12.40f, 1.0f, 1.0f));
+			landObject->SetName(L"LandObj");
+		}
+
+		// right
+		{
+			GameObject* landObject = objects::InstantiateLandObject(
+				this, Vector3(7.150f, 1.950f, 0.0f), Vector3(1.50f, 2.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
 	}

@@ -49,7 +49,7 @@ namespace da
 	void Scene_Title::OnEnter()
 	{
 		// 각종 객체들 Inactive 해주기
-		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.80f, 0.80f, 0.80f, 1.0f));
+		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.70f, 0.70f, 0.70f, 1.0f));
 		SceneManager::GetPlayerScript()->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
 		SceneManager::GetHUDObject()->SetObjectStates(GameObject::eObjectState::Inactive);
 
