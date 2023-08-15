@@ -316,16 +316,26 @@ namespace da
             return;
 
         if (Input::GetKey(eKeyCode::D))
-        {
-            // 왼쪽 벽충돌이 아니라면, 왼쪽으로 이동 가능
-            if (Collider2D::eWallCollisionState::Right != wallCollisionState)
+        {        
+            if (Collider2D::eWallCollisionState::Left != wallCollisionState
+                || Collider2D::eWallCollisionState::LT != wallCollisionState)
                 mPos.x += moveMagnitude;
         }
         if (Input::GetKey(eKeyCode::A))
         {
-            if (Collider2D::eWallCollisionState::Left != wallCollisionState)
+            if (Collider2D::eWallCollisionState::Right != wallCollisionState
+                || Collider2D::eWallCollisionState::RT != wallCollisionState)
+            {
                 mPos.x -= moveMagnitude;
+            }
+            else
+            {
+                int a = 0;
+            }
         }
+        
+       
+
         mTransform->SetPosition(mPos);
     }
     void PlayerScript::walkDust()

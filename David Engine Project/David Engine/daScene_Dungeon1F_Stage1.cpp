@@ -44,16 +44,16 @@ namespace da
 	}
 	void Scene_Dungeon1F_Stage1::OnEnter()
 	{
-		// Camera 技泼
-		SceneManager::GetMainCameraScript()->GetOwner()->GetComponent<Transform>()->SetPosition(math::Vector3::Zero);
-		GameDataManager::SetCameraMovableRange(math::Vector2(0.80f, 0.0f));
-		GameDataManager::SetCameraMovaPosition(math::Vector2::Zero);
 		// player 技泼
 		PlayerScript* player = SceneManager::GetPlayerScript();
 		player->SetPlayerPosition(math::Vector3::Zero);
 		player->SetPlayerVelocity(math::Vector2::Zero);
 		player->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 		player->IsPlayerInDungeon(true);
+		math::Vector3 playerPos = player->GetOwner()->GetTransform()->GetPosition();
+		// Camera 技泼
+		GameDataManager::SetCameraMovableRange(math::Vector2(0.80f, 0.0f));
+		GameDataManager::SetCameraMovaPosition(math::Vector2(playerPos.x, playerPos.y));
 		// light 技泼
 		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.50f, 0.50f, 0.50f, 1.0f));
 		// 面倒 技泼

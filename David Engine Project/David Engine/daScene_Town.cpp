@@ -47,10 +47,6 @@ namespace da
 	
 	void Scene_Town::OnEnter()
 	{
-		// Camera 技泼
-		SceneManager::GetMainCameraScript()->GetOwner()->GetComponent<Transform>()->SetPosition(math::Vector3::Zero);
-		GameDataManager::SetCameraMovableRange(math::Vector2(22.0f, 1.80f));
-		GameDataManager::SetCameraMovaPosition(math::Vector2::Zero);
 
 		// player 技泼
 		PlayerScript* player = SceneManager::GetPlayerScript();
@@ -58,6 +54,10 @@ namespace da
 		player->SetPlayerVelocity(math::Vector2::Zero);
 		player->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 		player->IsPlayerInDungeon(false);
+		math::Vector3 playerPos = player->GetOwner()->GetTransform()->GetPosition();
+		// Camera 技泼
+		GameDataManager::SetCameraMovableRange(math::Vector2(22.0f, 1.80f));
+		GameDataManager::SetCameraMovaPosition(math::Vector2(playerPos.x, playerPos.y));
 		// UI 技泼
 		structs::sPlayerStat playerStat = GameDataManager::GetPlayerStat();
 		SceneManager::GetLifebarScript()->SetValue(playerStat.MaxHP, playerStat.CurHP);

@@ -43,14 +43,16 @@ namespace da
 	}
 	void Scene_Dungeon2F_Stage2::OnEnter()
 	{
-		// Camera 技泼
-		SceneManager::GetMainCameraScript()->GetOwner()->GetComponent<Transform>()->SetPosition(math::Vector3::Zero);
 		// player 技泼
 		PlayerScript* player = SceneManager::GetPlayerScript();
 		player->SetPlayerPosition(math::Vector3::Zero);
 		player->SetPlayerVelocity(math::Vector2::Zero);
 		player->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 		player->IsPlayerInDungeon(true);
+		math::Vector3 playerPos = player->GetOwner()->GetTransform()->GetPosition();
+		// Camera 技泼
+		GameDataManager::SetCameraMovableRange(math::Vector2(0.210f, 2.240f));
+		GameDataManager::SetCameraMovaPosition(math::Vector2(playerPos.x, playerPos.y));
 		// light 技泼
 		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.50f, 0.50f, 0.50f, 1.0f));
 	}
@@ -78,10 +80,23 @@ namespace da
 		//	monsterObject->AddComponent<CreatureScript>();
 		//}
 
-		// land
+		// Ground
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
-				this, Vector3(-1.0f, -2.50f, 0.0f), Vector3(10.0f, 1.0f, 1.0f));
+				this, Vector3(0.0f, -5.950f, 0.0f), Vector3(14.0f, 1.0f, 1.0f));
+			landObject->SetName(L"LandObj");
+		}
+		// Left
+		{
+			GameObject* landObject = objects::InstantiateLandObject(
+				this, Vector3(-7.0f, -3.950f, 0.0f), Vector3(0.0f, 3.0f, 1.0f));
+			landObject->SetName(L"LandObj");
+		}
+
+		// Right
+		{
+			GameObject* landObject = objects::InstantiateLandObject(
+				this, Vector3(7.0f, -3.950f, 0.0f), Vector3(0.0f, 3.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
 	}
