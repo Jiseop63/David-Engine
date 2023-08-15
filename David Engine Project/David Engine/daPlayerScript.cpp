@@ -153,11 +153,12 @@ namespace da
         if (mDashRunning)
         {
             mHoldingDashTime += (float)Time::DeltaTime();
-            if (0.150f <= mHoldingDashTime)
+            if (0.30f <= mHoldingDashTime)
             {
                 mHoldingDashTime = 0.0f;
                 mDashRunning = false;
                 mRigidbody->GravityAble(true);
+                mRigidbody->OverrideVelocity(mPlayerDir, 1.0f);
             }
         }
     }       
@@ -478,16 +479,19 @@ namespace da
         {
             GetOwner()->SetBodyCollider(mBodyCollider);
             mBodyCollider->SetName(L"BodyCollider");
+            mBodyCollider->ImBody();
             mBodyCollider->SetSize(Vector2(0.30f, 0.40f));
             mBodyCollider->SetCenter(Vector2(0.0f, -0.10f));
+            mBodyCollider->SetDetectionType(Collider2D::eDetectionType::Default);
         }
         // foot
         {
             GetOwner()->SetFootCollider(mFootCollider);
             mFootCollider->SetName(L"FootCollider");
+            mFootCollider->ImFoot();
             mFootCollider->SetSize(Vector2(0.050f, 0.050f));
             mFootCollider->SetCenter(Vector2(0.0f, -0.450f));
-            mFootCollider->SetColliderDetection(Collider2D::eColliderDetection::Land);
+            mFootCollider->SetDetectionType(Collider2D::eDetectionType::Default);
         }
     }
 #pragma endregion

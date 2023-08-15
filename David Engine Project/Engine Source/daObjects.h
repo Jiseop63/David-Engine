@@ -179,7 +179,7 @@ namespace da::objects
 		myLayer.AddGameObject(obj);
 
 		Collider2D* collider = obj->AddComponent<Collider2D>();
-		collider->SetColliderDetection(Collider2D::eColliderDetection::Land);
+		collider->SetDetectionType(Collider2D::eDetectionType::Env);
 		obj->Initialize();
 
 		Transform* transform = obj->GetTransform();

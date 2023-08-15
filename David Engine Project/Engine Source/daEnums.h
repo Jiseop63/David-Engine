@@ -16,18 +16,24 @@ namespace da::enums
 	{
 		Default, // 숭돌 없고 렌더 안하는 객체
 
-		Background,	// 움직이지 않음
-		Layer,		// 카메라에 영향을 받음
+		// BG
+		Background,		// 움직이지 않음
+		Layer,			// 카메라에 영향을 받음
 		FrontBackGround,
-		Land,
-		ENV,
 
+		// Env Collision
+		Land,
+		Platform,
+
+		// Object Collision
+		ENV,
 		Creature,
 		CreatureAttackCollider,
 		Effect,
 		Playable,
 		PlayableAttackCollider,
 
+		// Graphic
 		Light,
 		UI,
 		Button,

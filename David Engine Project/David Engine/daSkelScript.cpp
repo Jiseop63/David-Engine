@@ -34,7 +34,7 @@ namespace da
 			// foot
 			mCreatureFootCollider->SetSize(math::Vector2(0.050f, 0.050f));
 			mCreatureFootCollider->SetCenter(math::Vector2(0.0f, -0.450f));
-			mCreatureFootCollider->SetColliderDetection(Collider2D::eColliderDetection::Land);
+			mCreatureFootCollider->SetDetectionType(Collider2D::eDetectionType::Default);
 		}
 
 		// 애니메이션 설정하기

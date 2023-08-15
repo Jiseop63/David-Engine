@@ -41,12 +41,17 @@ namespace da
 		mCreatureFootCollider = GetOwner()->AddComponent<Collider2D>();
 		GetOwner()->SetFootCollider(mCreatureFootCollider);
 
+
+		mCreatureBodyCollider->ImBody();
 		mCreatureBodyCollider->SetSize(Vector2(0.30f, 0.40f));
 		mCreatureBodyCollider->SetCenter(Vector2(0.0f, -0.10f));
+		mCreatureFootCollider->SetDetectionType(Collider2D::eDetectionType::Default);
 
+
+		mCreatureFootCollider->ImFoot();
 		mCreatureFootCollider->SetSize(Vector2(0.050f, 0.050f));
 		mCreatureFootCollider->SetCenter(Vector2(0.0f, -0.450f));
-		mCreatureFootCollider->SetColliderDetection(Collider2D::eColliderDetection::Land);
+		mCreatureFootCollider->SetDetectionType(Collider2D::eDetectionType::Default);
 		
 		mPlayerScript = SceneManager::GetPlayerScript();
 

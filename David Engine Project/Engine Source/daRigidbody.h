@@ -21,6 +21,7 @@ namespace da
 		void applyGravity();
 
 		void calculateVelocity();
+		void wallCollision();
 		void applyFriction();
 		void applyLocation();
 		void clearPower();

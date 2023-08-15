@@ -86,89 +86,29 @@ namespace da
 					|| GameObject::eObjectState::Active != right->GetOwner()->GetObjectState())
 					return;
 				
-				// 충돌함, 충돌한적 없음, Enter 호출
-				if (Collider2D::eColliderDetection::Land == left->GetColliderDetection()
-					&& Collider2D::eColliderDetection::Land == right->GetColliderDetection())
-				{
-					iter->second = true;
-					left->OnGroundEnter(right);
-					right->OnGroundEnter(left);
-					return;
-				}
-				else if (Collider2D::eColliderDetection::Default == left->GetColliderDetection()
-					&& Collider2D::eColliderDetection::Default == right->GetColliderDetection())
-				{
-					//Enter
-					iter->second = true;
-					left->OnCollisionEnter(right);
-					right->OnCollisionEnter(left);
-					return;
-				}
-				else
-				{
-					//Enter
-					iter->second = true;
-					left->OnWallEnter(right);
-					right->OnWallEnter(left);
-					return;
-				}
-				
+				//Enter
+				iter->second = true;
+				left->OnCollisionEnter(right);
+				right->OnCollisionEnter(left);
+				return;
 			}
 			else
 			{
 				// 둘중 하나가 비활성 상태임, Exit 호출
 				if (GameObject::eObjectState::Active != left->GetOwner()->GetObjectState()
 					|| GameObject::eObjectState::Active != right->GetOwner()->GetObjectState())
-				{
-					if (Collider2D::eColliderDetection::Land == left->GetColliderDetection()
-						&& Collider2D::eColliderDetection::Land == right->GetColliderDetection())
-					{
-						iter->second = false;
-						left->OnGroundExit(right);
-						right->OnGroundExit(left);
-						return;
-					}
-					else if (Collider2D::eColliderDetection::Default == left->GetColliderDetection()
-						&& Collider2D::eColliderDetection::Default == right->GetColliderDetection())
-					{
-						//Exit
-						iter->second = false;
-						left->OnCollisionExit(right);
-						right->OnCollisionExit(left);
-						return;
-					}
-					else
-					{
-						//Exit
-						iter->second = false;
-						left->OnWallExit(right);
-						right->OnWallExit(left);
-						return;
-					}					
+				{					
+					//Exit
+					iter->second = false;
+					left->OnCollisionExit(right);
+					right->OnCollisionExit(left);
+					return;
 				}
 
-				// 충돌함, 충돌한적 있음, Stay 호출
-				if (Collider2D::eColliderDetection::Land == left->GetColliderDetection()
-					&& Collider2D::eColliderDetection::Land == right->GetColliderDetection())
-				{
-					left->OnGroundStay(right);
-					right->OnGroundStay(left);
-					return;
-				}
-				else if (Collider2D::eColliderDetection::Default == left->GetColliderDetection()
-					&& Collider2D::eColliderDetection::Default == right->GetColliderDetection())
-				{
-					//Stay
-					left->OnCollisionStay(right);
-					right->OnCollisionStay(left);
-					return;
-				}
-				else
-				{
-					left->OnWallStay(right);
-					right->OnWallStay(left);
-					return;
-				}
+				//Stay
+				left->OnCollisionStay(right);
+				right->OnCollisionStay(left);
+				return;
 			}
 		}
 		else
@@ -176,30 +116,11 @@ namespace da
 			// 충돌아님, 충돌했었음, Exit호출
 			if (true == iter->second)
 			{
-				if (Collider2D::eColliderDetection::Land == left->GetColliderDetection()
-					&& Collider2D::eColliderDetection::Land == right->GetColliderDetection())
-				{
-					iter->second = false;
-					left->OnGroundExit(right);
-					right->OnGroundExit(left);
-					return;
-				}
-				else if (Collider2D::eColliderDetection::Default == left->GetColliderDetection()
-					&& Collider2D::eColliderDetection::Default == right->GetColliderDetection())
-				{
-					//Exit
-					iter->second = false;
-					left->OnCollisionExit(right);
-					right->OnCollisionExit(left);
-					return;
-				}
-				else
-				{
-					iter->second = false;
-					left->OnWallExit(right);
-					right->OnWallExit(left);
-					return;
-				}
+				//Exit
+				iter->second = false;
+				left->OnCollisionExit(right);
+				right->OnCollisionExit(left);
+				return;
 			}
 		}
 	}

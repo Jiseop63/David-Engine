@@ -10,15 +10,19 @@ namespace da
 		: Component(enums::eComponentType::Collider)
 		, mTransform(nullptr)
 		, mColliderID(0)
-		, mColliderShape(enums::eColliderShape::Rect)
-		, mDetectionType(eColliderDetection::Default)
-		, mCenter(math::Vector2::Zero)
-		, mSize(math::Vector2::One)
-		, mColliderColor(math::Vector4::Zero)
-		, mGrounded(false)
-		, mWallCollision(eWallCollisionState::None)
 		, mTotalPosition(math::Vector3::Zero)
 		, mTotalScale(math::Vector3::One)
+
+		, mColliderShape(enums::eColliderShape::Rect)
+		, mDetectionType(eDetectionType::Default)
+		, mColliderColor(math::Vector4::Zero)
+		, mCenter(math::Vector2::Zero)
+		, mSize(math::Vector2::One)
+		
+		, mFoot(false)
+		, mBody(false)
+		, mGrounded(false)
+		, mWallCollision(eWallCollisionState::None)
 	{
 		mColliderID = ColliderNumber++;
 		mColliderColor = math::Vector4(0.0f, 1.0f, 0.0f, 1.0f);
@@ -29,6 +33,7 @@ namespace da
 	void Collider2D::Initialize()
 	{
 		mTransform = GetOwner()->GetComponent<Transform>();
+		
 	}
 	void Collider2D::LateUpdate()
 	{
@@ -70,38 +75,120 @@ namespace da
 			mColliderColor = math::Vector4(1.0f, 0.0f, 1.0f, 1.0f);
 	}
 
-	void Collider2D::SetColliderDetection(eColliderDetection type)
+	void Collider2D::ChangeColliderColor(bool isCollision)
 	{
-		mDetectionType = type;
-		if (eColliderDetection::Land == mDetectionType)
+		switch (mDetectionType)
 		{
-			mColliderColor = math::Vector4(1.0f, 0.0f, 1.0f, 1.0f);
+		case da::Collider2D::eDetectionType::Default:
+		{
+			if (isCollision)
+				mColliderColor = math::Vector4(1.0f, 0.0f, 0.0f, 1.0f);
+			else
+				mColliderColor = math::Vector4(0.0f, 1.0f, 0.0f, 1.0f);
 		}
-		if (eColliderDetection::Default == mDetectionType)
+			break;
+		case da::Collider2D::eDetectionType::Env:
 		{
-			mColliderColor = math::Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+			if (isCollision)
+				mColliderColor = math::Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+			else
+				mColliderColor = math::Vector4(1.0f, 0.0f, 1.0f, 1.0f);
 		}
-		if (eColliderDetection::Inactive == mDetectionType)
+			break;
+		case da::Collider2D::eDetectionType::Sensor:
 		{
-			mColliderColor = math::Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+			if (isCollision)
+				mColliderColor = math::Vector4(0.20f, 0.20f, 0.20f, 1.0f);
+			else
+				mColliderColor = math::Vector4(1.0f, 1.0f, 0.0f, 1.0f);
+		}
+			break;
+		default:
+			break;
 		}
 	}
 
-	void Collider2D::WallCollitionCkeck(Transform* wallTransform)
+	void Collider2D::SetDetectionType(eDetectionType type)
 	{
-		// 위치 비교하기
-		if (GetOwner()->GetTransform()->GetPosition().x <= wallTransform->GetPosition().x)
+		mDetectionType = type;
+		if (eDetectionType::Default == mDetectionType)
 		{
-			mWallCollision = eWallCollisionState::Right;
+			mColliderColor = math::Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+		}
+		if (eDetectionType::Env == mDetectionType)
+		{
+			mColliderColor = math::Vector4(1.0f, 0.0f, 1.0f, 1.0f);
+		}
+		if (eDetectionType::Sensor == mDetectionType)
+		{
+			mColliderColor = math::Vector4(1.0f, 1.0f, 0.0f, 1.0f);
+		}
+	}
+
+	void Collider2D::groundCheck(Collider2D* other, bool isEnter)
+	{		
+		if (!mFoot)
+			return;
+
+		if (isEnter)
+			mGrounded = true;
+		else
+			mGrounded = false;
+	}
+	void Collider2D::wallCollisionCheck(Collider2D* other, bool isEnter)
+	{
+		// 일단 내가 Body타입인지 확인
+		if (!mBody)
+			return;
+		if (!isEnter)
+		{
+			mWallCollision = eWallCollisionState::None;
+			return;
+		}
+
+		// 상대꺼
+		math::Vector3 envPosition = other->GetTotalPosition();
+		math::Vector3 envSize = other->GetTotalScale();
+
+		// 내꺼
+		math::Vector3 bodyPosition = GetTotalPosition();
+		math::Vector3 bodySize = GetTotalScale();
+		
+
+		// 내가 천장에 머리를 박았음
+		if (envPosition.y - (envSize.y / 2.0f)
+			<= bodySize.y + (bodySize.y / 2.0f))
+		{
+			// 근데 왼쪽임 LT
+			if (envPosition.x + (envSize.x / 2.0f)
+				<= bodySize.x - (bodySize.x / 2.0f))
+				mWallCollision = eWallCollisionState::LT;
+			// 아님 오른쪽 RT
+			else if(envPosition.x - (envSize.x / 2.0f)
+				>= bodySize.x + (bodySize.x / 2.0f))
+				mWallCollision = eWallCollisionState::RT;
+			else
+				mWallCollision = eWallCollisionState::Top;
 		}
 		else
-			mWallCollision = eWallCollisionState::Left;
-
+		{
+			// 그냥 왼쪽
+			if (envPosition.x + (envSize.x / 2.0f)
+				<= bodySize.x - (bodySize.x / 2.0f))
+				mWallCollision = eWallCollisionState::Left;
+			// 그냥 오른쪽
+			else if (envPosition.x - (envSize.x / 2.0f)
+				>= bodySize.x + (bodySize.x / 2.0f))
+				mWallCollision = eWallCollisionState::Right;
+		}
 	}
 
 	void Collider2D::OnCollisionEnter(Collider2D* other)
 	{
-		ChangeCollisionColor(true);
+		ChangeColliderColor(true);
+		groundCheck(other, true);
+		wallCollisionCheck(other, true);
+
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetScripts();
 
@@ -122,95 +209,16 @@ namespace da
 	}
 	void Collider2D::OnCollisionExit(Collider2D* other)
 	{
-		ChangeCollisionColor(false);
+		ChangeColliderColor(false);
+		groundCheck(other, false);
+		wallCollisionCheck(other, false);
+
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetScripts();
 
 		for (Script* script : scripts)
 		{
 			script->OnCollisionExit(other);
-		}
-	}
-
-
-	void Collider2D::OnGroundEnter(Collider2D* other)
-	{
-		if (enums::eLayerType::Land == other->GetOwner()->GetLayerType()
-			&& enums::eLayerType::Land != GetOwner()->GetLayerType())			
-			mGrounded = true;
-
-		ChangeLandColor(true);
-		const std::vector<Script*>& scripts
-			= GetOwner()->GetScripts();
-		for (Script* script : scripts)
-		{
-			script->OnGroundEnter(other);
-		}
-	}
-	void Collider2D::OnGroundStay(Collider2D* other)
-	{
-		const std::vector<Script*>& scripts
-			= GetOwner()->GetScripts();
-
-		for (Script* script : scripts)
-		{
-			script->OnGroundStay(other);
-		}
-	}
-	void Collider2D::OnGroundExit(Collider2D* other)
-	{
-		if (enums::eLayerType::Land == other->GetOwner()->GetLayerType()
-			&& enums::eLayerType::Land != GetOwner()->GetLayerType())
-			mGrounded = false;
-		ChangeLandColor(false);
-		const std::vector<Script*>& scripts
-			= GetOwner()->GetScripts();
-
-		for (Script* script : scripts)
-		{
-			script->OnGroundExit(other);
-		}
-	}
-	void Collider2D::OnWallEnter(Collider2D* other)
-	{
-		if (enums::eLayerType::Land == other->GetOwner()->GetLayerType()
-			&& enums::eLayerType::Land != GetOwner()->GetLayerType())
-		{
-			// 충돌 반별하기
-			WallCollitionCkeck(other->GetOwner()->GetTransform());
-		}
-
-		const std::vector<Script*>& scripts
-			= GetOwner()->GetScripts();
-		for (Script* script : scripts)
-		{
-			script->OnWallEnter(other);
-		}
-	}
-	void Collider2D::OnWallStay(Collider2D* other)
-	{
-		const std::vector<Script*>& scripts
-			= GetOwner()->GetScripts();
-
-		for (Script* script : scripts)
-		{
-			script->OnWallStay(other);
-		}
-	}
-	void Collider2D::OnWallExit(Collider2D* other)
-	{
-		if (enums::eLayerType::Land == other->GetOwner()->GetLayerType()
-			&& enums::eLayerType::Land != GetOwner()->GetLayerType())
-		{
-			mWallCollision = eWallCollisionState::None;
-		}
-
-		const std::vector<Script*>& scripts
-			= GetOwner()->GetScripts();
-
-		for (Script* script : scripts)
-		{
-			script->OnWallExit(other);
 		}
 	}
 }

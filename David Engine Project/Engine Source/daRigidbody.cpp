@@ -98,21 +98,61 @@ namespace da
 			mCalcVelocity = mOverrideVelocity;
 			mOverrideVelocity = Vector2::Zero;
 		}
+		
+		wallCollision();
+	}
 
-		// 벽 충돌 구현하려면
-
-		// 어디 충돌인지를 파악해서
-
-		// 방향에 주어지는 힘을 제거해야함
+	void Rigidbody::wallCollision()
+	{
+		// 주체인 충돌체를 가져옴
 		Collider2D* bodyCollider = GetOwner()->GetBodyCollider();
-		if (Collider2D::eWallCollisionState::None != bodyCollider->IsWallCollision())
+
+		// 벽에 충돌일 경우에만 진행
+		if (Collider2D::eWallCollisionState::None == bodyCollider->IsWallCollision())
+			return;
+
+		switch (bodyCollider->IsWallCollision())
 		{
-			if (Collider2D::eWallCollisionState::Right == bodyCollider->IsWallCollision()
-				&& 0 <= mCalcVelocity.x)
-				mCalcVelocity.x = 0.0f; 
-			else if (Collider2D::eWallCollisionState::Left == bodyCollider->IsWallCollision()
-				&& 0 >= mCalcVelocity.x)
+		case da::Collider2D::eWallCollisionState::Left:
+		{
+			if (0 >= mCalcVelocity.x)
 				mCalcVelocity.x = 0.0f;
+		}
+			break;
+		case da::Collider2D::eWallCollisionState::Right:
+		{
+			if (0 <= mCalcVelocity.x)
+				mCalcVelocity.x = 0.0f;
+		}
+			break;
+		case da::Collider2D::eWallCollisionState::Top:
+		{
+			if (0 <= mCalcVelocity.y)
+				mCalcVelocity.y = 0.0f;
+		}
+			break;
+		case da::Collider2D::eWallCollisionState::LT:
+		{
+			if (0 >= mCalcVelocity.x
+				&& 0 <= mCalcVelocity.y)
+			{
+				mCalcVelocity.x = 0.0f;
+				mCalcVelocity.y = 0.0f;
+			}
+		}
+			break;
+		case da::Collider2D::eWallCollisionState::RT:
+		{
+			if (0 <= mCalcVelocity.x
+				&& 0 <= mCalcVelocity.y)
+			{
+				mCalcVelocity.x = 0.0f;
+				mCalcVelocity.y = 0.0f;
+			}
+		}
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -138,18 +178,21 @@ namespace da
 					|| (0 > mCalcVelocity.x && 0 < mInputForceDir.x)
 					|| false == mMoving)*/
 			}
-			PlayerScript* playerScript = SceneManager::GetPlayerScript();
+			/*PlayerScript* playerScript = SceneManager::GetPlayerScript();
 			if (playerScript->GetOwner() == GetOwner())
 			{
 				if (!playerScript->IsDashRunning())
+				{
 					friction *= 30.0f;;
-			}
+				}
+			}*/
 
 			// 마찰력이 현재속도보다 큰경우
 			if (abs(mCalcVelocity.x) < abs(friction.x))
 				mCalcVelocity.x = 0.0f;
 			else
 				mCalcVelocity.x += friction.x;
+		
 		}
 	}
 	void Rigidbody::applyLocation()
