@@ -162,9 +162,6 @@
     <ClInclude Include="daScene_Dungeon2F_Stage2.h">
       <Filter>Scenes\03 Dungeon</Filter>
     </ClInclude>
-    <ClInclude Include="daWeaponScript.h">
-      <Filter>Objects\Inventory</Filter>
-    </ClInclude>
     <ClInclude Include="daArmourScript.h">
       <Filter>Objects\UI\HUD</Filter>
     </ClInclude>
@@ -203,6 +200,9 @@
     </ClInclude>
     <ClInclude Include="daSkellBossScript.h">
       <Filter>Objects\Creature\Enemy\SkellBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="daWeaponScript.h">
+      <Filter>Objects\Creature\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -278,9 +278,6 @@
     <ClCompile Include="daScene_Dungeon2F_Stage2.cpp">
       <Filter>Scenes\03 Dungeon</Filter>
     </ClCompile>
-    <ClCompile Include="daWeaponScript.cpp">
-      <Filter>Objects\Inventory</Filter>
-    </ClCompile>
     <ClCompile Include="daArmourScript.cpp">
       <Filter>Objects\UI\HUD</Filter>
     </ClCompile>
@@ -319,6 +316,9 @@
     </ClCompile>
     <ClCompile Include="daSkellBossScript.cpp">
       <Filter>Objects\Creature\Enemy\SkellBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="daWeaponScript.cpp">
+      <Filter>Objects\Creature\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

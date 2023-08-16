@@ -18,6 +18,9 @@ namespace da
 		: mGotoReturn(false)
 		, mReturnAccumulateTime(0.0f)
 		, mReturnDelayTime(0.0f)
+		, mReadyToAttack(false)
+		, mCooldownAccumulateTime(0.0f)
+		, mAttackCooldownTime(0.0f)
 	{
 	}
 
@@ -53,16 +56,32 @@ namespace da
 		mCreatureAnimator->Create(L"SkelAttact", texture, math::Vector2(0.0f, 0.0f), math::Vector2(32.0f, 32.0f), 1, math::Vector2(0.0f, 0.0f), 0.1f);
 		mCreatureAnimator->PlayAnimation(L"SkelIdle");
 
+		// 조건 변수들 초기화
+		mCreatureStat.MoveSpeed = 1.750f;
 		mReturnDelayTime = 1.50f;
+		mAttackCooldownTime = 3.0f;
 	}
 
 	void SkelScript::Update()
 	{
+		chasingTimeout();
+		attackCooldownReady();
+		mCreatureWeaponScript->SetWeaponTransform(mCreatureTransform->GetPosition());
+		ReverseTexture();
+		SkelFSM();
+
+		if (0 >= mCreatureStat.CurHP)
+			ChangeState(eCreatureState::Dead);
+	}
+
+	void SkelScript::chasingTimeout()
+	{
+		if (eCreatureState::Chase != mCreatureActiveState)
+			return;
+
 		if (eCreatureState::Chase == mCreatureActiveState
 			&& mPlayerFind)
-		{
-			mReturnAccumulateTime = 0.0f;			
-		}
+			mReturnAccumulateTime = 0.0f;
 		else
 		{
 			mReturnAccumulateTime += (float)Time::DeltaTime();
@@ -72,37 +91,21 @@ namespace da
 				mGotoReturn = true;
 			}
 		}
-		
-		ReverseTexture();
-
-
-		SkelFSM();
-		if (0 >= mCreatureStat.CurHP)
-			ChangeState(eCreatureState::Dead);
 	}
-
-	void SkelScript::ChangeState(eCreatureState state)
+	void SkelScript::attackCooldownReady()
 	{
-		mCreatureActiveState = state;
-		switch (mCreatureActiveState)
+		if (!mReadyToAttack)
 		{
-		case da::eCreatureState::Idle:
-			mCreatureAnimator->PlayAnimation(L"SkelIdle");
-			break;
-		case da::eCreatureState::Chase:
-			mCreatureAnimator->PlayAnimation(L"SkelMove");
-			break;
-		case da::eCreatureState::Attack:
-			mCreatureAnimator->PlayAnimation(L"SkelAttact");
-			break;
-		case da::eCreatureState::Dead:
-			GetOwner()->SetObjectState(GameObject::eObjectState::Hide);
-			break;
-		default:
-			break;
+			mCooldownAccumulateTime += (float)Time::DeltaTime();
+			if (mAttackCooldownTime <= mCooldownAccumulateTime)
+			{
+				mReadyToAttack = true;
+				mCooldownAccumulateTime = 0.0f;
+			}
 		}
 	}
-
+	
+#pragma region FSM Func
 	void SkelScript::SkelFSM()
 	{
 		switch (mCreatureActiveState)
@@ -129,63 +132,35 @@ namespace da
 		mGotoReturn = false;
 
 		if (mPlayerFind)
-			ChangeState(eCreatureState::Chase);		
+			ChangeState(eCreatureState::Chase);
 	}
 
 	void SkelScript::SkelHandleChase()
 	{
-		float moveSpeed = 1.0f;
-		math::Vector3 playerPosition = mPlayerScript->GetOwner()->GetTransform()->GetPosition();
-		math::Vector3 skelPosition = mCreatureTransform->GetPosition();
 		
-		float distanceX = playerPosition.x - skelPosition.x;
 		if (!mGotoReturn)
-		{
-			if (0 >= distanceX)
-				mCreatureDir = -math::Vector2::UnitX;
-			else
-				mCreatureDir = math::Vector2::UnitX;
-
-			skelPosition.x += mCreatureDir.x * moveSpeed * (float)Time::DeltaTime();
-			mCreatureTransform->SetPosition(skelPosition);
-		}
+			moveToAttackRange();
 		else
-		{
-			float homeDir = mStandingPosition.x - skelPosition.x;
-			if (0 >= homeDir)
-				mCreatureDir = -math::Vector2::UnitX;
-			else
-				mCreatureDir = math::Vector2::UnitX;
-
-			skelPosition.x += mCreatureDir.x * moveSpeed * (float)Time::DeltaTime();
-
-			mCreatureTransform->SetPosition(skelPosition);
-
-			if (0.5f >= abs(skelPosition.x - mStandingPosition.x))
-			{
-				ChangeState(eCreatureState::Idle);
-			}
-		}
-
-		/*if (abs(distanceX) <= mCreatureStat.AttackRange)
-		{
-			mCreatureWeaponScript->IsCreatureAttackReady();
-			ChangeState(eCreatureState::Attack);
-		}*/
-
-		
-
+			returnIdle();		
 	}
 
 	void SkelScript::SkelHandleAttack()
 	{
-		// DoAttack!
-		mCreatureWeaponScript->SetWeaponTransform(mCreatureTransform->GetPosition(), mCreatureDir);
-		mCreatureWeaponScript->DoAttack();
-		
-		// 끝나는 조건을 확인해야함
+		// 공격하지 않았는데, 거리가 멀어지면 chase
+		if (!mCreatureWeaponScript->IsAttacking())
+		{
+			float distanceX = calcCreatureDir(mPlayerScript->GetOwner()->GetTransform()->GetPosition(), mCreatureTransform->GetPosition());
+			if (abs(distanceX) >= mCreatureStat.AttackRange)
+				ChangeState(eCreatureState::Chase);
+		}
+		// 공격하지 않았고, 쿨다운이 돌았다면
+		else if (!mCreatureWeaponScript->IsAttacking())
+		{
+			if (mReadyToAttack)
+				mCreatureWeaponScript->DoAttack();
+			// doAttack을 실행한 시점에서 위의 두 조건을 벗어나게 됨. 즉, 공격이 끝나야 플레이어를 쫓아오던가 할거임
+		}			
 	}
-
 	void SkelScript::SkelHandleDead()
 	{
 		if (!mIsDead)
@@ -198,4 +173,66 @@ namespace da
 		}
 		mIsDead = true;
 	}
+
+	void SkelScript::ChangeState(eCreatureState state)
+	{
+		mCreatureActiveState = state;
+		switch (mCreatureActiveState)
+		{
+		case da::eCreatureState::Idle:
+			mCreatureAnimator->PlayAnimation(L"SkelIdle");
+			break;
+		case da::eCreatureState::Chase:
+			mCreatureAnimator->PlayAnimation(L"SkelMove");
+			break;
+		case da::eCreatureState::Attack:
+			mCreatureAnimator->PlayAnimation(L"SkelAttact");
+			break;
+		case da::eCreatureState::Dead:
+			GetOwner()->SetObjectState(GameObject::eObjectState::Hide);
+			break;
+		default:
+			break;
+		}
+	}
+#pragma endregion
+	float SkelScript::calcCreatureDir(math::Vector3 targetPosition, math::Vector3 myPosition)
+	{
+
+		float retDistance = targetPosition.x - myPosition.x;
+		if (0 >= retDistance)
+			mCreatureDir = -math::Vector2::UnitX;
+		else
+			mCreatureDir = math::Vector2::UnitX;
+		return retDistance;
+	}
+	void SkelScript::returnIdle()
+	{
+		// 방향 구하기
+		math::Vector3 skelPosition = mCreatureTransform->GetPosition();
+		float homeDir = calcCreatureDir(mStandingPosition, skelPosition);
+
+		// 상태 조건
+		if (0.5f >= abs(skelPosition.x - mStandingPosition.x))
+			ChangeState(eCreatureState::Idle);
+		
+		// 이동
+		skelPosition.x += mCreatureDir.x * mCreatureStat.MoveSpeed * (float)Time::DeltaTime();
+		mCreatureTransform->SetPosition(skelPosition);
+	}
+	void SkelScript::moveToAttackRange()
+	{
+		// 방향 구하기
+		math::Vector3 skelPosition = mCreatureTransform->GetPosition();
+		float distanceX = calcCreatureDir(mPlayerScript->GetOwner()->GetTransform()->GetPosition(), skelPosition);
+
+		// 상태 조건
+		if (abs(distanceX) <= mCreatureStat.AttackRange)
+			ChangeState(eCreatureState::Attack);
+
+		// 이동
+		skelPosition.x += mCreatureDir.x * mCreatureStat.MoveSpeed * (float)Time::DeltaTime();
+		mCreatureTransform->SetPosition(skelPosition);
+	}
+	
 }

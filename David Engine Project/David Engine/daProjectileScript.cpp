@@ -108,9 +108,8 @@ namespace da
 			SkellBossScript* bossScript = creatureObj->GetComponent<SkellBossScript>();
 			// 보스 피격 호출
 			mReqWeapon->CallHitEffect(bossScript->GetBossTransform()->GetPosition());
-			SceneManager::GetMainCameraScript()->SetOscillation(20.0f, 0.150f);
+			SceneManager::GetMainCameraScript()->SetOscillation(120.0f, 0.1250f);
 		}
-
 		if (enums::eLayerType::Creature == other->GetOwner()->GetLayerType()
 			&& other->IsBody())
 		{
@@ -119,7 +118,7 @@ namespace da
 			CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
 			// 이펙트 호출
 			mReqWeapon->CallHitEffect(creatureScript->GetCreatureTransform()->GetPosition());
-			SceneManager::GetMainCameraScript()->SetOscillation(20.0f, 0.150f);
+			SceneManager::GetMainCameraScript()->SetOscillation(120.0f, 0.1250f);
 			// 피격 호출
 			creatureScript->OnDamaged();
 			

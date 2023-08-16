@@ -65,8 +65,8 @@ namespace da
 
 		// stat ¼¼ÆÃ
 
-		mCreatureStat.MaxHP = 20.0f;
-		mCreatureStat.CurHP = 20.0f;
+		mCreatureStat.MaxHP = 25.0f;
+		mCreatureStat.CurHP = 25.0f;
 		
 		mCreatureStat.MoveSpeed = 0.750f;
 		mCreatureStat.DetectRange = 2.50f;

@@ -39,9 +39,8 @@ namespace da
 		mWeaponTransform = GetOwner()->GetTransform();
 		mWeaponTransform->SetScale(math::Vector3(2.0f, 2.0f, 1.0f));
 
-		// 텍스쳐 (근거리에만 쓰임) 세팅
+		// 근거리 무기는 Texture, 원거리 무기는 Animation 을 사용함
 		mWeaponRenderer = GetOwner()->GetComponent<MeshRenderer>();
-		// 애니메이터 (원거리에만 쓰임) 세팅
 		mWeaponAnimator = GetOwner()->AddComponent<Animator>();
 		SetReverse(false);
 		// 무기 세팅
@@ -165,7 +164,7 @@ namespace da
 			{
 				// 무기 정보 세팅
 				mActiveArmour->Weapon.AttackDelayTime = 0.450f;
-				mActiveArmour->Weapon.AtaackDamage = 10.0f;
+				mActiveArmour->Weapon.AtaackDamage = 5.0f;
 				mActiveArmour->Weapon.ProjectileValidTime = 0.250f;
 				mActiveArmour->Weapon.ProjectileCenterPadding = 0.750f;
 				mActiveArmour->Weapon.ProjectileRange = 3.5f;
