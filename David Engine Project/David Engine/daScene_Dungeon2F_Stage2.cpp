@@ -172,8 +172,8 @@ namespace da
 
 		// skell Boss
 		{
-			SkellBossScript* skelScript = objects::InstantiateBoss<SkellBossScript>(this);
-			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(0.0f, 0.0f, ObjectZ));
+			SkellBossScript* bossScript = objects::InstantiateBoss<SkellBossScript>(this);
+			bossScript->GetOwner()->GetTransform()->SetPosition(Vector3(0.0f, 0.0f, ObjectZ));
 		}
 	}
 }

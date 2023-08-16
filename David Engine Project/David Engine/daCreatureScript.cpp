@@ -40,19 +40,23 @@ namespace da
 		GetOwner()->SetBodyCollider(mCreatureBodyCollider);
 		mCreatureFootCollider = GetOwner()->AddComponent<Collider2D>();
 		GetOwner()->SetFootCollider(mCreatureFootCollider);
-
+		mCreatureSensorCollider = GetOwner()->AddComponent<Collider2D>();
 
 		mCreatureBodyCollider->ImBody();
-		mCreatureBodyCollider->SetSize(Vector2(0.30f, 0.40f));
-		mCreatureBodyCollider->SetCenter(Vector2(0.0f, -0.10f));
 		mCreatureFootCollider->SetDetectionType(Collider2D::eDetectionType::Default);
+		mCreatureBodyCollider->SetSize(Vector2(0.30f, 0.60f));
+		mCreatureBodyCollider->SetCenter(Vector2(0.0f, -0.10f));
 
 
 		mCreatureFootCollider->ImFoot();
+		mCreatureFootCollider->SetDetectionType(Collider2D::eDetectionType::Default);
 		mCreatureFootCollider->SetSize(Vector2(0.050f, 0.050f));
 		mCreatureFootCollider->SetCenter(Vector2(0.0f, -0.450f));
-		mCreatureFootCollider->SetDetectionType(Collider2D::eDetectionType::Default);
 		
+
+		mCreatureSensorCollider->SetDetectionType(Collider2D::eDetectionType::Sensor);
+		mCreatureSensorCollider->SetSize(Vector2(3.50f, 0.90f));
+
 		mPlayerScript = SceneManager::GetPlayerScript();
 
 		// stat ¼¼ÆÃ

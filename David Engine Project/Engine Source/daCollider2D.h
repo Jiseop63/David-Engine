@@ -55,6 +55,7 @@ namespace da
 
 		void ImFoot(bool isFoot = true) { mFoot = isFoot; }
 		void ImBody(bool isBody = true) { mBody = isBody; }
+		bool IsBody() { return mBody; }
 
 	private:
 		void groundCheck(Collider2D* other, bool isEnter);

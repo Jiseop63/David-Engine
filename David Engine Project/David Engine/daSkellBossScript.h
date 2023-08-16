@@ -31,12 +31,15 @@ namespace da
 		virtual void Update() override;
 
 #pragma region FSM
+	private:
 		void ChangeState(eBossState state);
 		void BossFSM();
 		void SkellBossHandleIdle();
 		void SkellBossHandleAttack();
 		void SkellBossHandleDead();
 #pragma endregion
+	public:
+		Transform* GetBossTransform() { return mBossTransform; }
 
 	private:
 		void attackCoolDown();

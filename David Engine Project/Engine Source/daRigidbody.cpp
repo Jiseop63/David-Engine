@@ -116,20 +116,20 @@ namespace da
 		case da::Collider2D::eWallCollisionState::Left:
 		{
 			if (0 >= mCalcVelocity.x)
-				mCalcVelocity.x = 0.20f;
+				mCalcVelocity.x = 0.10f;
 		}
 			break;
 		case da::Collider2D::eWallCollisionState::Right:
 		{
 			if (0 <= mCalcVelocity.x)
-				mCalcVelocity.x = -0.20f;
+				mCalcVelocity.x = -0.10f;
 		}
 			break;
 		case da::Collider2D::eWallCollisionState::Top:
 		{
 			// 아래로 살작 밀기
 			if (0 <= mCalcVelocity.y)
-				mCalcVelocity.y = -0.20f;
+				mCalcVelocity.y = -0.10f;
 		}
 			break;
 		default:

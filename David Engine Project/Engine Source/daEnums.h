@@ -29,9 +29,9 @@ namespace da::enums
 		ENV,
 		Creature,
 		CreatureAttackCollider,
-		Effect,
-		
 		Boss,
+		
+		Effect,
 		Playable,
 		PlayableAttackCollider,
 

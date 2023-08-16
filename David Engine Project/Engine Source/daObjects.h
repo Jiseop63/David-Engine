@@ -168,7 +168,7 @@ namespace da::objects
 	{
 		// enemyObject 추가
 		GameObject* enemyObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Boss, L"AnimationMaterial");
-		// CreatureScript 추가
+		// BossScript 추가
 		T* enemyScript = enemyObject->AddComponent<T>();
 
 		return enemyScript;

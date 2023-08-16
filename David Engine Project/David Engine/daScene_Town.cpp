@@ -70,6 +70,7 @@ namespace da
 		CollisionManager::SetLayer(enums::eLayerType::Land, enums::eLayerType::Creature);
 		CollisionManager::SetLayer(enums::eLayerType::Platform, enums::eLayerType::Playable);
 		CollisionManager::SetLayer(enums::eLayerType::Platform, enums::eLayerType::Creature);
+		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Creature);
 	}
 	void Scene_Town::OnExit()
 	{

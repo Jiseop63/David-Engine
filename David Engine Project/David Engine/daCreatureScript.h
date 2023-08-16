@@ -50,6 +50,7 @@ namespace da
 		Animator*				mCreatureAnimator;
 		Collider2D*				mCreatureBodyCollider;
 		Collider2D*				mCreatureFootCollider;
+		Collider2D*				mCreatureSensorCollider;
 
 		PlayerScript*			mPlayerScript;
 		EnemyWeaponScript*		mCreatureWeaponScript;

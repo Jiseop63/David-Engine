@@ -36,6 +36,7 @@ namespace da
 		// Tr
 		mBossTransform->SetScale(math::Vector3(3.50f, 3.50f, 1.0f));
 		// 보스 충돌체
+		mBossCollider->ImBody();
 		mBossCollider->SetDetectionType(Collider2D::eDetectionType::Default);
 
 		// 보스 애니메이션

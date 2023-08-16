@@ -4,6 +4,7 @@
 #include "daWeaponScript.h"
 #include "daPlayerScript.h"
 #include "daCreatureScript.h"
+#include "daSkellBossScript.h"
 #include "daSceneManager.h"
 #include "daGameDataManager.h"
 namespace da
@@ -99,22 +100,29 @@ namespace da
 
 	void ProjectileScript::OnCollisionEnter(Collider2D* other)
 	{
-		if (enums::eLayerType::Boss == other->GetOwner()->GetLayerType())
+		if (enums::eLayerType::Boss == other->GetOwner()->GetLayerType()
+			&& other->IsBody())
 		{
 			mWeaponStat.ProjectileCollision = true;
-			// 보스 피격 호출
-		}
-
-		if (enums::eLayerType::Creature == other->GetOwner()->GetLayerType())
-		{
-			mWeaponStat.ProjectileCollision = true;
-			// 피격 호출
 			GameObject* creatureObj = other->GetOwner();
-			CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
-			creatureScript->OnDamaged();
-			mReqWeapon->CallHitEffect(creatureScript->GetCreatureTransform()->GetPosition());
+			SkellBossScript* bossScript = creatureObj->GetComponent<SkellBossScript>();
+			// 보스 피격 호출
+			mReqWeapon->CallHitEffect(bossScript->GetBossTransform()->GetPosition());
 			SceneManager::GetMainCameraScript()->SetOscillation(20.0f, 0.150f);
 		}
-		
+
+		if (enums::eLayerType::Creature == other->GetOwner()->GetLayerType()
+			&& other->IsBody())
+		{
+			mWeaponStat.ProjectileCollision = true;
+			GameObject* creatureObj = other->GetOwner();
+			CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
+			// 이펙트 호출
+			mReqWeapon->CallHitEffect(creatureScript->GetCreatureTransform()->GetPosition());
+			SceneManager::GetMainCameraScript()->SetOscillation(20.0f, 0.150f);
+			// 피격 호출
+			creatureScript->OnDamaged();
+			
+		}		
 	}
 }
