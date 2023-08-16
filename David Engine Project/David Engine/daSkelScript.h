@@ -24,6 +24,9 @@ namespace da
 #pragma region Collision
 
 #pragma endregion
-
+	private:
+		bool			mGotoReturn;
+		float			mReturnAccumulateTime;
+		float			mReturnDelayTime;
 	};
 }

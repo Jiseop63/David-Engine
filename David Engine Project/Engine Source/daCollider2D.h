@@ -13,6 +13,7 @@ namespace da
 			Default,
 			Env,
 			Sensor,
+			Inactive,
 		};
 		enum class eWallCollisionState
 		{

@@ -66,19 +66,19 @@ namespace da
 	}
     void PlayerScript::Update()
     {
-        // Time
+        PlayerCondition();
         timeProcess();
-
-        // Input
         PlayerInput();
         GetMouse();
-
-        // FSM
         PlayerFSM();
-
     }
 #pragma endregion
 #pragma region Common Func
+    void PlayerScript::PlayerCondition()
+    {        
+        if (0 >= mPlayerStat->CurHP)
+            ChangeState(ePlayerState::Dead);
+    }
     void PlayerScript::PlayerInput()
     {
         DebugInput();
@@ -94,32 +94,16 @@ namespace da
     void PlayerScript::DebugInput()
     {
         if (Input::GetKeyDown(eKeyCode::R))
-        {
-            GetHeal();
-            if (0 < mPlayerStat->CurHP)
-            {
-                mDead = false;
-                ChangeState(ePlayerState::Idle);
-                mWeaponScript->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-            }
-        }
+            GetHeal(); 
         if (Input::GetKeyDown(eKeyCode::T))
-        {
             GetDamage();
-            if (0 >= mPlayerStat->CurHP)
-                ChangeState(ePlayerState::Dead);
-        }
     }
     void PlayerScript::UIInput()
     {
         if (Input::GetKeyDown(eKeyCode::V))
-        {
             GameDataManager::CallInventory();
-        }
         if (Input::GetKeyDown(eKeyCode::TILDE))
-        {
             GameDataManager::ChangeArmour();
-        }
     }
     void PlayerScript::GetMouse()
     {
@@ -269,8 +253,13 @@ namespace da
             activeEffect(playerEffect, L"Dying");
             mWeaponScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
         }
-            
         mDead = true;
+        if (0 < mPlayerStat->CurHP)
+        {
+            mDead = false;
+            ChangeState(ePlayerState::Idle);
+            mWeaponScript->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+        }
     }
 #pragma endregion
 #pragma region Weapon Logic
@@ -504,39 +493,23 @@ namespace da
 #pragma region Collision Func
     void PlayerScript::OnCollisionEnter(Collider2D* other)
     {
+        if (enums::eLayerType::Creature == other->GetOwner()->GetLayerType()
+            && Collider2D::eDetectionType::Sensor == other->GetDetectionType())
+        {           
+            GameObject* creatureObj = other->GetOwner();
+            CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
+            creatureScript->IsFindPlayer(true);
+        }
     }
-    void PlayerScript::OnGroundStay(Collider2D* other)
+    void PlayerScript::OnCollisionExit(Collider2D* other)
     {
-        //// Land Pos, Size 가져오기
-        //Vector3 landPos = other->GetTotalPosition();
-        //Vector3 landSize = other->GetTotalScale();
-        //// 내 Pos, Size 가져오기
-        //Vector3 myPos = mFootCollider->GetTotalPosition();
-        //Vector3 mySize = mFootCollider->GetTotalScale();
-        //// A 상자의 최소/최대 위치
-        //Vector3 minLand = landPos - landSize * 0.5f;
-        //Vector3 maxLand = landPos + landSize * 0.5f;
-        //// B 상자의 최소/최대 위치
-        //Vector3 minMe = myPos - mySize * 0.5f;
-        //Vector3 maxMe = myPos + mySize * 0.5f;
-        //// 정황상 플레이어가 바닥에 파고들었음
-        //if (minLand.x <= maxMe.x && maxLand.x >= minMe.x &&
-        //    minLand.y <= maxMe.y && maxLand.y >= minMe.y &&
-        //    minLand.z <= maxMe.z && maxLand.z >= minMe.z)
-        //{
-        //    float landHeight = maxLand.y - minLand.y;
-        //    float myHeight = maxMe.y - minMe.y;
-        //    float totalHeight = landHeight / 2.0f + myHeight / 2.0f;
-        //    float collisionDepth = myPos.y - landPos.y;
-        //    float pushDistance = 0.0f;
-        //    if (collisionDepth < totalHeight)
-        //    {
-        //        pushDistance = totalHeight - collisionDepth;
-        //    }
-        //    Vector3 newPosition = mTransform->GetPosition();
-        //    newPosition.y += pushDistance;
-        //    mTransform->SetPosition(newPosition);            
-        //}
+        if (enums::eLayerType::Creature == other->GetOwner()->GetLayerType()
+            && Collider2D::eDetectionType::Sensor == other->GetDetectionType())
+        {
+            GameObject* creatureObj = other->GetOwner();
+            CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
+            creatureScript->IsFindPlayer(false);
+        }
     }
 #pragma endregion
 #pragma region public Func

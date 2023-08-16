@@ -65,7 +65,7 @@ namespace da
 		mPlayerStat.CurHP += value;
 		if (mPlayerStat.MaxHP <= mPlayerStat.CurHP)
 			mPlayerStat.CurHP = mPlayerStat.MaxHP;
-	
+
 		SceneManager::GetLifebarScript()->SetValue(mPlayerStat.MaxHP, mPlayerStat.CurHP);
 	}
 

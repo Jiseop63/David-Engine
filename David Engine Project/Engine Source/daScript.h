@@ -18,13 +18,5 @@ namespace da
 		virtual void OnCollisionEnter(Collider2D* other) {}
 		virtual void OnCollisionStay(Collider2D* other) {}
 		virtual void OnCollisionExit(Collider2D* other) {}
-
-		virtual void OnGroundEnter(Collider2D* other) {}
-		virtual void OnGroundStay(Collider2D* other) {}
-		virtual void OnGroundExit(Collider2D* other) {}
-
-		virtual void OnWallEnter(Collider2D* other) {}
-		virtual void OnWallStay(Collider2D* other) {}
-		virtual void OnWallExit(Collider2D* other) {}
 	};
 }

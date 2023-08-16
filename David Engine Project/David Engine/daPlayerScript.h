@@ -43,6 +43,7 @@ namespace da
 #pragma endregion
 
 #pragma region common Func
+		void PlayerCondition();
 		void PlayerInput();
 		void DebugInput();
 		void UIInput();
@@ -118,10 +119,7 @@ namespace da
 	public:
 		virtual void OnCollisionEnter(Collider2D* other) override;
 		virtual void OnCollisionStay(Collider2D* other) override {}
-		virtual void OnCollisionExit(Collider2D* other) override {}
-		virtual void OnGroundEnter(Collider2D* other) override {}
-		virtual void OnGroundStay(Collider2D* other) override;
-		virtual void OnGroundExit(Collider2D* other) override {}
+		virtual void OnCollisionExit(Collider2D* other) override;
 #pragma endregion
 // value
 #pragma region Components

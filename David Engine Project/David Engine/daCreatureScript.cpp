@@ -24,7 +24,10 @@ namespace da
 		, mPlayerScript(nullptr)
 		, mCreatureStat{}
 		, mCreatureActiveState(eCreatureState::Idle)
+		, mStandingPosition(math::Vector3::Zero) 
+		, mCreatureDir(math::Vector2::Zero) 
 		, mIsDead(false)
+		, mPlayerFind(false)
 	{
 	}
 	CreatureScript::~CreatureScript()
@@ -34,6 +37,7 @@ namespace da
 	{
 		// component ¼¼ÆÃ
 		mCreatureTransform = GetOwner()->GetComponent<Transform>();
+		mCreatureRenderer = GetOwner()->GetComponent <MeshRenderer>();
 		mCreatureRigidbody = GetOwner()->AddComponent<Rigidbody>();
 		mCreatureAnimator = GetOwner()->AddComponent<Animator>();
 		mCreatureBodyCollider = GetOwner()->AddComponent<Collider2D>();

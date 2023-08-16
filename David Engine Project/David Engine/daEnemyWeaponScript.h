@@ -1,10 +1,10 @@
 #pragma once
 #include "daScript.h"
 #include "daMeshRenderer.h"
-#include "daAnimator.h"
 
 namespace da
 {
+	class Animator;
 	class EnemyWeaponScript : public Script
 	{
 	public:
@@ -13,6 +13,11 @@ namespace da
 
 		virtual void Initialize() override;
 		virtual void Update() override;
+
+	public:
+		bool IsCreatureAttackReady() { return mCreatureAttackReady; }
+
+
 
 	public:
 		// Onwer가 무기를 세팅함
@@ -27,12 +32,25 @@ namespace da
 		void SetReverse(bool isLeft) { mEnemyWeaponRenderer->SetReverse(isLeft); }
 
 
+
+
+
+	public:
+		virtual void OnCollisionEnter(Collider2D* other) override;
+
+
 	protected:
 		Transform*		mEnemyWeaponTransform;
 		MeshRenderer*	mEnemyWeaponRenderer;
 		Animator*		mEnemyWeaponAnimator;
+		Collider2D*		mEnemyWeaponCollider;
 
 	protected:
 		std::shared_ptr<Texture> mEnemyWeaponTexture;
+
+	private:
+		bool			mCreatureAttackReady;
+		float			mCreatureAttackAccumulateTime;
+		float			mCreatureAttackDelayTime;
 	};
 }

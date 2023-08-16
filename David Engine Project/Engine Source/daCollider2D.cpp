@@ -102,7 +102,8 @@ namespace da
 			else
 				mColliderColor = math::Vector4(1.0f, 1.0f, 0.0f, 1.0f);
 		}
-			break;
+			break;		
+		break;
 		default:
 			break;
 		}
@@ -122,6 +123,10 @@ namespace da
 		if (eDetectionType::Sensor == mDetectionType)
 		{
 			mColliderColor = math::Vector4(1.0f, 1.0f, 0.0f, 1.0f);
+		}
+		if (eDetectionType::Inactive == mDetectionType)
+		{
+			mColliderColor = math::Vector4(0.0f, 0.0f, 1.0f, 1.0f);
 		}
 	}
 
@@ -179,11 +184,13 @@ namespace da
 			if (bodyPosition.x <= envPosition.x)
 				XPos = abs(bodyPosition.x) - abs(envPosition.x);
 		}
+		else if ((0 >= bodyPosition.x || 0 >= envPosition.x))
+			XPos = abs(envPosition.x) + abs(bodyPosition.x);
 
-		// 둘중 하나만 -인 경우
-		if ((0 >= bodyPosition.x && 0 <= envPosition.x)
-			|| (0 <= bodyPosition.x && 0 >= envPosition.x))
-			XPos = abs(bodyPosition.x) - abs(envPosition.x);
+		//// 둘중 하나만 -인 경우
+		//if ((0 >= bodyPosition.x && 0 <= envPosition.x)
+		//	|| (0 <= bodyPosition.x && 0 >= envPosition.x))
+		//	XPos = abs(bodyPosition.x) - abs(envPosition.x);
 
 		if (0 >= XPos)
 			XPos = abs(XPos);

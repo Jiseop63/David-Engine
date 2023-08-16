@@ -1,4 +1,7 @@
 #include "daSkelScript.h"
+
+#include "daTime.h"
+
 #include "daResources.h"
 #include "daGameObject.h"
 #include "daProjectileScript.h"
@@ -12,6 +15,9 @@
 namespace da
 {
 	SkelScript::SkelScript()
+		: mGotoReturn(false)
+		, mReturnAccumulateTime(0.0f)
+		, mReturnDelayTime(0.0f)
 	{
 	}
 
@@ -46,10 +52,30 @@ namespace da
 		mCreatureAnimator->Create(L"SkelMove", texture, math::Vector2(0.0f, 32.0f), math::Vector2(32.0f, 32.0f), 6, math::Vector2(0.0f, 0.0f), 0.1f);
 		mCreatureAnimator->Create(L"SkelAttact", texture, math::Vector2(0.0f, 0.0f), math::Vector2(32.0f, 32.0f), 1, math::Vector2(0.0f, 0.0f), 0.1f);
 		mCreatureAnimator->PlayAnimation(L"SkelIdle");
+
+		mReturnDelayTime = 1.50f;
 	}
 
 	void SkelScript::Update()
 	{
+		if (eCreatureState::Chase == mCreatureActiveState
+			&& mPlayerFind)
+		{
+			mReturnAccumulateTime = 0.0f;			
+		}
+		else
+		{
+			mReturnAccumulateTime += (float)Time::DeltaTime();
+			if (mReturnDelayTime <= mReturnAccumulateTime)
+			{
+				mReturnAccumulateTime = 0.0f;
+				mGotoReturn = true;
+			}
+		}
+		
+		ReverseTexture();
+
+
 		SkelFSM();
 		if (0 >= mCreatureStat.CurHP)
 			ChangeState(eCreatureState::Dead);
@@ -100,49 +126,64 @@ namespace da
 
 	void SkelScript::SkelHandleIdle()
 	{
-		// 탐지에 필요한 변수들
-		//float detectYRange = 2.50f;
-		//mCreatureStat.DetectRange;
-		//
-		//// 위치 구하기
-		//math::Vector3 playerPosition = mPlayerScript->GetOwner()->GetTransform()->GetPosition();
-		//math::Vector3 skelPosition = mCreatureTransform->GetPosition();
+		mGotoReturn = false;
 
-		//// 플레이어를 탐지
-		//float distanceX = skelPosition.x - playerPosition.x;
-		//float distanceY = skelPosition.y - playerPosition.y;
-
-		//if (abs(distanceX) >= mCreatureStat.DetectRange
-		//	&& abs(distanceY) >= detectYRange)
-		//{
-		//	ChangeState(eCreatureState::Chase);
-		//}
+		if (mPlayerFind)
+			ChangeState(eCreatureState::Chase);		
 	}
 
 	void SkelScript::SkelHandleChase()
 	{
+		float moveSpeed = 1.0f;
 		math::Vector3 playerPosition = mPlayerScript->GetOwner()->GetTransform()->GetPosition();
 		math::Vector3 skelPosition = mCreatureTransform->GetPosition();
-
-		float distance = math::Vector3::Distance(skelPosition, playerPosition);
-		// 플레이어를 탐지
-		float distanceX = skelPosition.x - playerPosition.x;
-		float distanceY = skelPosition.y - playerPosition.y;
-
-		// 공격 범위까지 접근
-		if (distance >= mCreatureStat.AttackRange)
+		
+		float distanceX = playerPosition.x - skelPosition.x;
+		if (!mGotoReturn)
 		{
-			ChangeState(eCreatureState::Attack);
+			if (0 >= distanceX)
+				mCreatureDir = -math::Vector2::UnitX;
+			else
+				mCreatureDir = math::Vector2::UnitX;
+
+			skelPosition.x += mCreatureDir.x * moveSpeed * (float)Time::DeltaTime();
+			mCreatureTransform->SetPosition(skelPosition);
+		}
+		else
+		{
+			float homeDir = mStandingPosition.x - skelPosition.x;
+			if (0 >= homeDir)
+				mCreatureDir = -math::Vector2::UnitX;
+			else
+				mCreatureDir = math::Vector2::UnitX;
+
+			skelPosition.x += mCreatureDir.x * moveSpeed * (float)Time::DeltaTime();
+
+			mCreatureTransform->SetPosition(skelPosition);
+
+			if (0.5f >= abs(skelPosition.x - mStandingPosition.x))
+			{
+				ChangeState(eCreatureState::Idle);
+			}
 		}
 
-		// 되돌아와서 Idle
+		/*if (abs(distanceX) <= mCreatureStat.AttackRange)
+		{
+			mCreatureWeaponScript->IsCreatureAttackReady();
+			ChangeState(eCreatureState::Attack);
+		}*/
+
+		
+
 	}
 
 	void SkelScript::SkelHandleAttack()
 	{
 		// DoAttack!
+		mCreatureWeaponScript->SetWeaponTransform(mCreatureTransform->GetPosition(), mCreatureDir);
+		mCreatureWeaponScript->DoAttack();
 		
-		// retChase
+		// 끝나는 조건을 확인해야함
 	}
 
 	void SkelScript::SkelHandleDead()

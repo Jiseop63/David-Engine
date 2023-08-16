@@ -37,10 +37,29 @@ namespace da
 		CreatureLifebarScript* SetCreatureLifeScript(GameObject* creature);
 		EffectEnemyScript* AddEffectObject(GameObject* effectObject);
 		structs::sCreatureStat GetCreatureStat() { return mCreatureStat; }
+
+		void SetStandingPosition(math::Vector3 vector3) { mStandingPosition = vector3; }
+		void SetDetectRange(float value) 
+		{ 
+			mCreatureStat.DetectRange = value; 
+			mCreatureSensorCollider->SetSize(math::Vector2(value * 2.0f, 0.90f));
+		}
+		void SetAttackRange(float value) { mCreatureStat.AttackRange = value; }
 #pragma endregion
 
+
+
+#pragma region Collision Func
 	public:
+		virtual void OnCollisionEnter(Collider2D* other) {}
+		virtual void OnCollisionExit(Collider2D* other) {}
 		void OnDamaged();
+		void IsFindPlayer(bool value) { mPlayerFind = value; }
+#pragma endregion
+
+
+
+
 
 #pragma region Components
 	protected:
@@ -65,8 +84,10 @@ namespace da
 
 #pragma region condition
 	protected:
-		math::Vector2			mCreatureDir;
 		eCreatureState			mCreatureActiveState;
+		math::Vector3			mStandingPosition;
+		math::Vector2			mCreatureDir;
+		bool					mPlayerFind;
 		bool					mIsDead;
 #pragma endregion
 
