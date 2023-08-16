@@ -152,7 +152,7 @@ namespace da::objects
 		creatureScript->AddEffectObject(effectObject);
 
 		// weapon 추가
-		GameObject* enemyWeaponObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, L"WeaponMaterial");
+		GameObject* enemyWeaponObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, L"AnimationMaterial");
 		creatureScript->SetEnemyWeaponScript(enemyWeaponObj);
 
 		// life Bar 추가해야함

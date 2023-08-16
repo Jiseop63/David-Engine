@@ -47,10 +47,7 @@ namespace da
 #pragma endregion
 
 #pragma region AttackCooldown condition value
-	private:
-		bool			mReadyToAttack;
-		float			mCooldownAccumulateTime;
-		float			mAttackCooldownTime;
+	
 #pragma endregion
 
 

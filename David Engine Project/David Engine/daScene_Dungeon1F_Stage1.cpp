@@ -73,9 +73,6 @@ namespace da
 			backGround->GetTransform()->SetScale(math::Vector3(13.66f, 7.68f, 1.0f));
 			backGround->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, BackgroundZ));
 		}
-	}
-	void Scene_Dungeon1F_Stage1::addGameObjects()
-	{
 		// Stage : 384 208
 		{
 			GameObject* stageObject = objects::InstantiateGameObject
@@ -91,23 +88,6 @@ namespace da
 			doorObject->GetTransform()->SetScale(math::Vector3(0.570f * 4.0f, 0.650f * 4.0f, 1.0f));
 			doorObject->GetTransform()->SetPosition(math::Vector3(-3.0f, -1.0f + 0.080f, ObjectZ));
 		}
-
-		// test enemy
-		{
-			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
-			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(1.50f, 0.0f, ObjectZ));
-		}
-		// test enemy
-		{
-			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
-			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(2.50f, 0.0f, ObjectZ));
-		}
-		// test enemy
-		{
-			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
-			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(-0.50f, 0.0f, ObjectZ));
-		}
-		
 		// ground
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
@@ -139,5 +119,27 @@ namespace da
 				this, Vector3(7.150f, 1.950f, 0.0f), Vector3(1.50f, 2.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
+	}
+	void Scene_Dungeon1F_Stage1::addGameObjects()
+	{
+		
+
+		// test enemy
+		{
+			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
+			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(1.50f, 0.0f, ObjectZ));
+		}
+		// test enemy
+		{
+			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
+			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(2.50f, 0.0f, ObjectZ));
+		}
+		// test enemy
+		{
+			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
+			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(-0.50f, 0.0f, ObjectZ));
+		}
+		
+		
 	}
 }

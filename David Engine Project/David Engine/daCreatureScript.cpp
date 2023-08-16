@@ -68,12 +68,12 @@ namespace da
 		mCreatureStat.MaxHP = 25.0f;
 		mCreatureStat.CurHP = 25.0f;
 		
-		mCreatureStat.MoveSpeed = 0.750f;
+		mCreatureStat.MoveSpeed = 1.250f;
 		mCreatureStat.DetectRange = 2.50f;
 
-		mCreatureStat.AttackRange = 1.250f;
+		mCreatureStat.AttackRange = 0.750f;
 		mCreatureStat.AttackAccumulateTime = 0.0f;
-		mCreatureStat.AttackDelay = 3.0f;		
+		mCreatureStat.AttackDelay = 4.0f;		
 	}
 
 	void CreatureScript::ReverseTexture()
@@ -103,7 +103,7 @@ namespace da
 	void CreatureScript::OnDamaged()
 	{
 		if (0 >= mCreatureStat.CurHP)
-			mCreatureStat.CurHP = 0;		
+			mCreatureStat.CurHP = 0;
 		mCreatureStat.CurHP -= 5.0f;
 
 		mCreatureLifeScript->SetValue(mCreatureStat.MaxHP, mCreatureStat.CurHP);

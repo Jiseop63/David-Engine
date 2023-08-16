@@ -85,7 +85,9 @@ namespace da
 				if (GameObject::eObjectState::Active != left->GetOwner()->GetObjectState()
 					|| GameObject::eObjectState::Active != right->GetOwner()->GetObjectState())
 					return;
-				
+				if (Collider2D::eDetectionType::Inactive == left->GetDetectionType()
+					|| Collider2D::eDetectionType::Inactive == right->GetDetectionType())
+					return;
 				//Enter
 				iter->second = true;
 				left->OnCollisionEnter(right);
@@ -98,6 +100,15 @@ namespace da
 				if (GameObject::eObjectState::Active != left->GetOwner()->GetObjectState()
 					|| GameObject::eObjectState::Active != right->GetOwner()->GetObjectState())
 				{					
+					//Exit
+					iter->second = false;
+					left->OnCollisionExit(right);
+					right->OnCollisionExit(left);
+					return;
+				}
+				if (Collider2D::eDetectionType::Inactive == left->GetDetectionType()
+					|| Collider2D::eDetectionType::Inactive == right->GetDetectionType())
+				{
 					//Exit
 					iter->second = false;
 					left->OnCollisionExit(right);
