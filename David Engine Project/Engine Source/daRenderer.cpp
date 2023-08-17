@@ -32,6 +32,20 @@ namespace renderer
 	{
 		std::vector<Vertex> vertexes = {};
 		std::vector<UINT> indexes = {};
+#pragma region Point Mesh
+		Vertex point = {};
+		point.pos = Vector3(0.0f, 0.0f, 0.0f);
+		vertexes.push_back(point);
+		indexes.push_back(0);
+		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+		mesh->CreateVertexBuffer(vertexes.data(), (UINT)vertexes.size());
+		mesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
+		Resources::Insert(L"PointMesh", mesh);
+
+
+		vertexes.clear();
+		indexes.clear();
+#pragma endregion
 
 #pragma region Rect Mesh
 		vertexes.resize(4);
@@ -51,7 +65,7 @@ namespace renderer
 		vertexes[3].color = Vector4(1.0f, 0.0f, 1.0f, 1.0f);
 		vertexes[3].uv = Vector2(0.0f, 1.0f);
 
-		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+		mesh = std::make_shared<Mesh>();
 		Resources::Insert<Mesh>(L"RectMesh", mesh);
 		mesh->CreateVertexBuffer(vertexes.data(), (UINT)vertexes.size());
 
@@ -223,7 +237,9 @@ namespace renderer
 		std::shared_ptr<Shader> particleShader = std::make_shared<Shader>();
 		{
 			particleShader->Create(eShaderStage::VS, L"ParticleShader.hlsl", "mainVS");
+			particleShader->Create(eShaderStage::GS, L"ParticleShader.hlsl", "mainGS");
 			particleShader->Create(eShaderStage::PS, L"ParticleShader.hlsl", "mainPS");
+			particleShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 			particleShader->SetRatserizerState(eRSType::SolidNone);
 			particleShader->SetDepthStencilState(eDSType::NoWrite);
 			particleShader->SetBlendState(eBSType::AlphaBlend);

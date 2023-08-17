@@ -18,7 +18,7 @@ namespace da
 		, mLifeTime(0.0f)
 	{
 		// 파티클 리소스 세팅
-		std::shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"RectMesh");
+		std::shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"PointMesh");
 		SetMesh(mesh);
 		std::shared_ptr<Material> material = Resources::Find<Material>(L"ParticleMaterial");
 		SetMaterial(material);
@@ -39,6 +39,7 @@ namespace da
 				pos.y *= -1.0f;
 
 			particles[i].Position = pos;
+			particles[i].Active = 1;
 		}
 		mParticleBuffer = new da::graphics::StructuredBuffer();
 		mParticleBuffer->Create(sizeof(Particle), 1000, eSRVType::None);
@@ -60,6 +61,7 @@ namespace da
 	{
 		GetOwner()->GetTransform()->BindConstantBuffer();
 		mParticleBuffer->Bind(eShaderStage::VS, 14);
+		mParticleBuffer->Bind(eShaderStage::GS, 14);
 		mParticleBuffer->Bind(eShaderStage::PS, 14);
 
 		GetMaterial()->Binds();
