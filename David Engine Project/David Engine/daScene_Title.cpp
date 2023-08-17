@@ -1,4 +1,5 @@
 #include "daScene_Title.h"
+#include "daApplication.h"
 
 // Init
 #include "daSceneManager.h"
@@ -14,8 +15,7 @@
 #include "daObjectsFastIncludeHeader.h"
 #include "daTimeConstants.h"
 
-#include "daApplication.h"
-
+#include "daComputeShader.h"
 
 extern da::Application application;
 
@@ -32,6 +32,9 @@ namespace da
 		initializeCommonObjects();
 		addBackgroundObjects();
 		addUIObjects();
+		ComputeShader* cs = new ComputeShader();
+		cs->Create(L"Paint.hlsl", "mainCS");
+		
 	}
 	void Scene_Title::Update()
 	{

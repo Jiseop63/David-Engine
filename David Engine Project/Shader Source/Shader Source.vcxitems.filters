@@ -28,6 +28,9 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)GridShader.hlsl">
       <Filter>2 Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)Paint.hlsl">
+      <Filter>2 Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Globals.hlsli">

@@ -9,6 +9,7 @@ namespace da::enums
 		Shader,
 		Material,
 		Animation,
+		ComputeShader,
 		End,
 	};
 

@@ -213,6 +213,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daStructuredBuffer.h">
       <Filter>Graphics\Buffer</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daComputeShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp">
@@ -308,6 +309,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daStructuredBuffer.cpp">
       <Filter>Graphics\Buffer</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daComputeShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)daMath.inl">
