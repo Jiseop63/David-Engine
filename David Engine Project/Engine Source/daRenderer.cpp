@@ -219,6 +219,16 @@ namespace renderer
 		std::shared_ptr<PaintShader> paintShader = std::make_shared<PaintShader>();
 		paintShader->Create(L"Paint.hlsl", "mainCS");
 		da::Resources::Insert(L"PaintShader", paintShader);
+
+		std::shared_ptr<Shader> particleShader = std::make_shared<Shader>();
+		{
+			particleShader->Create(eShaderStage::VS, L"ParticleShader.hlsl", "mainVS");
+			particleShader->Create(eShaderStage::PS, L"ParticleShader.hlsl", "mainPS");
+			particleShader->SetRatserizerState(eRSType::SolidNone);
+			particleShader->SetDepthStencilState(eDSType::NoWrite);
+			particleShader->SetBlendState(eBSType::AlphaBlend);
+			Resources::Insert(L"ParticleShader", particleShader);
+		}
 #pragma endregion
 
 #pragma region Sample Material
@@ -235,7 +245,7 @@ namespace renderer
 			spriteMaterial->SetShader(spriteShader);
 			Resources::Insert<Material>(L"SampleMaterial", spriteMaterial);
 		}
-		{			
+		{
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(uavTexture);
 			spriteMaterial->SetShader(spriteShader);
@@ -265,7 +275,13 @@ namespace renderer
 			projectileMaterial->SetShader(spriteShader);
 			Resources::Insert<Material>(L"ProjectileMaterial", projectileMaterial);
 		}
-
+		// particle material
+		{
+			std::shared_ptr<Material> particleMaterial = std::make_shared<Material>();
+			particleMaterial->SetShader(particleShader);
+			particleMaterial->SetRenderingMode(eRenderingMode::Transparent);
+			Resources::Insert<Material>(L"ParticleMaterial", particleMaterial);
+		}
 		
 
 #pragma endregion
@@ -784,6 +800,11 @@ namespace renderer
 			, shader->GetInputLayoutAddressOf());
 
 		shader = Resources::Find<Shader>(L"AnimationShader");
+		GetDevice()->CreateInputLayout(arrLayout, numElement
+			, shader->GetVSCode()
+			, shader->GetInputLayoutAddressOf());
+
+		shader = Resources::Find<Shader>(L"ParticleShader");
 		GetDevice()->CreateInputLayout(arrLayout, numElement
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());

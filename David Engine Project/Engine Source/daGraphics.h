@@ -24,7 +24,6 @@
 
 namespace da::graphics
 {
-
 	enum class eShaderStage
 	{
 		VS,
@@ -108,6 +107,7 @@ namespace da::graphics
 		{}
 		virtual ~GPUBuffer() = default;
 	};
+
 	struct DebugMesh
 	{
 		enums::eColliderShape Type;
@@ -121,6 +121,8 @@ namespace da::graphics
 		float Time;
 	};
 
+#pragma region StructuredBuffer
+
 	struct LightAttribute
 	{
 		math::Vector4		Color;
@@ -132,4 +134,17 @@ namespace da::graphics
 		float				LightAngle;
 		int					Padding;
 	};
+
+	struct Particle
+	{
+		math::Vector4 Position;
+		math::Vector4 Direction;
+
+		float	EndTime;
+		float	Time;
+		float	Speed;
+		UINT	Active;
+	};
+#pragma endregion
+
 };

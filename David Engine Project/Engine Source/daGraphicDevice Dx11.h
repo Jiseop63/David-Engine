@@ -59,6 +59,7 @@ namespace da::graphics
 
 	public:
 		void DrawIndexed(UINT indexCount, UINT startIndexLocation, INT baseVertexLocation);
+		void DrawIndexedInstanced(UINT indexCountPerInstance, UINT instanceCount, UINT startIndexLocation, INT baseVertexLocation, UINT startInstanceLocation);
 		void ClearTarget();
 		void UpdateViewPort();
 		void Draw();

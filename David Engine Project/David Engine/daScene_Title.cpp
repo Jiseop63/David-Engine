@@ -16,6 +16,7 @@
 #include "daTimeConstants.h"
 
 #include "daPaintShader.h"
+#include "daParticleRenderer.h"
 
 extern da::Application application;
 
@@ -59,6 +60,22 @@ namespace da
 			mr->SetMaterial(Resources::Find<Material>(L"SampleMaterial2"));
 			obj->GetComponent<Transform>()->SetPosition(math::Vector3(0.0f, 0.0f, 1.0f));
 			Collider2D* cd = obj->AddComponent<Collider2D>();
+		}
+
+		{
+			GameObject* obj = new GameObject();
+			AddGameObject(enums::eLayerType::Default, obj);
+			ParticleRenderer* mr = obj->AddComponent<ParticleRenderer>();
+			obj->GetComponent<Transform>()->SetPosition(math::Vector3(0.0f, 0.0f, 1.0f));
+			obj->GetComponent<Transform>()->SetScale(math::Vector3(0.2f, 0.2f, 0.2f));
+		}
+
+		{
+			GameObject* obj = new GameObject();
+			AddGameObject(enums::eLayerType::Default, obj);
+			ParticleRenderer* mr = obj->AddComponent<ParticleRenderer>();
+			obj->GetComponent<Transform>()->SetPosition(math::Vector3(0.0f, 0.0f, 1.0f));
+			obj->GetComponent<Transform>()->SetScale(math::Vector3(0.2f, 0.2f, 0.2f));
 		}
 	}
 	void Scene_Title::Update()

@@ -5,7 +5,7 @@ Texture2D BindingTexture : register(t0);
 Texture2D AtlasTexture : register(t12);
 
 StructuredBuffer<LightAttribute> lightsAttribute : register(t13);
-
+StructuredBuffer<Particle> particles : register(t14);
 // Sampler
 SamplerState pointSampler : register(s0);
 SamplerState linearSampler : register(s1);
