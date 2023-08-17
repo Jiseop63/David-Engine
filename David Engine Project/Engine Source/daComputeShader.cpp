@@ -33,12 +33,8 @@ namespace da::graphics
 	void ComputeShader::OnExcute()
 	{
 		Binds();
+		GetDevice()->BindComputeShader(mCS.Get());
+		GetDevice()->Dispatch(mGroupX, mGroupY, mGroupZ);
 		Clear();
-	}
-	void ComputeShader::Binds()
-	{
-	}
-	void ComputeShader::Clear()
-	{
 	}
 }

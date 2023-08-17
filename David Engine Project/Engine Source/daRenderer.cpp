@@ -5,6 +5,7 @@
 #include "daShader.h"
 #include "daMaterial.h"
 #include "daStructuredBuffer.h"
+#include "daPaintShader.h"
 
 using namespace da;
 using namespace da::graphics;
@@ -177,6 +178,7 @@ namespace renderer
 			gridShader->Create(eShaderStage::PS, L"GridShader.hlsl", "mainPS");
 			Resources::Insert<Shader>(L"GridShader", gridShader);
 		}
+		// slide bar
 		std::shared_ptr<Shader> lifeBarShader = std::make_shared<Shader>();
 		{
 			lifeBarShader->Create(eShaderStage::VS, L"LifeBarShader.hlsl", "mainVS");
@@ -189,6 +191,7 @@ namespace renderer
 			dashCountShader->Create(eShaderStage::PS, L"DashCountShader.hlsl", "mainPS");
 			Resources::Insert<Shader>(L"DashCountShader", dashCountShader);
 		}
+		// debug
 		std::shared_ptr<Shader> debugShader = std::make_shared<Shader>();
 		{
 			debugShader->Create(eShaderStage::VS, L"TriangleShader.hlsl", "mainVS");
@@ -197,23 +200,32 @@ namespace renderer
 			debugShader->SetRatserizerState(eRSType::Wireframe);
 			Resources::Insert(L"DebugShader", debugShader);
 		}
+
+		// layer
 		std::shared_ptr<Shader> tilingLayerShader = std::make_shared<Shader>();
 		{
 			tilingLayerShader->Create(eShaderStage::VS, L"TilingLayerShader.hlsl", "mainVS");
 			tilingLayerShader->Create(eShaderStage::PS, L"TilingLayerShader.hlsl", "mainPS");
 			Resources::Insert(L"TilingLayerShader", tilingLayerShader);
 		}
-
+		// anim
 		std::shared_ptr<Shader> animationShader = std::make_shared<Shader>();
 		{
 			animationShader->Create(eShaderStage::VS, L"AnimationShader.hlsl", "mainVS");
 			animationShader->Create(eShaderStage::PS, L"AnimationShader.hlsl", "mainPS");
 			Resources::Insert(L"AnimationShader", animationShader);
 		}
-
+		// paint
+		std::shared_ptr<PaintShader> paintShader = std::make_shared<PaintShader>();
+		paintShader->Create(L"Paint.hlsl", "mainCS");
+		da::Resources::Insert(L"PaintShader", paintShader);
 #pragma endregion
 
 #pragma region Sample Material
+		std::shared_ptr<Texture> uavTexture = std::make_shared<Texture>();
+		uavTexture->Create(1024, 1024, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS);
+		Resources::Insert(L"PaintTexture", uavTexture);
+
 		// smileTexture
 		{
 			std::shared_ptr<Texture> texture
@@ -222,6 +234,12 @@ namespace renderer
 			spriteMaterial->SetTexture(texture);
 			spriteMaterial->SetShader(spriteShader);
 			Resources::Insert<Material>(L"SampleMaterial", spriteMaterial);
+		}
+		{			
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->SetTexture(uavTexture);
+			spriteMaterial->SetShader(spriteShader);
+			Resources::Insert<Material>(L"SampleMaterial2", spriteMaterial);
 		}
 		// animation Material
 		{
@@ -247,6 +265,9 @@ namespace renderer
 			projectileMaterial->SetShader(spriteShader);
 			Resources::Insert<Material>(L"ProjectileMaterial", projectileMaterial);
 		}
+
+		
+
 #pragma endregion
 #pragma region Debug Material
 		// rect

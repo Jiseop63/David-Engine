@@ -15,7 +15,7 @@
 #include "daObjectsFastIncludeHeader.h"
 #include "daTimeConstants.h"
 
-#include "daComputeShader.h"
+#include "daPaintShader.h"
 
 extern da::Application application;
 
@@ -29,12 +29,37 @@ namespace da
 	}
 	void Scene_Title::Initialize()
 	{
-		initializeCommonObjects();
-		addBackgroundObjects();
-		addUIObjects();
-		ComputeShader* cs = new ComputeShader();
-		cs->Create(L"Paint.hlsl", "mainCS");
 		
+		//initializeCommonObjects();
+		//addBackgroundObjects();
+		//addUIObjects();
+
+		std::shared_ptr<PaintShader> paintShader = Resources::Find<PaintShader>(L"PaintShader");
+		std::shared_ptr<Texture> paintTexture = Resources::Find<Texture>(L"PaintTexture");
+		paintShader->SetTarget(paintTexture);
+		paintShader->OnExcute();
+
+		Camera* cameraComp = nullptr;
+		{
+			GameObject* camera = new GameObject();
+			AddGameObject(enums::eLayerType::Default, camera);
+			camera->GetComponent<Transform>()->SetPosition(math::Vector3(0.0f, 0.0f, -10.0f));
+			cameraComp = camera->AddComponent<Camera>();
+			cameraComp->TurnLayerMask(enums::eLayerType::UI, false);
+			camera->AddComponent<CameraScript>();
+			renderer::cameras.push_back(cameraComp);
+			renderer::mainCamera = cameraComp;
+		}
+
+		{
+			GameObject* obj = new GameObject();
+			AddGameObject(enums::eLayerType::Creature, obj);
+			MeshRenderer* mr = obj->AddComponent<MeshRenderer>();
+			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			mr->SetMaterial(Resources::Find<Material>(L"SampleMaterial2"));
+			obj->GetComponent<Transform>()->SetPosition(math::Vector3(0.0f, 0.0f, 1.0f));
+			Collider2D* cd = obj->AddComponent<Collider2D>();
+		}
 	}
 	void Scene_Title::Update()
 	{
@@ -52,12 +77,12 @@ namespace da
 	void Scene_Title::OnEnter()
 	{
 		// 각종 객체들 Inactive 해주기
-		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.70f, 0.70f, 0.70f, 1.0f));
-		SceneManager::GetPlayerScript()->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
-		SceneManager::GetHUDObject()->SetObjectStates(GameObject::eObjectState::Inactive);
-
-		GameDataManager::SetCameraMovableRange(math::Vector2(0.0f, 0.0f));
-		GameDataManager::SetCameraMovaPosition(math::Vector2::Zero);
+		//SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.70f, 0.70f, 0.70f, 1.0f));
+		//SceneManager::GetPlayerScript()->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
+		//SceneManager::GetHUDObject()->SetObjectStates(GameObject::eObjectState::Inactive);
+		
+		//GameDataManager::SetCameraMovableRange(math::Vector2(0.0f, 0.0f));
+		//GameDataManager::SetCameraMovaPosition(math::Vector2::Zero);
 	}
 	void Scene_Title::OnExit()
 	{

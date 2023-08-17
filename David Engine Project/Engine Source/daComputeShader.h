@@ -14,8 +14,8 @@ namespace da::graphics
 		virtual HRESULT Load(const std::wstring& path) { return S_FALSE; };
 		void OnExcute();
 
-		virtual void Binds();
-		virtual void Clear();
+		virtual void Binds() {}
+		virtual void Clear() {}
 
 	protected:
 		Microsoft::WRL::ComPtr<ID3DBlob> mCSBlob;

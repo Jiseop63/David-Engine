@@ -21,7 +21,7 @@ namespace da::graphics
 	void Material::Binds()
 	{
 		if (nullptr != mTexture)
-			mTexture->BindShader(eShaderStage::PS, 0);
+			mTexture->BindShaderResource(eShaderStage::PS, 0);
 		if (nullptr != mShader)
 			mShader->Binds();
 	}

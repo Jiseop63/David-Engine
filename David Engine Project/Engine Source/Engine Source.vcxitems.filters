@@ -214,6 +214,7 @@
       <Filter>Graphics\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daComputeShader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daPaintShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp">
@@ -310,6 +311,7 @@
       <Filter>Graphics\Buffer</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daComputeShader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daPaintShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)daMath.inl">

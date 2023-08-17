@@ -40,6 +40,8 @@ namespace da::graphics
 
 		void BindVertexShader(ID3D11VertexShader* pVetexShader);
 		void BindPixelShader(ID3D11PixelShader* pPixelShader);
+		void BindComputeShader(ID3D11ComputeShader* pComputeShader);
+		void Dispatch(UINT threadGroupCountX, UINT threadGroupCountY, UINT threadGroupCountZ);
 
 		void BindViewPort(D3D11_VIEWPORT* viewPort);
 
@@ -47,9 +49,10 @@ namespace da::graphics
 		void BindConstantBuffer(eShaderStage stage, eCBType type, ID3D11Buffer* buffer);
 		void BindsConstantBuffer(eCBType type, ID3D11Buffer* buffer);
 		void BindBuffer(ID3D11Buffer* buffer, void* data, UINT size);
-				
-		void BindShaderResource(eShaderStage stage, UINT startSlot, ID3D11ShaderResourceView** ppSRV);
+		void BindUnorderedAccessViews(UINT slot, ID3D11UnorderedAccessView** ppUnorderedAccessViews, const UINT* pUAVInitialCounts);
+
 		void BindSamplers(eShaderStage stage, UINT startSlot, ID3D11SamplerState** ppSamplers);
+		void BindShaderResource(eShaderStage stage, UINT startSlot, ID3D11ShaderResourceView** ppSRV);
 		void BindRasterizerState(ID3D11RasterizerState* pRasterizerState);
 		void BindDepthStencilState(ID3D11DepthStencilState* pDepthStencilState);
 		void BindBlendState(ID3D11BlendState* pBlendState);

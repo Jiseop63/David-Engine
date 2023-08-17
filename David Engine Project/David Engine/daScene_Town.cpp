@@ -25,8 +25,8 @@ namespace da
 	}
 	void Scene_Town::Initialize()
 	{
-		addBackgroundObject();
-		addGameObjects();
+		//addBackgroundObject();
+		//addGameObjects();
 	}
 	void Scene_Town::Update()
 	{

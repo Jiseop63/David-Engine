@@ -66,7 +66,7 @@ namespace da
 	void Animation::Binds()
 	{
 		// texture bind
-		mAtlas->BindShader(graphics::eShaderStage::PS, 12);
+		mAtlas->BindShaderResource(graphics::eShaderStage::PS, 12);
 
 		// animation CB
 		renderer::AnimationCB cbData = {};
