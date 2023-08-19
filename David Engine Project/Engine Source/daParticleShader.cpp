@@ -8,6 +8,7 @@ namespace da::graphics
 	ParticleShader::ParticleShader()
 		: ComputeShader(128, 1, 1)
 		, mParticleBuffer(nullptr)
+		, mSharedBuffer(nullptr)
 	{
 	}
 	ParticleShader::~ParticleShader()
@@ -16,6 +17,7 @@ namespace da::graphics
 	void ParticleShader::Binds()
 	{
 		mParticleBuffer->BindUAV(0);
+		mSharedBuffer->BindUAV(1);
 
 		mGroupX = mParticleBuffer->GetStride() / mThreadGroupCountX + 1;
 		mGroupY = 1;
@@ -24,6 +26,7 @@ namespace da::graphics
 	void ParticleShader::Clear()
 	{
 		mParticleBuffer->Clear();
+		mSharedBuffer->Clear();
 	}
 	void ParticleShader::SetParticleBuffer(StructuredBuffer* particleBuffer)
 	{

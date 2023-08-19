@@ -158,7 +158,7 @@ namespace renderer
 
 		// light structed buffer
 		lightsBuffer = new StructuredBuffer();
-		lightsBuffer->Create(sizeof(LightAttribute), 2, eViewType::SRV, nullptr);
+		lightsBuffer->Create(sizeof(LightAttribute), 2, eViewType::SRV, nullptr, true);
 
 		// Particle
 		constantBuffer[(UINT)eCBType::Particle] = new ConstantBuffer(eCBType::Particle);
@@ -258,9 +258,13 @@ namespace renderer
 #pragma endregion
 
 #pragma region Sample Material
+		// Paint Texture
 		std::shared_ptr<Texture> uavTexture = std::make_shared<Texture>();
 		uavTexture->Create(1024, 1024, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS);
 		Resources::Insert(L"PaintTexture", uavTexture);
+		// Particle Texture
+		std::shared_ptr<Texture> particleTexture = std::make_shared<Texture>();
+		Resources::Load<Texture>(L"Spark", L"..\\Resources\\Texture\\particle\\Sparks.png");
 
 		// smileTexture
 		{
@@ -303,8 +307,10 @@ namespace renderer
 		}
 		// particle material
 		{
+			std::shared_ptr<Texture> particleTex = Resources::Find<Texture>(L"Spark");
 			std::shared_ptr<Material> particleMaterial = std::make_shared<Material>();
 			particleMaterial->SetShader(particleShader);
+			particleMaterial->SetTexture(particleTex);
 			Resources::Insert<Material>(L"ParticleMaterial", particleMaterial);
 		}
 		

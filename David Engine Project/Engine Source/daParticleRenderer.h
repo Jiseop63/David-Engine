@@ -18,6 +18,8 @@ namespace da
 
 	private:
 		graphics::StructuredBuffer*		mParticleBuffer;
+		graphics::StructuredBuffer*		mSharedBuffer;
+
 		std::shared_ptr<ParticleShader> mCS;
 		UINT							mCount;
 		math::Vector4					mStartSize;
@@ -26,5 +28,6 @@ namespace da
 		math::Vector4					mEndColor;
 		float							mLifeTime;
 		float							mFrequency;
+		float							mTime;
 	};
 }

@@ -5,6 +5,8 @@ namespace da::graphics
 {
     StructuredBuffer::StructuredBuffer()
         : mViewType(eViewType::SRV)
+        , mReadBuffer(nullptr)
+        , mWriteBuffer(nullptr)
         , mSRV(nullptr)
         , mUAV(nullptr)
         , mSize(0)
@@ -16,7 +18,7 @@ namespace da::graphics
     StructuredBuffer::~StructuredBuffer()
     {
     }
-    bool StructuredBuffer::Create(UINT size, UINT stride, eViewType type, void* data)
+    bool StructuredBuffer::Create(UINT size, UINT stride, eViewType type, void* data, bool cpuAccess)
     {
         mSize = size;
         mStride = stride;
@@ -25,8 +27,8 @@ namespace da::graphics
         Desc.ByteWidth = mSize * mStride;
         Desc.StructureByteStride = mSize;
 
-        Desc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
-        Desc.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
+        Desc.Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT;
+        Desc.CPUAccessFlags = 0;
         Desc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE;
         Desc.MiscFlags = D3D11_RESOURCE_MISC_FLAG::D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
 
@@ -69,6 +71,35 @@ namespace da::graphics
                 return false;
         }
 
+        if (cpuAccess)
+            CreateRWBuffer();
+
+        return true;
+    }
+    bool StructuredBuffer::CreateRWBuffer()
+    {
+        D3D11_BUFFER_DESC wDesc(Desc);
+
+        wDesc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED; // 구조화 버퍼 추가 플래그 설정
+        wDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;	// Texture Register Binding	
+
+        wDesc.Usage = D3D11_USAGE_DYNAMIC;
+        wDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+
+        if (!GetDevice()->CreateBuffer(mWriteBuffer.GetAddressOf(), &wDesc, nullptr))
+            return false;
+
+        D3D11_BUFFER_DESC rDesc(Desc);
+
+        rDesc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED; // 구조화 버퍼 추가 플래그 설정
+        rDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;	// Texture Register Binding
+
+        rDesc.Usage = D3D11_USAGE_DEFAULT;
+        rDesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+
+        if (!GetDevice()->CreateBuffer(mReadBuffer.GetAddressOf(), &rDesc, nullptr))
+            return false;
+
         return true;
     }
     void StructuredBuffer::SetData(void* data, UINT stride)
@@ -76,7 +107,18 @@ namespace da::graphics
         if (mStride < stride)
             Create(mSize, stride, mViewType, data);
         else
-            GetDevice()->BindBuffer(Buffer.Get(), data, mSize * stride);
+            GetDevice()->BindBuffer(mWriteBuffer.Get(), data, mSize * stride);
+
+        GetDevice()->CopyResource(Buffer.Get(), mWriteBuffer.Get());
+    }
+    void StructuredBuffer::GetData(void* data, UINT size)
+    {
+        GetDevice()->CopyResource(mReadBuffer.Get(), Buffer.Get());
+
+        if (size == 0)
+            GetDevice()->BindBuffer(mReadBuffer.Get(), data, mSize * mStride);
+        else
+            GetDevice()->BindBuffer(mReadBuffer.Get(), data, size);
     }
     void StructuredBuffer::BindSRV(eShaderStage stage, UINT slot)
     {

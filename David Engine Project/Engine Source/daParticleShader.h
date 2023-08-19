@@ -14,8 +14,10 @@ namespace da::graphics
 		virtual void Clear() override;
 
 		void SetParticleBuffer(StructuredBuffer* particleBuffer);
+		void SetSharedBuffer(StructuredBuffer* sharedBuffer) { mSharedBuffer = sharedBuffer; }
 
 	private:
 		StructuredBuffer* mParticleBuffer;
+		StructuredBuffer* mSharedBuffer;
 	};
 }

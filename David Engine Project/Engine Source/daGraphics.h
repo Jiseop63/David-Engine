@@ -124,6 +124,10 @@ namespace da::graphics
 		float Time;
 	};
 
+	struct ParticleShared
+	{
+		UINT SharedActiveCount;
+	};
 #pragma region StructuredBuffer
 
 	struct LightAttribute

@@ -433,6 +433,11 @@ namespace da::graphics
 		mContext->OMSetBlendState(pBlendState, nullptr, 0xffffffff);
 	}
 
+	void GraphicDevice_Dx11::CopyResource(ID3D11Resource* pDstResource, ID3D11Resource* pSrcResource)
+	{
+		mContext->CopyResource(pDstResource, pSrcResource);
+	}
+
 	void GraphicDevice_Dx11::DrawIndexed(UINT indexCount, UINT startIndexLocation, INT baseVertexLocation)
 	{
 		mContext->DrawIndexed(indexCount, startIndexLocation, baseVertexLocation);

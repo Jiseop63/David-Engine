@@ -82,19 +82,39 @@ void mainGS(point VSOut In[1], inout TriangleStream<GSOut> output)
 float4 mainPS(GSOut In) : SV_TARGET
 {
     float4 retValue = (float4) 0.0f;
+    retValue = BindingTexture.Sample(pointSampler, In.UV);
     
-    retValue = float4(1.0f, 0.0f, 1.0f, 1.0f);
+    if (retValue.a <= 0.0f)
+        retValue = float4(0.0f, 0.0f, 0.0f, 0.0f);
     
     return retValue;
 
 }
 
 RWStructuredBuffer<Particle> ParticleBuffer : register(u0);
+RWStructuredBuffer<ParticleShared> ParticleSharedBuffer : register(u1);
 [numthreads(128, 1, 1)]
 void mainCS(uint3 DTid : SV_DispatchThreadID)
 {
     if (DTid.x >= cParticleElementCount)
         return;
     
-    ParticleBuffer[DTid.x].Position += ParticleBuffer[DTid.x].Direction * ParticleBuffer[DTid.x].Speed * cParticleElapsedTime;
+    if (0 == ParticleBuffer[DTid.x].Active)
+    {
+        while (0 < ParticleSharedBuffer[0].ActiveSharedCount)
+        {
+            int origin = ParticleSharedBuffer[0].ActiveSharedCount;
+            int exchange = origin - 1;
+            InterlockedExchange(ParticleSharedBuffer[0].ActiveSharedCount, exchange, exchange);
+            if (exchange == origin)
+            {
+                ParticleBuffer[DTid.x].Active = 1;
+                break;
+            }
+        }
+    }
+    else
+    {
+        ParticleBuffer[DTid.x].Position += ParticleBuffer[DTid.x].Direction * ParticleBuffer[DTid.x].Speed * cParticleElapsedTime;
+    }    
 }
