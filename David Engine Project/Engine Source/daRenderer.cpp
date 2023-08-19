@@ -6,6 +6,7 @@
 #include "daMaterial.h"
 #include "daStructuredBuffer.h"
 #include "daPaintShader.h"
+#include "daParticleShader.h"
 
 using namespace da;
 using namespace da::graphics;
@@ -157,8 +158,11 @@ namespace renderer
 
 		// light structed buffer
 		lightsBuffer = new StructuredBuffer();
-		lightsBuffer->Create(sizeof(LightAttribute), 2, eSRVType::None);
+		lightsBuffer->Create(sizeof(LightAttribute), 2, eViewType::SRV, nullptr);
 
+		// Particle
+		constantBuffer[(UINT)eCBType::Particle] = new ConstantBuffer(eCBType::Particle);
+		constantBuffer[(UINT)eCBType::Particle]->Create(sizeof(ParticleCB));
 #pragma endregion
 	}
 	void LoadResource()
@@ -229,11 +233,8 @@ namespace renderer
 			animationShader->Create(eShaderStage::PS, L"AnimationShader.hlsl", "mainPS");
 			Resources::Insert(L"AnimationShader", animationShader);
 		}
-		// paint
-		std::shared_ptr<PaintShader> paintShader = std::make_shared<PaintShader>();
-		paintShader->Create(L"Paint.hlsl", "mainCS");
-		da::Resources::Insert(L"PaintShader", paintShader);
-
+		
+		// ParticleShader
 		std::shared_ptr<Shader> particleShader = std::make_shared<Shader>();
 		{
 			particleShader->Create(eShaderStage::VS, L"ParticleShader.hlsl", "mainVS");
@@ -245,6 +246,15 @@ namespace renderer
 			particleShader->SetBlendState(eBSType::AlphaBlend);
 			Resources::Insert(L"ParticleShader", particleShader);
 		}
+		// paint CS
+		std::shared_ptr<PaintShader> paintShader = std::make_shared<PaintShader>();
+		paintShader->Create(L"Paint.hlsl", "mainCS");
+		da::Resources::Insert(L"PaintShader", paintShader);
+		// Particle CS
+		std::shared_ptr<ParticleShader> psSystemShader = std::make_shared<ParticleShader>();
+		psSystemShader->Create(L"ParticleShader.hlsl", "mainCS");
+		da::Resources::Insert(L"ParticleComputeShader", psSystemShader);
+
 #pragma endregion
 
 #pragma region Sample Material
@@ -295,7 +305,6 @@ namespace renderer
 		{
 			std::shared_ptr<Material> particleMaterial = std::make_shared<Material>();
 			particleMaterial->SetShader(particleShader);
-			particleMaterial->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert<Material>(L"ParticleMaterial", particleMaterial);
 		}
 		
@@ -946,8 +955,8 @@ namespace renderer
 		}
 
 		lightsBuffer->SetData(lightsAttributes.data(), (UINT)lightsAttributes.size());
-		lightsBuffer->Bind(eShaderStage::VS, 13);
-		lightsBuffer->Bind(eShaderStage::PS, 13);
+		lightsBuffer->BindSRV(eShaderStage::VS, 13);
+		lightsBuffer->BindSRV(eShaderStage::PS, 13);
 	}
 	void Release()
 	{

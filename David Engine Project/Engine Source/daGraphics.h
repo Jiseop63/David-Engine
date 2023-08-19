@@ -20,7 +20,7 @@
 #define CBSLOT_ANIMATION		6;
 #define CBSLOT_REVERSE			7;
 #define CBSLOT_COLLIDER			8;
-
+#define CBSLOT_PARTICLE			9;
 
 namespace da::graphics
 {
@@ -46,6 +46,7 @@ namespace da::graphics
 		Animation,
 		Reverse,
 		Collider,
+		Particle,
 		End,
 	};
 
@@ -91,9 +92,11 @@ namespace da::graphics
 		End,
 	};
 
-	enum class eSRVType
+	enum class eViewType
 	{
 		None,
+		SRV,
+		UAV,
 		End,
 	};
 	struct GPUBuffer

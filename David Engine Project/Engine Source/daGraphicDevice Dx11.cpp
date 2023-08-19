@@ -8,10 +8,7 @@ namespace da::graphics
 {
 	GraphicDevice_Dx11::GraphicDevice_Dx11()
 	{
-		// window handle
 		HWND hWnd = application.GetHwnd();
-
-		// Device, Context »ý¼º
 		D3D_FEATURE_LEVEL featureLevel = (D3D_FEATURE_LEVEL)0;
 		D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr
 			, D3D11_CREATE_DEVICE_DEBUG, nullptr, 0
@@ -64,7 +61,6 @@ namespace da::graphics
 		depthStencilDesc.MiscFlags = 0;
 
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> depthStencilBuffer = nullptr;
-
 		if (!CreateTexture2D(&depthStencilDesc, nullptr, depthStencilBuffer.GetAddressOf()))
 			return;
 		mDepthStencil->SetTexture(depthStencilBuffer);
@@ -76,7 +72,6 @@ namespace da::graphics
 
 		RECT winRect = {};
 		GetClientRect(hWnd, &winRect);
-		int a = 0;
 		mViewPort =
 		{
 			0.0f, 0.0f
@@ -119,16 +114,12 @@ namespace da::graphics
 
 		if (FAILED(mDevice->QueryInterface(__uuidof(IDXGIDevice), (void**)pDXGIDevice.GetAddressOf())))
 			return false;
-
 		if (FAILED(pDXGIDevice->GetParent(__uuidof(IDXGIAdapter), (void**)pAdapter.GetAddressOf())))
 			return false;
-
 		if (FAILED(pAdapter->GetParent(__uuidof(IDXGIFactory), (void**)pFactory.GetAddressOf())))
 			return false;
-
 		if (FAILED(pFactory->CreateSwapChain(mDevice.Get(), &dxgiDesc, mSwapChain.GetAddressOf())))
 			return false;
-
 		return true;
 	}
 	bool GraphicDevice_Dx11::CreateTexture2D(const D3D11_TEXTURE2D_DESC* desc, void* data, ID3D11Texture2D** ppTexture2D)
@@ -367,7 +358,7 @@ namespace da::graphics
 		mContext->Unmap(buffer, 0);
 	}
 
-	void GraphicDevice_Dx11::BindUnorderedAccessViews(UINT slot, ID3D11UnorderedAccessView** ppUnorderedAccessViews, const UINT* pUAVInitialCounts)
+	void GraphicDevice_Dx11::BindUnorderedAccess(UINT slot, ID3D11UnorderedAccessView** ppUnorderedAccessViews, const UINT* pUAVInitialCounts)
 	{
 		mContext->CSSetUnorderedAccessViews(slot, 1, ppUnorderedAccessViews, pUAVInitialCounts);
 	}

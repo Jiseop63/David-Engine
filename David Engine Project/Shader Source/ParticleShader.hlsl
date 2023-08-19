@@ -88,3 +88,13 @@ float4 mainPS(GSOut In) : SV_TARGET
     return retValue;
 
 }
+
+RWStructuredBuffer<Particle> ParticleBuffer : register(u0);
+[numthreads(128, 1, 1)]
+void mainCS(uint3 DTid : SV_DispatchThreadID)
+{
+    if (DTid.x >= cParticleElementCount)
+        return;
+    
+    ParticleBuffer[DTid.x].Position += ParticleBuffer[DTid.x].Direction * ParticleBuffer[DTid.x].Speed * cParticleElapsedTime;
+}

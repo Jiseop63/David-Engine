@@ -144,7 +144,6 @@ namespace da
 		// 렌더할 씬으로부터 오브젝트 배열 가져오기
 		Scene* scene = SceneManager::GetActiveScene();
 		
-				
 		for (int layerType = 0; layerType < (UINT)enums::eLayerType::End; ++layerType)
 		{
 			if (true == mLayerMask[layerType])
@@ -153,7 +152,7 @@ namespace da
 				Layer& targetLayer = scene->GetLayer((da::enums::eLayerType)layerType);
 				const std::vector<GameObject*> gameObjects = targetLayer.GetGameObjects();
 
-				divideAlphaBlendObjects(gameObjects);
+				layerSortAnddivideRenderTypeObjects(gameObjects);
 				
 			}
 		}
@@ -169,7 +168,7 @@ namespace da
 			, CompareDepthSort);
 	}
 
-	void Camera::divideAlphaBlendObjects(const std::vector<GameObject*> objects)
+	void Camera::layerSortAnddivideRenderTypeObjects(const std::vector<GameObject*> objects)
 	{
 		for (GameObject* object : objects)
 		{
