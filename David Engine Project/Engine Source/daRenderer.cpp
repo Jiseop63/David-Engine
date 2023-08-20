@@ -163,6 +163,10 @@ namespace renderer
 		// Particle
 		constantBuffer[(UINT)eCBType::Particle] = new ConstantBuffer(eCBType::Particle);
 		constantBuffer[(UINT)eCBType::Particle]->Create(sizeof(ParticleCB));
+
+		// Noise
+		constantBuffer[(UINT)eCBType::Noise] = new ConstantBuffer(eCBType::Noise);
+		constantBuffer[(UINT)eCBType::Noise]->Create(sizeof(NoiseCB));
 #pragma endregion
 	}
 	void LoadResource()
@@ -265,6 +269,10 @@ namespace renderer
 		// Particle Texture
 		std::shared_ptr<Texture> particleTexture = std::make_shared<Texture>();
 		Resources::Load<Texture>(L"Spark", L"..\\Resources\\Texture\\particle\\Sparks.png");
+		// Noise Texture
+		Resources::Load<Texture>(L"Noise01", L"..\\Resources\\Texture\\noise\\noise_01.png");
+		Resources::Load<Texture>(L"Noise02", L"..\\Resources\\Texture\\noise\\noise_02.png");
+		Resources::Load<Texture>(L"Noise03", L"..\\Resources\\Texture\\noise\\noise_03.png");
 
 		// smileTexture
 		{
@@ -935,6 +943,7 @@ namespace renderer
 	}
 	void Render()
 	{
+		BindNoiseTexture();
 		BindLights();
 		for (Camera* camera : cameras)
 		{
@@ -963,6 +972,28 @@ namespace renderer
 		lightsBuffer->SetData(lightsAttributes.data(), (UINT)lightsAttributes.size());
 		lightsBuffer->BindSRV(eShaderStage::VS, 13);
 		lightsBuffer->BindSRV(eShaderStage::PS, 13);
+	}
+	void BindNoiseTexture()
+	{
+		std::shared_ptr<Texture> texture = Resources::Find<Texture>(L"Noise01");
+
+		texture->BindShaderResource(eShaderStage::VS, 15);
+		texture->BindShaderResource(eShaderStage::HS, 15);
+		texture->BindShaderResource(eShaderStage::DS, 15);
+		texture->BindShaderResource(eShaderStage::GS, 15);
+		texture->BindShaderResource(eShaderStage::PS, 15);
+		texture->BindShaderResource(eShaderStage::CS, 15);
+
+		ConstantBuffer* noiseCB = constantBuffer[(UINT)eCBType::Noise];
+		NoiseCB noiseData = {};
+		noiseData.NoiseSize.x = texture->GetWidth();
+		noiseData.NoiseSize.y = texture->GetHeight();
+
+		noiseCB->SetData(&noiseData);
+		noiseCB->Bind(eShaderStage::VS);
+		noiseCB->Bind(eShaderStage::GS);
+		noiseCB->Bind(eShaderStage::PS);
+		noiseCB->Bind(eShaderStage::CS);
 	}
 	void Release()
 	{

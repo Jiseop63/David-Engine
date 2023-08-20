@@ -58,7 +58,7 @@ namespace da
 		//addBackgroundObjects();
 		//addUIObjects();
 
-		std::shared_ptr<PaintShader> paintShader = Resources::Find<PaintShader>(L"PaintShader");
+		/*std::shared_ptr<PaintShader> paintShader = Resources::Find<PaintShader>(L"PaintShader");
 		std::shared_ptr<Texture> paintTexture = Resources::Find<Texture>(L"PaintTexture");
 		paintShader->SetTarget(paintTexture);
 		paintShader->OnExcute();
@@ -71,7 +71,7 @@ namespace da
 			mr->SetMaterial(Resources::Find<Material>(L"SampleMaterial2"));
 			obj->GetComponent<Transform>()->SetPosition(math::Vector3(0.0f, 0.0f, 0.0f));
 			Collider2D* cd = obj->AddComponent<Collider2D>();
-		}
+		}*/
 
 		{
 			GameObject* obj = new GameObject();

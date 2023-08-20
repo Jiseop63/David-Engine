@@ -37,7 +37,8 @@ namespace da::graphics
 		elapsedTime += (float)Time::DeltaTime();
 		renderer::ParticleCB particleData = {};
 		particleData.ElementCount = mParticleBuffer->GetStride();
-		particleData.ElpasedTime = (float)Time::DeltaTime();
+		particleData.ElpasedTime = elapsedTime;
+		particleData.DeltaTime = (float)Time::DeltaTime();
 
 		particleCB->SetData(&particleData);
 		particleCB->Bind(eShaderStage::CS);

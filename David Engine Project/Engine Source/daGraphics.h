@@ -21,6 +21,7 @@
 #define CBSLOT_REVERSE			7;
 #define CBSLOT_COLLIDER			8;
 #define CBSLOT_PARTICLE			9;
+#define CBSLOT_NOISE			10;
 
 namespace da::graphics
 {
@@ -47,6 +48,7 @@ namespace da::graphics
 		Reverse,
 		Collider,
 		Particle,
+		Noise,
 		End,
 	};
 
@@ -133,7 +135,9 @@ namespace da::graphics
 	struct LightAttribute
 	{
 		math::Vector4		Color;
+		
 		math::Vector4		Position;
+		
 		math::Vector4		Direction;
 
 		enums::eLightType   LightType;
@@ -145,11 +149,14 @@ namespace da::graphics
 	struct Particle
 	{
 		math::Vector4 Position;
+		
 		math::Vector4 Direction;
 
 		float	EndTime;
 		float	Time;
+		float	MaxSpeed;
 		float	Speed;
+
 		UINT	Active;
 	};
 #pragma endregion

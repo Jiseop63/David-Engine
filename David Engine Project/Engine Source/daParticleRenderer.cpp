@@ -36,26 +36,27 @@ namespace da
 		for (size_t i = 0; i < 1000; i++)
 		{
 			math::Vector4 pos = math::Vector4::Zero;
-			pos.x += rand() % 20;
-			pos.y += rand() % 10;
+			
+			// 방향값을 랜덤으로 보내는 알고리즘
+			//particles[i].Direction = math::Vector4(cosf((float)i * (XM_2PI / (float)1000)), sinf((float)i * (XM_2PI / 100.f)), 0.0f, 1.0f);
+			
+			// 방향은 인자를 받아서 세팅하도록 하면 좋을듯?
+			particles[i].Direction = math::Vector4( 0.0f, -1.0f, 0.0f, 1.0f );
 
-			int sign = rand() % 2;
-			if (sign == 0)
-				pos.x *= -1.0f;
-			sign = rand() % 2;
-			if (sign == 0)
-				pos.y *= -1.0f;
-
-			particles[i].Direction = math::Vector4( cosf((float)i * (XM_2PI / (float)1000)), sinf((float)i * (XM_2PI / 100.f)), 0.0f, 1.0f );
+			// 위치는 Transform으로 세팅
 			particles[i].Position = pos;
-			particles[i].Speed= 1.0f;
+			// 속도도 인자를 받아서
+			particles[i].MaxSpeed = 2.0f;
+			particles[i].Speed = 0.0f;
+			// 종료 조건도
+			particles[i].EndTime = 2.0f;
 			particles[i].Active = 0;
 		}
 		mParticleBuffer = new da::graphics::StructuredBuffer();
 		mParticleBuffer->Create(sizeof(Particle), 1000, eViewType::UAV, particles);
 
 		mSharedBuffer = new da::graphics::StructuredBuffer();
-		mSharedBuffer->Create(sizeof(Particle), 1, eViewType::UAV, nullptr, true);
+		mSharedBuffer->Create(sizeof(ParticleShared), 1, eViewType::UAV, nullptr, true);
 
 		//mParticleBuffer->SetData(particles, 1000);
 	}
@@ -70,7 +71,7 @@ namespace da
 	}
 	void ParticleRenderer::LateUpdate()
 	{
-		float aliveTime = 1.0f / 1.0f;
+		float aliveTime = 1.0f / 5.750f;
 		mTime += (float)Time::DeltaTime();
 
 		if (mTime > aliveTime)
@@ -80,7 +81,8 @@ namespace da
 			mTime = f - floor(f);
 
 			ParticleShared shareData = {};
-			shareData.SharedActiveCount = 2;
+			// 파티클 생성 개수도 인자로 받으면 좋을듯
+			shareData.SharedActiveCount = 1;
 			mSharedBuffer->SetData(&shareData, 1);
 		}
 		else
