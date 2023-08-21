@@ -30,6 +30,12 @@ namespace da
 	}
 	void Scene_Title::Initialize()
 	{
+		//initializeCommonObjects();
+		//addBackgroundObjects();
+		//addUIObjects();
+
+
+
 		// camera Init
 		CameraObject* subCameraObj = objects::InstantiateSubCamera(this);
 		SceneManager::SetSubCameraScript(subCameraObj);
@@ -53,31 +59,26 @@ namespace da
 			light->SetColor(math::Vector4(0.70f, 0.70f, 0.70f, 1.0f));
 		}
 
-
-		//initializeCommonObjects();
-		//addBackgroundObjects();
-		//addUIObjects();
-
-		/*std::shared_ptr<PaintShader> paintShader = Resources::Find<PaintShader>(L"PaintShader");
-		std::shared_ptr<Texture> paintTexture = Resources::Find<Texture>(L"PaintTexture");
-		paintShader->SetTarget(paintTexture);
-		paintShader->OnExcute();
-
+		// 페인트		
 		{
+			std::shared_ptr<PaintShader> paintShader = Resources::Find<PaintShader>(L"PaintShader");
+			std::shared_ptr<Texture> paintTexture = Resources::Find<Texture>(L"PaintTexture");
+			paintShader->SetTarget(paintTexture);
+			paintShader->OnExcute();
 			GameObject* obj = new GameObject();
-			AddGameObject(enums::eLayerType::Creature, obj);
+			AddGameObject(enums::eLayerType::Default, obj);
 			MeshRenderer* mr = obj->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			mr->SetMaterial(Resources::Find<Material>(L"SampleMaterial2"));
-			obj->GetComponent<Transform>()->SetPosition(math::Vector3(0.0f, 0.0f, 0.0f));
+			obj->GetComponent<Transform>()->SetPosition(math::Vector3(0.0f, 0.0f, 1.0f));
 			Collider2D* cd = obj->AddComponent<Collider2D>();
-		}*/
-
+		}
+		// 파티클
 		{
 			GameObject* obj = new GameObject();
-			AddGameObject(enums::eLayerType::Default, obj);
+			AddGameObject(enums::eLayerType::Creature, obj);
 			ParticleRenderer* mr = obj->AddComponent<ParticleRenderer>();
-			obj->GetComponent<Transform>()->SetPosition(math::Vector3(0.0f, 0.0f, 1.0f));
+			obj->GetComponent<Transform>()->SetPosition(math::Vector3(0.0f, 0.0f, -1.0f));
 			obj->GetComponent<Transform>()->SetScale(math::Vector3(0.2f, 0.2f, 0.2f));
 		}
 

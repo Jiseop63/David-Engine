@@ -61,7 +61,7 @@ namespace da
 		View = mView;
 		Projection = mProjection;
 
-		// 씬의 오브젝트들을 렌더모드에 따라 렌더링배열에 추가
+		// 레이어 순서대로 오브젝트를 가져온다음, 렌더 타입에 맞게 분류해서 등록함
 		sortGameObjects();
 		// 오브젝트들을 z축으로 정렬
 		depthSortTransparencyGameobjects();
@@ -254,7 +254,7 @@ namespace da
 	void Camera::disableDepthStencilState()
 	{
 		Microsoft::WRL::ComPtr<ID3D11DepthStencilState> dsState
-			= renderer::DepthStencilStates[(UINT)eDSType::Default];
+			= renderer::DepthStencilStates[(UINT)eDSType::None];
 		GetDevice()->BindDepthStencilState(dsState.Get());
 	}
 

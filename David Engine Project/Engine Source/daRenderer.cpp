@@ -875,15 +875,18 @@ namespace renderer
 		GetDevice()->CreateRasterizerState(
 			&rasterizerDesc, RasterizerStates[(UINT)eRSType::SolidBack].GetAddressOf());
 		// Soild Front	: 앞면을 렌더링하지 않음
+		rasterizerDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_FRONT;
 		GetDevice()->CreateRasterizerState(
 			&rasterizerDesc, RasterizerStates[(UINT)eRSType::SolidFront].GetAddressOf());
 		// Solid None	: 모든 면을 렌더링함
+		rasterizerDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
 		GetDevice()->CreateRasterizerState(
 			&rasterizerDesc, RasterizerStates[(UINT)eRSType::SolidNone].GetAddressOf());
 		// Wireframe	: 뼈대만 렌더링함
 		rasterizerDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME;
+		rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
 		GetDevice()->CreateRasterizerState(
 			&rasterizerDesc, RasterizerStates[(UINT)eRSType::Wireframe].GetAddressOf());
 #pragma endregion
@@ -897,18 +900,26 @@ namespace renderer
 		GetDevice()->CreateDepthStencilState(
 			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::Less].GetAddressOf());
 		// Greater <- Z 값이 나보다 크면 안그림
+		depthStencilDesc.DepthEnable = true;
 		depthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER;
+		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
+		depthStencilDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(
 			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::Greater].GetAddressOf());
 		// No Write <- 덮어쓰기 안함
+		depthStencilDesc.DepthEnable = true;
 		depthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
 		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ZERO;
+		depthStencilDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(
 			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::NoWrite].GetAddressOf());
-		// None 
+		// None
 		depthStencilDesc.DepthEnable = false;
+		depthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
+		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ZERO;
+		depthStencilDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(
-			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::Default].GetAddressOf());
+			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::None].GetAddressOf());
 #pragma endregion
 #pragma region Blend State
 		D3D11_BLEND_DESC blendDesc = {};
@@ -986,8 +997,8 @@ namespace renderer
 
 		ConstantBuffer* noiseCB = constantBuffer[(UINT)eCBType::Noise];
 		NoiseCB noiseData = {};
-		noiseData.NoiseSize.x = texture->GetWidth();
-		noiseData.NoiseSize.y = texture->GetHeight();
+		noiseData.NoiseSize.x = (float)texture->GetWidth();
+		noiseData.NoiseSize.y = (float)texture->GetHeight();
 
 		noiseCB->SetData(&noiseData);
 		noiseCB->Bind(eShaderStage::VS);

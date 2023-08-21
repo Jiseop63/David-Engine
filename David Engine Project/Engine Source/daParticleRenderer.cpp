@@ -31,24 +31,31 @@ namespace da
 		SetMaterial(material);
 
 		mCS = Resources::Find<ParticleShader>(L"ParticleComputeShader");
-
+				
+	}
+	ParticleRenderer::~ParticleRenderer()
+	{
+	}
+	void ParticleRenderer::Initialize()
+	{
+		math::Vector3 prticlePos = GetOwner()->GetTransform()->GetPosition();
 		// 구조화버퍼 세팅
 		for (size_t i = 0; i < 1000; i++)
 		{
-			math::Vector4 pos = math::Vector4::Zero;
-			
+			math::Vector4 pos(prticlePos.x, prticlePos.y, 0.0f, 0.0f);
+
 			// 방향값을 랜덤으로 보내는 알고리즘
 			//particles[i].Direction = math::Vector4(cosf((float)i * (XM_2PI / (float)1000)), sinf((float)i * (XM_2PI / 100.f)), 0.0f, 1.0f);
-			
+
 			// 방향은 인자를 받아서 세팅하도록 하면 좋을듯?
-			particles[i].Direction = math::Vector4( 0.0f, -1.0f, 0.0f, 1.0f );
+			particles[i].Direction = math::Vector4(0.0f, -1.0f, 0.0f, 1.0f);
 
 			// 위치는 Transform으로 세팅
 			particles[i].Position = pos;
 			// 속도도 인자를 받아서
 			particles[i].MaxSpeed = 2.0f;
 			particles[i].Speed = 0.0f;
-			// 종료 조건도
+			// 종료 조건
 			particles[i].EndTime = 2.0f;
 			particles[i].Active = 0;
 		}
@@ -57,14 +64,6 @@ namespace da
 
 		mSharedBuffer = new da::graphics::StructuredBuffer();
 		mSharedBuffer->Create(sizeof(ParticleShared), 1, eViewType::UAV, nullptr, true);
-
-		//mParticleBuffer->SetData(particles, 1000);
-	}
-	ParticleRenderer::~ParticleRenderer()
-	{
-	}
-	void ParticleRenderer::Initialize()
-	{
 	}
 	void ParticleRenderer::Update()
 	{

@@ -50,11 +50,10 @@ namespace da::graphics
 		depthStencilDesc.CPUAccessFlags = 0;
 
 		depthStencilDesc.Format = DXGI_FORMAT::DXGI_FORMAT_D24_UNORM_S8_UINT;
-		
+		depthStencilDesc.ArraySize = 1;
 		depthStencilDesc.Width = clientWidth;
 		depthStencilDesc.Height = clientHeight;
-		depthStencilDesc.ArraySize = 1;
-		
+				
 		depthStencilDesc.SampleDesc.Count = 1;
 		depthStencilDesc.SampleDesc.Quality = 0;
 		depthStencilDesc.MipLevels = 0;
@@ -455,14 +454,11 @@ namespace da::graphics
 	}
 	void GraphicDevice_Dx11::UpdateViewPort()
 	{
-		HWND hwnd = application.GetHwnd();
-		RECT  winRect = {};
-		GetClientRect(hwnd, &winRect);
 		mViewPort =
 		{
 			0.0f, 0.0f
-			, (float)(winRect.right - winRect.left)
-			, (float)(winRect.bottom - winRect.top)
+			, (float)application.GetFrameWidth()
+			, (float)application.GetFrameHeight()
 			, 0.0f, 1.0f
 		};
 		BindViewPort(&mViewPort);

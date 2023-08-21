@@ -164,7 +164,7 @@ void mainCS(uint3 DTid : SV_DispatchThreadID)
         // 활성화 상태면 이동
         if (1 == ParticleBuffer[DTid.x].Active)
         {
-            ParticleBuffer[DTid.x].Speed -= cParticleDeltaTime / 1.70f;
+            ParticleBuffer[DTid.x].Speed -= cParticleDeltaTime / 1.0f;
             ParticleBuffer[DTid.x].Position += ParticleBuffer[DTid.x].Direction * ParticleBuffer[DTid.x].Speed * cParticleDeltaTime;
             ParticleBuffer[DTid.x].Time += cParticleDeltaTime;
             if (ParticleBuffer[DTid.x].EndTime <= ParticleBuffer[DTid.x].Time)

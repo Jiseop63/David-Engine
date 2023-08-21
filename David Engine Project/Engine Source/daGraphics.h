@@ -74,7 +74,7 @@ namespace da::graphics
 		Less,
 		Greater,
 		NoWrite,
-		Default,
+		None,
 		End,
 	};
 

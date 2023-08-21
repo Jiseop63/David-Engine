@@ -32,11 +32,11 @@ namespace da::graphics
 		UINT GetWidth() { return mWidth; }
 		UINT GetHeight() { return mHeight; }
 
-		Microsoft::WRL::ComPtr<ID3D11RenderTargetView>    GetRTV() { return  mRTV; }
+		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> GetRTV() { return  mRTV; }
 		void SetRTV(Microsoft::WRL::ComPtr<ID3D11RenderTargetView> rtv) { mRTV = rtv; }
-		Microsoft::WRL::ComPtr<ID3D11DepthStencilView>    GetDSV() { return  mDSV; }
+		Microsoft::WRL::ComPtr<ID3D11DepthStencilView> GetDSV() { return  mDSV; }
 		void SetDSV(Microsoft::WRL::ComPtr<ID3D11DepthStencilView> dsv) { mDSV = dsv; }
-		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>  GetSRV() { return  mSRV; }
+		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> GetSRV() { return  mSRV; }
 		Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> GetUAV() { return  mUAV; }
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> GetTexture() { return mTexture; }
 		void SetTexture(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture) { mTexture = texture; }
