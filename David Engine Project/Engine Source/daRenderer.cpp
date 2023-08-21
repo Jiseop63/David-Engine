@@ -6,7 +6,6 @@
 #include "daMaterial.h"
 #include "daStructuredBuffer.h"
 #include "daPaintShader.h"
-#include "daParticleShader.h"
 
 using namespace da;
 using namespace da::graphics;
@@ -33,20 +32,6 @@ namespace renderer
 	{
 		std::vector<Vertex> vertexes = {};
 		std::vector<UINT> indexes = {};
-#pragma region Point Mesh
-		Vertex point = {};
-		point.pos = Vector3(0.0f, 0.0f, 0.0f);
-		vertexes.push_back(point);
-		indexes.push_back(0);
-		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-		mesh->CreateVertexBuffer(vertexes.data(), (UINT)vertexes.size());
-		mesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
-		Resources::Insert(L"PointMesh", mesh);
-
-
-		vertexes.clear();
-		indexes.clear();
-#pragma endregion
 
 #pragma region Rect Mesh
 		vertexes.resize(4);
@@ -66,7 +51,7 @@ namespace renderer
 		vertexes[3].color = Vector4(1.0f, 0.0f, 1.0f, 1.0f);
 		vertexes[3].uv = Vector2(0.0f, 1.0f);
 
-		mesh = std::make_shared<Mesh>();
+		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
 		Resources::Insert<Mesh>(L"RectMesh", mesh);
 		mesh->CreateVertexBuffer(vertexes.data(), (UINT)vertexes.size());
 
@@ -158,15 +143,8 @@ namespace renderer
 
 		// light structed buffer
 		lightsBuffer = new StructuredBuffer();
-		lightsBuffer->Create(sizeof(LightAttribute), 2, eViewType::SRV, nullptr, true);
+		lightsBuffer->Create(sizeof(LightAttribute), 2, eSRVType::None);
 
-		// Particle
-		constantBuffer[(UINT)eCBType::Particle] = new ConstantBuffer(eCBType::Particle);
-		constantBuffer[(UINT)eCBType::Particle]->Create(sizeof(ParticleCB));
-
-		// Noise
-		constantBuffer[(UINT)eCBType::Noise] = new ConstantBuffer(eCBType::Noise);
-		constantBuffer[(UINT)eCBType::Noise]->Create(sizeof(NoiseCB));
 #pragma endregion
 	}
 	void LoadResource()
@@ -237,42 +215,16 @@ namespace renderer
 			animationShader->Create(eShaderStage::PS, L"AnimationShader.hlsl", "mainPS");
 			Resources::Insert(L"AnimationShader", animationShader);
 		}
-		
-		// ParticleShader
-		std::shared_ptr<Shader> particleShader = std::make_shared<Shader>();
-		{
-			particleShader->Create(eShaderStage::VS, L"ParticleShader.hlsl", "mainVS");
-			particleShader->Create(eShaderStage::GS, L"ParticleShader.hlsl", "mainGS");
-			particleShader->Create(eShaderStage::PS, L"ParticleShader.hlsl", "mainPS");
-			particleShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
-			particleShader->SetRatserizerState(eRSType::SolidNone);
-			particleShader->SetDepthStencilState(eDSType::NoWrite);
-			particleShader->SetBlendState(eBSType::AlphaBlend);
-			Resources::Insert(L"ParticleShader", particleShader);
-		}
-		// paint CS
+		// paint
 		std::shared_ptr<PaintShader> paintShader = std::make_shared<PaintShader>();
 		paintShader->Create(L"Paint.hlsl", "mainCS");
 		da::Resources::Insert(L"PaintShader", paintShader);
-		// Particle CS
-		std::shared_ptr<ParticleShader> psSystemShader = std::make_shared<ParticleShader>();
-		psSystemShader->Create(L"ParticleShader.hlsl", "mainCS");
-		da::Resources::Insert(L"ParticleComputeShader", psSystemShader);
-
 #pragma endregion
 
 #pragma region Sample Material
-		// Paint Texture
 		std::shared_ptr<Texture> uavTexture = std::make_shared<Texture>();
 		uavTexture->Create(1024, 1024, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS);
 		Resources::Insert(L"PaintTexture", uavTexture);
-		// Particle Texture
-		std::shared_ptr<Texture> particleTexture = std::make_shared<Texture>();
-		Resources::Load<Texture>(L"Spark", L"..\\Resources\\Texture\\particle\\Sparks.png");
-		// Noise Texture
-		Resources::Load<Texture>(L"Noise01", L"..\\Resources\\Texture\\noise\\noise_01.png");
-		Resources::Load<Texture>(L"Noise02", L"..\\Resources\\Texture\\noise\\noise_02.png");
-		Resources::Load<Texture>(L"Noise03", L"..\\Resources\\Texture\\noise\\noise_03.png");
 
 		// smileTexture
 		{
@@ -283,7 +235,7 @@ namespace renderer
 			spriteMaterial->SetShader(spriteShader);
 			Resources::Insert<Material>(L"SampleMaterial", spriteMaterial);
 		}
-		{
+		{			
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->SetTexture(uavTexture);
 			spriteMaterial->SetShader(spriteShader);
@@ -313,14 +265,7 @@ namespace renderer
 			projectileMaterial->SetShader(spriteShader);
 			Resources::Insert<Material>(L"ProjectileMaterial", projectileMaterial);
 		}
-		// particle material
-		{
-			std::shared_ptr<Texture> particleTex = Resources::Find<Texture>(L"Spark");
-			std::shared_ptr<Material> particleMaterial = std::make_shared<Material>();
-			particleMaterial->SetShader(particleShader);
-			particleMaterial->SetTexture(particleTex);
-			Resources::Insert<Material>(L"ParticleMaterial", particleMaterial);
-		}
+
 		
 
 #pragma endregion
@@ -843,11 +788,6 @@ namespace renderer
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());
 
-		shader = Resources::Find<Shader>(L"ParticleShader");
-		GetDevice()->CreateInputLayout(arrLayout, numElement
-			, shader->GetVSCode()
-			, shader->GetInputLayoutAddressOf());
-
 #pragma endregion
 #pragma region Sampler State
 
@@ -875,18 +815,15 @@ namespace renderer
 		GetDevice()->CreateRasterizerState(
 			&rasterizerDesc, RasterizerStates[(UINT)eRSType::SolidBack].GetAddressOf());
 		// Soild Front	: 앞면을 렌더링하지 않음
-		rasterizerDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_FRONT;
 		GetDevice()->CreateRasterizerState(
 			&rasterizerDesc, RasterizerStates[(UINT)eRSType::SolidFront].GetAddressOf());
 		// Solid None	: 모든 면을 렌더링함
-		rasterizerDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
 		GetDevice()->CreateRasterizerState(
 			&rasterizerDesc, RasterizerStates[(UINT)eRSType::SolidNone].GetAddressOf());
 		// Wireframe	: 뼈대만 렌더링함
 		rasterizerDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME;
-		rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
 		GetDevice()->CreateRasterizerState(
 			&rasterizerDesc, RasterizerStates[(UINT)eRSType::Wireframe].GetAddressOf());
 #pragma endregion
@@ -900,26 +837,18 @@ namespace renderer
 		GetDevice()->CreateDepthStencilState(
 			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::Less].GetAddressOf());
 		// Greater <- Z 값이 나보다 크면 안그림
-		depthStencilDesc.DepthEnable = true;
 		depthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER;
-		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
-		depthStencilDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(
 			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::Greater].GetAddressOf());
 		// No Write <- 덮어쓰기 안함
-		depthStencilDesc.DepthEnable = true;
 		depthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
 		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ZERO;
-		depthStencilDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(
 			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::NoWrite].GetAddressOf());
-		// None
+		// None 
 		depthStencilDesc.DepthEnable = false;
-		depthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
-		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ZERO;
-		depthStencilDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(
-			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::None].GetAddressOf());
+			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::Default].GetAddressOf());
 #pragma endregion
 #pragma region Blend State
 		D3D11_BLEND_DESC blendDesc = {};
@@ -954,7 +883,6 @@ namespace renderer
 	}
 	void Render()
 	{
-		BindNoiseTexture();
 		BindLights();
 		for (Camera* camera : cameras)
 		{
@@ -981,30 +909,8 @@ namespace renderer
 		}
 
 		lightsBuffer->SetData(lightsAttributes.data(), (UINT)lightsAttributes.size());
-		lightsBuffer->BindSRV(eShaderStage::VS, 13);
-		lightsBuffer->BindSRV(eShaderStage::PS, 13);
-	}
-	void BindNoiseTexture()
-	{
-		std::shared_ptr<Texture> texture = Resources::Find<Texture>(L"Noise01");
-
-		texture->BindShaderResource(eShaderStage::VS, 15);
-		texture->BindShaderResource(eShaderStage::HS, 15);
-		texture->BindShaderResource(eShaderStage::DS, 15);
-		texture->BindShaderResource(eShaderStage::GS, 15);
-		texture->BindShaderResource(eShaderStage::PS, 15);
-		texture->BindShaderResource(eShaderStage::CS, 15);
-
-		ConstantBuffer* noiseCB = constantBuffer[(UINT)eCBType::Noise];
-		NoiseCB noiseData = {};
-		noiseData.NoiseSize.x = (float)texture->GetWidth();
-		noiseData.NoiseSize.y = (float)texture->GetHeight();
-
-		noiseCB->SetData(&noiseData);
-		noiseCB->Bind(eShaderStage::VS);
-		noiseCB->Bind(eShaderStage::GS);
-		noiseCB->Bind(eShaderStage::PS);
-		noiseCB->Bind(eShaderStage::CS);
+		lightsBuffer->Bind(eShaderStage::VS, 13);
+		lightsBuffer->Bind(eShaderStage::PS, 13);
 	}
 	void Release()
 	{

@@ -97,9 +97,9 @@ namespace da::objects
 		// 라이트
 		{
 			Light* playerLight = player->AddComponent<Light>();
-			playerLight->SetRadius(3.0f);
+			playerLight->SetRadius(2.5f);
 			playerLight->SetLightType(enums::eLightType::Point);
-			playerLight->SetColor(math::Vector4(0.450f, 0.450f, 0.450f, 1.0f));
+			playerLight->SetColor(math::Vector4(0.40f, 0.40f, 0.40f, 1.0f));
 		}
 		// 플레이어 스크립트 추가
 		PlayerScript* playerScript = player->AddComponent<PlayerScript>();
@@ -228,10 +228,9 @@ namespace da::objects
 				
 		// 서순 중요함
 		cameraObj->Initialize();
+		camera->TurnLayerMask(enums::eLayerType::UI, false);
 		camera->TurnLayerMask(enums::eLayerType::Background, false);
 		camera->TurnLayerMask(enums::eLayerType::Layer, false);
-		camera->TurnLayerMask(enums::eLayerType::Light, false);
-		camera->TurnLayerMask(enums::eLayerType::UI, false);
 		return cameraObj;
 	}
 	static CameraObject* InstantiateUICamera(Scene* scene)
@@ -250,6 +249,7 @@ namespace da::objects
 		camera->TurnLayerMask(enums::eLayerType::UI);
 		return cameraObj;
 	}
+
 	static CameraObject* InstantiateSubCamera(Scene* scene)
 	{
 		CameraObject* cameraObj = new CameraObject();

@@ -61,7 +61,7 @@ namespace da
 		View = mView;
 		Projection = mProjection;
 
-		// 레이어 순서대로 오브젝트를 가져온다음, 렌더 타입에 맞게 분류해서 등록함
+		// 씬의 오브젝트들을 렌더모드에 따라 렌더링배열에 추가
 		sortGameObjects();
 		// 오브젝트들을 z축으로 정렬
 		depthSortTransparencyGameobjects();
@@ -144,6 +144,7 @@ namespace da
 		// 렌더할 씬으로부터 오브젝트 배열 가져오기
 		Scene* scene = SceneManager::GetActiveScene();
 		
+				
 		for (int layerType = 0; layerType < (UINT)enums::eLayerType::End; ++layerType)
 		{
 			if (true == mLayerMask[layerType])
@@ -152,7 +153,7 @@ namespace da
 				Layer& targetLayer = scene->GetLayer((da::enums::eLayerType)layerType);
 				const std::vector<GameObject*> gameObjects = targetLayer.GetGameObjects();
 
-				layerSortAnddivideRenderTypeObjects(gameObjects);
+				divideAlphaBlendObjects(gameObjects);
 				
 			}
 		}
@@ -168,7 +169,7 @@ namespace da
 			, CompareDepthSort);
 	}
 
-	void Camera::layerSortAnddivideRenderTypeObjects(const std::vector<GameObject*> objects)
+	void Camera::divideAlphaBlendObjects(const std::vector<GameObject*> objects)
 	{
 		for (GameObject* object : objects)
 		{
@@ -254,7 +255,7 @@ namespace da
 	void Camera::disableDepthStencilState()
 	{
 		Microsoft::WRL::ComPtr<ID3D11DepthStencilState> dsState
-			= renderer::DepthStencilStates[(UINT)eDSType::None];
+			= renderer::DepthStencilStates[(UINT)eDSType::Default];
 		GetDevice()->BindDepthStencilState(dsState.Get());
 	}
 

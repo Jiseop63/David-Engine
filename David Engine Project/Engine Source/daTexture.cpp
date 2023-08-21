@@ -124,13 +124,13 @@ namespace da::graphics
 	void Texture::BindUnorderedAccessViews(UINT slot)
 	{
 		UINT offset = -1;
-		GetDevice()->BindUnorderedAccess(slot, mUAV.GetAddressOf(), &offset);
+		GetDevice()->BindUnorderedAccessViews(slot, mUAV.GetAddressOf(), &offset);
 	}
 	void Texture::ClearUnorderedAccessViews(UINT slot)
 	{
 		ID3D11UnorderedAccessView* pUAV = nullptr;
 		UINT offset = -1;
-		GetDevice()->BindUnorderedAccess(slot, &pUAV, &offset);
+		GetDevice()->BindUnorderedAccessViews(slot, &pUAV, &offset);
 	}
 	void Texture::Clear()
 	{

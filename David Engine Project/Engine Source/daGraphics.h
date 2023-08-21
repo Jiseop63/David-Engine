@@ -20,11 +20,11 @@
 #define CBSLOT_ANIMATION		6;
 #define CBSLOT_REVERSE			7;
 #define CBSLOT_COLLIDER			8;
-#define CBSLOT_PARTICLE			9;
-#define CBSLOT_NOISE			10;
+
 
 namespace da::graphics
 {
+
 	enum class eShaderStage
 	{
 		VS,
@@ -47,8 +47,6 @@ namespace da::graphics
 		Animation,
 		Reverse,
 		Collider,
-		Particle,
-		Noise,
 		End,
 	};
 
@@ -74,7 +72,7 @@ namespace da::graphics
 		Less,
 		Greater,
 		NoWrite,
-		None,
+		Default,
 		End,
 	};
 
@@ -94,11 +92,9 @@ namespace da::graphics
 		End,
 	};
 
-	enum class eViewType
+	enum class eSRVType
 	{
 		None,
-		SRV,
-		UAV,
 		End,
 	};
 	struct GPUBuffer
@@ -112,7 +108,6 @@ namespace da::graphics
 		{}
 		virtual ~GPUBuffer() = default;
 	};
-
 	struct DebugMesh
 	{
 		enums::eColliderShape Type;
@@ -126,18 +121,10 @@ namespace da::graphics
 		float Time;
 	};
 
-	struct ParticleShared
-	{
-		UINT SharedActiveCount;
-	};
-#pragma region StructuredBuffer
-
 	struct LightAttribute
 	{
 		math::Vector4		Color;
-		
 		math::Vector4		Position;
-		
 		math::Vector4		Direction;
 
 		enums::eLightType   LightType;
@@ -145,20 +132,4 @@ namespace da::graphics
 		float				LightAngle;
 		int					Padding;
 	};
-
-	struct Particle
-	{
-		math::Vector4 Position;
-		
-		math::Vector4 Direction;
-
-		float	EndTime;
-		float	Time;
-		float	MaxSpeed;
-		float	Speed;
-
-		UINT	Active;
-	};
-#pragma endregion
-
 };

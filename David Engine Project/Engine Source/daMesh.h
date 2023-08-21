@@ -19,9 +19,7 @@ namespace da
 
 		void BindBuffer();
 		void Render();
-		void RenderInstanced(UINT startIndexLocation);
-		
-	public:
+
 		UINT GetIndexCount() { return mIndexCount; }
 
 

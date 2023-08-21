@@ -19,7 +19,6 @@ namespace da::graphics
 		
 		bool CompileFromFile(const std::wstring& fileName, const std::string& funcName, const std::string& version, ID3DBlob** ppCode);
 		bool CreateVertexShader(const void* pShaderBytecode, SIZE_T bytecodeLength, ID3D11VertexShader** ppVertexShader);
-		bool CreateGeometryShader(const void* pShaderBytecode, SIZE_T bytecodeLength, ID3D11GeometryShader** ppGeometryShader);
 		bool CreatePixelShader(const void* pShaderBytecode, SIZE_T bytecodeLength, ID3D11PixelShader** ppPixelShader);
 		bool CreateComputeShader(const void* pShaderBytecode, SIZE_T bytecodeLength, ID3D11ComputeShader** ppComputeShader);
 
@@ -40,9 +39,6 @@ namespace da::graphics
 		void BindIndexBuffer(ID3D11Buffer* pIndexBuffer, DXGI_FORMAT format, UINT offset);
 
 		void BindVertexShader(ID3D11VertexShader* pVetexShader);
-		void BindHullShader(ID3D11HullShader* pHullShader);
-		void BindDomainShader(ID3D11DomainShader* pDomainShader);
-		void BindGeometryShader(ID3D11GeometryShader* pGeometryShader);
 		void BindPixelShader(ID3D11PixelShader* pPixelShader);
 		void BindComputeShader(ID3D11ComputeShader* pComputeShader);
 		void Dispatch(UINT threadGroupCountX, UINT threadGroupCountY, UINT threadGroupCountZ);
@@ -53,18 +49,16 @@ namespace da::graphics
 		void BindConstantBuffer(eShaderStage stage, eCBType type, ID3D11Buffer* buffer);
 		void BindsConstantBuffer(eCBType type, ID3D11Buffer* buffer);
 		void BindBuffer(ID3D11Buffer* buffer, void* data, UINT size);
-		void BindUnorderedAccess(UINT slot, ID3D11UnorderedAccessView** ppUnorderedAccessViews, const UINT* pUAVInitialCounts);
+		void BindUnorderedAccessViews(UINT slot, ID3D11UnorderedAccessView** ppUnorderedAccessViews, const UINT* pUAVInitialCounts);
 
 		void BindSamplers(eShaderStage stage, UINT startSlot, ID3D11SamplerState** ppSamplers);
 		void BindShaderResource(eShaderStage stage, UINT startSlot, ID3D11ShaderResourceView** ppSRV);
 		void BindRasterizerState(ID3D11RasterizerState* pRasterizerState);
 		void BindDepthStencilState(ID3D11DepthStencilState* pDepthStencilState);
 		void BindBlendState(ID3D11BlendState* pBlendState);
-		void CopyResource(ID3D11Resource* pDstResource, ID3D11Resource* pSrcResource);
 
 	public:
 		void DrawIndexed(UINT indexCount, UINT startIndexLocation, INT baseVertexLocation);
-		void DrawIndexedInstanced(UINT indexCountPerInstance, UINT instanceCount, UINT startIndexLocation, INT baseVertexLocation, UINT startInstanceLocation);
 		void ClearTarget();
 		void UpdateViewPort();
 		void Draw();

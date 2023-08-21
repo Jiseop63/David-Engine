@@ -39,7 +39,7 @@ namespace da
 #pragma region Object sort
 		void sortGameObjects();
 		void depthSortTransparencyGameobjects();
-		void layerSortAnddivideRenderTypeObjects(const std::vector<GameObject*> objects);
+		void divideAlphaBlendObjects(const std::vector<GameObject*> objects);
 		void renderOpaque();
 		void renderCutout();
 		void renderTransparent();

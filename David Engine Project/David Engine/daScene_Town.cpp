@@ -50,7 +50,7 @@ namespace da
 
 		// player 세팅
 		PlayerScript* player = SceneManager::GetPlayerScript();
-		player->SetPlayerPosition(math::Vector3(0.0f, 2.50f, -0.1f));
+		player->SetPlayerPosition(math::Vector3(0.0f, 2.50f, 0.0f));
 		player->SetPlayerVelocity(math::Vector2::Zero);
 		player->ChangeState(ePlayerState::Idle);
 		player->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
@@ -111,21 +111,38 @@ namespace da
 			bgLayerScript->SetCamera(mainCameraObject->GetCameraComponent());
 			bgLayerScript->SetName(L"두번째 레이어 스크립트");
 		}
+	}
+	void Scene_Town::addUIObjects()
+	{
+	}
+	void Scene_Town::addGameObjects()
+	{
 		// floor
 		{
 			// 694 128
 			GameObject* floorObject = objects::InstantiateGameObject<GameObject>(this, enums::eLayerType::FrontBackGround, L"TownMapTileMaterial");
 			floorObject->SetName(L"Floor");
 			Transform* floorTr = floorObject->GetTransform();
-			floorTr->SetScale(Vector3(19.180f * 4.0f, 1.920f * 4.0f, FrontLayerZ));
+			floorTr->SetScale(Vector3(19.180f * 4.0f, 1.920f * 4.0f, 1.0f));
 			floorTr->SetPosition(Vector3(0.0f, -1.920f, ObjectZ));
 		}
+
+		// test enemy
+		{
+			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
+			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(1.50f, 0.0f, ObjectZ));
+		}
+
 		// land
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
 				this, Vector3(0.0f, -4.350f, 0.0f), Vector3(62.0f, 1.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
+
+		// 62 / 2 = 31
+
+
 		// right rimit
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
@@ -145,6 +162,7 @@ namespace da
 				this, Vector3(-26.60f, 1.40f, 0.0f), Vector3(8.50f, 1.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
+
 		// second
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
@@ -157,19 +175,5 @@ namespace da
 				this, Vector3(25.70f, 1.40f, 0.0f), Vector3(8.0f, 1.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
-	}
-	void Scene_Town::addUIObjects()
-	{
-	}
-	void Scene_Town::addGameObjects()
-	{
-		
-		// test enemy
-		{
-			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
-			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(1.50f, 0.0f, ObjectZ));
-		}
-
-		
 	}
 }

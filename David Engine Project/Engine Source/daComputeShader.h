@@ -8,7 +8,6 @@ namespace da::graphics
 	{
 	public:
 		ComputeShader();
-		ComputeShader(int x, int y, int z);
 		virtual ~ComputeShader();
 
 		bool Create(const std::wstring& name, const std::string& methodName);

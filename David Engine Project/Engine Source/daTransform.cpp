@@ -61,10 +61,6 @@ namespace da
 		ConstantBuffer* bindTransform = renderer::constantBuffer[(UINT)graphics::eCBType::Transform];
 		bindTransform->SetData(&transformCB);
 		bindTransform->Bind(eShaderStage::VS);
-		bindTransform->Bind(eShaderStage::HS);
-		bindTransform->Bind(eShaderStage::DS);
-		bindTransform->Bind(eShaderStage::GS);
-		bindTransform->Bind(eShaderStage::PS);
 	}
 	Vector3 Transform::GetScreenPosition()
 	{

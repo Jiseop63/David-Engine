@@ -16,7 +16,6 @@
 #include "daTimeConstants.h"
 
 #include "daPaintShader.h"
-#include "daParticleRenderer.h"
 
 extern da::Application application;
 
@@ -30,58 +29,38 @@ namespace da
 	}
 	void Scene_Title::Initialize()
 	{
-		//initializeCommonObjects();
-		//addBackgroundObjects();
-		//addUIObjects();
+		
+		initializeCommonObjects();
+		addBackgroundObjects();
+		addUIObjects();
 
+		std::shared_ptr<PaintShader> paintShader = Resources::Find<PaintShader>(L"PaintShader");
+		std::shared_ptr<Texture> paintTexture = Resources::Find<Texture>(L"PaintTexture");
+		paintShader->SetTarget(paintTexture);
+		paintShader->OnExcute();
 
-
-		// camera Init
-		CameraObject* subCameraObj = objects::InstantiateSubCamera(this);
-		SceneManager::SetSubCameraScript(subCameraObj);
-		CameraObject* mainCameraObj = objects::InstantiateMainCamera(this);
-		SceneManager::SetMainCameraScript(mainCameraObj);
-		CameraObject* uiCameraObj = objects::InstantiateUICamera(this);
-		renderer::mainCamera = mainCameraObj->GetCameraComponent();
-		renderer::uiCamera = uiCameraObj->GetCameraComponent();
-		// subCamera setting
-		SubCameraScript* subCamScript = subCameraObj->GetComponent<SubCameraScript>();
-		subCamScript->SetMainCameraTransfrom(mainCameraObj->GetTransform());
-
-		// light - done
-		GameObject* lightObj = objects::InstantiateCommonObject
-			<GameObject>(this, enums::eLayerType::Light, L"NoneMaterial");
-		lightObj->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, 0.0f));
-		SceneManager::SetLightObject(lightObj);
+		/*Camera* cameraComp = nullptr;
 		{
-			Light* light = lightObj->AddComponent<Light>();
-			light->SetLightType(enums::eLightType::Directional);
-			light->SetColor(math::Vector4(0.70f, 0.70f, 0.70f, 1.0f));
-		}
+			GameObject* camera = new GameObject();
+			AddGameObject(enums::eLayerType::Default, camera);
+			camera->GetComponent<Transform>()->SetPosition(math::Vector3(0.0f, 0.0f, -10.0f));
+			cameraComp = camera->AddComponent<Camera>();
+			cameraComp->TurnLayerMask(enums::eLayerType::UI, false);
+			camera->AddComponent<CameraScript>();
+			renderer::cameras.push_back(cameraComp);
+			renderer::mainCamera = cameraComp;
+		}*/
 
-		// 페인트		
 		{
-			std::shared_ptr<PaintShader> paintShader = Resources::Find<PaintShader>(L"PaintShader");
-			std::shared_ptr<Texture> paintTexture = Resources::Find<Texture>(L"PaintTexture");
-			paintShader->SetTarget(paintTexture);
-			paintShader->OnExcute();
 			GameObject* obj = new GameObject();
-			AddGameObject(enums::eLayerType::Default, obj);
+			AddGameObject(enums::eLayerType::UI, obj);
 			MeshRenderer* mr = obj->AddComponent<MeshRenderer>();
 			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 			mr->SetMaterial(Resources::Find<Material>(L"SampleMaterial2"));
 			obj->GetComponent<Transform>()->SetPosition(math::Vector3(0.0f, 0.0f, 1.0f));
+			obj->GetComponent<Transform>()->SetScale(math::Vector3(2.0f, 2.0f, 1.0f));
 			Collider2D* cd = obj->AddComponent<Collider2D>();
 		}
-		// 파티클
-		{
-			GameObject* obj = new GameObject();
-			AddGameObject(enums::eLayerType::Creature, obj);
-			ParticleRenderer* mr = obj->AddComponent<ParticleRenderer>();
-			obj->GetComponent<Transform>()->SetPosition(math::Vector3(0.0f, 0.0f, -1.0f));
-			obj->GetComponent<Transform>()->SetScale(math::Vector3(0.2f, 0.2f, 0.2f));
-		}
-
 	}
 	void Scene_Title::Update()
 	{
@@ -99,11 +78,12 @@ namespace da
 	void Scene_Title::OnEnter()
 	{
 		// 각종 객체들 Inactive 해주기
-		//SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.70f, 0.70f, 0.70f, 1.0f));
-		//SceneManager::GetPlayerScript()->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
-		//SceneManager::GetHUDObject()->SetObjectStates(GameObject::eObjectState::Inactive);
-		//GameDataManager::SetCameraMovableRange(math::Vector2(0.0f, 0.0f));
-		//GameDataManager::SetCameraMovaPosition(math::Vector2::Zero);
+		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.70f, 0.70f, 0.70f, 1.0f));
+		SceneManager::GetPlayerScript()->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
+		SceneManager::GetHUDObject()->SetObjectStates(GameObject::eObjectState::Inactive);
+		
+		GameDataManager::SetCameraMovableRange(math::Vector2(0.0f, 0.0f));
+		GameDataManager::SetCameraMovaPosition(math::Vector2::Zero);
 	}
 	void Scene_Title::OnExit()
 	{
@@ -167,13 +147,13 @@ namespace da
 			float playBtnScaleY = 0.480f;
 			UIObject* playBtnObject = objects::InstantiateButtonObject<UIObject>(this, L"StartBtnMaterial", L"PlayOffTexture", L"PlayOnTexture");
 			playBtnObject->GetTransform()->SetScale(math::Vector3(playBtnScaleX, playBtnScaleY, 1.0f));
-			playBtnObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, BackgroundZ));
+			playBtnObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, HUDZ));
 			ButtonScript* playBtnScript = playBtnObject->GetComponent<ButtonScript>();
 			playBtnScript->SetScreenPosision();
 			playBtnScript->SetButtonType(ButtonScript::eButtonType::Play);
 			UIObject* exitBtnObject = objects::InstantiateButtonObject<UIObject>(this, L"ExitBtnMaterial", L"ExitOffTexture", L"ExitOnTexture");
 			exitBtnObject->GetTransform()->SetScale(math::Vector3(0.840f, 0.480f, 1.0f));
-			exitBtnObject->GetTransform()->SetPosition(math::Vector3(0.0f, -1.0f, BackgroundZ));
+			exitBtnObject->GetTransform()->SetPosition(math::Vector3(0.0f, -1.0f, HUDZ));
 			ButtonScript* exitBtnScript = exitBtnObject->GetComponent<ButtonScript>();
 			exitBtnScript->SetScreenPosision();
 			exitBtnScript->SetButtonType(ButtonScript::eButtonType::Exit);

@@ -60,8 +60,5 @@ float4 mainPS(VSOut Out) : SV_Target
     
     color *= lightColor;
     
-    if (color.a <= 0.0f)
-        color = float4(0.0f, 0.0f, 0.0f, 0.0f);
-    
     return color;
 }
