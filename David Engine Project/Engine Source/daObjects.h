@@ -68,6 +68,8 @@ namespace da::objects
 	static T* InstantiateButtonObject(Scene* scene, const std::wstring& material, const std::wstring& first, const std::wstring& second)
 	{
 		T* obj = InstantiateObject<T>(scene, enums::eLayerType::UI);
+		GameObject* gameObject = dynamic_cast<GameObject*>(obj);
+		gameObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, OverlayZ));
 		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
 		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 		meshRenderer->SetMaterial(Resources::Find<Material>(material));
@@ -81,6 +83,8 @@ namespace da::objects
 	static T* InstantiateMultiTextureUI(Scene* scene, const std::wstring& material, const std::wstring& first, const std::wstring& second)
 	{
 		T* obj = InstantiateObject<T>(scene, enums::eLayerType::UI);
+		GameObject* gameObject = dynamic_cast<GameObject*>(obj);
+		gameObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, OverlayZ));
 		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
 		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
 		meshRenderer->SetMaterial(Resources::Find<Material>(material));
@@ -92,6 +96,7 @@ namespace da::objects
 	{
 
 		GameObject* player = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Playable, L"AnimationMaterial");
+		player->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, CreatureZ));
 		Layer& myLayer = scene->GetLayer(enums::eLayerType::Playable);
 		
 		// 라이트
@@ -107,8 +112,9 @@ namespace da::objects
 		for (int index = 0; index < PLAYER_EFFECT_POOL; index++)
 		{
 			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
-			player->AddChildObject(gameObject);
+			gameObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, CreatureZ));
 			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
+			player->AddChildObject(gameObject);
 			playerScript->AddEffectObject(gameObject);
 		}
 
@@ -121,6 +127,7 @@ namespace da::objects
 		for (int index = 0; index < WEAPON_EFFECT_POOL; index++)
 		{
 			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
+			gameObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, CreatureZ));
 			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
 			weaponScript->AddEffectObject(gameObject);
 			player->AddChildObject(gameObject);
@@ -130,6 +137,7 @@ namespace da::objects
 		for (int index = 0; index < PLAYER_PROJECTILE_POOL; index++)
 		{
 			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::PlayableAttackCollider, L"ProjectileMaterial");
+			gameObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, CreatureZ));
 			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
 			weaponScript->AddProjectileObject(gameObject);
 			player->AddChildObject(gameObject);
@@ -142,21 +150,25 @@ namespace da::objects
 	{
 		// enemyObject 추가
 		GameObject* enemyObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, L"AnimationMaterial");
+		enemyObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, CreatureZ));
 		// CreatureScript 추가
 		T* enemyScript = enemyObject->AddComponent<T>();
 		CreatureScript* creatureScript = dynamic_cast<CreatureScript*>(enemyScript);
 		// Effect 추가
 		GameObject* effectObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
-		enemyObject->AddChildObject(effectObject);
+		effectObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, CreatureZ));
 		effectObject->SetObjectState(GameObject::eObjectState::Inactive);
+		enemyObject->AddChildObject(effectObject);
 		creatureScript->AddEffectObject(effectObject);
 
 		// weapon 추가
-		GameObject* enemyWeaponObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, L"AnimationMaterial");
+		GameObject* enemyWeaponObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::CreatureAttackCollider, L"AnimationMaterial");
+		enemyWeaponObj->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, CreatureZ));
 		creatureScript->SetEnemyWeaponScript(enemyWeaponObj);
 
 		// life Bar 추가해야함
 		GameObject* enemyLifeObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, L"CreatureLifeBarMaterial");
+		enemyLifeObj->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, CreatureZ));
 		CreatureLifebarScript* creatureLifeScript = creatureScript->SetCreatureLifeScript(enemyLifeObj);
 		enemyLifeObj->GetTransform()->SetScale(1.0f, 0.250f, 1.0f);
 
@@ -168,6 +180,7 @@ namespace da::objects
 	{
 		// enemyObject 추가
 		GameObject* enemyObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Boss, L"AnimationMaterial");
+		enemyObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, CreatureZ));
 		// BossScript 추가
 		T* enemyScript = enemyObject->AddComponent<T>();
 

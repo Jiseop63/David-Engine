@@ -23,8 +23,8 @@ namespace da
 	}
 	void Scene_Dungeon1F_Stage1::Initialize()
 	{
-		//addBackgroundObjects();
-		//addGameObjects();
+		addBackgroundObjects();
+		addGameObjects();
 	}
 	void Scene_Dungeon1F_Stage1::Update()
 	{
@@ -78,7 +78,7 @@ namespace da
 			GameObject* stageObject = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::FrontBackGround, L"1FStage1Material");
 			stageObject->GetTransform()->SetScale(math::Vector3(3.840f * 4.0f, 2.080f * 4.0f, 1.0f));
-			stageObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, ObjectZ));
+			stageObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, FrontLayerZ));
 		}
 
 		// Close Door : 57, 65
