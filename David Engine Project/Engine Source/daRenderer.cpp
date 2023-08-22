@@ -134,11 +134,11 @@ namespace renderer
 		// ColliderColor
 		constantBuffer[(UINT)eCBType::Collider] = new ConstantBuffer(eCBType::Collider);
 		constantBuffer[(UINT)eCBType::Collider]->Create(sizeof(ColliderCB));
-		
+
 		// fade
-		
+
 		// afterimage
-		
+
 		// blink
 
 		// light structed buffer
@@ -147,576 +147,90 @@ namespace renderer
 
 #pragma endregion
 	}
-	void LoadResource()
+	void LoadShader()
 	{
-#pragma region Create Shaders
-
 		// Default Shaders
-		std::shared_ptr<Shader> triangleShader = std::make_shared<Shader>();
+		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
 		{
-			triangleShader->Create(eShaderStage::VS, L"TriangleShader.hlsl", "mainVS");
-			triangleShader->Create(eShaderStage::PS, L"TriangleShader.hlsl", "mainPS");
-			Resources::Insert<Shader>(L"TriangleShader", triangleShader);
+			shader->Create(eShaderStage::VS, L"TriangleShader.hlsl", "mainVS");
+			shader->Create(eShaderStage::PS, L"TriangleShader.hlsl", "mainPS");
+			Resources::Insert<Shader>(L"TriangleShader", shader);
 		}
-		std::shared_ptr<Shader> spriteShader = std::make_shared<Shader>();
+		// sprite
 		{
-			spriteShader->Create(eShaderStage::VS, L"SpriteShader.hlsl", "mainVS");
-			spriteShader->Create(eShaderStage::PS, L"SpriteShader.hlsl", "mainPS");
-			Resources::Insert<Shader>(L"SpriteShader", spriteShader);
+			shader = std::make_shared<Shader>();
+			shader->Create(eShaderStage::VS, L"SpriteShader.hlsl", "mainVS");
+			shader->Create(eShaderStage::PS, L"SpriteShader.hlsl", "mainPS");
+			Resources::Insert<Shader>(L"SpriteShader", shader);
 		}
 		// TitleBackground Shader
-		std::shared_ptr<Shader> movingBGShader = std::make_shared<Shader>();
 		{
-			movingBGShader->Create(eShaderStage::VS, L"MovingBGShader.hlsl", "mainVS");
-			movingBGShader->Create(eShaderStage::PS, L"MovingBGShader.hlsl", "mainPS");
-			Resources::Insert<Shader>(L"MovingBGShader", movingBGShader);
+			shader = std::make_shared<Shader>();
+			shader->Create(eShaderStage::VS, L"MovingBGShader.hlsl", "mainVS");
+			shader->Create(eShaderStage::PS, L"MovingBGShader.hlsl", "mainPS");
+			Resources::Insert<Shader>(L"MovingBGShader", shader);
 		}
 		// Grid Shader
-		std::shared_ptr<Shader> gridShader = std::make_shared<Shader>();
 		{
-			gridShader->Create(eShaderStage::VS, L"GridShader.hlsl", "mainVS");
-			gridShader->Create(eShaderStage::PS, L"GridShader.hlsl", "mainPS");
-			Resources::Insert<Shader>(L"GridShader", gridShader);
+			shader = std::make_shared<Shader>();
+			shader->Create(eShaderStage::VS, L"GridShader.hlsl", "mainVS");
+			shader->Create(eShaderStage::PS, L"GridShader.hlsl", "mainPS");
+			Resources::Insert<Shader>(L"GridShader", shader);
 		}
 		// slide bar
-		std::shared_ptr<Shader> lifeBarShader = std::make_shared<Shader>();
 		{
-			lifeBarShader->Create(eShaderStage::VS, L"LifeBarShader.hlsl", "mainVS");
-			lifeBarShader->Create(eShaderStage::PS, L"LifeBarShader.hlsl", "mainPS");
-			Resources::Insert<Shader>(L"LifeBarShader", lifeBarShader);
+			shader = std::make_shared<Shader>();
+			shader->Create(eShaderStage::VS, L"LifeBarShader.hlsl", "mainVS");
+			shader->Create(eShaderStage::PS, L"LifeBarShader.hlsl", "mainPS");
+			Resources::Insert<Shader>(L"LifeBarShader", shader);
 		}
-		std::shared_ptr<Shader> dashCountShader = std::make_shared<Shader>();
 		{
-			dashCountShader->Create(eShaderStage::VS, L"DashCountShader.hlsl", "mainVS");
-			dashCountShader->Create(eShaderStage::PS, L"DashCountShader.hlsl", "mainPS");
-			Resources::Insert<Shader>(L"DashCountShader", dashCountShader);
+			shader = std::make_shared<Shader>();
+			shader->Create(eShaderStage::VS, L"DashCountShader.hlsl", "mainVS");
+			shader->Create(eShaderStage::PS, L"DashCountShader.hlsl", "mainPS");
+			Resources::Insert<Shader>(L"DashCountShader", shader);
 		}
 		// debug
-		std::shared_ptr<Shader> debugShader = std::make_shared<Shader>();
 		{
-			debugShader->Create(eShaderStage::VS, L"TriangleShader.hlsl", "mainVS");
-			debugShader->Create(eShaderStage::PS, L"DebugShader.hlsl", "mainPS");
-			debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-			debugShader->SetRatserizerState(eRSType::Wireframe);
-			Resources::Insert(L"DebugShader", debugShader);
+			shader = std::make_shared<Shader>();
+			shader->Create(eShaderStage::VS, L"TriangleShader.hlsl", "mainVS");
+			shader->Create(eShaderStage::PS, L"DebugShader.hlsl", "mainPS");
+			shader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+			shader->SetRatserizerState(eRSType::WireframeNone);
+			Resources::Insert(L"DebugShader", shader);
 		}
 
-		// layer
-		std::shared_ptr<Shader> tilingLayerShader = std::make_shared<Shader>();
+		// tilingLayerShader
 		{
-			tilingLayerShader->Create(eShaderStage::VS, L"TilingLayerShader.hlsl", "mainVS");
-			tilingLayerShader->Create(eShaderStage::PS, L"TilingLayerShader.hlsl", "mainPS");
-			Resources::Insert(L"TilingLayerShader", tilingLayerShader);
+			shader = std::make_shared<Shader>();
+			shader->Create(eShaderStage::VS, L"TilingLayerShader.hlsl", "mainVS");
+			shader->Create(eShaderStage::PS, L"TilingLayerShader.hlsl", "mainPS");
+			Resources::Insert(L"TilingLayerShader", shader);
 		}
 		// anim
-		std::shared_ptr<Shader> animationShader = std::make_shared<Shader>();
 		{
-			animationShader->Create(eShaderStage::VS, L"AnimationShader.hlsl", "mainVS");
-			animationShader->Create(eShaderStage::PS, L"AnimationShader.hlsl", "mainPS");
-			Resources::Insert(L"AnimationShader", animationShader);
+			shader = std::make_shared<Shader>();
+			shader->Create(eShaderStage::VS, L"AnimationShader.hlsl", "mainVS");
+			shader->Create(eShaderStage::PS, L"AnimationShader.hlsl", "mainPS");
+			Resources::Insert(L"AnimationShader", shader);
 		}
+		// paritlce
+		{
+			shader = std::make_shared<Shader>();
+			shader->Create(eShaderStage::VS, L"ParticleShader.hlsl", "mainVS");
+			shader->Create(eShaderStage::PS, L"ParticleShader.hlsl", "mainPS");
+			shader->SetRatserizerState(eRSType::SolidNone);
+			shader->SetDepthStencilState(eDSType::NoWrite);
+			shader->SetBlendState(eBSType::AlphaBlend);
+			Resources::Insert(L"ParticleShader", shader);
+		}
+
 		// paint
 		std::shared_ptr<PaintShader> paintShader = std::make_shared<PaintShader>();
 		paintShader->Create(L"Paint.hlsl", "mainCS");
 		da::Resources::Insert(L"PaintShader", paintShader);
-#pragma endregion
-
-#pragma region Sample Material
-		std::shared_ptr<Texture> uavTexture = std::make_shared<Texture>();
-		uavTexture->Create(1024, 1024, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS);
-		Resources::Insert(L"PaintTexture", uavTexture);
-
-		// smileTexture
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"SampleTexture", L"..\\Resources\\Texture\\Sample\\smileTexture.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"SampleMaterial", spriteMaterial);
-		}
-		{			
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(uavTexture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"SampleMaterial2", spriteMaterial);
-		}
-		// animation Material
-		{
-			std::shared_ptr<Material> animationMaterial = std::make_shared<Material>();
-			animationMaterial->SetShader(animationShader);
-			Resources::Insert<Material>(L"AnimationMaterial", animationMaterial);
-		}
-		// None material
-		{
-			std::shared_ptr<Material> noneMaterial = std::make_shared<Material>();
-			noneMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"NoneMaterial", noneMaterial);
-		}
-		// weapon material
-		{
-			std::shared_ptr<Material> weaponMaterial = std::make_shared<Material>();
-			weaponMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"WeaponMaterial", weaponMaterial);
-		}
-		// projectile material
-		{
-			std::shared_ptr<Material> projectileMaterial = std::make_shared<Material>();
-			projectileMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"ProjectileMaterial", projectileMaterial);
-		}
-
-		
-
-#pragma endregion
-#pragma region Debug Material
-		// rect
-		{			
-			std::shared_ptr<Material> debugMaterial = std::make_shared<Material>();
-			debugMaterial->SetShader(debugShader);
-			Resources::Insert<Material>(L"DebugMaterial", debugMaterial);
-		}
-#pragma endregion
-#pragma region HUD Material & Texture
-
-		// Grid
-		{
-			std::shared_ptr<Material> gridMaterial = std::make_shared<Material>();
-			gridMaterial->SetShader(gridShader);
-			Resources::Insert<Material>(L"GridMaterial", gridMaterial);
-		}
-		// Basic Cursor
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"BasicCursorTexture", L"..\\Resources\\Texture\\Hud\\Mouse\\BasicCursor.png");
-			Resources::Load<Texture>(L"ShootingCursorTexture", L"..\\Resources\\Texture\\Hud\\Mouse\\ShootingCursor2.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"CursorMaterial", spriteMaterial);
-		}
-
-		// life Panel
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"PlayerLifePanelTexture", L"..\\Resources\\Texture\\Hud\\Life\\PlayerLifePanel.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"PlayerLifePanelMaterial", spriteMaterial);
-		}
-		// life Bar
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"PlayerLifeBarTexture", L"..\\Resources\\Texture\\Hud\\Life\\LifeBar.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(lifeBarShader);
-			Resources::Insert<Material>(L"PlayerLifeBarMaterial", spriteMaterial);
-		}
-		// Monster life Bar
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"PlayerLifeBarTexture", L"..\\Resources\\Texture\\Hud\\Life\\LifeBar.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(lifeBarShader);
-			Resources::Insert<Material>(L"CreatureLifeBarMaterial", spriteMaterial);
-		}
-		// dashcount panel
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"DashPanelTexture", L"..\\Resources\\Texture\\Hud\\DashCount\\DashPanel.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"DashPanelMaterial", spriteMaterial);
-		}
-		// dashcount bar
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"DashActivateTexture", L"..\\Resources\\Texture\\Hud\\DashCount\\DashCountsActivate.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(dashCountShader);
-			Resources::Insert<Material>(L"DashActivateMaterial", spriteMaterial);
-		}
-		// weapon panel
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"Armour1Texture", L"..\\Resources\\Texture\\Hud\\Armour\\Armour1.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"Armour1Material", spriteMaterial);
-		}
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"Armour2Texture", L"..\\Resources\\Texture\\Hud\\Armour\\Armour2.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"Armour2Material", spriteMaterial);
-		}
-		// weapon Icon Material
-		{			
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"WeaponIconMaterial", spriteMaterial);
-		}
-		// weapon Icon Texture
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"GreatSwordIconTexture", L"..\\Resources\\Texture\\Items\\GreatSword.png");
-		}
-#pragma endregion
-#pragma region Inventory Material & Texture
-		// InventorySelect : NoneTexture Material | Sprite Shader
-		{
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"InventoryPanelMaterial", spriteMaterial);
-		}
-		// WeaponSlot 1~2 : NoneTexture Material | Sprite Shader
-		{
-			std::shared_ptr<Material> slot1Material = std::make_shared<Material>();
-			slot1Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"WeaponSlot1Material", slot1Material);
-			std::shared_ptr<Material> slot2Material = std::make_shared<Material>();
-			slot2Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"WeaponSlot2Material", slot2Material);
-		}
-		// shiledSlot 1~2 : NoneTexture Material | Sprite Shader
-		{
-			std::shared_ptr<Material> slot1Material = std::make_shared<Material>();
-			slot1Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"ShiledSlot1Material", slot1Material);
-			std::shared_ptr<Material> slot2Material = std::make_shared<Material>();
-			slot2Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"ShiledSlot2Material", slot2Material);
-		}
-		// accessorySlot 1~4 : NoneTexture Material | Sprite Shader
-		{
-			std::shared_ptr<Material> slot1Material = std::make_shared<Material>(); 
-			slot1Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"AccessorySlot1Material", slot1Material);
-			std::shared_ptr<Material> slot2Material = std::make_shared<Material>();
-			slot2Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"AccessorySlot2Material", slot2Material);
-			std::shared_ptr<Material> slot3Material = std::make_shared<Material>();
-			slot3Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"AccessorySlot3Material", slot3Material);
-			std::shared_ptr<Material> slot4Material = std::make_shared<Material>();
-			slot4Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"AccessorySlot4Material", slot4Material);
-		}
-		// ItemSlot 1~ 15 : NoneTexture Material | Sprite Shader
-		{
-			std::shared_ptr<Material> slot00Material = std::make_shared<Material>();
-			slot00Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"ItemSlot00Material", slot00Material);
-			std::shared_ptr<Material> slot01Material = std::make_shared<Material>();
-			slot01Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"ItemSlot01Material", slot01Material);
-			std::shared_ptr<Material> slot02Material = std::make_shared<Material>();
-			slot02Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"ItemSlot02Material", slot02Material);
-			std::shared_ptr<Material> slot03Material = std::make_shared<Material>();
-			slot03Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"ItemSlot03Material", slot03Material);
-			std::shared_ptr<Material> slot04Material = std::make_shared<Material>();
-			slot04Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"ItemSlot04Material", slot04Material);
-			std::shared_ptr<Material> slot10Material = std::make_shared<Material>();
-			slot10Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"ItemSlot10Material", slot10Material);
-			std::shared_ptr<Material> slot11Material = std::make_shared<Material>();
-			slot11Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"ItemSlot11Material", slot11Material);
-			std::shared_ptr<Material> slot12Material = std::make_shared<Material>();
-			slot12Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"ItemSlot12Material", slot12Material);
-			std::shared_ptr<Material> slot13Material = std::make_shared<Material>();
-			slot13Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"ItemSlot13Material", slot13Material);
-			std::shared_ptr<Material> slot14Material = std::make_shared<Material>();
-			slot14Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"ItemSlot14Material", slot14Material);
-			std::shared_ptr<Material> slot20Material = std::make_shared<Material>();
-			slot20Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"ItemSlot20Material", slot20Material);
-			std::shared_ptr<Material> slot21Material = std::make_shared<Material>();
-			slot21Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"ItemSlot21Material", slot21Material);
-			std::shared_ptr<Material> slot22Material = std::make_shared<Material>();
-			slot22Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"ItemSlot22Material", slot22Material);
-			std::shared_ptr<Material> slot23Material = std::make_shared<Material>();
-			slot23Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"ItemSlot23Material", slot23Material);
-			std::shared_ptr<Material> slot24Material = std::make_shared<Material>();
-			slot24Material->SetShader(spriteShader);
-			Resources::Insert<Material>(L"ItemSlot24Material", slot24Material);			
-		}
-
-		// Inventory Textures
-		{
-			Resources::Load<Texture>(L"InventoryPanelATexture", L"..\\Resources\\Texture\\Inventory\\InventoryPanelA.png");
-			Resources::Load<Texture>(L"InventoryPanelBTexture", L"..\\Resources\\Texture\\Inventory\\InventoryPanelB.png");
-
-		}
-		// Select Weapon & Shiled Textures
-		{
-			Resources::Load<Texture>(L"WeaponSlotTexture", L"..\\Resources\\Texture\\Inventory\\weapon.png");
-			Resources::Load<Texture>(L"WeaponSlotSelectTexture", L"..\\Resources\\Texture\\Inventory\\weaponSelect.png");
-			Resources::Load<Texture>(L"ShiledSlotTexture", L"..\\Resources\\Texture\\Inventory\\shiled.png");
-			Resources::Load<Texture>(L"ShiledSlotSelectTexture", L"..\\Resources\\Texture\\Inventory\\shiledSelect.png");
-		}
-		// accessory & item slot
-		{
-			Resources::Load<Texture>(L"AccessorySlotTexture", L"..\\Resources\\Texture\\Inventory\\accessory.png");
-			Resources::Load<Texture>(L"AccessorySlotSelectTexture", L"..\\Resources\\Texture\\Inventory\\accessorySelect.png");
-			Resources::Load<Texture>(L"ItemSlotTexture", L"..\\Resources\\Texture\\Inventory\\ItemSlot.png");
-			Resources::Load<Texture>(L"ItemSlotSelectTexture", L"..\\Resources\\Texture\\Inventory\\ItemSlotSelect.png");
-		}
-#pragma endregion
-#pragma region Item Texture
-		// weapon
-		{
-			Resources::Load<Texture>(L"LongSwordTexture", L"..\\Resources\\Texture\\Items\\LongSword.png");
-			Resources::Load<Texture>(L"LongSwordTestTexture", L"..\\Resources\\Texture\\Items\\LongSwordTest.png");
-			Resources::Load<Texture>(L"GreatSwordTexture", L"..\\Resources\\Texture\\Items\\GreatSword.png");
-			Resources::Load<Texture>(L"GreatSword0Texture", L"..\\Resources\\Texture\\Items\\GreatSword0.png");
-			Resources::Load<Texture>(L"GreatSword1Texture", L"..\\Resources\\Texture\\Items\\GreatSword1.png");
-			
-		}
-#pragma endregion
-#pragma region Effect Texture Atlas
-		Resources::Load<Texture>(L"GreatSwingFX", L"..\\Resources\\Texture\\Items\\GreatSword\\GreatSwingFX.png");
-		Resources::Load<Texture>(L"JumpFX", L"..\\Resources\\Texture\\Adventurer\\FX\\JumpFX.png");
-		Resources::Load<Texture>(L"DustFX", L"..\\Resources\\Texture\\Adventurer\\FX\\DustFX.png");
-		Resources::Load<Texture>(L"SlashFX", L"..\\Resources\\Texture\\Adventurer\\FX\\SlashFX.png");
-		Resources::Load<Texture>(L"DyingFX", L"..\\Resources\\Texture\\Adventurer\\FX\\DyingFX.png");
-
-#pragma endregion
-
-#pragma region Title :: Load Texture & Create Material
-
-		// TitleBtn : NoneTexture Material | Sprite Shader
-		{
-			std::shared_ptr<Material> startBtnMaterial = std::make_shared<Material>();
-			startBtnMaterial->SetShader(spriteShader);
-			std::shared_ptr<Material> exitBtnMaterial = std::make_shared<Material>();
-			exitBtnMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"StartBtnMaterial", startBtnMaterial);
-			Resources::Insert<Material>(L"ExitBtnMaterial", exitBtnMaterial);
-		}
-
-		// TitleScene BG layer | Sprite Shader	
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"TitleBackgroundTexture", L"..\\Resources\\Texture\\Scene_Title\\TitleBackground.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"TitleBackgroundMaterial", spriteMaterial);
-		}
-		// Front Layer, Back Layer, Small Clouds | MovingBG Shader
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"BackCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\BackCloud.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(movingBGShader);
-			Resources::Insert<Material>(L"BackCloudMaterial", spriteMaterial);
-		}
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"FrontCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\FrontCloud.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(movingBGShader);
-			Resources::Insert<Material>(L"FrontCloudMaterial", spriteMaterial);
-		}
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"SmallCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\smallCloud.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(movingBGShader);
-			Resources::Insert<Material>(L"SmallCloudMaterial", spriteMaterial);
-		}
-
-		// Title MainLogo & CopyRight | sprite shader
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"MainLogoTexture", L"..\\Resources\\Texture\\Scene_Title\\MainLogo.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"MainLogoMaterial", spriteMaterial);
-		}
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"CopyrightTexture", L"..\\Resources\\Texture\\Scene_Title\\Copyright.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"CopyrightMaterial", spriteMaterial);
-		}
-
-		// TitleScene Button Textures
-		{
-			Resources::Load<Texture>(L"PlayOffTexture", L"..\\Resources\\Texture\\Scene_Title\\Button\\PlayOff_Kor.png");
-			Resources::Load<Texture>(L"PlayOnTexture", L"..\\Resources\\Texture\\Scene_Title\\Button\\PlayOn_Kor.png");
-			
-			Resources::Load<Texture>(L"ExitOffTexture", L"..\\Resources\\Texture\\Scene_Title\\Button\\ExitOff_Kor.png");
-			Resources::Load<Texture>(L"ExitOnTexture", L"..\\Resources\\Texture\\Scene_Title\\Button\\ExitOn_Kor.png");
-		}
-#pragma endregion
-#pragma region Town :: Load Texture & Create material
-		// sky
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"SkyTexture", L"..\\Resources\\Texture\\Scene_Town\\layer\\Sky_Day.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"SkyMaterial", spriteMaterial);
-		}
-		// TownBG
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"TownBGTexture", L"..\\Resources\\Texture\\Scene_Town\\layer\\TownBG_Day.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(tilingLayerShader);
-			Resources::Insert<Material>(L"TownBGMaterial", spriteMaterial);
-		}
-		// TownLayer
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"TownLayerDayTexture", L"..\\Resources\\Texture\\Scene_Town\\layer\\TownLayer_Day.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(tilingLayerShader);
-			Resources::Insert<Material>(L"TownLayerMaterial", spriteMaterial);
-		}
-
-		// SecondFloor
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"TownMapTileTexture", L"..\\Resources\\Texture\\Scene_Town\\TownMapTile.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"TownMapTileMaterial", spriteMaterial);
-		}		
-		// platform
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"SecondFloor_OneWayTexture", L"..\\Resources\\Texture\\Scene_Town\\SecondFloor_OneWay.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"SecondFloor_OneWayMaterial", spriteMaterial);
-		}
-#pragma endregion
-#pragma region 1F :: Load Texture & Create material
-		// platform
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"Platform1FTexture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\Platform1F.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"Platform1FMaterial", spriteMaterial);
-		}
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"Platform1Fx4Texture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\Platform1Fx4.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"Platform1Fx4Material", spriteMaterial);
-		}
-		// Sub BG
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"DungeonSubBGTexture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\SubBG.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"DungeonSubBGMaterial", spriteMaterial);
-		}
-		// close door
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"Close1FTexture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\close1F.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"Close1FMaterial", spriteMaterial);
-		}
-		// open door
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"Open1FTexture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\open1F.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"Open1FMaterial", spriteMaterial);
-		}
-		// stage1
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"1FStage1Texture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\1FStage1.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"1FStage1Material", spriteMaterial);
-		}
-		//stage2
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"1FStage2Texture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\1FStage4.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"1FStage2Material", spriteMaterial);
-		}
-#pragma endregion
-#pragma region 2F :: Load Texture & Create material
-		// stage1
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"2FStage1Texture", L"..\\Resources\\Texture\\Scene_Dungeon2F\\EntranceBossroom.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"2FStage1Material", spriteMaterial);
-		}
-		// stage2
-		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"2FStage2Texture", L"..\\Resources\\Texture\\Scene_Dungeon2F\\Bossroom.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->SetTexture(texture);
-			spriteMaterial->SetShader(spriteShader);
-			Resources::Insert<Material>(L"2FStage2Material", spriteMaterial);
-		}
-
-		// monster texture
-		{
-			Resources::Load<Texture>(L"SkelSprite", L"..\\Resources\\Texture\\Monster\\Skel\\SpriteSheet.png");
-			Resources::Load<Texture>(L"EnemyGreatSword", L"..\\Resources\\Texture\\Monster\\Skel\\GreatSwordSpriteSheet.png");
-		}
-		// boss texture
-		{
-			Resources::Load<Texture>(L"BossSpriteSheet", L"..\\Resources\\Texture\\Scene_Dungeon2F\\SkellBossSpriteSheet.png");
-		}
-#pragma endregion
 	}
+
 	void SetupState()
 	{
 #pragma region InputLayout
@@ -748,7 +262,7 @@ namespace renderer
 		GetDevice()->CreateInputLayout(arrLayout, numElement
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());
-		
+
 		shader = Resources::Find<Shader>(L"SpriteShader");
 		GetDevice()->CreateInputLayout(arrLayout, numElement
 			, shader->GetVSCode()
@@ -788,6 +302,11 @@ namespace renderer
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());
 
+		shader = Resources::Find<Shader>(L"ParticleShader");
+		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
+			, shader->GetVSCode()
+			, shader->GetInputLayoutAddressOf());
+
 #pragma endregion
 #pragma region Sampler State
 
@@ -798,9 +317,9 @@ namespace renderer
 		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 		GetDevice()->CreateSamplerState(&samplerDesc, samplerStates[(UINT)eSamplerType::Point].GetAddressOf());
 		GetDevice()->BindSamplers(eShaderStage::PS, 0, samplerStates[(UINT)eSamplerType::Point].GetAddressOf());
-		
+
 		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-		GetDevice()->CreateSamplerState(&samplerDesc, samplerStates[(UINT)eSamplerType::Linear].GetAddressOf()); 
+		GetDevice()->CreateSamplerState(&samplerDesc, samplerStates[(UINT)eSamplerType::Linear].GetAddressOf());
 		GetDevice()->BindSamplers(eShaderStage::PS, 1, samplerStates[(UINT)eSamplerType::Linear].GetAddressOf());
 
 		samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
@@ -822,10 +341,10 @@ namespace renderer
 		rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
 		GetDevice()->CreateRasterizerState(
 			&rasterizerDesc, RasterizerStates[(UINT)eRSType::SolidNone].GetAddressOf());
-		// Wireframe	: 뼈대만 렌더링함
+		// WireframeNone	: 뼈대만 렌더링함
 		rasterizerDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME;
 		GetDevice()->CreateRasterizerState(
-			&rasterizerDesc, RasterizerStates[(UINT)eRSType::Wireframe].GetAddressOf());
+			&rasterizerDesc, RasterizerStates[(UINT)eRSType::WireframeNone].GetAddressOf());
 #pragma endregion
 #pragma region DepthStencil State
 		D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
@@ -848,7 +367,7 @@ namespace renderer
 		// None 
 		depthStencilDesc.DepthEnable = false;
 		GetDevice()->CreateDepthStencilState(
-			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::Default].GetAddressOf());
+			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::None].GetAddressOf());
 #pragma endregion
 #pragma region Blend State
 		D3D11_BLEND_DESC blendDesc = {};
@@ -874,12 +393,570 @@ namespace renderer
 			&blendDesc, BlendStates[(UINT)eBSType::Oneone].GetAddressOf());
 #pragma endregion
 	}
+
+	void LoadTexture()
+	{
+		Resources::Load<Texture>(L"SampleTexture", L"..\\Resources\\Texture\\Sample\\smileTexture.png");
+
+		std::shared_ptr<Texture> uavTexture = std::make_shared<Texture>();
+		uavTexture->Create(1024, 1024, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS);
+		Resources::Insert(L"PaintTexture", uavTexture);
+
+		// ui
+		Resources::Load<Texture>(L"BasicCursorTexture", L"..\\Resources\\Texture\\Hud\\Mouse\\BasicCursor.png");
+		Resources::Load<Texture>(L"ShootingCursorTexture", L"..\\Resources\\Texture\\Hud\\Mouse\\ShootingCursor2.png");
+		Resources::Load<Texture>(L"PlayerLifePanelTexture", L"..\\Resources\\Texture\\Hud\\Life\\PlayerLifePanel.png");
+		Resources::Load<Texture>(L"PlayerLifeBarTexture", L"..\\Resources\\Texture\\Hud\\Life\\LifeBar.png");
+		Resources::Load<Texture>(L"DashPanelTexture", L"..\\Resources\\Texture\\Hud\\DashCount\\DashPanel.png");
+		Resources::Load<Texture>(L"DashActivateTexture", L"..\\Resources\\Texture\\Hud\\DashCount\\DashCountsActivate.png");
+		Resources::Load<Texture>(L"Armour1Texture", L"..\\Resources\\Texture\\Hud\\Armour\\Armour1.png");
+		Resources::Load<Texture>(L"Armour2Texture", L"..\\Resources\\Texture\\Hud\\Armour\\Armour2.png");
+		Resources::Load<Texture>(L"GreatSwordIconTexture", L"..\\Resources\\Texture\\Items\\GreatSword.png");
+		// inventory
+		Resources::Load<Texture>(L"InventoryPanelATexture", L"..\\Resources\\Texture\\Inventory\\InventoryPanelA.png");
+		Resources::Load<Texture>(L"InventoryPanelBTexture", L"..\\Resources\\Texture\\Inventory\\InventoryPanelB.png");
+		Resources::Load<Texture>(L"WeaponSlotTexture", L"..\\Resources\\Texture\\Inventory\\weapon.png");
+		Resources::Load<Texture>(L"WeaponSlotSelectTexture", L"..\\Resources\\Texture\\Inventory\\weaponSelect.png");
+		Resources::Load<Texture>(L"ShiledSlotTexture", L"..\\Resources\\Texture\\Inventory\\shiled.png");
+		Resources::Load<Texture>(L"ShiledSlotSelectTexture", L"..\\Resources\\Texture\\Inventory\\shiledSelect.png");
+		Resources::Load<Texture>(L"AccessorySlotTexture", L"..\\Resources\\Texture\\Inventory\\accessory.png");
+		Resources::Load<Texture>(L"AccessorySlotSelectTexture", L"..\\Resources\\Texture\\Inventory\\accessorySelect.png");
+		Resources::Load<Texture>(L"ItemSlotTexture", L"..\\Resources\\Texture\\Inventory\\ItemSlot.png");
+		Resources::Load<Texture>(L"ItemSlotSelectTexture", L"..\\Resources\\Texture\\Inventory\\ItemSlotSelect.png");
+		// item
+		Resources::Load<Texture>(L"LongSwordTexture", L"..\\Resources\\Texture\\Items\\LongSword.png");
+		Resources::Load<Texture>(L"LongSwordTestTexture", L"..\\Resources\\Texture\\Items\\LongSwordTest.png");
+		Resources::Load<Texture>(L"GreatSwordTexture", L"..\\Resources\\Texture\\Items\\GreatSword.png");
+		Resources::Load<Texture>(L"GreatSword0Texture", L"..\\Resources\\Texture\\Items\\GreatSword0.png");
+		Resources::Load<Texture>(L"GreatSword1Texture", L"..\\Resources\\Texture\\Items\\GreatSword1.png");
+		// effect
+		Resources::Load<Texture>(L"GreatSwingFX", L"..\\Resources\\Texture\\Items\\GreatSword\\GreatSwingFX.png");
+		Resources::Load<Texture>(L"JumpFX", L"..\\Resources\\Texture\\Adventurer\\FX\\JumpFX.png");
+		Resources::Load<Texture>(L"DustFX", L"..\\Resources\\Texture\\Adventurer\\FX\\DustFX.png");
+		Resources::Load<Texture>(L"SlashFX", L"..\\Resources\\Texture\\Adventurer\\FX\\SlashFX.png");
+		Resources::Load<Texture>(L"DyingFX", L"..\\Resources\\Texture\\Adventurer\\FX\\DyingFX.png");
+
+		// title
+		Resources::Load<Texture>(L"TitleBackgroundTexture", L"..\\Resources\\Texture\\Scene_Title\\TitleBackground.png");
+		Resources::Load<Texture>(L"BackCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\BackCloud.png");
+		Resources::Load<Texture>(L"FrontCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\FrontCloud.png");
+		Resources::Load<Texture>(L"SmallCloudTexture", L"..\\Resources\\Texture\\Scene_Title\\smallCloud.png");
+		Resources::Load<Texture>(L"MainLogoTexture", L"..\\Resources\\Texture\\Scene_Title\\MainLogo.png");
+		Resources::Load<Texture>(L"CopyrightTexture", L"..\\Resources\\Texture\\Scene_Title\\Copyright.png");
+		// title button
+		Resources::Load<Texture>(L"PlayOffTexture", L"..\\Resources\\Texture\\Scene_Title\\Button\\PlayOff_Kor.png");
+		Resources::Load<Texture>(L"PlayOnTexture", L"..\\Resources\\Texture\\Scene_Title\\Button\\PlayOn_Kor.png");
+		Resources::Load<Texture>(L"ExitOffTexture", L"..\\Resources\\Texture\\Scene_Title\\Button\\ExitOff_Kor.png");
+		Resources::Load<Texture>(L"ExitOnTexture", L"..\\Resources\\Texture\\Scene_Title\\Button\\ExitOn_Kor.png");
+		Resources::Load<Texture>(L"SkyTexture", L"..\\Resources\\Texture\\Scene_Town\\layer\\Sky_Day.png");
+		// town
+		Resources::Load<Texture>(L"TownBGTexture", L"..\\Resources\\Texture\\Scene_Town\\layer\\TownBG_Day.png");
+		Resources::Load<Texture>(L"TownLayerDayTexture", L"..\\Resources\\Texture\\Scene_Town\\layer\\TownLayer_Day.png");
+		Resources::Load<Texture>(L"TownMapTileTexture", L"..\\Resources\\Texture\\Scene_Town\\TownMapTile.png");
+		Resources::Load<Texture>(L"SecondFloor_OneWayTexture", L"..\\Resources\\Texture\\Scene_Town\\SecondFloor_OneWay.png");
+		// 1F
+		Resources::Load<Texture>(L"Platform1FTexture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\Platform1F.png");
+		Resources::Load<Texture>(L"Platform1Fx4Texture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\Platform1Fx4.png");
+		Resources::Load<Texture>(L"DungeonSubBGTexture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\SubBG.png");
+		Resources::Load<Texture>(L"Close1FTexture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\close1F.png");
+		Resources::Load<Texture>(L"Open1FTexture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\open1F.png");
+		// monster
+		Resources::Load<Texture>(L"SkelSprite", L"..\\Resources\\Texture\\Monster\\Skel\\SpriteSheet.png");
+		Resources::Load<Texture>(L"EnemyGreatSword", L"..\\Resources\\Texture\\Monster\\Skel\\GreatSwordSpriteSheet.png");
+		Resources::Load<Texture>(L"BossSpriteSheet", L"..\\Resources\\Texture\\Scene_Dungeon2F\\SkellBossSpriteSheet.png");
+		// dungeonTexture
+		Resources::Load<Texture>(L"1FStage1Texture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\1FStage1.png");
+		Resources::Load<Texture>(L"1FStage2Texture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\1FStage4.png");
+		Resources::Load<Texture>(L"2FStage1Texture", L"..\\Resources\\Texture\\Scene_Dungeon2F\\EntranceBossroom.png");
+		Resources::Load<Texture>(L"2FStage2Texture", L"..\\Resources\\Texture\\Scene_Dungeon2F\\Bossroom.png");
+	}
+	void LoadMaterial()
+	{
+#pragma region Sample
+		std::shared_ptr<Texture> texture = Resources::Find<Texture>(L"SampleTexture");
+		std::shared_ptr<Shader> shader = Resources::Find<Shader>(L"SpriteShader");
+		std::shared_ptr<Material> material = std::make_shared<Material>();
+		// smileTexture
+		{
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"SampleMaterial", material);
+		}
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"PaintTexture");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"SampleMaterial2", material);
+		}		
+#pragma endregion
+#pragma region Basic (NoneTexture)
+		// animation Material
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"AnimationShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"AnimationMaterial", material);
+		}
+		// None material
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"NoneMaterial", material);
+		}
+		// weapon material
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"WeaponMaterial", material);
+		}
+		// projectile material
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ProjectileMaterial", material);
+		}
+		// debug material
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"DebugShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"DebugMaterial", material);
+		}
+		// Grid
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"GridShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"GridMaterial", material);
+		}
+		// particle
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"ParticleShader");
+			material->SetShader(shader);
+			material->SetRenderingMode(eRenderingMode::Transparent);
+			Resources::Insert(L"ParticleMaterial", material);
+		}
+#pragma endregion
+#pragma region HUD Material		
+		// Basic Cursor
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"BasicCursorTexture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"CursorMaterial", material);
+		}
+
+		// life Panel
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"PlayerLifePanelTexture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"PlayerLifePanelMaterial", material);
+		}
+		// life Bar
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"PlayerLifeBarTexture");
+			shader = Resources::Find<Shader>(L"LifeBarShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"PlayerLifeBarMaterial", material);
+		}
+		// Monster life Bar
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"PlayerLifeBarTexture");
+			shader = Resources::Find<Shader>(L"LifeBarShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"CreatureLifeBarMaterial", material);
+		}
+		// dashcount panel
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"DashPanelTexture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"DashPanelMaterial", material);
+		}
+		// dashcount bar
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"DashActivateTexture");
+			shader = Resources::Find<Shader>(L"DashCountShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"DashActivateMaterial", material);
+		}
+		// weapon panel
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"Armour1Texture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"Armour1Material", material);
+		}
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"Armour2Texture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"Armour2Material", material);
+		}
+		// weapon Icon Material
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"WeaponIconMaterial", material);
+		}
+#pragma endregion
+#pragma region Inventory Material
+		// InventorySelect : NoneTexture Material | Sprite Shader
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"InventoryPanelMaterial", material);
+		}
+		// WeaponSlot 1~2 : NoneTexture Material | Sprite Shader
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"WeaponSlot1Material", material);
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"WeaponSlot2Material", material);
+		}
+		// shiledSlot 1~2 : NoneTexture Material | Sprite Shader
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ShiledSlot1Material", material);
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ShiledSlot2Material", material);
+		}
+		// accessorySlot 1~4 : NoneTexture Material | Sprite Shader
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"AccessorySlot1Material", material);
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"AccessorySlot2Material", material);
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"AccessorySlot3Material", material);
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"AccessorySlot4Material", material);
+		}
+		// ItemSlot 1~ 15 : NoneTexture Material | Sprite Shader
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ItemSlot00Material", material);
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ItemSlot01Material", material);
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ItemSlot02Material", material);
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ItemSlot03Material", material);
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ItemSlot04Material", material);
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ItemSlot10Material", material);
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ItemSlot11Material", material);
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ItemSlot12Material", material);
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ItemSlot13Material", material);
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ItemSlot14Material", material);
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ItemSlot20Material", material);
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ItemSlot21Material", material);
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ItemSlot22Material", material);
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ItemSlot23Material", material);
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ItemSlot24Material", material);
+		}
+
+		// Inventory Textures
+		{
+
+		}
+		// Select Weapon & Shiled Textures
+		{
+		}
+		// accessory & item slot
+		{
+			
+		}
+#pragma endregion
+#pragma region Title Material
+		// TitleBtn 
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"StartBtnMaterial", material);
+
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ExitBtnMaterial", material);
+		}
+
+		// TitleScene BG layer | Sprite Shader	
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"TitleBackgroundTexture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"TitleBackgroundMaterial", material);
+		}
+		// Front Layer, Back Layer, Small Clouds | MovingBG Shader
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"BackCloudTexture");
+			shader = Resources::Find<Shader>(L"MovingBGShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"BackCloudMaterial", material);
+		}
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"FrontCloudTexture");
+			shader = Resources::Find<Shader>(L"MovingBGShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"FrontCloudMaterial", material);
+		}
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"SmallCloudTexture");
+			shader = Resources::Find<Shader>(L"MovingBGShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"SmallCloudMaterial", material);
+		}
+
+		// Title MainLogo & CopyRight | sprite shader
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"MainLogoTexture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"MainLogoMaterial", material);
+		}
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"CopyrightTexture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"CopyrightMaterial", material);
+		}
+#pragma endregion
+#pragma region Town material
+		// sky
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"SkyTexture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"SkyMaterial", material);
+		}
+		// TownBG
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"TownBGTexture");
+			shader = Resources::Find<Shader>(L"TilingLayerShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"TownBGMaterial", material);
+		}
+		// TownLayer
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"TownLayerDayTexture");
+			shader = Resources::Find<Shader>(L"TilingLayerShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"TownLayerMaterial", material);
+		}
+
+		// SecondFloor
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"TownMapTileTexture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"TownMapTileMaterial", material);
+		}
+		// platform
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"SecondFloor_OneWayTexture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"SecondFloor_OneWayMaterial", material);
+		}
+#pragma endregion
+#pragma region 1F material
+		// platform
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"Platform1FTexture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"Platform1FMaterial", material);
+		}
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"Platform1Fx4Texture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"Platform1Fx4Material", material);
+		}
+		// Sub BG
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"DungeonSubBGTexture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"DungeonSubBGMaterial", material);
+		}
+		// close door
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"Close1FTexture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"Close1FMaterial", material);
+		}
+		// open door
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"Open1FTexture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"Open1FMaterial", material);
+		}
+		// stage1
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"1FStage1Texture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"1FStage1Material", material);
+		}
+		//stage2
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"1FStage2Texture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"1FStage2Material", material);
+		}
+#pragma endregion
+#pragma region 2F material
+		// stage1
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"2FStage1Texture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"2FStage1Material", material);
+		}
+		// stage2
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"2FStage2Texture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"2FStage2Material", material);
+		}
+#pragma endregion
+	}	
+	
 	void Initialize()
 	{
 		LoadMesh();
 		LoadBuffer();
-		LoadResource();
+		LoadShader();		
 		SetupState();
+		LoadTexture();
+		LoadMaterial();
 	}
 	void Render()
 	{

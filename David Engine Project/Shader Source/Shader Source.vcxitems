@@ -21,6 +21,7 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)GridShader.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)MovingBGShader.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)Paint.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)ParticleShader.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)SpriteShader.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)TilingLayerShader.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)TriangleShader.hlsl" />

@@ -427,6 +427,10 @@ namespace da::graphics
 	{
 		mContext->DrawIndexed(indexCount, startIndexLocation, baseVertexLocation);
 	}
+	void GraphicDevice_Dx11::DrawIndexedInstanced(UINT indexCountPerInstance, UINT instanceCount, UINT startIndexLocation, INT baseVertexLocation, UINT startInstanceLocation)
+	{
+		mContext->DrawIndexedInstanced(indexCountPerInstance, instanceCount, startIndexLocation, baseVertexLocation, startInstanceLocation);
+	}
 	void GraphicDevice_Dx11::ClearTarget()
 	{
 		FLOAT bgColor[4] = { 0.1f, 0.1f, 0.1f, 1.0f };

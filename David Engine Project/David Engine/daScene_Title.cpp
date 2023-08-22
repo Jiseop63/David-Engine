@@ -16,7 +16,7 @@
 #include "daTimeConstants.h"
 
 #include "daPaintShader.h"
-
+#include "daParticleRenderer.h"
 extern da::Application application;
 
 namespace da
@@ -29,13 +29,36 @@ namespace da
 	}
 	void Scene_Title::Initialize()
 	{
-		
+		// paint
+		{
+			std::shared_ptr<PaintShader> paintShader = Resources::Find<PaintShader>(L"PaintShader");
+			std::shared_ptr<Texture> paintTexture = Resources::Find<Texture>(L"PaintTexture");
+			paintShader->SetTarget(paintTexture);
+			paintShader->OnExcute();
+			GameObject* obj = new GameObject();
+			obj->SetCommonObject(true);
+			AddGameObject(enums::eLayerType::Playable, obj);
+			MeshRenderer* mr = obj->AddComponent<MeshRenderer>();
+			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+			mr->SetMaterial(Resources::Find<Material>(L"SampleMaterial2"));
+			obj->GetComponent<Transform>()->SetPosition(math::Vector3(0.0f, 0.0f, FrontLayerZ));
+			obj->GetComponent<Transform>()->SetScale(math::Vector3(1.50f, 1.50f, 1.0f));
+			Collider2D* cd = obj->AddComponent<Collider2D>();
+		}
+		// particle
+		{			
+			GameObject* obj = new GameObject();
+			obj->SetCommonObject(true);
+			obj->GetComponent<Transform>()->SetPosition(math::Vector3(0.0f, 0.0f, FrontLayerZ));
+			obj->GetComponent<Transform>()->SetScale(math::Vector3(0.20f, 0.20f, 1.0f));
+			AddGameObject(enums::eLayerType::Playable, obj);
+			ParticleRenderer* mr = obj->AddComponent<ParticleRenderer>();
+			Collider2D* cd = obj->AddComponent<Collider2D>();
+		}
+
 		initializeCommonObjects();
 		addBackgroundObjects();
 		addUIObjects();
-
-
-		
 	}
 	void Scene_Title::Update()
 	{
@@ -137,22 +160,7 @@ namespace da
 		
 	}
 	void Scene_Title::initializeCommonObjects()
-	{
-		{
-			std::shared_ptr<PaintShader> paintShader = Resources::Find<PaintShader>(L"PaintShader");
-			std::shared_ptr<Texture> paintTexture = Resources::Find<Texture>(L"PaintTexture");
-			paintShader->SetTarget(paintTexture);
-			paintShader->OnExcute();
-			GameObject* obj = new GameObject();
-			obj->SetCommonObject(true);
-			AddGameObject(enums::eLayerType::Playable, obj);
-			MeshRenderer* mr = obj->AddComponent<MeshRenderer>();
-			mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-			mr->SetMaterial(Resources::Find<Material>(L"SampleMaterial2"));
-			obj->GetComponent<Transform>()->SetPosition(math::Vector3(0.0f, 0.0f, FrontLayerZ));
-			obj->GetComponent<Transform>()->SetScale(math::Vector3(1.50f, 1.50f, 1.0f));
-			Collider2D* cd = obj->AddComponent<Collider2D>();
-		}
+	{		
 		// camera Init
 		CameraObject* subCameraObj = objects::InstantiateSubCamera(this);
 		SceneManager::SetSubCameraScript(subCameraObj);

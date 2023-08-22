@@ -47,6 +47,7 @@ namespace da::graphics
 		Animation,
 		Reverse,
 		Collider,
+		Particle,
 		End,
 	};
 
@@ -63,7 +64,7 @@ namespace da::graphics
 		SolidBack,
 		SolidFront,
 		SolidNone,
-		Wireframe,
+		WireframeNone,
 		End,
 	};
 
@@ -72,7 +73,7 @@ namespace da::graphics
 		Less,
 		Greater,
 		NoWrite,
-		Default,
+		None,
 		End,
 	};
 
@@ -121,6 +122,7 @@ namespace da::graphics
 		float Time;
 	};
 
+#pragma region structured buffer data
 	struct LightAttribute
 	{
 		math::Vector4		Color;
@@ -132,4 +134,18 @@ namespace da::graphics
 		float				LightAngle;
 		int					Padding;
 	};
+	struct Particle
+	{
+		math::Vector4 ParticleDirection;
+		math::Vector4 ParticlePosition;
+
+		float	ParticleLifeTime;
+		float	ParticleAccumulatetime;
+		float   ParticleStartSpeed;
+		float   ParticleCurrentSpeed;
+
+		UINT	ParticleActive;
+	};
+#pragma endregion
+
 };
