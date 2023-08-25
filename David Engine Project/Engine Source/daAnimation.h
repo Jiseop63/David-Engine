@@ -4,7 +4,6 @@
 
 namespace da
 {
-	using namespace graphics;
 	class Animator;
 	class Animation : public Resource
 	{

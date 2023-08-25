@@ -29,7 +29,7 @@ namespace da
 	public:
 		void Run();
 		void SetWindow(HWND hwnd, UINT width, UINT height);
-		void CalculateWindowSize(UINT width, UINT height);
+		void CalculateWindowSize(HWND hwnd, UINT width, UINT height);
 
 	private:
 		bool mbInitialize = false;

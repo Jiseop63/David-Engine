@@ -39,7 +39,7 @@ namespace da::objects
 		myLayer.AddGameObject(obj);
 		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
 		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-		meshRenderer->SetMaterial(Resources::Find<Material>(material));		
+		meshRenderer->SetMaterial(Resources::Find<Material>(material));
 
 		obj->Initialize();
 		return obj;

@@ -23,8 +23,8 @@ namespace da
 	}
 	void Scene_Dungeon1F_Stage1::Initialize()
 	{
-		addBackgroundObjects();
-		addGameObjects();
+		//addBackgroundObjects();
+		//addGameObjects();
 	}
 	void Scene_Dungeon1F_Stage1::Update()
 	{

@@ -61,17 +61,17 @@ namespace da
 		View = mView;
 		Projection = mProjection;
 
-		// 씬의 오브젝트들을 렌더모드에 따라 렌더링배열에 추가
+		// 오브젝트들을 레이어 순서대로 순회하며 렌더타입에 따라 분류함
 		sortGameObjects();
 		// 오브젝트들을 z축으로 정렬
 		depthSortTransparencyGameobjects();
 		// 불투명 객체부터 우선 렌더
 		renderOpaque();
 
-		// depthState 설정 끄기
-		disableDepthStencilState();
 		// 일부 투명 객체 렌더
 		renderCutout();
+		// depthState 설정 끄기
+		disableDepthStencilState();
 		// 반투명 객체 렌더
 		renderTransparent();
 		// depthState 설정 켜기
@@ -141,20 +141,18 @@ namespace da
 		mCutoutGameObjects.clear();
 		mTransparentGameObjects.clear();
 
-		// 렌더할 씬으로부터 오브젝트 배열 가져오기
+		// 카메라가 비추는 씬 가져오기
 		Scene* scene = SceneManager::GetActiveScene();
 		
-				
+		// 씬에서 레이어를 순회하며 각 오브젝트들을 렌더타입에 따라 나눈다
 		for (int layerType = 0; layerType < (UINT)enums::eLayerType::End; ++layerType)
 		{
 			if (true == mLayerMask[layerType])
-			{
-				// 씬에서 레이어에 있는 오브젝트 가져옴
+			{				
 				Layer& targetLayer = scene->GetLayer((da::enums::eLayerType)layerType);
 				const std::vector<GameObject*> gameObjects = targetLayer.GetGameObjects();
 
-				divideAlphaBlendObjects(gameObjects);
-				
+				divideAlphaBlendObjects(gameObjects);				
 			}
 		}
 	}

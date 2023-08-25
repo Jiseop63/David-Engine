@@ -4,10 +4,10 @@ namespace da::enums
 {
 	enum class eResourceType
 	{
-		Mesh,
 		Texture,
 		Shader,
 		Material,
+		Mesh,
 		Animation,
 		ComputeShader,
 		End,

@@ -16,7 +16,7 @@ namespace da
 		virtual void Render() override;
 
 	private:
-		graphics::StructuredBuffer* mBuffer;
+		graphics::StructuredBuffer* mParticleBuffer;
 
 		UINT			mCount;
 		math::Vector4	mStartSize;

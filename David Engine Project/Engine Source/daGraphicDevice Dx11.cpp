@@ -36,14 +36,12 @@ namespace da::graphics
 		// get rendertarget RenderTarget & RenderTargetView by swapchain
 		// RenderTarget만들기
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> renderTarget = nullptr;		
-		if (FAILED(mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D)
-			, (void**)renderTarget.GetAddressOf())))
+		if (FAILED(mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)renderTarget.GetAddressOf())))
 			return;
 		mRenderTarget->SetTexture(renderTarget);
 
 		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> renderTargetView = nullptr;
-		mDevice->CreateRenderTargetView((ID3D11Resource*)mRenderTarget->GetTexture().Get()
-			, nullptr, renderTargetView.GetAddressOf());
+		mDevice->CreateRenderTargetView((ID3D11Resource*)mRenderTarget->GetTexture().Get(), nullptr, renderTargetView.GetAddressOf());
 		mRenderTarget->SetRTV(renderTargetView);
 
 		// DepthStencil 만들기
@@ -64,7 +62,6 @@ namespace da::graphics
 		depthStencilDesc.MiscFlags = 0;
 
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> depthStencilBuffer = nullptr;
-
 		if (!CreateTexture2D(&depthStencilDesc, nullptr, depthStencilBuffer.GetAddressOf()))
 			return;
 		mDepthStencil->SetTexture(depthStencilBuffer);
@@ -74,14 +71,11 @@ namespace da::graphics
 			return;
 		mDepthStencil->SetDSV(depthStencilView);
 
-		RECT winRect = {};
-		GetClientRect(hWnd, &winRect);
-		int a = 0;
 		mViewPort =
 		{
 			0.0f, 0.0f
-			, (float)clientWidth
-			, (float)clientHeight
+			, (float)application.GetFrameWidth()
+			, (float)application.GetFrameHeight()
 			, 0.0f, 1.0f
 		};
 		BindViewPort(&mViewPort);
@@ -172,7 +166,14 @@ namespace da::graphics
 		if (FAILED(mDevice->CreateVertexShader(pShaderBytecode, bytecodeLength, nullptr, ppVertexShader)))
 			return false;
 
-		return true;		
+		return true;
+	}
+	bool GraphicDevice_Dx11::CreateGeometryShader(const void* pShaderBytecode, SIZE_T bytecodeLength, ID3D11GeometryShader** ppGeometryShader)
+	{
+		if (FAILED(mDevice->CreateGeometryShader(pShaderBytecode, bytecodeLength, nullptr, ppGeometryShader)))
+			return false;
+
+		return true;
 	}
 	bool GraphicDevice_Dx11::CreatePixelShader(const void* pShaderBytecode, SIZE_T bytecodeLength, ID3D11PixelShader** ppPixelShader)
 	{
@@ -278,6 +279,18 @@ namespace da::graphics
 	void GraphicDevice_Dx11::BindVertexShader(ID3D11VertexShader* pVetexShader)
 	{
 		mContext->VSSetShader(pVetexShader, 0, 0);
+	}
+	void GraphicDevice_Dx11::BindHullShader(ID3D11HullShader* pHullShader)
+	{
+		mContext->HSSetShader(pHullShader, 0, 0);
+	}
+	void GraphicDevice_Dx11::BindDomainShader(ID3D11DomainShader* pDomainShader)
+	{
+		mContext->DSSetShader(pDomainShader, 0, 0);
+	}
+	void GraphicDevice_Dx11::BindGeometryShader(ID3D11GeometryShader* pGeometryShader)
+	{
+		mContext->GSSetShader(pGeometryShader, 0, 0);
 	}
 	void GraphicDevice_Dx11::BindPixelShader(ID3D11PixelShader* pPixelShader)
 	{

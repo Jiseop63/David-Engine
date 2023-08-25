@@ -32,8 +32,22 @@ namespace renderer
 	{
 		std::vector<Vertex> vertexes = {};
 		std::vector<UINT> indexes = {};
+		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+#pragma region Point Mesh
+		Vertex point = {};
+		point.pos = Vector3(0.0f, 0.0f, 0.0f);
+		vertexes.push_back(point);
+		indexes.push_back(0);
+		mesh->CreateVertexBuffer(vertexes.data(), (UINT)vertexes.size());
+		mesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
+		Resources::Insert(L"PointMesh", mesh);
 
+		vertexes.clear();
+		indexes.clear();
+#pragma endregion
 #pragma region Rect Mesh
+		mesh = std::make_shared<Mesh>();
+
 		vertexes.resize(4);
 		vertexes[0].pos = Vector3(-0.5f, 0.5f, 0.0f);
 		vertexes[0].color = Vector4(1.0f, 0.0f, 1.0f, 1.0f);
@@ -50,26 +64,25 @@ namespace renderer
 		vertexes[3].pos = Vector3(-0.5f, -0.5f, 0.0f);
 		vertexes[3].color = Vector4(1.0f, 0.0f, 1.0f, 1.0f);
 		vertexes[3].uv = Vector2(0.0f, 1.0f);
-
-		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-		Resources::Insert<Mesh>(L"RectMesh", mesh);
 		mesh->CreateVertexBuffer(vertexes.data(), (UINT)vertexes.size());
 
 		indexes.push_back(0); indexes.push_back(1); indexes.push_back(2);
 		indexes.push_back(0); indexes.push_back(2); indexes.push_back(3);
-
 		mesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
+
+		Resources::Insert<Mesh>(L"RectMesh", mesh);
 #pragma endregion
 #pragma region Debug Mesh (rect, circle)
 		// Rect Debug Mesh
-		std::shared_ptr<Mesh> rectDebug = std::make_shared<Mesh>();
-		Resources::Insert(L"DebugRect", rectDebug);
-		rectDebug->CreateVertexBuffer(vertexes.data(), (UINT)vertexes.size());
-		rectDebug->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
-
-		// Circle Debug Mesh
+		mesh = std::make_shared<Mesh>();
+		mesh->CreateVertexBuffer(vertexes.data(), (UINT)vertexes.size());
+		mesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
+		Resources::Insert(L"DebugRect", mesh);
 		vertexes.clear();
 		indexes.clear();
+
+		// Circle Debug Mesh
+		mesh = std::make_shared<Mesh>();
 
 		Vertex center = {};
 		center.pos = Vector3(0.0f, 0.0f, 0.0f);
@@ -95,10 +108,9 @@ namespace renderer
 		}
 		indexes.push_back(1);
 
-		std::shared_ptr<Mesh> circleDebug = std::make_shared<Mesh>();
-		Resources::Insert(L"DebugCircle", circleDebug);
-		circleDebug->CreateVertexBuffer(vertexes.data(), (UINT)vertexes.size());
-		circleDebug->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
+		mesh->CreateVertexBuffer(vertexes.data(), (UINT)vertexes.size());
+		mesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
+		Resources::Insert(L"DebugCircle", mesh);
 #pragma endregion
 	}
 	void LoadBuffer()
@@ -141,16 +153,20 @@ namespace renderer
 
 		// blink
 
+#pragma endregion
 		// light structed buffer
 		lightsBuffer = new StructuredBuffer();
 		lightsBuffer->Create(sizeof(LightAttribute), 2, eSRVType::None);
-
-#pragma endregion
 	}
 	void LoadShader()
 	{
-		// Default Shaders
+		// mTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
+		// mRSType(eRSType::SolidBack)
+		// mDSType(eDSType::Less)
+		// mBSType(eBSType::AlphaBlend)
+
 		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
+		// Default Shaders
 		{
 			shader->Create(eShaderStage::VS, L"TriangleShader.hlsl", "mainVS");
 			shader->Create(eShaderStage::PS, L"TriangleShader.hlsl", "mainPS");
@@ -163,12 +179,23 @@ namespace renderer
 			shader->Create(eShaderStage::PS, L"SpriteShader.hlsl", "mainPS");
 			Resources::Insert<Shader>(L"SpriteShader", shader);
 		}
-		// TitleBackground Shader
+		// anim
+		{
+			shader = std::make_shared<Shader>();
+			shader->Create(eShaderStage::VS, L"AnimationShader.hlsl", "mainVS");
+			shader->Create(eShaderStage::PS, L"AnimationShader.hlsl", "mainPS");
+			Resources::Insert(L"AnimationShader", shader);
+		}
+		// Background Shaders
 		{
 			shader = std::make_shared<Shader>();
 			shader->Create(eShaderStage::VS, L"MovingBGShader.hlsl", "mainVS");
 			shader->Create(eShaderStage::PS, L"MovingBGShader.hlsl", "mainPS");
 			Resources::Insert<Shader>(L"MovingBGShader", shader);
+			shader = std::make_shared<Shader>();
+			shader->Create(eShaderStage::VS, L"TilingLayerShader.hlsl", "mainVS");
+			shader->Create(eShaderStage::PS, L"TilingLayerShader.hlsl", "mainPS");
+			Resources::Insert(L"TilingLayerShader", shader);
 		}
 		// Grid Shader
 		{
@@ -183,8 +210,6 @@ namespace renderer
 			shader->Create(eShaderStage::VS, L"LifeBarShader.hlsl", "mainVS");
 			shader->Create(eShaderStage::PS, L"LifeBarShader.hlsl", "mainPS");
 			Resources::Insert<Shader>(L"LifeBarShader", shader);
-		}
-		{
 			shader = std::make_shared<Shader>();
 			shader->Create(eShaderStage::VS, L"DashCountShader.hlsl", "mainVS");
 			shader->Create(eShaderStage::PS, L"DashCountShader.hlsl", "mainPS");
@@ -199,29 +224,16 @@ namespace renderer
 			shader->SetRatserizerState(eRSType::WireframeNone);
 			Resources::Insert(L"DebugShader", shader);
 		}
-
-		// tilingLayerShader
-		{
-			shader = std::make_shared<Shader>();
-			shader->Create(eShaderStage::VS, L"TilingLayerShader.hlsl", "mainVS");
-			shader->Create(eShaderStage::PS, L"TilingLayerShader.hlsl", "mainPS");
-			Resources::Insert(L"TilingLayerShader", shader);
-		}
-		// anim
-		{
-			shader = std::make_shared<Shader>();
-			shader->Create(eShaderStage::VS, L"AnimationShader.hlsl", "mainVS");
-			shader->Create(eShaderStage::PS, L"AnimationShader.hlsl", "mainPS");
-			Resources::Insert(L"AnimationShader", shader);
-		}
 		// paritlce
 		{
 			shader = std::make_shared<Shader>();
 			shader->Create(eShaderStage::VS, L"ParticleShader.hlsl", "mainVS");
+			shader->Create(eShaderStage::GS, L"ParticleShader.hlsl", "mainGS");
 			shader->Create(eShaderStage::PS, L"ParticleShader.hlsl", "mainPS");
 			shader->SetRatserizerState(eRSType::SolidNone);
 			shader->SetDepthStencilState(eDSType::NoWrite);
 			shader->SetBlendState(eBSType::AlphaBlend);
+			shader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 			Resources::Insert(L"ParticleShader", shader);
 		}
 
@@ -334,40 +346,47 @@ namespace renderer
 		GetDevice()->CreateRasterizerState(
 			&rasterizerDesc, RasterizerStates[(UINT)eRSType::SolidBack].GetAddressOf());
 		// Soild Front	: 앞면을 렌더링하지 않음
+		rasterizerDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_FRONT;
 		GetDevice()->CreateRasterizerState(
 			&rasterizerDesc, RasterizerStates[(UINT)eRSType::SolidFront].GetAddressOf());
 		// Solid None	: 모든 면을 렌더링함
+		rasterizerDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
 		GetDevice()->CreateRasterizerState(
 			&rasterizerDesc, RasterizerStates[(UINT)eRSType::SolidNone].GetAddressOf());
 		// WireframeNone	: 뼈대만 렌더링함
 		rasterizerDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME;
+		rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
 		GetDevice()->CreateRasterizerState(
 			&rasterizerDesc, RasterizerStates[(UINT)eRSType::WireframeNone].GetAddressOf());
 #pragma endregion
 #pragma region DepthStencil State
 		D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
-		// Less <- Z 값이 나보다 작으면 안그림
+		// Less <- Z 값이 나보다 작으면 겹치는 부분을 안그림
 		depthStencilDesc.DepthEnable = true;
 		depthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
-		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
+		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 		depthStencilDesc.StencilEnable = false;
-		GetDevice()->CreateDepthStencilState(
-			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::Less].GetAddressOf());
-		// Greater <- Z 값이 나보다 크면 안그림
+		GetDevice()->CreateDepthStencilState(&depthStencilDesc, DepthStencilStates[(UINT)eDSType::Less].GetAddressOf());
+		// Greater <- Z 값이 나보다 크면 겹치는 부분을 안그림
+		depthStencilDesc.DepthEnable = true;
 		depthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER;
-		GetDevice()->CreateDepthStencilState(
-			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::Greater].GetAddressOf());
+		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+		depthStencilDesc.StencilEnable = false;
+		GetDevice()->CreateDepthStencilState(&depthStencilDesc, DepthStencilStates[(UINT)eDSType::Greater].GetAddressOf());
 		// No Write <- 덮어쓰기 안함
+		depthStencilDesc.DepthEnable = true;
 		depthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
-		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ZERO;
-		GetDevice()->CreateDepthStencilState(
-			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::NoWrite].GetAddressOf());
+		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+		depthStencilDesc.StencilEnable = false;
+		GetDevice()->CreateDepthStencilState(&depthStencilDesc, DepthStencilStates[(UINT)eDSType::NoWrite].GetAddressOf());
 		// None 
 		depthStencilDesc.DepthEnable = false;
-		GetDevice()->CreateDepthStencilState(
-			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::None].GetAddressOf());
+		depthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
+		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+		depthStencilDesc.StencilEnable = false;
+		GetDevice()->CreateDepthStencilState(&depthStencilDesc, DepthStencilStates[(UINT)eDSType::None].GetAddressOf());
 #pragma endregion
 #pragma region Blend State
 		D3D11_BLEND_DESC blendDesc = {};
@@ -384,19 +403,18 @@ namespace renderer
 		blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND::D3D11_BLEND_INV_SRC_ALPHA;
 		blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND::D3D11_BLEND_ZERO;
 		blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE::D3D11_COLOR_WRITE_ENABLE_ALL;
-		GetDevice()->CreateBlendState(
-			&blendDesc, BlendStates[(UINT)eBSType::AlphaBlend].GetAddressOf());
+		GetDevice()->CreateBlendState(&blendDesc, BlendStates[(UINT)eBSType::AlphaBlend].GetAddressOf());
 		// Oneone
 		blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND::D3D11_BLEND_ONE;
 		blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND::D3D11_BLEND_ONE;
-		GetDevice()->CreateBlendState(
-			&blendDesc, BlendStates[(UINT)eBSType::Oneone].GetAddressOf());
+		GetDevice()->CreateBlendState(&blendDesc, BlendStates[(UINT)eBSType::Oneone].GetAddressOf());
 #pragma endregion
 	}
 
 	void LoadTexture()
 	{
 		Resources::Load<Texture>(L"SampleTexture", L"..\\Resources\\Texture\\Sample\\smileTexture.png");
+		Resources::Load<Texture>(L"Link", L"..\\Resources\\Texture\\Link.png");
 
 		std::shared_ptr<Texture> uavTexture = std::make_shared<Texture>();
 		uavTexture->Create(1024, 1024, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS);
@@ -487,6 +505,7 @@ namespace renderer
 			texture = Resources::Find<Texture>(L"PaintTexture");
 			material->SetTexture(texture);
 			material->SetShader(shader);
+			material->SetRenderingMode(graphics::eRenderingMode::Transparent);
 			Resources::Insert<Material>(L"SampleMaterial2", material);
 		}		
 #pragma endregion
@@ -496,6 +515,7 @@ namespace renderer
 			material = std::make_shared<Material>();
 			shader = Resources::Find<Shader>(L"AnimationShader");
 			material->SetShader(shader);
+			material->SetRenderingMode(graphics::eRenderingMode::Transparent);
 			Resources::Insert<Material>(L"AnimationMaterial", material);
 		}
 		// None material

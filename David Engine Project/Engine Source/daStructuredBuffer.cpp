@@ -4,6 +4,10 @@
 namespace da::graphics
 {
     StructuredBuffer::StructuredBuffer()
+        : mSRV(nullptr)
+        , mSRVType(eSRVType::None)
+        , mSize(0)
+        , mStride(0)
     {
     }
     StructuredBuffer::~StructuredBuffer()

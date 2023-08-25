@@ -2,6 +2,7 @@
 #include "daTime.h"
 #include "daAnimator.h"
 #include "daRenderer.h"
+#include "daConstantBuffer.h"
 
 namespace da
 {
@@ -75,10 +76,10 @@ namespace da
 		cbData.SpriteOffset = mSprites[mIndex].Offset;
 		cbData.AtlasSize = mSprites[mIndex].AtlasSize;
 
-		ConstantBuffer* animationCB = renderer::constantBuffer[(UINT)graphics::eCBType::Animation];
+		graphics::ConstantBuffer* animationCB = renderer::constantBuffer[(UINT)graphics::eCBType::Animation];
 		animationCB->SetData(&cbData);
-		animationCB->Bind(eShaderStage::VS);
-		animationCB->Bind(eShaderStage::PS);
+		animationCB->Bind(graphics::eShaderStage::VS);
+		animationCB->Bind(graphics::eShaderStage::PS);
 	}
 	void Animation::Reset()
 	{

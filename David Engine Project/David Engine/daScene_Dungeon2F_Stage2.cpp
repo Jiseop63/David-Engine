@@ -22,8 +22,8 @@ namespace da
 	}
 	void Scene_Dungeon2F_Stage2::Initialize()
 	{
-		addBackgroundObjects();
-		addGameObjects();
+		//addBackgroundObjects();
+		//addGameObjects();
 	}
 	void Scene_Dungeon2F_Stage2::Update()
 	{

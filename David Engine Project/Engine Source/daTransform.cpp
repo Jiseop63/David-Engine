@@ -53,14 +53,18 @@ namespace da
 	}
 	void Transform::BindConstantBuffer()
 	{
-		renderer::TransformCB transformCB = {};
-		transformCB.World = mWorld;
-		transformCB.View = Camera::GetGPUViewMatrix();
-		transformCB.Projection = Camera::GetGPUProjectionMatrix();
+		renderer::TransformCB transformData = {};
+		transformData.World = mWorld;
+		transformData.View = Camera::GetGPUViewMatrix();
+		transformData.Projection = Camera::GetGPUProjectionMatrix();
 		
-		ConstantBuffer* bindTransform = renderer::constantBuffer[(UINT)graphics::eCBType::Transform];
-		bindTransform->SetData(&transformCB);
-		bindTransform->Bind(eShaderStage::VS);
+		ConstantBuffer* transformCB = renderer::constantBuffer[(UINT)graphics::eCBType::Transform];
+		transformCB->SetData(&transformData);
+		transformCB->Bind(eShaderStage::VS);
+		transformCB->Bind(eShaderStage::HS);
+		transformCB->Bind(eShaderStage::DS);
+		transformCB->Bind(eShaderStage::GS);
+		transformCB->Bind(eShaderStage::PS);
 	}
 	Vector3 Transform::GetScreenPosition()
 	{

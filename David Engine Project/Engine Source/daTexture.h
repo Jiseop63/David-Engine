@@ -23,10 +23,12 @@ namespace da::graphics
 
 		bool Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindFlag);
 		virtual HRESULT Load(const std::wstring& path);
+		
 		void BindShaderResource(eShaderStage stage, UINT startSlot);
+		void Clear();
+
 		void BindUnorderedAccessViews(UINT slot);
 		void ClearUnorderedAccessViews(UINT slot);
-		void Clear();
 
 	public:
 		UINT GetWidth() { return mWidth; }
@@ -44,13 +46,13 @@ namespace da::graphics
 	private:
 		ScratchImage										mImage;
 		Microsoft::WRL::ComPtr<ID3D11Texture2D>				mTexture;
+		D3D11_TEXTURE2D_DESC								mDesc;
+		UINT												mWidth;
+		UINT												mHeight;
+		
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	mSRV;
 		Microsoft::WRL::ComPtr<ID3D11RenderTargetView>		mRTV;
 		Microsoft::WRL::ComPtr<ID3D11DepthStencilView>		mDSV;
 		Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView>	mUAV;
-		D3D11_TEXTURE2D_DESC								mDesc;
-		UINT												mWidth;
-		UINT												mHeight;
-
 	};
 }
