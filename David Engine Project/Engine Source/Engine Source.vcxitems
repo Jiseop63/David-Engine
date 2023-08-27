@@ -39,6 +39,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daObjects.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daPaintShader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daParticleRenderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daParticleShader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daResources.h" />
@@ -78,6 +79,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daMeshRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daPaintShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daParticleRenderer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daParticleShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daResources.cpp" />

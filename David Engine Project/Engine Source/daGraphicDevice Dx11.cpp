@@ -8,10 +8,7 @@ namespace da::graphics
 {
 	GraphicDevice_Dx11::GraphicDevice_Dx11()
 	{
-		// window handle
 		HWND hWnd = application.GetHwnd();
-
-		// Device, Context 생성
 		D3D_FEATURE_LEVEL featureLevel = (D3D_FEATURE_LEVEL)0;
 		D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr
 			, D3D11_CREATE_DEVICE_DEBUG, nullptr, 0
@@ -36,12 +33,14 @@ namespace da::graphics
 		// get rendertarget RenderTarget & RenderTargetView by swapchain
 		// RenderTarget만들기
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> renderTarget = nullptr;		
-		if (FAILED(mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)renderTarget.GetAddressOf())))
+		if (FAILED(mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D)
+			, (void**)renderTarget.GetAddressOf())))
 			return;
 		mRenderTarget->SetTexture(renderTarget);
 
 		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> renderTargetView = nullptr;
-		mDevice->CreateRenderTargetView((ID3D11Resource*)mRenderTarget->GetTexture().Get(), nullptr, renderTargetView.GetAddressOf());
+		mDevice->CreateRenderTargetView((ID3D11Resource*)mRenderTarget->GetTexture().Get()
+			, nullptr, renderTargetView.GetAddressOf());
 		mRenderTarget->SetRTV(renderTargetView);
 
 		// DepthStencil 만들기
@@ -51,11 +50,10 @@ namespace da::graphics
 		depthStencilDesc.CPUAccessFlags = 0;
 
 		depthStencilDesc.Format = DXGI_FORMAT::DXGI_FORMAT_D24_UNORM_S8_UINT;
-		
+		depthStencilDesc.ArraySize = 1;
 		depthStencilDesc.Width = clientWidth;
 		depthStencilDesc.Height = clientHeight;
-		depthStencilDesc.ArraySize = 1;
-		
+				
 		depthStencilDesc.SampleDesc.Count = 1;
 		depthStencilDesc.SampleDesc.Quality = 0;
 		depthStencilDesc.MipLevels = 0;
@@ -71,11 +69,13 @@ namespace da::graphics
 			return;
 		mDepthStencil->SetDSV(depthStencilView);
 
+		RECT winRect = {};
+		GetClientRect(hWnd, &winRect);
 		mViewPort =
 		{
 			0.0f, 0.0f
-			, (float)application.GetFrameWidth()
-			, (float)application.GetFrameHeight()
+			, (float)clientWidth
+			, (float)clientHeight
 			, 0.0f, 1.0f
 		};
 		BindViewPort(&mViewPort);
@@ -113,16 +113,12 @@ namespace da::graphics
 
 		if (FAILED(mDevice->QueryInterface(__uuidof(IDXGIDevice), (void**)pDXGIDevice.GetAddressOf())))
 			return false;
-
 		if (FAILED(pDXGIDevice->GetParent(__uuidof(IDXGIAdapter), (void**)pAdapter.GetAddressOf())))
 			return false;
-
 		if (FAILED(pAdapter->GetParent(__uuidof(IDXGIFactory), (void**)pFactory.GetAddressOf())))
 			return false;
-
 		if (FAILED(pFactory->CreateSwapChain(mDevice.Get(), &dxgiDesc, mSwapChain.GetAddressOf())))
 			return false;
-
 		return true;
 	}
 	bool GraphicDevice_Dx11::CreateTexture2D(const D3D11_TEXTURE2D_DESC* desc, void* data, ID3D11Texture2D** ppTexture2D)
@@ -166,7 +162,7 @@ namespace da::graphics
 		if (FAILED(mDevice->CreateVertexShader(pShaderBytecode, bytecodeLength, nullptr, ppVertexShader)))
 			return false;
 
-		return true;
+		return true;		
 	}
 	bool GraphicDevice_Dx11::CreateGeometryShader(const void* pShaderBytecode, SIZE_T bytecodeLength, ID3D11GeometryShader** ppGeometryShader)
 	{
@@ -361,7 +357,7 @@ namespace da::graphics
 		mContext->Unmap(buffer, 0);
 	}
 
-	void GraphicDevice_Dx11::BindUnorderedAccessViews(UINT slot, ID3D11UnorderedAccessView** ppUnorderedAccessViews, const UINT* pUAVInitialCounts)
+	void GraphicDevice_Dx11::BindUnorderedAccess(UINT slot, ID3D11UnorderedAccessView** ppUnorderedAccessViews, const UINT* pUAVInitialCounts)
 	{
 		mContext->CSSetUnorderedAccessViews(slot, 1, ppUnorderedAccessViews, pUAVInitialCounts);
 	}
@@ -436,6 +432,11 @@ namespace da::graphics
 		mContext->OMSetBlendState(pBlendState, nullptr, 0xffffffff);
 	}
 
+	void GraphicDevice_Dx11::CopyResource(ID3D11Resource* pDstResource, ID3D11Resource* pSrcResource)
+	{
+		mContext->CopyResource(pDstResource, pSrcResource);
+	}
+
 	void GraphicDevice_Dx11::DrawIndexed(UINT indexCount, UINT startIndexLocation, INT baseVertexLocation)
 	{
 		mContext->DrawIndexed(indexCount, startIndexLocation, baseVertexLocation);
@@ -453,14 +454,11 @@ namespace da::graphics
 	}
 	void GraphicDevice_Dx11::UpdateViewPort()
 	{
-		HWND hwnd = application.GetHwnd();
-		RECT  winRect = {};
-		GetClientRect(hwnd, &winRect);
 		mViewPort =
 		{
 			0.0f, 0.0f
-			, (float)(winRect.right - winRect.left)
-			, (float)(winRect.bottom - winRect.top)
+			, (float)application.GetFrameWidth()
+			, (float)application.GetFrameHeight()
 			, 0.0f, 1.0f
 		};
 		BindViewPort(&mViewPort);

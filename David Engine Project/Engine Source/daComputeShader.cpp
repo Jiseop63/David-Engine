@@ -5,10 +5,23 @@ namespace da::graphics
 {
 	ComputeShader::ComputeShader()
 		: Resource(enums::eResourceType::ComputeShader)
+		, mGroupX(0)
+		, mGroupY(0)
+		, mGroupZ(0)
 	{
 		mThreadGroupCountX = 32;
 		mThreadGroupCountY = 32;
 		mThreadGroupCountZ = 1;
+	}
+	ComputeShader::ComputeShader(int x, int y, int z)
+		: Resource(enums::eResourceType::ComputeShader)
+		, mGroupX(0)
+		, mGroupY(0)
+		, mGroupZ(0)
+	{
+		mThreadGroupCountX = x;
+		mThreadGroupCountY = y;
+		mThreadGroupCountZ = z;
 	}
 	ComputeShader::~ComputeShader()
 	{

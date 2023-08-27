@@ -20,10 +20,9 @@ namespace da::graphics
 
 	void Material::Binds()
 	{
-		if (mTexture)
+		if (nullptr != mTexture)
 			mTexture->BindShaderResource(eShaderStage::PS, 0);
-
-		if (mShader)
+		if (nullptr != mShader)
 			mShader->Binds();
 	}
 	void Material::Clear()

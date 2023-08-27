@@ -1,6 +1,7 @@
 #pragma once
 #include "daMeshRenderer.h"
 #include "daStructuredBuffer.h"
+#include "daParticleShader.h"
 
 namespace da
 {
@@ -10,19 +11,23 @@ namespace da
 		ParticleRenderer();
 		virtual ~ParticleRenderer();
 
-		virtual void Initialize() override;
-		virtual void Update() override;
-		virtual void LateUpdate() override;
-		virtual void Render() override;
+		virtual void Initialize();
+		virtual void Update();
+		virtual void LateUpdate();
+		virtual void Render();
 
 	private:
-		graphics::StructuredBuffer* mParticleBuffer;
+		graphics::StructuredBuffer*		mParticleBuffer;
+		graphics::StructuredBuffer*		mSharedBuffer;
 
-		UINT			mCount;
-		math::Vector4	mStartSize;
-		math::Vector4	mEndSize;
-		math::Vector4	mStartColor;
-		math::Vector4	mEndColor;
-		float			mLifeTime;
+		std::shared_ptr<ParticleShader> mCS;
+		UINT							mCount;
+		math::Vector4					mStartSize;
+		math::Vector4					mEndSize;
+		math::Vector4					mStartColor;
+		math::Vector4					mEndColor;
+		float							mLifeTime;
+		float							mFrequency;
+		float							mTime;
 	};
 }

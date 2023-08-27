@@ -216,6 +216,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daComputeShader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daPaintShader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daParticleRenderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daParticleShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp">
@@ -314,6 +315,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daComputeShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daPaintShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daParticleRenderer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daParticleShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)daMath.inl">

@@ -45,3 +45,15 @@ cbuffer Collider : register(b8)
 {
     float4 cColliderColor;
 }
+
+cbuffer ParticleSystem : register(b9)
+{
+    uint    cParticleElementCount;
+    float   cParticleElapsedTime;
+    float   cParticleDeltaTime;
+}
+
+cbuffer Noise : register(b10)
+{
+    float4 cNoiseTextureSize;
+}

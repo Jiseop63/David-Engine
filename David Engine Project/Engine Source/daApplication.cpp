@@ -79,26 +79,24 @@ namespace da
 			mHwnd = hwnd;
 			mClientWidth = width;
 			mClientHeight = height;
-			CalculateWindowSize(hwnd, width, height);
-			
+
 			graphicDevice = std::make_unique<da::graphics::GraphicDevice_Dx11>();
 			da::graphics::GetDevice() = graphicDevice.get();
 		}
 
-		RECT winRect = { 0, 0, (LONG)width , (LONG)height };
-		AdjustWindowRect(&winRect, WS_OVERLAPPEDWINDOW, false);
-		SetWindowPos(mHwnd, nullptr, 0, 0, UINT(winRect.right - winRect.left), UINT(winRect.bottom - winRect.top), 0);
+		CalculateWindowSize(width, height);
+
+		SetWindowPos(mHwnd, nullptr, 0, 0, mFrameWidth, mFrameHeight, 0);
 		ShowWindow(mHwnd, true);
 		UpdateWindow(mHwnd);
 	}
 
-	void Application::CalculateWindowSize(HWND hwnd, UINT width, UINT height)
+	void Application::CalculateWindowSize(UINT width, UINT height)
 	{
 		// 윈도우 크기 구하기
-		RECT winRect = {};
-		GetClientRect(hwnd, &winRect);
-		mFrameWidth = UINT(winRect.right - winRect.left);
-		mFrameHeight = UINT(winRect.bottom - winRect.top);
-		
+		RECT rt = { 0, 0, (LONG)width , (LONG)height };
+		AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, false);
+		mFrameWidth = UINT(rt.right - rt.left);
+		mFrameHeight = UINT(rt.bottom - rt.top);
 	}
 }

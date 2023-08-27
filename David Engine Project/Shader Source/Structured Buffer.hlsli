@@ -12,15 +12,21 @@ struct LightAttribute
 
 struct Particle
 {
-    float4  ParticleDirection;
-    float4  ParticlePosition;
+    float4  Position;
+    float4  Direction;
     
-    float   ParticleLifeTime;
-    float   ParticleAccumulatetime;
-    float   ParticleStartSpeed;
-    float   ParticleCurrentSpeed;
-    uint    ParticleActive;
+    float   EndTime;
+    float   Time;
+    float   MaxSpeed;
+    float   Speed;
+    uint    Active;
+};
+
+struct ParticleShared
+{
+    uint ActiveSharedCount;
 };
 
 StructuredBuffer<LightAttribute> lightsAttribute : register(t13);
 StructuredBuffer<Particle> particles : register(t14);
+

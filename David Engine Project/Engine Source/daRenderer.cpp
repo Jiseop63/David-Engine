@@ -6,6 +6,7 @@
 #include "daMaterial.h"
 #include "daStructuredBuffer.h"
 #include "daPaintShader.h"
+#include "daParticleShader.h"
 
 using namespace da;
 using namespace da::graphics;
@@ -32,22 +33,22 @@ namespace renderer
 	{
 		std::vector<Vertex> vertexes = {};
 		std::vector<UINT> indexes = {};
-		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
 #pragma region Point Mesh
 		Vertex point = {};
 		point.pos = Vector3(0.0f, 0.0f, 0.0f);
 		vertexes.push_back(point);
 		indexes.push_back(0);
+		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
 		mesh->CreateVertexBuffer(vertexes.data(), (UINT)vertexes.size());
 		mesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
 		Resources::Insert(L"PointMesh", mesh);
 
+
 		vertexes.clear();
 		indexes.clear();
 #pragma endregion
-#pragma region Rect Mesh
-		mesh = std::make_shared<Mesh>();
 
+#pragma region Rect Mesh
 		vertexes.resize(4);
 		vertexes[0].pos = Vector3(-0.5f, 0.5f, 0.0f);
 		vertexes[0].color = Vector4(1.0f, 0.0f, 1.0f, 1.0f);
@@ -64,25 +65,26 @@ namespace renderer
 		vertexes[3].pos = Vector3(-0.5f, -0.5f, 0.0f);
 		vertexes[3].color = Vector4(1.0f, 0.0f, 1.0f, 1.0f);
 		vertexes[3].uv = Vector2(0.0f, 1.0f);
+
+		mesh = std::make_shared<Mesh>();
+		Resources::Insert<Mesh>(L"RectMesh", mesh);
 		mesh->CreateVertexBuffer(vertexes.data(), (UINT)vertexes.size());
 
 		indexes.push_back(0); indexes.push_back(1); indexes.push_back(2);
 		indexes.push_back(0); indexes.push_back(2); indexes.push_back(3);
-		mesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
 
-		Resources::Insert<Mesh>(L"RectMesh", mesh);
+		mesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
 #pragma endregion
 #pragma region Debug Mesh (rect, circle)
 		// Rect Debug Mesh
-		mesh = std::make_shared<Mesh>();
-		mesh->CreateVertexBuffer(vertexes.data(), (UINT)vertexes.size());
-		mesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
-		Resources::Insert(L"DebugRect", mesh);
-		vertexes.clear();
-		indexes.clear();
+		std::shared_ptr<Mesh> rectDebug = std::make_shared<Mesh>();
+		Resources::Insert(L"DebugRect", rectDebug);
+		rectDebug->CreateVertexBuffer(vertexes.data(), (UINT)vertexes.size());
+		rectDebug->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
 
 		// Circle Debug Mesh
-		mesh = std::make_shared<Mesh>();
+		vertexes.clear();
+		indexes.clear();
 
 		Vertex center = {};
 		center.pos = Vector3(0.0f, 0.0f, 0.0f);
@@ -108,9 +110,10 @@ namespace renderer
 		}
 		indexes.push_back(1);
 
-		mesh->CreateVertexBuffer(vertexes.data(), (UINT)vertexes.size());
-		mesh->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
-		Resources::Insert(L"DebugCircle", mesh);
+		std::shared_ptr<Mesh> circleDebug = std::make_shared<Mesh>();
+		Resources::Insert(L"DebugCircle", circleDebug);
+		circleDebug->CreateVertexBuffer(vertexes.data(), (UINT)vertexes.size());
+		circleDebug->CreateIndexBuffer(indexes.data(), (UINT)indexes.size());
 #pragma endregion
 	}
 	void LoadBuffer()
@@ -146,25 +149,28 @@ namespace renderer
 		// ColliderColor
 		constantBuffer[(UINT)eCBType::Collider] = new ConstantBuffer(eCBType::Collider);
 		constantBuffer[(UINT)eCBType::Collider]->Create(sizeof(ColliderCB));
-
+		
 		// fade
-
+		
 		// afterimage
-
+		
 		// blink
 
-#pragma endregion
 		// light structed buffer
 		lightsBuffer = new StructuredBuffer();
-		lightsBuffer->Create(sizeof(LightAttribute), 2, eSRVType::None);
+		lightsBuffer->Create(sizeof(LightAttribute), 2, eViewType::SRV, nullptr, true);
+
+		// Particle
+		constantBuffer[(UINT)eCBType::Particle] = new ConstantBuffer(eCBType::Particle);
+		constantBuffer[(UINT)eCBType::Particle]->Create(sizeof(ParticleCB));
+
+		// Noise
+		constantBuffer[(UINT)eCBType::Noise] = new ConstantBuffer(eCBType::Noise);
+		constantBuffer[(UINT)eCBType::Noise]->Create(sizeof(NoiseCB));
+#pragma endregion
 	}
 	void LoadShader()
 	{
-		// mTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
-		// mRSType(eRSType::SolidBack)
-		// mDSType(eDSType::Less)
-		// mBSType(eBSType::AlphaBlend)
-
 		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
 		// Default Shaders
 		{
@@ -221,7 +227,7 @@ namespace renderer
 			shader->Create(eShaderStage::VS, L"TriangleShader.hlsl", "mainVS");
 			shader->Create(eShaderStage::PS, L"DebugShader.hlsl", "mainPS");
 			shader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-			shader->SetRatserizerState(eRSType::WireframeNone);
+			shader->SetRatserizerState(eRSType::Wireframe);
 			Resources::Insert(L"DebugShader", shader);
 		}
 		// paritlce
@@ -241,8 +247,11 @@ namespace renderer
 		std::shared_ptr<PaintShader> paintShader = std::make_shared<PaintShader>();
 		paintShader->Create(L"Paint.hlsl", "mainCS");
 		da::Resources::Insert(L"PaintShader", paintShader);
-	}
 
+		std::shared_ptr<ParticleShader> particleShader = std::make_shared<ParticleShader>();
+		particleShader->Create(L"ParticleShader.hlsl", "mainCS");
+		da::Resources::Insert(L"ParticleComputeShader", particleShader);
+	}
 	void SetupState()
 	{
 #pragma region InputLayout
@@ -274,7 +283,7 @@ namespace renderer
 		GetDevice()->CreateInputLayout(arrLayout, numElement
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());
-
+		
 		shader = Resources::Find<Shader>(L"SpriteShader");
 		GetDevice()->CreateInputLayout(arrLayout, numElement
 			, shader->GetVSCode()
@@ -315,7 +324,7 @@ namespace renderer
 			, shader->GetInputLayoutAddressOf());
 
 		shader = Resources::Find<Shader>(L"ParticleShader");
-		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
+		GetDevice()->CreateInputLayout(arrLayout, numElement
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());
 
@@ -329,9 +338,9 @@ namespace renderer
 		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 		GetDevice()->CreateSamplerState(&samplerDesc, samplerStates[(UINT)eSamplerType::Point].GetAddressOf());
 		GetDevice()->BindSamplers(eShaderStage::PS, 0, samplerStates[(UINT)eSamplerType::Point].GetAddressOf());
-
+		
 		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-		GetDevice()->CreateSamplerState(&samplerDesc, samplerStates[(UINT)eSamplerType::Linear].GetAddressOf());
+		GetDevice()->CreateSamplerState(&samplerDesc, samplerStates[(UINT)eSamplerType::Linear].GetAddressOf()); 
 		GetDevice()->BindSamplers(eShaderStage::PS, 1, samplerStates[(UINT)eSamplerType::Linear].GetAddressOf());
 
 		samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
@@ -355,38 +364,42 @@ namespace renderer
 		rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
 		GetDevice()->CreateRasterizerState(
 			&rasterizerDesc, RasterizerStates[(UINT)eRSType::SolidNone].GetAddressOf());
-		// WireframeNone	: 뼈대만 렌더링함
+		// Wireframe	: 뼈대만 렌더링함
 		rasterizerDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME;
 		rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
 		GetDevice()->CreateRasterizerState(
-			&rasterizerDesc, RasterizerStates[(UINT)eRSType::WireframeNone].GetAddressOf());
+			&rasterizerDesc, RasterizerStates[(UINT)eRSType::Wireframe].GetAddressOf());
 #pragma endregion
 #pragma region DepthStencil State
 		D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
-		// Less <- Z 값이 나보다 작으면 겹치는 부분을 안그림
+		// Less <- Z 값이 나보다 작으면 안그림
 		depthStencilDesc.DepthEnable = true;
 		depthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
-		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		depthStencilDesc.StencilEnable = false;
-		GetDevice()->CreateDepthStencilState(&depthStencilDesc, DepthStencilStates[(UINT)eDSType::Less].GetAddressOf());
-		// Greater <- Z 값이 나보다 크면 겹치는 부분을 안그림
+		GetDevice()->CreateDepthStencilState(
+			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::Less].GetAddressOf());
+		// Greater <- Z 값이 나보다 크면 안그림
 		depthStencilDesc.DepthEnable = true;
 		depthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER;
-		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		depthStencilDesc.StencilEnable = false;
-		GetDevice()->CreateDepthStencilState(&depthStencilDesc, DepthStencilStates[(UINT)eDSType::Greater].GetAddressOf());
+		GetDevice()->CreateDepthStencilState(
+			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::Greater].GetAddressOf());
 		// No Write <- 덮어쓰기 안함
 		depthStencilDesc.DepthEnable = true;
 		depthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
-		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ZERO;
 		depthStencilDesc.StencilEnable = false;
-		GetDevice()->CreateDepthStencilState(&depthStencilDesc, DepthStencilStates[(UINT)eDSType::NoWrite].GetAddressOf());
-		// None 
+		GetDevice()->CreateDepthStencilState(
+			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::NoWrite].GetAddressOf());
+		// None
 		depthStencilDesc.DepthEnable = false;
 		depthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
-		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ZERO;
 		depthStencilDesc.StencilEnable = false;
-		GetDevice()->CreateDepthStencilState(&depthStencilDesc, DepthStencilStates[(UINT)eDSType::None].GetAddressOf());
+		GetDevice()->CreateDepthStencilState(
+			&depthStencilDesc, DepthStencilStates[(UINT)eDSType::None].GetAddressOf());
 #pragma endregion
 #pragma region Blend State
 		D3D11_BLEND_DESC blendDesc = {};
@@ -403,18 +416,24 @@ namespace renderer
 		blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND::D3D11_BLEND_INV_SRC_ALPHA;
 		blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND::D3D11_BLEND_ZERO;
 		blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE::D3D11_COLOR_WRITE_ENABLE_ALL;
-		GetDevice()->CreateBlendState(&blendDesc, BlendStates[(UINT)eBSType::AlphaBlend].GetAddressOf());
+		GetDevice()->CreateBlendState(
+			&blendDesc, BlendStates[(UINT)eBSType::AlphaBlend].GetAddressOf());
 		// Oneone
 		blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND::D3D11_BLEND_ONE;
 		blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND::D3D11_BLEND_ONE;
-		GetDevice()->CreateBlendState(&blendDesc, BlendStates[(UINT)eBSType::Oneone].GetAddressOf());
+		GetDevice()->CreateBlendState(
+			&blendDesc, BlendStates[(UINT)eBSType::Oneone].GetAddressOf());
 #pragma endregion
 	}
-
 	void LoadTexture()
 	{
 		Resources::Load<Texture>(L"SampleTexture", L"..\\Resources\\Texture\\Sample\\smileTexture.png");
 		Resources::Load<Texture>(L"Link", L"..\\Resources\\Texture\\Link.png");
+		Resources::Load<Texture>(L"LinkSprite", L"..\\Resources\\Texture\\linkSprites.png");
+		Resources::Load<Texture>(L"circleParticleTexture", L"..\\Resources\\Texture\\particle\\AlphaCircle.png");
+		Resources::Load<Texture>(L"Noise01", L"..\\Resources\\Texture\\noise\\noise_01.png");
+		Resources::Load<Texture>(L"Noise02", L"..\\Resources\\Texture\\noise\\noise_02.png");
+		Resources::Load<Texture>(L"Noise03", L"..\\Resources\\Texture\\noise\\noise_03.png");
 
 		std::shared_ptr<Texture> uavTexture = std::make_shared<Texture>();
 		uavTexture->Create(1024, 1024, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS);
@@ -505,9 +524,9 @@ namespace renderer
 			texture = Resources::Find<Texture>(L"PaintTexture");
 			material->SetTexture(texture);
 			material->SetShader(shader);
-			material->SetRenderingMode(graphics::eRenderingMode::Transparent);
+			//material->SetRenderingMode(graphics::eRenderingMode::Transparent);
 			Resources::Insert<Material>(L"SampleMaterial2", material);
-		}		
+		}
 #pragma endregion
 #pragma region Basic (NoneTexture)
 		// animation Material
@@ -515,7 +534,7 @@ namespace renderer
 			material = std::make_shared<Material>();
 			shader = Resources::Find<Shader>(L"AnimationShader");
 			material->SetShader(shader);
-			material->SetRenderingMode(graphics::eRenderingMode::Transparent);
+			//material->SetRenderingMode(graphics::eRenderingMode::Transparent);
 			Resources::Insert<Material>(L"AnimationMaterial", material);
 		}
 		// None material
@@ -556,9 +575,11 @@ namespace renderer
 		// particle
 		{
 			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"circleParticleTexture");
 			shader = Resources::Find<Shader>(L"ParticleShader");
+			material->SetTexture(texture);
 			material->SetShader(shader);
-			material->SetRenderingMode(eRenderingMode::Transparent);
+			//material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"ParticleMaterial", material);
 		}
 #pragma endregion
@@ -754,18 +775,6 @@ namespace renderer
 			shader = Resources::Find<Shader>(L"SpriteShader");
 			material->SetShader(shader);
 			Resources::Insert<Material>(L"ItemSlot24Material", material);
-		}
-
-		// Inventory Textures
-		{
-
-		}
-		// Select Weapon & Shiled Textures
-		{
-		}
-		// accessory & item slot
-		{
-			
 		}
 #pragma endregion
 #pragma region Title Material
@@ -967,19 +976,19 @@ namespace renderer
 			Resources::Insert<Material>(L"2FStage2Material", material);
 		}
 #pragma endregion
-	}	
-	
+	}
 	void Initialize()
 	{
 		LoadMesh();
 		LoadBuffer();
-		LoadShader();		
+		LoadShader();
 		SetupState();
 		LoadTexture();
 		LoadMaterial();
 	}
 	void Render()
 	{
+		BindNoiseTexture();
 		BindLights();
 		for (Camera* camera : cameras)
 		{
@@ -996,6 +1005,28 @@ namespace renderer
 	{
 		debugMeshs.push_back(mesh);
 	}
+	void BindNoiseTexture()
+	{
+		std::shared_ptr<Texture> texture = Resources::Find<Texture>(L"Noise01");
+
+		texture->BindShaderResource(eShaderStage::VS, 15);
+		texture->BindShaderResource(eShaderStage::HS, 15);
+		texture->BindShaderResource(eShaderStage::DS, 15);
+		texture->BindShaderResource(eShaderStage::GS, 15);
+		texture->BindShaderResource(eShaderStage::PS, 15);
+		texture->BindShaderResource(eShaderStage::CS, 15);
+
+		ConstantBuffer* noiseCB = constantBuffer[(UINT)eCBType::Noise];
+		NoiseCB noiseData = {};
+		noiseData.NoiseSize.x = (float)texture->GetWidth();
+		noiseData.NoiseSize.y = (float)texture->GetHeight();
+
+		noiseCB->SetData(&noiseData);
+		noiseCB->Bind(eShaderStage::VS);
+		noiseCB->Bind(eShaderStage::GS);
+		noiseCB->Bind(eShaderStage::PS);
+		noiseCB->Bind(eShaderStage::CS);
+	}
 	void BindLights()
 	{
 		std::vector<LightAttribute> lightsAttributes = {};
@@ -1006,8 +1037,8 @@ namespace renderer
 		}
 
 		lightsBuffer->SetData(lightsAttributes.data(), (UINT)lightsAttributes.size());
-		lightsBuffer->Bind(eShaderStage::VS, 13);
-		lightsBuffer->Bind(eShaderStage::PS, 13);
+		lightsBuffer->BindSRV(eShaderStage::VS, 13);
+		lightsBuffer->BindSRV(eShaderStage::PS, 13);
 	}
 	void Release()
 	{

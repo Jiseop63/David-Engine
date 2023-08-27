@@ -12,7 +12,6 @@
 
 // Object
 #define ObjectZ		0.0f
-#define CreatureZ	-0.0005f
 
 // UI
 #define HUDZ		-0.0010f

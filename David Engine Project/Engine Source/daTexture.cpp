@@ -55,6 +55,7 @@ namespace da::graphics
 			if (!GetDevice()->CreateShaderResourceView(mTexture.Get(), &tSRVDesc, mSRV.GetAddressOf()))
 				return false;
 		}
+
 		if (bindFlag & (UINT)D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET)
 		{
 			D3D11_RENDER_TARGET_VIEW_DESC tSRVDesc = {};
@@ -65,6 +66,7 @@ namespace da::graphics
 			if (!GetDevice()->CreateRenderTargetView(mTexture.Get(), nullptr, mRTV.GetAddressOf()))
 				return false;
 		}
+
 		if (bindFlag & (UINT)D3D11_BIND_FLAG::D3D11_BIND_UNORDERED_ACCESS)
 		{
 			D3D11_UNORDERED_ACCESS_VIEW_DESC tUAVDesc = {};
@@ -122,23 +124,23 @@ namespace da::graphics
 	void Texture::BindUnorderedAccessViews(UINT slot)
 	{
 		UINT offset = -1;
-		GetDevice()->BindUnorderedAccessViews(slot, mUAV.GetAddressOf(), &offset);
+		GetDevice()->BindUnorderedAccess(slot, mUAV.GetAddressOf(), &offset);
 	}
 	void Texture::ClearUnorderedAccessViews(UINT slot)
 	{
 		ID3D11UnorderedAccessView* pUAV = nullptr;
 		UINT offset = -1;
-		GetDevice()->BindUnorderedAccessViews(slot, &pUAV, &offset);
+		GetDevice()->BindUnorderedAccess(slot, &pUAV, &offset);
 	}
 	void Texture::Clear()
 	{
 		ID3D11ShaderResourceView* srv = nullptr;
 
 		GetDevice()->BindShaderResource(eShaderStage::VS, 0, &srv);
-		GetDevice()->BindShaderResource(eShaderStage::HS, 0, &srv);
 		GetDevice()->BindShaderResource(eShaderStage::DS, 0, &srv);
 		GetDevice()->BindShaderResource(eShaderStage::GS, 0, &srv);
-		GetDevice()->BindShaderResource(eShaderStage::PS, 0, &srv);
+		GetDevice()->BindShaderResource(eShaderStage::HS, 0, &srv);
 		GetDevice()->BindShaderResource(eShaderStage::CS, 0, &srv);
+		GetDevice()->BindShaderResource(eShaderStage::PS, 0, &srv);
 	}
 }

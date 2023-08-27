@@ -24,10 +24,7 @@ namespace da
 	{
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 		tr->BindConstantBuffer();
-		
-		mMesh->BindBuffer();
-		mMaterial->Binds();
-		
+
 		TimeConstants* timeConstants = GetOwner()->GetComponent<TimeConstants>();
 		if (timeConstants)
 			timeConstants->BindConstantBuffer();
@@ -42,7 +39,8 @@ namespace da
 
 		BindReverseCB();
 		
-		
+		mMesh->BindBuffer();
+		mMaterial->Binds();
 		mMesh->Render();
 		mMaterial->Clear();
 	}

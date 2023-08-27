@@ -60,6 +60,18 @@ namespace renderer
 		da::math::Vector4 ColliderColor;
 	};
 
+	CBUFFER(ParticleCB, CBSLOT_PARTICLE)
+	{
+		UINT ElementCount;
+		float ElpasedTime;
+		float DeltaTime;
+	};
+
+	CBUFFER(NoiseCB, CBSLOT_NOISE)
+	{
+		da::math::Vector4 NoiseSize;
+	};
+
 
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[(UINT)da::graphics::eSamplerType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerStates[(UINT)da::graphics::eRSType::End];
@@ -79,5 +91,6 @@ namespace renderer
 	void Render();
 	void Release();
 	void PushDebugMeshAttribute(da::graphics::DebugMesh mesh);
+	void BindNoiseTexture();
 	void BindLights();
 }

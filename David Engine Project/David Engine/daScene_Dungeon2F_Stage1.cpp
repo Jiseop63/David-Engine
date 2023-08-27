@@ -22,8 +22,8 @@ namespace da
 	}
 	void Scene_Dungeon2F_Stage1::Initialize()
 	{
-		//addBackgroundObjects();
-		//addGameObjects();
+		addBackgroundObjects();
+		addGameObjects();
 	}
 	void Scene_Dungeon2F_Stage1::Update()
 	{
@@ -64,14 +64,17 @@ namespace da
 	}
 	void Scene_Dungeon2F_Stage1::addBackgroundObjects()
 	{
+	}
+	void Scene_Dungeon2F_Stage1::addGameObjects()
+	{
 		// Stage : 336 208
 		{
 			GameObject* stageObject = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::FrontBackGround, L"2FStage1Material");
 			stageObject->GetTransform()->SetScale(math::Vector3(3.680f * 4.0f, 2.080f * 4.0f, 1.0f));
-			stageObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, FrontLayerZ));
+			stageObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, ObjectZ));
 		}
-
+		
 		// Close Door : 57, 65
 		{
 			GameObject* doorObject = objects::InstantiateGameObject
@@ -106,9 +109,5 @@ namespace da
 				this, Vector3(7.250f, 1.30f, 0.0f), Vector3(1.0f, 2.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
-	}
-	void Scene_Dungeon2F_Stage1::addGameObjects()
-	{
-		
 	}
 }
