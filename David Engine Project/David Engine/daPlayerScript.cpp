@@ -142,7 +142,7 @@ namespace da
         if (mDashRunning)
         {
             mHoldingDashTime += (float)Time::DeltaTime();
-            if (0.30f <= mHoldingDashTime)
+            if (0.250f <= mHoldingDashTime)
             {
                 mHoldingDashTime = 0.0f;
                 mDashRunning = false;
@@ -323,8 +323,43 @@ namespace da
             else
                 mPos.x -= moveMagnitude;
         }
-        
-       
+
+        if (mFootCollider->IsGround())
+        {
+            if (Input::GetKey(eKeyCode::S))
+            {
+                if (Input::GetKeyDown(eKeyCode::SPACE))
+                    mFootCollider->ApplyGround(false);
+            }
+            else
+            {
+                // 버퍼에 추가
+                if (Input::GetKeyDown(eKeyCode::SPACE))
+                    mJumpCount->BufferedJump = true;
+
+                if (Input::GetKeyUp(eKeyCode::SPACE))
+                {
+                    // 버퍼 중단
+                    mJumpCount->BufferedJump = false;
+                    // 바로 점프
+                    todoJump();
+                }
+            }
+        }
+        else
+        {
+            // 점프 개수가 유효한지 확인
+            if (mJumpCount->ExtraJump)
+            {
+                if (Input::GetKeyDown(eKeyCode::SPACE))
+                {
+                    mJumpCount->ExtraJump = false;
+                    mJumpCount->JumpForceRatio = 0.80f;
+                    // 점프하기
+                    todoJump();
+                }
+            }
+        }
 
         mTransform->SetPosition(mPos);
     }
@@ -364,9 +399,11 @@ namespace da
             math::Vector2 currentVelocity = mRigidbody->GetVelocity();
 
             // Dash상태가 아니고, y가 -인 경우에만
-            if (!mDashRunning 
+            if (!mDashRunning
                 && 0 >= currentVelocity.y)
-                mJumping = false;
+                mPassPlatform = false;
+            else
+                mPassPlatform = true;
         }
         void PlayerScript::inputDash()
         {
@@ -388,7 +425,8 @@ namespace da
             mHoldingDashTime = 0.0f;
             mDashRunning = true;
             mRigidbody->GravityAble(false);
-
+            mPassPlatform = true;
+            mFootCollider->ApplyGround(false); // 이게 있어야 바닥뚫고 대시 가능
             //// 투사체 정보 갱신
             //mWeaponScript->ModifyProjectile(
             //    math::Vector2(0.80f, 1.20f), 0.0f, 0.30f, enums::eProjectileType::Body);
@@ -397,34 +435,7 @@ namespace da
         }
         void PlayerScript::inputJump()
         {
-            if (mFootCollider->IsGround())
-            {
-                // 버퍼에 추가
-                if (Input::GetKeyDown(eKeyCode::SPACE))
-                    mJumpCount->BufferedJump = true;
-
-                if (Input::GetKeyUp(eKeyCode::SPACE))
-                {
-                    // 버퍼 중단
-                    mJumpCount->BufferedJump = false;
-                    // 바로 점프
-                    todoJump();
-                }
-            }
-            else
-            {
-                // 점프 개수가 유효한지 확인
-                if (mJumpCount->ExtraJump)
-                {
-                    if (Input::GetKeyDown(eKeyCode::SPACE))
-                    {
-                        mJumpCount->ExtraJump = false;
-                        mJumpCount->JumpForceRatio = 0.80f;
-                        // 점프하기
-                        todoJump();
-                    }
-                }
-            }
+            
 
         }
         void PlayerScript::bufferedJump()
@@ -453,7 +464,7 @@ namespace da
             activeEffect(playerEffect, L"Jumping");
 
             // 최소 높이 설정
-            float minForceRatio = 0.650f;
+            float minForceRatio = 0.8750f;
             if (minForceRatio >= mJumpCount->JumpForceRatio)
                 mJumpCount->JumpForceRatio = minForceRatio;
 

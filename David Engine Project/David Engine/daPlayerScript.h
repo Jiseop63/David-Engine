@@ -114,6 +114,8 @@ namespace da
 		void todoJump();
 
 	public:
+		bool IsPassingPlatform() { return mPassPlatform; }
+		void ApplyPassingPlatform(bool value) { mPassPlatform = value; }
 		bool IsJumping() { return mJumping; }
 		void StartJump() { mJumping = true; }
 #pragma endregion

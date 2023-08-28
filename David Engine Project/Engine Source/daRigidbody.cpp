@@ -51,7 +51,7 @@ namespace da
 
 	void Rigidbody::applyGravity()
 	{
-		Vector2 gravity(0.0f, -9.80f);
+		Vector2 gravity(0.0f, -14.80f);
 		Collider2D* footCollider = GetOwner()->GetFootCollider();
 
 		if (footCollider->IsGround())
@@ -155,18 +155,7 @@ namespace da
 			if (footCollider->IsGround())
 			{
 				friction *= 30.0f;
-				/*if ((0 < mCalcVelocity.x && 0 > mInputForceDir.x)
-					|| (0 > mCalcVelocity.x && 0 < mInputForceDir.x)
-					|| false == mMoving)*/
 			}
-			/*PlayerScript* playerScript = SceneManager::GetPlayerScript();
-			if (playerScript->GetOwner() == GetOwner())
-			{
-				if (!playerScript->IsDashRunning())
-				{
-					friction *= 30.0f;;
-				}
-			}*/
 
 			// 마찰력이 현재속도보다 큰경우
 			if (abs(mCalcVelocity.x) < abs(friction.x))

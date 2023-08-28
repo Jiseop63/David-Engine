@@ -23,7 +23,9 @@ namespace da
 		
 		, mFoot(false)
 		, mBody(false)
+		, mIsCollision(false)
 		, mGrounded(false)
+		, mPlatformCollision(false)
 		, mWallCollision(eWallCollisionState::None)
 	{
 		mColliderID = ColliderNumber++;
@@ -143,11 +145,13 @@ namespace da
 		PlayerScript* player = dynamic_cast<PlayerScript*>(scripts[0]);
 		if (player)
 		{
-			if (player->IsJumping())
+			if (player->IsPassingPlatform())
+			{
 				mGrounded = false;
-		}
-
-		//if ()
+				player->ApplyPassingPlatform(false);
+				return;
+			}
+		}		
 
 		// 조건 하나 더 추가해서 검사해야함
 		if (isEnter)

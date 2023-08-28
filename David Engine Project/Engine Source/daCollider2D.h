@@ -46,21 +46,22 @@ namespace da
 		void SetCenter(math::Vector2 size) { mCenter = size; }
 		math::Vector2 GetCenter() { return mCenter; }
 
-		bool IsGround() { return mGrounded; }
-		void ApplyGround(bool isGround) { mGrounded = isGround; }
-
-		eWallCollisionState IsWallCollision() { return mWallCollision; }
-
 		math::Vector3 GetTotalPosition() { return mTotalPosition; }
 		math::Vector3 GetTotalScale() { return mTotalScale; }
+
+		bool IsCollision() { return mIsCollision; }
+		bool IsGround() { return mGrounded; }
+		void ApplyGround(bool isGround) { mGrounded = isGround; }
+		bool IsPlatformCollision() { return mPlatformCollision; }
+		eWallCollisionState IsWallCollision() { return mWallCollision; }
 
 		void ImFoot(bool isFoot = true) { mFoot = isFoot; }
 		bool IsFoot() { return mFoot; }
 		void ImBody(bool isBody = true) { mBody = isBody; }
 		bool IsBody() { return mBody; }
-		bool IsCollision() { return mIsCollision; }
 	private:
 		void groundCheck(Collider2D* other, bool isEnter);
+		void platformCheck(Collider2D* other, bool isEnter);
 		void wallCollisionCheck(Collider2D* other, bool isEnter);
 
 	public:
@@ -94,6 +95,7 @@ namespace da
 		bool					mBody;
 		bool					mIsCollision;
 		bool					mGrounded;			// Foot Collider
+		bool					mPlatformCollision;
 		eWallCollisionState		mWallCollision;		// Body Collider
 	};
 }
