@@ -145,12 +145,30 @@ namespace da
 				this, Vector3(-26.60f, 1.40f, 0.0f), Vector3(8.50f, 1.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
+		
 		// second
 		{
 			GameObject* landObject = objects::InstantiatePlatformObject(
 				this, Vector3(-0.350f, 0.150f, 0.0f), Vector3(17.30f, 1.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
+		// second left
+		{
+			GameObject* landObject = objects::InstantiatePlatformObject(
+				this, Vector3(-10.750f, -1.850f, 0.0f), Vector3(6.0f, 1.0f, 1.0f));
+			landObject->GetTransform()->SetRotation(0.0f, 0.0f, 0.7850f);
+			landObject->SetName(L"LandObj");
+		}
+		// second right
+		{
+			GameObject* landObject = objects::InstantiatePlatformObject(
+				this, Vector3(10.10f, -1.850f, 0.0f), Vector3(6.0f, 1.0f, 1.0f));
+			landObject->GetTransform()->SetRotation(0.0f, 0.0f, -0.7850f);
+
+			landObject->SetName(L"LandObj");
+		}
+
+
 		// third
 		{
 			GameObject* landObject = objects::InstantiatePlatformObject(
