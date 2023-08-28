@@ -55,9 +55,10 @@ namespace da
 		math::Vector3 GetTotalScale() { return mTotalScale; }
 
 		void ImFoot(bool isFoot = true) { mFoot = isFoot; }
+		bool IsFoot() { return mFoot; }
 		void ImBody(bool isBody = true) { mBody = isBody; }
 		bool IsBody() { return mBody; }
-
+		bool IsCollision() { return mIsCollision; }
 	private:
 		void groundCheck(Collider2D* other, bool isEnter);
 		void wallCollisionCheck(Collider2D* other, bool isEnter);
@@ -91,6 +92,7 @@ namespace da
 		// condition value
 		bool					mFoot;
 		bool					mBody;
+		bool					mIsCollision;
 		bool					mGrounded;			// Foot Collider
 		eWallCollisionState		mWallCollision;		// Body Collider
 	};

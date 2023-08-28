@@ -198,6 +198,25 @@ namespace da::objects
 
 		return obj;
 	}
+
+	static GameObject* InstantiatePlatformObject(Scene* scene, math::Vector3 location, math::Vector3 scale)
+	{
+		GameObject* obj = new GameObject();
+		obj->SetLayerType(enums::eLayerType::Platform);
+		obj->SetName(L"PlatformCollider");
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::Platform);
+		myLayer.AddGameObject(obj);
+
+		Collider2D* collider = obj->AddComponent<Collider2D>();
+		collider->SetDetectionType(Collider2D::eDetectionType::Env);
+		obj->Initialize();
+
+		Transform* transform = obj->GetTransform();
+		transform->SetPosition(location);
+		transform->SetScale(scale);
+
+		return obj;
+	}
 	static GameObject* InstantiateGridObject(Scene* scene, CameraObject* cameraObject)
 	{
 		GameObject* obj = new GameObject();

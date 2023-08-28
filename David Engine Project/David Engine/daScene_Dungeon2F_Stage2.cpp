@@ -113,49 +113,49 @@ namespace da
 
 		// 1F Platform
 		{
-			GameObject* landObject = objects::InstantiateLandObject(
+			GameObject* landObject = objects::InstantiatePlatformObject(
 				this, Vector3(-0.020f, -4.350f, 0.0f), Vector3(5.150f, 0.450f, 1.0f));
 			landObject->SetName(L"PlatformObj");
 		}
 		// 2F Platform
 		{
-			GameObject* landObject = objects::InstantiateLandObject(
+			GameObject* landObject = objects::InstantiatePlatformObject(
 				this, Vector3(-3.550f, -2.450f, 0.0f), Vector3(1.90f, 0.450f, 1.0f));
 			landObject->SetName(L"PlatformObj");
 		}
 		// 2F Platform
 		{
-			GameObject* landObject = objects::InstantiateLandObject(
+			GameObject* landObject = objects::InstantiatePlatformObject(
 				this, Vector3(3.550f, -2.450f, 0.0f), Vector3(1.90f, 0.450f, 1.0f));
 			landObject->SetName(L"PlatformObj");
 		}
 		// 3F Platform
 		{
-			GameObject* landObject = objects::InstantiateLandObject(
+			GameObject* landObject = objects::InstantiatePlatformObject(
 				this, Vector3(-4.150f, -0.550f, 0.0f), Vector3(1.90f, 0.450f, 1.0f));
 			landObject->SetName(L"PlatformObj");
 		}
 		// 3F Platform
 		{
-			GameObject* landObject = objects::InstantiateLandObject(
+			GameObject* landObject = objects::InstantiatePlatformObject(
 				this, Vector3(4.150f, -0.550f, 0.0f), Vector3(1.90f, 0.450f, 1.0f));
 			landObject->SetName(L"PlatformObj");
 		}
 		// 4F Platform
 		{
-			GameObject* landObject = objects::InstantiateLandObject(
+			GameObject* landObject = objects::InstantiatePlatformObject(
 				this, Vector3(-4.150f, 1.350f, 0.0f), Vector3(1.90f, 0.450f, 1.0f));
 			landObject->SetName(L"PlatformObj");
 		}
 		// 4F Platform
 		{
-			GameObject* landObject = objects::InstantiateLandObject(
+			GameObject* landObject = objects::InstantiatePlatformObject(
 				this, Vector3(4.150f, 1.350f, 0.0f), Vector3(1.90f, 0.450f, 1.0f));
 			landObject->SetName(L"PlatformObj");
 		}
 		// rooftop Platform
 		{
-			GameObject* landObject = objects::InstantiateLandObject(
+			GameObject* landObject = objects::InstantiatePlatformObject(
 				this, Vector3(0.0f, 2.650f, 0.0f), Vector3(3.80f, 0.450f, 1.0f));
 			landObject->SetName(L"PlatformObj");
 		}

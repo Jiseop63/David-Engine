@@ -42,6 +42,10 @@ namespace da
 
         , mDashRunning(false)
         , mHoldingDashTime(0.0f)
+
+        , mPassPlatform(false)
+        , mBodyCollision(false)
+        , mFootCollision(false)
 	{
 	}
 	PlayerScript::~PlayerScript()
@@ -133,6 +137,7 @@ namespace da
         jumpRegen();
         bufferedJump();
         walkDust();
+        endJumping();
 
         if (mDashRunning)
         {
@@ -354,6 +359,15 @@ namespace da
             if (mDashCount->DashRegenTime <= mDashCount->DashAccumulateTime)
                 GameDataManager::RecoveryDash();
         }
+        void PlayerScript::endJumping()
+        {
+            math::Vector2 currentVelocity = mRigidbody->GetVelocity();
+
+            // Dash상태가 아니고, y가 -인 경우에만
+            if (!mDashRunning 
+                && 0 >= currentVelocity.y)
+                mJumping = false;
+        }
         void PlayerScript::inputDash()
         {
             if (Input::GetKeyDown(eKeyCode::RBTN))
@@ -464,6 +478,10 @@ namespace da
         mAnimator->Create(L"playerJump", texture, Vector2(0.0f, 64.0f), Vector2(32.0f, 32.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
         mAnimator->Create(L"playerDead", texture, Vector2(0.0f, 96.0f), Vector2(32.0f, 32.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
         mAnimator->PlayAnimation(L"playerIdle");
+
+        mAnimator->StartEvent(L"playerJump") = std::bind(&PlayerScript::StartJump, this);
+
+        L"playerJump";
     }
     void PlayerScript::InitCollider()
     {
@@ -493,6 +511,7 @@ namespace da
 #pragma region Collision Func
     void PlayerScript::OnCollisionEnter(Collider2D* other)
     {
+        // 몬스터의 시야에 닿은경우
         if (enums::eLayerType::Creature == other->GetOwner()->GetLayerType()
             && Collider2D::eDetectionType::Sensor == other->GetDetectionType())
         {           
@@ -503,6 +522,17 @@ namespace da
     }
     void PlayerScript::OnCollisionExit(Collider2D* other)
     {
+        // 플렛폼에 충돌
+        if (enums::eLayerType::Platform == other->GetOwner()->GetLayerType())
+        {
+            // 어디가 충돌했는지 확인하기
+            if (mBodyCollider->IsCollision())
+                mBodyCollision = false;
+            if (mFootCollider->IsCollision())
+                mFootCollision = false;
+        }
+
+
         if (enums::eLayerType::Creature == other->GetOwner()->GetLayerType()
             && Collider2D::eDetectionType::Sensor == other->GetDetectionType())
         {

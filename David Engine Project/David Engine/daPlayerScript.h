@@ -92,15 +92,19 @@ namespace da
 #pragma endregion
 
 #pragma region Move Logic
+	private:
 		void CameraMove();
 		void InputMove();
 		void walkDust();
+
 #pragma endregion
 
 #pragma region Jump & Dash Logic
 	private:
 		void jumpRegen();
 		void dashRegen();
+		void endJumping();
+
 		void bufferedJump();
 
 		void inputDash();
@@ -108,6 +112,10 @@ namespace da
 
 		void inputJump();
 		void todoJump();
+
+	public:
+		bool IsJumping() { return mJumping; }
+		void StartJump() { mJumping = true; }
 #pragma endregion
 #pragma region Initialize Player
 	public:
@@ -161,6 +169,12 @@ namespace da
 		bool			mDashRunning;
 		float			mHoldingDashTime;
 
+		// ÇÃ·¿Æû ¿¹¿ÜÃ³¸® º¯¼ö
+	private:
+		bool			mJumping;
+		bool			mPassPlatform;
+		bool			mBodyCollision;
+		bool			mFootCollision;
 #pragma endregion
 	};
 }

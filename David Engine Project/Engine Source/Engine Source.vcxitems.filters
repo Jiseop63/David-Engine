@@ -97,6 +97,9 @@
     <Filter Include="System\Component\Light">
       <UniqueIdentifier>{d9b4e6d2-1435-456e-ae62-f38a5d4d79ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\CS">
+      <UniqueIdentifier>{6832b206-e4f5-4a32-b068-1b4aedcf6cfe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)daMath.h">
@@ -213,10 +216,18 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daStructuredBuffer.h">
       <Filter>Graphics\Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daComputeShader.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)daPaintShader.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)daParticleRenderer.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)daParticleShader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daComputeShader.h">
+      <Filter>Graphics\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daPaintShader.h">
+      <Filter>Graphics\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daParticleRenderer.h">
+      <Filter>Graphics\CS</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daParticleShader.h">
+      <Filter>Graphics\CS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp">
@@ -312,10 +323,18 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daStructuredBuffer.cpp">
       <Filter>Graphics\Buffer</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daComputeShader.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)daPaintShader.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)daParticleRenderer.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)daParticleShader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daComputeShader.cpp">
+      <Filter>Graphics\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daPaintShader.cpp">
+      <Filter>Graphics\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daParticleRenderer.cpp">
+      <Filter>Graphics\CS</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daParticleShader.cpp">
+      <Filter>Graphics\CS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)daMath.inl">

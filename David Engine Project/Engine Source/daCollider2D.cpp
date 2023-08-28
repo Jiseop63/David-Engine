@@ -2,6 +2,8 @@
 #include "daGameObject.h"
 #include "daRenderer.h"
 #include "daConstantBuffer.h"
+#include "../David Engine/daPlayerScript.h"
+
 namespace da
 {
 	UINT Collider2D::ColliderNumber = 0;
@@ -137,6 +139,17 @@ namespace da
 		if (eDetectionType::Env != other->GetDetectionType())
 			return;
 
+		const std::vector<Script*>& scripts = GetOwner()->GetScripts();
+		PlayerScript* player = dynamic_cast<PlayerScript*>(scripts[0]);
+		if (player)
+		{
+			if (player->IsJumping())
+				mGrounded = false;
+		}
+
+		//if ()
+
+		// 조건 하나 더 추가해서 검사해야함
 		if (isEnter)
 			mGrounded = true;
 		else
@@ -144,11 +157,17 @@ namespace da
 	}
 	void Collider2D::wallCollisionCheck(Collider2D* other, bool isEnter)
 	{
-		// 일단 내가 Body타입인지 확인
+		// 내가 body 가 아닌경우 충돌검사 안함
 		if (!mBody)
 			return;
+		// 상대가 벽 타입이 아닌경우 충돌검사 안함
 		if (eDetectionType::Env != other->GetDetectionType())
 			return;
+
+		// 상대가 플렛폼이면 충돌검사 안함
+		if (enums::eLayerType::Platform == other->GetOwner()->GetLayerType())
+			return;
+
 
 		if (!isEnter)
 		{
@@ -233,6 +252,7 @@ namespace da
 		ChangeColliderColor(true);
 		groundCheck(other, true);
 		wallCollisionCheck(other, true);
+		mIsCollision = true;
 
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetScripts();
@@ -257,6 +277,7 @@ namespace da
 		ChangeColliderColor(false);
 		groundCheck(other, false);
 		wallCollisionCheck(other, false);
+		mIsCollision = false;
 
 		const std::vector<Script*>& scripts
 			= GetOwner()->GetScripts();
