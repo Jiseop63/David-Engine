@@ -521,8 +521,8 @@ namespace da
             GetOwner()->SetBodyCollider(mBodyCollider);
             mBodyCollider->SetName(L"BodyCollider");
             mBodyCollider->ImBody();
-            mBodyCollider->SetSize(Vector2(0.30f, 0.50f));
-            mBodyCollider->SetCenter(Vector2(0.0f, -0.150f));
+            mBodyCollider->SetSize(Vector2(0.30f, 0.550f));
+            mBodyCollider->SetCenter(Vector2(0.0f, -0.160f));
             mBodyCollider->SetDetectionType(Collider2D::eDetectionType::Default);
         }
         // foot
@@ -530,8 +530,8 @@ namespace da
             GetOwner()->SetFootCollider(mFootCollider);
             mFootCollider->SetName(L"FootCollider");
             mFootCollider->ImFoot();
-            mFootCollider->SetSize(Vector2(0.050f, 0.050f));
-            mFootCollider->SetCenter(Vector2(0.0f, -0.450f));
+            mFootCollider->SetSize(Vector2(0.150f, 0.050f));
+            mFootCollider->SetCenter(Vector2(0.0f, -0.50f));
             mFootCollider->SetDetectionType(Collider2D::eDetectionType::Default);
         }
     }
