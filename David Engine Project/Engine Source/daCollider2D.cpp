@@ -27,6 +27,7 @@ namespace da
 		, mGrounded(false)
 		, mPlatformCollision(false)
 		, mWallCollision(eWallCollisionState::None)
+		, mEnvRotate(0.0f)
 	{
 		mColliderID = ColliderNumber++;
 		mColliderColor = math::Vector4(0.0f, 1.0f, 0.0f, 1.0f);
@@ -141,6 +142,8 @@ namespace da
 		if (eDetectionType::Env != other->GetDetectionType())
 			return;
 
+
+		// env 오브젝트를 이동할때 막히지 않도록 예외처리
 		const std::vector<Script*>& scripts = GetOwner()->GetScripts();
 		PlayerScript* player = dynamic_cast<PlayerScript*>(scripts[0]);
 		if (player)
@@ -151,13 +154,27 @@ namespace da
 				player->ApplyPassingPlatform(false);
 				return;
 			}
-		}		
+		}
 
-		// 조건 하나 더 추가해서 검사해야함
+		// 이동 제어하는 기능
+		if (enums::eLayerType::Platform == other->GetOwner()->GetLayerType())
+			mPlatformCollision = true;
+		else
+			mPlatformCollision = false;
+
+		// 바닥 충돌 체크
 		if (isEnter)
 			mGrounded = true;
 		else
 			mGrounded = false;
+	
+
+		// 기울어진 경우 해당 발판의 회전값을 저장
+		if (mGrounded)
+		{
+			math::Vector3 envRotate = other->GetOwner()->GetTransform()->GetRotation();
+			mEnvRotate = envRotate.z;
+		}
 	}
 	void Collider2D::wallCollisionCheck(Collider2D* other, bool isEnter)
 	{

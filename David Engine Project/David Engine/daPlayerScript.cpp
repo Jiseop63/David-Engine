@@ -314,19 +314,32 @@ namespace da
             if (Collider2D::eWallCollisionState::Right == wallCollisionState)
                 return;
             else
-                mPos.x += moveMagnitude;
+            {
+                Vector2 moveDir = daRotateVector2(Vector2::UnitX, mFootCollider->GetEnvRotate());
+                Vector2 movePosition = moveDir * moveMagnitude;
+
+                mPos.x += movePosition.x;
+                mPos.y += movePosition.y;
+            }
         }
         if (Input::GetKey(eKeyCode::A))
         {
             if (Collider2D::eWallCollisionState::Left == wallCollisionState)
                 return;
             else
-                mPos.x -= moveMagnitude;
+            {
+                Vector2 moveDir = daRotateVector2(Vector2::UnitX, mFootCollider->GetEnvRotate());
+                Vector2 movePosition = moveDir * moveMagnitude;
+                                
+                mPos.x -= movePosition.x;
+                mPos.y -= movePosition.y;
+            }
         }
 
         if (mFootCollider->IsGround())
         {
-            if (Input::GetKey(eKeyCode::S))
+            if (Input::GetKey(eKeyCode::S)
+                && mFootCollider->IsPlatformCollision())
             {
                 if (Input::GetKeyDown(eKeyCode::SPACE))
                     mFootCollider->ApplyGround(false);
@@ -426,7 +439,11 @@ namespace da
             mDashRunning = true;
             mRigidbody->GravityAble(false);
             mPassPlatform = true;
-            mFootCollider->ApplyGround(false); // 이게 있어야 바닥뚫고 대시 가능
+
+            // 이게 있어야 바닥뚫고 대시 가능
+            if (mFootCollider->IsPlatformCollision())
+                mFootCollider->ApplyGround(false);
+
             //// 투사체 정보 갱신
             //mWeaponScript->ModifyProjectile(
             //    math::Vector2(0.80f, 1.20f), 0.0f, 0.30f, enums::eProjectileType::Body);

@@ -27,19 +27,11 @@ namespace da::math
     struct Plane;
 
     //------------------------------------------------------------------------------
-    // float
-    /*float RadianToDegree(float radian)
-    {
-        float retDegree = 0.0f;
-        retDegree = radian * 180 / XM_PI;
-        return retDegree;
-    }
-    float DegreeToRadian(float degree)
-    {
-        float retRadian = 0.0f;
-        retRadian = degree * XM_PI / 180;
-        return retRadian;
-    }*/
+    float daRadianToDegree(float radian) noexcept;    
+    float daDegreeToRadian(float degree) noexcept;
+    Vector2 daRotateVector2(const Vector2& vector, float radian) noexcept;
+
+
 
     //------------------------------------------------------------------------------
     // 2D rectangle

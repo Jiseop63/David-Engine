@@ -240,4 +240,27 @@ namespace da::math
 
 		return rct;
 	}
+	float daRadianToDegree(float radian) noexcept
+	{
+		float retDegree = 0.0f;
+		retDegree = radian * (180 / XM_PI);
+		return retDegree;
+	}
+	float daDegreeToRadian(float degree) noexcept
+	{
+		float retRadian = 0.0f;
+		retRadian = degree * (XM_PI / 180);
+		return retRadian;
+	}
+	Vector2 daRotateVector2(const Vector2& vector, float radian) noexcept
+	{
+		Vector2 retVector;
+		double cosA = std::cos(radian);
+		double sinA = std::sin(radian);
+
+		retVector.x = vector.x * cosA - vector.y * sinA;
+		retVector.y = vector.x * sinA + vector.y * cosA;
+		retVector.Normalize();
+		return retVector;
+	}
 }

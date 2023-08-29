@@ -155,7 +155,7 @@ namespace da
 		// second left
 		{
 			GameObject* landObject = objects::InstantiatePlatformObject(
-				this, Vector3(-10.750f, -1.850f, 0.0f), Vector3(6.0f, 1.0f, 1.0f));
+				this, Vector3(-10.80f, -1.830f, 0.0f), Vector3(6.0f, 1.0f, 1.0f));
 			landObject->GetTransform()->SetRotation(0.0f, 0.0f, 0.7850f);
 			landObject->SetName(L"LandObj");
 		}

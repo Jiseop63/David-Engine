@@ -59,9 +59,11 @@ namespace da
 		bool IsFoot() { return mFoot; }
 		void ImBody(bool isBody = true) { mBody = isBody; }
 		bool IsBody() { return mBody; }
+
+		float GetEnvRotate() { return mEnvRotate; }
+
 	private:
 		void groundCheck(Collider2D* other, bool isEnter);
-		void platformCheck(Collider2D* other, bool isEnter);
 		void wallCollisionCheck(Collider2D* other, bool isEnter);
 
 	public:
@@ -97,5 +99,7 @@ namespace da
 		bool					mGrounded;			// Foot Collider
 		bool					mPlatformCollision;
 		eWallCollisionState		mWallCollision;		// Body Collider
+
+		float					mEnvRotate;
 	};
 }
