@@ -457,8 +457,8 @@ namespace da::graphics
 		mViewPort =
 		{
 			0.0f, 0.0f
-			, (float)application.GetFrameWidth()
-			, (float)application.GetFrameHeight()
+			, (float)application.GetClientWidth()
+			, (float)application.GetClientHeight()
 			, 0.0f, 1.0f
 		};
 		BindViewPort(&mViewPort);

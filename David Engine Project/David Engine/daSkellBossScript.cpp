@@ -34,16 +34,16 @@ namespace da
 		mPlayerScript = SceneManager::GetPlayerScript();
 
 		// Tr
-		mBossTransform->SetScale(math::Vector3(3.50f, 3.50f, 1.0f));
+		mBossTransform->SetScale(math::Vector3(5.50f, 5.50f, 1.0f));
 		// 보스 충돌체
 		mBossCollider->ImBody();
 		mBossCollider->SetDetectionType(Collider2D::eDetectionType::Default);
-
+		mBossCollider->SetSize(math::Vector2(0.45f, 0.7f));
 		// 보스 애니메이션
 		std::shared_ptr<Texture> texture = Resources::Load<Texture>(L"BossSpriteSheet", L"..\\Resources\\Texture\\\\Skel\\SpriteSheet.png");
-		mBossAnimator->Create(L"SkellBossIdle", texture, math::Vector2(0.0f, 0.0f), math::Vector2(85.0f, 99.0f), 10, math::Vector2(0.0f, 0.0f), 0.10f, 100.0f);
-		mBossAnimator->Create(L"SkellBossAttact", texture, math::Vector2(0.0f, 99.0f), math::Vector2(85.0f, 128.0f), 10, math::Vector2(0.0f, 0.0f), 0.10f, 100.0f);
-		mBossAnimator->Create(L"SkellBossDead", texture, math::Vector2(0.0f, 227.0f), math::Vector2(85.0f, 128.0f), 1, math::Vector2(0.0f, 0.0f), 0.10f, 100.0f);
+		mBossAnimator->Create(L"SkellBossIdle", texture, math::Vector2(0.0f, 0.0f), math::Vector2(85.0f, 99.0f), 10, math::Vector2(0.0f, 0.0f), 0.10f, 150.0f);
+		mBossAnimator->Create(L"SkellBossAttact", texture, math::Vector2(0.0f, 99.0f), math::Vector2(85.0f, 128.0f), 10, math::Vector2(0.0f, 0.0f), 0.10f, 150.0f);
+		mBossAnimator->Create(L"SkellBossDead", texture, math::Vector2(0.0f, 227.0f), math::Vector2(85.0f, 128.0f), 1, math::Vector2(0.0f, 0.0f), 0.10f, 150.0f);
 		
 		mBossAnimator->CompleteEvent(L"SkellBossAttact") = std::bind(&SkellBossScript::retIdle, this);
 
@@ -51,7 +51,7 @@ namespace da
 
 		// 변수
 		mAttackReady = false;
-		mAttackCoolDownDelayTime = 6.0f;
+		mAttackCoolDownDelayTime = 3.0f;
 		
 	}
 	void SkellBossScript::Update()

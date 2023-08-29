@@ -503,7 +503,8 @@ namespace renderer
 		Resources::Load<Texture>(L"BossSpriteSheet", L"..\\Resources\\Texture\\Scene_Dungeon2F\\SkellBossSpriteSheet.png");
 		// dungeonTexture
 		Resources::Load<Texture>(L"1FStage1Texture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\1FStage1.png");
-		Resources::Load<Texture>(L"1FStage2Texture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\1FStage4.png");
+		Resources::Load<Texture>(L"1FStage2Texture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\1FStage2.png");
+		Resources::Load<Texture>(L"1FStage3Texture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\1FStage3.png");
 		Resources::Load<Texture>(L"2FStage1Texture", L"..\\Resources\\Texture\\Scene_Dungeon2F\\EntranceBossroom.png");
 		Resources::Load<Texture>(L"2FStage2Texture", L"..\\Resources\\Texture\\Scene_Dungeon2F\\Bossroom.png");
 	}
@@ -946,6 +947,7 @@ namespace renderer
 			material->SetShader(shader);
 			Resources::Insert<Material>(L"1FStage1Material", material);
 		}
+
 		//stage2
 		{
 			material = std::make_shared<Material>();
@@ -954,6 +956,16 @@ namespace renderer
 			material->SetTexture(texture);
 			material->SetShader(shader);
 			Resources::Insert<Material>(L"1FStage2Material", material);
+		}
+
+		//stage3
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"1FStage3Texture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"1FStage3Material", material);
 		}
 #pragma endregion
 #pragma region 2F material

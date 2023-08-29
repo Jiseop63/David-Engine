@@ -30,7 +30,7 @@ namespace da
 	{
 		if (Input::GetKeyDown(eKeyCode::N))
 		{
-			SceneManager::LoadScene(L"Scene_Dungeon2F_Stage1");
+			SceneManager::LoadScene(L"Scene_Dungeon1F_Stage2");
 		}
 		Scene::Update();
 	}
@@ -46,7 +46,7 @@ namespace da
 	{
 		// player ¼¼ÆÃ
 		PlayerScript* player = SceneManager::GetPlayerScript();
-		player->SetPlayerPosition(math::Vector3::Zero);
+		player->SetPlayerPosition(math::Vector3(-2.0f, -1.0f, ObjectZ));
 		player->SetPlayerVelocity(math::Vector2::Zero);
 		player->ChangeState(ePlayerState::Idle);
 		player->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
@@ -78,7 +78,7 @@ namespace da
 			GameObject* stageObject = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::FrontBackGround, L"1FStage1Material");
 			stageObject->GetTransform()->SetScale(math::Vector3(3.840f * 4.0f, 2.080f * 4.0f, 1.0f));
-			stageObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, ObjectZ));
+			stageObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, FrontLayerZ));
 		}
 
 		// Close Door : 57, 65
@@ -86,7 +86,7 @@ namespace da
 			GameObject* doorObject = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::ENV, L"Close1FMaterial");
 			doorObject->GetTransform()->SetScale(math::Vector3(0.570f * 4.0f, 0.650f * 4.0f, 1.0f));
-			doorObject->GetTransform()->SetPosition(math::Vector3(-3.0f, -1.0f + 0.080f, ObjectZ));
+			doorObject->GetTransform()->SetPosition(math::Vector3(-3.0f, -1.0f + 0.080f, FrontLayerZ));
 		}
 		// ground
 		{
@@ -122,24 +122,6 @@ namespace da
 	}
 	void Scene_Dungeon1F_Stage1::addGameObjects()
 	{
-		
-
-		// test enemy
-		{
-			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
-			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(1.50f, 0.0f, ObjectZ));
-		}
-		// test enemy
-		{
-			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
-			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(2.50f, 0.0f, ObjectZ));
-		}
-		// test enemy
-		{
-			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
-			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(-0.50f, 0.0f, ObjectZ));
-		}
-		
 		
 	}
 }

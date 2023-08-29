@@ -204,6 +204,12 @@
     <ClInclude Include="daWeaponScript.h">
       <Filter>Objects\Creature\Player</Filter>
     </ClInclude>
+    <ClInclude Include="daScene_Dungeon1F_Stage2.h">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="daScene_Dungeon1F_Stage3.h">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -319,6 +325,12 @@
     </ClCompile>
     <ClCompile Include="daWeaponScript.cpp">
       <Filter>Objects\Creature\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="daScene_Dungeon1F_Stage3.cpp">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="daScene_Dungeon1F_Stage2.cpp">
+      <Filter>Scenes\03 Dungeon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

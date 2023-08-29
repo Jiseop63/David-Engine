@@ -46,7 +46,7 @@ namespace da
 		
 		// player ¼¼ÆÃ
 		PlayerScript* player = SceneManager::GetPlayerScript();
-		player->SetPlayerPosition(math::Vector3::Zero);
+		player->SetPlayerPosition(math::Vector3(-3.0f, -1.30f, ObjectZ));
 		player->SetPlayerVelocity(math::Vector2::Zero);
 		player->ChangeState(ePlayerState::Idle);
 		player->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
