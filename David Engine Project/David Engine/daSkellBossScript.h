@@ -46,9 +46,25 @@ namespace da
 		
 	private:
 		void retIdle();
+
+#pragma region AttackPettern
+		// 빔 날리는 패턴				4초 동안 피해받지 않으면
+		// 빔 세번 날리는 패턴		점프를 3초 동안 안하면
+		// 탄막 날리는 패턴			점프를 6회 이상 하면
+		// 칼 떨어뜨리는 패턴			대시를 6번 이상 사용하면
+		// 가장먼저 조건 충족되는대로 패턴 고정
+
+
+		// 패턴 구현하려면 Time값을 가지는 변수가 많이 필요할듯?
+#pragma endregion
+
+
+
 #pragma region Collision
 
 #pragma endregion
+
+
 	private:
 		Transform*		mBossTransform;
 		Collider2D*		mBossCollider;
@@ -61,5 +77,11 @@ namespace da
 		bool			mAttackReady;
 		float			mAttackCoolDownDelayTime;
 		float			mAttackCoolDownAccumulateTime;
+
+		// 비주얼 용도로 손? 스크립트 (이펙트랑 같이 사용하면 될듯)
+
+		// 파티클 스크립트
+		// 이펙트 스크립트
+		// 투사체 스크립트
 	};
 }

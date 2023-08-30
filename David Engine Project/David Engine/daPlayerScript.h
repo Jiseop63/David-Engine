@@ -43,12 +43,13 @@ namespace da
 #pragma endregion
 
 #pragma region common Func
-		void PlayerCondition();
-		void PlayerInput();
-		void DebugInput();
-		void UIInput();
-		void GetMouse();
+		void PlayerCondition(); // hp -> 0 dead
+		void PlayerInput();		// move + attack Key
+		void DebugInput();		// hp UP Down
+		void UIInput();			// inventory
+		void GetMouse();		// mouseInput
 		void CalcPlayerDir();
+
 		void timeProcess();
 		EffectPlayerScript* callEffect();
 		void activeEffect(EffectPlayerScript* effect, const std::wstring name);
@@ -109,7 +110,7 @@ namespace da
 
 		void inputDash();
 		void todoDash();
-
+		// 대시공격 추가해야함
 		void inputJump();
 		void todoJump();
 

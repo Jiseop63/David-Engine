@@ -139,6 +139,9 @@ namespace da
 			float distanceX = calcCreatureDir(mPlayerScript->GetOwner()->GetTransform()->GetPosition(), mCreatureTransform->GetPosition());
 			if (abs(distanceX) >= mCreatureStat.AttackRange)
 				ChangeState(eCreatureState::Chase);
+
+
+
 			if (mCreatureWeaponScript->IsReadyToAttack())
 				mCreatureWeaponScript->DoAttack();
 			// doAttack을 실행한 시점에서 위의 두 조건을 벗어나게 됨. 즉, 공격이 끝나야 플레이어를 쫓아오던가 할거임
@@ -201,6 +204,7 @@ namespace da
 			ChangeState(eCreatureState::Attack);
 
 		// 이동
+		// 이동에 제약주기
 		skelPosition.x += mCreatureDir.x * mCreatureStat.MoveSpeed * (float)Time::DeltaTime();
 		mCreatureTransform->SetPosition(skelPosition);
 	}
