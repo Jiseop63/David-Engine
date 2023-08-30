@@ -328,11 +328,11 @@ namespace da
                 return;
             else
             {
-                Vector2 moveDir = daRotateVector2(Vector2::UnitX, mFootCollider->GetEnvRotate());
+                Vector2 moveDir = daRotateVector2(-Vector2::UnitX, mFootCollider->GetEnvRotate());
                 Vector2 movePosition = moveDir * moveMagnitude;
                                 
-                mPos.x -= movePosition.x;
-                mPos.y -= movePosition.y;
+                mPos.x += movePosition.x;
+                mPos.y += movePosition.y;
             }
         }
 
@@ -342,7 +342,7 @@ namespace da
                 && mFootCollider->IsPlatformCollision())
             {
                 if (Input::GetKeyDown(eKeyCode::SPACE))
-                    mFootCollider->ApplyGround(false);
+                    mFootCollider->ClearGroundBuffer();
             }
             else
             {
@@ -442,7 +442,7 @@ namespace da
 
             // 이게 있어야 바닥뚫고 대시 가능
             if (mFootCollider->IsPlatformCollision())
-                mFootCollider->ApplyGround(false);
+                mFootCollider->ClearGroundBuffer();
 
             //// 투사체 정보 갱신
             //mWeaponScript->ModifyProjectile(
@@ -485,7 +485,7 @@ namespace da
             if (minForceRatio >= mJumpCount->JumpForceRatio)
                 mJumpCount->JumpForceRatio = minForceRatio;
 
-            mFootCollider->ApplyGround(false);
+            mFootCollider->ClearGroundBuffer();
 
             if (mJumpCount->ExtraJump)
                 mRigidbody->ApplyVelocity(Vector2::UnitY, mPlayerStat->JumpForce * mJumpCount->JumpForceRatio);

@@ -40,6 +40,14 @@ namespace da
 		mTransform = GetOwner()->GetComponent<Transform>();
 		
 	}
+	void Collider2D::Update()
+	{
+		// 뭐라도 하나 충돌중이면 Ground 유지하도록 하기
+		if (0 < mGroundBuffer)
+			mGrounded = true;
+		else
+			mGrounded = false;
+	}
 	void Collider2D::LateUpdate()
 	{
 		Transform* tr = GetOwner()->GetComponent<Transform>();
@@ -136,12 +144,17 @@ namespace da
 	}
 
 	void Collider2D::groundCheck(Collider2D* other, bool isEnter)
-	{		
+	{
 		if (!mFoot)
 			return;
 		if (eDetectionType::Env != other->GetDetectionType())
 			return;
 
+		// 플렛폼 이동 예외처리
+		if (enums::eLayerType::Platform == other->GetOwner()->GetLayerType())
+			mPlatformCollision = true;
+		else
+			mPlatformCollision = false;
 
 		// env 오브젝트를 이동할때 막히지 않도록 예외처리
 		const std::vector<Script*>& scripts = GetOwner()->GetScripts();
@@ -150,31 +163,33 @@ namespace da
 		{
 			if (player->IsPassingPlatform())
 			{
-				mGrounded = false;
+				mGroundBuffer = 0;
 				player->ApplyPassingPlatform(false);
 				return;
 			}
 		}
 
-		// 이동 제어하는 기능
-		if (enums::eLayerType::Platform == other->GetOwner()->GetLayerType())
-			mPlatformCollision = true;
-		else
-			mPlatformCollision = false;
 
 		// 바닥 충돌 체크
 		if (isEnter)
-			mGrounded = true;
-		else
-			mGrounded = false;
-	
-
-		// 기울어진 경우 해당 발판의 회전값을 저장
-		if (mGrounded)
 		{
-			math::Vector3 envRotate = other->GetOwner()->GetTransform()->GetRotation();
-			mEnvRotate = envRotate.z;
+			0.7850f; // 실제 기울기
+			// 기울어진 경우 해당 발판의 회전값을 저장
+			float envRotateZ = other->GetOwner()->GetTransform()->GetRotation().z;
+			if (0.70f >= envRotateZ
+				&& -0.70f <= envRotateZ)
+				mEnvRotate = 0.0f;
+			else
+				mEnvRotate = envRotateZ;
+			mGroundBuffer++;
 		}
+		else
+		{
+			mGroundBuffer--;
+		}
+
+
+		
 	}
 	void Collider2D::wallCollisionCheck(Collider2D* other, bool isEnter)
 	{

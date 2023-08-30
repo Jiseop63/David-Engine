@@ -73,33 +73,49 @@ namespace da
 			stageObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, FrontLayerZ));
 		}
 
-		// ground top
-		{
-			GameObject* landObject = objects::InstantiateLandObject(
-				this, Vector3(-2.2250f, -3.02750f, 0.0f), Vector3(2.0f, 1.0f, 1.0f));
-			landObject->SetName(L"LandObj");
-		}
-		// ground top left
-		{
-			GameObject* landObject = objects::InstantiateLandObject(
-				this, Vector3(-3.6070f, -3.6050f, 0.0f), Vector3(2.0f, 1.0f, 1.0f));
-			landObject->GetTransform()->SetRotation(math::Vector3(0.0f, 0.0f, 0.7850f));
-			landObject->SetName(L"LandObj");
-		}
-		// ground top right
-		{
-			GameObject* landObject = objects::InstantiateLandObject(
-				this, Vector3(-0.8470f, -3.6050f, 0.0f), Vector3(2.0f, 1.0f, 1.0f));
-			landObject->GetTransform()->SetRotation(math::Vector3(0.0f, 0.0f, -0.7850f));
-			landObject->SetName(L"LandObj");
-		}
-
 		// ground
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
 				this, Vector3(-0.50f, -5.0f, 0.0f), Vector3(18.0f, 1.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
+		// ground top
+		{
+			GameObject* landObject = objects::InstantiateLandObject(
+				this, Vector3(-2.2250f, -3.0750f, 0.0f), Vector3(2.0f, 1.0f, 1.0f));
+			landObject->SetName(L"LandObj");
+		}
+		// ground top left
+		{
+			GameObject* landObject = objects::InstantiateLandObject(
+				this, Vector3(-3.6070f, -3.650f, 0.0f), Vector3(2.0f, 1.0f, 1.0f));
+			landObject->GetTransform()->SetRotation(math::Vector3(0.0f, 0.0f, 0.7850f));
+			landObject->SetName(L"LandObj");
+		}
+		// ground top right
+		{
+			GameObject* landObject = objects::InstantiateLandObject(
+				this, Vector3(-0.8470f, -3.650f, 0.0f), Vector3(2.0f, 1.0f, 1.0f));
+			landObject->GetTransform()->SetRotation(math::Vector3(0.0f, 0.0f, -0.7850f));
+			landObject->SetName(L"LandObj");
+		}
+		// ground middle left
+		{
+			GameObject* landObject = objects::InstantiateLandObject(
+				this, Vector3(-4.850f, -4.3550f, 0.0f), Vector3(0.80f, 1.0f, 1.0f));
+			landObject->GetTransform()->SetRotation(math::Vector3(0.0f, 0.0f, 0.0f));
+			landObject->SetName(L"LandObj");
+		}
+		// ground middle right
+		{
+			GameObject* landObject = objects::InstantiateLandObject(
+				this, Vector3(0.350f, -4.3550f, 0.0f), Vector3(0.80f, 1.0f, 1.0f));
+			landObject->GetTransform()->SetRotation(math::Vector3(0.0f, 0.0f, 0.0f));
+			landObject->SetName(L"LandObj");
+		}
+
+
+		
 		// left
 		{
 			GameObject* landObject = objects::InstantiateLandObject(

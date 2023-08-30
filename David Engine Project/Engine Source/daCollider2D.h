@@ -27,6 +27,7 @@ namespace da
 		virtual ~Collider2D();
 
 		virtual void Initialize() override;
+		virtual void Update() override;
 		virtual void LateUpdate() override;
 
 		void ChangeCollisionColor(bool isCollision);
@@ -50,8 +51,14 @@ namespace da
 		math::Vector3 GetTotalScale() { return mTotalScale; }
 
 		bool IsCollision() { return mIsCollision; }
-		bool IsGround() { return mGrounded; }
+		bool IsGround() { return  0 < mGroundBuffer ? true : false; }
+
+		// 이건 안쓸 예정임
 		void ApplyGround(bool isGround) { mGrounded = isGround; }
+
+		int GetGroundBuffer() { return mGroundBuffer; }
+		void ClearGroundBuffer(int value = 0) { mGroundBuffer = value; }
+
 		bool IsPlatformCollision() { return mPlatformCollision; }
 		eWallCollisionState IsWallCollision() { return mWallCollision; }
 
@@ -97,6 +104,7 @@ namespace da
 		bool					mBody;
 		bool					mIsCollision;
 		bool					mGrounded;			// Foot Collider
+		int						mGroundBuffer;
 		bool					mPlatformCollision;
 		eWallCollisionState		mWallCollision;		// Body Collider
 

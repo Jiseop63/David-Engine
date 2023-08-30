@@ -139,6 +139,7 @@ namespace da
 			landObject->SetName(L"LandObj");
 		}
 
+		// 이 아래로는 플렛폼오브젝트
 		// first
 		{
 			GameObject* landObject = objects::InstantiatePlatformObject(
@@ -149,20 +150,27 @@ namespace da
 		// second
 		{
 			GameObject* landObject = objects::InstantiatePlatformObject(
-				this, Vector3(-0.350f, 0.150f, 0.0f), Vector3(17.30f, 1.0f, 1.0f));
+				this, Vector3(-0.34750f, 0.150f, 0.0f), Vector3(17.30f, 1.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
 		// second left
 		{
 			GameObject* landObject = objects::InstantiatePlatformObject(
-				this, Vector3(-10.80f, -1.830f, 0.0f), Vector3(6.0f, 1.0f, 1.0f));
+				this, Vector3(-10.950f, -1.62750f, 0.0f), Vector3(5.70f, 0.50f, 1.0f));
 			landObject->GetTransform()->SetRotation(0.0f, 0.0f, 0.7850f);
+			landObject->SetName(L"LandObj");
+		}
+		// second left bottom
+		{
+			GameObject* landObject = objects::InstantiatePlatformObject(
+				this, Vector3(-13.4250f, -3.450f, 0.0f), Vector3(1.30f, 0.50f, 1.0f));
+			landObject->GetTransform()->SetRotation(0.0f, 0.0f, 0.0f);
 			landObject->SetName(L"LandObj");
 		}
 		// second right
 		{
 			GameObject* landObject = objects::InstantiatePlatformObject(
-				this, Vector3(10.10f, -1.850f, 0.0f), Vector3(6.0f, 1.0f, 1.0f));
+				this, Vector3(10.250f, -1.62750f, 0.0f), Vector3(6.0f, 0.50f, 1.0f));
 			landObject->GetTransform()->SetRotation(0.0f, 0.0f, -0.7850f);
 
 			landObject->SetName(L"LandObj");
