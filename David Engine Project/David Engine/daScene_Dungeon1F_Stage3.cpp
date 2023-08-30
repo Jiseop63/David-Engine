@@ -121,19 +121,19 @@ namespace da
 		// lefttop platform
 		{
 			GameObject* landObject = objects::InstantiatePlatformObject(
-				this, Vector3(-3.80f, 0.50f, 0.0f), Vector3(3.30f, 0.20f, 1.0f));
+				this, Vector3(-3.50f, 0.550f, 0.0f), Vector3(3.30f, 0.20f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
 		// righttop platform
 		{
 			GameObject* landObject = objects::InstantiatePlatformObject(
-				this, Vector3(3.80f, 0.50f, 0.0f), Vector3(3.30f, 0.20f, 1.0f));
+				this, Vector3(3.50f, 0.550f, 0.0f), Vector3(3.30f, 0.20f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
 		// center land
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
-				this, Vector3(0.0f, 0.370f, 0.0f), Vector3(3.80f, 0.60f, 1.0f));
+				this, Vector3(0.0f, 0.380f, 0.0f), Vector3(3.80f, 0.60f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
 	}

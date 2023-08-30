@@ -156,7 +156,7 @@ namespace da
 		// second left
 		{
 			GameObject* landObject = objects::InstantiatePlatformObject(
-				this, Vector3(-10.950f, -1.62750f, 0.0f), Vector3(5.70f, 0.50f, 1.0f));
+				this, Vector3(-10.7550f, -1.480f, 0.0f), Vector3(5.50f, 0.50f, 1.0f));
 			landObject->GetTransform()->SetRotation(0.0f, 0.0f, 0.7850f);
 			landObject->SetName(L"LandObj");
 		}
@@ -170,12 +170,18 @@ namespace da
 		// second right
 		{
 			GameObject* landObject = objects::InstantiatePlatformObject(
-				this, Vector3(10.250f, -1.62750f, 0.0f), Vector3(6.0f, 0.50f, 1.0f));
+				this, Vector3(10.1250f, -1.480f, 0.0f), Vector3(5.50f, 0.50f, 1.0f));
 			landObject->GetTransform()->SetRotation(0.0f, 0.0f, -0.7850f);
 
 			landObject->SetName(L"LandObj");
 		}
-
+		// second right bottom
+		{
+			GameObject* landObject = objects::InstantiatePlatformObject(
+				this, Vector3(12.70f, -3.450f, 0.0f), Vector3(1.30f, 0.50f, 1.0f));
+			landObject->GetTransform()->SetRotation(0.0f, 0.0f, 0.0f);
+			landObject->SetName(L"LandObj");
+		}
 
 		// third
 		{

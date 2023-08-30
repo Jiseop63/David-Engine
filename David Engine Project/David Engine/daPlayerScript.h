@@ -70,7 +70,7 @@ namespace da
 		EffectPlayerScript* AddEffectObject(GameObject* object);
 		bool IsLeft() { if (0 >= mPlayerDir.x) return true; return false; }
 		bool IsPlayerGround() { return mFootCollider->IsGround(); }
-		void PlayerIsNotGround() { mFootCollider->ApplyGround(false); }
+		void PlayerIsNotGround() { mFootCollider->ClearGroundBuffer(); }
 		bool IsDashRunning() { return mDashRunning; }
 		math::Vector2 GetPlayerDir() { return mPlayerDir; }
 		void SetPlayerVelocity(math::Vector2 vector2) { mRigidbody->OverrideVelocity(vector2, 0.0f); }

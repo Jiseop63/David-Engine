@@ -165,6 +165,7 @@ namespace da
 			{
 				mGroundBuffer = 0;
 				player->ApplyPassingPlatform(false);
+
 				return;
 			}
 		}
@@ -185,7 +186,8 @@ namespace da
 		}
 		else
 		{
-			mGroundBuffer--;
+			if (0 < mGroundBuffer)
+				mGroundBuffer--;
 		}
 
 
