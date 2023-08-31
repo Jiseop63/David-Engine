@@ -5,7 +5,7 @@
 #include "..\\Engine Source\\daMaterial.h"
 #include "..\\Engine Source\\daMeshRenderer.h"
 #include "..\\Engine Source\\daTransform.h"
-
+#include "..\David Engine\daGameDataManager.h"
 #include "daGridScript.h"
 
 
@@ -15,6 +15,8 @@ namespace gui
 	std::vector<Widget*> Editor::mWidgets = {};
 	std::vector<EditorObject*> Editor::mEditorObjects = {};
 	std::vector<DebugObject*> Editor::mDebugObjects = {};
+
+	da::GameDataManager gameManager;
 	void Editor::Initialize()
 	{
 		// Debug Objects
@@ -79,15 +81,18 @@ namespace gui
 	}
 	void Editor::Render()
 	{
-		for (EditorObject* obj : mEditorObjects)
+		if (gameManager.IsDebuging())
 		{
-			obj->Render();
-		}
-		for (const da::graphics::DebugMesh& mesh : renderer::debugMeshs)
-		{
-			DebugRender(mesh);
-		}
-		renderer::debugMeshs.clear();
+			for (EditorObject* obj : mEditorObjects)
+			{
+				obj->Render();
+			}
+			for (const da::graphics::DebugMesh& mesh : renderer::debugMeshs)
+			{
+				DebugRender(mesh);
+			}
+			renderer::debugMeshs.clear();
+		}		
 	}
 	void Editor::Release()
 	{

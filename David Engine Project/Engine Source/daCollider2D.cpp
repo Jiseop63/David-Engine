@@ -153,8 +153,6 @@ namespace da
 		if (eDetectionType::Env != other->GetDetectionType())
 			return;
 
-		
-
 		// env 오브젝트를 이동할때 막히지 않도록 예외처리
 		const std::vector<Script*>& scripts = GetOwner()->GetScripts();
 		PlayerScript* player = dynamic_cast<PlayerScript*>(scripts[0]);
@@ -169,9 +167,6 @@ namespace da
 			}
 		}
 
-		
-
-		
 		if (isEnter)
 		{
 
@@ -182,7 +177,7 @@ namespace da
 				mPlatformCollision = false;
 
 
-			// enter에서 기울기를 적용할겨면, 여기서 버퍼값을 현재값으로 덮어씌우고,
+		// enter에서 기울기를 적용할겨면, 여기서 버퍼값을 현재값으로 덮어씌우고,
 		// exit에서 기울기를 적용할거면, 버퍼값을 따로둔다
 
 		// envDataBuffer와 현재 envData를 비교
@@ -208,11 +203,9 @@ namespace da
 			{
 				// 2) 기울기 비교
 				if (0 != mEnvRotateBuffer)	// 대상이 경사로임
-				{
-					// 평지 -> 오르막 : enter 순서대로 기울기 값을 적용
+				// 평지 -> 오르막 : enter 순서대로 기울기 값을 적용
 					mEnvRotate = mEnvRotateBuffer;
-				}
-					// 오르막 -> 평지 : exit 이후, 버퍼에 적용된 값을 적용
+				// 오르막 -> 평지 : exit 이후, 버퍼에 적용된 값을 적용
 				else
 				{
 					if (0 == mGroundBuffer)
@@ -224,11 +217,9 @@ namespace da
 			{
 				// 2) 기울기 비교
 				if (0 == mEnvRotateBuffer) // 대상이 평지임
-				{
-					// 내리막 -> 평지 : enter 순서대로 기울기 값을 적용
+				// 내리막 -> 평지 : enter 순서대로 기울기 값을 적용
 					mEnvRotate = mEnvRotateBuffer;
-				}
-					// 평지 -> 내리막 : exit 이후, 버퍼에 적용된 값을 적용
+				// 평지 -> 내리막 : exit 이후, 버퍼에 적용된 값을 적용
 				else
 				{
 					if (0 == mGroundBuffer)
@@ -253,9 +244,6 @@ namespace da
 			if (0 < mGroundBuffer)
 				mGroundBuffer--;
 		}
-
-
-		
 		
 	}
 	void Collider2D::wallCollisionCheck(Collider2D* other, bool isEnter)
@@ -308,11 +296,6 @@ namespace da
 		}
 		else if ((0 >= bodyPosition.x || 0 >= envPosition.x))
 			XPos = abs(envPosition.x) + abs(bodyPosition.x);
-
-		//// 둘중 하나만 -인 경우
-		//if ((0 >= bodyPosition.x && 0 <= envPosition.x)
-		//	|| (0 <= bodyPosition.x && 0 >= envPosition.x))
-		//	XPos = abs(bodyPosition.x) - abs(envPosition.x);
 
 		if (0 >= XPos)
 			XPos = abs(XPos);

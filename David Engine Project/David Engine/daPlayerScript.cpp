@@ -101,6 +101,8 @@ namespace da
             GetHeal(); 
         if (Input::GetKeyDown(eKeyCode::T))
             GetDamage();
+        if (Input::GetKeyDown(eKeyCode::Y))
+            GameDataManager::DebugMode();
     }
     void PlayerScript::UIInput()
     {
@@ -135,9 +137,10 @@ namespace da
     {
         dashRegen();
         jumpRegen();
-        bufferedJump();
-        walkDust();
-        endJumping();
+
+        bufferedJump(); // 점프파워 모으기
+        walkEffect();     
+        endJumping();   // 이게 있어야 플렛폼 지나갈때 안막힘
 
         if (mDashRunning)
         {
@@ -376,7 +379,7 @@ namespace da
 
         mTransform->SetPosition(mPos);
     }
-    void PlayerScript::walkDust()
+    void PlayerScript::walkEffect()
     {
         if (ePlayerState::Move != mActiveState)
             return;
@@ -384,11 +387,15 @@ namespace da
         mDustAccumulateTime += (float)Time::DeltaTime();
         if (0.30f <= mDustAccumulateTime)
         {            
-            EffectPlayerScript* playerEffect = callEffect();
-            playerEffect->SetReverse(IsLeft());
-            activeEffect(playerEffect, L"Walking");
+            dustSpawn();
             mDustAccumulateTime = 0.0f;
         }
+    }
+    void PlayerScript::dustSpawn()
+    {
+        EffectPlayerScript* playerEffect = callEffect();
+        playerEffect->SetReverse(IsLeft());
+        activeEffect(playerEffect, L"DustEffect");
     }
 #pragma endregion
 #pragma region Jump & Dash Logic
@@ -534,6 +541,7 @@ namespace da
             mFootCollider->SetCenter(Vector2(0.0f, -0.50f));
             mFootCollider->SetDetectionType(Collider2D::eDetectionType::Default);
         }
+
     }
 #pragma endregion
 #pragma region Collision Func
@@ -546,6 +554,11 @@ namespace da
             GameObject* creatureObj = other->GetOwner();
             CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
             creatureScript->IsFindPlayer(true);
+        }
+        if (Collider2D::eDetectionType::Env == other->GetDetectionType()
+            && mFootCollider->IsGround())
+        {
+            dustSpawn();
         }
     }
     void PlayerScript::OnCollisionExit(Collider2D* other)

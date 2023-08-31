@@ -96,9 +96,13 @@ namespace da
 	private:
 		void CameraMove();
 		void InputMove();
-		void walkDust();
-
+		void walkEffect();
 #pragma endregion
+
+#pragma region Effect
+		void dustSpawn();
+#pragma endregion
+
 
 #pragma region Jump & Dash Logic
 	private:
