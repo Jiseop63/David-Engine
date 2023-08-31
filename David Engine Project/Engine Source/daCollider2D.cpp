@@ -153,11 +153,7 @@ namespace da
 		if (eDetectionType::Env != other->GetDetectionType())
 			return;
 
-		// 플렛폼 이동 예외처리
-		if (enums::eLayerType::Platform == other->GetOwner()->GetLayerType())
-			mPlatformCollision = true;
-		else
-			mPlatformCollision = false;
+		
 
 		// env 오브젝트를 이동할때 막히지 않도록 예외처리
 		const std::vector<Script*>& scripts = GetOwner()->GetScripts();
@@ -178,6 +174,14 @@ namespace da
 		
 		if (isEnter)
 		{
+
+			// 플렛폼 이동 예외처리
+			if (enums::eLayerType::Platform == other->GetOwner()->GetLayerType())
+				mPlatformCollision = true;
+			else
+				mPlatformCollision = false;
+
+
 			// enter에서 기울기를 적용할겨면, 여기서 버퍼값을 현재값으로 덮어씌우고,
 		// exit에서 기울기를 적용할거면, 버퍼값을 따로둔다
 
@@ -251,37 +255,7 @@ namespace da
 		}
 
 
-		//////////////////////////////////////////////////////////////////////////////
-		//0.7850f; // 실제 기울기
-
-		//// 기울기 값을 버퍼에 넣음
-		//mEnvRotateBuffer = other->GetOwner()->GetTransform()->GetRotation().z;
-		//// 기울기 값이 이전과 다름
-		//if (mEnvRotate != mEnvRotateBuffer)
-		//{
-
-		//}
-		//if (0.70f >= mEnvRotateBuffer
-		//	&& -0.70f <= mEnvRotateBuffer)
-		//	mEnvRotate = 0.0f;
-		//else
-		//	mEnvRotate = mEnvRotateBuffer;
-		/////////////////////////////////////////////////////////////////////////////////
-		//
-		//// 바닥 충돌 체크
-		//if (isEnter)
-		//{
-		//	mGroundBuffer++;
-		//	// 이따가 기울기 적용
-		//}
-		//else
-		//{
-		//	if (0 < mGroundBuffer)
-		//		mGroundBuffer--;
-		//	// 기울기 버퍼값을 사용?
-		//}
-
-
+		
 		
 	}
 	void Collider2D::wallCollisionCheck(Collider2D* other, bool isEnter)
