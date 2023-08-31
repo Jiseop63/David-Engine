@@ -129,4 +129,10 @@ namespace da
 		Events* events = FindEvents(name);
 		return events->EndEvent.mEvent;
 	}
+	std::function<void()>& Animator::GetActionEvent(const std::wstring& name, UINT index)
+	{
+		Events* events = FindEvents(name);
+
+		return events->ActionEvents[index].mEvent;
+	}
 }

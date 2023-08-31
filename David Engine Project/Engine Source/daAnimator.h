@@ -25,6 +25,7 @@ namespace da
 			Event StartEvent;
 			Event CompleteEvent;
 			Event EndEvent;
+			std::vector<Event> ActionEvents;
 		};
 
 		Animator();
@@ -47,7 +48,8 @@ namespace da
 		std::function<void()>& StartEvent(const std::wstring& name);
 		std::function<void()>& CompleteEvent(const std::wstring& name);
 		std::function<void()>& EndEvent(const std::wstring& name);
-
+		std::function<void()>& GetActionEvent(const std::wstring& name, UINT index);
+		
 	private:
 		std::map<std::wstring, Animation*>	mAnimations;
 		std::map<std::wstring, Events*>		mEvents;
