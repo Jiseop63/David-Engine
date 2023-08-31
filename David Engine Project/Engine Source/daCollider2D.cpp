@@ -25,9 +25,12 @@ namespace da
 		, mBody(false)
 		, mIsCollision(false)
 		, mGrounded(false)
+		, mGroundBuffer(0)
 		, mPlatformCollision(false)
 		, mWallCollision(eWallCollisionState::None)
 		, mEnvRotate(0.0f)
+		, mEnvRotateBuffer(0.0f)
+		, mEnvPositionBuffer(math::Vector3::Zero)
 	{
 		mColliderID = ColliderNumber++;
 		mColliderColor = math::Vector4(0.0f, 1.0f, 0.0f, 1.0f);
@@ -170,25 +173,113 @@ namespace da
 			}
 		}
 
+		
 
-		// 바닥 충돌 체크
+		
 		if (isEnter)
 		{
-			0.7850f; // 실제 기울기
-			// 기울어진 경우 해당 발판의 회전값을 저장
-			float envRotateZ = other->GetOwner()->GetTransform()->GetRotation().z;
-			if (0.70f >= envRotateZ
-				&& -0.70f <= envRotateZ)
-				mEnvRotate = 0.0f;
-			else
+			// enter에서 기울기를 적용할겨면, 여기서 버퍼값을 현재값으로 덮어씌우고,
+		// exit에서 기울기를 적용할거면, 버퍼값을 따로둔다
+
+		// envDataBuffer와 현재 envData를 비교
+			Transform* envTransform = other->GetOwner()->GetTransform();
+			math::Vector3 envPosition = envTransform->GetPosition();
+			float envRotateZ = envTransform->GetRotation().z;
+
+			// 최초 초기화
+			if (math::Vector3::Zero == mEnvPositionBuffer)
+			{
+				mEnvPositionBuffer = envPosition;
 				mEnvRotate = envRotateZ;
+			}
+			mEnvRotateBuffer = envRotateZ;
+
+			// 1) 높이 비교
+			// 비교대상이 이전보다 위에 있음 : 평지 -> 오르막, 오르막 -> 평지
+			if (mEnvPositionBuffer.y == envPosition.y)
+			{
+				mEnvRotate = mEnvRotateBuffer;
+			}
+			else if (mEnvPositionBuffer.y < envPosition.y) // 이전값과 현재 값을 비교~
+			{
+				// 2) 기울기 비교
+				if (0 != mEnvRotateBuffer)	// 대상이 경사로임
+				{
+					// 평지 -> 오르막 : enter 순서대로 기울기 값을 적용
+					mEnvRotate = mEnvRotateBuffer;
+				}
+					// 오르막 -> 평지 : exit 이후, 버퍼에 적용된 값을 적용
+				else
+				{
+					if (0 == mGroundBuffer)
+						mEnvRotate = mEnvRotateBuffer;
+				}
+			}
+			// 비교대상이 이전보다 아래에 있음 : 평지 -> 내리막, 내리막 -> 평지
+			else
+			{
+				// 2) 기울기 비교
+				if (0 == mEnvRotateBuffer) // 대상이 평지임
+				{
+					// 내리막 -> 평지 : enter 순서대로 기울기 값을 적용
+					mEnvRotate = mEnvRotateBuffer;
+				}
+					// 평지 -> 내리막 : exit 이후, 버퍼에 적용된 값을 적용
+				else
+				{
+					if (0 == mGroundBuffer)
+						mEnvRotate = mEnvRotateBuffer;
+				}
+			}
+
+			// 높이 비교가 끝났으면, 버퍼에 달아주기 (enter에서만)
+			mEnvPositionBuffer = envPosition;
+			
+			// ground 적용
 			mGroundBuffer++;
 		}
+		// exit
 		else
 		{
+			// 두 값이 다르면 버퍼에 있는 값을 적용함
+			if (mEnvRotateBuffer != mEnvRotate)
+				mEnvRotate = mEnvRotateBuffer;
+
+			// ground 적용
 			if (0 < mGroundBuffer)
 				mGroundBuffer--;
 		}
+
+
+		//////////////////////////////////////////////////////////////////////////////
+		//0.7850f; // 실제 기울기
+
+		//// 기울기 값을 버퍼에 넣음
+		//mEnvRotateBuffer = other->GetOwner()->GetTransform()->GetRotation().z;
+		//// 기울기 값이 이전과 다름
+		//if (mEnvRotate != mEnvRotateBuffer)
+		//{
+
+		//}
+		//if (0.70f >= mEnvRotateBuffer
+		//	&& -0.70f <= mEnvRotateBuffer)
+		//	mEnvRotate = 0.0f;
+		//else
+		//	mEnvRotate = mEnvRotateBuffer;
+		/////////////////////////////////////////////////////////////////////////////////
+		//
+		//// 바닥 충돌 체크
+		//if (isEnter)
+		//{
+		//	mGroundBuffer++;
+		//	// 이따가 기울기 적용
+		//}
+		//else
+		//{
+		//	if (0 < mGroundBuffer)
+		//		mGroundBuffer--;
+		//	// 기울기 버퍼값을 사용?
+		//}
 
 
 		

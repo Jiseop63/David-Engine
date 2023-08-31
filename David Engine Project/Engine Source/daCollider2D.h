@@ -109,5 +109,7 @@ namespace da
 		eWallCollisionState		mWallCollision;		// Body Collider
 
 		float					mEnvRotate;
+		float					mEnvRotateBuffer;
+		math::Vector3			mEnvPositionBuffer;
 	};
 }
