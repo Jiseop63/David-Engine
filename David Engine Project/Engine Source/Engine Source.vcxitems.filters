@@ -100,6 +100,12 @@
     <Filter Include="Graphics\CS">
       <UniqueIdentifier>{6832b206-e4f5-4a32-b068-1b4aedcf6cfe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\Sound">
+      <UniqueIdentifier>{002bc412-a9ee-4d94-8b0b-36f3563d8508}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Resource\AudioClip">
+      <UniqueIdentifier>{d8ba1746-dc4c-4360-9b9d-d13e74e4063b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)daMath.h">
@@ -228,6 +234,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daParticleShader.h">
       <Filter>Graphics\CS</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daFmod.h">
+      <Filter>Common\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daAudioSource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daAudioClip.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp">
@@ -335,6 +346,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daParticleShader.cpp">
       <Filter>Graphics\CS</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daFmod.cpp">
+      <Filter>Common\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daAudioSource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)daMath.inl">

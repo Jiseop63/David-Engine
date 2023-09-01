@@ -10,6 +10,7 @@ namespace da::enums
 		Material,
 		Animation,
 		ComputeShader,
+		AudioClip,
 		End,
 	};
 
@@ -57,6 +58,8 @@ namespace da::enums
 		Script,
 		Light,
 		Camera,
+		AudioListener,
+		AudioSource,
 		End,
 	};
 
