@@ -3,9 +3,10 @@
 #include "..\\Engine SOURCE\\David Engine.h"
 #include "..\\Engine SOURCE\\daGraphics.h"
 
-#include "guiWidget.h"
-#include "guiEditorObject.h"
-#include "guiDebugObject.h"
+#define IMGUI_DEFINE_MATH_OPERATORS
+#include "imgui.h"
+#include "imgui_impl_win32.h"
+#include "imgui_impl_dx11.h"
 
 namespace gui
 {
@@ -20,11 +21,15 @@ namespace gui
 		static void Render();
 		static void Release();
 
-		static void DebugRender(const da::graphics::DebugMesh& mesh);
 
 	private:
-		static std::vector<Widget*> mWidgets;
-		static std::vector<EditorObject*> mEditorObjects;
-		static std::vector<DebugObject*> mDebugObjects;
+		static void InitializeDearImgui();
+		static void InitializeObjects();
+		static void DearImguiRender();
+		static void DebugRender(const da::graphics::DebugMesh& mesh);
+	private:
+		static std::vector<class Widget*> mWidgets;
+		static std::vector<class EditorObject*> mEditorObjects;
+		static std::vector<class DebugObject*> mDebugObjects;
 	};
 }
