@@ -17,7 +17,7 @@ namespace da
 		EffectScript::Initialize();
 		mEffectTransform->SetScale(2.50f, 2.50f, 1.0f);
 		mEffectAnimator->Create(L"GreatSwing", Resources::Find<Texture>(L"GreatSwingFX"), math::Vector2::Zero, math::Vector2(32.0f, 25.0f), 4, math::Vector2::Zero, 0.0750f);
-		mEffectAnimator->Create(L"Slash", Resources::Find<Texture>(L"SlashFX"), math::Vector2::Zero, math::Vector2(42.0f, 5.0f), 4, math::Vector2::Zero, 0.0750f, 35.0f);
+		mEffectAnimator->Create(L"Slash", Resources::Find<Texture>(L"SlashFX"), math::Vector2::Zero, math::Vector2(42.0f, 5.0f), 4, math::Vector2::Zero, 0.0750f, 25.0f);
 		// 종료 이벤트 넣어주기
 		mEffectAnimator->CompleteEvent(L"GreatSwing") = std::bind(&EffectWeaponScript::retInactive, this);
 		mEffectAnimator->CompleteEvent(L"Slash") = std::bind(&EffectWeaponScript::retInactive, this);

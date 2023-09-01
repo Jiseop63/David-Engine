@@ -18,6 +18,8 @@ namespace da
 
 	da::math::Vector2 GameDataManager::mCameraMovableRange = Vector2::Zero;
 	da::math::Vector2 GameDataManager::mCameraMovePosition = Vector2::Zero;
+	
+	bool GameDataManager::mDebuging = false;
 
 	void GameDataManager::Initialize()
 	{

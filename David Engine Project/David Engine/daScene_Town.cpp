@@ -120,6 +120,8 @@ namespace da
 			floorTr->SetScale(Vector3(19.180f * 4.0f, 1.920f * 4.0f, FrontLayerZ));
 			floorTr->SetPosition(Vector3(0.0f, -1.920f, ObjectZ));
 		}
+
+
 		// land
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
@@ -143,29 +145,41 @@ namespace da
 		// first
 		{
 			GameObject* landObject = objects::InstantiatePlatformObject(
-				this, Vector3(-26.60f, 1.40f, 0.0f), Vector3(8.50f, 1.0f, 1.0f));
-			landObject->SetName(L"LandObj");
+				this, Vector3(-26.6750f, 1.6750f, 0.0f), Vector3(8.50f, 0.50f, 1.0f));
+			landObject->SetName(L"PlatformObj");
 		}
-		
+		// first right
+		{
+			GameObject* landObject = objects::InstantiatePlatformObject(
+				this, Vector3(-20.0f, -0.770f, 0.0f), Vector3(7.20f, 0.50f, 1.0f));
+			landObject->GetTransform()->SetRotation(0.0f, 0.0f, -0.7850f);
+			landObject->SetName(L"PlatformObj");
+		}
+		// first right bottom
+		{
+			GameObject* landObject = objects::InstantiatePlatformObject(
+				this, Vector3(-16.950f, -3.450f, 0.0f), Vector3(0.70f, 0.50f, 1.0f));
+			landObject->SetName(L"PlatformObj");
+		}
 		// second
 		{
 			GameObject* landObject = objects::InstantiatePlatformObject(
 				this, Vector3(-0.34750f, 0.150f, 0.0f), Vector3(17.30f, 1.0f, 1.0f));
-			landObject->SetName(L"LandObj");
+			landObject->SetName(L"PlatformObj");
 		}
 		// second left
 		{
 			GameObject* landObject = objects::InstantiatePlatformObject(
 				this, Vector3(-10.7550f, -1.480f, 0.0f), Vector3(5.50f, 0.50f, 1.0f));
 			landObject->GetTransform()->SetRotation(0.0f, 0.0f, 0.7850f);
-			landObject->SetName(L"LandObj");
+			landObject->SetName(L"PlatformObj");
 		}
 		// second left bottom
 		{
 			GameObject* landObject = objects::InstantiatePlatformObject(
 				this, Vector3(-13.4250f, -3.450f, 0.0f), Vector3(1.30f, 0.50f, 1.0f));
 			landObject->GetTransform()->SetRotation(0.0f, 0.0f, 0.0f);
-			landObject->SetName(L"LandObj");
+			landObject->SetName(L"PlatformObj");
 		}
 		// second right
 		{
@@ -173,21 +187,34 @@ namespace da
 				this, Vector3(10.1250f, -1.480f, 0.0f), Vector3(5.50f, 0.50f, 1.0f));
 			landObject->GetTransform()->SetRotation(0.0f, 0.0f, -0.7850f);
 
-			landObject->SetName(L"LandObj");
+			landObject->SetName(L"PlatformObj");
 		}
 		// second right bottom
 		{
 			GameObject* landObject = objects::InstantiatePlatformObject(
 				this, Vector3(12.70f, -3.450f, 0.0f), Vector3(1.30f, 0.50f, 1.0f));
 			landObject->GetTransform()->SetRotation(0.0f, 0.0f, 0.0f);
-			landObject->SetName(L"LandObj");
+			landObject->SetName(L"PlatformObj");
 		}
 
 		// third
 		{
 			GameObject* landObject = objects::InstantiatePlatformObject(
 				this, Vector3(25.70f, 1.40f, 0.0f), Vector3(8.0f, 1.0f, 1.0f));
-			landObject->SetName(L"LandObj");
+			landObject->SetName(L"PlatformObj");
+		}
+		// third left
+		{
+			GameObject* landObject = objects::InstantiatePlatformObject(
+				this, Vector3(19.30f, -0.870f, 0.0f), Vector3(7.20f, 0.50f, 1.0f));
+			landObject->GetTransform()->SetRotation(0.0f, 0.0f, 0.7850f);
+			landObject->SetName(L"PlatformObj");
+		}
+		// third left bottom
+		{
+			GameObject* landObject = objects::InstantiatePlatformObject(
+				this, Vector3(16.30f, -3.450f, 0.0f), Vector3(0.70f, 0.50f, 1.0f));
+			landObject->SetName(L"PlatformObj");
 		}
 	}
 	void Scene_Town::addUIObjects()

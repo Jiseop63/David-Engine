@@ -10,6 +10,16 @@ namespace da
 		static void InitializePlayerStat();
 
 	public:
+		static void DebugMode()
+		{
+			if (mDebuging)
+				mDebuging = false; 
+			else
+				mDebuging = true;
+		}
+		static bool IsDebuging() { return mDebuging; }
+
+	public:
 		static structs::sPlayerStat& GetPlayerStat() { return mPlayerStat; }
 		static structs::sJumpCount& GetJumpCount() { return mJumpCount; }
 		static structs::sDashCount& GetDashCount() { return mDashCount; }
@@ -54,6 +64,9 @@ namespace da
 
 		static da::math::Vector2 mCameraMovableRange;
 		static da::math::Vector2 mCameraMovePosition;
+
+
+		static bool mDebuging;
 #pragma endregion
 	};
 }

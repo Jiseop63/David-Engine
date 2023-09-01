@@ -6,9 +6,6 @@
 #include "..\\Engine Source\\daMeshRenderer.h"
 #include "..\\Engine Source\\daTransform.h"
 
-#include "guiWidget.h"
-#include "guiEditorObject.h"
-#include "guiDebugObject.h"
 #include "daGridScript.h"
 
 #include "Engine Source/daApplication.h"
@@ -22,6 +19,8 @@ namespace gui
 	std::vector<Widget*> Editor::mWidgets = {};
 	std::vector<EditorObject*> Editor::mEditorObjects = {};
 	std::vector<DebugObject*> Editor::mDebugObjects = {};
+
+	da::GameDataManager gameManager;
 	void Editor::Initialize()
 	{
 		InitializeDearImgui();
