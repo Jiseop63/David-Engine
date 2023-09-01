@@ -6,13 +6,16 @@
 #include "..\\Engine Source\\daMeshRenderer.h"
 #include "..\\Engine Source\\daTransform.h"
 
-#include "daGridScript.h"
+#include "guiWidget.h"
+#include "guiEditorObject.h"
+#include "guiDebugObject.h"
 
+#include "daGridScript.h"
+#include "David Engine/daGameDataManager.h"
 #include "Engine Source/daApplication.h"
 #include "Engine Source/daGraphicDevice Dx11.h"
-
 extern da::Application application;
-
+extern da::GameDataManager gameManager;
 namespace gui
 {
 	using namespace da::enums;
@@ -48,16 +51,20 @@ namespace gui
 	}
 	void Editor::Render()
 	{
-		for (EditorObject* obj : mEditorObjects)
+		if (gameManager.IsDebuging())
 		{
-			obj->Render();
+			for (EditorObject* obj : mEditorObjects)
+			{
+				obj->Render();
+			}
+			for (const da::graphics::DebugMesh& mesh : renderer::debugMeshs)
+			{
+				DebugRender(mesh);
+			}
+			renderer::debugMeshs.clear();
+			DearImguiRender();
 		}
-		for (const da::graphics::DebugMesh& mesh : renderer::debugMeshs)
-		{
-			DebugRender(mesh);
-		}
-		renderer::debugMeshs.clear();
-		DearImguiRender();
+		
 	}
 	void Editor::Release()
 	{
