@@ -2,6 +2,9 @@
 
 namespace da
 {
+	FMOD::Studio::System* Fmod::mSystem = nullptr;
+	FMOD::System* Fmod::mCoreSystem = nullptr;
+
 	void Fmod::Initialize()
 	{
 		void* extraDriverData = NULL;

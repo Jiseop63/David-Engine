@@ -14,6 +14,9 @@
 #include "daCollider2D.h"
 #include "daAnimator.h"
 #include "daLight.h"
+#include "daAudioListener.h"
+#include "daAudioClip.h"
+#include "daAudioSource.h"
 
 // Camera
 #include "daCameraObject.h"

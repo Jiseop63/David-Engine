@@ -244,7 +244,8 @@ namespace da::objects
 		cameraObj->SetCameraComponent(camera);
 		CameraScript* script = cameraObj->AddComponent<CameraScript>();
 		script->SetCamera(camera);
-				
+		cameraObj->AddComponent<AudioListener>();
+
 		// 서순 중요함
 		cameraObj->Initialize();
 		camera->TurnLayerMask(enums::eLayerType::Background, false);

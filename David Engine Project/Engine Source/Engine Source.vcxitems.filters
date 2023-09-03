@@ -34,24 +34,6 @@
     <Filter Include="Common\Header">
       <UniqueIdentifier>{bd8e1546-a87c-4305-95b9-23860e9e2307}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\Resource">
-      <UniqueIdentifier>{42f0267c-f0c1-4ec6-84c6-b4deddc5fe5c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Resource\Base">
-      <UniqueIdentifier>{5925d4c3-0e83-402f-92e8-826fb7fb2cac}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Resource\Mesh">
-      <UniqueIdentifier>{5110afc4-b0ca-4f56-8b0f-938a212564de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Resource\Material">
-      <UniqueIdentifier>{be3a9c1b-f3ac-450e-a82b-79416b6c5f8f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Resource\Shader">
-      <UniqueIdentifier>{c18c5351-3c2e-46f1-ae5f-43a695191a66}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Resource\Texture">
-      <UniqueIdentifier>{c8f35b83-b1cf-4cbb-bff3-2c69fa24c164}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{97b33a37-8828-44c3-b453-ba450772aeff}</UniqueIdentifier>
     </Filter>
@@ -91,20 +73,53 @@
     <Filter Include="System\Component\Animator">
       <UniqueIdentifier>{52e8edf9-9330-43d4-bb4c-241df2077f6a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\Resource\Animation">
-      <UniqueIdentifier>{a91eec0f-663d-4e5f-aaf9-e3d28c31332c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System\Component\Light">
       <UniqueIdentifier>{d9b4e6d2-1435-456e-ae62-f38a5d4d79ee}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\CS">
       <UniqueIdentifier>{6832b206-e4f5-4a32-b068-1b4aedcf6cfe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common\Sound">
+    <Filter Include="System\Component\Audio">
+      <UniqueIdentifier>{f9f90712-d351-4bc2-af29-f198fe347c5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{42f0267c-f0c1-4ec6-84c6-b4deddc5fe5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Base">
+      <UniqueIdentifier>{5925d4c3-0e83-402f-92e8-826fb7fb2cac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Mesh">
+      <UniqueIdentifier>{5110afc4-b0ca-4f56-8b0f-938a212564de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Material">
+      <UniqueIdentifier>{be3a9c1b-f3ac-450e-a82b-79416b6c5f8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Shader">
+      <UniqueIdentifier>{c18c5351-3c2e-46f1-ae5f-43a695191a66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Texture">
+      <UniqueIdentifier>{c8f35b83-b1cf-4cbb-bff3-2c69fa24c164}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Animation">
+      <UniqueIdentifier>{a91eec0f-663d-4e5f-aaf9-e3d28c31332c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\AudioClip">
+      <UniqueIdentifier>{d8ba1746-dc4c-4360-9b9d-d13e74e4063b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Component\ParticleRender">
+      <UniqueIdentifier>{b0305e67-b115-47a0-8cf5-e64a68f446fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Manager\Sound">
       <UniqueIdentifier>{002bc412-a9ee-4d94-8b0b-36f3563d8508}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\Resource\AudioClip">
-      <UniqueIdentifier>{d8ba1746-dc4c-4360-9b9d-d13e74e4063b}</UniqueIdentifier>
+    <Filter Include="System\Manager\Collision">
+      <UniqueIdentifier>{9cb0991d-e7cf-4575-9aff-d6d01be14595}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Manager\Scene">
+      <UniqueIdentifier>{cbd6e2b7-46aa-4817-8219-199583752e23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Manager\Font">
+      <UniqueIdentifier>{adfad570-fdf8-4d96-927f-148c770bab0f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -124,16 +139,16 @@
       <Filter>Common\Input</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daShader.h">
-      <Filter>Graphics\Resource\Shader</Filter>
+      <Filter>Resource\Shader</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daMesh.h">
-      <Filter>Graphics\Resource\Mesh</Filter>
+      <Filter>Resource\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daTexture.h">
-      <Filter>Graphics\Resource\Texture</Filter>
+      <Filter>Resource\Texture</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daMaterial.h">
-      <Filter>Graphics\Resource\Material</Filter>
+      <Filter>Resource\Material</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daComponent.h">
       <Filter>System\Component\Base</Filter>
@@ -190,10 +205,10 @@
       <Filter>System\Component\Rigidbody</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daResource.h">
-      <Filter>Graphics\Resource\Base</Filter>
+      <Filter>Resource\Base</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daResources.h">
-      <Filter>Graphics\Resource\Base</Filter>
+      <Filter>Resource\Base</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daStructs.h">
       <Filter>Common\Header</Filter>
@@ -204,17 +219,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daCollider2D.h">
       <Filter>System\Component\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daSceneManager.h">
-      <Filter>System\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daCollisionManager.h">
-      <Filter>System\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daAnimator.h">
       <Filter>System\Component\Animator</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daAnimation.h">
-      <Filter>Graphics\Resource\Animation</Filter>
+      <Filter>Resource\Animation</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daLight.h">
       <Filter>System\Component\Light</Filter>
@@ -228,17 +237,33 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daPaintShader.h">
       <Filter>Graphics\CS</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daParticleRenderer.h">
-      <Filter>Graphics\CS</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)daParticleShader.h">
       <Filter>Graphics\CS</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daFmod.h">
-      <Filter>Common\Sound</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daAudioListener.h">
+      <Filter>System\Component\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)daAudioSource.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)daAudioClip.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daAudioClip.h">
+      <Filter>System\Component\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daAudioSource.h">
+      <Filter>Resource\AudioClip</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daParticleRenderer.h">
+      <Filter>System\Component\ParticleRender</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daFmod.h">
+      <Filter>System\Manager\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daCollisionManager.h">
+      <Filter>System\Manager\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daSceneManager.h">
+      <Filter>System\Manager\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)daFontWrapper.h">
+      <Filter>System\Manager\Font</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMath.cpp">
@@ -257,16 +282,16 @@
       <Filter>High Level Interface</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daShader.cpp">
-      <Filter>Graphics\Resource\Shader</Filter>
+      <Filter>Resource\Shader</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMesh.cpp">
-      <Filter>Graphics\Resource\Mesh</Filter>
+      <Filter>Resource\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daTexture.cpp">
-      <Filter>Graphics\Resource\Texture</Filter>
+      <Filter>Resource\Texture</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daMaterial.cpp">
-      <Filter>Graphics\Resource\Material</Filter>
+      <Filter>Resource\Material</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daComponent.cpp">
       <Filter>System\Component\Base</Filter>
@@ -308,25 +333,19 @@
       <Filter>System\Component\Rigidbody</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daResource.cpp">
-      <Filter>Graphics\Resource\Base</Filter>
+      <Filter>Resource\Base</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daResources.cpp">
-      <Filter>Graphics\Resource\Base</Filter>
+      <Filter>Resource\Base</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daCollider2D.cpp">
       <Filter>System\Component\Collider</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daSceneManager.cpp">
-      <Filter>System\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daCollisionManager.cpp">
-      <Filter>System\Manager</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daAnimator.cpp">
       <Filter>System\Component\Animator</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daAnimation.cpp">
-      <Filter>Graphics\Resource\Animation</Filter>
+      <Filter>Resource\Animation</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daLight.cpp">
       <Filter>System\Component\Light</Filter>
@@ -340,16 +359,33 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daPaintShader.cpp">
       <Filter>Graphics\CS</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daParticleRenderer.cpp">
-      <Filter>Graphics\CS</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)daParticleShader.cpp">
       <Filter>Graphics\CS</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daFmod.cpp">
-      <Filter>Common\Sound</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daAudioClip.cpp">
+      <Filter>System\Component\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)daAudioSource.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daAudioListener.cpp">
+      <Filter>System\Component\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daAudioSource.cpp">
+      <Filter>Resource\AudioClip</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daParticleRenderer.cpp">
+      <Filter>System\Component\ParticleRender</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daFmod.cpp">
+      <Filter>System\Manager\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daCollisionManager.cpp">
+      <Filter>System\Manager\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daSceneManager.cpp">
+      <Filter>System\Manager\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)daFontWrapper.cpp">
+      <Filter>System\Manager\Font</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)daMath.inl">

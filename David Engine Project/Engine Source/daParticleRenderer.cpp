@@ -35,6 +35,10 @@ namespace da
 	}
 	ParticleRenderer::~ParticleRenderer()
 	{
+		delete mParticleBuffer;
+		mParticleBuffer = nullptr;
+		delete mSharedBuffer;
+		mSharedBuffer = nullptr;
 	}
 	void ParticleRenderer::Initialize()
 	{
@@ -64,9 +68,6 @@ namespace da
 
 		mSharedBuffer = new da::graphics::StructuredBuffer();
 		mSharedBuffer->Create(sizeof(ParticleShared), 1, eViewType::UAV, nullptr, true);
-	}
-	void ParticleRenderer::Update()
-	{
 	}
 	void ParticleRenderer::LateUpdate()
 	{

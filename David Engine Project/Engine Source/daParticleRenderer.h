@@ -12,7 +12,6 @@ namespace da
 		virtual ~ParticleRenderer();
 
 		virtual void Initialize();
-		virtual void Update();
 		virtual void LateUpdate();
 		virtual void Render();
 

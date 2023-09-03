@@ -4,6 +4,8 @@
 #include "daRenderer.h"
 #include "daSceneManager.h"
 #include "daCollisionManager.h"
+#include "daFmod.h"
+#include "daFontWrapper.h"
 
 namespace da
 {
@@ -32,6 +34,8 @@ namespace da
 	{
 		Time::Initialize();
 		Input::Initialize();
+		Fmod::Initialize();
+		FontWrapper::Initialize();
 
 		renderer::Initialize();
 		SceneManager::Initialize();
@@ -52,11 +56,13 @@ namespace da
 
 	void Application::Render()
 	{
-		Time::Render();
-		//Input::Render();
-
 		graphicDevice->ClearTarget();
 		graphicDevice->UpdateViewPort();
+
+		Time::Render();
+		//Input::Render();
+		//FontWrapper::DrawFont(L"TEXT", 10.f, 30.f, 20, FONT_RGBA(255, 0, 255, 255));
+
 		
 		renderer::Render();
 	}

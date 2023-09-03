@@ -18,6 +18,8 @@
 #include "daPaintShader.h"
 #include "daParticleRenderer.h"
 
+
+
 extern da::Application application;
 
 namespace da
@@ -150,12 +152,12 @@ namespace da
 		GameObject* lightObj = objects::InstantiateCommonObject
 			<GameObject>(this, enums::eLayerType::Light, L"NoneMaterial");
 		SceneManager::SetLightObject(lightObj);
-		{
-			Light* light = lightObj->AddComponent<Light>();
-			light->SetLightType(enums::eLightType::Directional);
-			light->SetColor(math::Vector4(0.90f, 0.90f, 0.90f, 1.0f));
-		}
-
+		Light* light = lightObj->AddComponent<Light>();
+		light->SetLightType(enums::eLightType::Directional);
+		light->SetColor(math::Vector4(0.90f, 0.90f, 0.90f, 1.0f));
+		AudioSource* audioSource = lightObj->AddComponent<AudioSource>();
+		audioSource->SetClip(Resources::Load<AudioClip>(L"TestSound", L"..\\Resources\\Sound\\0.mp3"));
+		audioSource->Play();
 #pragma region HUD
 
 		// hud - done

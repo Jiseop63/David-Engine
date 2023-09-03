@@ -20,6 +20,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daAnimator.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daApplication.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daAudioClip.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daAudioListener.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daAudioSource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daCollider2D.h" />
@@ -30,6 +31,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)daEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daEnums.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daFmod.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)daFontWrapper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daGameObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daGraphics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)daInput.h" />
@@ -64,6 +66,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daAnimation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daAnimator.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daApplication.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daAudioClip.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daAudioListener.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daAudioSource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daCollider2D.cpp" />
@@ -73,6 +77,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)daConstantBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daEntity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daFmod.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)daFontWrapper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daGameObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daGraphicDevice Dx11.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)daInput.cpp" />

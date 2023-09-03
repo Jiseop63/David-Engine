@@ -9,6 +9,9 @@ namespace da
 		: Component(enums::eComponentType::AudioListener)
 	{
 	}
+	AudioListener::~AudioListener()
+	{
+	}
 	void AudioListener::LateUpdate()
 	{
 		Transform* tr = GetOwner()->GetComponent<Transform>();

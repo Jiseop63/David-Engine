@@ -9,6 +9,8 @@
 #include "daLoadScenes.h"
 #include "daGameDataManager.h"
 #include "guiEditor.h"
+#include "daFmod.h"
+#include "daFontWrapper.h"
 
 #ifdef _DEBUG
 #pragma comment(lib, "..\\x64\\Debug\\David Engine.lib")
@@ -81,6 +83,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     renderer::Release();
     da::SceneManager::Release();
+    da::Fmod::Release();
+    da::FontWrapper::Release();
     gui::Editor::Release();
     return (int) msg.wParam;
 }
