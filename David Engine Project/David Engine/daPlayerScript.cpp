@@ -102,7 +102,11 @@ namespace da
         if (Input::GetKeyDown(eKeyCode::T))
             GetDamage();
         if (Input::GetKeyDown(eKeyCode::Y))
+        {
             GameDataManager::DebugMode();
+            bool isDebug = GameDataManager::IsDebuging();
+            int a = 0;
+        }
     }
     void PlayerScript::UIInput()
     {

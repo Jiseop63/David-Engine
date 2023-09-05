@@ -19,10 +19,10 @@ namespace da
 	Animation::~Animation()
 	{
 	}
-	void Animation::LateUpdate()
+	UINT Animation::LateUpdate()
 	{
 		if (mComplete)
-			return;
+			return -1;
 		mDurationTime += (float)Time::DeltaTime();
 
 		if (mSprites[mIndex].Duration <= mDurationTime)
@@ -35,7 +35,9 @@ namespace da
 				mIndex = (int)mSprites.size() - 1;
 				mComplete = true;
 			}
+			return mIndex;
 		}
+		return -1;
 	}
 	void Animation::Create(const std::wstring& name
 		, std::shared_ptr<graphics::Texture> atlas

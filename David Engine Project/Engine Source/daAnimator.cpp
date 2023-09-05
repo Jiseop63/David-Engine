@@ -41,7 +41,15 @@ namespace da
 				mActiveAnimation->Reset();
 		}
 
-		mActiveAnimation->LateUpdate();
+		UINT frameIndex = mActiveAnimation->LateUpdate();
+		if (events)
+		{
+			// Complete가 아니고, 프레임 중간에 ActionEvent가 있다면 그것을 실행
+			if (frameIndex != -1 && events->ActionEvents[frameIndex].mEvent)
+			{
+				events->ActionEvents[frameIndex].mEvent();
+			}
+		}
 	}
 	void Animator::Create(const std::wstring& name
 		, std::shared_ptr<graphics::Texture> atlas, math::Vector2 leftTop
@@ -62,7 +70,9 @@ namespace da
 			return;
 
 		events = new Events();
+		events->ActionEvents.resize(columnLength);
 		mEvents.insert( std::make_pair(name, events) );
+
 	}
 	Animation* Animator::FindAnimation(const std::wstring& name)
 	{
@@ -88,13 +98,15 @@ namespace da
 	{
 		Animation* prevAnimation = mActiveAnimation;
 		Events* events;
+		// EndEvent 조건
 		if (prevAnimation)
 		{
 			events = FindEvents(prevAnimation->GetKey());
 			if (events)
 				events->EndEvent();
-		}		
+		}
 
+		// 다음 애니메이션 실행
 		Animation* animation = FindAnimation(name);
 		if (animation)
 		{
@@ -129,7 +141,7 @@ namespace da
 		Events* events = FindEvents(name);
 		return events->EndEvent.mEvent;
 	}
-	std::function<void()>& Animator::GetActionEvent(const std::wstring& name, UINT index)
+	std::function<void()>& Animator::ActionEvent(const std::wstring& name, UINT index)
 	{
 		Events* events = FindEvents(name);
 

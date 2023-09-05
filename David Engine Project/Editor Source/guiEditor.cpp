@@ -51,7 +51,6 @@ namespace gui
 	}
 	void Editor::Render()
 	{
-		RenderDearImgui();
 		if (gameManager.IsDebuging())
 		{
 			for (EditorObject* obj : mEditorObjects)
@@ -64,6 +63,8 @@ namespace gui
 			}
 			renderer::debugMeshs.clear();
 		}
+
+		RenderDearImgui();
 		
 	}
 	void Editor::Release()

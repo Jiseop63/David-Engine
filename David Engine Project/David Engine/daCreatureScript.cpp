@@ -100,6 +100,18 @@ namespace da
 		mEnemyEffectScript = effectObject->AddComponent<EffectEnemyScript>();
 		return mEnemyEffectScript;
 	}
+	void CreatureScript::OnCollisionEnter(Collider2D* other)
+	{
+		// 플렛폼에 충돌
+		if (enums::eLayerType::Platform == other->GetOwner()->GetLayerType())
+		{
+			// 어디가 충돌했는지 확인하기
+			if (mCreatureBodyCollider->IsCollision())
+				mBodyCollision = false;
+			if (mCreatureFootCollider->IsCollision())
+				mFootCollision = false;
+		}
+	}
 	void CreatureScript::OnDamaged()
 	{
 		if (0 >= mCreatureStat.CurHP)

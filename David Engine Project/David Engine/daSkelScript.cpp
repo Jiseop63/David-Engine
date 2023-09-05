@@ -15,16 +15,17 @@
 namespace da
 {
 	SkelScript::SkelScript()
-		: mGotoReturn(false)
-		, mReturnAccumulateTime(0.0f)
-		, mReturnDelayTime(0.0f)
-
-		, mChaseDurationTime(0.0f)
+		: mChaseDurationTime(0.0f)
 		, mChaseDurationDecay(0.0f)
+		, mDistanceFromPlayer(0.0f)
 
 		, mPrepareAttack(false)
 		, mPrepareDurationTime(0.0f)
 		, mPrepareDurationDecay(0.0f)
+
+		, mAttackProgress(false)
+		, mReadyDurationTime(0.0f)
+		, mReadyDurationDecay(0.0f)
 	{
 	}
 
@@ -60,10 +61,14 @@ namespace da
 		mCreatureAnimator->PlayAnimation(L"SkelIdle");
 
 		// 스텟 초기화
-		mCreatureStat.MoveSpeed = 1.750f;		
+		mCreatureStat.MoveSpeed = 1.750f;
 
-		mChaseDurationTime = 0.50f;
-		mPrepareDurationTime = 1.750f;
+		mChaseDurationTime = 1.50f;
+		mChaseDurationDecay = mChaseDurationTime;
+		mPrepareDurationTime = 0.250f;
+		mPrepareDurationDecay = mPrepareDurationTime;
+		mReadyDurationTime = 2.50f;
+		mReadyDurationDecay = mReadyDurationTime;
 	}
 
 	void SkelScript::Update()
@@ -100,28 +105,6 @@ namespace da
 
 
 
-	void SkelScript::chasingTimeout()
-	{
-		if (eCreatureState::Chase != mCreatureActiveState)
-			return;
-
-		if (eCreatureState::Chase == mCreatureActiveState
-			&& mDetectPlayer)
-			mReturnAccumulateTime = 0.0f;
-		else
-		{
-			mReturnAccumulateTime += (float)Time::DeltaTime();
-			if (mReturnDelayTime <= mReturnAccumulateTime)
-			{
-				mReturnAccumulateTime = 0.0f;
-				mGotoReturn = true;
-			}
-		}
-	}
-	void SkelScript::attackCooldownReady()
-	{
-		
-	}
 	
 #pragma region FSM Func
 	void SkelScript::skelFSM()
@@ -166,9 +149,28 @@ namespace da
 		calcCreatureDir();
 
 		// 이동하기 *이동하기전에 벽 충돌 방향 확인하는 코드 필요함
-		math::Vector3 skelPosition = mCreatureTransform->GetPosition();
-		skelPosition.x += mCreatureDir.x * mCreatureStat.MoveSpeed * (float)Time::DeltaTime();
-		mCreatureTransform->SetPosition(skelPosition);				
+		Collider2D::eWallCollisionState wallCollisionState = mCreatureBodyCollider->IsWallCollision();				// 벽 충돌 체크
+		math::Vector3 skelPosition = mCreatureTransform->GetPosition();												// 내 위치
+		float moveMagnitude = mCreatureStat.MoveSpeed * (float)Time::DeltaTime();									// 이동량
+		math::Vector2 moveDir = daRotateVector2(mCreatureDir, mCreatureFootCollider->GetEnvRotate());	// 회전까지 고려한 이동방향
+		math::Vector2 movePosition = moveDir * moveMagnitude;														// 이동위치
+		skelPosition.x += movePosition.x;																			// 이동한 위치
+		skelPosition.y += movePosition.y;																			// 이동한 위치
+
+		// 벽 충돌 이동제한
+		if (0 <= mCreatureDir.x)
+		{
+			if (Collider2D::eWallCollisionState::Right == wallCollisionState)
+				return;
+			mCreatureTransform->SetPosition(skelPosition);
+		}
+		else
+		{
+			if (Collider2D::eWallCollisionState::Left == wallCollisionState)
+				return;
+			mCreatureTransform->SetPosition(skelPosition);
+		}
+
 	}
 	void SkelScript::findingPlayer()
 	{
@@ -209,7 +211,7 @@ namespace da
 
 	void SkelScript::prepareForAttack()
 	{
-		// 선딜이 끝났다면 종료
+		// 선딜이 끝났다면 넘기기
 		if (mPrepareAttack)
 			return;
 
@@ -223,23 +225,24 @@ namespace da
 	}
 	void SkelScript::doAttack()
 	{
+		// 아직 선딜레이가 남았으면 넘기기
 		if (!mPrepareAttack)
 			return;
-		else
+
+		// 공격하기 전이라면
+		if (!mAttackProgress)
 		{
-			if (!mAttackProgress)
-			{
-				mCreatureAnimator->PlayAnimation(L"SkelIdle");
-				mAttackProgress = true;								// 애니메이션 호출 제한
-			}
-				mCreatureWeaponScript->DoAttack();
+			mCreatureAnimator->PlayAnimation(L"SkelIdle");	// 애니메이션 호출
+			mCreatureWeaponScript->DoAttack();					// 공격 기능 호출
+			mAttackProgress = true;								// 다음 진행으로 넘기기
 		}
 	}
 	void SkelScript::readyForAttackDelay()
 	{
 		if (!mPrepareAttack)
 			return;
-		else
+
+		if (mAttackProgress)
 		{
 			mReadyDurationDecay -= (float)Time::DeltaTime();
 			if (0 >= mReadyDurationDecay)

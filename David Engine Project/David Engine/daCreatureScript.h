@@ -51,7 +51,7 @@ namespace da
 
 #pragma region Collision Func
 	public:
-		virtual void OnCollisionEnter(Collider2D* other) {}
+		virtual void OnCollisionEnter(Collider2D* other);
 		virtual void OnCollisionExit(Collider2D* other) {}
 		void OnDamaged();
 		void CreatureFindsPlayer(bool value) { mDetectPlayer = value; }
@@ -89,6 +89,8 @@ namespace da
 		math::Vector2			mCreatureDir;
 		bool					mDetectPlayer;
 		bool					mIsDead;
+		bool					mBodyCollision;
+		bool					mFootCollision;
 #pragma endregion
 
 	};
