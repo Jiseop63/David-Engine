@@ -43,9 +43,6 @@
     <Filter Include="Scenes\02 Town">
       <UniqueIdentifier>{bb7678ff-cc4e-49eb-ba3b-05f6c62dbdf7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scenes\03 Dungeon">
-      <UniqueIdentifier>{93894b0e-6b73-42aa-81ce-841f1733fc11}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\UI\Cursor">
       <UniqueIdentifier>{11c52a41-4699-4397-bff7-ea4dd622bf72}</UniqueIdentifier>
     </Filter>
@@ -90,6 +87,9 @@
     </Filter>
     <Filter Include="Objects\Creature\Enemy\SkellBoss">
       <UniqueIdentifier>{d6d4c006-4444-4d83-8954-e28b06655882}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\03 Dungeon_01">
+      <UniqueIdentifier>{93894b0e-6b73-42aa-81ce-841f1733fc11}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -154,13 +154,13 @@
       <Filter>Objects\Camera</Filter>
     </ClInclude>
     <ClInclude Include="daScene_Dungeon1F_Stage1.h">
-      <Filter>Scenes\03 Dungeon</Filter>
+      <Filter>Scenes\03 Dungeon_01</Filter>
     </ClInclude>
     <ClInclude Include="daScene_Dungeon2F_Stage1.h">
-      <Filter>Scenes\03 Dungeon</Filter>
+      <Filter>Scenes\03 Dungeon_01</Filter>
     </ClInclude>
     <ClInclude Include="daScene_Dungeon2F_Stage2.h">
-      <Filter>Scenes\03 Dungeon</Filter>
+      <Filter>Scenes\03 Dungeon_01</Filter>
     </ClInclude>
     <ClInclude Include="daArmourScript.h">
       <Filter>Objects\UI\HUD</Filter>
@@ -205,10 +205,10 @@
       <Filter>Objects\Creature\Player</Filter>
     </ClInclude>
     <ClInclude Include="daScene_Dungeon1F_Stage2.h">
-      <Filter>Scenes\03 Dungeon</Filter>
+      <Filter>Scenes\03 Dungeon_01</Filter>
     </ClInclude>
     <ClInclude Include="daScene_Dungeon1F_Stage3.h">
-      <Filter>Scenes\03 Dungeon</Filter>
+      <Filter>Scenes\03 Dungeon_01</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -276,13 +276,13 @@
       <Filter>Objects\Camera</Filter>
     </ClCompile>
     <ClCompile Include="daScene_Dungeon1F_Stage1.cpp">
-      <Filter>Scenes\03 Dungeon</Filter>
+      <Filter>Scenes\03 Dungeon_01</Filter>
     </ClCompile>
     <ClCompile Include="daScene_Dungeon2F_Stage1.cpp">
-      <Filter>Scenes\03 Dungeon</Filter>
+      <Filter>Scenes\03 Dungeon_01</Filter>
     </ClCompile>
     <ClCompile Include="daScene_Dungeon2F_Stage2.cpp">
-      <Filter>Scenes\03 Dungeon</Filter>
+      <Filter>Scenes\03 Dungeon_01</Filter>
     </ClCompile>
     <ClCompile Include="daArmourScript.cpp">
       <Filter>Objects\UI\HUD</Filter>
@@ -327,10 +327,10 @@
       <Filter>Objects\Creature\Player</Filter>
     </ClCompile>
     <ClCompile Include="daScene_Dungeon1F_Stage3.cpp">
-      <Filter>Scenes\03 Dungeon</Filter>
+      <Filter>Scenes\03 Dungeon_01</Filter>
     </ClCompile>
     <ClCompile Include="daScene_Dungeon1F_Stage2.cpp">
-      <Filter>Scenes\03 Dungeon</Filter>
+      <Filter>Scenes\03 Dungeon_01</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -54,7 +54,7 @@ namespace da
 		virtual void OnCollisionEnter(Collider2D* other) {}
 		virtual void OnCollisionExit(Collider2D* other) {}
 		void OnDamaged();
-		void IsFindPlayer(bool value) { mPlayerFind = value; }
+		void CreatureFindsPlayer(bool value) { mDetectPlayer = value; }
 #pragma endregion
 
 
@@ -87,7 +87,7 @@ namespace da
 		eCreatureState			mCreatureActiveState;
 		math::Vector3			mStandingPosition;
 		math::Vector2			mCreatureDir;
-		bool					mPlayerFind;
+		bool					mDetectPlayer;
 		bool					mIsDead;
 #pragma endregion
 

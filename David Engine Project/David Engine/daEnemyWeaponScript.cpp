@@ -17,11 +17,7 @@ namespace da
 		, mEnemyWeaponAnimator(nullptr)
 		, mEnemyWeaponCollider(nullptr)
 		, mEnemyWeaponTexture(nullptr)
-		, mInAttack(false)
 		, mPlayerDamaged(false)
-		, mReadyToAttack(false)
-		, mCooldownAccumulateTime(0.0f)
-		, mAttackCooldownTime(0.0f)
 	{
 	}
 	EnemyWeaponScript::~EnemyWeaponScript()
@@ -44,45 +40,22 @@ namespace da
 		mEnemyWeaponAnimator->Create(L"EnemyGreatSwordSwing", Resources::Find<Texture>(L"EnemyGreatSword")
 			, math::Vector2::Zero, math::Vector2(51.0f, 49.0f), 16, math::Vector2::Zero, 0.050f, 70.0f);
 
-		mEnemyWeaponAnimator->StartEvent(L"EnemyGreatSwordSwing") = std::bind(&EnemyWeaponScript::AttackStart, this);
-		mEnemyWeaponAnimator->CompleteEvent(L"EnemyGreatSwordSwing") = std::bind(&EnemyWeaponScript::AttackFinished, this);
+		//mEnemyWeaponAnimator->StartEvent(L"EnemyGreatSwordSwing") = std::bind(&EnemyWeaponScript::AttackStart, this);
+		//mEnemyWeaponAnimator->CompleteEvent(L"EnemyGreatSwordSwing") = std::bind(&EnemyWeaponScript::AttackFinished, this);
 
 		mEnemyWeaponAnimator->PlayAnimation(L"EnemyGreatSwordIdle", false);
-
-		// 조건 변수
-		mAttackCooldownTime = 4.0f;
-
 	}
 	void EnemyWeaponScript::Update()
 	{
-		if (!mReadyToAttack)
-		{
-			mCooldownAccumulateTime += (float)Time::DeltaTime();
-			if (mAttackCooldownTime <= mCooldownAccumulateTime)
-			{
-				mReadyToAttack = true;
-				mCooldownAccumulateTime = 0.0f;
-			}
-		}
-		if (Input::GetKeyDown(eKeyCode::B))
-		{
-			mEnemyWeaponAnimator->PlayAnimation(L"EnemyGreatSwordSwing", false);
-		}
 	}
 	void EnemyWeaponScript::DoAttack()
 	{
-		if (mReadyToAttack)
-			activeAttack();
-		
-	}
-	void EnemyWeaponScript::activeAttack()
-	{
-		mReadyToAttack = false;
 		// 애니메이션
 		mEnemyWeaponAnimator->PlayAnimation(L"EnemyGreatSwordSwing", false);
-		//충돌체 활성화
-		mEnemyWeaponCollider->SetDetectionType(Collider2D::eDetectionType::Default);
+		// 충돌체 활성화	*액션이벤트에서 진행해야함
+		// mEnemyWeaponCollider->SetDetectionType(Collider2D::eDetectionType::Default);
 	}
+
 	void EnemyWeaponScript::OnCollisionEnter(Collider2D* other)
 	{
 		if (enums::eLayerType::Playable == other->GetOwner()->GetLayerType()

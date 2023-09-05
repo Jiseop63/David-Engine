@@ -15,16 +15,6 @@ namespace da
 		virtual void Update() override;
 
 	public:
-		bool IsAttacking() { return mInAttack; }
-		bool IsReadyToAttack() { return mReadyToAttack; }
-
-		void AttackStart() { 
-			mInAttack = true; 
-		}
-		void AttackFinished() { 
-			mInAttack = false;
-			mPlayerDamaged = false;
-		}
 
 	public:
 		// Onwer가 무기를 세팅함
@@ -53,11 +43,6 @@ namespace da
 		std::shared_ptr<Texture> mEnemyWeaponTexture;
 
 	private:
-		bool			mInAttack;
 		bool			mPlayerDamaged;
-	private:
-		bool			mReadyToAttack;
-		float			mCooldownAccumulateTime;
-		float			mAttackCooldownTime;
 	};
 }

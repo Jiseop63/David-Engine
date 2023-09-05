@@ -553,7 +553,7 @@ namespace da
         {           
             GameObject* creatureObj = other->GetOwner();
             CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
-            creatureScript->IsFindPlayer(true);
+            creatureScript->CreatureFindsPlayer(true);
         }
         if (Collider2D::eDetectionType::Env == other->GetDetectionType()
             && mFootCollider->IsGround())
@@ -579,7 +579,7 @@ namespace da
         {
             GameObject* creatureObj = other->GetOwner();
             CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
-            creatureScript->IsFindPlayer(false);
+            creatureScript->CreatureFindsPlayer(false);
         }
     }
 #pragma endregion

@@ -51,6 +51,7 @@ namespace gui
 	}
 	void Editor::Render()
 	{
+		RenderDearImgui();
 		if (gameManager.IsDebuging())
 		{
 			for (EditorObject* obj : mEditorObjects)
@@ -62,7 +63,6 @@ namespace gui
 				DebugRender(mesh);
 			}
 			renderer::debugMeshs.clear();
-			DearImguiRender();
 		}
 		
 	}
@@ -185,7 +185,7 @@ namespace gui
 
 		mEditorObjects.push_back(grid);
 	}
-	void Editor::DearImguiRender()
+	void Editor::RenderDearImgui()
 	{
 		// Our state
 		bool show_demo_window = true;

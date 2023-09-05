@@ -27,7 +27,7 @@ namespace da
 		, mStandingPosition(math::Vector3::Zero) 
 		, mCreatureDir(math::Vector2::Zero) 
 		, mIsDead(false)
-		, mPlayerFind(false)
+		, mDetectPlayer(false)
 	{
 	}
 	CreatureScript::~CreatureScript()

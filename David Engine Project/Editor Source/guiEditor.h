@@ -21,11 +21,11 @@ namespace gui
 		static void Render();
 		static void Release();
 
+		static void InitializeDearImgui();
+		static void RenderDearImgui();
 
 	private:
-		static void InitializeDearImgui();
 		static void InitializeObjects();
-		static void DearImguiRender();
 		static void DebugRender(const da::graphics::DebugMesh& mesh);
 	private:
 		static std::vector<class Widget*> mWidgets;
