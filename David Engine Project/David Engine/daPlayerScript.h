@@ -76,7 +76,7 @@ namespace da
 		math::Vector2 GetPlayerDir() { return mPlayerDir; }
 		void SetPlayerVelocity(math::Vector2 vector2) { mRigidbody->OverrideVelocity(vector2, 0.0f); }
 		void SetPlayerPosition(math::Vector3 vector3) { mTransform->SetPosition(vector3); }
-		void IsPlayerInDungeon(bool value) 
+		void IsPlayerInDungeon(bool value)
 		{ 
 			if (value)
 				mLight->SetColor(math::Vector4(0.550f, 0.550f, 0.550f, 1.0f));
@@ -185,3 +185,8 @@ namespace da
 #pragma endregion
 	};
 }
+
+/*
+필요한 변수와 스크립트를 구분해서 역할 나누기
+
+*/

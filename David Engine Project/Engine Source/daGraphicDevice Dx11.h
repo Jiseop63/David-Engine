@@ -53,7 +53,7 @@ namespace da::graphics
 		void BindConstantBuffer(eShaderStage stage, eCBType type, ID3D11Buffer* buffer);
 		void BindsConstantBuffer(eCBType type, ID3D11Buffer* buffer);
 		void BindBuffer(ID3D11Buffer* buffer, void* data, UINT size);
-		void BindUnorderedAccess(UINT slot, ID3D11UnorderedAccessView** ppUnorderedAccessViews, const UINT* pUAVInitialCounts);
+		void BindUnorderedAccessViews(UINT slot, ID3D11UnorderedAccessView** ppUnorderedAccessViews, const UINT* pUAVInitialCounts);
 
 		void BindSamplers(eShaderStage stage, UINT startSlot, ID3D11SamplerState** ppSamplers);
 		void BindShaderResource(eShaderStage stage, UINT startSlot, ID3D11ShaderResourceView** ppSRV);
@@ -77,14 +77,13 @@ namespace da::graphics
 		D3D11_VIEWPORT GetViewPort() { return mViewPort; }
 		ID3D11RenderTargetView* const* GetRenderTargetView() { return mRenderTarget->GetRTV().GetAddressOf(); }
 
-	private:
-		
-		Microsoft::WRL::ComPtr<ID3D11Device> mDevice; // 실제 그래픽카드 하드웨어 객체		
-		Microsoft::WRL::ComPtr<ID3D11DeviceContext> mContext; // 이객체를 이용하여 명령을 내린다.		
-		std::shared_ptr<da::graphics::Texture> mRenderTarget;
-		std::shared_ptr<da::graphics::Texture> mDepthStencil;
-		Microsoft::WRL::ComPtr<IDXGISwapChain> mSwapChain; // 더블버퍼링 작업을 진행해주는 swapChain
-		D3D11_VIEWPORT mViewPort;
+	private:		
+		Microsoft::WRL::ComPtr<ID3D11Device>		mDevice; // 실제 그래픽카드 하드웨어 객체
+		Microsoft::WRL::ComPtr<ID3D11DeviceContext> mContext; // 이객체를 이용하여 명령을 내린다.
+		Microsoft::WRL::ComPtr<IDXGISwapChain>		mSwapChain; // 더블버퍼링 작업을 진행해주는 swapChain
+		std::shared_ptr<da::graphics::Texture>		mRenderTarget;
+		std::shared_ptr<da::graphics::Texture>		mDepthStencil;
+		D3D11_VIEWPORT								mViewPort;
 	};
 
 	inline GraphicDevice_Dx11*& GetDevice()

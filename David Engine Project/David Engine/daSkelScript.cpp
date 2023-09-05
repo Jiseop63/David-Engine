@@ -152,12 +152,12 @@ namespace da
 		Collider2D::eWallCollisionState wallCollisionState = mCreatureBodyCollider->IsWallCollision();				// 벽 충돌 체크
 		math::Vector3 skelPosition = mCreatureTransform->GetPosition();												// 내 위치
 		float moveMagnitude = mCreatureStat.MoveSpeed * (float)Time::DeltaTime();									// 이동량
-		math::Vector2 moveDir = daRotateVector2(mCreatureDir, mCreatureFootCollider->GetEnvRotate());	// 회전까지 고려한 이동방향
+		math::Vector2 moveDir = daRotateVector2(mCreatureDir, mCreatureFootCollider->GetEnvRotate());				// 회전까지 고려한 이동방향
 		math::Vector2 movePosition = moveDir * moveMagnitude;														// 이동위치
 		skelPosition.x += movePosition.x;																			// 이동한 위치
 		skelPosition.y += movePosition.y;																			// 이동한 위치
 
-		// 벽 충돌 이동제한
+		// 벽 충돌 방향에 따른 이동 적용
 		if (0 <= mCreatureDir.x)
 		{
 			if (Collider2D::eWallCollisionState::Right == wallCollisionState)

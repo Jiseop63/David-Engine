@@ -128,7 +128,7 @@ namespace da::graphics
     {
         mUAVSlot = slot;
         UINT offset = -1;
-        GetDevice()->BindUnorderedAccess(slot, mUAV.GetAddressOf(), &offset);
+        GetDevice()->BindUnorderedAccessViews(slot, mUAV.GetAddressOf(), &offset);
     }
     void StructuredBuffer::Clear()
     {
@@ -144,6 +144,6 @@ namespace da::graphics
         // uav clear
         ID3D11UnorderedAccessView* uav = nullptr;
         UINT offset = -1;
-        GetDevice()->BindUnorderedAccess(mUAVSlot, &uav, &offset);
+        GetDevice()->BindUnorderedAccessViews(mUAVSlot, &uav, &offset);
     }
 }
