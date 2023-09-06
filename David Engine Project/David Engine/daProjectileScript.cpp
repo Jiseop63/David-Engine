@@ -1,7 +1,7 @@
 #include "daProjectileScript.h"
 #include "daGameObject.h"
 #include "daTime.h"
-#include "daWeaponScript.h"
+#include "daPlayerCombatScript.h"
 #include "daPlayerScript.h"
 #include "daCreatureScript.h"
 #include "daSkellBossScript.h"

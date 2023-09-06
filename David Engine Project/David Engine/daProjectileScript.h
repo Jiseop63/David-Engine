@@ -3,7 +3,7 @@
 	
 namespace da
 {
-	class WeaponScript;
+	class CombatScript;
 	class ProjectileScript : public Script
 	{
 	public:
@@ -32,8 +32,8 @@ namespace da
 
 		// 외부 세팅 함수
 	public:
-		void SetReqWeapon(WeaponScript* weapon) { mReqWeapon = weapon; }
-		WeaponScript* GetReqWeapon() { return mReqWeapon; }
+		void SetReqWeapon(CombatScript* weapon) { mReqWeapon = weapon; }
+		CombatScript* GetReqWeapon() { return mReqWeapon; }
 		void SetWeaponProjectile(structs::sWeaponStat weaponStat) 
 		{ 
 			mWeaponStat = weaponStat; 
@@ -50,7 +50,7 @@ namespace da
 		Transform*				mPlayerTransform;
 
 	private:
-		WeaponScript*			mReqWeapon;
+		CombatScript*			mReqWeapon;
 		structs::sWeaponStat	mWeaponStat;
 
 		enums::eProjectileType	mProjectileType;

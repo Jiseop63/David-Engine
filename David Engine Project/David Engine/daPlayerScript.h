@@ -4,7 +4,7 @@
 #include "daAnimator.h"
 #include "daMeshRenderer.h"
 #include "daLight.h"
-#include "daWeaponScript.h"
+#include "daPlayerCombatScript.h"
 
 namespace da
 {
@@ -26,7 +26,7 @@ namespace da
 		Dead,
 	};
 
-	class EffectPlayerScript;
+	class EffectScript;
 	class PlayerScript : public Script
 	{
 	public:
@@ -51,8 +51,8 @@ namespace da
 		void CalcPlayerDir();
 
 		void timeProcess();
-		EffectPlayerScript* callEffect();
-		void activeEffect(EffectPlayerScript* effect, const std::wstring name);
+		EffectScript* callEffect();
+		void activeEffect(EffectScript* effect, const std::wstring name);
 #pragma endregion
 
 #pragma region FSM Func
@@ -66,9 +66,9 @@ namespace da
 
 #pragma region public Func
 	public:
-		WeaponScript* SetWeaponObject(GameObject* object);
-		WeaponScript* GetWeaponScript() { return mWeaponScript; }
-		EffectPlayerScript* AddEffectObject(GameObject* object);
+		CombatScript* SetWeaponObject(GameObject* object);
+		CombatScript* GetWeaponScript() { return mWeaponScript; }
+		EffectScript* AddEffectObject(GameObject* object);
 		bool IsLeft() { if (0 >= mPlayerDir.x) return true; return false; }
 		bool IsPlayerGround() { return mFootCollider->IsGround(); }
 		void PlayerIsNotGround() { mFootCollider->ClearGroundBuffer(); }
@@ -152,8 +152,8 @@ namespace da
 
 #pragma region Other Scripts
 	private:
-		WeaponScript*	mWeaponScript;
-		std::vector<EffectPlayerScript*> mEffects;
+		CombatScript*	mWeaponScript;
+		std::vector<EffectScript*> mEffects;
 #pragma endregion
 
 #pragma region Global Data

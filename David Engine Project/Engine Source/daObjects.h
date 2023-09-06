@@ -115,7 +115,7 @@ namespace da::objects
 		// weapon 세팅
 		GameObject* weaponObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Playable, L"WeaponMaterial");
 		player->AddChildObject(weaponObject);
-		WeaponScript* weaponScript = playerScript->SetWeaponObject(weaponObject);
+		CombatScript* weaponScript = playerScript->SetWeaponObject(weaponObject);
 
 		// weapon effect 세팅
 		for (int index = 0; index < WEAPON_EFFECT_POOL; index++)

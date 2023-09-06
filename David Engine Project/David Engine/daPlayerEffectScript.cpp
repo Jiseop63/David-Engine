@@ -1,15 +1,15 @@
-#include "daEffectPlayerScript.h"
+#include "daPlayerEffectScript.h"
 #include "daGameObject.h"
 #include "daResources.h"
 namespace da
 {
-	EffectPlayerScript::EffectPlayerScript()
+	PlayerEffectScript::PlayerEffectScript()
 	{
 	}
-	EffectPlayerScript::~EffectPlayerScript()
+	PlayerEffectScript::~PlayerEffectScript()
 	{
 	}
-	void EffectPlayerScript::Initialize()
+	void PlayerEffectScript::Initialize()
 	{
 		EffectScript::Initialize();
 		mEffectTransform->SetScale(1.750f, 1.750f, 1.0f);
@@ -18,13 +18,9 @@ namespace da
 		mEffectAnimator->Create(L"Dying", Resources::Find<Texture>(L"DyingFX"), math::Vector2::Zero, math::Vector2(64.0f, 64.0f), 12, math::Vector2::Zero, 0.050f, 40.0f);
 		
 		// 종료 이벤트 넣어주기
-		mEffectAnimator->CompleteEvent(L"Jumping") = std::bind(&EffectPlayerScript::retInactive, this);
-		mEffectAnimator->CompleteEvent(L"DustEffect") = std::bind(&EffectPlayerScript::retInactive, this);
-		mEffectAnimator->CompleteEvent(L"Dying") = std::bind(&EffectPlayerScript::retInactive, this);
-	}
-	void EffectPlayerScript::PlayEffect(const std::wstring name)
-	{
-		mEffectAnimator->PlayAnimation(name, false);
+		mEffectAnimator->CompleteEvent(L"Jumping") = std::bind(&PlayerEffectScript::retInactive, this);
+		mEffectAnimator->CompleteEvent(L"DustEffect") = std::bind(&PlayerEffectScript::retInactive, this);
+		mEffectAnimator->CompleteEvent(L"Dying") = std::bind(&PlayerEffectScript::retInactive, this);
 	}
 }
 

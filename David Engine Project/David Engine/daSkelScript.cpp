@@ -1,12 +1,12 @@
 #include "daSkelScript.h"
 
+#include "daSceneManager.h"
+
+
 #include "daTime.h"
 
 #include "daResources.h"
 #include "daGameObject.h"
-#include "daProjectileScript.h"
-#include "daWeaponScript.h"
-#include "daEffectWeaponScript.h"
 
 #include "daEnemyWeaponScript.h"
 #include "daEffectEnemyScript.h"
@@ -38,18 +38,22 @@ namespace da
 	{
 		// 컴포넌트 가져오기
 		CreatureScript::Initialize();
+		mCreatureSensorCollider = GetOwner()->AddComponent<Collider2D>();
+
 
 		// 충돌체 설정하기
+		// body & foot
 		{
-			// body
 			mCreatureBodyCollider->SetSize(math::Vector2(0.30f, 0.40f));
 			mCreatureBodyCollider->SetCenter(math::Vector2(0.0f, -0.10f));
-		}
-		{
-			// foot
 			mCreatureFootCollider->SetSize(math::Vector2(0.050f, 0.050f));
 			mCreatureFootCollider->SetCenter(math::Vector2(0.0f, -0.450f));
-			mCreatureFootCollider->SetDetectionType(Collider2D::eDetectionType::Default);
+		}
+		// senser
+		{
+			mCreatureSensorCollider->SetDetectionType(Collider2D::eDetectionType::Sensor);
+			mCreatureSensorCollider->SetSize(math::Vector2(4.50f, 1.90f));
+			mCreatureSensorCollider->SetCenter(math::Vector2(0.0f, 0.450f));
 		}
 
 		// 애니메이션 설정하기
@@ -60,8 +64,22 @@ namespace da
 		mCreatureAnimator->Create(L"SkelAttact", texture, math::Vector2(0.0f, 0.0f), math::Vector2(32.0f, 32.0f), 1, math::Vector2(0.0f, 0.0f), 0.1f);
 		mCreatureAnimator->PlayAnimation(L"SkelIdle");
 
+		mPlayerScript = SceneManager::GetPlayerScript();
+
+
 		// 스텟 초기화
-		mCreatureStat.MoveSpeed = 1.750f;
+
+		mCreatureStat.MaxHP = 25.0f;
+		mCreatureStat.CurHP = 25.0f;
+
+		mCreatureStat.MoveSpeed = 1.250f;
+		mCreatureStat.DetectRange = 2.50f;
+
+		mCreatureStat.AttackRange = 0.750f;
+		mCreatureStat.AttackAccumulateTime = 0.0f;
+		mCreatureStat.AttackDelay = 4.0f;
+
+		mCreatureStat.MoveSpeed = 1.50f;
 
 		mChaseDurationTime = 1.50f;
 		mChaseDurationDecay = mChaseDurationTime;

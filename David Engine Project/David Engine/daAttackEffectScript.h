@@ -3,12 +3,12 @@
 
 namespace da
 {
-	class WeaponScript;
-	class EffectWeaponScript : public EffectScript
+	class CombatScript;
+	class AttackEffectScript : public EffectScript
 	{
 	public:
-		EffectWeaponScript();
-		virtual ~EffectWeaponScript();
+		AttackEffectScript();
+		virtual ~AttackEffectScript();
 
 		virtual void Initialize() override;
 
@@ -19,13 +19,13 @@ namespace da
 
 		// 외부 세팅 함수
 	public:
-		void SetReqWeapon(WeaponScript* weapon) 
+		void SetReqWeapon(CombatScript* weapon) 
 		{ 
 			mReqWeapon = weapon;
 			int a = 0;
 		}
 
 	private:
-		WeaponScript* mReqWeapon;
+		CombatScript* mReqWeapon;
 	};
 }

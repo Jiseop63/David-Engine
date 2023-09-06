@@ -1,5 +1,5 @@
 #include "daCreatureScript.h"
-#include "daCreatureScript.h"
+
 #include "daGameObject.h"
 #include "daResources.h"
 #include "daSceneManager.h"
@@ -44,36 +44,24 @@ namespace da
 		GetOwner()->SetBodyCollider(mCreatureBodyCollider);
 		mCreatureFootCollider = GetOwner()->AddComponent<Collider2D>();
 		GetOwner()->SetFootCollider(mCreatureFootCollider);
-		mCreatureSensorCollider = GetOwner()->AddComponent<Collider2D>();
 
+
+		// 콜라이더 세팅은 각자 알아서 하는거로 하자..?
 		mCreatureBodyCollider->ImBody();
 		mCreatureFootCollider->SetDetectionType(Collider2D::eDetectionType::Default);
-		mCreatureBodyCollider->SetSize(Vector2(0.30f, 0.60f));
-		mCreatureBodyCollider->SetCenter(Vector2(0.0f, -0.10f));
-
-
 		mCreatureFootCollider->ImFoot();
 		mCreatureFootCollider->SetDetectionType(Collider2D::eDetectionType::Default);
-		mCreatureFootCollider->SetSize(Vector2(0.050f, 0.050f));
-		mCreatureFootCollider->SetCenter(Vector2(0.0f, -0.450f));
 		
+		// 이건 Creature를 상속받는 Monster에서 진행하도록 하자
+		/*mCreatureSensorCollider = GetOwner()->AddComponent<Collider2D>();*/
+		/*mCreatureSensorCollider->SetDetectionType(Collider2D::eDetectionType::Sensor);
+		mCreatureSensorCollider->SetSize(Vector2(4.50f, 1.90f));
+		mCreatureFootCollider->SetCenter(Vector2(0.0f, 0.450f));*/
 
-		mCreatureSensorCollider->SetDetectionType(Collider2D::eDetectionType::Sensor);
-		mCreatureSensorCollider->SetSize(Vector2(3.50f, 0.90f));
 
-		mPlayerScript = SceneManager::GetPlayerScript();
+		// stat 세팅... 은 알아서 하세요
 
-		// stat 세팅
-
-		mCreatureStat.MaxHP = 25.0f;
-		mCreatureStat.CurHP = 25.0f;
-		
-		mCreatureStat.MoveSpeed = 1.250f;
-		mCreatureStat.DetectRange = 2.50f;
-
-		mCreatureStat.AttackRange = 0.750f;
-		mCreatureStat.AttackAccumulateTime = 0.0f;
-		mCreatureStat.AttackDelay = 4.0f;		
+			
 	}
 
 	void CreatureScript::ReverseTexture()

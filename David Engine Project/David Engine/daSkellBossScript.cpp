@@ -32,7 +32,6 @@ namespace da
 		mBossAnimator = GetOwner()->AddComponent<Animator>();
 
 		mPlayerScript = SceneManager::GetPlayerScript();
-
 		// Tr
 		mBossTransform->SetScale(math::Vector3(5.50f, 5.50f, 1.0f));
 		// 보스 충돌체

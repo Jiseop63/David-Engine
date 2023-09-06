@@ -11,8 +11,8 @@
 #include "daResources.h"
 
 #include "daCreatureScript.h"
-#include "daWeaponScript.h"
-#include "daEffectPlayerScript.h"
+#include "daPlayerCombatScript.h"
+#include "daPlayerEffectScript.h"
 
 namespace da
 {
@@ -159,7 +159,7 @@ namespace da
         }
     }       
 
-    EffectPlayerScript* PlayerScript::callEffect()
+    EffectScript* PlayerScript::callEffect()
     {
         for (size_t effect = 0; effect < mEffects.size(); effect++)
         {
@@ -169,7 +169,7 @@ namespace da
         }
         return nullptr;
     }
-    void PlayerScript::activeEffect(EffectPlayerScript* effect, const std::wstring name)
+    void PlayerScript::activeEffect(EffectScript* effect, const std::wstring name)
     {
         if (!effect)
             return;
@@ -260,7 +260,7 @@ namespace da
     {
         if (!mDead)
         {
-            EffectPlayerScript* playerEffect = callEffect();
+            EffectScript* playerEffect = callEffect();
             playerEffect->SetReverse(IsLeft());
             activeEffect(playerEffect, L"Dying");
             mWeaponScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
@@ -397,7 +397,7 @@ namespace da
     }
     void PlayerScript::dustSpawn()
     {
-        EffectPlayerScript* playerEffect = callEffect();
+        EffectScript* playerEffect = callEffect();
         playerEffect->SetReverse(IsLeft());
         activeEffect(playerEffect, L"DustEffect");
     }
@@ -487,7 +487,7 @@ namespace da
         {
             if (ePlayerState::Jump != mActiveState)
                 ChangeState(ePlayerState::Jump);
-            EffectPlayerScript* playerEffect = callEffect();
+            EffectScript* playerEffect = callEffect();
             playerEffect->SetReverse(IsLeft());
             activeEffect(playerEffect, L"Jumping");
 
@@ -588,15 +588,15 @@ namespace da
     }
 #pragma endregion
 #pragma region public Func
-    WeaponScript* PlayerScript::SetWeaponObject(GameObject* object)
+    CombatScript* PlayerScript::SetWeaponObject(GameObject* object)
     {
-        mWeaponScript = object->AddComponent<WeaponScript>();
+        mWeaponScript = object->AddComponent<CombatScript>();
         mWeaponScript->SetPlayerScript(this);
         return mWeaponScript;
     }
-    EffectPlayerScript* PlayerScript::AddEffectObject(GameObject* object)
+    EffectScript* PlayerScript::AddEffectObject(GameObject* object)
     {
-        EffectPlayerScript* effect = object->AddComponent<EffectPlayerScript>();
+        EffectScript* effect = object->AddComponent<PlayerEffectScript>();
         mEffects.push_back(effect);
         return effect;
     }

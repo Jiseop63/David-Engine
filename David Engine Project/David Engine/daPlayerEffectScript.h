@@ -3,12 +3,13 @@
 
 namespace da
 {
-	class EffectEnemyScript : public EffectScript
+	class PlayerEffectScript : public EffectScript
 	{
 	public:
-		EffectEnemyScript();
-		virtual ~EffectEnemyScript();
+		PlayerEffectScript();
+		virtual ~PlayerEffectScript();
 
 		virtual void Initialize() override;
+
 	};
 }

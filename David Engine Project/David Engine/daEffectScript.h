@@ -16,6 +16,10 @@ namespace da
 		virtual void LateUpdate();
 
 	public:
+		virtual void PlayEffect(const std::wstring name);
+		virtual void retInactive() { GetOwner()->SetObjectState(GameObject::eObjectState::Inactive); }
+
+	public:
 		Transform* GetTransform() { return mEffectTransform; }
 		
 		void SetEffectPosition(math::Vector3 vector3) { mEffectTransform->SetPosition(vector3); }

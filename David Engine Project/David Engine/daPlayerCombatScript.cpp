@@ -1,15 +1,15 @@
-#include "daWeaponScript.h"
+#include "daPlayerCombatScript.h"
 #include "daGameObject.h"
 #include "daResources.h"
 #include "daTime.h"
 #include "daGameDataManager.h"
-#include "daEffectWeaponScript.h"
+#include "daAttackEffectScript.h"
 #include "daProjectileScript.h"
 #include "daPlayerScript.h"
 
 namespace da
 {
-	WeaponScript::WeaponScript()
+	CombatScript::CombatScript()
 		: mWeaponTransform(nullptr)
 		, mWeaponRenderer(nullptr)
 		, mWeaponAnimator(nullptr)
@@ -30,10 +30,10 @@ namespace da
 		, mEffectAngle(0.0f)
 	{		
 	}
-	WeaponScript::~WeaponScript()
+	CombatScript::~CombatScript()
 	{
 	}
-	void WeaponScript::Initialize()
+	void CombatScript::Initialize()
 	{
 		// Tr세팅
 		mWeaponTransform = GetOwner()->GetTransform();
@@ -46,14 +46,18 @@ namespace da
 		// 무기 세팅
 		ChangeWeapon();
 	}
-	void WeaponScript::Update()
+	void CombatScript::Update()
 	{
 		attackConditionCheck();
 		projectileConditionCheck();
 	}
+
+	void CombatScript::LateUpdate()
+	{
+	}
 		
 #pragma region common func
-	void WeaponScript::attackConditionCheck()
+	void CombatScript::attackConditionCheck()
 	{		
 		if (!mActiveArmour->Weapon.AttackReady)
 		{
@@ -68,7 +72,7 @@ namespace da
 			}
 		}
 	}
-	void WeaponScript::projectileConditionCheck()
+	void CombatScript::projectileConditionCheck()
 	{
 		if (mActiveArmour)
 		{
@@ -86,7 +90,7 @@ namespace da
 #pragma endregion
 
 #pragma region player Call
-	void WeaponScript::SetWeaponTransform(math::Vector3 playerPos, math::Vector2 playerDir)
+	void CombatScript::SetWeaponTransform(math::Vector3 playerPos, math::Vector2 playerDir)
 	{
 		// Player 위치 저장
 		mPlayerPosition = playerPos;
@@ -137,6 +141,7 @@ namespace da
 				weaponPosistion.x -= armDown.x;
 			}
 		}
+
 		weaponPosistion.x -= mPlayerDir.x * 0.050f;
 		weaponPosistion.y -= mPlayerDir.y * 0.050f;
 		// 변경된 값을 Weapon Transform에 적용하기
@@ -146,7 +151,7 @@ namespace da
 	}
 #pragma endregion
 #pragma region Inventory Call
-	void WeaponScript::ChangeWeapon()
+	void CombatScript::ChangeWeapon()
 	{
 		// 기존 무기 초기화 해주기
 		if (mActiveArmour)
@@ -156,7 +161,7 @@ namespace da
 		weaponInit();
 
 	}
-	void WeaponScript::weaponInit()
+	void CombatScript::weaponInit()
 	{		
 		if (mActiveArmour->Weapon.IsMeleeWeapon)
 		{
@@ -181,12 +186,14 @@ namespace da
 	}
 #pragma endregion
 #pragma region Attack Process	
-	void WeaponScript::DoAttack()
+	void CombatScript::DoAttack()
 	{
 		if (mActiveArmour->Weapon.AttackReady)
 		{
-			// 공격 활성화 (Tr 세팅, 이펙트, 충돌 객체 세팅)
-			activeAttack();
+			// 이펙트 적용하기
+			ActiveEffect();
+			// 투사체 적용하기
+			ActiveProjectile();
 			
 			// 무기 텍스쳐 & 애니메이션 적용하기			
 			playWeaponImage();
@@ -194,24 +201,42 @@ namespace da
 			mActiveArmour->Weapon.AttackReady = false;
 		}
 	}
-	void WeaponScript::ActiveEffect()
+	void CombatScript::ActiveEffect()
 	{
-		// 방향 구하기
+		// 이펙트를 활성화 하는 시점에서 현재 장비중인 무기의 정보를 세팅한다
+		switch (mActiveArmour->Weapon.WeaponName)
+		{
+		case enums::eWeaponName::Default:
+		{
+			mEffectName = L"GreatSwing";
+		}
+		break;
+		case enums::eWeaponName::LongSword:
+		{
+			mEffectName = L"GreatSwing";
+		}
+		break;
+		default:
+			break;
+		}
+
+		// 이펙트 정보를 입력한다
+		EffectScript* effect = callEffect();
+
 		math::Vector3 playerDir(mPlayerDir.x, mPlayerDir.y, 0.0f);
-		EffectWeaponScript* effect = callEffect();
 		effect->SetEffectScale(mEffectScale);
 		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, mEffectAngle - 1.570f));
 		effect->SetEffectPosition(mPlayerPosition + (playerDir * mActiveArmour->Weapon.ProjectileCenterPadding));
 		effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-		effect->PlayEffect(mActiveArmour->Weapon.WeaponName);
+		effect->PlayEffect(mEffectName);
 	}
-	void WeaponScript::CallHitEffect(math::Vector3 position)
+	void CombatScript::CallHitEffect(math::Vector3 position)
 	{
 		if (7 <= mHitEffectAngle)
 			mHitEffectAngle = 0.0f;
 		mHitEffectAngle += 1.80f;
 		// 방향 구하기
-		EffectWeaponScript* effect = callEffect();
+		EffectScript* effect = callEffect();
 		effect->SetEffectScale(math::Vector3(1.50f, 1.50f, 1.0f));
 		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, mHitEffectAngle));
 		effect->SetEffectPosition(position - math::Vector3(0.0f, 0.2f, 0.0f));
@@ -219,7 +244,7 @@ namespace da
 		effect->PlayEffect(L"Slash");
 	}
 
-	void WeaponScript::ActiveProjectile()
+	void CombatScript::ActiveProjectile()
 	{
 		mActiveArmour->Weapon.ProjectileCollision = true;
 
@@ -234,14 +259,11 @@ namespace da
 		projectile->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 
 	}
-	void WeaponScript::activeAttack()
+	void CombatScript::activeAttack()
 	{
-		// 이펙트 적용하기
-		ActiveEffect();
-		// 투사체 적용하기
-		ActiveProjectile();
+		
 	}
-	void WeaponScript::playWeaponImage()
+	void CombatScript::playWeaponImage()
 	{
 		if (mActiveArmour->Weapon.IsMeleeWeapon)
 		{
@@ -257,14 +279,23 @@ namespace da
 		}
 	}
 #pragma endregion
-#pragma region Effect Func
-	void WeaponScript::AddEffectObject(GameObject* object)
+#pragma region Initialize script
+	void CombatScript::AddEffectObject(GameObject* object)
 	{
-		EffectWeaponScript* weaponEffect = object->AddComponent<EffectWeaponScript>();
+		AttackEffectScript* weaponEffect = object->AddComponent<AttackEffectScript>();
 		weaponEffect->SetReqWeapon(this);
 		mEffects.push_back(weaponEffect);
 	}
-	EffectWeaponScript* WeaponScript::callEffect()
+	void CombatScript::AddProjectileObject(GameObject* object)
+	{
+		ProjectileScript* weaponProjectile = object->AddComponent<ProjectileScript>();
+		weaponProjectile->SetReqWeapon(this);
+		mProjectiles.push_back(weaponProjectile);
+	}	
+#pragma endregion
+
+#pragma region Get available script
+	EffectScript* CombatScript::callEffect()
 	{
 		for (size_t effect = 0; effect < mEffects.size(); effect++)
 		{
@@ -274,15 +305,7 @@ namespace da
 		}
 		return nullptr;
 	}
-#pragma endregion
-#pragma region Projectile Func
-	void WeaponScript::AddProjectileObject(GameObject* object)
-	{
-		ProjectileScript* weaponProjectile = object->AddComponent<ProjectileScript>();
-		weaponProjectile->SetReqWeapon(this);
-		mProjectiles.push_back(weaponProjectile);
-	}
-	ProjectileScript* WeaponScript::callProjectile()
+	ProjectileScript* CombatScript::callProjectile()
 	{
 		for (size_t projectile = 0; projectile < mProjectiles.size(); ++projectile)
 		{

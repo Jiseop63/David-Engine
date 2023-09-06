@@ -18,9 +18,5 @@ namespace da
 		// 종료 이벤트 넣어주기
 		mEffectAnimator->CompleteEvent(L"Dying") = std::bind(&EffectEnemyScript::retInactive, this);
 	}
-	void EffectEnemyScript::PlayEffect(const std::wstring name)
-	{
-		mEffectAnimator->PlayAnimation(name, false);
-	}
 }
 

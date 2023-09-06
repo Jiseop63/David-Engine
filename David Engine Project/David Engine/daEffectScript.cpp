@@ -22,4 +22,9 @@ namespace da
 	{
 		mEffectRenderer->SetReverse(mReverse);
 	}
+
+	void EffectScript::PlayEffect(const std::wstring name)
+	{
+		mEffectAnimator->PlayAnimation(name, false);
+	}
 }

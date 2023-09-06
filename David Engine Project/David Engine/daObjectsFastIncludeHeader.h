@@ -43,9 +43,9 @@
 
 // Player
 #include "daPlayerScript.h"
-#include "daWeaponScript.h"
-#include "daEffectPlayerScript.h"
-#include "daEffectWeaponScript.h"
+#include "daPlayerCombatScript.h"
+#include "daPlayerEffectScript.h"
+#include "daAttackEffectScript.h"
 #include "daProjectileScript.h"
 
 // Monster

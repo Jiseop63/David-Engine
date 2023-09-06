@@ -25,9 +25,6 @@
     <Filter Include="Objects\Creature">
       <UniqueIdentifier>{f1d6c165-77b1-4600-bcad-69546ff9a36c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\Projectile">
-      <UniqueIdentifier>{9b6f2395-2724-4804-93c4-084a1d419492}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Global">
       <UniqueIdentifier>{b9cf5647-e53a-4021-b1cf-90426a34c88b}</UniqueIdentifier>
     </Filter>
@@ -42,6 +39,9 @@
     </Filter>
     <Filter Include="Scenes\02 Town">
       <UniqueIdentifier>{bb7678ff-cc4e-49eb-ba3b-05f6c62dbdf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\03 Dungeon">
+      <UniqueIdentifier>{93894b0e-6b73-42aa-81ce-841f1733fc11}</UniqueIdentifier>
     </Filter>
     <Filter Include="Objects\UI\Cursor">
       <UniqueIdentifier>{11c52a41-4699-4397-bff7-ea4dd622bf72}</UniqueIdentifier>
@@ -61,26 +61,20 @@
     <Filter Include="Objects\Inventory">
       <UniqueIdentifier>{ea11053a-df54-4bba-a85f-6a2a4a5fcc46}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\Effect">
+    <Filter Include="Objects\UI\Layer%28BG%29">
+      <UniqueIdentifier>{267b491d-17d6-4e15-9f5d-fd11280f69ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Creature\1 Effect">
       <UniqueIdentifier>{06f6a52b-f4ec-4386-bd42-84478a8fb1b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Creature\2 Projectile">
+      <UniqueIdentifier>{9b6f2395-2724-4804-93c4-084a1d419492}</UniqueIdentifier>
     </Filter>
     <Filter Include="Objects\Creature\Enemy">
       <UniqueIdentifier>{a6fdd62c-9e2f-44cc-bcd0-8fa27098adaf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\Creature\Player">
-      <UniqueIdentifier>{0aa2b072-1be2-4d95-a0e1-9a8feb3ec3e7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\UI\미정%28안씀%29">
-      <UniqueIdentifier>{2e8b3b4a-11dc-4060-9060-f12741d5ed99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\UI\Layer%28BG%29">
-      <UniqueIdentifier>{267b491d-17d6-4e15-9f5d-fd11280f69ad}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\Creature\Enemy\Base">
       <UniqueIdentifier>{895fa221-325a-4857-b9be-6bc1c8382217}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\Creature\Enemy\안씀">
-      <UniqueIdentifier>{20bd74d1-08fc-44e2-a799-8832af244fd9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Objects\Creature\Enemy\Skel">
       <UniqueIdentifier>{f178a37d-bc73-4a5a-9021-f616faca9fc4}</UniqueIdentifier>
@@ -88,8 +82,8 @@
     <Filter Include="Objects\Creature\Enemy\SkellBoss">
       <UniqueIdentifier>{d6d4c006-4444-4d83-8954-e28b06655882}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scenes\03 Dungeon_01">
-      <UniqueIdentifier>{93894b0e-6b73-42aa-81ce-841f1733fc11}</UniqueIdentifier>
+    <Filter Include="Objects\Creature\Player">
+      <UniqueIdentifier>{0aa2b072-1be2-4d95-a0e1-9a8feb3ec3e7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -98,9 +92,6 @@
     </ClInclude>
     <ClInclude Include="daGameDataManager.h">
       <Filter>Global</Filter>
-    </ClInclude>
-    <ClInclude Include="daProjectileObject.h">
-      <Filter>Objects\Projectile</Filter>
     </ClInclude>
     <ClInclude Include="daCameraObject.h">
       <Filter>Objects\Camera</Filter>
@@ -126,9 +117,6 @@
     <ClInclude Include="daInventoryScript.h">
       <Filter>Objects\Inventory</Filter>
     </ClInclude>
-    <ClInclude Include="daOverlayObject.h">
-      <Filter>Objects\UI\미정%28안씀%29</Filter>
-    </ClInclude>
     <ClInclude Include="daUIObject.h">
       <Filter>Objects\UI\base</Filter>
     </ClInclude>
@@ -141,9 +129,6 @@
     <ClInclude Include="daItemScript.h">
       <Filter>Objects\Inventory</Filter>
     </ClInclude>
-    <ClInclude Include="daHUDScript.h">
-      <Filter>Objects\UI\미정%28안씀%29</Filter>
-    </ClInclude>
     <ClInclude Include="daLifeBarScript.h">
       <Filter>Objects\UI\HUD</Filter>
     </ClInclude>
@@ -154,13 +139,13 @@
       <Filter>Objects\Camera</Filter>
     </ClInclude>
     <ClInclude Include="daScene_Dungeon1F_Stage1.h">
-      <Filter>Scenes\03 Dungeon_01</Filter>
+      <Filter>Scenes\03 Dungeon</Filter>
     </ClInclude>
     <ClInclude Include="daScene_Dungeon2F_Stage1.h">
-      <Filter>Scenes\03 Dungeon_01</Filter>
+      <Filter>Scenes\03 Dungeon</Filter>
     </ClInclude>
     <ClInclude Include="daScene_Dungeon2F_Stage2.h">
-      <Filter>Scenes\03 Dungeon_01</Filter>
+      <Filter>Scenes\03 Dungeon</Filter>
     </ClInclude>
     <ClInclude Include="daArmourScript.h">
       <Filter>Objects\UI\HUD</Filter>
@@ -168,14 +153,11 @@
     <ClInclude Include="daPlayerScript.h">
       <Filter>Objects\Creature\Player</Filter>
     </ClInclude>
-    <ClInclude Include="daEffectWeaponScript.h">
+    <ClInclude Include="daAttackEffectScript.h">
       <Filter>Objects\Creature\Player</Filter>
     </ClInclude>
-    <ClInclude Include="daEffectPlayerScript.h">
+    <ClInclude Include="daPlayerEffectScript.h">
       <Filter>Objects\Creature\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="daCreatureObject.h">
-      <Filter>Objects\Creature\Enemy\안씀</Filter>
     </ClInclude>
     <ClInclude Include="daCreatureScript.h">
       <Filter>Objects\Creature\Enemy\Base</Filter>
@@ -187,13 +169,10 @@
       <Filter>Objects\Creature\Enemy\Skel</Filter>
     </ClInclude>
     <ClInclude Include="daEffectScript.h">
-      <Filter>Objects\Effect</Filter>
+      <Filter>Objects\Creature\1 Effect</Filter>
     </ClInclude>
     <ClInclude Include="daEffectEnemyScript.h">
       <Filter>Objects\Creature\Enemy\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="daProjectileScript.h">
-      <Filter>Objects\Creature\Player</Filter>
     </ClInclude>
     <ClInclude Include="daCreatureLifebarScript.h">
       <Filter>Objects\Creature\Enemy\Base</Filter>
@@ -201,14 +180,20 @@
     <ClInclude Include="daSkellBossScript.h">
       <Filter>Objects\Creature\Enemy\SkellBoss</Filter>
     </ClInclude>
-    <ClInclude Include="daWeaponScript.h">
+    <ClInclude Include="daPlayerCombatScript.h">
       <Filter>Objects\Creature\Player</Filter>
     </ClInclude>
     <ClInclude Include="daScene_Dungeon1F_Stage2.h">
-      <Filter>Scenes\03 Dungeon_01</Filter>
+      <Filter>Scenes\03 Dungeon</Filter>
     </ClInclude>
     <ClInclude Include="daScene_Dungeon1F_Stage3.h">
-      <Filter>Scenes\03 Dungeon_01</Filter>
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="daProjectileScript.h">
+      <Filter>Objects\Creature\2 Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="daPlayerProjectileScript.h">
+      <Filter>Objects\Creature\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -217,9 +202,6 @@
     </ClCompile>
     <ClCompile Include="daGameDataManager.cpp">
       <Filter>Global</Filter>
-    </ClCompile>
-    <ClCompile Include="daProjectileObject.cpp">
-      <Filter>Objects\Projectile</Filter>
     </ClCompile>
     <ClCompile Include="daCameraObject.cpp">
       <Filter>Objects\Camera</Filter>
@@ -242,9 +224,6 @@
     <ClCompile Include="daInventoryScript.cpp">
       <Filter>Objects\Inventory</Filter>
     </ClCompile>
-    <ClCompile Include="daOverlayObject.cpp">
-      <Filter>Objects\UI\미정%28안씀%29</Filter>
-    </ClCompile>
     <ClCompile Include="daUIObject.cpp">
       <Filter>Objects\UI\base</Filter>
     </ClCompile>
@@ -260,12 +239,6 @@
     <ClCompile Include="daLifeBarScript.cpp">
       <Filter>Objects\UI\HUD</Filter>
     </ClCompile>
-    <ClCompile Include="daHUDScript.cpp">
-      <Filter>Objects\UI\미정%28안씀%29</Filter>
-    </ClCompile>
-    <ClCompile Include="daUIManager.cpp">
-      <Filter>Objects\UI\미정%28안씀%29</Filter>
-    </ClCompile>
     <ClCompile Include="daDashCountScript.cpp">
       <Filter>Objects\UI\HUD</Filter>
     </ClCompile>
@@ -276,13 +249,13 @@
       <Filter>Objects\Camera</Filter>
     </ClCompile>
     <ClCompile Include="daScene_Dungeon1F_Stage1.cpp">
-      <Filter>Scenes\03 Dungeon_01</Filter>
+      <Filter>Scenes\03 Dungeon</Filter>
     </ClCompile>
     <ClCompile Include="daScene_Dungeon2F_Stage1.cpp">
-      <Filter>Scenes\03 Dungeon_01</Filter>
+      <Filter>Scenes\03 Dungeon</Filter>
     </ClCompile>
     <ClCompile Include="daScene_Dungeon2F_Stage2.cpp">
-      <Filter>Scenes\03 Dungeon_01</Filter>
+      <Filter>Scenes\03 Dungeon</Filter>
     </ClCompile>
     <ClCompile Include="daArmourScript.cpp">
       <Filter>Objects\UI\HUD</Filter>
@@ -290,14 +263,11 @@
     <ClCompile Include="daPlayerScript.cpp">
       <Filter>Objects\Creature\Player</Filter>
     </ClCompile>
-    <ClCompile Include="daEffectPlayerScript.cpp">
+    <ClCompile Include="daPlayerEffectScript.cpp">
       <Filter>Objects\Creature\Player</Filter>
     </ClCompile>
-    <ClCompile Include="daEffectWeaponScript.cpp">
+    <ClCompile Include="daAttackEffectScript.cpp">
       <Filter>Objects\Creature\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="daCreatureObject.cpp">
-      <Filter>Objects\Creature\Enemy\안씀</Filter>
     </ClCompile>
     <ClCompile Include="daCreatureScript.cpp">
       <Filter>Objects\Creature\Enemy\Base</Filter>
@@ -309,13 +279,10 @@
       <Filter>Objects\Creature\Enemy\Skel</Filter>
     </ClCompile>
     <ClCompile Include="daEffectScript.cpp">
-      <Filter>Objects\Effect</Filter>
+      <Filter>Objects\Creature\1 Effect</Filter>
     </ClCompile>
     <ClCompile Include="daEffectEnemyScript.cpp">
       <Filter>Objects\Creature\Enemy\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="daProjectileScript.cpp">
-      <Filter>Objects\Creature\Player</Filter>
     </ClCompile>
     <ClCompile Include="daCreatureLifebarScript.cpp">
       <Filter>Objects\Creature\Enemy\Base</Filter>
@@ -323,14 +290,20 @@
     <ClCompile Include="daSkellBossScript.cpp">
       <Filter>Objects\Creature\Enemy\SkellBoss</Filter>
     </ClCompile>
-    <ClCompile Include="daWeaponScript.cpp">
+    <ClCompile Include="daPlayerCombatScript.cpp">
       <Filter>Objects\Creature\Player</Filter>
     </ClCompile>
     <ClCompile Include="daScene_Dungeon1F_Stage3.cpp">
-      <Filter>Scenes\03 Dungeon_01</Filter>
+      <Filter>Scenes\03 Dungeon</Filter>
     </ClCompile>
     <ClCompile Include="daScene_Dungeon1F_Stage2.cpp">
-      <Filter>Scenes\03 Dungeon_01</Filter>
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="daProjectileScript.cpp">
+      <Filter>Objects\Creature\2 Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="daPlayerProjectileScript.cpp">
+      <Filter>Objects\Creature\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
