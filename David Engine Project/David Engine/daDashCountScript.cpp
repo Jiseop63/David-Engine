@@ -20,7 +20,7 @@ namespace da
 	void DashCountScript::BindConstantBuffer()
 	{
 		// value 가져오기
-		structs::sDashCount dashCount = GameDataManager::GetDashCount();
+		structs::sDashData dashCount = GameDataManager::GetDashCount();
 
 		// 상수버퍼 만들기
 		graphics::ConstantBuffer* outCB

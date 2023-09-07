@@ -1,5 +1,5 @@
 #pragma once
-#include "daScript.h"
+#include "daCreatureScript.h"
 #include "daRigidbody.h"
 #include "daAnimator.h"
 #include "daMeshRenderer.h"
@@ -27,13 +27,15 @@ namespace da
 	};
 
 	class EffectScript;
-	class PlayerScript : public Script
+	class PlayerScript : public CreatureScript
 	{
 	public:
 		PlayerScript();
 		virtual ~PlayerScript();
+
 		// юс╫ц
 	public:
+		virtual void AddEffectObject(GameObject* effectObject) override;
 		void GetDamage();
 		void GetHeal();
 
@@ -68,12 +70,11 @@ namespace da
 	public:
 		CombatScript* SetWeaponObject(GameObject* object);
 		CombatScript* GetWeaponScript() { return mWeaponScript; }
-		EffectScript* AddEffectObject(GameObject* object);
-		bool IsLeft() { if (0 >= mPlayerDir.x) return true; return false; }
+		bool IsLeft() { if (0 >= mCreatureDir.x) return true; return false; }
 		bool IsPlayerGround() { return mFootCollider->IsGround(); }
 		void PlayerIsNotGround() { mFootCollider->ClearGroundBuffer(); }
 		bool IsDashRunning() { return mDashRunning; }
-		math::Vector2 GetPlayerDir() { return mPlayerDir; }
+		math::Vector2 GetPlayerDir() { return mCreatureDir; }
 		void SetPlayerVelocity(math::Vector2 vector2) { mRigidbody->OverrideVelocity(vector2, 0.0f); }
 		void SetPlayerPosition(math::Vector3 vector3) { mTransform->SetPosition(vector3); }
 		void IsPlayerInDungeon(bool value)
@@ -153,20 +154,17 @@ namespace da
 #pragma region Other Scripts
 	private:
 		CombatScript*	mWeaponScript;
-		std::vector<EffectScript*> mEffects;
+		//std::vector<EffectScript*> mEffects;
 #pragma endregion
 
 #pragma region Global Data
 	private:
-		structs::sPlayerStat*	mPlayerStat;
-		structs::sJumpCount*	mJumpCount;
-		structs::sDashCount* 	mDashCount;
+		structs::sJumpData*		mJumpData;
+		structs::sDashData* 	mDashData;
 #pragma endregion
 
 #pragma region Condition value
 	private:
-		bool			mDead;
-		math::Vector2	mPlayerDir;
 		ePlayerState	mActiveState;
 		ePlayerState	mpreviousState;
 

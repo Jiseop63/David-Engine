@@ -8,9 +8,9 @@
 namespace da
 {
 	using namespace math;
-	structs::sPlayerStat GameDataManager::mPlayerStat = {};
-	structs::sJumpCount GameDataManager::mJumpCount = {};
-	structs::sDashCount GameDataManager::mDashCount = {};
+	structs::sCreatureStat GameDataManager::mPlayerStat = {};
+	structs::sJumpData GameDataManager::mJumpData = {};
+	structs::sDashData GameDataManager::mDashData = {};
 	structs::sInventory GameDataManager::mInventoryData = {};
 
 	structs::sArmour* GameDataManager::mActiveArmour = nullptr;
@@ -31,19 +31,19 @@ namespace da
 		mPlayerStat.MaxHP = 30;
 		mPlayerStat.CurHP = mPlayerStat.MaxHP;
 		mPlayerStat.MoveSpeed = 3.50f;
-		mPlayerStat.JumpForce = 8.50f;
-		mPlayerStat.DashForce = 10.50f;
 		
-		mDashCount.MaxDashCount = 2;
-		mDashCount.CurDashCount = mDashCount.MaxDashCount;
-		mDashCount.DashAccumulateTime = 0.0f;
-		mDashCount.DashRegenTime = 2.250f;
+		mDashData.DashForce = 10.50f;
+		mDashData.MaxDashCount = 2;
+		mDashData.CurDashCount = mDashData.MaxDashCount;
+		mDashData.DashAccumulateTime = 0.0f;
+		mDashData.DashRegenTime = 2.250f;
 
-		mJumpCount.JumpAccumulateTime = 0.0f;
-		mJumpCount.JumpLimitTime = 0.1250f;
-		mJumpCount.JumpForceRatio = 0.0f;
-		mJumpCount.BufferedJump = false;
-		mJumpCount.ExtraJump = true;
+		mJumpData.JumpForce = 8.50f;
+		mJumpData.JumpAccumulateTime = 0.0f;
+		mJumpData.JumpLimitTime = 0.1250f;
+		mJumpData.JumpForceRatio = 0.0f;
+		mJumpData.BufferedJump = false;
+		mJumpData.ExtraJump = true;
 
 		mActiveArmour = new structs::sArmour();
 		mActiveArmour->Weapon.WeaponName = enums::eWeaponName::LongSword;
@@ -73,9 +73,9 @@ namespace da
 
 	bool GameDataManager::UseDash()
 	{		
-		if (0 < mDashCount.CurDashCount)
+		if (0 < mDashData.CurDashCount)
 		{
-			mDashCount.CurDashCount -= 1;
+			mDashData.CurDashCount -= 1;
 			SceneManager::GetDashCountScript()->BindConstantBuffer();
 			return true;
 		}
@@ -85,19 +85,19 @@ namespace da
 
 	void GameDataManager::RecoveryDash()
 	{
-		if (mDashCount.MaxDashCount > mDashCount.CurDashCount)
+		if (mDashData.MaxDashCount > mDashData.CurDashCount)
 		{
-			mDashCount.DashAccumulateTime = 0.0f;
-			mDashCount.CurDashCount += 1;
+			mDashData.DashAccumulateTime = 0.0f;
+			mDashData.CurDashCount += 1;
 			SceneManager::GetDashCountScript()->BindConstantBuffer();
 		}
 	}
 
 	void GameDataManager::ClearJumpBuffer()
 	{
-		mJumpCount.BufferedJump = false;
-		mJumpCount.JumpForceRatio = 0.0f;
-		mJumpCount.JumpAccumulateTime = 0.0f;
+		mJumpData.BufferedJump = false;
+		mJumpData.JumpForceRatio = 0.0f;
+		mJumpData.JumpAccumulateTime = 0.0f;
 	}
 
 	void GameDataManager::SetCameraMovaPosition(da::math::Vector2 vector2, bool shake)

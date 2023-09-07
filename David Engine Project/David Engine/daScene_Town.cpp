@@ -60,7 +60,7 @@ namespace da
 		GameDataManager::SetCameraMovableRange(math::Vector2(22.0f, 1.80f));
 		GameDataManager::SetCameraMovaPosition(math::Vector2(playerPos.x, playerPos.y));
 		// UI ¼¼ÆÃ
-		structs::sPlayerStat playerStat = GameDataManager::GetPlayerStat();
+		structs::sCreatureStat playerStat = GameDataManager::GetPlayerStat();
 		SceneManager::GetLifebarScript()->SetValue(playerStat.MaxHP, playerStat.CurHP);
 		SceneManager::GetHUDObject()->SetObjectStates(GameObject::eObjectState::Active);
 		SceneManager::GetCursourScrip()->IsIngame(true);
@@ -225,7 +225,7 @@ namespace da
 		
 		// test enemy
 		{
-			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
+			SkelScript* skelScript = objects::InstantiateMonster<SkelScript>(this);
 			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(1.50f, 0.0f, ObjectZ));
 		}
 

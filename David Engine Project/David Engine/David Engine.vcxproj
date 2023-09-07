@@ -153,6 +153,7 @@
     <ClInclude Include="daCreatureLifebarScript.h" />
     <ClInclude Include="daCreatureScript.h" />
     <ClInclude Include="daEffectEnemyScript.h" />
+    <ClInclude Include="daMonsterScript.h" />
     <ClInclude Include="daPlayerEffectScript.h" />
     <ClInclude Include="daEffectScript.h" />
     <ClInclude Include="daAttackEffectScript.h" />
@@ -192,6 +193,7 @@
     <ClCompile Include="daCreatureScript.cpp" />
     <ClCompile Include="daDashCountScript.cpp" />
     <ClCompile Include="daEffectEnemyScript.cpp" />
+    <ClCompile Include="daMonsterScript.cpp" />
     <ClCompile Include="daPlayerEffectScript.cpp" />
     <ClCompile Include="daEffectScript.cpp" />
     <ClCompile Include="daAttackEffectScript.cpp" />

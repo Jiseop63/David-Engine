@@ -1,9 +1,9 @@
 #pragma once
-#include "daCreatureScript.h"
+#include "daMonsterScript.h"
 
 namespace da
 {
-	class SkelScript : public CreatureScript
+	class SkelScript : public MonsterScript
 	{
 	public:
 		SkelScript();
@@ -19,14 +19,14 @@ namespace da
 
 #pragma region Common Func
 	private:
-		void calcCreatureDir();
+		void calcMonsterDir();
 		void visualUpdate();
 		void lifeCheck();
 #pragma endregion
 
 #pragma region FSM
 	private:
-		void ChangeState(eCreatureState state);
+		void ChangeState(eMonsterState state);
 		void skelFSM();
 		void SkelHandleIdle();
 		void SkelHandleChase();
@@ -55,18 +55,18 @@ namespace da
 
 #pragma region Chase Value
 	private:
-		float mChaseDurationTime;		// 최대 추적 유지시간
-		float mChaseDurationDecay;		// 현재 유지시간
-		float mDistanceFromPlayer;		// 플레이어와의 거리
+		float	mChaseDurationTime;		// 최대 추적 유지시간
+		float	mChaseDurationDecay;		// 현재 유지시간
+		float	mDistanceFromPlayer;		// 플레이어와의 거리
 #pragma endregion
 
 #pragma region AttackCooldown condition value
-		bool			mPrepareAttack;
-		float			mPrepareDurationTime;
-		float			mPrepareDurationDecay;
-		bool			mAttackProgress;
-		float			mReadyDurationTime;
-		float			mReadyDurationDecay;
+		bool	mPrepareAttack;
+		float	mPrepareDurationTime;
+		float	mPrepareDurationDecay;
+		bool	mAttackProgress;
+		float	mReadyDurationTime;
+		float	mReadyDurationDecay;
 #pragma endregion
 
 

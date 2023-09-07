@@ -166,7 +166,7 @@ namespace da
 		
 		// test enemy
 		{
-			SkelScript* skelScript = objects::InstantiateCreature<SkelScript>(this);
+			SkelScript* skelScript = objects::InstantiateMonster<SkelScript>(this);
 			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(-0.50f, 0.0f, ObjectZ));
 		}
 

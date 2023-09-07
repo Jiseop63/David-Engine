@@ -1,11 +1,9 @@
 #include "daCreatureScript.h"
+#include "daCreatureScript.h"
 
 #include "daGameObject.h"
 #include "daResources.h"
 #include "daSceneManager.h"
-#include "daEnemyWeaponScript.h"
-#include "daEffectEnemyScript.h"
-#include "daCreatureLifebarScript.h"
 
 namespace da
 {
@@ -13,21 +11,14 @@ namespace da
 
 	CreatureScript::CreatureScript()
 		: mCreatureTransform(nullptr)
+		, mCreatureRenderer(nullptr)
 		, mCreatureRigidbody(nullptr)
 		, mCreatureAnimator(nullptr)
 		, mCreatureBodyCollider(nullptr)
 		, mCreatureFootCollider(nullptr)
-
-		, mCreatureWeaponScript(nullptr)
-		, mEnemyEffectScript(nullptr)
-		, mCreatureLifeScript(nullptr)
-		, mPlayerScript(nullptr)
 		, mCreatureStat{}
-		, mCreatureActiveState(eCreatureState::Idle)
-		, mStandingPosition(math::Vector3::Zero) 
 		, mCreatureDir(math::Vector2::Zero) 
 		, mIsDead(false)
-		, mDetectPlayer(false)
 	{
 	}
 	CreatureScript::~CreatureScript()
@@ -64,30 +55,13 @@ namespace da
 			
 	}
 
-	void CreatureScript::ReverseTexture()
+
+
+	void CreatureScript::VisualUpdate()
 	{
-		bool value = IsLeft();
-		mCreatureRenderer->SetReverse(value);
-		mCreatureWeaponScript->SetReverse(value);
+		ReverseTexture();
 	}
 
-	EnemyWeaponScript* CreatureScript::SetEnemyWeaponScript(GameObject* creature)
-	{
-		mCreatureWeaponScript = creature->AddComponent<EnemyWeaponScript>();
-		return mCreatureWeaponScript;
-	}
-	CreatureLifebarScript* CreatureScript::SetCreatureLifeScript(GameObject* creature)
-	{
-		mCreatureLifeScript = creature->AddComponent<CreatureLifebarScript>();
-		mCreatureLifeScript->SetCreatureScript(this);
-		mCreatureLifeScript->SetValue(mCreatureStat.MaxHP, mCreatureStat.CurHP);
-		return mCreatureLifeScript;
-	}
-	EffectEnemyScript* CreatureScript::AddEffectObject(GameObject* effectObject)
-	{
-		mEnemyEffectScript = effectObject->AddComponent<EffectEnemyScript>();
-		return mEnemyEffectScript;
-	}
 	void CreatureScript::OnCollisionEnter(Collider2D* other)
 	{
 		// ÇÃ·¿Æû¿¡ Ãæµ¹
@@ -102,10 +76,8 @@ namespace da
 	}
 	void CreatureScript::OnDamaged()
 	{
-		if (0 >= mCreatureStat.CurHP)
-			mCreatureStat.CurHP = 0;
-		mCreatureStat.CurHP -= 5.0f;
-
-		mCreatureLifeScript->SetValue(mCreatureStat.MaxHP, mCreatureStat.CurHP);
+		if (0 >= mCreatureStat->CurHP)
+			mCreatureStat->CurHP = 0;
+		mCreatureStat->CurHP -= 5.0f;
 	}
 }

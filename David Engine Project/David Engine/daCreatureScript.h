@@ -6,17 +6,7 @@
 
 namespace da
 {
-	enum class eCreatureState
-	{
-		Idle,
-		Chase,
-		Attack,
-		Dead,
-	};
-	class PlayerScript;
-	class EnemyWeaponScript;
-	class EffectEnemyScript;
-	class CreatureLifebarScript;
+	class EffectScript;
 	class CreatureScript : public Script
 	{
 	public:
@@ -25,26 +15,22 @@ namespace da
 
 		virtual void Initialize();
 #pragma region common Func
-		void ReverseTexture();
 		bool IsLeft() { if (0 >= mCreatureDir.x) return true; else return false; }
+		void ReverseTexture() { mCreatureRenderer->SetReverse(IsLeft()); }
 #pragma endregion
 
 
 #pragma region public Func
 	public:
 		Transform* GetCreatureTransform() { return mCreatureTransform; }
-		EnemyWeaponScript* SetEnemyWeaponScript(GameObject* creature);
-		CreatureLifebarScript* SetCreatureLifeScript(GameObject* creature);
-		EffectEnemyScript* AddEffectObject(GameObject* effectObject);
-		structs::sCreatureStat GetCreatureStat() { return mCreatureStat; }
+		
+		virtual void AddEffectObject(GameObject* effectScript) {}
+		structs::sCreatureStat GetCreatureStat() { return *mCreatureStat; }
+#pragma endregion
 
-		void SetStandingPosition(math::Vector3 vector3) { mStandingPosition = vector3; }
-		void SetDetectRange(float value) 
-		{ 
-			mCreatureStat.DetectRange = value; 
-			mCreatureSensorCollider->SetSize(math::Vector2(value * 2.0f, 0.90f));
-		}
-		void SetAttackRange(float value) { mCreatureStat.AttackRange = value; }
+#pragma region Creature 공용 함수
+	protected:
+		void VisualUpdate();		// 왼쪽 오른쪽 구분해서 반전시킴
 #pragma endregion
 
 
@@ -54,7 +40,6 @@ namespace da
 		virtual void OnCollisionEnter(Collider2D* other);
 		virtual void OnCollisionExit(Collider2D* other) {}
 		void OnDamaged();
-		void CreatureFindsPlayer(bool value) { mDetectPlayer = value; }
 #pragma endregion
 
 
@@ -69,25 +54,22 @@ namespace da
 		Animator*				mCreatureAnimator;
 		Collider2D*				mCreatureBodyCollider;
 		Collider2D*				mCreatureFootCollider;
-		Collider2D*				mCreatureSensorCollider;
+#pragma endregion
 
-		PlayerScript*			mPlayerScript;
-		EnemyWeaponScript*		mCreatureWeaponScript;
-		EffectEnemyScript*		mEnemyEffectScript;
-		CreatureLifebarScript*	mCreatureLifeScript;
+#pragma region Other script
+	protected:
+		std::vector<EffectScript*> mEffects;
 
 #pragma endregion
+
 #pragma region Datas
 	protected:
-		structs::sCreatureStat	mCreatureStat;
+		structs::sCreatureStat*	mCreatureStat;				// 공용
 #pragma endregion
 
 #pragma region condition
 	protected:
-		eCreatureState			mCreatureActiveState;
-		math::Vector3			mStandingPosition;
 		math::Vector2			mCreatureDir;
-		bool					mDetectPlayer;
 		bool					mIsDead;
 		bool					mBodyCollision;
 		bool					mFootCollision;

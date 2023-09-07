@@ -31,6 +31,8 @@ namespace da
 
 	SkelScript::~SkelScript()
 	{
+		delete mCreatureStat;
+		mCreatureStat = nullptr;
 	}
 
 #pragma region Basic Func
@@ -38,7 +40,7 @@ namespace da
 	{
 		// 컴포넌트 가져오기
 		CreatureScript::Initialize();
-		mCreatureSensorCollider = GetOwner()->AddComponent<Collider2D>();
+		mMonsterSensorCollider = GetOwner()->AddComponent<Collider2D>();
 
 
 		// 충돌체 설정하기
@@ -51,9 +53,9 @@ namespace da
 		}
 		// senser
 		{
-			mCreatureSensorCollider->SetDetectionType(Collider2D::eDetectionType::Sensor);
-			mCreatureSensorCollider->SetSize(math::Vector2(4.50f, 1.90f));
-			mCreatureSensorCollider->SetCenter(math::Vector2(0.0f, 0.450f));
+			mMonsterSensorCollider->SetDetectionType(Collider2D::eDetectionType::Sensor);
+			mMonsterSensorCollider->SetSize(math::Vector2(4.50f, 1.90f));
+			mMonsterSensorCollider->SetCenter(math::Vector2(0.0f, 0.450f));
 		}
 
 		// 애니메이션 설정하기
@@ -68,18 +70,18 @@ namespace da
 
 
 		// 스텟 초기화
+		mCreatureStat = new structs::sCreatureStat();
+		mCreatureStat->MaxHP = 25.0f;
+		mCreatureStat->CurHP = 25.0f;
 
-		mCreatureStat.MaxHP = 25.0f;
-		mCreatureStat.CurHP = 25.0f;
+		mCreatureStat->MoveSpeed = 1.250f;
+		mMonsterAttackStat.DetectRange = 2.50f;
 
-		mCreatureStat.MoveSpeed = 1.250f;
-		mCreatureStat.DetectRange = 2.50f;
+		mMonsterAttackStat.AttackRange = 0.750f;
+		mMonsterAttackStat.AttackAccumulateTime = 0.0f;
+		mMonsterAttackStat.AttackDelay = 4.0f;
 
-		mCreatureStat.AttackRange = 0.750f;
-		mCreatureStat.AttackAccumulateTime = 0.0f;
-		mCreatureStat.AttackDelay = 4.0f;
-
-		mCreatureStat.MoveSpeed = 1.50f;
+		mCreatureStat->MoveSpeed = 1.50f;
 
 		mChaseDurationTime = 1.50f;
 		mChaseDurationDecay = mChaseDurationTime;
@@ -99,7 +101,7 @@ namespace da
 
 
 #pragma region Common Func
-	void SkelScript::calcCreatureDir()
+	void SkelScript::calcMonsterDir()
 	{
 		math::Vector3 skelPosition = mCreatureTransform->GetPosition();
 
@@ -116,8 +118,8 @@ namespace da
 	}
 	void SkelScript::lifeCheck()
 	{
-		if (0 >= mCreatureStat.CurHP)
-			ChangeState(eCreatureState::Dead);
+		if (0 >= mCreatureStat->CurHP)
+			ChangeState(eMonsterState::Dead);
 	}
 #pragma endregion
 
@@ -127,18 +129,18 @@ namespace da
 #pragma region FSM Func
 	void SkelScript::skelFSM()
 	{
-		switch (mCreatureActiveState)
+		switch (mMonsterActiveState)
 		{
-		case da::eCreatureState::Idle:
+		case da::eMonsterState::Idle:
 			SkelHandleIdle();
 			break;
-		case da::eCreatureState::Chase:
+		case da::eMonsterState::Chase:
 			SkelHandleChase();
 			break;
-		case da::eCreatureState::Attack:
+		case da::eMonsterState::Attack:
 			SkelHandleAttack();
 			break;
-		case da::eCreatureState::Dead:
+		case da::eMonsterState::Dead:
 			SkelHandleDead();
 			break;
 		default:
@@ -150,7 +152,7 @@ namespace da
 	{
 		// Chace 상태로 전환
 		if (mDetectPlayer)
-			ChangeState(eCreatureState::Chase);
+			ChangeState(eMonsterState::Chase);
 	}
 
 	void SkelScript::SkelHandleChase()
@@ -164,13 +166,13 @@ namespace da
 	void SkelScript::trackingPlayer()
 	{
 		// 방향 구하기		
-		calcCreatureDir();
+		calcMonsterDir();
 
 		// 이동하기 *이동하기전에 벽 충돌 방향 확인하는 코드 필요함
 		Collider2D::eWallCollisionState wallCollisionState = mCreatureBodyCollider->IsWallCollision();				// 벽 충돌 체크
 		math::Vector3 skelPosition = mCreatureTransform->GetPosition();												// 내 위치
-		float moveMagnitude = mCreatureStat.MoveSpeed * (float)Time::DeltaTime();									// 이동량
-		math::Vector2 moveDir = daRotateVector2(mCreatureDir, mCreatureFootCollider->GetEnvRotate());				// 회전까지 고려한 이동방향
+		float moveMagnitude = mCreatureStat->MoveSpeed * (float)Time::DeltaTime();									// 이동량
+		math::Vector2 moveDir = daRotateVector2(mCreatureDir, mCreatureFootCollider->GetEnvRotate());	// 회전까지 고려한 이동방향
 		math::Vector2 movePosition = moveDir * moveMagnitude;														// 이동위치
 		skelPosition.x += movePosition.x;																			// 이동한 위치
 		skelPosition.y += movePosition.y;																			// 이동한 위치
@@ -204,14 +206,14 @@ namespace da
 			{
 				mChaseDurationDecay = mChaseDurationTime;
 
-				ChangeState(eCreatureState::Idle);
+				ChangeState(eMonsterState::Idle);
 			}
 		}
 		// 공격 범위에 도달했다면
-		if (abs(mDistanceFromPlayer) <= mCreatureStat.AttackRange)
+		if (abs(mDistanceFromPlayer) <= mMonsterAttackStat.AttackRange)
 		{
 			mChaseDurationDecay = mChaseDurationTime;
-			ChangeState(eCreatureState::Attack);
+			ChangeState(eMonsterState::Attack);
 		}
 	}
 
@@ -268,7 +270,7 @@ namespace da
 				mReadyDurationDecay = mReadyDurationTime;	// 후딜 시간값 초기화
 				mPrepareAttack = false;						// 선딜 조건 초기화
 				mAttackProgress = false;					// 공격 애니메이션 호출 조건 초기화
-				ChangeState(eCreatureState::Chase);			// 상태 변경
+				ChangeState(eMonsterState::Chase);			// 상태 변경
 			}
 		}
 	}
@@ -285,21 +287,21 @@ namespace da
 		mIsDead = true;
 	}
 
-	void SkelScript::ChangeState(eCreatureState state)
+	void SkelScript::ChangeState(eMonsterState state)
 	{
-		mCreatureActiveState = state;
-		switch (mCreatureActiveState)
+		mMonsterActiveState = state;
+		switch (mMonsterActiveState)
 		{
-		case da::eCreatureState::Idle:
+		case da::eMonsterState::Idle:
 			mCreatureAnimator->PlayAnimation(L"SkelIdle");
 			break;
-		case da::eCreatureState::Chase:
+		case da::eMonsterState::Chase:
 			mCreatureAnimator->PlayAnimation(L"SkelMove");
 			break;
-		case da::eCreatureState::Attack:
+		case da::eMonsterState::Attack:
 			mCreatureAnimator->PlayAnimation(L"SkelIdle");
 			break;
-		case da::eCreatureState::Dead:
+		case da::eMonsterState::Dead:
 			GetOwner()->SetObjectState(GameObject::eObjectState::Hide);
 			break;
 		default:

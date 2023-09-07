@@ -138,26 +138,28 @@ namespace da::objects
 	}
 
 	template <typename T>
-	static T* InstantiateCreature(Scene* scene)
+	static T* InstantiateMonster(Scene* scene)
 	{
 		// enemyObject 추가
 		GameObject* enemyObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, L"AnimationMaterial");
-		// CreatureScript 추가
+		// MonsterScript 추가
 		T* enemyScript = enemyObject->AddComponent<T>();
-		CreatureScript* creatureScript = dynamic_cast<CreatureScript*>(enemyScript);
+		MonsterScript* monsterScript = dynamic_cast<MonsterScript*>(enemyScript);
 		// Effect 추가
 		GameObject* effectObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
 		enemyObject->AddChildObject(effectObject);
 		effectObject->SetObjectState(GameObject::eObjectState::Inactive);
-		creatureScript->AddEffectObject(effectObject);
+		monsterScript->AddEffectObject(effectObject);
 
 		// weapon 추가
 		GameObject* enemyWeaponObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, L"AnimationMaterial");
-		creatureScript->SetEnemyWeaponScript(enemyWeaponObj);
+		EnemyWeaponScript* enemyWeaponScript = enemyWeaponObj->AddComponent<EnemyWeaponScript>();
+		monsterScript->SetEnemyWeaponScript(enemyWeaponScript);
 
 		// life Bar 추가해야함
 		GameObject* enemyLifeObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, L"CreatureLifeBarMaterial");
-		CreatureLifebarScript* creatureLifeScript = creatureScript->SetCreatureLifeScript(enemyLifeObj);
+		CreatureLifebarScript* creatureLifeBarScript = enemyLifeObj->AddComponent<CreatureLifebarScript>();
+		monsterScript->SetCreatureLifeScript(creatureLifeBarScript);
 		enemyLifeObj->GetTransform()->SetScale(1.0f, 0.250f, 1.0f);
 
 

@@ -20,9 +20,9 @@ namespace da
 		static bool IsDebuging() { return mDebuging; }
 
 	public:
-		static structs::sPlayerStat& GetPlayerStat() { return mPlayerStat; }
-		static structs::sJumpCount& GetJumpCount() { return mJumpCount; }
-		static structs::sDashCount& GetDashCount() { return mDashCount; }
+		static structs::sCreatureStat& GetPlayerStat() { return mPlayerStat; }
+		static structs::sJumpData& GetJumpCount() { return mJumpData; }
+		static structs::sDashData& GetDashCount() { return mDashData; }
 		static structs::sInventory& GetInventory() { return mInventoryData; }
 
 #pragma region Player Func
@@ -54,9 +54,9 @@ namespace da
 
 #pragma region Data
 	private:
-		static structs::sPlayerStat mPlayerStat;
-		static structs::sJumpCount mJumpCount;
-		static structs::sDashCount mDashCount;
+		static structs::sCreatureStat mPlayerStat;
+		static structs::sJumpData mJumpData;
+		static structs::sDashData mDashData;
 		static structs::sInventory mInventoryData;
 
 		static structs::sArmour* mActiveArmour;

@@ -49,7 +49,7 @@
 #include "daProjectileScript.h"
 
 // Monster
-#include "daCreatureScript.h"
+#include "daMonsterScript.h"
 #include "daEnemyWeaponScript.h"
 #include "daSkelScript.h"
 #include "daCreatureLifebarScript.h"

@@ -1,54 +1,50 @@
 #include "daMath.h"
 namespace da::structs
 {
-	struct sPlayerStat
-	{
-		float MaxHP;
-		float CurHP;
-		float MoveSpeed;
-		float JumpForce;
-		float DashForce;
-		sPlayerStat()
-			: MaxHP(0.0f), CurHP(0.0f), MoveSpeed(0.0f), JumpForce(0.0f), DashForce(0.0f)
-		{}
-	};
-
 	struct sCreatureStat
 	{
 		float MaxHP;
 		float CurHP;
-		float MoveSpeed;
-		float DetectRange;
+		float MoveSpeed;		
+				
+		sCreatureStat()
+			: MaxHP(0.0f), CurHP(0.0f), MoveSpeed(0.0f)
+		{}
+	};
 
+	struct sMonsterAttackStat
+	{
+		float DetectRange;
 		float AttackRange;
 		float AttackAccumulateTime;
 		float AttackDelay;
-		
-		sCreatureStat()
-			: MaxHP(0.0f), CurHP(0.0f), MoveSpeed(0.0f), DetectRange(0.0f), AttackRange(0.0f)
-			, AttackAccumulateTime(0.0f), AttackDelay(0.0f)
+		sMonsterAttackStat()
+			: DetectRange(0.0f), AttackRange(0.0f), AttackAccumulateTime(0.0f), AttackDelay(0.0f)
 		{}
 	};
-	struct sJumpCount
+
+	struct sJumpData
 	{
+		float	JumpForce;
 		float	JumpAccumulateTime;
 		float	JumpLimitTime;
 		float	JumpForceRatio;
 		bool	BufferedJump;
 		bool	ExtraJump;
-		sJumpCount()
-			: JumpAccumulateTime(0.0f), JumpLimitTime(0.0f), JumpForceRatio(0.0f)
+		sJumpData()
+			: JumpForce(0.0f), JumpAccumulateTime(0.0f), JumpLimitTime(0.0f), JumpForceRatio(0.0f)
 			, BufferedJump(false), ExtraJump(true)
 		{}
 	};
-	struct sDashCount
+	struct sDashData
 	{
 		int		MaxDashCount;
 		int		CurDashCount;
+		float	DashForce;
 		float	DashAccumulateTime;
 		float	DashRegenTime;
-		sDashCount()
-			: MaxDashCount(0), CurDashCount(0), DashAccumulateTime(0.0f), DashRegenTime(0.0f)
+		sDashData()
+			: MaxDashCount(0), CurDashCount(0), DashForce(0.0f), DashAccumulateTime(0.0f), DashRegenTime(0.0f)
 		{}
 	};
 
