@@ -144,9 +144,12 @@ namespace da
 		CameraObject* uiCameraObj = objects::InstantiateUICamera(this);
 		renderer::mainCamera = mainCameraObj->GetCameraComponent();
 		renderer::uiCamera = uiCameraObj->GetCameraComponent();
-		// subCamera setting
+		// Camera setting
 		SubCameraScript* subCamScript = subCameraObj->GetComponent<SubCameraScript>();
 		subCamScript->SetMainCameraTransfrom(mainCameraObj->GetTransform());
+		AudioSource* audioSource = mainCameraObj->AddComponent<AudioSource>();
+		audioSource->SetClip(Resources::Load<AudioClip>(L"TestSound", L"..\\Resources\\Sound\\0.mp3"));
+		audioSource->Play();
 
 		// light - done
 		GameObject* lightObj = objects::InstantiateCommonObject
@@ -155,9 +158,6 @@ namespace da
 		Light* light = lightObj->AddComponent<Light>();
 		light->SetLightType(enums::eLightType::Directional);
 		light->SetColor(math::Vector4(0.90f, 0.90f, 0.90f, 1.0f));
-		AudioSource* audioSource = lightObj->AddComponent<AudioSource>();
-		audioSource->SetClip(Resources::Load<AudioClip>(L"TestSound", L"..\\Resources\\Sound\\0.mp3"));
-		audioSource->Play();
 #pragma region HUD
 
 		// hud - done

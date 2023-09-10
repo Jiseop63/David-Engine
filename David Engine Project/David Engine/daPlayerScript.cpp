@@ -17,14 +17,7 @@
 namespace da
 {
     PlayerScript::PlayerScript()
-        : mTransform(nullptr)
-        , mRigidbody(nullptr)
-        , mAnimator(nullptr)
-        , mRenderer(nullptr)
-        , mLight(nullptr)
-        , mBodyCollider(nullptr)
-        , mFootCollider(nullptr)
-
+        : mLight(nullptr)
         , mWeaponScript(nullptr)
 
         , mActiveState(ePlayerState::Idle)
@@ -51,18 +44,15 @@ namespace da
 #pragma region Default Func
 	void PlayerScript::Initialize()
 	{
-        mTransform = GetOwner()->GetComponent<Transform>();
-        mRenderer = GetOwner()->GetComponent<MeshRenderer>();
+        CreatureScript::Initialize();
         mLight = GetOwner()->GetComponent<Light>();
 
-        mRigidbody = GetOwner()->AddComponent<Rigidbody>();
         InitAnimation();
         InitCollider();
 
         mCreatureStat = &GameDataManager::GetPlayerStat();
         mJumpData = &GameDataManager::GetJumpCount();
         mDashData = &GameDataManager::GetDashCount();
-        ChangeWeapon();
 	}
     void PlayerScript::Update()
     {
@@ -122,16 +112,14 @@ namespace da
     {
         Vector3 mouseWorldPosition = Input::GetMouseWorldPosition();
         Vector2 mousePosition(mouseWorldPosition.x, mouseWorldPosition.y);
-        Vector3 playerPosition = mTransform->GetPosition();
+        Vector3 playerPosition = mCreatureTransform->GetPosition();
         // Player Dir
         Vector2 playerDir(mousePosition.x - playerPosition.x, mousePosition.y - playerPosition.y);
         playerDir.Normalize();
         mCreatureDir = playerDir;
 
         bool value = IsLeft();
-        mRenderer->SetReverse(value);
-
-        mWeaponScript->SetWeaponTransform(playerPosition, mCreatureDir);
+        mCreatureRenderer->SetReverse(value);
     }
     void PlayerScript::timeProcess()
     {
@@ -149,8 +137,8 @@ namespace da
             {
                 mHoldingDashTime = 0.0f;
                 mDashRunning = false;
-                mRigidbody->GravityAble(true);
-                mRigidbody->OverrideVelocity(math::Vector2::UnitY, 0.010f);
+                mCreatureRigidbody->GravityAble(true);
+                mCreatureRigidbody->OverrideVelocity(math::Vector2::UnitY, 0.010f);
             }
         }
     }       
@@ -169,7 +157,7 @@ namespace da
     {
         if (!effect)
             return;
-        effect->SetEffectPosition(mTransform->GetPosition() + Vector3(0.0f, -0.20f, 0.0f));
+        effect->SetEffectPosition(mCreatureTransform->GetPosition() + Vector3(0.0f, -0.20f, 0.0f));
         effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
         effect->PlayEffect(name);
     }
@@ -199,16 +187,16 @@ namespace da
         switch (mActiveState)
         {
         case da::ePlayerState::Idle:
-            mAnimator->PlayAnimation(L"playerIdle");
+            mCreatureAnimator->PlayAnimation(L"playerIdle");
             break;
         case da::ePlayerState::Move:
-            mAnimator->PlayAnimation(L"playerMove");
+            mCreatureAnimator->PlayAnimation(L"playerMove");
             break;
         case da::ePlayerState::Jump:
-            mAnimator->PlayAnimation(L"playerJump");
+            mCreatureAnimator->PlayAnimation(L"playerJump");
             break;
         case da::ePlayerState::Dead:
-            mAnimator->PlayAnimation(L"playerDead");
+            mCreatureAnimator->PlayAnimation(L"playerDead");
             break;
         default:
             break;
@@ -245,16 +233,16 @@ namespace da
     {        
         if (0 == mMoveCondition)
         {
-            mRigidbody->SetMoving(false);
-            mAnimator->PlayAnimation(L"playerIdle");
+            mCreatureRigidbody->SetMoving(false);
+            mCreatureAnimator->PlayAnimation(L"playerIdle");
             ChangeState(ePlayerState::Idle);
         }
         else
-            mRigidbody->SetMoving(true);
+            mCreatureRigidbody->SetMoving(true);
     }
     void PlayerScript::HandleJump()
     {
-        if (mFootCollider->IsGround())
+        if (mCreatureFootCollider->IsGround())
             ChangeState(mpreviousState);
     }
     void PlayerScript::HandleDead()
@@ -283,25 +271,20 @@ namespace da
             // 비활성이라면 활성화 시켜줌
             if (GameObject::eObjectState::Active != mWeaponScript->GetOwner()->GetObjectState())
                 mWeaponScript->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-            mWeaponScript->DoAttack();
+            mWeaponScript->ToDoAttack();
         }
-    }
-    void PlayerScript::ChangeWeapon()
-    {
-        // 일단 임시로 무기 세팅
-        //mWeaponScript->ChangeWeapon(enums::eWeaponType::LongSword);
     }
 #pragma endregion
 #pragma region Move Logic
     void PlayerScript::CameraMove()
     {
-        Vector3 playerPos = mTransform->GetPosition();
+        Vector3 playerPos = mCreatureTransform->GetPosition();
         
         GameDataManager::SetCameraMovaPosition(math::Vector2(playerPos.x, playerPos.y));
     }
     void PlayerScript::InputMove()
     {        
-        Vector3 mPos = mTransform->GetPosition();
+        Vector3 mPos = mCreatureTransform->GetPosition();
         float moveMagnitude = mCreatureStat->MoveSpeed * (float)Time::DeltaTime();
 
         // moveAnimation
@@ -312,7 +295,7 @@ namespace da
             || Input::GetKeyUp(eKeyCode::A))
             mMoveCondition--;
 
-        Collider2D::eWallCollisionState wallCollisionState = mBodyCollider->IsWallCollision();
+        Collider2D::eWallCollisionState wallCollisionState = mCreatureBodyCollider->IsWallCollision();
 
         if (mDashRunning)
             return;
@@ -323,7 +306,7 @@ namespace da
                 return;
             else
             {
-                Vector2 moveDir = daRotateVector2(Vector2::UnitX, mFootCollider->GetEnvRotate());
+                Vector2 moveDir = daRotateVector2(Vector2::UnitX, mCreatureFootCollider->GetEnvRotate());
                 Vector2 movePosition = moveDir * moveMagnitude;
 
                 mPos.x += movePosition.x;
@@ -336,7 +319,7 @@ namespace da
                 return;
             else
             {
-                Vector2 moveDir = daRotateVector2(-Vector2::UnitX, mFootCollider->GetEnvRotate());
+                Vector2 moveDir = daRotateVector2(-Vector2::UnitX, mCreatureFootCollider->GetEnvRotate());
                 Vector2 movePosition = moveDir * moveMagnitude;
                                 
                 mPos.x += movePosition.x;
@@ -344,13 +327,13 @@ namespace da
             }
         }
 
-        if (mFootCollider->IsGround())
+        if (mCreatureFootCollider->IsGround())
         {
             if (Input::GetKey(eKeyCode::S)
-                && mFootCollider->IsPlatformCollision())
+                && mCreatureFootCollider->IsPlatformCollision())
             {
                 if (Input::GetKeyDown(eKeyCode::SPACE))
-                    mFootCollider->ClearGroundBuffer();
+                    mCreatureFootCollider->ClearGroundBuffer();
             }
             else
             {
@@ -382,7 +365,7 @@ namespace da
             }
         }
 
-        mTransform->SetPosition(mPos);
+        mCreatureTransform->SetPosition(mPos);
     }
     void PlayerScript::walkEffect()
     {
@@ -407,7 +390,7 @@ namespace da
         void PlayerScript::jumpRegen()
         {
             if (!mJumpData->ExtraJump)
-                if (mFootCollider->IsGround())
+                if (mCreatureFootCollider->IsGround())
                     mJumpData->ExtraJump = true;
         }
         void PlayerScript::dashRegen()
@@ -421,7 +404,7 @@ namespace da
         }
         void PlayerScript::endJumping()
         {
-            math::Vector2 currentVelocity = mRigidbody->GetVelocity();
+            math::Vector2 currentVelocity = mCreatureRigidbody->GetVelocity();
 
             // Dash상태가 아니고, y가 -인 경우에만
             if (!mDashRunning
@@ -446,15 +429,15 @@ namespace da
         void PlayerScript::todoDash()
         {
             // 이동시키기
-            mRigidbody->OverrideVelocity(mCreatureDir, mDashData->DashForce);
+            mCreatureRigidbody->OverrideVelocity(mCreatureDir, mDashData->DashForce);
             mHoldingDashTime = 0.0f;
             mDashRunning = true;
-            mRigidbody->GravityAble(false);
+            mCreatureRigidbody->GravityAble(false);
             mPassPlatform = true;
 
             // 이게 있어야 바닥뚫고 대시 가능
-            if (mFootCollider->IsPlatformCollision())
-                mFootCollider->ClearGroundBuffer();
+            if (mCreatureFootCollider->IsPlatformCollision())
+                mCreatureFootCollider->ClearGroundBuffer();
 
             //// 투사체 정보 갱신
             //mWeaponScript->ModifyProjectile(
@@ -497,12 +480,12 @@ namespace da
             if (minForceRatio >= mJumpData->JumpForceRatio)
                 mJumpData->JumpForceRatio = minForceRatio;
 
-            mFootCollider->ClearGroundBuffer();
+            mCreatureFootCollider->ClearGroundBuffer();
 
             if (mJumpData->ExtraJump)
-                mRigidbody->ApplyVelocity(Vector2::UnitY, mJumpData->JumpForce * mJumpData->JumpForceRatio);
+                mCreatureRigidbody->ApplyVelocity(Vector2::UnitY, mJumpData->JumpForce * mJumpData->JumpForceRatio);
             else
-                mRigidbody->OverrideVelocity(Vector2::UnitY, mJumpData->JumpForce * mJumpData->JumpForceRatio);
+                mCreatureRigidbody->OverrideVelocity(Vector2::UnitY, mJumpData->JumpForce * mJumpData->JumpForceRatio);
             GameDataManager::ClearJumpBuffer();
         }
 #pragma endregion
@@ -510,43 +493,28 @@ namespace da
 #pragma region Initialize Player
     void PlayerScript::InitAnimation()
     {
-        mAnimator = GetOwner()->AddComponent<Animator>();
-
         std::shared_ptr<Texture> texture = Resources::Load<Texture>(L"PlayerSprite", L"..\\Resources\\Texture\\Adventurer\\SpriteSheet.png");
-        mAnimator->Create(L"playerIdle", texture, Vector2(0.0f, 0.0f), Vector2(32.0f, 32.0f), 5, Vector2(0.0f, 0.0f), 0.1f);
-        mAnimator->Create(L"playerMove", texture, Vector2(0.0f, 32.0f), Vector2(32.0f, 32.0f), 8, Vector2(0.0f, 0.0f), 0.1f);
-        mAnimator->Create(L"playerJump", texture, Vector2(0.0f, 64.0f), Vector2(32.0f, 32.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
-        mAnimator->Create(L"playerDead", texture, Vector2(0.0f, 96.0f), Vector2(32.0f, 32.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
-        mAnimator->PlayAnimation(L"playerIdle");
+        mCreatureAnimator->Create(L"playerIdle", texture, Vector2(0.0f, 0.0f), Vector2(32.0f, 32.0f), 5, Vector2(0.0f, 0.0f), 0.1f);
+        mCreatureAnimator->Create(L"playerMove", texture, Vector2(0.0f, 32.0f), Vector2(32.0f, 32.0f), 8, Vector2(0.0f, 0.0f), 0.1f);
+        mCreatureAnimator->Create(L"playerJump", texture, Vector2(0.0f, 64.0f), Vector2(32.0f, 32.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
+        mCreatureAnimator->Create(L"playerDead", texture, Vector2(0.0f, 96.0f), Vector2(32.0f, 32.0f), 1, Vector2(0.0f, 0.0f), 0.1f);
+        mCreatureAnimator->PlayAnimation(L"playerIdle");
 
-        mAnimator->StartEvent(L"playerJump") = std::bind(&PlayerScript::StartJump, this);
+        mCreatureAnimator->StartEvent(L"playerJump") = std::bind(&PlayerScript::StartJump, this);
 
-        L"playerJump";
     }
     void PlayerScript::InitCollider()
     {
-        mBodyCollider = GetOwner()->AddComponent<Collider2D>();
-        mFootCollider = GetOwner()->AddComponent<Collider2D>();
-
         // body
         {
-            GetOwner()->SetBodyCollider(mBodyCollider);
-            mBodyCollider->SetName(L"BodyCollider");
-            mBodyCollider->ImBody();
-            mBodyCollider->SetSize(Vector2(0.30f, 0.550f));
-            mBodyCollider->SetCenter(Vector2(0.0f, -0.160f));
-            mBodyCollider->SetDetectionType(Collider2D::eDetectionType::Default);
+            mCreatureBodyCollider->SetSize(Vector2(0.30f, 0.550f));
+            mCreatureBodyCollider->SetCenter(Vector2(0.0f, -0.160f));
         }
         // foot
         {
-            GetOwner()->SetFootCollider(mFootCollider);
-            mFootCollider->SetName(L"FootCollider");
-            mFootCollider->ImFoot();
-            mFootCollider->SetSize(Vector2(0.150f, 0.050f));
-            mFootCollider->SetCenter(Vector2(0.0f, -0.50f));
-            mFootCollider->SetDetectionType(Collider2D::eDetectionType::Default);
+            mCreatureFootCollider->SetSize(Vector2(0.150f, 0.050f));
+            mCreatureFootCollider->SetCenter(Vector2(0.0f, -0.50f));
         }
-
     }
 #pragma endregion
 #pragma region Collision Func
@@ -561,7 +529,7 @@ namespace da
             creatureScript->MonsterFindsPlayer(true);
         }
         if (Collider2D::eDetectionType::Env == other->GetDetectionType()
-            && mFootCollider->IsGround())
+            && mCreatureFootCollider->IsGround())
         {
             dustSpawn();
         }
@@ -572,9 +540,9 @@ namespace da
         if (enums::eLayerType::Platform == other->GetOwner()->GetLayerType())
         {
             // 어디가 충돌했는지 확인하기
-            if (mBodyCollider->IsCollision())
+            if (mCreatureBodyCollider->IsCollision())
                 mBodyCollision = false;
-            if (mFootCollider->IsCollision())
+            if (mCreatureFootCollider->IsCollision())
                 mFootCollision = false;
         }
 
@@ -595,11 +563,5 @@ namespace da
         mWeaponScript->SetPlayerScript(this);
         return mWeaponScript;
     }
-   /* EffectScript* PlayerScript::AddEffectObject(GameObject* object)
-    {
-        EffectScript* effect = object->AddComponent<PlayerEffectScript>();
-        mEffects.push_back(effect);
-        return effect;
-    }*/
 #pragma endregion
 }

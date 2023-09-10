@@ -71,12 +71,12 @@ namespace da
 		CombatScript* SetWeaponObject(GameObject* object);
 		CombatScript* GetWeaponScript() { return mWeaponScript; }
 		bool IsLeft() { if (0 >= mCreatureDir.x) return true; return false; }
-		bool IsPlayerGround() { return mFootCollider->IsGround(); }
-		void PlayerIsNotGround() { mFootCollider->ClearGroundBuffer(); }
+		bool IsPlayerGround() { return mCreatureFootCollider->IsGround(); }
+		void PlayerIsNotGround() { mCreatureFootCollider->ClearGroundBuffer(); }
 		bool IsDashRunning() { return mDashRunning; }
 		math::Vector2 GetPlayerDir() { return mCreatureDir; }
-		void SetPlayerVelocity(math::Vector2 vector2) { mRigidbody->OverrideVelocity(vector2, 0.0f); }
-		void SetPlayerPosition(math::Vector3 vector3) { mTransform->SetPosition(vector3); }
+		void SetPlayerVelocity(math::Vector2 vector2) { mCreatureRigidbody->OverrideVelocity(vector2, 0.0f); }
+		void SetPlayerPosition(math::Vector3 vector3) { mCreatureTransform->SetPosition(vector3); }
 		void IsPlayerInDungeon(bool value)
 		{ 
 			if (value)

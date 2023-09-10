@@ -31,28 +31,18 @@ namespace da
 		mCreatureRenderer = GetOwner()->GetComponent <MeshRenderer>();
 		mCreatureRigidbody = GetOwner()->AddComponent<Rigidbody>();
 		mCreatureAnimator = GetOwner()->AddComponent<Animator>();
-		mCreatureBodyCollider = GetOwner()->AddComponent<Collider2D>();
-		GetOwner()->SetBodyCollider(mCreatureBodyCollider);
-		mCreatureFootCollider = GetOwner()->AddComponent<Collider2D>();
-		GetOwner()->SetFootCollider(mCreatureFootCollider);
-
-
-		// 콜라이더 세팅은 각자 알아서 하는거로 하자..?
-		mCreatureBodyCollider->ImBody();
-		mCreatureFootCollider->SetDetectionType(Collider2D::eDetectionType::Default);
-		mCreatureFootCollider->ImFoot();
-		mCreatureFootCollider->SetDetectionType(Collider2D::eDetectionType::Default);
 		
-		// 이건 Creature를 상속받는 Monster에서 진행하도록 하자
-		/*mCreatureSensorCollider = GetOwner()->AddComponent<Collider2D>();*/
-		/*mCreatureSensorCollider->SetDetectionType(Collider2D::eDetectionType::Sensor);
-		mCreatureSensorCollider->SetSize(Vector2(4.50f, 1.90f));
-		mCreatureFootCollider->SetCenter(Vector2(0.0f, 0.450f));*/
+		mCreatureBodyCollider = GetOwner()->AddComponent<Collider2D>();
+		mCreatureBodyCollider->ImBody();
+		mCreatureBodyCollider->SetName(L"BodyCollider");
+		mCreatureBodyCollider->SetDetectionType(Collider2D::eDetectionType::Default);
+		GetOwner()->SetBodyCollider(mCreatureBodyCollider);
 
-
-		// stat 세팅... 은 알아서 하세요
-
-			
+		mCreatureFootCollider = GetOwner()->AddComponent<Collider2D>();
+		mCreatureFootCollider->ImFoot();
+		mCreatureFootCollider->SetName(L"FootCollider");
+		mCreatureFootCollider->SetDetectionType(Collider2D::eDetectionType::Default);
+		GetOwner()->SetFootCollider(mCreatureFootCollider);
 	}
 
 

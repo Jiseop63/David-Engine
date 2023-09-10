@@ -16,10 +16,10 @@ namespace da::structs
 	{
 		float DetectRange;
 		float AttackRange;
-		float AttackAccumulateTime;
+		float AttackDelayAccumulateTime;
 		float AttackDelay;
 		sMonsterAttackStat()
-			: DetectRange(0.0f), AttackRange(0.0f), AttackAccumulateTime(0.0f), AttackDelay(0.0f)
+			: DetectRange(0.0f), AttackRange(0.0f), AttackDelayAccumulateTime(0.0f), AttackDelay(0.0f)
 		{}
 	};
 
@@ -54,7 +54,7 @@ namespace da::structs
 		bool						IsMeleeWeapon;
 		bool						AttackReady;
 		float						AtaackDamage;
-		float						AttackAccumulateTime;
+		float						AttackDelayAccumulateTime;
 		float						AttackDelayTime;
 
 		bool						ProjectileActive;
@@ -70,7 +70,7 @@ namespace da::structs
 			, IsMeleeWeapon(true)
 			, AttackReady(true)
 			, AtaackDamage(0.0f)
-			, AttackAccumulateTime(0.0f)
+			, AttackDelayAccumulateTime(0.0f)
 			, AttackDelayTime(0.0f)
 			, ProjectileActive(false)
 			, ProjectileCollision(false)

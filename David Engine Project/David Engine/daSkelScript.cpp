@@ -78,7 +78,7 @@ namespace da
 		mMonsterAttackStat.DetectRange = 2.50f;
 
 		mMonsterAttackStat.AttackRange = 0.750f;
-		mMonsterAttackStat.AttackAccumulateTime = 0.0f;
+		mMonsterAttackStat.AttackDelayAccumulateTime = 0.0f;
 		mMonsterAttackStat.AttackDelay = 4.0f;
 
 		mCreatureStat->MoveSpeed = 1.50f;

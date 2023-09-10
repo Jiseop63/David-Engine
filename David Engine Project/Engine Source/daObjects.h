@@ -103,6 +103,8 @@ namespace da::objects
 		}
 		// 플레이어 스크립트 추가
 		PlayerScript* playerScript = player->AddComponent<PlayerScript>();
+		SceneManager::SetPlayerScript(player);
+
 		// 플레이어 이펙트 세팅
 		for (int index = 0; index < PLAYER_EFFECT_POOL; index++)
 		{

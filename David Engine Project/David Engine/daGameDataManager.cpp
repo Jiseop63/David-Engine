@@ -144,7 +144,7 @@ namespace da
 		
 		
 		// control weaponScript
-		SceneManager::GetPlayerScript()->GetWeaponScript()->ChangeWeapon();
+		SceneManager::GetPlayerScript()->GetWeaponScript()->EquipWeapon();
 	}
 	structs::sArmour* GameDataManager::GetActiveArmour()
 	{
