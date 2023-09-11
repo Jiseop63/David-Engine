@@ -43,12 +43,12 @@ namespace da
 #pragma region update Transform & Render & Condition
 	private:
 		// 렌더링 방향 구하기
-		bool IsLeft() { if (0 >= mPlayerDir.x) return true; else return false; }	// 방향을 어떻게 받지?
+		bool isLeft() { if (0 >= mPlayerDir.x) return true; else return false; }	// 방향을 어떻게 받지?
 
 		// update 에서 Transform 및 render 세팅
 		void updateWeaponPosition();			// Update에서 항상 플레이어 위치로 이동
 		void updateWeaponRotate();				// Update에서 항상 마우스 방향으로 회전함
-		void updateReverseRenderer() { bool value = IsLeft(); mWeaponRenderer->SetReverse(value); mWeaponRenderer->SetReverse(value); }
+		void updateReverseRenderer() { bool value = isLeft(); mWeaponRenderer->SetReverse(value); }
 
 		void updateAttackCoolDown(); // 공격 스텟 정보로 쿨다운 적용하기
 #pragma endregion

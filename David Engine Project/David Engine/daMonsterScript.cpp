@@ -2,10 +2,18 @@
 #include "daGameObject.h"
 #include "daCreatureLifebarScript.h"
 #include "daEffectEnemyScript.h"
+#include "daEnemyWeaponScript.h"
 
 namespace da
 {
 	MonsterScript::MonsterScript()
+		: mMonsterSensorCollider(nullptr)
+		, mPlayerScript(nullptr)
+		, mCreatureWeaponScript(nullptr)
+		, mMonsterLifeScript(nullptr)
+		, mMonsterAttackStat{}
+		, mMonsterActiveState(eMonsterState::Idle)
+		, mDetectPlayer(0.0f)
 	{
 	}
 	MonsterScript::~MonsterScript()
@@ -14,16 +22,18 @@ namespace da
 	void MonsterScript::Initialize()
 	{
 		CreatureScript::Initialize();
+		mMonsterSensorCollider = GetOwner()->AddComponent<Collider2D>();
 	}
 	void MonsterScript::AddEffectObject(GameObject* effectObject)
 	{
 		EffectEnemyScript* enemyEffect = effectObject->AddComponent<EffectEnemyScript>();
 		mEffects.push_back(enemyEffect);
 	}
-	EnemyWeaponScript* MonsterScript::SetEnemyWeaponScript(EnemyWeaponScript* creature)
+
+#pragma region Init other script
+	void MonsterScript::SetEnemyWeaponScript(EnemyWeaponScript* creature)
 	{
 		mCreatureWeaponScript = creature;
-		return creature;
 	}
 	CreatureLifebarScript* MonsterScript::SetCreatureLifeScript(CreatureLifebarScript* creature)
 	{
@@ -32,4 +42,6 @@ namespace da
 		mMonsterLifeScript->SetValue(mCreatureStat->MaxHP, mCreatureStat->CurHP);
 		return creature;
 	}
+#pragma endregion
+
 }

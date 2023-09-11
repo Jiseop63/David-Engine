@@ -11,8 +11,8 @@ namespace da
 		Dead,
 	};
 	class PlayerScript;
-	class EnemyWeaponScript;
 	class EffectEnemyScript;
+	class EnemyWeaponScript;
 	class CreatureLifebarScript;
 	class MonsterScript : public CreatureScript
 	{
@@ -25,10 +25,8 @@ namespace da
 
 
 	public:
-		virtual void AddEffectObject(GameObject* effectObject) override;
-
-		// 공격기능과 채력바를 외부에서 추가함
-		EnemyWeaponScript* SetEnemyWeaponScript(EnemyWeaponScript* creature);
+		virtual void AddEffectObject(GameObject* effectObject) override;		
+		void SetEnemyWeaponScript(class EnemyWeaponScript* creature);
 		CreatureLifebarScript* SetCreatureLifeScript(CreatureLifebarScript* creature);
 
 		// 세부 몬스터 스텟을 설정하는 기능
@@ -42,25 +40,18 @@ namespace da
 		// player에 의해 호출됨
 		void MonsterFindsPlayer(bool value) { mDetectPlayer = value; }
 
+#pragma region Components
 	protected:
-		Collider2D*			mMonsterSensorCollider;
-
-		PlayerScript*		mPlayerScript;
-
-		EnemyWeaponScript*	mCreatureWeaponScript;			//	일단 보류
-		EffectEnemyScript*	mEnemyEffectScript;				//	일단 보류
-		CreatureLifebarScript* mMonsterLifeScript;
-
-
-
+		Collider2D*				mMonsterSensorCollider;
+		PlayerScript*			mPlayerScript;
+		EnemyWeaponScript*		mCreatureWeaponScript;
+		CreatureLifebarScript*	mMonsterLifeScript;
+#pragma endregion
 
 	protected:
 		structs::sMonsterAttackStat mMonsterAttackStat;
-
-	protected:
-		eMonsterState			mMonsterActiveState;
-
-		bool					mDetectPlayer;
+		eMonsterState				mMonsterActiveState;
+		bool						mDetectPlayer;
 
 	};
 }

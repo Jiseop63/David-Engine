@@ -32,51 +32,62 @@ namespace da
 	public:
 		PlayerScript();
 		virtual ~PlayerScript();
-
-		// 임시
+				
+#pragma region Default Func
 	public:
+		virtual void Initialize() override;
+		virtual void Update() override;
+		virtual void LateUpdate() override;
+
+
 		virtual void AddEffectObject(GameObject* effectObject) override;
 		void GetDamage();
 		void GetHeal();
-
-#pragma region Default Func
-		virtual void Initialize();
-		virtual void Update();
 #pragma endregion
 
-#pragma region common Func
-		void PlayerCondition(); // hp -> 0 dead
-		void PlayerInput();		// move + attack Key
-		void DebugInput();		// hp UP Down
-		void UIInput();			// inventory
-		void GetMouse();		// mouseInput
-		void CalcPlayerDir();
-
-		void timeProcess();
-		EffectScript* callEffect();
-		void activeEffect(EffectScript* effect, const std::wstring name);
+#pragma region Input func
+	private:
+		void inputDebug();					// hp UP Down
+		void inputUI();						// inventory
+		void inputAttack();
+		void inputCameraMove();
+		void inputMove();
+		void inputDash();
+		void inputJump();
 #pragma endregion
+
+#pragma region Update func
+	private:
+		void updatePlayerConditionCheck();	// hp -> 0 dead
+		void updatePlayerInput();			// move + attack Key
+		void updatePlayerDir();				// mouseInput
+		void updatePlayerFSM();
+		void updateWalkEffect();
+		void updateJumpRegen();
+		void updateDashRegen();
+		void updatePassPlatformCheck();
+		void updateBufferedJump();
+		void updateDashValidTime();
+#pragma endregion
+
+
 
 #pragma region FSM Func
+	public:
 		void ChangeState(ePlayerState state);
-		void PlayerFSM();
-		void HandleIdle();
-		void HandleMove();
-		void HandleJump();
-		void HandleDead();
+	private:
+		void handleIdle();
+		void handleMove();
+		void handleJump();
+		void handleDead();
 #pragma endregion
 
 #pragma region public Func
 	public:
 		CombatScript* SetWeaponObject(GameObject* object);
 		CombatScript* GetWeaponScript() { return mWeaponScript; }
-		bool IsLeft() { if (0 >= mCreatureDir.x) return true; return false; }
-		bool IsPlayerGround() { return mCreatureFootCollider->IsGround(); }
-		void PlayerIsNotGround() { mCreatureFootCollider->ClearGroundBuffer(); }
-		bool IsDashRunning() { return mDashRunning; }
-		math::Vector2 GetPlayerDir() { return mCreatureDir; }
-		void SetPlayerVelocity(math::Vector2 vector2) { mCreatureRigidbody->OverrideVelocity(vector2, 0.0f); }
-		void SetPlayerPosition(math::Vector3 vector3) { mCreatureTransform->SetPosition(vector3); }
+		
+		bool IsDashRunning() { return mDashRunning; }		
 		void IsPlayerInDungeon(bool value)
 		{ 
 			if (value)
@@ -84,51 +95,26 @@ namespace da
 			else
 				mLight->SetColor(math::Vector4::Zero);
 		}
-#pragma endregion
 
-#pragma region Weapon Logic
-	private:
-		// 행동 함수
-		void InputAttack();
-		void ChangeWeapon();
-#pragma endregion
-
-#pragma region Move Logic
-	private:
-		void CameraMove();
-		void InputMove();
-		void walkEffect();
-#pragma endregion
-
-#pragma region Effect
-		void dustSpawn();
-#pragma endregion
-
-
-#pragma region Jump & Dash Logic
-	private:
-		void jumpRegen();
-		void dashRegen();
-		void endJumping();
-
-		void bufferedJump();
-
-		void inputDash();
-		void todoDash();
-		// 대시공격 추가해야함
-		void inputJump();
-		void todoJump();
-
-	public:
 		bool IsPassingPlatform() { return mPassPlatform; }
 		void ApplyPassingPlatform(bool value) { mPassPlatform = value; }
 		bool IsJumping() { return mJumping; }
 		void StartJump() { mJumping = true; }
 #pragma endregion
+
+#pragma region ToDo func
+	private:
+		void todoActiveEffect(EffectScript* effect, const std::wstring name);
+		void todoDustSpawn();
+		void todoDash();
+		void todoJump();
+#pragma endregion
+
 #pragma region Initialize Player
 	public:
-		void InitAnimation();
-		void InitCollider();
+		void initializeAnimation();
+		void initializeCollider();
+		void initializeData();
 #pragma endregion
 
 #pragma region Collision Func
@@ -137,24 +123,12 @@ namespace da
 		virtual void OnCollisionStay(Collider2D* other) override {}
 		virtual void OnCollisionExit(Collider2D* other) override;
 #pragma endregion
+
 // value
 #pragma region Components
-		// component val
-	protected:
-		Transform*		mTransform;
-		Rigidbody*		mRigidbody;
-		Animator*		mAnimator;
-		MeshRenderer*	mRenderer;
-		Light*			mLight;
-		
-		Collider2D*		mBodyCollider;
-		Collider2D*		mFootCollider;
-#pragma endregion
-
-#pragma region Other Scripts
 	private:
+		Light*			mLight;
 		CombatScript*	mWeaponScript;
-		//std::vector<EffectScript*> mEffects;
 #pragma endregion
 
 #pragma region Global Data

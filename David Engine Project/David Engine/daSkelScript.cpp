@@ -39,10 +39,8 @@ namespace da
 	void SkelScript::Initialize()
 	{
 		// 컴포넌트 가져오기
-		CreatureScript::Initialize();
-		mMonsterSensorCollider = GetOwner()->AddComponent<Collider2D>();
-
-
+		MonsterScript::Initialize();
+		
 		// 충돌체 설정하기
 		// body & foot
 		{
@@ -97,6 +95,10 @@ namespace da
 		visualUpdate();
 		lifeCheck();
 	}
+	void SkelScript::LateUpdate()
+	{
+		CreatureScript::visualUpdate();
+	}
 #pragma endregion
 
 
@@ -114,7 +116,7 @@ namespace da
 	void SkelScript::visualUpdate()
 	{
 		mCreatureWeaponScript->SetWeaponTransform(mCreatureTransform->GetPosition());
-		ReverseTexture();
+		reverseTexture();
 	}
 	void SkelScript::lifeCheck()
 	{
@@ -280,9 +282,10 @@ namespace da
 		{
 			// 사망 이펙트 실행
 			mCreatureWeaponScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
-			mEnemyEffectScript->SetEffectPosition(mCreatureTransform->GetPosition() + math::Vector3(0.0f, -0.20f, 0.0f));
-			mEnemyEffectScript->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-			mEnemyEffectScript->PlayEffect(L"Dying");
+			EffectScript* effect = CreatureScript::callEffect();
+			effect->SetEffectPosition(mCreatureTransform->GetPosition() + math::Vector3(0.0f, -0.20f, 0.0f));
+			effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+			effect->PlayEffect(L"Dying");
 		}
 		mIsDead = true;
 	}

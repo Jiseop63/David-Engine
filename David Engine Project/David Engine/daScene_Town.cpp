@@ -50,8 +50,8 @@ namespace da
 
 		// player ¼¼ÆÃ
 		PlayerScript* player = SceneManager::GetPlayerScript();
-		player->SetPlayerPosition(math::Vector3(-12.0f, -1.50f, ObjectZ));
-		player->SetPlayerVelocity(math::Vector2::Zero);
+		player->SetCreaturePosition(math::Vector3(-12.0f, -1.50f, ObjectZ));
+		player->SetCreatureVelocity(math::Vector2::Zero);
 		player->ChangeState(ePlayerState::Idle);
 		player->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 		player->IsPlayerInDungeon(false);
@@ -74,7 +74,7 @@ namespace da
 	}
 	void Scene_Town::OnExit()
 	{
-		SceneManager::GetPlayerScript()->PlayerIsNotGround();
+		SceneManager::GetPlayerScript()->CreatureIsNotGround();
 	}
 
 	void Scene_Town::addBackgroundObject()

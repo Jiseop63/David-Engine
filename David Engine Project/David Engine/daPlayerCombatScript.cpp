@@ -81,13 +81,9 @@ namespace da
 
 
 		// # 플레이어 방향 가져오기
-		mPlayerDir = mPlayerScript->GetPlayerDir();
+		mPlayerDir = mPlayerScript->GetCreatureDir();
 		// # 내 위치 가져오기
 		math::Vector3 myPosition = mWeaponTransform->GetPosition();
-
-
-		// 방향 구분
-		bool isLeft = IsLeft();
 
 		// 무기 회전방향 구하기
 		float angle = atan2(mPlayerDir.y, mPlayerDir.x);
@@ -98,7 +94,7 @@ namespace da
 		math::Vector2 armDown(0.050f, -0.30f);
 
 		// 공격할때마다 무기 회전값과 위치값 적용
-		if (isLeft)
+		if (isLeft())
 		{
 			if (!mWeaponAttacked)
 			{

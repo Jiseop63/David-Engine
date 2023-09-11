@@ -147,16 +147,19 @@ namespace da::objects
 		// MonsterScript 추가
 		T* enemyScript = enemyObject->AddComponent<T>();
 		MonsterScript* monsterScript = dynamic_cast<MonsterScript*>(enemyScript);
+
 		// Effect 추가
 		GameObject* effectObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
 		enemyObject->AddChildObject(effectObject);
 		effectObject->SetObjectState(GameObject::eObjectState::Inactive);
 		monsterScript->AddEffectObject(effectObject);
 
-		// weapon 추가
+		// weapon 세팅
 		GameObject* enemyWeaponObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, L"AnimationMaterial");
+		enemyObject->AddChildObject(enemyWeaponObj);
 		EnemyWeaponScript* enemyWeaponScript = enemyWeaponObj->AddComponent<EnemyWeaponScript>();
 		monsterScript->SetEnemyWeaponScript(enemyWeaponScript);
+		enemyWeaponScript->SetOwnerScript(monsterScript);
 
 		// life Bar 추가해야함
 		GameObject* enemyLifeObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Creature, L"CreatureLifeBarMaterial");

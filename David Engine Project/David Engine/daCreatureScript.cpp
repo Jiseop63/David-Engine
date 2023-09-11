@@ -1,9 +1,9 @@
 #include "daCreatureScript.h"
-#include "daCreatureScript.h"
 
 #include "daGameObject.h"
 #include "daResources.h"
 #include "daSceneManager.h"
+#include "daEffectScript.h"
 
 namespace da
 {
@@ -19,6 +19,8 @@ namespace da
 		, mCreatureStat{}
 		, mCreatureDir(math::Vector2::Zero) 
 		, mIsDead(false)
+		, mBodyCollision(false)
+		, mFootCollision(false)
 	{
 	}
 	CreatureScript::~CreatureScript()
@@ -45,11 +47,20 @@ namespace da
 		GetOwner()->SetFootCollider(mCreatureFootCollider);
 	}
 
-
-
-	void CreatureScript::VisualUpdate()
+	EffectScript* CreatureScript::callEffect()
 	{
-		ReverseTexture();
+		for (size_t effect = 0; effect < mEffects.size(); effect++)
+		{
+			if (GameObject::eObjectState::Inactive ==
+				mEffects[effect]->GetOwner()->GetObjectState())
+				return mEffects[effect];
+		}
+		return nullptr;
+	}
+
+	void CreatureScript::visualUpdate()
+	{
+		reverseTexture();
 	}
 
 	void CreatureScript::OnCollisionEnter(Collider2D* other)

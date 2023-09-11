@@ -1,4 +1,5 @@
 #include "daEnemyWeaponScript.h"
+
 #include "daGameDataManager.h"
 #include "daTime.h"
 #include "daInput.h"
@@ -9,6 +10,8 @@
 #include "daAnimator.h"
 #include "daMeshRenderer.h"
 
+#include "daMonsterScript.h"
+
 namespace da
 {
 	EnemyWeaponScript::EnemyWeaponScript()
@@ -17,6 +20,7 @@ namespace da
 		, mEnemyWeaponAnimator(nullptr)
 		, mEnemyWeaponCollider(nullptr)
 		, mEnemyWeaponTexture(nullptr)
+		, mMonsterScript(nullptr)
 		, mPlayerDamaged(false)
 	{
 	}
@@ -48,6 +52,11 @@ namespace da
 	void EnemyWeaponScript::Update()
 	{
 	}
+	void EnemyWeaponScript::LateUpdate()
+	{
+		mEnemyWeaponTransform->SetPosition(mMonsterScript->GetCreatureTransform()->GetPosition());
+		updateReverseRenderer();
+	}
 	void EnemyWeaponScript::DoAttack()
 	{
 		// 애니메이션
@@ -65,6 +74,14 @@ namespace da
 	void EnemyWeaponScript::inactiveAttack()
 	{
 		mEnemyWeaponCollider->SetDetectionType(Collider2D::eDetectionType::Inactive);
+	}
+
+	bool EnemyWeaponScript::isLeft()
+	{
+		if (0 >= mMonsterScript->GetCreatureDir().x) 
+			return true; 
+		else 
+			return false;
 	}
 
 	void EnemyWeaponScript::OnCollisionEnter(Collider2D* other)

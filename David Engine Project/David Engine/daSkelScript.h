@@ -11,6 +11,7 @@ namespace da
 
 		virtual void Initialize() override;
 		virtual void Update() override;
+		virtual void LateUpdate() override;
 
 #pragma region Spawn
 		// 초기 위치와 스텟 정하기

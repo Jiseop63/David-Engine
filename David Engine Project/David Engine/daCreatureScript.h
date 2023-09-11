@@ -15,22 +15,34 @@ namespace da
 
 		virtual void Initialize();
 #pragma region common Func
-		bool IsLeft() { if (0 >= mCreatureDir.x) return true; else return false; }
-		void ReverseTexture() { mCreatureRenderer->SetReverse(IsLeft()); }
+	
+
+	public:
+		bool IsCreatureGround() { return mCreatureFootCollider->IsGround(); }
+		void CreatureIsNotGround() { mCreatureFootCollider->ClearGroundBuffer(); }
+		math::Vector2 GetCreatureDir() { return mCreatureDir; }
+
+		void SetCreatureVelocity(math::Vector2 vector2) { mCreatureRigidbody->OverrideVelocity(vector2, 0.0f); }
+		void SetCreaturePosition(math::Vector3 vector3) { mCreatureTransform->SetPosition(vector3); }
 #pragma endregion
 
 
 #pragma region public Func
 	public:
-		Transform* GetCreatureTransform() { return mCreatureTransform; }
-		
-		virtual void AddEffectObject(GameObject* effectScript) {}
+		Transform* GetCreatureTransform() { return mCreatureTransform; }		
 		structs::sCreatureStat GetCreatureStat() { return *mCreatureStat; }
+
+		// 상속받는 각 클래스마다 직접 구현해주기
+		virtual void AddEffectObject(GameObject* effectScript) {}
+	protected:
+		EffectScript* callEffect();		// 이펙트 배열에서 유요한 이펙트를 가져오기
 #pragma endregion
 
 #pragma region Creature 공용 함수
 	protected:
-		void VisualUpdate();		// 왼쪽 오른쪽 구분해서 반전시킴
+		bool isLeft() { if (0 >= mCreatureDir.x) return true; else return false; }
+		void reverseTexture() { mCreatureRenderer->SetReverse(isLeft()); }
+		void visualUpdate();														// 왼쪽 오른쪽 구분해서 반전시킴
 #pragma endregion
 
 
@@ -71,8 +83,8 @@ namespace da
 	protected:
 		math::Vector2			mCreatureDir;
 		bool					mIsDead;
-		bool					mBodyCollision;
-		bool					mFootCollision;
+		bool					mBodyCollision;	// 사실 안쓰는 기능임
+		bool					mFootCollision;	// 사실 안쓰는 기능임
 #pragma endregion
 
 	};
