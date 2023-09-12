@@ -60,17 +60,17 @@ namespace da
 		GameDataManager::SetCameraMovableRange(math::Vector2(22.0f, 1.80f));
 		GameDataManager::SetCameraMovaPosition(math::Vector2(playerPos.x, playerPos.y));
 		// UI 세팅
-		structs::sCreatureStat playerStat = GameDataManager::GetPlayerStat();
+		structs::sCreatureStat playerStat = *GameDataManager::GetPlayerStat();
 		SceneManager::GetLifebarScript()->SetValue(playerStat.MaxHP, playerStat.CurHP);
 		SceneManager::GetHUDObject()->SetObjectStates(GameObject::eObjectState::Active);
 		SceneManager::GetCursourScrip()->IsIngame(true);
 		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.70f, 0.70f, 0.70f, 1.0f));
 		// 충돌 세팅
 		CollisionManager::SetLayer(enums::eLayerType::Land, enums::eLayerType::Playable);
-		CollisionManager::SetLayer(enums::eLayerType::Land, enums::eLayerType::Creature);
+		CollisionManager::SetLayer(enums::eLayerType::Land, enums::eLayerType::Monster);
 		CollisionManager::SetLayer(enums::eLayerType::Platform, enums::eLayerType::Playable);
-		CollisionManager::SetLayer(enums::eLayerType::Platform, enums::eLayerType::Creature);
-		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Creature);
+		CollisionManager::SetLayer(enums::eLayerType::Platform, enums::eLayerType::Monster);
+		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Monster);
 	}
 	void Scene_Town::OnExit()
 	{

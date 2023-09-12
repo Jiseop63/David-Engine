@@ -21,7 +21,7 @@ namespace da
 
 #pragma region Initialize & Get
 	public:
-		void SetPlayerScript(PlayerScript* player) { mPlayerScript = player; }
+		void AddPlayerObject(PlayerScript* player) { mPlayerScript = player; }
 		PlayerScript* GetPlayerScript() { return mPlayerScript; }
 		
 		void AddEffectObject(GameObject* object);

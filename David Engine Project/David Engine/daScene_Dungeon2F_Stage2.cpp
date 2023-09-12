@@ -57,7 +57,7 @@ namespace da
 		// light ¼¼ÆÃ
 		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.40f, 0.40f, 0.40f, 1.0f));
 
-		CollisionManager::SetLayer(enums::eLayerType::PlayableAttackCollider, enums::eLayerType::Boss);
+		CollisionManager::SetLayer(enums::eLayerType::PlayableProjectile, enums::eLayerType::Boss);
 
 	}
 	void Scene_Dungeon2F_Stage2::OnExit()

@@ -26,9 +26,10 @@ namespace da
 
         , mDustAccumulateTime(0.0f)
 
-        , mJumpData(nullptr)
-        , mDashData(nullptr)
+        , mJumpData{}
+        , mDashData{}
 
+        , mJumping(false)
         , mDashRunning(false)
         , mHoldingDashTime(0.0f)
 
@@ -59,6 +60,7 @@ namespace da
         updateBufferedJump();
         updatePassPlatformCheck();
         updateDashValidTime();
+
         updatePlayerConditionCheck();
         updatePlayerInput();
         updatePlayerFSM();
@@ -74,7 +76,7 @@ namespace da
 #pragma region Common Func
     void PlayerScript::updatePlayerConditionCheck()
     {        
-        if (0 >= mCreatureStat->CurHP)
+        if (0 >= mCreatureStat.CurHP)
             ChangeState(ePlayerState::Dead);
     }
     void PlayerScript::updatePlayerInput()
@@ -223,7 +225,7 @@ namespace da
             mWeaponScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
         }
         mIsDead = true;
-        if (0 < mCreatureStat->CurHP)
+        if (0 < mCreatureStat.CurHP)
         {
             mIsDead = false;
             ChangeState(ePlayerState::Idle);
@@ -251,10 +253,7 @@ namespace da
         GameDataManager::SetCameraMovaPosition(math::Vector2(playerPos.x, playerPos.y));
     }
     void PlayerScript::inputMove()
-    {        
-        Vector3 mPos = mCreatureTransform->GetPosition();
-        float moveMagnitude = mCreatureStat->MoveSpeed * (float)Time::DeltaTime();
-
+    {
         // moveAnimation
         if (Input::GetKeyDown(eKeyCode::D)
             || Input::GetKeyDown(eKeyCode::A))
@@ -263,37 +262,16 @@ namespace da
             || Input::GetKeyUp(eKeyCode::A))
             mMoveCondition--;
 
-        Collider2D::eWallCollisionState wallCollisionState = mCreatureBodyCollider->IsWallCollision();
 
         if (mDashRunning)
             return;
 
         if (Input::GetKey(eKeyCode::D))
-        {        
-            if (Collider2D::eWallCollisionState::Right == wallCollisionState)
-                return;
-            else
-            {
-                Vector2 moveDir = daRotateVector2(Vector2::UnitX, mCreatureFootCollider->GetEnvRotate());
-                Vector2 movePosition = moveDir * moveMagnitude;
+            CreatureScript::moveRight();
 
-                mPos.x += movePosition.x;
-                mPos.y += movePosition.y;
-            }
-        }
         if (Input::GetKey(eKeyCode::A))
-        {
-            if (Collider2D::eWallCollisionState::Left == wallCollisionState)
-                return;
-            else
-            {
-                Vector2 moveDir = daRotateVector2(-Vector2::UnitX, mCreatureFootCollider->GetEnvRotate());
-                Vector2 movePosition = moveDir * moveMagnitude;
-                                
-                mPos.x += movePosition.x;
-                mPos.y += movePosition.y;
-            }
-        }
+            CreatureScript::moveLeft();
+
 
         if (mCreatureFootCollider->IsGround())
         {
@@ -307,12 +285,12 @@ namespace da
             {
                 // 버퍼에 추가
                 if (Input::GetKeyDown(eKeyCode::SPACE))
-                    mJumpData->BufferedJump = true;
+                    mJumpData.BufferedJump = true;
 
                 if (Input::GetKeyUp(eKeyCode::SPACE))
                 {
                     // 버퍼 중단
-                    mJumpData->BufferedJump = false;
+                    mJumpData.BufferedJump = false;
                     // 바로 점프
                     todoJump();
                 }
@@ -321,19 +299,18 @@ namespace da
         else
         {
             // 점프 개수가 유효한지 확인
-            if (mJumpData->ExtraJump)
+            if (mJumpData.ExtraJump)
             {
                 if (Input::GetKeyDown(eKeyCode::SPACE))
                 {
-                    mJumpData->ExtraJump = false;
-                    mJumpData->JumpForceRatio = 0.80f;
+                    mJumpData.ExtraJump = false;
+                    mJumpData.JumpForceRatio = 0.80f;
                     // 점프하기
                     todoJump();
                 }
             }
         }
 
-        mCreatureTransform->SetPosition(mPos);
     }
     void PlayerScript::updateWalkEffect()
     {
@@ -357,17 +334,17 @@ namespace da
 #pragma region Jump & Dash Logic
         void PlayerScript::updateJumpRegen()
         {
-            if (!mJumpData->ExtraJump)
+            if (!mJumpData.ExtraJump)
                 if (mCreatureFootCollider->IsGround())
-                    mJumpData->ExtraJump = true;
+                    mJumpData.ExtraJump = true;
         }
         void PlayerScript::updateDashRegen()
         {
-            if (mDashData->MaxDashCount == mDashData->CurDashCount)
+            if (mDashData.MaxDashCount == mDashData.CurDashCount)
                 return;
 
-            mDashData->DashAccumulateTime += (float)Time::DeltaTime();
-            if (mDashData->DashRegenTime <= mDashData->DashAccumulateTime)
+            mDashData.DashAccumulateTime += (float)Time::DeltaTime();
+            if (mDashData.DashRegenTime <= mDashData.DashAccumulateTime)
                 GameDataManager::RecoveryDash();
         }
         void PlayerScript::updatePassPlatformCheck()
@@ -397,7 +374,7 @@ namespace da
         void PlayerScript::todoDash()
         {
             // 이동시키기
-            mCreatureRigidbody->OverrideVelocity(mCreatureDir, mDashData->DashForce);
+            mCreatureRigidbody->OverrideVelocity(mCreatureDir, mDashData.DashForce);
             mHoldingDashTime = 0.0f;
             mDashRunning = true;
             mCreatureRigidbody->GravityAble(false);
@@ -421,16 +398,16 @@ namespace da
         void PlayerScript::updateBufferedJump()
         {
             // 버퍼에 등록되면
-            if (mJumpData->BufferedJump)
+            if (mJumpData.BufferedJump)
             {
                 // 시간을 재다가
-                mJumpData->JumpAccumulateTime += (float)Time::DeltaTime();
+                mJumpData.JumpAccumulateTime += (float)Time::DeltaTime();
 
                 // 조건에 맞으면 점프
-                if (mJumpData->JumpLimitTime <= mJumpData->JumpAccumulateTime)
+                if (mJumpData.JumpLimitTime <= mJumpData.JumpAccumulateTime)
                 {
-                    mJumpData->JumpAccumulateTime = 0.0f;
-                    mJumpData->JumpForceRatio = 1.0f;
+                    mJumpData.JumpAccumulateTime = 0.0f;
+                    mJumpData.JumpForceRatio = 1.0f;
                     todoJump();
                 }
             }
@@ -459,15 +436,15 @@ namespace da
 
             // 최소 높이 설정
             float minForceRatio = 0.8750f;
-            if (minForceRatio >= mJumpData->JumpForceRatio)
-                mJumpData->JumpForceRatio = minForceRatio;
+            if (minForceRatio >= mJumpData.JumpForceRatio)
+                mJumpData.JumpForceRatio = minForceRatio;
 
             mCreatureFootCollider->ClearGroundBuffer();
 
-            if (mJumpData->ExtraJump)
-                mCreatureRigidbody->ApplyVelocity(Vector2::UnitY, mJumpData->JumpForce * mJumpData->JumpForceRatio);
+            if (mJumpData.ExtraJump)
+                mCreatureRigidbody->ApplyVelocity(Vector2::UnitY, mJumpData.JumpForce * mJumpData.JumpForceRatio);
             else
-                mCreatureRigidbody->OverrideVelocity(Vector2::UnitY, mJumpData->JumpForce * mJumpData->JumpForceRatio);
+                mCreatureRigidbody->OverrideVelocity(Vector2::UnitY, mJumpData.JumpForce * mJumpData.JumpForceRatio);
             GameDataManager::ClearJumpBuffer();
         }
 #pragma endregion
@@ -500,16 +477,33 @@ namespace da
     }
     void PlayerScript::initializeData()
     {
-        mCreatureStat = &GameDataManager::GetPlayerStat();
-        mJumpData = &GameDataManager::GetJumpCount();
-        mDashData = &GameDataManager::GetDashCount();
+        mCreatureStat.MaxHP = 30;
+        mCreatureStat.CurHP = mCreatureStat.MaxHP;
+        mCreatureStat.MoveSpeed = 3.50f;
+
+        mDashData.DashForce = 10.50f;
+        mDashData.MaxDashCount = 2;
+        mDashData.CurDashCount = mDashData.MaxDashCount;
+        mDashData.DashAccumulateTime = 0.0f;
+        mDashData.DashRegenTime = 2.250f;
+
+        mJumpData.JumpForce = 8.50f;
+        mJumpData.JumpAccumulateTime = 0.0f;
+        mJumpData.JumpLimitTime = 0.1250f;
+        mJumpData.JumpForceRatio = 0.0f;
+        mJumpData.BufferedJump = false;
+        mJumpData.ExtraJump = true;
+
+        GameDataManager::SetPlayerStat(mCreatureStat);
+        GameDataManager::SetDashCount(mDashData);
+        GameDataManager::SetJumpCount(mJumpData);
     }
 #pragma endregion
 #pragma region Collision Func
     void PlayerScript::OnCollisionEnter(Collider2D* other)
     {
         // 몬스터의 시야에 닿은경우
-        if (enums::eLayerType::Creature == other->GetOwner()->GetLayerType()
+        if (enums::eLayerType::Monster == other->GetOwner()->GetLayerType()
             && Collider2D::eDetectionType::Sensor == other->GetDetectionType())
         {           
             GameObject* creatureObj = other->GetOwner();
@@ -535,7 +529,7 @@ namespace da
         }
 
 
-        if (enums::eLayerType::Creature == other->GetOwner()->GetLayerType()
+        if (enums::eLayerType::Monster == other->GetOwner()->GetLayerType()
             && Collider2D::eDetectionType::Sensor == other->GetDetectionType())
         {
             GameObject* creatureObj = other->GetOwner();
@@ -548,7 +542,7 @@ namespace da
     CombatScript* PlayerScript::SetWeaponObject(GameObject* object)
     {
         mWeaponScript = object->AddComponent<CombatScript>();
-        mWeaponScript->SetPlayerScript(this);
+        mWeaponScript->AddPlayerObject(this);
         return mWeaponScript;
     }
 #pragma endregion

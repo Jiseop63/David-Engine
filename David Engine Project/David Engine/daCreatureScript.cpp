@@ -4,6 +4,7 @@
 #include "daResources.h"
 #include "daSceneManager.h"
 #include "daEffectScript.h"
+#include "daTime.h"
 
 namespace da
 {
@@ -63,6 +64,44 @@ namespace da
 		reverseTexture();
 	}
 
+	void CreatureScript::moveLeft()
+	{
+		Vector3 myPos = mCreatureTransform->GetPosition();
+		float moveMagnitude = mCreatureStat.MoveSpeed * (float)Time::DeltaTime();
+		Collider2D::eWallCollisionState wallCollisionState = mCreatureBodyCollider->IsWallCollision();
+		if (Collider2D::eWallCollisionState::Left == wallCollisionState)
+			return;
+		else
+		{
+			Vector2 moveDir = daRotateVector2(-Vector2::UnitX, mCreatureFootCollider->GetEnvRotate());
+			Vector2 movePosition = moveDir * moveMagnitude;
+
+			myPos.x += movePosition.x;
+			myPos.y += movePosition.y;
+		}
+		mCreatureTransform->SetPosition(myPos);
+	}
+
+	void CreatureScript::moveRight()
+	{
+		Vector3 myPos = mCreatureTransform->GetPosition();
+		float moveMagnitude = mCreatureStat.MoveSpeed * (float)Time::DeltaTime();
+		Collider2D::eWallCollisionState wallCollisionState = mCreatureBodyCollider->IsWallCollision();
+
+		if (Collider2D::eWallCollisionState::Right == wallCollisionState)
+			return;
+		else
+		{
+			Vector2 moveDir = daRotateVector2(Vector2::UnitX, mCreatureFootCollider->GetEnvRotate());
+			Vector2 movePosition = moveDir * moveMagnitude;
+
+			myPos.x += movePosition.x;
+			myPos.y += movePosition.y;
+		}
+
+		mCreatureTransform->SetPosition(myPos);
+	}
+
 	void CreatureScript::OnCollisionEnter(Collider2D* other)
 	{
 		// ÇÃ·¿Æû¿¡ Ãæµ¹
@@ -75,10 +114,10 @@ namespace da
 				mFootCollision = false;
 		}
 	}
-	void CreatureScript::OnDamaged()
+	void CreatureScript::OnDamaged(float damage)
 	{
-		if (0 >= mCreatureStat->CurHP)
-			mCreatureStat->CurHP = 0;
-		mCreatureStat->CurHP -= 5.0f;
+		if (0 >= mCreatureStat.CurHP)
+			mCreatureStat.CurHP = 0;
+		mCreatureStat.CurHP -= damage;
 	}
 }

@@ -12,7 +12,6 @@ namespace da
 
 		virtual void Update() override;
 
-		void BindConstantBuffer();
 
 	public:
 		void SetCreatureScript(CreatureScript* creature) { mCreatureScript = creature; }

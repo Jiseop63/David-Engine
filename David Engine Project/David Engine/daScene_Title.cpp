@@ -138,9 +138,9 @@ namespace da
 	{
 		// camera Init
 		CameraObject* subCameraObj = objects::InstantiateSubCamera(this);
-		SceneManager::SetSubCameraScript(subCameraObj);
+		SceneManager::AddSubCameraObject(subCameraObj);
 		CameraObject* mainCameraObj = objects::InstantiateMainCamera(this);
-		SceneManager::SetMainCameraScript(mainCameraObj);
+		SceneManager::AddMainCameraObject(mainCameraObj);
 		CameraObject* uiCameraObj = objects::InstantiateUICamera(this);
 		renderer::mainCamera = mainCameraObj->GetCameraComponent();
 		renderer::uiCamera = uiCameraObj->GetCameraComponent();
@@ -154,17 +154,21 @@ namespace da
 		// light - done
 		GameObject* lightObj = objects::InstantiateCommonObject
 			<GameObject>(this, enums::eLayerType::Light, L"NoneMaterial");
-		SceneManager::SetLightObject(lightObj);
+		SceneManager::AddLightObject(lightObj);
 		Light* light = lightObj->AddComponent<Light>();
 		light->SetLightType(enums::eLightType::Directional);
 		light->SetColor(math::Vector4(0.90f, 0.90f, 0.90f, 1.0f));
+
+		// player - done
+		GameObject* playerObject = objects::InstantiatePlayer(this);
+		SceneManager::AddPlayerObject(playerObject);
 #pragma region HUD
 
 		// hud - done
 		GameObject* playerHUD = objects::InstantiateObject
 			<GameObject>(this, enums::eLayerType::Default);
 		playerHUD->SetCommonObject(true);
-		SceneManager::SetHUDObject(playerHUD);
+		SceneManager::AddHUDObject(playerHUD);
 		{
 			// hpBar, dashBar
 			{
@@ -192,11 +196,18 @@ namespace da
 				GameObject* lifeBar = objects::InstantiateCommonObject
 					<GameObject>(this, enums::eLayerType::UI, L"PlayerLifeBarMaterial");
 				playerHUD->AddChildObject(lifeBar);
-				lifeBar->AddComponent<LifeBarScript>();
-				SceneManager::SetLifebarScript(lifeBar);	
+
+				// 플레이어 hp 연동
+				PlayerScript* playerScript = SceneManager::GetPlayerScript();
+				structs::sCreatureStat playerStat = playerScript->GetCreatureStat();
+				LifeBarScript* playerLifeBar = lifeBar->AddComponent<LifeBarScript>();
+				playerLifeBar->SetValue(playerStat.MaxHP, playerStat.CurHP);
+				SceneManager::AddLifebarObject(lifeBar);	
+
+
+				// Bar 크기 조절
 				Transform* lifeBarTransform = lifeBar->GetTransform();
 				lifeBarTransform->SetParent(playerHUDTransform);
-				// Bar 크기 조절
 				float barXScale = 1.960f;	// 49 * 4
 				float barYScale = 0.40f;	// 10 * 4
 				lifeBarTransform->SetScale(math::Vector3(barXScale, barYScale, 1.0f));
@@ -227,8 +238,16 @@ namespace da
 				GameObject* dashActivate = objects::InstantiateCommonObject
 					<GameObject>(this, enums::eLayerType::UI, L"DashActivateMaterial");
 				playerHUD->AddChildObject(dashActivate);
-				SceneManager::SetDashCountScript(dashActivate);
+				DashCountScript* dashCountScript = dashActivate->AddComponent<DashCountScript>();
 
+				dashCountScript->SetValue(playerScript->GetDashData().MaxDashCount, playerScript->GetDashData().CurDashCount);
+
+				int a = 0;
+				SceneManager::AddDashCountObject(dashActivate);
+				DashCountScript* testDashData = SceneManager::GetDashCountScript();
+				playerScript->downDashCount();
+				structs::sDashData dashData = playerScript->GetDashData();
+				a = 1;
 				Transform* dashActivateTransform = dashActivate->GetTransform();
 				dashActivateTransform->SetParent(playerHUDTransform);
 
@@ -240,7 +259,6 @@ namespace da
 				// Dash Active position
 				math::Vector3 dashActivePosition = dashPanelPosition + math::Vector3(0.0f, 0.0f, -0.0001f);
 				dashActivateTransform->SetPosition(dashActivePosition);
-				dashActivate->AddComponent<DashCountScript>();
 			}
 			// player Amour panel A, B
 			{
@@ -281,7 +299,7 @@ namespace da
 		GameObject* cursorObject = objects::InstantiateCommonObject
 			<GameObject>(this, enums::eLayerType::UI, L"CursorMaterial");
 		cursorObject->AddComponent<CursorScript>();
-		SceneManager::SetCursourScript(cursorObject);
+		SceneManager::AddCursourObject(cursorObject);
 		{
 			cursorObject->GetTransform()->SetScale(math::Vector3(0.190f * 4.0f, 0.190f * 4.0f, 1.0f));
 			cursorObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, CursorZ));
@@ -662,8 +680,6 @@ namespace da
 		}
 #pragma endregion
 
-		// player - done
-		GameObject* playerObject = objects::InstantiatePlayer(this);
-		SceneManager::SetPlayerScript(playerObject);
+		
 	}
 }

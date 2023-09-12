@@ -8,7 +8,10 @@
 namespace da
 {
 	DashCountScript::DashCountScript()
+		: mMaxValue(0.0f)
+		, mCurValue(0.0f)
 	{
+		int a = 0;
 	}
 	DashCountScript::~DashCountScript()
 	{
@@ -19,17 +22,14 @@ namespace da
 	}
 	void DashCountScript::BindConstantBuffer()
 	{
-		// value 가져오기
-		structs::sDashData dashCount = GameDataManager::GetDashCount();
-
 		// 상수버퍼 만들기
 		graphics::ConstantBuffer* outCB
 			= renderer::constantBuffer[(UINT)graphics::eCBType::Count];
 
 		// 데이터 채우기
 		renderer::CountCB data;
-		data.MaxDashCount = (float)dashCount.MaxDashCount;
-		data.CurDashCount = (float)dashCount.CurDashCount;
+		data.MaxDashCount = mMaxValue;
+		data.CurDashCount = mCurValue;
 
 		outCB->SetData(&data);
 		outCB->Bind(graphics::eShaderStage::VS);

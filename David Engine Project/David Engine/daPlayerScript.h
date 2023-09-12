@@ -86,7 +86,10 @@ namespace da
 	public:
 		CombatScript* SetWeaponObject(GameObject* object);
 		CombatScript* GetWeaponScript() { return mWeaponScript; }
-		
+		structs::sDashData GetDashData() const { return mDashData; }
+
+		void downDashCount() { mDashData.CurDashCount--; }
+
 		bool IsDashRunning() { return mDashRunning; }		
 		void IsPlayerInDungeon(bool value)
 		{ 
@@ -133,8 +136,8 @@ namespace da
 
 #pragma region Global Data
 	private:
-		structs::sJumpData*		mJumpData;
-		structs::sDashData* 	mDashData;
+		structs::sJumpData	mJumpData;
+		structs::sDashData 	mDashData;
 #pragma endregion
 
 #pragma region Condition value

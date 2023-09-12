@@ -29,13 +29,13 @@ namespace da::enums
 
 		// Object Collision
 		ENV,
-		Creature,
-		CreatureAttackCollider,
+		Monster,
+		MonsterProjectile,
 		Boss,
 		
 		Effect,
 		Playable,
-		PlayableAttackCollider,
+		PlayableProjectile,
 
 		// Graphic
 		Light,

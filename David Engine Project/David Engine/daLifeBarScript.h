@@ -11,10 +11,10 @@ namespace da
 
 		void BindConstantBuffer();
 
-		void SetValue(float max, float cur) { mMaxValue = max, mCurValue = cur; }
+		void SetValue(float max, float cur) { mMaxValue = &max, mCurValue = &cur; }
 
 	protected:
-		float mMaxValue;
-		float mCurValue;
+		float* mMaxValue;
+		float* mCurValue;
 	};
 }

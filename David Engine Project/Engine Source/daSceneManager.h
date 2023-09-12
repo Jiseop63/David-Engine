@@ -39,29 +39,33 @@ namespace da
 		static Scene* LoadScene(std::wstring name);
 
 	public:
-		static void SetLightObject(GameObject* light) { mLightObject = light; }
+		static void AddLightObject(GameObject* light) { mLightObject = light; }
 		static GameObject* GetLightObject() { return mLightObject; }
 
-		static void SetMainCameraScript(GameObject* mainCamera) { mMainCameraScript = mainCamera->GetComponent<CameraScript>(); }
+		static void AddMainCameraObject(GameObject* mainCamera) { mMainCameraScript = mainCamera->GetComponent<CameraScript>(); }
 		static CameraScript* GetMainCameraScript() { return mMainCameraScript; }
-		static void SetSubCameraScript(GameObject* subCamera) { mSubCameraScript = subCamera->GetComponent<SubCameraScript>(); }
+		static void AddSubCameraObject(GameObject* subCamera) { mSubCameraScript = subCamera->GetComponent<SubCameraScript>(); }
 		static SubCameraScript* GetSubCameraScript() { return mSubCameraScript; }
 
-		static void SetPlayerScript(GameObject* player) { mPlayerScript = player->GetComponent<PlayerScript>(); }
+		static void AddPlayerObject(GameObject* player) { mPlayerScript = player->GetComponent<PlayerScript>(); }
 		static PlayerScript* GetPlayerScript() { return mPlayerScript; }
 		static void SetInventoryObject(GameObject* inventory) { mInventoryObject = inventory; }
 		static GameObject* GetInventoryObject() { return mInventoryObject; }
 		static void SetInventoryScript(GameObject* inventory) { mInventoryScript = inventory->GetComponent<InventoryScript>(); }
 		static InventoryScript* GetInventoryScript() { return mInventoryScript; }
 
-		static void SetHUDObject(GameObject* hud) { mHUDObject = hud; }
+		static void AddHUDObject(GameObject* hud) { mHUDObject = hud; }
 		static GameObject* GetHUDObject() { return mHUDObject; }
-		static void SetLifebarScript(GameObject* lifebar) { mLifebarScript = lifebar->GetComponent<LifeBarScript>(); }
+		static void AddLifebarObject(GameObject* lifebar) { mLifebarScript = lifebar->GetComponent<LifeBarScript>(); }
 		static LifeBarScript* GetLifebarScript() { return mLifebarScript; }
-		static void SetDashCountScript(GameObject* dashCount) { mDashCountScript = dashCount->GetComponent<DashCountScript>(); }
+		static void AddDashCountObject(GameObject* dashCount) 
+		{ 
+			mDashCountScript = dashCount->GetComponent<DashCountScript>(); 
+			int a = 0;
+		}
 		static DashCountScript* GetDashCountScript() { return mDashCountScript; }
 		
-		static void SetCursourScript(GameObject* cursour) { mCursourScrip = cursour->GetComponent<CursorScript>(); }
+		static void AddCursourObject(GameObject* cursour) { mCursourScrip = cursour->GetComponent<CursorScript>(); }
 		static CursorScript* GetCursourScrip() { return mCursourScrip; }
 
 	private:

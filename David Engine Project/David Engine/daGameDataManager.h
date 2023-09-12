@@ -20,9 +20,13 @@ namespace da
 		static bool IsDebuging() { return mDebuging; }
 
 	public:
-		static structs::sCreatureStat& GetPlayerStat() { return mPlayerStat; }
-		static structs::sJumpData& GetJumpCount() { return mJumpData; }
-		static structs::sDashData& GetDashCount() { return mDashData; }
+		static void SetPlayerStat(structs::sCreatureStat data) { mPlayerStat = &data; }
+		static void SetJumpCount(structs::sJumpData data) { mJumpData = &data;}
+		static void SetDashCount(structs::sDashData data) { mDashData = &data;}
+
+		static structs::sCreatureStat* GetPlayerStat() { return mPlayerStat; }
+		static structs::sJumpData* GetJumpCount() { return mJumpData; }
+		static structs::sDashData* GetDashCount() { return mDashData; }
 		static structs::sInventory& GetInventory() { return mInventoryData; }
 
 #pragma region Player Func
@@ -54,16 +58,16 @@ namespace da
 
 #pragma region Data
 	private:
-		static structs::sCreatureStat mPlayerStat;
-		static structs::sJumpData mJumpData;
-		static structs::sDashData mDashData;
-		static structs::sInventory mInventoryData;
+		static structs::sCreatureStat*	mPlayerStat;
+		static structs::sJumpData*		mJumpData;
+		static structs::sDashData*		mDashData;
+		static structs::sInventory		mInventoryData;
 
-		static structs::sArmour* mActiveArmour;
-		static structs::sArmour* mSubArmour;
+		static structs::sArmour*		mActiveArmour;
+		static structs::sArmour*		mSubArmour;
 
-		static da::math::Vector2 mCameraMovableRange;
-		static da::math::Vector2 mCameraMovePosition;
+		static da::math::Vector2		mCameraMovableRange;
+		static da::math::Vector2		mCameraMovePosition;
 
 
 		static bool mDebuging;

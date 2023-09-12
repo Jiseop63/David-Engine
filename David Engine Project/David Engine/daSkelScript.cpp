@@ -31,8 +31,6 @@ namespace da
 
 	SkelScript::~SkelScript()
 	{
-		delete mCreatureStat;
-		mCreatureStat = nullptr;
 	}
 
 #pragma region Basic Func
@@ -68,18 +66,17 @@ namespace da
 
 
 		// 스텟 초기화
-		mCreatureStat = new structs::sCreatureStat();
-		mCreatureStat->MaxHP = 25.0f;
-		mCreatureStat->CurHP = 25.0f;
+		mCreatureStat.MaxHP = 25.0f;
+		mCreatureStat.CurHP = 25.0f;
 
-		mCreatureStat->MoveSpeed = 1.250f;
+		mCreatureStat.MoveSpeed = 1.250f;
 		mMonsterAttackStat.DetectRange = 2.50f;
 
 		mMonsterAttackStat.AttackRange = 0.750f;
 		mMonsterAttackStat.AttackDelayAccumulateTime = 0.0f;
 		mMonsterAttackStat.AttackDelay = 4.0f;
 
-		mCreatureStat->MoveSpeed = 1.50f;
+		mCreatureStat.MoveSpeed = 1.50f;
 
 		mChaseDurationTime = 1.50f;
 		mChaseDurationDecay = mChaseDurationTime;
@@ -120,7 +117,7 @@ namespace da
 	}
 	void SkelScript::lifeCheck()
 	{
-		if (0 >= mCreatureStat->CurHP)
+		if (0 >= mCreatureStat.CurHP)
 			ChangeState(eMonsterState::Dead);
 	}
 #pragma endregion
@@ -171,26 +168,22 @@ namespace da
 		calcMonsterDir();
 
 		// 이동하기 *이동하기전에 벽 충돌 방향 확인하는 코드 필요함
-		Collider2D::eWallCollisionState wallCollisionState = mCreatureBodyCollider->IsWallCollision();				// 벽 충돌 체크
-		math::Vector3 skelPosition = mCreatureTransform->GetPosition();												// 내 위치
-		float moveMagnitude = mCreatureStat->MoveSpeed * (float)Time::DeltaTime();									// 이동량
+		Collider2D::eWallCollisionState wallCollisionState = mCreatureBodyCollider->IsWallCollision();	// 벽 충돌 체크
+		math::Vector3 skelPosition = mCreatureTransform->GetPosition();									// 내 위치
+		float moveMagnitude = mCreatureStat.MoveSpeed * (float)Time::DeltaTime();						// 이동량
 		math::Vector2 moveDir = daRotateVector2(mCreatureDir, mCreatureFootCollider->GetEnvRotate());	// 회전까지 고려한 이동방향
-		math::Vector2 movePosition = moveDir * moveMagnitude;														// 이동위치
-		skelPosition.x += movePosition.x;																			// 이동한 위치
-		skelPosition.y += movePosition.y;																			// 이동한 위치
+		math::Vector2 movePosition = moveDir * moveMagnitude;											// 이동위치
+		skelPosition.x += movePosition.x;																// 이동한 위치
+		skelPosition.y += movePosition.y;																// 이동한 위치
 
 		// 벽 충돌 방향에 따른 이동 적용
 		if (0 <= mCreatureDir.x)
 		{
-			if (Collider2D::eWallCollisionState::Right == wallCollisionState)
-				return;
-			mCreatureTransform->SetPosition(skelPosition);
+			moveRight();
 		}
 		else
 		{
-			if (Collider2D::eWallCollisionState::Left == wallCollisionState)
-				return;
-			mCreatureTransform->SetPosition(skelPosition);
+			moveLeft();
 		}
 
 	}
@@ -255,8 +248,8 @@ namespace da
 		if (!mAttackProgress)
 		{
 			mCreatureAnimator->PlayAnimation(L"SkelIdle");	// 애니메이션 호출
-			mCreatureWeaponScript->DoAttack();					// 공격 기능 호출
-			mAttackProgress = true;								// 다음 진행으로 넘기기
+			mCreatureWeaponScript->DoAttack();				// 공격 기능 호출
+			mAttackProgress = true;							// 다음 진행으로 넘기기
 		}
 	}
 	void SkelScript::readyForAttackDelay()

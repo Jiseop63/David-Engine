@@ -8,8 +8,8 @@
 namespace da
 {
 	LifeBarScript::LifeBarScript()
-		: mMaxValue(0.0f)
-		, mCurValue(0.0f)
+		: mMaxValue(nullptr)
+		, mCurValue(nullptr)
 	{
 	}
 	LifeBarScript::~LifeBarScript()
@@ -23,8 +23,8 @@ namespace da
 
 		// 데이터 채우기
 		renderer::LifeCB data;
-		data.MaxHP = mMaxValue;
-		data.CurHP = mCurValue;
+		data.MaxHP = *mMaxValue;
+		data.CurHP = *mCurValue;
 
 		outCB->SetData(&data);
 		outCB->Bind(graphics::eShaderStage::VS);

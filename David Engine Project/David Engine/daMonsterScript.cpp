@@ -39,7 +39,7 @@ namespace da
 	{
 		mMonsterLifeScript = creature;
 		mMonsterLifeScript->SetCreatureScript(this);
-		mMonsterLifeScript->SetValue(mCreatureStat->MaxHP, mCreatureStat->CurHP);
+		mMonsterLifeScript->SetValue(mCreatureStat.MaxHP, mCreatureStat.CurHP);
 		return creature;
 	}
 #pragma endregion

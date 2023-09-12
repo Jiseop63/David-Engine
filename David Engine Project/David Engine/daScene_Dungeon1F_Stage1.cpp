@@ -58,7 +58,7 @@ namespace da
 		// light 세팅
 		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.40f, 0.40f, 0.40f, 1.0f));
 		// 충돌 세팅
-		CollisionManager::SetLayer(enums::eLayerType::PlayableAttackCollider, enums::eLayerType::Creature);
+		CollisionManager::SetLayer(enums::eLayerType::PlayableProjectile, enums::eLayerType::Monster);
 	}
 	void Scene_Dungeon1F_Stage1::OnExit()
 	{

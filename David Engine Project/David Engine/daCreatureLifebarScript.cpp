@@ -22,19 +22,4 @@ namespace da
 		GetOwner()->GetTransform()->SetPosition(creaturePos);
 	}
 
-	void CreatureLifebarScript::BindConstantBuffer()
-	{
-		// 상수버퍼 만들기
-		graphics::ConstantBuffer* outCB
-			= renderer::constantBuffer[(UINT)graphics::eCBType::Life];
-
-		// 데이터 채우기
-		renderer::LifeCB data;
-		data.MaxHP = mMaxValue;
-		data.CurHP = mCurValue;
-
-		outCB->SetData(&data);
-		outCB->Bind(graphics::eShaderStage::VS);
-		outCB->Bind(graphics::eShaderStage::PS);
-	}
 }

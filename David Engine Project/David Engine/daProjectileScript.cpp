@@ -110,7 +110,7 @@ namespace da
 			mReqWeapon->CallHitEffect(bossScript->GetBossTransform()->GetPosition());
 			SceneManager::GetMainCameraScript()->SetOscillation(120.0f, 0.1250f);
 		}
-		if (enums::eLayerType::Creature == other->GetOwner()->GetLayerType()
+		if (enums::eLayerType::Monster == other->GetOwner()->GetLayerType()
 			&& other->IsBody())
 		{
 			mWeaponStat.ProjectileCollision = true;
@@ -119,8 +119,13 @@ namespace da
 			// 이펙트 호출
 			mReqWeapon->CallHitEffect(creatureScript->GetCreatureTransform()->GetPosition());
 			SceneManager::GetMainCameraScript()->SetOscillation(120.0f, 0.1250f);
+
+			// 최종 피해량
+			float totalDamage = 5.0f;
+
+
 			// 피격 호출
-			creatureScript->OnDamaged();
+			creatureScript->OnDamaged(totalDamage);
 			
 		}		
 	}
