@@ -165,8 +165,7 @@ namespace da::objects
 		GameObject* enemyLifeObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Monster, L"CreatureLifeBarMaterial");
 		CreatureLifebarScript* creatureLifeBarScript = enemyLifeObj->AddComponent<CreatureLifebarScript>();
 		monsterScript->SetCreatureLifeScript(creatureLifeBarScript);
-		structs::sCreatureStat monsterStat = monsterScript->GetCreatureStat();
-		creatureLifeBarScript->SetValue(monsterStat.MaxHP, monsterStat.CurHP);
+		creatureLifeBarScript->SetValue(&monsterScript->GetCreatureStat()->MaxHP, &monsterScript->GetCreatureStat()->CurHP);
 		enemyLifeObj->GetTransform()->SetScale(1.0f, 0.250f, 1.0f);
 
 		return enemyScript;

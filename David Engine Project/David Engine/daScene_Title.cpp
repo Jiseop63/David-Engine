@@ -189,7 +189,7 @@ namespace da
 				float panelYScale = 0.640f;	// 16 * 4
 				lifePanelTransform->SetScale(math::Vector3(panelXScale, panelYScale, 1.0f));
 				// Life Panel 위치 조절
-				math::Vector3 lifePanelPosition = math::Vector3((panelXScale / 2.0f) + padding, -(panelYScale / 2.0f) - padding, 0.f);
+				math::Vector3 lifePanelPosition = math::Vector3((panelXScale / 2.0f) + padding, - (panelYScale / 2.0f) - padding, 0.f);
 				lifePanelTransform->SetPosition(lifePanelPosition);
 
 				// Bar 객체 생성
@@ -199,11 +199,9 @@ namespace da
 
 				// 플레이어 hp 연동
 				PlayerScript* playerScript = SceneManager::GetPlayerScript();
-				structs::sCreatureStat playerStat = playerScript->GetCreatureStat();
 				LifeBarScript* playerLifeBar = lifeBar->AddComponent<LifeBarScript>();
-				playerLifeBar->SetValue(playerStat.MaxHP, playerStat.CurHP);
-				SceneManager::AddLifebarObject(lifeBar);	
-
+				playerLifeBar->SetValue(&playerScript->GetCreatureStat()->MaxHP, &playerScript->GetCreatureStat()->CurHP);
+				SceneManager::AddLifebarObject(lifeBar);
 
 				// Bar 크기 조절
 				Transform* lifeBarTransform = lifeBar->GetTransform();
@@ -239,15 +237,12 @@ namespace da
 					<GameObject>(this, enums::eLayerType::UI, L"DashActivateMaterial");
 				playerHUD->AddChildObject(dashActivate);
 				DashCountScript* dashCountScript = dashActivate->AddComponent<DashCountScript>();
+				dashCountScript->SetName(L"debugingTarget");
 
-				dashCountScript->SetValue(playerScript->GetDashData().MaxDashCount, playerScript->GetDashData().CurDashCount);
+				const structs::sDashData* datas = playerScript->GetDashData();
+				dashCountScript->SetValue(&playerScript->GetDashData()->MaxDashCount, &playerScript->GetDashData()->CurDashCount);
 
-				int a = 0;
 				SceneManager::AddDashCountObject(dashActivate);
-				DashCountScript* testDashData = SceneManager::GetDashCountScript();
-				playerScript->downDashCount();
-				structs::sDashData dashData = playerScript->GetDashData();
-				a = 1;
 				Transform* dashActivateTransform = dashActivate->GetTransform();
 				dashActivateTransform->SetParent(playerHUDTransform);
 

@@ -116,8 +116,8 @@ namespace da
 	}
 	void CreatureScript::OnDamaged(float damage)
 	{
+		mCreatureStat.CurHP -= damage;
 		if (0 >= mCreatureStat.CurHP)
 			mCreatureStat.CurHP = 0;
-		mCreatureStat.CurHP -= damage;
 	}
 }

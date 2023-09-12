@@ -60,8 +60,7 @@ namespace da
 		GameDataManager::SetCameraMovableRange(math::Vector2(22.0f, 1.80f));
 		GameDataManager::SetCameraMovaPosition(math::Vector2(playerPos.x, playerPos.y));
 		// UI ¼¼ÆÃ
-		structs::sCreatureStat playerStat = *GameDataManager::GetPlayerStat();
-		SceneManager::GetLifebarScript()->SetValue(playerStat.MaxHP, playerStat.CurHP);
+		SceneManager::GetLifebarScript()->SetValue(&player->GetCreatureStat()->MaxHP, &player->GetCreatureStat()->CurHP);
 		SceneManager::GetHUDObject()->SetObjectStates(GameObject::eObjectState::Active);
 		SceneManager::GetCursourScrip()->IsIngame(true);
 		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.70f, 0.70f, 0.70f, 1.0f));

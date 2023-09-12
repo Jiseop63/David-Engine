@@ -7,7 +7,7 @@ namespace da
 	{
 	public:
 		static void Initialize();		
-		static void InitializePlayerStat();
+		static void InitializeInventory();
 
 	public:
 		static void DebugMode()
@@ -20,24 +20,7 @@ namespace da
 		static bool IsDebuging() { return mDebuging; }
 
 	public:
-		static void SetPlayerStat(structs::sCreatureStat data) { mPlayerStat = &data; }
-		static void SetJumpCount(structs::sJumpData data) { mJumpData = &data;}
-		static void SetDashCount(structs::sDashData data) { mDashData = &data;}
-
-		static structs::sCreatureStat* GetPlayerStat() { return mPlayerStat; }
-		static structs::sJumpData* GetJumpCount() { return mJumpData; }
-		static structs::sDashData* GetDashCount() { return mDashData; }
 		static structs::sInventory& GetInventory() { return mInventoryData; }
-
-#pragma region Player Func
-	public:
-		static void GetDamage(float value);
-		static void GetHeal(float value);
-
-		static bool UseDash();
-		static void RecoveryDash();
-		static void ClearJumpBuffer();
-#pragma endregion
 
 #pragma region Scene Enter Func
 	public:
@@ -58,9 +41,6 @@ namespace da
 
 #pragma region Data
 	private:
-		static structs::sCreatureStat*	mPlayerStat;
-		static structs::sJumpData*		mJumpData;
-		static structs::sDashData*		mDashData;
 		static structs::sInventory		mInventoryData;
 
 		static structs::sArmour*		mActiveArmour;

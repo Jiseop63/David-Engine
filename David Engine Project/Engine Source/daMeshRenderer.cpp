@@ -5,6 +5,7 @@
 #include "daTimeConstants.h"
 #include "daAnimator.h"
 #include "../David Engine/daLifeBarScript.h"
+#include "../David Engine/daDashCountScript.h"
 
 namespace da
 {
@@ -32,6 +33,9 @@ namespace da
 		LifeBarScript* lifebar = GetOwner()->GetComponent<LifeBarScript>();
 		if (lifebar)
 			lifebar->BindConstantBuffer();
+		DashCountScript* dashbar = GetOwner()->GetComponent<DashCountScript>();
+		if (dashbar)
+			dashbar->BindConstantBuffer();
 
 		Animator* animator = GetOwner()->GetComponent<Animator>();
 		if (animator)

@@ -87,7 +87,6 @@ namespace da
             return;
         inputCameraMove();
         inputMove();
-        inputJump();
         inputDash();
         inputAttack();        
     }
@@ -95,6 +94,8 @@ namespace da
     {
         if (Input::GetKeyDown(eKeyCode::R))
             GetHeal(); 
+        if (Input::GetKeyDown(eKeyCode::E))
+            downDashCount();
         if (Input::GetKeyDown(eKeyCode::T))
             GetDamage();
         if (Input::GetKeyDown(eKeyCode::Y))
@@ -141,12 +142,18 @@ namespace da
     void PlayerScript::GetDamage()
     {
         float value = 5.0f;
-        GameDataManager::GetDamage(value);
+        mCreatureStat.CurHP -= value;
+        if (0 >= mCreatureStat.CurHP)
+            mCreatureStat.CurHP = 0;
+        //GameDataManager::GetDamage(value);
     }
     void PlayerScript::GetHeal()    
     {
         float value = 5.0f;
-        GameDataManager::GetHeal(value);        
+        mCreatureStat.CurHP += value;
+        if (mCreatureStat.MaxHP <= mCreatureStat.CurHP)
+            mCreatureStat.CurHP = mCreatureStat.MaxHP;
+        //GameDataManager::GetHeal(value);        
     }
 #pragma endregion
 #pragma region FSM Func
@@ -345,7 +352,13 @@ namespace da
 
             mDashData.DashAccumulateTime += (float)Time::DeltaTime();
             if (mDashData.DashRegenTime <= mDashData.DashAccumulateTime)
-                GameDataManager::RecoveryDash();
+            {
+                if (mDashData.MaxDashCount > mDashData.CurDashCount)
+                {
+                    mDashData.DashAccumulateTime = 0.0f;
+                    mDashData.CurDashCount++;
+                }
+            }
         }
         void PlayerScript::updatePassPlatformCheck()
         {
@@ -363,7 +376,7 @@ namespace da
             if (Input::GetKeyDown(eKeyCode::RBTN))
             {
                 // condition
-                if (GameDataManager::UseDash())
+                if (useDash())
                 {
                     if (ePlayerState::Jump != mActiveState)
                         ChangeState(ePlayerState::Jump);
@@ -389,11 +402,6 @@ namespace da
             //    math::Vector2(0.80f, 1.20f), 0.0f, 0.30f, enums::eProjectileType::Body);
             //// 투사체 활성화
             //mWeaponScript->ActiveProjectile();
-        }
-        void PlayerScript::inputJump()
-        {
-            
-
         }
         void PlayerScript::updateBufferedJump()
         {
@@ -445,7 +453,7 @@ namespace da
                 mCreatureRigidbody->ApplyVelocity(Vector2::UnitY, mJumpData.JumpForce * mJumpData.JumpForceRatio);
             else
                 mCreatureRigidbody->OverrideVelocity(Vector2::UnitY, mJumpData.JumpForce * mJumpData.JumpForceRatio);
-            GameDataManager::ClearJumpBuffer();
+            clearJumpBuffer();
         }
 #pragma endregion
 
@@ -494,9 +502,9 @@ namespace da
         mJumpData.BufferedJump = false;
         mJumpData.ExtraJump = true;
 
-        GameDataManager::SetPlayerStat(mCreatureStat);
-        GameDataManager::SetDashCount(mDashData);
-        GameDataManager::SetJumpCount(mJumpData);
+        //GameDataManager::SetPlayerStat(mCreatureStat);
+        //GameDataManager::SetDashCount(mDashData);
+        //GameDataManager::SetJumpCount(mJumpData);
     }
 #pragma endregion
 #pragma region Collision Func

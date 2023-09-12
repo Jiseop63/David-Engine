@@ -32,7 +32,7 @@ namespace da
 #pragma region public Func
 	public:
 		Transform* GetCreatureTransform() { return mCreatureTransform; }		
-		structs::sCreatureStat& GetCreatureStat() { return mCreatureStat; }
+		const structs::sCreatureStat* GetCreatureStat() { return &mCreatureStat; }
 		// 상속받는 각 클래스마다 직접 구현해주기
 		virtual void AddEffectObject(GameObject* effectScript) {}
 	protected:

@@ -89,7 +89,8 @@ namespace da
 		if (enums::eLayerType::Playable == other->GetOwner()->GetLayerType()
 			&& other->IsBody())
 		{
-			GameDataManager::GetDamage(4.0f);
+			CreatureScript* playerScript = other->GetOwner()->GetComponent<CreatureScript>();
+			playerScript->OnDamaged(4.0f);
 			mEnemyWeaponCollider->SetDetectionType(Collider2D::eDetectionType::Inactive);				
 		}		
 	}

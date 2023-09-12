@@ -53,7 +53,6 @@ namespace da
 		void inputCameraMove();
 		void inputMove();
 		void inputDash();
-		void inputJump();
 #pragma endregion
 
 #pragma region Update func
@@ -86,13 +85,13 @@ namespace da
 	public:
 		CombatScript* SetWeaponObject(GameObject* object);
 		CombatScript* GetWeaponScript() { return mWeaponScript; }
-		structs::sDashData GetDashData() const { return mDashData; }
+		const structs::sDashData* GetDashData() const { return &mDashData; }
 
 		void downDashCount() { mDashData.CurDashCount--; }
 
-		bool IsDashRunning() { return mDashRunning; }		
+		bool IsDashRunning() { return mDashRunning; }
 		void IsPlayerInDungeon(bool value)
-		{ 
+		{
 			if (value)
 				mLight->SetColor(math::Vector4(0.550f, 0.550f, 0.550f, 1.0f));
 			else
@@ -111,6 +110,23 @@ namespace da
 		void todoDustSpawn();
 		void todoDash();
 		void todoJump();
+
+		void clearJumpBuffer()
+		{
+			mJumpData.BufferedJump = false;
+			mJumpData.JumpForceRatio = 0.0f;
+			mJumpData.JumpAccumulateTime = 0.0f;
+		}
+		bool useDash()
+		{
+			if (0 < mDashData.CurDashCount)
+			{
+				mDashData.CurDashCount -= 1;
+				return true;
+			}
+			return false;
+		}
+
 #pragma endregion
 
 #pragma region Initialize Player
@@ -130,8 +146,8 @@ namespace da
 // value
 #pragma region Components
 	private:
-		Light*			mLight;
-		CombatScript*	mWeaponScript;
+		Light*				mLight;
+		CombatScript*		mWeaponScript;
 #pragma endregion
 
 #pragma region Global Data
@@ -160,8 +176,3 @@ namespace da
 #pragma endregion
 	};
 }
-
-/*
-필요한 변수와 스크립트를 구분해서 역할 나누기
-
-*/

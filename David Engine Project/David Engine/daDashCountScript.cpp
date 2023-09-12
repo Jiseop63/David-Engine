@@ -8,10 +8,9 @@
 namespace da
 {
 	DashCountScript::DashCountScript()
-		: mMaxValue(0.0f)
-		, mCurValue(0.0f)
+		: mMaxValue(nullptr)
+		, mCurValue(nullptr)
 	{
-		int a = 0;
 	}
 	DashCountScript::~DashCountScript()
 	{
@@ -28,8 +27,8 @@ namespace da
 
 		// 데이터 채우기
 		renderer::CountCB data;
-		data.MaxDashCount = mMaxValue;
-		data.CurDashCount = mCurValue;
+		data.MaxDashCount = (float)*mMaxValue;
+		data.CurDashCount = (float)*mCurValue;
 
 		outCB->SetData(&data);
 		outCB->Bind(graphics::eShaderStage::VS);

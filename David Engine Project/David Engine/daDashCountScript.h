@@ -12,10 +12,14 @@ namespace da
 		virtual void LateUpdate();
 		void BindConstantBuffer();
 
-		void SetValue(const float& max, const float& cur) { mMaxValue = max; mCurValue = cur; }
+		void SetValue(const int* max, const int* cur)
+		{ 
+			mMaxValue = max;
+			mCurValue = cur;
+		}
 
 	private:
-		float mMaxValue;
-		float mCurValue;
+		const int* mMaxValue;
+		const int* mCurValue;
 	};
 }
