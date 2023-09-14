@@ -150,6 +150,7 @@
     <ClInclude Include="daButtonScript.h" />
     <ClInclude Include="daCameraObject.h" />
     <ClInclude Include="daCameraScript.h" />
+    <ClInclude Include="daCombatScript.h" />
     <ClInclude Include="daCreatureLifebarScript.h" />
     <ClInclude Include="daCreatureScript.h" />
     <ClInclude Include="daEffectEnemyScript.h" />
@@ -157,7 +158,7 @@
     <ClInclude Include="daPlayerEffectScript.h" />
     <ClInclude Include="daEffectScript.h" />
     <ClInclude Include="daAttackEffectScript.h" />
-    <ClInclude Include="daEnemyWeaponScript.h" />
+    <ClInclude Include="daMonsterCombatScript.h" />
     <ClInclude Include="daGameDataManager.h" />
     <ClInclude Include="daGridScript.h" />
     <ClInclude Include="daInventoryScript.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="daButtonScript.cpp" />
     <ClCompile Include="daCameraObject.cpp" />
     <ClCompile Include="daCameraScript.cpp" />
+    <ClCompile Include="daCombatScript.cpp" />
     <ClCompile Include="daCreatureLifebarScript.cpp" />
     <ClCompile Include="daCreatureScript.cpp" />
     <ClCompile Include="daDashCountScript.cpp" />
@@ -197,7 +199,7 @@
     <ClCompile Include="daPlayerEffectScript.cpp" />
     <ClCompile Include="daEffectScript.cpp" />
     <ClCompile Include="daAttackEffectScript.cpp" />
-    <ClCompile Include="daEnemyWeaponScript.cpp" />
+    <ClCompile Include="daMonsterCombatScript.cpp" />
     <ClCompile Include="daGameDataManager.cpp" />
     <ClCompile Include="daCursorScript.cpp" />
     <ClCompile Include="daGridScript.cpp" />

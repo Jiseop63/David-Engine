@@ -8,7 +8,7 @@
 #include "daResources.h"
 #include "daGameObject.h"
 
-#include "daEnemyWeaponScript.h"
+#include "daMonsterCombatScript.h"
 #include "daEffectEnemyScript.h"
 #include "daPlayerScript.h"
 
@@ -112,7 +112,7 @@ namespace da
 	}
 	void SkelScript::visualUpdate()
 	{
-		mCreatureWeaponScript->SetWeaponTransform(mCreatureTransform->GetPosition());
+		mMonsterCombatScript->SetWeaponTransform(mCreatureTransform->GetPosition());
 		reverseTexture();
 	}
 	void SkelScript::lifeCheck()
@@ -248,7 +248,7 @@ namespace da
 		if (!mAttackProgress)
 		{
 			mCreatureAnimator->PlayAnimation(L"SkelIdle");	// 애니메이션 호출
-			mCreatureWeaponScript->DoAttack();				// 공격 기능 호출
+			mMonsterCombatScript->DoAttack();				// 공격 기능 호출
 			mAttackProgress = true;							// 다음 진행으로 넘기기
 		}
 	}
@@ -274,7 +274,7 @@ namespace da
 		if (!mIsDead)
 		{
 			// 사망 이펙트 실행
-			mCreatureWeaponScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
+			mMonsterCombatScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
 			EffectScript* effect = CreatureScript::callEffect();
 			effect->SetEffectPosition(mCreatureTransform->GetPosition() + math::Vector3(0.0f, -0.20f, 0.0f));
 			effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);

@@ -47,16 +47,21 @@ namespace da::structs
 			: MaxDashCount(0), CurDashCount(0), DashForce(0.0f), DashAccumulateTime(0.0f), DashRegenTime(0.0f)
 		{}
 	};
-
-	struct sWeaponStat
+	struct sAttackStat
 	{
-		da::enums::eWeaponName		WeaponName;
-		bool						IsMeleeWeapon;
 		bool						AttackReady;
 		float						AtaackDamage;
 		float						AttackDelayAccumulateTime;
 		float						AttackDelayTime;
-
+		sAttackStat()
+			: AttackReady(true)
+			, AtaackDamage(0.0f)
+			, AttackDelayAccumulateTime(0.0f)
+			, AttackDelayTime(0.0f)
+		{}
+	};
+	struct sProjectileStat
+	{
 		bool						ProjectileActive;
 		bool						ProjectileCollision;
 		float						ProjectileRange;
@@ -64,21 +69,29 @@ namespace da::structs
 		float						ProjectileAccumulate;
 		float						ProjectileCenterPadding;
 		da::enums::eProjectileType	ProjectileType;
-
-		sWeaponStat()
-			: WeaponName(da::enums::eWeaponName::Default)
-			, IsMeleeWeapon(true)
-			, AttackReady(true)
-			, AtaackDamage(0.0f)
-			, AttackDelayAccumulateTime(0.0f)
-			, AttackDelayTime(0.0f)
-			, ProjectileActive(false)
+		sProjectileStat()
+			: ProjectileActive(false)
 			, ProjectileCollision(false)
 			, ProjectileRange(0.0f)
 			, ProjectileValidTime(0.0f)
 			, ProjectileAccumulate(0.0f)
 			, ProjectileCenterPadding(0.0f)
 			, ProjectileType(enums::eProjectileType::Melee)
+		{}
+	};
+	struct sWeaponInfo
+	{
+		da::enums::eWeaponName		WeaponName;
+		std::wstring				AnimationName;
+		bool						IsAnimationType;
+		sAttackStat					AttackStat;
+		sProjectileStat				ProjectileStat;
+		
+		sWeaponInfo()
+			: WeaponName(da::enums::eWeaponName::Default)
+			, IsAnimationType(false)
+			, AttackStat{}
+			, ProjectileStat{}
 		{}
 	};
 	struct sShieldStat
@@ -92,7 +105,7 @@ namespace da::structs
 
 	struct sArmour
 	{
-		sWeaponStat Weapon;
+		sWeaponInfo Weapon;
 		sShieldStat Shield;
 		sArmour()
 			: Weapon{}, Shield{}

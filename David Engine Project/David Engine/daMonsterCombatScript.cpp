@@ -1,4 +1,4 @@
-#include "daEnemyWeaponScript.h"
+#include "daMonsterCombatScript.h"
 
 #include "daGameDataManager.h"
 #include "daTime.h"
@@ -14,7 +14,7 @@
 
 namespace da
 {
-	EnemyWeaponScript::EnemyWeaponScript()
+	MonsterCombatScript::MonsterCombatScript()
 		: mEnemyWeaponTransform(nullptr)
 		, mEnemyWeaponRenderer(nullptr)
 		, mEnemyWeaponAnimator(nullptr)
@@ -24,10 +24,10 @@ namespace da
 		, mPlayerDamaged(false)
 	{
 	}
-	EnemyWeaponScript::~EnemyWeaponScript()
+	MonsterCombatScript::~MonsterCombatScript()
 	{
 	}
-	void EnemyWeaponScript::Initialize()
+	void MonsterCombatScript::Initialize()
 	{
 		mEnemyWeaponTransform = GetOwner()->GetComponent<Transform>();
 		mEnemyWeaponRenderer = GetOwner()->GetComponent<MeshRenderer>();
@@ -45,19 +45,19 @@ namespace da
 		
 		mEnemyWeaponAnimator->Create(L"EnemyGreatSwordSwing", Resources::Find<Texture>(L"EnemyGreatSword")
 			, math::Vector2::Zero, math::Vector2(51.0f, 49.0f), 16, math::Vector2::Zero, 0.050f, 70.0f);
-		mEnemyWeaponAnimator->ActionEvent(L"EnemyGreatSwordSwing", 7) = std::bind(&EnemyWeaponScript::activeAttack, this);
-		mEnemyWeaponAnimator->CompleteEvent(L"EnemyGreatSwordSwing") = std::bind(&EnemyWeaponScript::inactiveAttack, this);
+		mEnemyWeaponAnimator->ActionEvent(L"EnemyGreatSwordSwing", 7) = std::bind(&MonsterCombatScript::activeAttack, this);
+		mEnemyWeaponAnimator->CompleteEvent(L"EnemyGreatSwordSwing") = std::bind(&MonsterCombatScript::inactiveAttack, this);
 		mEnemyWeaponAnimator->PlayAnimation(L"EnemyGreatSwordIdle", false);
 	}
-	void EnemyWeaponScript::Update()
+	void MonsterCombatScript::Update()
 	{
 	}
-	void EnemyWeaponScript::LateUpdate()
+	void MonsterCombatScript::LateUpdate()
 	{
 		mEnemyWeaponTransform->SetPosition(mMonsterScript->GetCreatureTransform()->GetPosition());
 		updateReverseRenderer();
 	}
-	void EnemyWeaponScript::DoAttack()
+	void MonsterCombatScript::DoAttack()
 	{
 		// 애니메이션
 		mEnemyWeaponAnimator->PlayAnimation(L"EnemyGreatSwordSwing", false);
@@ -66,17 +66,17 @@ namespace da
 	}
 
 	// 특정 프레임에 호출됨
-	void EnemyWeaponScript::activeAttack()
+	void MonsterCombatScript::activeAttack()
 	{
 		mEnemyWeaponCollider->SetDetectionType(Collider2D::eDetectionType::Default);
 	}
 
-	void EnemyWeaponScript::inactiveAttack()
+	void MonsterCombatScript::inactiveAttack()
 	{
 		mEnemyWeaponCollider->SetDetectionType(Collider2D::eDetectionType::Inactive);
 	}
 
-	bool EnemyWeaponScript::isLeft()
+	bool MonsterCombatScript::isLeft()
 	{
 		if (0 >= mMonsterScript->GetCreatureDir().x) 
 			return true; 
@@ -84,7 +84,7 @@ namespace da
 			return false;
 	}
 
-	void EnemyWeaponScript::OnCollisionEnter(Collider2D* other)
+	void MonsterCombatScript::OnCollisionEnter(Collider2D* other)
 	{
 		if (enums::eLayerType::Playable == other->GetOwner()->GetLayerType()
 			&& other->IsBody())

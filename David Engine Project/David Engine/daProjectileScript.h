@@ -32,14 +32,16 @@ namespace da
 
 		// 외부 세팅 함수
 	public:
-		void SetReqWeapon(CombatScript* weapon) { mReqWeapon = weapon; }
-		CombatScript* GetReqWeapon() { return mReqWeapon; }
-		void SetWeaponProjectile(structs::sWeaponStat weaponStat) 
+		void SetWeaponScript(CombatScript* weapon) { mWeaponScript = weapon; }
+		CombatScript* GetWeaponScript() { return mWeaponScript; }
+		void SetWeaponProjectile(structs::sWeaponInfo weaponInfo) 
 		{ 
-			mWeaponStat = weaponStat; 
-			mWeaponStat.ProjectileActive = true;
+			mWeaponInfo = weaponInfo;
+			mWeaponInfo.ProjectileStat.ProjectileActive = true;
 		}
 		void SetBeginProjectile(math::Vector3 vector3) { mBeginPosition = vector3; }
+
+		void ClearProjectile();
 
 	public:
 		virtual void OnCollisionEnter(Collider2D* other) override;
@@ -47,11 +49,11 @@ namespace da
 	protected:
 		Transform*				mProjectileTransform;
 		Collider2D*				mProjectileCollider;
-		Transform*				mPlayerTransform;
+		Transform*				mWeaponTransform;
 
 	private:
-		CombatScript*			mReqWeapon;
-		structs::sWeaponStat	mWeaponStat;
+		CombatScript*			mWeaponScript;
+		structs::sWeaponInfo	mWeaponInfo;
 
 		enums::eProjectileType	mProjectileType;
 		math::Vector3			mProjectileDir;

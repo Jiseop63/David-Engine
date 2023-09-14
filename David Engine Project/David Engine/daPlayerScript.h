@@ -83,8 +83,8 @@ namespace da
 
 #pragma region public Func
 	public:
-		CombatScript* SetWeaponObject(GameObject* object);
-		CombatScript* GetWeaponScript() { return mWeaponScript; }
+		PlayerCombatScript* SetWeaponObject(GameObject* object);
+		PlayerCombatScript* GetWeaponScript() { return mWeaponScript; }
 		const structs::sDashData* GetDashData() const { return &mDashData; }
 
 		void downDashCount() { mDashData.CurDashCount--; }
@@ -147,7 +147,7 @@ namespace da
 #pragma region Components
 	private:
 		Light*				mLight;
-		CombatScript*		mWeaponScript;
+		PlayerCombatScript*		mWeaponScript;
 #pragma endregion
 
 #pragma region Global Data

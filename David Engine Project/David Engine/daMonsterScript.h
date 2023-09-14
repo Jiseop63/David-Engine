@@ -12,7 +12,7 @@ namespace da
 	};
 	class PlayerScript;
 	class EffectEnemyScript;
-	class EnemyWeaponScript;
+	class MonsterCombatScript;
 	class CreatureLifebarScript;
 	class MonsterScript : public CreatureScript
 	{
@@ -26,7 +26,7 @@ namespace da
 
 	public:
 		virtual void AddEffectObject(GameObject* effectObject) override;		
-		void SetEnemyWeaponScript(class EnemyWeaponScript* creature);
+		void SetEnemyWeaponScript(class MonsterCombatScript* creature);
 		CreatureLifebarScript* SetCreatureLifeScript(CreatureLifebarScript* creature);
 
 		// 세부 몬스터 스텟을 설정하는 기능
@@ -44,7 +44,7 @@ namespace da
 	protected:
 		Collider2D*				mMonsterSensorCollider;
 		PlayerScript*			mPlayerScript;
-		EnemyWeaponScript*		mCreatureWeaponScript;
+		MonsterCombatScript*	mMonsterCombatScript;
 		CreatureLifebarScript*	mMonsterLifeScript;
 #pragma endregion
 

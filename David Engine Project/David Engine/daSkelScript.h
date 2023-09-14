@@ -69,7 +69,5 @@ namespace da
 		float	mReadyDurationTime;
 		float	mReadyDurationDecay;
 #pragma endregion
-
-
 	};
 }

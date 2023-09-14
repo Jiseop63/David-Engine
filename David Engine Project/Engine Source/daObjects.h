@@ -117,7 +117,7 @@ namespace da::objects
 		// weapon 세팅
 		GameObject* weaponObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Playable, L"WeaponMaterial");
 		player->AddChildObject(weaponObject);
-		CombatScript* weaponScript = playerScript->SetWeaponObject(weaponObject);
+		PlayerCombatScript* weaponScript = playerScript->SetWeaponObject(weaponObject);
 
 		// weapon effect 세팅
 		for (int index = 0; index < WEAPON_EFFECT_POOL; index++)
@@ -157,7 +157,7 @@ namespace da::objects
 		// weapon 세팅
 		GameObject* enemyWeaponObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Monster, L"AnimationMaterial");
 		enemyObject->AddChildObject(enemyWeaponObj);
-		EnemyWeaponScript* enemyWeaponScript = enemyWeaponObj->AddComponent<EnemyWeaponScript>();
+		MonsterCombatScript* enemyWeaponScript = enemyWeaponObj->AddComponent<MonsterCombatScript>();
 		monsterScript->SetEnemyWeaponScript(enemyWeaponScript);
 		enemyWeaponScript->SetOwnerScript(monsterScript);
 

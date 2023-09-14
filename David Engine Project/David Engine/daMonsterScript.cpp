@@ -2,14 +2,14 @@
 #include "daGameObject.h"
 #include "daCreatureLifebarScript.h"
 #include "daEffectEnemyScript.h"
-#include "daEnemyWeaponScript.h"
+#include "daMonsterCombatScript.h"
 
 namespace da
 {
 	MonsterScript::MonsterScript()
 		: mMonsterSensorCollider(nullptr)
 		, mPlayerScript(nullptr)
-		, mCreatureWeaponScript(nullptr)
+		, mMonsterCombatScript(nullptr)
 		, mMonsterLifeScript(nullptr)
 		, mMonsterAttackStat{}
 		, mMonsterActiveState(eMonsterState::Idle)
@@ -31,9 +31,9 @@ namespace da
 	}
 
 #pragma region Init other script
-	void MonsterScript::SetEnemyWeaponScript(EnemyWeaponScript* creature)
+	void MonsterScript::SetEnemyWeaponScript(MonsterCombatScript* creature)
 	{
-		mCreatureWeaponScript = creature;
+		mMonsterCombatScript = creature;
 	}
 	CreatureLifebarScript* MonsterScript::SetCreatureLifeScript(CreatureLifebarScript* creature)
 	{

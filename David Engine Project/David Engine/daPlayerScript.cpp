@@ -547,10 +547,10 @@ namespace da
     }
 #pragma endregion
 #pragma region public Func
-    CombatScript* PlayerScript::SetWeaponObject(GameObject* object)
+    PlayerCombatScript* PlayerScript::SetWeaponObject(GameObject* object)
     {
-        mWeaponScript = object->AddComponent<CombatScript>();
-        mWeaponScript->AddPlayerObject(this);
+        mWeaponScript = object->AddComponent<PlayerCombatScript>();
+        mWeaponScript->AddOwnerScript(this);
         return mWeaponScript;
     }
 #pragma endregion

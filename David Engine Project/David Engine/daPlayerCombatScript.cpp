@@ -12,81 +12,49 @@
 
 namespace da
 {
-	CombatScript::CombatScript()
-		: mWeaponTransform(nullptr)
-		, mWeaponRenderer(nullptr)
-		, mWeaponAnimator(nullptr)
-		, mPlayerScript(nullptr)
-		, mEffects{}
-		, mProjectiles{}
-		, mActiveArmour(nullptr)
-		, mWeaponTexture(nullptr)
+	PlayerCombatScript::PlayerCombatScript()
+		: mWeaponTexture(nullptr)
 		, mFirstTexture(nullptr)
 		, mSecondTexture(nullptr)
-
-		, mEffectScale(math::Vector3::One)
-		, mProjectileScale(math::Vector2::One)
-
-		, mPlayerDir(math::Vector2::Zero)
-		, mHitEffectAngle(0.0f)
-		, mWeaponAttacked(false)
-		, mEffectAngle(0.0f)
 	{		
 	}
-	CombatScript::~CombatScript()
+	PlayerCombatScript::~PlayerCombatScript()
 	{
 	}
 
-	void CombatScript::Initialize()
+	void PlayerCombatScript::Initialize()
 	{
-		// Tr세팅
-		mWeaponTransform = GetOwner()->GetTransform();
-		mWeaponTransform->SetScale(math::Vector3(2.0f, 2.0f, 1.0f));
+		CombatScript::Initialize();
+		// mActiveArmour = GameDataManager::GetActiveArmour();
+		// = SceneManager::GetPlayerScript();
 
-		// 근거리 무기는 Texture, 원거리 무기는 Animation 을 사용함
-		mWeaponRenderer = GetOwner()->GetComponent<MeshRenderer>();
-		mWeaponAnimator = GetOwner()->AddComponent<Animator>();
-
-		// 데이터 연동
-		mActiveArmour = GameDataManager::GetActiveArmour();
-		mPlayerScript = SceneManager::GetPlayerScript();
+		mWeaponInfo = new structs::sWeaponInfo;
 		EquipWeapon();
-
-		// 무기 세팅
-		//ChangeWeapon();
+		int a = 0;
+		// 초기화 및 관련 객체 등록해주기
 	}
-	void CombatScript::Update()
+	void PlayerCombatScript::Update()
 	{		
-		updateAttackCoolDown();
+		CombatScript::updateAttackCoolDown();
 	}
-	void CombatScript::LateUpdate()
+	void PlayerCombatScript::LateUpdate()
 	{
-		updateWeaponPosition();
+		CombatScript::updateWeaponPosition();
+		CombatScript::updateReverseRenderer();
 		updateWeaponRotate();
-		updateReverseRenderer();
 	}
 		
 #pragma region Update & lateUpdate Func
 
-	void CombatScript::updateWeaponPosition()
+	void PlayerCombatScript::updateWeaponRotate()
 	{
-		// 플레이어 위치 가져오기
-		math::Vector3 playerPosition = mPlayerScript->GetCreatureTransform()->GetPosition();
-		// 내 위치에 적용하기
-		mWeaponTransform->SetPosition(playerPosition);
-	}
-	void CombatScript::updateWeaponRotate()
-	{
-		// 회전값 적용하기 + 방향 적용하기
-
-
 		// # 플레이어 방향 가져오기
-		mPlayerDir = mPlayerScript->GetCreatureDir();
+		mOwnerDir = mOwnerScript->GetCreatureDir();
 		// # 내 위치 가져오기
-		math::Vector3 myPosition = mWeaponTransform->GetPosition();
+		math::Vector3 myPosition = mCombatTransform->GetPosition();
 
 		// 무기 회전방향 구하기
-		float angle = atan2(mPlayerDir.y, mPlayerDir.x);
+		float angle = atan2(mOwnerDir.y, mOwnerDir.x);
 		mEffectAngle = angle;
 
 		// Weapon Position 구하기
@@ -124,179 +92,85 @@ namespace da
 			}
 		}
 
-		myPosition.x -= mPlayerDir.x * 0.050f;
-		myPosition.y -= mPlayerDir.y * 0.050f;
+		myPosition.x -= mOwnerDir.x * 0.050f;
+		myPosition.y -= mOwnerDir.y * 0.050f;
 		// 변경된 값을 Weapon Transform에 적용하기
-		mWeaponTransform->SetRotation(math::Vector3(0.0f, 0.0f, angle));
-		mWeaponTransform->SetPosition(myPosition);
+		mCombatTransform->SetRotation(math::Vector3(0.0f, 0.0f, angle));
+		mCombatTransform->SetPosition(myPosition);
 	}
-	void CombatScript::updateAttackCoolDown()
-	{
-		// 쿨다운 적용하기
-		if (!mActiveArmour->Weapon.AttackReady)
-		{
-			mActiveArmour->Weapon.AttackDelayAccumulateTime += (float)Time::DeltaTime();
-
-			if (mActiveArmour->Weapon.AttackDelayTime <= mActiveArmour->Weapon.AttackDelayAccumulateTime)
-			{
-				mActiveArmour->Weapon.AttackReady = true;
-				mActiveArmour->Weapon.AttackDelayAccumulateTime = 0.0f;
-			}
-		}
-	}
-
 #pragma endregion
 #pragma region Initialize & Get Script
-	void CombatScript::AddEffectObject(GameObject* object)
+	void PlayerCombatScript::AddEffectObject(GameObject* object)
 	{
 		AttackEffectScript* weaponEffect = object->AddComponent<AttackEffectScript>();
 		weaponEffect->SetReqWeapon(this);
-		mEffects.push_back(weaponEffect);
+		mCombatEffects.push_back(weaponEffect);
 	}
-	void CombatScript::AddProjectileObject(GameObject* object)
+	void PlayerCombatScript::AddProjectileObject(GameObject* object)
 	{
 		ProjectileScript* weaponProjectile = object->AddComponent<ProjectileScript>();
-		weaponProjectile->SetReqWeapon(this);
-		mProjectiles.push_back(weaponProjectile);
-	}
-	EffectScript* CombatScript::callEffect()
-	{
-		for (size_t effect = 0; effect < mEffects.size(); effect++)
-		{
-			if (GameObject::eObjectState::Inactive ==
-				mEffects[effect]->GetOwner()->GetObjectState())
-				return mEffects[effect];
-		}
-		return nullptr;
-	}
-	ProjectileScript* CombatScript::callProjectile()
-	{
-		for (size_t projectile = 0; projectile < mProjectiles.size(); ++projectile)
-		{
-			if (GameObject::eObjectState::Inactive ==
-				mProjectiles[projectile]->GetOwner()->GetObjectState())
-				return mProjectiles[projectile];
-		}
-		return nullptr;
+		weaponProjectile->SetWeaponScript(this);
+		mCombatProjectiles.push_back(weaponProjectile);
 	}
 #pragma endregion
 #pragma region Player call
-	void CombatScript::EquipWeapon()
+	void PlayerCombatScript::EquipWeapon()
 	{
-		switch (mActiveArmour->Weapon.WeaponName)
+		// 나중에는 여기서 세팅하는게 아니라 아이템이 세팅되어서 넘겨질 예정임
+		switch (mWeaponInfo->WeaponName)
 		{
 		case enums::eWeaponName::Default:
 		{
 			// 무기 정보 세팅
-			mActiveArmour->Weapon.AttackDelayTime = 0.450f;
-			mActiveArmour->Weapon.AttackDelayAccumulateTime = 0.0f;
-			mActiveArmour->Weapon.AtaackDamage = 5.0f;
-			mActiveArmour->Weapon.ProjectileValidTime = 0.250f;
-			mActiveArmour->Weapon.ProjectileCenterPadding = 0.750f;
-			mActiveArmour->Weapon.ProjectileRange = 3.5f;
+			mWeaponInfo->AttackStat.AttackDelayTime = 0.450f;
+			mWeaponInfo->AttackStat.AttackDelayAccumulateTime = 0.0f;
+			mWeaponInfo->AttackStat.AtaackDamage = 5.0f;
+			mWeaponInfo->ProjectileStat.ProjectileValidTime = 0.250f;
+			mWeaponInfo->ProjectileStat.ProjectileCenterPadding = 0.750f;
+			mWeaponInfo->ProjectileStat.ProjectileRange = 3.5f;
 			mProjectileScale = math::Vector2(2.50f, 1.750f);
-			mWeaponTransform->SetScale(math::Vector3(0.090f * 4.0f, 0.440f * 4.0f, 1.0f));
+			mCombatTransform->SetScale(math::Vector3(0.090f * 4.0f, 0.440f * 4.0f, 1.0f));
 			mWeaponTexture = Resources::Find<Texture>(L"LongSwordTestTexture");
 			mEffectName = L"GreatSwing";
 			mEffectScale = math::Vector3(2.50f, 2.50f, 1.0f);
 
 			if (mWeaponTexture)
-				mWeaponRenderer->ChangeSlotTexture(mWeaponTexture);
+				mCombatRenderer->ChangeSlotTexture(mWeaponTexture);
 		}
 		break;
 		case enums::eWeaponName::LongSword:
 		{
 			// 무기 정보 세팅
-			mActiveArmour->Weapon.AttackDelayTime = 0.450f;
-			mActiveArmour->Weapon.AttackDelayAccumulateTime = 0.0f;
-			mActiveArmour->Weapon.AtaackDamage = 5.0f;
-			mActiveArmour->Weapon.ProjectileValidTime = 0.250f;
-			mActiveArmour->Weapon.ProjectileCenterPadding = 0.750f;
-			mActiveArmour->Weapon.ProjectileRange = 3.5f;
+			mWeaponInfo->AttackStat.AttackDelayTime = 0.450f;
+			mWeaponInfo->AttackStat.AttackDelayAccumulateTime = 0.0f;
+			mWeaponInfo->AttackStat.AtaackDamage = 5.0f;
+			mWeaponInfo->ProjectileStat.ProjectileValidTime = 0.250f;
+			mWeaponInfo->ProjectileStat.ProjectileCenterPadding = 0.750f;
+			mWeaponInfo->ProjectileStat.ProjectileRange = 3.5f;
 			mProjectileScale = math::Vector2(2.50f, 1.750f);
-			mWeaponTransform->SetScale(math::Vector3(0.090f * 4.0f, 0.440f * 4.0f, 1.0f));
+			mCombatTransform->SetScale(math::Vector3(0.090f * 4.0f, 0.440f * 4.0f, 1.0f));
 			mWeaponTexture = Resources::Find<Texture>(L"LongSwordTestTexture");
 			mEffectName = L"GreatSwing";
 			mEffectScale = math::Vector3(2.50f, 2.50f, 1.0f);
 
 			if (mWeaponTexture)
-				mWeaponRenderer->ChangeSlotTexture(mWeaponTexture);
+				mCombatRenderer->ChangeSlotTexture(mWeaponTexture);
 		}
 		break;
 		default:
 			break;
 		}
 	}
-	void CombatScript::ToDoAttack()
+	void PlayerCombatScript::ToDoAttack()
 	{
-		if (mActiveArmour->Weapon.AttackReady)
+		if (mWeaponInfo->AttackStat.AttackReady)
 		{
-			playWeaponAttack();
-			mActiveArmour->Weapon.AttackReady = false;
+			CombatScript::attackEffect();
+			CombatScript::attackProjectile();
+			CombatScript::attackPlay();
+			mWeaponInfo->AttackStat.AttackReady = false;
 		}
 	}
-	void CombatScript::CallHitEffect(math::Vector3 position)
-	{
-		if (7 <= mHitEffectAngle)
-			mHitEffectAngle = 0.0f;
-		mHitEffectAngle += 1.80f;
-		// 방향 구하기
-		EffectScript* effect = callEffect();
-		effect->SetEffectScale(math::Vector3(1.50f, 1.50f, 1.0f));
-		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, mHitEffectAngle));
-		effect->SetEffectPosition(position - math::Vector3(0.0f, 0.2f, 0.0f));
-		effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-		effect->PlayEffect(L"Slash");
-	}
+	
 #pragma endregion
-#pragma region Atttack process
-	void CombatScript::playWeaponAttack()
-	{
-		attackEffect();
-		attackProjectile();
-		attackAnimation();
-	}
-	void CombatScript::attackEffect()
-	{
-		// 유효한 객체 가져오기
-		EffectScript* effect = callEffect();
-		// 세팅 해주기
-		math::Vector3 playerDir(mPlayerDir.x, mPlayerDir.y, 0.0f);
-		effect->SetEffectScale(mEffectScale);
-		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, mEffectAngle - 1.570f));
-		effect->SetEffectPosition(mWeaponTransform->GetPosition() + (playerDir * mActiveArmour->Weapon.ProjectileCenterPadding));
-		effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-		effect->PlayEffect(mEffectName);
-	}
-	void CombatScript::attackProjectile()
-	{
-		// 유효한 객체 가져오기
-		ProjectileScript* projectile = callProjectile();
-		// 세팅 해주기
-		math::Vector3 playerDir(mPlayerDir.x, mPlayerDir.y, 0.0f);
-		projectile->SetProjectileRotation(math::Vector3(0.0f, 0.0f, mEffectAngle - 1.570f));
-		projectile->SetProjectilePosition(mWeaponTransform->GetPosition() + (playerDir * mActiveArmour->Weapon.ProjectileCenterPadding));
-		projectile->SetBeginProjectile(mWeaponTransform->GetPosition());
-		projectile->SetProjectileCenter(mPlayerDir * mActiveArmour->Weapon.ProjectileCenterPadding);
-		projectile->SetProjectileSize(mProjectileScale);
-		projectile->SetProjectileType(mActiveArmour->Weapon.ProjectileType);
-		projectile->SetWeaponProjectile(mActiveArmour->Weapon);
-		projectile->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-	}
-	void CombatScript::attackAnimation()
-	{
-		if (mActiveArmour->Weapon.IsMeleeWeapon)
-		{
-			// Weapon Texture
-			if (mWeaponAttacked)
-				mWeaponAttacked = false;
-			else
-				mWeaponAttacked = true;
-		}
-		else
-		{
-			// Animation Play
-		}
-	}
-#pragma endregion	
 }

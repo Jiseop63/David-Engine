@@ -6,11 +6,11 @@ namespace da
 {
 	class Animator;
 	class MonsterScript;
-	class EnemyWeaponScript : public Script
+	class MonsterCombatScript : public Script
 	{
 	public:
-		EnemyWeaponScript();
-		virtual ~EnemyWeaponScript();
+		MonsterCombatScript();
+		virtual ~MonsterCombatScript();
 
 		virtual void Initialize() override;
 		virtual void Update() override;
@@ -45,10 +45,10 @@ namespace da
 		Transform*		mEnemyWeaponTransform;
 		MeshRenderer*	mEnemyWeaponRenderer;
 		Animator*		mEnemyWeaponAnimator;
-		Collider2D*		mEnemyWeaponCollider;
+		Collider2D*		mEnemyWeaponCollider; // 충돌체 없앨 예정
 
-		MonsterScript*	mMonsterScript;
-
+		MonsterScript*	mMonsterScript; // owner
+		// 투사체 추가할 예정
 	protected:
 		std::shared_ptr<Texture> mEnemyWeaponTexture;
 

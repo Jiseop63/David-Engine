@@ -3,7 +3,7 @@
 
 namespace da
 {
-	class CombatScript;
+	class PlayerCombatScript;
 	class AttackEffectScript : public EffectScript
 	{
 	public:
@@ -19,13 +19,13 @@ namespace da
 
 		// 외부 세팅 함수
 	public:
-		void SetReqWeapon(CombatScript* weapon) 
+		void SetReqWeapon(PlayerCombatScript* weapon) 
 		{ 
 			mReqWeapon = weapon;
 			int a = 0;
 		}
 
 	private:
-		CombatScript* mReqWeapon;
+		PlayerCombatScript* mReqWeapon;
 	};
 }
