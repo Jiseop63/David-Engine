@@ -12,9 +12,8 @@ namespace da
 	ProjectileScript::ProjectileScript()
 		: mProjectileTransform(nullptr)
 		, mProjectileCollider(nullptr)
-		, mWeaponTransform(nullptr)
-		, mWeaponScript(nullptr)
-		, mWeaponInfo{}
+		, mCombatScript(nullptr)
+		, mProjectileInfo{}
 		, mIsCollision(false)
 	{
 	}
@@ -30,9 +29,21 @@ namespace da
 	{
 		projectileProcess();
 	}
+	void ProjectileScript::OnActive()
+	{
+		mCombatScript->GetOwnerScript()->GetCreatureTransform();
+
+		mBeginPosition = mCombatScript->GetOwnerScript()->GetCreatureTransform()->GetPosition();
+		mProjectileTransform->SetPosition(mBeginPosition);
+		mProjectileTransform->SetRotation(math::Vector3(0.0f, 0.0f, mProjectileInfo.ProjectileAngle));
+		mProjectileCollider->SetCenter(mCombatScript->GetOwnerScript()->GetCreatureDir() * mProjectileInfo.ProjectileCenterPadding);
+
+		mProjectileInfo.ProjectileActive = true;
+		GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+	}
 	void ProjectileScript::projectileProcess()
 	{
-		switch (mWeaponInfo.ProjectileStat.ProjectileType)
+		switch (mProjectileInfo.ProjectileType)
 		{
 		case da::enums::eProjectileType::Melee:
 			meleeProcess();
@@ -55,13 +66,13 @@ namespace da
 	{
 		// 이동
 		math::Vector3 retPosition = mProjectileTransform->GetPosition();
-		retPosition *= mProjectileDir * (float)Time::DeltaTime();
+		retPosition *= mProjectileTransform->Up() * (float)Time::DeltaTime();
 		mProjectileTransform->SetPosition(retPosition);
 
 		bool turnOff = false;
-		if (mWeaponInfo.ProjectileStat.ProjectileRange <= mBeginPosition.Length())
+		if (mProjectileInfo.ProjectileRange <= mBeginPosition.Length())
 			turnOff = true;
-		if (mWeaponInfo.ProjectileStat.ProjectileCollision)
+		if (mProjectileInfo.ProjectileCollision)
 			turnOff = true;
 
 		if (turnOff)
@@ -71,20 +82,18 @@ namespace da
 	}
 	void ProjectileScript::bodyProcess()
 	{
-		if (!mWeaponTransform)
-			mWeaponTransform = SceneManager::GetPlayerScript()->GetOwner()->GetTransform();
-		
-		mProjectileTransform->SetPosition(mWeaponTransform->GetPosition());
+		if (!mCombatScript->GetOwnerScript()->GetCreatureTransform())
+			mProjectileTransform->SetPosition(mCombatScript->GetOwnerScript()->GetCreatureTransform()->GetPosition());
 		outOfTime();
 	}
 	void ProjectileScript::outOfTime()
 	{
 		// 활성화 되고
-		if (mWeaponInfo.ProjectileStat.ProjectileActive)
+		if (mProjectileInfo.ProjectileActive)
 		{
-			mWeaponInfo.ProjectileStat.ProjectileAccumulate += (float)Time::DeltaTime();
+			mProjectileInfo.ProjectileValidAccumulateTime += (float)Time::DeltaTime();
 			// 유지시간을 넘기면
-			if (mWeaponInfo.ProjectileStat.ProjectileAccumulate >= mWeaponInfo.ProjectileStat.ProjectileValidTime)
+			if (mProjectileInfo.ProjectileValidAccumulateTime >= mProjectileInfo.ProjectileValidTime)
 			{
 				ClearProjectile();
 			}
@@ -93,9 +102,9 @@ namespace da
 
 	void ProjectileScript::ClearProjectile()
 	{
-		mWeaponInfo.ProjectileStat.ProjectileAccumulate = 0.0f;
-		mWeaponInfo.ProjectileStat.ProjectileCollision = false;
-		mWeaponInfo.ProjectileStat.ProjectileActive = false;
+		mProjectileInfo.ProjectileValidAccumulateTime = 0.0f;
+		mProjectileInfo.ProjectileCollision = false;
+		mProjectileInfo.ProjectileActive = false;
 		GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
 	}
 
@@ -104,21 +113,21 @@ namespace da
 		if (enums::eLayerType::Boss == other->GetOwner()->GetLayerType()
 			&& other->IsBody())
 		{
-			mWeaponInfo.ProjectileStat.ProjectileCollision = true;
+			mProjectileInfo.ProjectileCollision = true;
 			GameObject* creatureObj = other->GetOwner();
 			SkellBossScript* bossScript = creatureObj->GetComponent<SkellBossScript>();
 			// 보스 피격 호출
-			mWeaponScript->CallHitEffect(bossScript->GetBossTransform()->GetPosition());
+			mCombatScript->CallHitEffect(bossScript->GetBossTransform()->GetPosition());
 			SceneManager::GetMainCameraScript()->SetOscillation(120.0f, 0.1250f);
 		}
 		if (enums::eLayerType::Monster == other->GetOwner()->GetLayerType()
 			&& other->IsBody())
 		{
-			mWeaponInfo.ProjectileStat.ProjectileCollision = true;
+			mProjectileInfo.ProjectileCollision = true;
 			GameObject* creatureObj = other->GetOwner();
 			CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
 			// 이펙트 호출
-			mWeaponScript->CallHitEffect(creatureScript->GetCreatureTransform()->GetPosition());
+			mCombatScript->CallHitEffect(creatureScript->GetCreatureTransform()->GetPosition());
 			SceneManager::GetMainCameraScript()->SetOscillation(120.0f, 0.1250f);
 
 			// 최종 피해량
@@ -126,8 +135,20 @@ namespace da
 
 
 			// 피격 호출
+			creatureScript->OnDamaged(totalDamage);			
+		}
+		if (enums::eLayerType::Playable == other->GetOwner()->GetLayerType()
+			&& other->IsBody())
+		{
+			mProjectileInfo.ProjectileCollision = true;
+			GameObject* creatureObj = other->GetOwner();
+			CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
+
+			// 최종 피해량
+			float totalDamage = 5.0f;
+
+			// 피격 호출
 			creatureScript->OnDamaged(totalDamage);
-			
-		}		
+		}
 	}
 }

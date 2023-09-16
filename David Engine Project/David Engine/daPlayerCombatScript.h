@@ -21,8 +21,8 @@ namespace da
 
 #pragma region Initialize & Get
 	public:		
-		void AddEffectObject(GameObject* object);
-		void AddProjectileObject(GameObject* object);
+		virtual void AddEffectObject(GameObject* object) override;
+		virtual void AddProjectileObject(GameObject* object) override;
 
 #pragma endregion
 
@@ -37,6 +37,9 @@ namespace da
 	private:
 		virtual void updateWeaponRotate() override;
 #pragma endregion
+
+	private:
+		virtual void attackProjectile() override;
 
 	private:
 		std::shared_ptr<Texture>			mWeaponTexture;

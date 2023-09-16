@@ -11,8 +11,8 @@
 
 #define PLAYER_EFFECT_POOL 20
 #define WEAPON_EFFECT_POOL 5
-#define PLAYER_PROJECTILE_POOL 30
-
+#define PLAYER_PROJECTILE_POOL 15
+#define MONSTER_PROJECTILE_POOL 5
 namespace da::objects
 {
 #pragma region Basic GameObjects Func
@@ -157,9 +157,17 @@ namespace da::objects
 		// weapon 세팅
 		GameObject* enemyWeaponObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Monster, L"AnimationMaterial");
 		enemyObject->AddChildObject(enemyWeaponObj);
-		MonsterCombatScript* enemyWeaponScript = enemyWeaponObj->AddComponent<MonsterCombatScript>();
+		SkelCombatScript* enemyWeaponScript = enemyWeaponObj->AddComponent<SkelCombatScript>();
 		monsterScript->SetEnemyWeaponScript(enemyWeaponScript);
-		enemyWeaponScript->SetOwnerScript(monsterScript);
+		enemyWeaponScript->AddOwnerScript(monsterScript);
+		for (int index = 0; index < MONSTER_PROJECTILE_POOL; index++)
+		{
+			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::MonsterProjectile, L"ProjectileMaterial");
+			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
+			enemyWeaponScript->AddProjectileObject(gameObject);
+			enemyObject->AddChildObject(gameObject);
+		}
+
 
 		// life Bar 추가해야함
 		GameObject* enemyLifeObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Monster, L"CreatureLifeBarMaterial");

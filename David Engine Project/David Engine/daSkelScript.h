@@ -20,8 +20,7 @@ namespace da
 
 #pragma region Common Func
 	private:
-		void calcMonsterDir();
-		void visualUpdate();
+		void calcTargetDir();
 		void lifeCheck();
 #pragma endregion
 

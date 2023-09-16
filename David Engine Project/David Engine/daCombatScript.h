@@ -38,19 +38,19 @@ namespace da
 #pragma region update Transform & Render & Condition
 	protected:
 		bool isLeft() { if (0 >= mOwnerDir.x) return true; else return false; }
-		void updateReverseRenderer() { bool value = isLeft(); mCombatRenderer->SetReverse(value); }
+		void updateReverseRenderer();
 		void updateWeaponPosition();
 		virtual void updateWeaponRotate() {} // 상속해서 만드세요
 
 		void updateAttackCoolDown(); // 공격 스텟 정보로 쿨다운 적용하기
 #pragma endregion
 
-#pragma region Attack func
+#pragma region Attack func (DoAttack 에서 구현하기)
 	protected:
 		// 공격 스텟 정보로 이펙트 및 투사체 호출
-		void attackEffect();			// 공격 이펙트 세팅		
-		void attackProjectile();		// 공격 투사체 세팅
-		void attackPlay();				// 무기 이미지 재생
+		void attackEffect();				// 공격 이펙트 세팅		
+		virtual void attackProjectile() {}	// 공격 투사체 세팅
+		void attackPlay();					// 무기 이미지 재생
 		
 #pragma endregion
 	public:
@@ -72,7 +72,7 @@ namespace da
 	protected:
 		std::wstring					mEffectName;
 		math::Vector3					mEffectScale;
-		math::Vector2					mProjectileScale;
+		math::Vector2					mProjectileSize;
 		
 	protected:
 		float							mEffectAngle;

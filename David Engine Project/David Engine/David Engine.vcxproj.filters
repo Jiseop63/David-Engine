@@ -165,9 +165,6 @@
     <ClInclude Include="daPlayerEffectScript.h">
       <Filter>Objects\Creature\Player</Filter>
     </ClInclude>
-    <ClInclude Include="daMonsterCombatScript.h">
-      <Filter>Objects\Creature\Monster\Base</Filter>
-    </ClInclude>
     <ClInclude Include="daSkelScript.h">
       <Filter>Objects\Creature\Monster\Skel</Filter>
     </ClInclude>
@@ -206,6 +203,9 @@
     </ClInclude>
     <ClInclude Include="daCombatScript.h">
       <Filter>Objects\Creature\1 Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="daSkelCombatScript.h">
+      <Filter>Objects\Creature\Monster\Skel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -281,9 +281,6 @@
     <ClCompile Include="daAttackEffectScript.cpp">
       <Filter>Objects\Creature\Player</Filter>
     </ClCompile>
-    <ClCompile Include="daMonsterCombatScript.cpp">
-      <Filter>Objects\Creature\Monster\Base</Filter>
-    </ClCompile>
     <ClCompile Include="daSkelScript.cpp">
       <Filter>Objects\Creature\Monster\Skel</Filter>
     </ClCompile>
@@ -322,6 +319,9 @@
     </ClCompile>
     <ClCompile Include="daCombatScript.cpp">
       <Filter>Objects\Creature\1 Combat</Filter>
+    </ClCompile>
+    <ClCompile Include="daSkelCombatScript.cpp">
+      <Filter>Objects\Creature\Monster\Skel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

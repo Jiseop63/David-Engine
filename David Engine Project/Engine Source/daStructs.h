@@ -62,21 +62,23 @@ namespace da::structs
 	};
 	struct sProjectileStat
 	{
+		da::enums::eProjectileType	ProjectileType;
+		float						ProjectileAngle;
+		float						ProjectileCenterPadding;
+		float						ProjectileValidTime;
+		float						ProjectileValidAccumulateTime;
+		float						ProjectileRange;
 		bool						ProjectileActive;
 		bool						ProjectileCollision;
-		float						ProjectileRange;
-		float						ProjectileValidTime;
-		float						ProjectileAccumulate;
-		float						ProjectileCenterPadding;
-		da::enums::eProjectileType	ProjectileType;
 		sProjectileStat()
-			: ProjectileActive(false)
-			, ProjectileCollision(false)
-			, ProjectileRange(0.0f)
-			, ProjectileValidTime(0.0f)
-			, ProjectileAccumulate(0.0f)
+			: ProjectileType(enums::eProjectileType::Melee)
+			, ProjectileAngle(0.0f)
 			, ProjectileCenterPadding(0.0f)
-			, ProjectileType(enums::eProjectileType::Melee)
+			, ProjectileValidTime(0.0f)
+			, ProjectileValidAccumulateTime(0.0f)
+			, ProjectileRange(0.0f)
+			, ProjectileActive(false)
+			, ProjectileCollision(false)
 		{}
 	};
 	struct sWeaponInfo

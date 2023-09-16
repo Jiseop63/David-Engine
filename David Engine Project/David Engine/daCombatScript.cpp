@@ -20,7 +20,7 @@ namespace da
 		, mWeaponInfo(nullptr)
 		, mEffectName()
 		, mEffectScale(math::Vector3::One)
-		, mProjectileScale(math::Vector3::One)
+		, mProjectileSize(math::Vector2::One)
 		, mEffectAngle(0.0f)
 		, mHitEffectAngle(0.0f)
 		, mWeaponAttacked(false)
@@ -72,12 +72,19 @@ namespace da
 	//	}
 	//}
 
+	void CombatScript::updateReverseRenderer()
+	{
+		mOwnerDir = mOwnerScript->GetCreatureDir(); 
+		bool value = isLeft();
+		mCombatRenderer->SetReverse(value);
+	}
+
 	void CombatScript::updateWeaponPosition()
 	{
 		// 플레이어 위치 가져오기
-		math::Vector3 playerPosition = mOwnerScript->GetCreatureTransform()->GetPosition();
+		math::Vector3 ownerPosition = mOwnerScript->GetCreatureTransform()->GetPosition();
 		// 내 위치에 적용하기
-		mCombatTransform->SetPosition(playerPosition);
+		mCombatTransform->SetPosition(ownerPosition);
 	}
 	void CombatScript::updateAttackCoolDown()
 	{
@@ -104,21 +111,6 @@ namespace da
 		effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 		effect->PlayEffect(mEffectName);
 	}
-	void CombatScript::attackProjectile()
-	{
-		// 유효한 객체 가져오기
-		ProjectileScript* projectile = callProjectile();
-		// 세팅 해주기
-		math::Vector3 ownerDir(mOwnerDir.x, mOwnerDir.y, 0.0f);
-		projectile->SetProjectileRotation(math::Vector3(0.0f, 0.0f, mEffectAngle - 1.570f));
-		projectile->SetProjectilePosition(mCombatTransform->GetPosition() + (ownerDir * mWeaponInfo->ProjectileStat.ProjectileCenterPadding));
-		projectile->SetBeginProjectile(mCombatTransform->GetPosition());
-		projectile->SetProjectileCenter(mOwnerDir * mWeaponInfo->ProjectileStat.ProjectileCenterPadding);
-		projectile->SetProjectileSize(mProjectileScale);
-		projectile->SetProjectileType(mWeaponInfo->ProjectileStat.ProjectileType);
-		projectile->SetWeaponProjectile(*mWeaponInfo);
-		projectile->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-	}
 	void CombatScript::attackPlay()
 	{
 		// combat 클래스에서는 일단 이렇게 만들고, 상속받은 객체의 weapon정보로 진행될것
@@ -126,7 +118,7 @@ namespace da
 		if (mWeaponInfo->IsAnimationType)
 		{
 			// Play animation 
-			mCombatAnimator->PlayAnimation(mWeaponInfo->AnimationName);	// 애니메이션 호출
+			mCombatAnimator->PlayAnimation(mWeaponInfo->AnimationName, false);	// 애니메이션 호출
 		}
 		else
 		{

@@ -28,7 +28,7 @@ namespace da
 		// mActiveArmour = GameDataManager::GetActiveArmour();
 		// = SceneManager::GetPlayerScript();
 
-		mWeaponInfo = new structs::sWeaponInfo;
+		mWeaponInfo = new structs::sWeaponInfo();
 		EquipWeapon();
 		int a = 0;
 		// 초기화 및 관련 객체 등록해주기
@@ -48,8 +48,6 @@ namespace da
 
 	void PlayerCombatScript::updateWeaponRotate()
 	{
-		// # 플레이어 방향 가져오기
-		mOwnerDir = mOwnerScript->GetCreatureDir();
 		// # 내 위치 가져오기
 		math::Vector3 myPosition = mCombatTransform->GetPosition();
 
@@ -95,8 +93,23 @@ namespace da
 		myPosition.x -= mOwnerDir.x * 0.050f;
 		myPosition.y -= mOwnerDir.y * 0.050f;
 		// 변경된 값을 Weapon Transform에 적용하기
+		mWeaponInfo->ProjectileStat.ProjectileAngle = mEffectAngle - 1.570f;
 		mCombatTransform->SetRotation(math::Vector3(0.0f, 0.0f, angle));
 		mCombatTransform->SetPosition(myPosition);
+	}
+	void PlayerCombatScript::attackProjectile()
+	{
+		// 유효한 객체 가져오기
+		ProjectileScript* projectile = callProjectile();
+
+		// 초기화 데이터 세팅
+		mWeaponInfo->ProjectileStat.ProjectileActive = true;
+		mWeaponInfo->ProjectileStat.ProjectileValidAccumulateTime = 0.0f;
+		
+		projectile->SetProjectileInfo(mWeaponInfo->ProjectileStat);
+		projectile->SetProjectileSize(mProjectileSize);
+
+		projectile->OnActive();
 	}
 #pragma endregion
 #pragma region Initialize & Get Script
@@ -109,7 +122,7 @@ namespace da
 	void PlayerCombatScript::AddProjectileObject(GameObject* object)
 	{
 		ProjectileScript* weaponProjectile = object->AddComponent<ProjectileScript>();
-		weaponProjectile->SetWeaponScript(this);
+		weaponProjectile->SetCombatScript(this);
 		mCombatProjectiles.push_back(weaponProjectile);
 	}
 #pragma endregion
@@ -122,15 +135,19 @@ namespace da
 		case enums::eWeaponName::Default:
 		{
 			// 무기 정보 세팅
+			mWeaponInfo->IsAnimationType = false;
 			mWeaponInfo->AttackStat.AttackDelayTime = 0.450f;
 			mWeaponInfo->AttackStat.AttackDelayAccumulateTime = 0.0f;
 			mWeaponInfo->AttackStat.AtaackDamage = 5.0f;
+			
 			mWeaponInfo->ProjectileStat.ProjectileValidTime = 0.250f;
 			mWeaponInfo->ProjectileStat.ProjectileCenterPadding = 0.750f;
 			mWeaponInfo->ProjectileStat.ProjectileRange = 3.5f;
-			mProjectileScale = math::Vector2(2.50f, 1.750f);
+			mProjectileSize = math::Vector2(2.50f, 1.750f);
+
 			mCombatTransform->SetScale(math::Vector3(0.090f * 4.0f, 0.440f * 4.0f, 1.0f));
 			mWeaponTexture = Resources::Find<Texture>(L"LongSwordTestTexture");
+
 			mEffectName = L"GreatSwing";
 			mEffectScale = math::Vector3(2.50f, 2.50f, 1.0f);
 
@@ -141,13 +158,14 @@ namespace da
 		case enums::eWeaponName::LongSword:
 		{
 			// 무기 정보 세팅
+			mWeaponInfo->IsAnimationType = false;
 			mWeaponInfo->AttackStat.AttackDelayTime = 0.450f;
 			mWeaponInfo->AttackStat.AttackDelayAccumulateTime = 0.0f;
 			mWeaponInfo->AttackStat.AtaackDamage = 5.0f;
 			mWeaponInfo->ProjectileStat.ProjectileValidTime = 0.250f;
 			mWeaponInfo->ProjectileStat.ProjectileCenterPadding = 0.750f;
 			mWeaponInfo->ProjectileStat.ProjectileRange = 3.5f;
-			mProjectileScale = math::Vector2(2.50f, 1.750f);
+			mProjectileSize = math::Vector2(2.50f, 1.750f);
 			mCombatTransform->SetScale(math::Vector3(0.090f * 4.0f, 0.440f * 4.0f, 1.0f));
 			mWeaponTexture = Resources::Find<Texture>(L"LongSwordTestTexture");
 			mEffectName = L"GreatSwing";
@@ -165,9 +183,9 @@ namespace da
 	{
 		if (mWeaponInfo->AttackStat.AttackReady)
 		{
-			CombatScript::attackEffect();
-			CombatScript::attackProjectile();
 			CombatScript::attackPlay();
+			CombatScript::attackEffect();
+			attackProjectile();
 			mWeaponInfo->AttackStat.AttackReady = false;
 		}
 	}

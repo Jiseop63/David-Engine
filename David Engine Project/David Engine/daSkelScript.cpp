@@ -8,7 +8,7 @@
 #include "daResources.h"
 #include "daGameObject.h"
 
-#include "daMonsterCombatScript.h"
+#include "daSkelCombatScript.h"
 #include "daEffectEnemyScript.h"
 #include "daPlayerScript.h"
 
@@ -89,7 +89,6 @@ namespace da
 	void SkelScript::Update()
 	{
 		skelFSM();
-		visualUpdate();
 		lifeCheck();
 	}
 	void SkelScript::LateUpdate()
@@ -100,7 +99,7 @@ namespace da
 
 
 #pragma region Common Func
-	void SkelScript::calcMonsterDir()
+	void SkelScript::calcTargetDir()
 	{
 		math::Vector3 skelPosition = mCreatureTransform->GetPosition();
 
@@ -109,11 +108,6 @@ namespace da
 			mCreatureDir = -math::Vector2::UnitX;
 		else
 			mCreatureDir = math::Vector2::UnitX;
-	}
-	void SkelScript::visualUpdate()
-	{
-		mMonsterCombatScript->SetWeaponTransform(mCreatureTransform->GetPosition());
-		reverseTexture();
 	}
 	void SkelScript::lifeCheck()
 	{
@@ -165,7 +159,7 @@ namespace da
 	void SkelScript::trackingPlayer()
 	{
 		// 방향 구하기		
-		calcMonsterDir();
+		calcTargetDir();
 
 		// 이동하기 *이동하기전에 벽 충돌 방향 확인하는 코드 필요함
 		Collider2D::eWallCollisionState wallCollisionState = mCreatureBodyCollider->IsWallCollision();	// 벽 충돌 체크
@@ -178,29 +172,21 @@ namespace da
 
 		// 벽 충돌 방향에 따른 이동 적용
 		if (0 <= mCreatureDir.x)
-		{
-			moveRight();
-		}
+			moveRight(); 
 		else
-		{
 			moveLeft();
-		}
-
 	}
 	void SkelScript::findingPlayer()
 	{
 		// 플레이어가 인지범위 내에 있다면 or 없다면
 		if (mDetectPlayer)
-		{
 			mChaseDurationDecay = mChaseDurationTime;
-		}
 		else
 		{
 			mChaseDurationDecay -= (float)Time::DeltaTime();
 			if (0.0f >= mChaseDurationDecay)
 			{
 				mChaseDurationDecay = mChaseDurationTime;
-
 				ChangeState(eMonsterState::Idle);
 			}
 		}
@@ -248,7 +234,7 @@ namespace da
 		if (!mAttackProgress)
 		{
 			mCreatureAnimator->PlayAnimation(L"SkelIdle");	// 애니메이션 호출
-			mMonsterCombatScript->DoAttack();				// 공격 기능 호출
+			mMonsterCombatScript->ToDoAttack();				// 공격 기능 호출
 			mAttackProgress = true;							// 다음 진행으로 넘기기
 		}
 	}

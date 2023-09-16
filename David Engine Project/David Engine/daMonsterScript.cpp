@@ -2,7 +2,7 @@
 #include "daGameObject.h"
 #include "daCreatureLifebarScript.h"
 #include "daEffectEnemyScript.h"
-#include "daMonsterCombatScript.h"
+#include "daCombatScript.h"
 
 namespace da
 {
@@ -31,7 +31,7 @@ namespace da
 	}
 
 #pragma region Init other script
-	void MonsterScript::SetEnemyWeaponScript(MonsterCombatScript* creature)
+	void MonsterScript::SetEnemyWeaponScript(CombatScript* creature)
 	{
 		mMonsterCombatScript = creature;
 	}
