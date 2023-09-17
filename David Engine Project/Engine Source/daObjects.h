@@ -10,9 +10,12 @@
 #include "daObjectsFastIncludeHeader.h"
 
 #define PLAYER_EFFECT_POOL 20
-#define WEAPON_EFFECT_POOL 5
 #define PLAYER_PROJECTILE_POOL 15
-#define MONSTER_PROJECTILE_POOL 5
+#define PLAYER_WEAPON_EFFECT_POOL 15
+
+#define MONSTER_PROJECTILE_POOL 15
+#define MONSTER_WEAPON_EFFECT_POOL 15
+
 namespace da::objects
 {
 #pragma region Basic GameObjects Func
@@ -120,7 +123,7 @@ namespace da::objects
 		PlayerCombatScript* weaponScript = playerScript->SetWeaponObject(weaponObject);
 
 		// weapon effect 세팅
-		for (int index = 0; index < WEAPON_EFFECT_POOL; index++)
+		for (int index = 0; index < PLAYER_WEAPON_EFFECT_POOL; index++)
 		{
 			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
 			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
@@ -139,15 +142,15 @@ namespace da::objects
 		return player;
 	}
 
-	template <typename T>
-	static T* InstantiateMonster(Scene* scene)
+	static SkelScript* InstantiateSkel(Scene* scene)
 	{
 		// enemyObject 추가
 		GameObject* enemyObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Monster, L"AnimationMaterial");
+		enemyObject->SetName(L"SkelObject");
 		// MonsterScript 추가
-		T* enemyScript = enemyObject->AddComponent<T>();
+		SkelScript* enemyScript = enemyObject->AddComponent<SkelScript>();
 		MonsterScript* monsterScript = dynamic_cast<MonsterScript*>(enemyScript);
-
+		enemyScript->SetName(L"SkelScript");
 		// Effect 추가
 		GameObject* effectObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
 		enemyObject->AddChildObject(effectObject);
@@ -156,6 +159,7 @@ namespace da::objects
 
 		// weapon 세팅
 		GameObject* enemyWeaponObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Monster, L"AnimationMaterial");
+		enemyWeaponObj->SetName(L"SkelWeaponScript");
 		enemyObject->AddChildObject(enemyWeaponObj);
 		SkelCombatScript* enemyWeaponScript = enemyWeaponObj->AddComponent<SkelCombatScript>();
 		monsterScript->SetEnemyWeaponScript(enemyWeaponScript);
@@ -168,10 +172,61 @@ namespace da::objects
 			enemyObject->AddChildObject(gameObject);
 		}
 
+		// life Bar 추가해야함
+		GameObject* enemyLifeObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Monster, L"CreatureLifeBarMaterial");
+		enemyLifeObj->SetName(L"SkelLifeBarObject");
+		CreatureLifebarScript* creatureLifeBarScript = enemyLifeObj->AddComponent<CreatureLifebarScript>();
+		creatureLifeBarScript->SetName(L"SkelLifeBarScript");
+		monsterScript->SetCreatureLifeScript(creatureLifeBarScript);
+		creatureLifeBarScript->SetValue(&monsterScript->GetCreatureStat()->MaxHP, &monsterScript->GetCreatureStat()->CurHP);
+		enemyLifeObj->GetTransform()->SetScale(1.0f, 0.250f, 1.0f);
+
+		return enemyScript;
+	}
+	static BansheeScript* InstantiateBanshee(Scene* scene)
+	{
+		// enemyObject 추가
+		GameObject* enemyObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Monster, L"AnimationMaterial");
+		enemyObject->SetName(L"BansheeObject");
+		// MonsterScript 추가
+		BansheeScript* enemyScript = enemyObject->AddComponent<BansheeScript>();
+		enemyScript->SetName(L"BansheeScript");
+		MonsterScript* monsterScript = dynamic_cast<MonsterScript*>(enemyScript);
+
+		// Effect 추가
+		GameObject* effectObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
+		enemyObject->AddChildObject(effectObject);
+		effectObject->SetObjectState(GameObject::eObjectState::Inactive);
+		monsterScript->AddEffectObject(effectObject);
+
+		// weapon 세팅
+		GameObject* enemyWeaponObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Monster, L"AnimationMaterial");
+		enemyWeaponObj->SetName(L"BansheeWeaponScript");
+		enemyObject->AddChildObject(enemyWeaponObj);
+		BansheeCombatScript* enemyWeaponScript = enemyWeaponObj->AddComponent<BansheeCombatScript>();
+		monsterScript->SetEnemyWeaponScript(enemyWeaponScript);
+		enemyWeaponScript->AddOwnerScript(monsterScript);
+		for (int index = 0; index < MONSTER_WEAPON_EFFECT_POOL; index++)
+		{
+			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
+			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
+			enemyWeaponScript->AddEffectObject(gameObject);
+			enemyObject->AddChildObject(gameObject);
+		}
+		for (int index = 0; index < MONSTER_PROJECTILE_POOL; index++)
+		{
+			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::MonsterProjectile, L"ProjectileMaterial");
+			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
+			enemyWeaponScript->AddProjectileObject(gameObject);
+			enemyObject->AddChildObject(gameObject);
+		}
+
 
 		// life Bar 추가해야함
 		GameObject* enemyLifeObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Monster, L"CreatureLifeBarMaterial");
+		enemyLifeObj->SetName(L"BansheeLifeBarObject");
 		CreatureLifebarScript* creatureLifeBarScript = enemyLifeObj->AddComponent<CreatureLifebarScript>();
+		creatureLifeBarScript->SetName(L"BansheeLifeBarScript");
 		monsterScript->SetCreatureLifeScript(creatureLifeBarScript);
 		creatureLifeBarScript->SetValue(&monsterScript->GetCreatureStat()->MaxHP, &monsterScript->GetCreatureStat()->CurHP);
 		enemyLifeObj->GetTransform()->SetScale(1.0f, 0.250f, 1.0f);
@@ -189,21 +244,16 @@ namespace da::objects
 		return enemyScript;
 	}
 
-	// 이건 안씀
-	static GameObject* InstantiateSkel(Scene* scene)
-	{
-		GameObject* enemyObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Monster, L"AnimationMaterial");
-	}
-
 	static GameObject* InstantiateLandObject(Scene* scene, math::Vector3 location, math::Vector3 scale)
 	{
 		GameObject* obj = new GameObject();
 		obj->SetLayerType(enums::eLayerType::Land);
-		obj->SetName(L"LandCollider");
+		obj->SetName(L"LandObject");
 		Layer& myLayer = scene->GetLayer(enums::eLayerType::Land);
 		myLayer.AddGameObject(obj);
 
 		Collider2D* collider = obj->AddComponent<Collider2D>();
+		collider->SetName(L"LandCollider");
 		collider->SetDetectionType(Collider2D::eDetectionType::Env);
 		obj->Initialize();
 
@@ -218,11 +268,12 @@ namespace da::objects
 	{
 		GameObject* obj = new GameObject();
 		obj->SetLayerType(enums::eLayerType::Platform);
-		obj->SetName(L"PlatformCollider");
+		obj->SetName(L"PlatformObject");
 		Layer& myLayer = scene->GetLayer(enums::eLayerType::Platform);
 		myLayer.AddGameObject(obj);
 
 		Collider2D* collider = obj->AddComponent<Collider2D>();
+		collider->SetName(L"PlatformCollider");
 		collider->SetDetectionType(Collider2D::eDetectionType::Env);
 		obj->Initialize();
 

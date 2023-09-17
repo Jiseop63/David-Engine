@@ -7,6 +7,7 @@ namespace da
 	Component::Component(eComponentType type)
 		: mComponentType(type)
 		, mOwner(nullptr)
+		, mUsing(true)
 	{
 	}
 	Component::~Component()

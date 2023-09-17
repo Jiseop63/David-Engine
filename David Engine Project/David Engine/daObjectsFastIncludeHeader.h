@@ -50,8 +50,11 @@
 
 // Monster
 #include "daMonsterScript.h"
-#include "daSkelCombatScript.h"
-#include "daSkelScript.h"
+#include "daFlyingMonsterScript.h"
 #include "daCreatureLifebarScript.h"
+#include "daSkelScript.h"
+#include "daSkelCombatScript.h"
+#include "daBansheeScript.h"
+#include "daBansheeCombatScript.h"
 
 #include "daSkellBossScript.h"

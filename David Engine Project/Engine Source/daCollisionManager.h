@@ -30,6 +30,7 @@ namespace da
 	private:
 		static bool RectToRect(Collider2D* left, Collider2D* right);
 		static bool CircleToCircle(Collider2D* left, Collider2D* right);
+		static bool RectToCircle(Collider2D* rect, Collider2D* circle);
 
 	private:
 		static std::bitset<LAYER_MAX> mCollisionMatrix[LAYER_MAX];

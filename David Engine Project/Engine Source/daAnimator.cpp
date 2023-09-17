@@ -27,6 +27,8 @@ namespace da
 	}
 	void Animator::LateUpdate()
 	{
+		if (!mUsing)
+			return;
 		if (!mActiveAnimation)
 			return;
 		// 애니메이션에 있는 이벤트 가져오기

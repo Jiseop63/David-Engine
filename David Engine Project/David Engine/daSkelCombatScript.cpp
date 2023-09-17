@@ -50,9 +50,6 @@ namespace da
 		mWeaponInfo->ProjectileStat.ProjectileAngle = -1.570f;
 
 	}
-	void SkelCombatScript::Update()
-	{
-	}
 	void SkelCombatScript::LateUpdate()
 	{
 		CombatScript::updateWeaponPosition();

@@ -1,5 +1,5 @@
 #pragma once
-#include "daFlyingMonsterScript.h"
+#include "daMonsterScript.h"
 
 namespace da
 {
@@ -9,7 +9,7 @@ namespace da
 		Attack,
 		Dead,
 	};
-	class BansheeScript : public FlyingMonsterScript
+	class BansheeScript : public MonsterScript
 	{
 	public:
 		BansheeScript();
@@ -22,6 +22,8 @@ namespace da
 #pragma region Spawn
 		// 초기 위치와 스텟 정하기
 		// 등장 이펙트? 애니메이션? 진행하기
+
+		void retIdle();
 #pragma endregion
 
 #pragma region Common Func
@@ -72,5 +74,7 @@ namespace da
 		float	mReadyDurationTime;
 		float	mReadyDurationDecay;
 #pragma endregion
+
+		bool	mIsAttacked;
 	};
 }

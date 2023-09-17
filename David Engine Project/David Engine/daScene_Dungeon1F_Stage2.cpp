@@ -223,18 +223,30 @@ namespace da
 	{
 		// test enemy
 		{
-			SkelScript* skelScript = objects::InstantiateMonster<SkelScript>(this);
+			SkelScript* skelScript = objects::InstantiateSkel(this);
 			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(3.50f, 2.0f, ObjectZ));
 		}
 		// test enemy
 		{
-			SkelScript* skelScript = objects::InstantiateMonster<SkelScript>(this);
+			SkelScript* skelScript = objects::InstantiateSkel(this);
 			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(1.50f, 2.0f, ObjectZ));
 		}
 		// test enemy
 		{
-			SkelScript* skelScript = objects::InstantiateMonster<SkelScript>(this);
+			SkelScript* skelScript = objects::InstantiateSkel(this);
 			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(-1.50f, 2.0f, ObjectZ));
+		}
+
+		// test enemy
+		{
+			BansheeScript* bansheeScript = objects::InstantiateBanshee(this);
+			bansheeScript->GetOwner()->GetTransform()->SetPosition(Vector3(-6.50f, 2.50f, ObjectZ));
+		}
+
+		// test enemy
+		{
+			BansheeScript* bansheeScript = objects::InstantiateBanshee(this);
+			bansheeScript->GetOwner()->GetTransform()->SetPosition(Vector3(6.50f, 2.50f, ObjectZ));
 		}
 	}
 }

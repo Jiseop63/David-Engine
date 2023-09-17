@@ -147,7 +147,7 @@ namespace da
 
 			mCombatTransform->SetScale(math::Vector3(0.090f * 4.0f, 0.440f * 4.0f, 1.0f));
 			mWeaponTexture = Resources::Find<Texture>(L"LongSwordTestTexture");
-			mWeaponInfo->EffectName = L"GreatSwing";
+			mWeaponInfo->ProjectileStat.EffectName = L"GreatSwing";
 			mEffectScale = math::Vector3(2.50f, 2.50f, 1.0f);
 
 			if (mWeaponTexture)
@@ -167,7 +167,7 @@ namespace da
 			mProjectileSize = math::Vector2(2.50f, 1.750f);
 			mCombatTransform->SetScale(math::Vector3(0.090f * 4.0f, 0.440f * 4.0f, 1.0f));
 			mWeaponTexture = Resources::Find<Texture>(L"LongSwordTestTexture");
-			mWeaponInfo->EffectName = L"GreatSwing";
+			mWeaponInfo->ProjectileStat.EffectName = L"GreatSwing";
 			mEffectScale = math::Vector3(2.50f, 2.50f, 1.0f);
 
 			if (mWeaponTexture)

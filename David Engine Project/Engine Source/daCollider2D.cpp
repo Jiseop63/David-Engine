@@ -45,6 +45,8 @@ namespace da
 	}
 	void Collider2D::Update()
 	{
+		if (!mUsing)
+			return;
 		// 뭐라도 하나 충돌중이면 Ground 유지하도록 하기
 		if (0 < mGroundBuffer)
 			mGrounded = true;
@@ -53,11 +55,22 @@ namespace da
 	}
 	void Collider2D::LateUpdate()
 	{
+		if (!mUsing)
+			return;
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 
 		math::Vector3 scale = tr->GetScale();
-		scale.x *= mSize.x;
-		scale.y *= mSize.y;
+		if (enums::eColliderShape::Rect== mColliderShape)
+		{
+			scale.x *= mSize.x;
+			scale.y *= mSize.y;
+		}
+		else if (enums::eColliderShape::Circle == mColliderShape)
+		{
+			scale.x *= mSize.x;
+			scale.y *= mSize.y;
+		}
+		
 
 		math::Vector3 pos = tr->GetPosition();
 		pos.x += mCenter.x;
@@ -67,7 +80,7 @@ namespace da
 		mesh.Position = pos;
 		mesh.Scale = scale;
 		mesh.Rotation = tr->GetRotation();
-		mesh.Type = enums::eColliderShape::Rect;
+		mesh.Type = mColliderShape;
 		mesh.Color = mColliderColor;
 		renderer::PushDebugMeshAttribute(mesh);
 

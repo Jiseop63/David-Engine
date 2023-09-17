@@ -61,6 +61,7 @@ namespace da::structs
 	};
 	struct sProjectileStat
 	{
+		std::wstring				EffectName;
 		da::enums::eProjectileType	ProjectileType;
 		float						ProjectileAngle;
 		float						ProjectileCenterPadding;
@@ -71,7 +72,8 @@ namespace da::structs
 		bool						ProjectileActive;
 		bool						ProjectileCollision;
 		sProjectileStat()
-			: ProjectileType(enums::eProjectileType::Melee)
+			: EffectName()
+			, ProjectileType(enums::eProjectileType::Melee)
 			, ProjectileAngle(0.0f)
 			, ProjectileCenterPadding(0.0f)
 			, ProjectileValidTime(0.0f)
@@ -86,7 +88,6 @@ namespace da::structs
 	{
 		da::enums::eWeaponName		WeaponName;
 		std::wstring				AnimationName;
-		std::wstring				EffectName;
 		bool						IsAnimationType;
 		sAttackStat					AttackStat;
 		sProjectileStat				ProjectileStat;

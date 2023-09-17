@@ -21,6 +21,7 @@ using namespace DirectX::PackedVector;
 namespace da::math
 {
     struct Vector2;
+    struct Vector3;
     struct Vector4;
     struct Matrix;
     struct Quaternion;
@@ -30,7 +31,7 @@ namespace da::math
     float daRadianToDegree(float radian) noexcept;    
     float daDegreeToRadian(float degree) noexcept;
     Vector2 daRotateVector2(const Vector2& vector, float radian) noexcept;
-
+    Vector3 daRotateVector3(const Vector3& vector, float radian) noexcept;
 
 
     //------------------------------------------------------------------------------

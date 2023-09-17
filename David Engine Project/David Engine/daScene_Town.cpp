@@ -221,13 +221,16 @@ namespace da
 	}
 	void Scene_Town::addGameObjects()
 	{
-		
 		// test enemy
 		{
-			SkelScript* skelScript = objects::InstantiateMonster<SkelScript>(this);
+			SkelScript* skelScript = objects::InstantiateSkel(this);
 			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(1.50f, 0.0f, ObjectZ));
 		}
 
-		
+		// test enemy
+		{
+			BansheeScript* bansheeScript = objects::InstantiateBanshee(this);
+			bansheeScript->GetOwner()->GetTransform()->SetPosition(Vector3(-4.50f, 0.0f, ObjectZ));
+		}
 	}
 }

@@ -32,50 +32,56 @@ namespace da
 	}
 	void BansheeScript::Initialize()
 	{
+		MonsterScript::Initialize();
 		// 컴포넌트 가져오기
-		FlyingMonsterScript::Initialize();
+		GetOwner()->SetName(L"BansheeObject");
+		SetName(L"BansheeScript");
 
-		// 충돌체 설정하기
-		// body & foot
-		{
-			mCreatureBodyCollider->SetSize(math::Vector2(0.30f, 0.40f));
-			mCreatureBodyCollider->SetCenter(math::Vector2(0.0f, -0.10f));			
-		}
-		// senser
-		{
-			mMonsterSensorCollider->SetDetectionType(Collider2D::eDetectionType::Sensor);
-			mMonsterSensorCollider->SetSize(math::Vector2(4.50f, 1.90f));
-			mMonsterSensorCollider->SetCenter(math::Vector2(0.0f, 0.450f));
-		}
-
-		// 애니메이션 설정하기
-
-		std::shared_ptr<Texture> texture = Resources::Find<Texture>(L"BansheeSpriteSheet");
-		mCreatureAnimator->Create(L"BansheeIdle", texture, math::Vector2(0.0f, 0.0f), math::Vector2(20.0f, 22.0f), 6, math::Vector2(0.0f, 0.0f), 0.1f);
-		mCreatureAnimator->Create(L"BansheeAttact", texture, math::Vector2(0.0f, 22.0f), math::Vector2(20.0f, 22.0f), 6, math::Vector2(0.0f, 0.0f), 0.1f);
-		mCreatureAnimator->PlayAnimation(L"BansheeIdle");
-
-		mPlayerScript = SceneManager::GetPlayerScript();
+		mCreatureRigidbody->ApplyComponentUsing(false);
+		mCreatureFootCollider->ApplyComponentUsing(false);
 
 
 		// 스텟 초기화
 		mCreatureStat.MaxHP = 25.0f;
 		mCreatureStat.CurHP = 25.0f;
 
-		mCreatureStat.MoveSpeed = 1.250f;
-
-		mMonsterAttackStat.AttackRange = 0.750f;
+		mMonsterAttackStat.AttackRange = 7.0f;
 		mMonsterAttackStat.AttackDelayAccumulateTime = 0.0f;
 		mMonsterAttackStat.AttackDelay = 4.0f;
 
-		mCreatureStat.MoveSpeed = 1.50f;
+		//mCreatureStat.MoveSpeed = 1.50f;
 
 		mChaseDurationTime = 1.50f;
 		mChaseDurationDecay = mChaseDurationTime;
-		mPrepareDurationTime = 0.250f;
+		mPrepareDurationTime = 1.750f;
 		mPrepareDurationDecay = mPrepareDurationTime;
-		mReadyDurationTime = 2.50f;
+		mReadyDurationTime = 7.50f;
 		mReadyDurationDecay = mReadyDurationTime;
+
+		// 충돌체 설정하기
+		// body & foot
+		{
+			mCreatureBodyCollider->SetName(L"BansheeBodyCollider");
+			mCreatureBodyCollider->SetSize(math::Vector2(0.30f, 0.40f));
+			mCreatureBodyCollider->SetCenter(math::Vector2(0.0f, -0.10f));			
+		}
+		// senser
+		{
+			mMonsterSensorCollider->SetName(L"BansheeSensorCollider");
+			mMonsterSensorCollider->SetDetectionType(Collider2D::eDetectionType::Sensor);
+			//mMonsterSensorCollider->SetColliderShapeType(enums::eColliderShape::Circle);
+			mMonsterSensorCollider->SetSize(math::Vector2(mMonsterAttackStat.AttackRange, mMonsterAttackStat.AttackRange));
+		}
+
+		// 애니메이션 설정하기
+
+		std::shared_ptr<Texture> texture = Resources::Find<Texture>(L"BansheeSpriteSheet");
+		mCreatureAnimator->Create(L"BansheeIdle", texture, math::Vector2(0.0f, 0.0f), math::Vector2(20.0f, 22.0f), 6, math::Vector2(0.0f, 0.0f), 0.1f, 60.0f);
+		mCreatureAnimator->Create(L"BansheeAttact", texture, math::Vector2(0.0f, 22.0f), math::Vector2(20.0f, 22.0f), 6, math::Vector2(0.0f, 0.0f), 0.1f, 60.0f);
+		mCreatureAnimator->PlayAnimation(L"BansheeIdle");
+		mCreatureAnimator->CompleteEvent(L"BansheeAttact") = std::bind(&BansheeScript::retIdle, this);
+
+		mPlayerScript = SceneManager::GetPlayerScript();
 	}
 	void BansheeScript::Update()
 	{
@@ -84,7 +90,11 @@ namespace da
 	}
 	void BansheeScript::LateUpdate()
 	{
-		FlyingCreatureScript::visualUpdate();
+		CreatureScript::visualUpdate();
+	}
+	void BansheeScript::retIdle()
+	{
+		mCreatureAnimator->PlayAnimation(L"BansheeIdle");
 	}
 	void BansheeScript::calcTargetDir()
 	{
@@ -136,8 +146,11 @@ namespace da
 	}
 	void BansheeScript::BansheeHandleIdle()
 	{
-		if (mDetectPlayer)
+		if (mDetectPlayer && !mIsAttacked)
+		{
 			ChangeState(eBansheeState::Attack);
+			mIsAttacked = true;
+		}
 	}
 	void BansheeScript::BansheeHandleAttack()
 	{
@@ -154,7 +167,7 @@ namespace da
 		{
 			// 사망 이펙트 실행
 			mMonsterCombatScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
-			EffectScript* effect = FlyingCreatureScript::callEffect();
+			EffectScript* effect = CreatureScript::callEffect();
 			effect->SetEffectPosition(mCreatureTransform->GetPosition() + math::Vector3(0.0f, -0.20f, 0.0f));
 			effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 			effect->PlayEffect(L"Dying");
@@ -200,8 +213,9 @@ namespace da
 		if (!mAttackProgress)
 		{
 			mCreatureAnimator->PlayAnimation(L"BansheeIdle");	// 애니메이션 호출
-			mMonsterCombatScript->ToDoAttack();				// 공격 기능 호출
-			mAttackProgress = true;							// 다음 진행으로 넘기기
+			mMonsterCombatScript->ToDoAttack();						// 공격 기능 호출
+			mAttackProgress = true;									// 다음 진행으로 넘기기
+			mIsAttacked = false;									// 애니메이션 초기화
 		}
 	}
 	void BansheeScript::readyForAttackDelay()

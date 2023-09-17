@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="daArmourScript.h" />
+    <ClInclude Include="daBansheeAttackEffect.h" />
     <ClInclude Include="daBansheeCombatScript.h" />
     <ClInclude Include="daBansheeScript.h" />
     <ClInclude Include="daButtonScript.h" />
@@ -156,6 +157,8 @@
     <ClInclude Include="daCreatureLifebarScript.h" />
     <ClInclude Include="daCreatureScript.h" />
     <ClInclude Include="daEffectEnemyScript.h" />
+    <ClInclude Include="daFlyingCreatureScript.h" />
+    <ClInclude Include="daFlyingMonsterScript.h" />
     <ClInclude Include="daMonsterScript.h" />
     <ClInclude Include="daPlayerEffectScript.h" />
     <ClInclude Include="daEffectScript.h" />
@@ -189,6 +192,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="daArmourScript.cpp" />
+    <ClCompile Include="daBansheeAttackEffect.cpp" />
     <ClCompile Include="daBansheeCombatScript.cpp" />
     <ClCompile Include="daBansheeScript.cpp" />
     <ClCompile Include="daButtonScript.cpp" />
@@ -199,6 +203,8 @@
     <ClCompile Include="daCreatureScript.cpp" />
     <ClCompile Include="daDashCountScript.cpp" />
     <ClCompile Include="daEffectEnemyScript.cpp" />
+    <ClCompile Include="daFlyingCreatureScript.cpp" />
+    <ClCompile Include="daFlyingMonsterScript.cpp" />
     <ClCompile Include="daMonsterScript.cpp" />
     <ClCompile Include="daPlayerEffectScript.cpp" />
     <ClCompile Include="daEffectScript.cpp" />

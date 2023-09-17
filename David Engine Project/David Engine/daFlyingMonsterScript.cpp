@@ -21,7 +21,7 @@ namespace da
 	{
 		FlyingCreatureScript::Initialize();
 		mMonsterSensorCollider = GetOwner()->AddComponent<Collider2D>();
-		mMonsterSensorCollider->SetColliderType(enums::eColliderShape::Circle);
+		//mMonsterSensorCollider->SetColliderShapeType(enums::eColliderShape::Circle);
 	}
 	void FlyingMonsterScript::AddEffectObject(GameObject* effectObject)
 	{

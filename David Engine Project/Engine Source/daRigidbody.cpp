@@ -40,7 +40,9 @@ namespace da
 	}
 
 	void Rigidbody::Update()
-	{		
+	{
+		if (!mUsing)
+			return;
 		mCalcVelocity = mPreviousVelocity;
 		applyGravity();
 		calculateVelocity();
@@ -54,9 +56,11 @@ namespace da
 		Vector2 gravity(0.0f, -14.80f);
 		Collider2D* footCollider = GetOwner()->GetFootCollider();
 
+		if (!footCollider)
+			return;
+
 		if (footCollider->IsGround())
-		{
-			
+		{			
 			// y 속도 제거하기
 			gravity.Normalize();
 			float dot = mCalcVelocity.Dot(gravity);

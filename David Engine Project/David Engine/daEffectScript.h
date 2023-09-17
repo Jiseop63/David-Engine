@@ -26,9 +26,9 @@ namespace da
 
 	public:
 		virtual void PlayEffect(const std::wstring name);
-		void OnActive();
+		virtual void OnActive();
 			
-	private:
+	protected:
 		void stayEffect();
 		void directionEffect();
 		void rotateEffect();
@@ -64,9 +64,9 @@ namespace da
 		structs::sProjectileStat*	mProjectileInfo;
 		math::Vector3				mBeginPosition;
 
+		eEffectMoveType				mEffectMoveType;
+		math::Vector3				mEffectDir;
 	private:
 		bool			mReverse;
-		eEffectMoveType mEffectMoveType;
-		math::Vector3	mEffectDir;
 	};
 }

@@ -108,7 +108,7 @@ namespace da
 		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, mEffectAngle - 1.570f));
 		effect->SetEffectPosition(mCombatTransform->GetPosition() + (ownerDir * mWeaponInfo->ProjectileStat.ProjectileCenterPadding));
 		effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-		effect->PlayEffect(mWeaponInfo->EffectName);
+		effect->PlayEffect(mWeaponInfo->ProjectileStat.EffectName);
 	}
 	void CombatScript::attackPlay()
 	{

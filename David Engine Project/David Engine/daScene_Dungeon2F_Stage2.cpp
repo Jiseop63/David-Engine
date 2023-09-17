@@ -163,12 +163,12 @@ namespace da
 	}
 	void Scene_Dungeon2F_Stage2::addGameObjects()
 	{
-		
-		// test enemy
-		{
-			SkelScript* skelScript = objects::InstantiateMonster<SkelScript>(this);
-			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(-0.50f, 0.0f, ObjectZ));
-		}
+		//
+		//// test enemy
+		//{
+		//	SkelScript* skelScript = objects::InstantiateSkel(this);
+		//	skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(-0.50f, 0.0f, ObjectZ));
+		//}
 
 		// skell Boss
 		{

@@ -73,9 +73,6 @@
     <Filter Include="Objects\Creature\Monster">
       <UniqueIdentifier>{a6fdd62c-9e2f-44cc-bcd0-8fa27098adaf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\Creature\Monster\Base">
-      <UniqueIdentifier>{895fa221-325a-4857-b9be-6bc1c8382217}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\Creature\Monster\Skel">
       <UniqueIdentifier>{f178a37d-bc73-4a5a-9021-f616faca9fc4}</UniqueIdentifier>
     </Filter>
@@ -93,6 +90,9 @@
     </Filter>
     <Filter Include="Objects\Creature\Monster\Banshee">
       <UniqueIdentifier>{2314c23d-a3be-43c3-bd1d-d55791fb0612}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Creature\Monster\0 Base">
+      <UniqueIdentifier>{895fa221-325a-4857-b9be-6bc1c8382217}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -175,10 +175,10 @@
       <Filter>Objects\Creature\2 Effect</Filter>
     </ClInclude>
     <ClInclude Include="daEffectEnemyScript.h">
-      <Filter>Objects\Creature\Monster\Base</Filter>
+      <Filter>Objects\Creature\Monster\0 Base</Filter>
     </ClInclude>
     <ClInclude Include="daCreatureLifebarScript.h">
-      <Filter>Objects\Creature\Monster\Base</Filter>
+      <Filter>Objects\Creature\Monster\0 Base</Filter>
     </ClInclude>
     <ClInclude Include="daSkellBossScript.h">
       <Filter>Objects\Creature\Monster\SkellBoss</Filter>
@@ -202,7 +202,7 @@
       <Filter>Objects\Creature\0 Base</Filter>
     </ClInclude>
     <ClInclude Include="daMonsterScript.h">
-      <Filter>Objects\Creature\Monster\Base</Filter>
+      <Filter>Objects\Creature\Monster\0 Base</Filter>
     </ClInclude>
     <ClInclude Include="daCombatScript.h">
       <Filter>Objects\Creature\1 Combat</Filter>
@@ -214,6 +214,15 @@
       <Filter>Objects\Creature\Monster\Banshee</Filter>
     </ClInclude>
     <ClInclude Include="daBansheeCombatScript.h">
+      <Filter>Objects\Creature\Monster\Banshee</Filter>
+    </ClInclude>
+    <ClInclude Include="daFlyingCreatureScript.h">
+      <Filter>Objects\Creature\0 Base</Filter>
+    </ClInclude>
+    <ClInclude Include="daFlyingMonsterScript.h">
+      <Filter>Objects\Creature\Monster\0 Base</Filter>
+    </ClInclude>
+    <ClInclude Include="daBansheeAttackEffect.h">
       <Filter>Objects\Creature\Monster\Banshee</Filter>
     </ClInclude>
   </ItemGroup>
@@ -297,10 +306,10 @@
       <Filter>Objects\Creature\2 Effect</Filter>
     </ClCompile>
     <ClCompile Include="daEffectEnemyScript.cpp">
-      <Filter>Objects\Creature\Monster\Base</Filter>
+      <Filter>Objects\Creature\Monster\0 Base</Filter>
     </ClCompile>
     <ClCompile Include="daCreatureLifebarScript.cpp">
-      <Filter>Objects\Creature\Monster\Base</Filter>
+      <Filter>Objects\Creature\Monster\0 Base</Filter>
     </ClCompile>
     <ClCompile Include="daSkellBossScript.cpp">
       <Filter>Objects\Creature\Monster\SkellBoss</Filter>
@@ -324,7 +333,7 @@
       <Filter>Objects\Creature\0 Base</Filter>
     </ClCompile>
     <ClCompile Include="daMonsterScript.cpp">
-      <Filter>Objects\Creature\Monster\Base</Filter>
+      <Filter>Objects\Creature\Monster\0 Base</Filter>
     </ClCompile>
     <ClCompile Include="daCombatScript.cpp">
       <Filter>Objects\Creature\1 Combat</Filter>
@@ -336,6 +345,15 @@
       <Filter>Objects\Creature\Monster\Banshee</Filter>
     </ClCompile>
     <ClCompile Include="daBansheeCombatScript.cpp">
+      <Filter>Objects\Creature\Monster\Banshee</Filter>
+    </ClCompile>
+    <ClCompile Include="daFlyingCreatureScript.cpp">
+      <Filter>Objects\Creature\0 Base</Filter>
+    </ClCompile>
+    <ClCompile Include="daFlyingMonsterScript.cpp">
+      <Filter>Objects\Creature\Monster\0 Base</Filter>
+    </ClCompile>
+    <ClCompile Include="daBansheeAttackEffect.cpp">
       <Filter>Objects\Creature\Monster\Banshee</Filter>
     </ClCompile>
   </ItemGroup>

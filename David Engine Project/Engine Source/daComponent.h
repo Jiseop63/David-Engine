@@ -16,9 +16,12 @@ namespace da
 	public:
 		GameObject* GetOwner() { return mOwner; }
 		void SetOwner(GameObject* target) { mOwner = target; }
+		void ApplyComponentUsing(bool value) { mUsing = value; }
 
+	protected:
+		bool						mUsing;
 	private:
 		const enums::eComponentType mComponentType;
-		GameObject* mOwner;
+		GameObject*					mOwner;
 	};
 }

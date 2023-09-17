@@ -18,7 +18,7 @@ namespace da
 
 #pragma region Initialize & Get
 	public:
-		void AddOwnerScript(CreatureScript* player) { mOwnerScript = player; }
+		virtual void AddOwnerScript(CreatureScript* player) { mOwnerScript = player; }
 		CreatureScript* GetOwnerScript() { return mOwnerScript; }
 
 		// 반드시 상속받아서 구현하세요
@@ -39,7 +39,7 @@ namespace da
 	protected:
 		bool isLeft() { if (0 >= mOwnerDir.x) return true; else return false; }
 		void updateReverseRenderer();
-		void updateWeaponPosition();
+		virtual void updateWeaponPosition();
 		virtual void updateWeaponRotate() {} // 상속해서 만드세요
 
 		void updateAttackCoolDown(); // 공격 스텟 정보로 쿨다운 적용하기

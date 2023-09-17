@@ -64,11 +64,14 @@ namespace da
 	{
 		// ÀÌµ¿
 		math::Vector3 retPosition = mProjectileTransform->GetPosition(); 
-		retPosition *= mProjectileTransform->Up() * (float)Time::DeltaTime(); 
+		retPosition += mProjectileInfo->ProjectileSpeed * mProjectileTransform->Up() * (float)Time::DeltaTime();
 		mProjectileTransform->SetPosition(retPosition);
 
+
+		math::Vector3 moveVector = mBeginPosition - retPosition;
+		
 		bool turnOff = false;
-		if (mProjectileInfo->ProjectileRange <= mBeginPosition.Length())
+		if (mProjectileInfo->ProjectileRange <= moveVector.Length())
 			turnOff = true;
 		if (mProjectileInfo->ProjectileCollision)
 			turnOff = true;

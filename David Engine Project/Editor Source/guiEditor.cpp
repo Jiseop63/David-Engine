@@ -26,7 +26,7 @@ namespace gui
 	da::GameDataManager gameManager;
 	void Editor::Initialize()
 	{
-		InitializeDearImgui();
+		//InitializeDearImgui();
 		InitializeObjects();
 	}
 	void Editor::Run()
@@ -63,9 +63,7 @@ namespace gui
 			}
 			renderer::debugMeshs.clear();
 		}
-
-		RenderDearImgui();
-		
+		//RenderDearImgui();
 	}
 	void Editor::Release()
 	{
@@ -86,9 +84,9 @@ namespace gui
 		}
 
 		// Cleanup
-		ImGui_ImplDX11_Shutdown();
-		ImGui_ImplWin32_Shutdown();
-		ImGui::DestroyContext();
+		//ImGui_ImplDX11_Shutdown();
+		//ImGui_ImplWin32_Shutdown();
+		//ImGui::DestroyContext();
 	}
 	void Editor::DebugRender(const da::graphics::DebugMesh& mesh)
 	{

@@ -263,4 +263,15 @@ namespace da::math
 		retVector.Normalize();
 		return retVector;
 	}
+	Vector3 daRotateVector3(const Vector3& vector, float radian) noexcept
+	{
+		Vector3 retVector;
+		float cosA = std::cos(radian);
+		float sinA = std::sin(radian);
+
+		retVector.x = vector.x * cosA - vector.y * sinA;
+		retVector.y = vector.x * sinA + vector.y * cosA;
+		retVector.Normalize();
+		return retVector;
+	}
 }

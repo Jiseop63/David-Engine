@@ -147,9 +147,9 @@ namespace da
 		// Camera setting
 		SubCameraScript* subCamScript = subCameraObj->GetComponent<SubCameraScript>();
 		subCamScript->SetMainCameraTransfrom(mainCameraObj->GetTransform());
-		AudioSource* audioSource = mainCameraObj->AddComponent<AudioSource>();
+		/*AudioSource* audioSource = mainCameraObj->AddComponent<AudioSource>();
 		audioSource->SetClip(Resources::Load<AudioClip>(L"TestSound", L"..\\Resources\\Sound\\0.mp3"));
-		audioSource->Play();
+		audioSource->Play();*/
 
 		// light - done
 		GameObject* lightObj = objects::InstantiateCommonObject

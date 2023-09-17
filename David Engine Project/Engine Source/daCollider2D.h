@@ -35,7 +35,7 @@ namespace da
 		void ChangeColliderColor(bool isCollision);
 
 	public:	
-		void SetColliderType(enums::eColliderShape type) { mColliderShape = type; }
+		void SetColliderShapeType(enums::eColliderShape type) { mColliderShape = type; }
 		enums::eColliderShape GetColliderType() { return mColliderShape; }
 		
 		void SetDetectionType(eDetectionType type);
@@ -98,8 +98,11 @@ namespace da
 		math::Vector2			mSize;
 		math::Vector2			mCenter;
 
+
+
+
 	private:
-		// condition value
+		// Creature 유형의 충돌조건 함수
 		bool					mFoot;
 		bool					mBody;
 		bool					mIsCollision;
@@ -108,6 +111,11 @@ namespace da
 		bool					mPlatformCollision;
 		eWallCollisionState		mWallCollision;		// Body Collider
 
+
+
+
+		// 경사로 이동간 충돌에서 예외처리를 위한 바닥충돌 버퍼
+	private:
 		float					mEnvRotate;
 		float					mEnvRotateBuffer;
 		math::Vector3			mEnvPositionBuffer;

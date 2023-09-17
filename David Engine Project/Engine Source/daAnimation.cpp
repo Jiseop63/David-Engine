@@ -2,6 +2,7 @@
 #include "daTime.h"
 #include "daAnimator.h"
 #include "daRenderer.h"
+#include "daGameObject.h"
 
 namespace da
 {

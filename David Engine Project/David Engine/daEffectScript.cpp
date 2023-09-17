@@ -60,10 +60,12 @@ namespace da
 	{
 		mBeginPosition = mCombatScript->GetOwnerScript()->GetCreatureTransform()->GetPosition();
 		mEffectTransform->SetPosition(mBeginPosition);
+
 		mEffectTransform->SetRotation(math::Vector3(0.0f, 0.0f, mProjectileInfo->ProjectileAngle));
 
 		mProjectileInfo->ProjectileActive = true;
 		GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+		PlayEffect(mProjectileInfo->EffectName);
 	}
 	void EffectScript::stayEffect()
 	{
