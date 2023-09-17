@@ -31,19 +31,17 @@ namespace da
 	}
 	void ProjectileScript::OnActive()
 	{
-		mCombatScript->GetOwnerScript()->GetCreatureTransform();
-
 		mBeginPosition = mCombatScript->GetOwnerScript()->GetCreatureTransform()->GetPosition();
 		mProjectileTransform->SetPosition(mBeginPosition);
-		mProjectileTransform->SetRotation(math::Vector3(0.0f, 0.0f, mProjectileInfo.ProjectileAngle));
-		mProjectileCollider->SetCenter(mCombatScript->GetOwnerScript()->GetCreatureDir() * mProjectileInfo.ProjectileCenterPadding);
+		mProjectileTransform->SetRotation(math::Vector3(0.0f, 0.0f, mProjectileInfo->ProjectileAngle));
+		mProjectileCollider->SetCenter(mCombatScript->GetOwnerScript()->GetCreatureDir() * mProjectileInfo->ProjectileCenterPadding);
 
-		mProjectileInfo.ProjectileActive = true;
+		mProjectileInfo->ProjectileActive = true;
 		GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 	}
 	void ProjectileScript::projectileProcess()
 	{
-		switch (mProjectileInfo.ProjectileType)
+		switch (mProjectileInfo->ProjectileType)
 		{
 		case da::enums::eProjectileType::Melee:
 			meleeProcess();
@@ -65,14 +63,14 @@ namespace da
 	void ProjectileScript::rangeProcess()
 	{
 		// 이동
-		math::Vector3 retPosition = mProjectileTransform->GetPosition();
-		retPosition *= mProjectileTransform->Up() * (float)Time::DeltaTime();
+		math::Vector3 retPosition = mProjectileTransform->GetPosition(); 
+		retPosition *= mProjectileTransform->Up() * (float)Time::DeltaTime(); 
 		mProjectileTransform->SetPosition(retPosition);
 
 		bool turnOff = false;
-		if (mProjectileInfo.ProjectileRange <= mBeginPosition.Length())
+		if (mProjectileInfo->ProjectileRange <= mBeginPosition.Length())
 			turnOff = true;
-		if (mProjectileInfo.ProjectileCollision)
+		if (mProjectileInfo->ProjectileCollision)
 			turnOff = true;
 
 		if (turnOff)
@@ -89,11 +87,11 @@ namespace da
 	void ProjectileScript::outOfTime()
 	{
 		// 활성화 되고
-		if (mProjectileInfo.ProjectileActive)
+		if (mProjectileInfo->ProjectileActive)
 		{
-			mProjectileInfo.ProjectileValidAccumulateTime += (float)Time::DeltaTime();
+			mProjectileInfo->ProjectileValidAccumulateTime += (float)Time::DeltaTime();
 			// 유지시간을 넘기면
-			if (mProjectileInfo.ProjectileValidAccumulateTime >= mProjectileInfo.ProjectileValidTime)
+			if (mProjectileInfo->ProjectileValidAccumulateTime >= mProjectileInfo->ProjectileValidTime)
 			{
 				ClearProjectile();
 			}
@@ -102,9 +100,9 @@ namespace da
 
 	void ProjectileScript::ClearProjectile()
 	{
-		mProjectileInfo.ProjectileValidAccumulateTime = 0.0f;
-		mProjectileInfo.ProjectileCollision = false;
-		mProjectileInfo.ProjectileActive = false;
+		mProjectileInfo->ProjectileValidAccumulateTime = 0.0f;
+		mProjectileInfo->ProjectileCollision = false;
+		mProjectileInfo->ProjectileActive = false;
 		GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
 	}
 
@@ -113,7 +111,7 @@ namespace da
 		if (enums::eLayerType::Boss == other->GetOwner()->GetLayerType()
 			&& other->IsBody())
 		{
-			mProjectileInfo.ProjectileCollision = true;
+			mProjectileInfo->ProjectileCollision = true;
 			GameObject* creatureObj = other->GetOwner();
 			SkellBossScript* bossScript = creatureObj->GetComponent<SkellBossScript>();
 			// 보스 피격 호출
@@ -123,7 +121,7 @@ namespace da
 		if (enums::eLayerType::Monster == other->GetOwner()->GetLayerType()
 			&& other->IsBody())
 		{
-			mProjectileInfo.ProjectileCollision = true;
+			mProjectileInfo->ProjectileCollision = true;
 			GameObject* creatureObj = other->GetOwner();
 			CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
 			// 이펙트 호출
@@ -140,7 +138,7 @@ namespace da
 		if (enums::eLayerType::Playable == other->GetOwner()->GetLayerType()
 			&& other->IsBody())
 		{
-			mProjectileInfo.ProjectileCollision = true;
+			mProjectileInfo->ProjectileCollision = true;
 			GameObject* creatureObj = other->GetOwner();
 			CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
 

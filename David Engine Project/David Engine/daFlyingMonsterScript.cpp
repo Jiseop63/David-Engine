@@ -1,4 +1,4 @@
-#include "daMonsterScript.h"
+#include "daFlyingMonsterScript.h"
 #include "daGameObject.h"
 #include "daCreatureLifebarScript.h"
 #include "daEffectEnemyScript.h"
@@ -6,36 +6,33 @@
 
 namespace da
 {
-	MonsterScript::MonsterScript()
+	FlyingMonsterScript::FlyingMonsterScript()
 		: mMonsterSensorCollider(nullptr)
 		, mPlayerScript(nullptr)
 		, mMonsterCombatScript(nullptr)
 		, mMonsterLifeScript(nullptr)
-		, mMonsterAttackStat{}
-		, mDetectPlayer(0.0f)
+		, mDetectPlayer(false)
 	{
 	}
-	MonsterScript::~MonsterScript()
+	FlyingMonsterScript::~FlyingMonsterScript()
 	{
 	}
-	void MonsterScript::Initialize()
+	void FlyingMonsterScript::Initialize()
 	{
-		CreatureScript::Initialize();
+		FlyingCreatureScript::Initialize();
 		mMonsterSensorCollider = GetOwner()->AddComponent<Collider2D>();
+		mMonsterSensorCollider->SetColliderType(enums::eColliderShape::Circle);
 	}
-	void MonsterScript::AddEffectObject(GameObject* effectObject)
+	void FlyingMonsterScript::AddEffectObject(GameObject* effectObject)
 	{
 		EffectEnemyScript* enemyEffect = effectObject->AddComponent<EffectEnemyScript>();
 		mEffects.push_back(enemyEffect);
 	}
-
-#pragma region Init other script
-	CreatureLifebarScript* MonsterScript::SetCreatureLifeScript(CreatureLifebarScript* creature)
+	CreatureLifebarScript* FlyingMonsterScript::SetCreatureLifeScript(CreatureLifebarScript* creature)
 	{
 		mMonsterLifeScript = creature;
-		mMonsterLifeScript->SetCreatureScript(this);
+		mMonsterLifeScript->SetFlyingCreatureScript(this);
 		mMonsterLifeScript->SetValue(&mCreatureStat.MaxHP, &mCreatureStat.CurHP);
 		return creature;
 	}
-#pragma endregion
 }

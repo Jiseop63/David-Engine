@@ -15,7 +15,8 @@
 namespace da
 {
 	SkelScript::SkelScript()
-		: mChaseDurationTime(0.0f)
+		: mMonsterActiveState(eSkulState::Idle)
+		, mChaseDurationTime(0.0f)
 		, mChaseDurationDecay(0.0f)
 		, mDistanceFromPlayer(0.0f)
 
@@ -70,7 +71,6 @@ namespace da
 		mCreatureStat.CurHP = 25.0f;
 
 		mCreatureStat.MoveSpeed = 1.250f;
-		mMonsterAttackStat.DetectRange = 2.50f;
 
 		mMonsterAttackStat.AttackRange = 0.750f;
 		mMonsterAttackStat.AttackDelayAccumulateTime = 0.0f;
@@ -112,7 +112,7 @@ namespace da
 	void SkelScript::lifeCheck()
 	{
 		if (0 >= mCreatureStat.CurHP)
-			ChangeState(eMonsterState::Dead);
+			ChangeState(eSkulState::Dead);
 	}
 #pragma endregion
 
@@ -124,16 +124,16 @@ namespace da
 	{
 		switch (mMonsterActiveState)
 		{
-		case da::eMonsterState::Idle:
+		case da::eSkulState::Idle:
 			SkelHandleIdle();
 			break;
-		case da::eMonsterState::Chase:
+		case da::eSkulState::Chase:
 			SkelHandleChase();
 			break;
-		case da::eMonsterState::Attack:
+		case da::eSkulState::Attack:
 			SkelHandleAttack();
 			break;
-		case da::eMonsterState::Dead:
+		case da::eSkulState::Dead:
 			SkelHandleDead();
 			break;
 		default:
@@ -145,7 +145,7 @@ namespace da
 	{
 		// Chace 상태로 전환
 		if (mDetectPlayer)
-			ChangeState(eMonsterState::Chase);
+			ChangeState(eSkulState::Chase);
 	}
 
 	void SkelScript::SkelHandleChase()
@@ -187,14 +187,14 @@ namespace da
 			if (0.0f >= mChaseDurationDecay)
 			{
 				mChaseDurationDecay = mChaseDurationTime;
-				ChangeState(eMonsterState::Idle);
+				ChangeState(eSkulState::Idle);
 			}
 		}
 		// 공격 범위에 도달했다면
 		if (abs(mDistanceFromPlayer) <= mMonsterAttackStat.AttackRange)
 		{
 			mChaseDurationDecay = mChaseDurationTime;
-			ChangeState(eMonsterState::Attack);
+			ChangeState(eSkulState::Attack);
 		}
 	}
 
@@ -251,7 +251,7 @@ namespace da
 				mReadyDurationDecay = mReadyDurationTime;	// 후딜 시간값 초기화
 				mPrepareAttack = false;						// 선딜 조건 초기화
 				mAttackProgress = false;					// 공격 애니메이션 호출 조건 초기화
-				ChangeState(eMonsterState::Chase);			// 상태 변경
+				ChangeState(eSkulState::Chase);			// 상태 변경
 			}
 		}
 	}
@@ -269,21 +269,21 @@ namespace da
 		mIsDead = true;
 	}
 
-	void SkelScript::ChangeState(eMonsterState state)
+	void SkelScript::ChangeState(eSkulState state)
 	{
 		mMonsterActiveState = state;
 		switch (mMonsterActiveState)
 		{
-		case da::eMonsterState::Idle:
+		case da::eSkulState::Idle:
 			mCreatureAnimator->PlayAnimation(L"SkelIdle");
 			break;
-		case da::eMonsterState::Chase:
+		case da::eSkulState::Chase:
 			mCreatureAnimator->PlayAnimation(L"SkelMove");
 			break;
-		case da::eMonsterState::Attack:
+		case da::eSkulState::Attack:
 			mCreatureAnimator->PlayAnimation(L"SkelIdle");
 			break;
-		case da::eMonsterState::Dead:
+		case da::eSkulState::Dead:
 			GetOwner()->SetObjectState(GameObject::eObjectState::Hide);
 			break;
 		default:

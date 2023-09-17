@@ -150,12 +150,6 @@ namespace renderer
 		constantBuffer[(UINT)eCBType::Collider] = new ConstantBuffer(eCBType::Collider);
 		constantBuffer[(UINT)eCBType::Collider]->Create(sizeof(ColliderCB));
 		
-		// fade
-		
-		// afterimage
-		
-		// blink
-
 		// light structed buffer
 		lightsBuffer = new StructuredBuffer();
 		lightsBuffer->Create(sizeof(LightAttribute), 2, eViewType::SRV, nullptr, true);
@@ -167,6 +161,13 @@ namespace renderer
 		// Noise
 		constantBuffer[(UINT)eCBType::Noise] = new ConstantBuffer(eCBType::Noise);
 		constantBuffer[(UINT)eCBType::Noise]->Create(sizeof(NoiseCB));
+
+		// fade
+
+		// afterimage
+
+		// blink
+
 #pragma endregion
 	}
 	void LoadShader()
@@ -500,7 +501,18 @@ namespace renderer
 		// monster
 		Resources::Load<Texture>(L"SkelSprite", L"..\\Resources\\Texture\\Monster\\Skel\\SpriteSheet.png");
 		Resources::Load<Texture>(L"EnemyGreatSword", L"..\\Resources\\Texture\\Monster\\Skel\\GreatSwordSpriteSheet.png");
+
+		Resources::Load<Texture>(L"BansheeSpriteSheet", L"..\\Resources\\Texture\\Monster\\Banshee\\BansheeSpriteSheet.png");
+		Resources::Load<Texture>(L"BansheeBulletIdle", L"..\\Resources\\Texture\\Monster\\Banshee\\BansheeBulletIdle.png");
+		Resources::Load<Texture>(L"BansheeBulletHit", L"..\\Resources\\Texture\\Monster\\Banshee\\BansheeBulletHit.png");
+		
 		Resources::Load<Texture>(L"BossSpriteSheet", L"..\\Resources\\Texture\\Scene_Dungeon2F\\SkellBossSpriteSheet.png");
+		//Resources::Load<Texture>(L"BossSpriteSheet", L"..\\Resources\\Texture\\Scene_Dungeon2F\\SkellBossSpriteSheet.png"); 투사체
+		//Resources::Load<Texture>(L"BossSpriteSheet", L"..\\Resources\\Texture\\Scene_Dungeon2F\\SkellBossSpriteSheet.png"); 레이저
+		//Resources::Load<Texture>(L"BossSpriteSheet", L"..\\Resources\\Texture\\Scene_Dungeon2F\\SkellBossSpriteSheet.png"); 칼
+		
+		
+		
 		// dungeonTexture
 		Resources::Load<Texture>(L"1FStage1Texture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\1FStage1.png");
 		Resources::Load<Texture>(L"1FStage2Texture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\1FStage2.png");

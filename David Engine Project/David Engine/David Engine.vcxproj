@@ -147,6 +147,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="daArmourScript.h" />
+    <ClInclude Include="daBansheeCombatScript.h" />
+    <ClInclude Include="daBansheeScript.h" />
     <ClInclude Include="daButtonScript.h" />
     <ClInclude Include="daCameraObject.h" />
     <ClInclude Include="daCameraScript.h" />
@@ -187,6 +189,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="daArmourScript.cpp" />
+    <ClCompile Include="daBansheeCombatScript.cpp" />
+    <ClCompile Include="daBansheeScript.cpp" />
     <ClCompile Include="daButtonScript.cpp" />
     <ClCompile Include="daCameraObject.cpp" />
     <ClCompile Include="daCameraScript.cpp" />

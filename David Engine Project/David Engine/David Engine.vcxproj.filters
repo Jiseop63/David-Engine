@@ -91,6 +91,9 @@
     <Filter Include="Objects\Creature\3 Projectile">
       <UniqueIdentifier>{9b6f2395-2724-4804-93c4-084a1d419492}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Creature\Monster\Banshee">
+      <UniqueIdentifier>{2314c23d-a3be-43c3-bd1d-d55791fb0612}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -207,6 +210,12 @@
     <ClInclude Include="daSkelCombatScript.h">
       <Filter>Objects\Creature\Monster\Skel</Filter>
     </ClInclude>
+    <ClInclude Include="daBansheeScript.h">
+      <Filter>Objects\Creature\Monster\Banshee</Filter>
+    </ClInclude>
+    <ClInclude Include="daBansheeCombatScript.h">
+      <Filter>Objects\Creature\Monster\Banshee</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -322,6 +331,12 @@
     </ClCompile>
     <ClCompile Include="daSkelCombatScript.cpp">
       <Filter>Objects\Creature\Monster\Skel</Filter>
+    </ClCompile>
+    <ClCompile Include="daBansheeScript.cpp">
+      <Filter>Objects\Creature\Monster\Banshee</Filter>
+    </ClCompile>
+    <ClCompile Include="daBansheeCombatScript.cpp">
+      <Filter>Objects\Creature\Monster\Banshee</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

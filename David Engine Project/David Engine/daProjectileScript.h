@@ -29,7 +29,7 @@ namespace da
 		void SetCombatScript(CombatScript* weapon) { mCombatScript = weapon; }
 		CombatScript* GetCombatScript() { return mCombatScript; }
 		
-		void SetProjectileInfo(structs::sProjectileStat projectileStat) { mProjectileInfo = projectileStat; }
+		void SetProjectileInfo(structs::sProjectileStat* projectileStat) { mProjectileInfo = projectileStat; }
 		void SetProjectileSize(math::Vector2 size) { mProjectileCollider->SetSize(size); }
 	public:
 		void ClearProjectile();
@@ -40,10 +40,9 @@ namespace da
 	protected:
 		Transform*					mProjectileTransform;
 		Collider2D*					mProjectileCollider;
-		Transform*					mWeaponTransform;
 		CombatScript*				mCombatScript;
 	private:
-		structs::sProjectileStat	mProjectileInfo;
+		structs::sProjectileStat*	mProjectileInfo;
 
 		math::Vector3				mBeginPosition;
 		bool						mIsCollision;

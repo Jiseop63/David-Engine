@@ -14,12 +14,11 @@ namespace da::structs
 
 	struct sMonsterAttackStat
 	{
-		float DetectRange;
 		float AttackRange;
 		float AttackDelayAccumulateTime;
 		float AttackDelay;
 		sMonsterAttackStat()
-			: DetectRange(0.0f), AttackRange(0.0f), AttackDelayAccumulateTime(0.0f), AttackDelay(0.0f)
+			: AttackRange(0.0f), AttackDelayAccumulateTime(0.0f), AttackDelay(0.0f)
 		{}
 	};
 
@@ -68,6 +67,7 @@ namespace da::structs
 		float						ProjectileValidTime;
 		float						ProjectileValidAccumulateTime;
 		float						ProjectileRange;
+		float						ProjectileSpeed;
 		bool						ProjectileActive;
 		bool						ProjectileCollision;
 		sProjectileStat()
@@ -77,6 +77,7 @@ namespace da::structs
 			, ProjectileValidTime(0.0f)
 			, ProjectileValidAccumulateTime(0.0f)
 			, ProjectileRange(0.0f)
+			, ProjectileSpeed(0.0f)
 			, ProjectileActive(false)
 			, ProjectileCollision(false)
 		{}
@@ -85,6 +86,7 @@ namespace da::structs
 	{
 		da::enums::eWeaponName		WeaponName;
 		std::wstring				AnimationName;
+		std::wstring				EffectName;
 		bool						IsAnimationType;
 		sAttackStat					AttackStat;
 		sProjectileStat				ProjectileStat;

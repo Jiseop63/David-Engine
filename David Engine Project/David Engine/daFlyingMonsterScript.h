@@ -1,24 +1,24 @@
 #pragma once
-#include "daCreatureScript.h"
+#include "daFlyingCreatureScript.h"
 
 namespace da
-{	
+{
 	class PlayerScript;
 	class EffectEnemyScript;
 	class CombatScript;
 	class CreatureLifebarScript;
-	class MonsterScript : public CreatureScript
+	class FlyingMonsterScript : public FlyingCreatureScript
 	{
 
 	public:
-		MonsterScript();
-		virtual ~MonsterScript();
+		FlyingMonsterScript();
+		virtual ~FlyingMonsterScript();
 
 		virtual void Initialize();
 
 
 	public:
-		virtual void AddEffectObject(GameObject* effectObject) override;		
+		virtual void AddEffectObject(GameObject* effectObject) override;
 		void SetEnemyWeaponScript(CombatScript* creature) { mMonsterCombatScript = creature; }
 		CreatureLifebarScript* SetCreatureLifeScript(CreatureLifebarScript* creature);
 
@@ -42,7 +42,6 @@ namespace da
 
 	protected:
 		structs::sMonsterAttackStat mMonsterAttackStat;
-		
 		bool						mDetectPlayer;
 
 	};

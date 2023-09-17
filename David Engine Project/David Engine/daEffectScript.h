@@ -6,18 +6,32 @@
 
 namespace da
 {
+	class CombatScript;
 	class EffectScript : public Script
 	{
+	public:
+		enum eEffectMoveType
+		{
+			DontMove,
+			Direction,
+			Rotate,
+		};
 	public:
 		EffectScript();
 		virtual ~EffectScript();
 
 		virtual void Initialize();
+		virtual void Update();
 		virtual void LateUpdate();
 
 	public:
 		virtual void PlayEffect(const std::wstring name);
-		virtual void retInactive() { GetOwner()->SetObjectState(GameObject::eObjectState::Inactive); }
+		void OnActive();
+			
+	private:
+		void stayEffect();
+		void directionEffect();
+		void rotateEffect();
 
 	public:
 		Transform* GetTransform() { return mEffectTransform; }
@@ -28,14 +42,31 @@ namespace da
 		math::Vector3 GetEffectRotation() { return mEffectTransform->GetRotation(); }
 		void SetEffectScale(math::Vector3 vector3) { mEffectTransform->SetScale(vector3); }
 		math::Vector3 GetEffectScale() { return mEffectTransform->GetScale(); }
+		void SetCombatScript(CombatScript* weapon) { mCombatScript = weapon; }
+		CombatScript* GetCombatScript() { return mCombatScript; }
+
 		void SetReverse(bool value) { mReverse = value; }
+
+		void SetEffectDir(math::Vector3 direction) { mEffectDir = direction; }
+		void SetEffectMoveType(eEffectMoveType moveType) { mEffectMoveType = moveType; }
+		void SetProjectileInfo(structs::sProjectileStat* projectileStat) { mProjectileInfo = projectileStat; }
+	public:
+		virtual void retInactive() { GetOwner()->SetObjectState(GameObject::eObjectState::Inactive); }
 
 	protected:
 		Transform*		mEffectTransform;
 		MeshRenderer*	mEffectRenderer;
 		Animator*		mEffectAnimator;
 
+	protected:
+		CombatScript*				mCombatScript;
+
+		structs::sProjectileStat*	mProjectileInfo;
+		math::Vector3				mBeginPosition;
+
 	private:
-		bool mReverse;
+		bool			mReverse;
+		eEffectMoveType mEffectMoveType;
+		math::Vector3	mEffectDir;
 	};
 }

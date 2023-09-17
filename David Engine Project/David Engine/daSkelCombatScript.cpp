@@ -15,7 +15,6 @@ namespace da
 {
 	SkelCombatScript::SkelCombatScript()
 		: mAttackFinished(false)
-		, mPlayerDamaged(false)
 	{
 	}
 	SkelCombatScript::~SkelCombatScript()
@@ -24,7 +23,6 @@ namespace da
 	void SkelCombatScript::Initialize()
 	{
 		CombatScript::Initialize();
-		mCombatTransform->SetScale(math::Vector3(2.50f, 2.50f, 1.0f));
 
 		// 애니메이션 & 이벤트		
 		mCombatAnimator->Create(L"EnemyGreatSwordIdle", Resources::Find<Texture>(L"EnemyGreatSword")
@@ -36,8 +34,11 @@ namespace da
 		mCombatAnimator->CompleteEvent(L"EnemyGreatSwordSwing") = std::bind(&SkelCombatScript::attackFinished, this);
 		mCombatAnimator->PlayAnimation(L"EnemyGreatSwordIdle", false);
 
-		mWeaponInfo = new structs::sWeaponInfo();
 
+		mProjectileSize = math::Vector2(1.20f, 1.40f);
+		mCombatTransform->SetScale(math::Vector3(0.510f * 4.0f, 0.490f * 4.0f, 1.0f));
+
+		mWeaponInfo = new structs::sWeaponInfo();
 		mWeaponInfo->IsAnimationType = true;
 		mWeaponInfo->AnimationName = L"EnemyGreatSwordSwing";
 		mWeaponInfo->AttackStat.AttackDelayTime = 0.450f;
@@ -47,8 +48,6 @@ namespace da
 		mWeaponInfo->ProjectileStat.ProjectileCenterPadding = 0.30f;
 		mWeaponInfo->ProjectileStat.ProjectileRange = 3.5f;
 		mWeaponInfo->ProjectileStat.ProjectileAngle = -1.570f;
-		mProjectileSize = math::Vector2(1.20f, 1.40f);
-		mCombatTransform->SetScale(math::Vector3(0.510f * 4.0f, 0.490f * 4.0f, 1.0f));
 
 	}
 	void SkelCombatScript::Update()
@@ -86,7 +85,7 @@ namespace da
 		mWeaponInfo->ProjectileStat.ProjectileActive = true;
 		mWeaponInfo->ProjectileStat.ProjectileValidAccumulateTime = 0.0f;
 
-		projectile->SetProjectileInfo(mWeaponInfo->ProjectileStat);
+		projectile->SetProjectileInfo(&mWeaponInfo->ProjectileStat);
 		projectile->SetProjectileSize(mProjectileSize);
 		projectile->OnActive();
 	}

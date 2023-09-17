@@ -4,6 +4,7 @@
 namespace da
 {
 	class CreatureScript;
+	class FlyingCreatureScript;
 	class CreatureLifebarScript : public LifeBarScript
 	{
 	public:
@@ -15,8 +16,9 @@ namespace da
 
 	public:
 		void SetCreatureScript(CreatureScript* creature) { mCreatureScript = creature; }
-
+		void SetFlyingCreatureScript(FlyingCreatureScript* creature) { mFlyingCreatureScript = creature; }
 	private:
 		CreatureScript* mCreatureScript;
+		FlyingCreatureScript* mFlyingCreatureScript;
 	};
 }

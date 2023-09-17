@@ -18,7 +18,6 @@ namespace da
 		, mOwnerPosition(math::Vector3::Zero)
 		, mOwnerDir(math::Vector2::UnitX)
 		, mWeaponInfo(nullptr)
-		, mEffectName()
 		, mEffectScale(math::Vector3::One)
 		, mProjectileSize(math::Vector2::One)
 		, mEffectAngle(0.0f)
@@ -73,8 +72,7 @@ namespace da
 	//}
 
 	void CombatScript::updateReverseRenderer()
-	{
-		mOwnerDir = mOwnerScript->GetCreatureDir(); 
+	{		
 		bool value = isLeft();
 		mCombatRenderer->SetReverse(value);
 	}
@@ -85,6 +83,7 @@ namespace da
 		math::Vector3 ownerPosition = mOwnerScript->GetCreatureTransform()->GetPosition();
 		// 내 위치에 적용하기
 		mCombatTransform->SetPosition(ownerPosition);
+		mOwnerDir = mOwnerScript->GetCreatureDir();
 	}
 	void CombatScript::updateAttackCoolDown()
 	{
@@ -109,7 +108,7 @@ namespace da
 		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, mEffectAngle - 1.570f));
 		effect->SetEffectPosition(mCombatTransform->GetPosition() + (ownerDir * mWeaponInfo->ProjectileStat.ProjectileCenterPadding));
 		effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-		effect->PlayEffect(mEffectName);
+		effect->PlayEffect(mWeaponInfo->EffectName);
 	}
 	void CombatScript::attackPlay()
 	{

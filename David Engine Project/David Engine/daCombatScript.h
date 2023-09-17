@@ -48,7 +48,7 @@ namespace da
 #pragma region Attack func (DoAttack 에서 구현하기)
 	protected:
 		// 공격 스텟 정보로 이펙트 및 투사체 호출
-		void attackEffect();				// 공격 이펙트 세팅		
+		virtual void attackEffect();				// 공격 이펙트 세팅		
 		virtual void attackProjectile() {}	// 공격 투사체 세팅
 		void attackPlay();					// 무기 이미지 재생
 		
@@ -70,7 +70,6 @@ namespace da
 		structs::sWeaponInfo*			mWeaponInfo;
 
 	protected:
-		std::wstring					mEffectName;
 		math::Vector3					mEffectScale;
 		math::Vector2					mProjectileSize;
 		

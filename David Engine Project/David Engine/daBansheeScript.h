@@ -1,20 +1,19 @@
 #pragma once
-#include "daMonsterScript.h"
+#include "daFlyingMonsterScript.h"
 
 namespace da
 {
-	enum class eSkulState
+	enum class eBansheeState
 	{
 		Idle,
-		Chase,
 		Attack,
 		Dead,
 	};
-	class SkelScript : public MonsterScript
+	class BansheeScript : public FlyingMonsterScript
 	{
 	public:
-		SkelScript();
-		virtual ~SkelScript();
+		BansheeScript();
+		virtual ~BansheeScript();
 
 		virtual void Initialize() override;
 		virtual void Update() override;
@@ -33,17 +32,15 @@ namespace da
 
 #pragma region FSM
 	private:
-		void ChangeState(eSkulState state);
+		void ChangeState(eBansheeState state);
 		void skelFSM();
-		void SkelHandleIdle();
-		void SkelHandleChase();
-		void SkelHandleAttack();
-		void SkelHandleDead();
+		void BansheeHandleIdle();
+		void BansheeHandleAttack();
+		void BansheeHandleDead();
 #pragma endregion
 
 #pragma region Chase Func
 	private:
-		void trackingPlayer();		// 플레이어를 향해서 이동하기
 		void findingPlayer();		// 추격 제한로직
 #pragma endregion
 
@@ -57,13 +54,12 @@ namespace da
 
 
 #pragma region Collision
-		
+
 #pragma endregion
-		eSkulState				mMonsterActiveState;
-		
+		eBansheeState mMonsterActiveState;
 #pragma region Chase Value
 	private:
-		float	mChaseDurationTime;		// 최대 추적 유지시간
+		float	mChaseDurationTime;			// 최대 추적 유지시간
 		float	mChaseDurationDecay;		// 현재 유지시간
 		float	mDistanceFromPlayer;		// 플레이어와의 거리
 #pragma endregion
