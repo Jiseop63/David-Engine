@@ -228,6 +228,9 @@
     <ClInclude Include="daSkellBossHandScript.h">
       <Filter>Objects\Creature\Monster\SkellBoss</Filter>
     </ClInclude>
+    <ClInclude Include="daSkellBossProjectileScript.h">
+      <Filter>Objects\Creature\Monster\SkellBoss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -361,6 +364,9 @@
     </ClCompile>
     <ClCompile Include="daSkellBossHandScript.cpp">
       <Filter>Objects\Creature\Monster\SkellBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="daSkellBossProjectileScript.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

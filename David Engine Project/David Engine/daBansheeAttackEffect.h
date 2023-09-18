@@ -32,6 +32,6 @@ namespace da
 
 	private:
 		bool					mChanged;
-		BansheeCombatScript* mReqWeapon;
+		BansheeCombatScript*	mReqWeapon;
 	};
 }

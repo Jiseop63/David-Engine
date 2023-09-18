@@ -1,4 +1,6 @@
 #include "daMath.h"
+#include "daEnums.h"
+
 namespace da::structs
 {
 	struct sCreatureStat
@@ -21,7 +23,17 @@ namespace da::structs
 			: AttackRange(0.0f), AttackDelayAccumulateTime(0.0f), AttackDelay(0.0f)
 		{}
 	};
-
+	struct sBossProjectileStat
+	{
+		float ProjectileDamage;
+		float ProjectileRange;
+		float ProjectileSpeed;
+		float ProjectileAngle;
+		bool ProjectileCollision;
+		sBossProjectileStat()
+			: ProjectileDamage(0.0f), ProjectileRange(0.0f), ProjectileSpeed(0.0f), ProjectileAngle(0.0f), ProjectileCollision(false)
+		{}
+	};
 	struct sJumpData
 	{
 		float	JumpForce;
@@ -47,7 +59,7 @@ namespace da::structs
 		{}
 	};
 	struct sAttackStat
-	{
+	{		
 		bool						AttackReady;
 		float						AtaackDamage;
 		float						AttackDelayAccumulateTime;

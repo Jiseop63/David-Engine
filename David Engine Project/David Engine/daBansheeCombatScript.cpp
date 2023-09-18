@@ -29,9 +29,6 @@ namespace da
 
 		mWeaponInfo->IsAnimationType = false;
 		mWeaponInfo->ProjectileStat.EffectName = L"BansheeBulletIdle";
-		mWeaponInfo->AttackStat.AttackDelayTime = 0.750f;
-		mWeaponInfo->AttackStat.AttackDelayAccumulateTime = 0.0f;
-		mWeaponInfo->AttackStat.AtaackDamage = 3.0f;
 		mWeaponInfo->ProjectileStat.ProjectileType = enums::eProjectileType::Range;
 		mWeaponInfo->ProjectileStat.ProjectileValidTime = 0.250f;
 		mWeaponInfo->ProjectileStat.ProjectileCenterPadding = 0.0f;

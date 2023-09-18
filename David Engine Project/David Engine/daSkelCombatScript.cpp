@@ -41,9 +41,6 @@ namespace da
 		mWeaponInfo = new structs::sWeaponInfo();
 		mWeaponInfo->IsAnimationType = true;
 		mWeaponInfo->AnimationName = L"EnemyGreatSwordSwing";
-		mWeaponInfo->AttackStat.AttackDelayTime = 0.450f;
-		mWeaponInfo->AttackStat.AttackDelayAccumulateTime = 0.0f;
-		mWeaponInfo->AttackStat.AtaackDamage = 3.0f;
 		mWeaponInfo->ProjectileStat.ProjectileValidTime = 0.250f;
 		mWeaponInfo->ProjectileStat.ProjectileCenterPadding = 0.30f;
 		mWeaponInfo->ProjectileStat.ProjectileRange = 3.5f;

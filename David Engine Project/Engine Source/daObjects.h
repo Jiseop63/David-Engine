@@ -16,6 +16,8 @@
 #define MONSTER_PROJECTILE_POOL 15
 #define MONSTER_WEAPON_EFFECT_POOL 15
 
+#define BOSS_PROJECTILE_POOL 400
+
 namespace da::objects
 {
 #pragma region Basic GameObjects Func
@@ -257,16 +259,24 @@ namespace da::objects
 		// BossScript Ãß°¡
 		SkellBossScript* bossScript = bossObject->AddComponent<SkellBossScript>();
 
-		GameObject* leftHand = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Boss, L"AnimationMaterial");
+		GameObject* leftHand = InstantiateGameObject<GameObject>(scene, enums::eLayerType::BossProjectile, L"AnimationMaterial");
 		leftHand->GetTransform()->SetPosition(math::Vector2(-4.150f, -2.450f));
 		SkellBossHandScript* leftHandScript = leftHand->AddComponent<SkellBossHandScript>();
 		leftHandScript->SetLeftHand();
 		bossScript->SetLeftHand(leftHandScript);
 
-		GameObject* rightHand = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Boss, L"AnimationMaterial");
+		GameObject* rightHand = InstantiateGameObject<GameObject>(scene, enums::eLayerType::BossProjectile, L"AnimationMaterial");
 		rightHand->GetTransform()->SetPosition(math::Vector2(4.150f, -0.550f));
 		SkellBossHandScript* rightHandScript = rightHand->AddComponent<SkellBossHandScript>();
 		bossScript->SetRightHand(rightHandScript);
+
+		for (int index = 0; index < BOSS_PROJECTILE_POOL; index++)
+		{
+			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::BossProjectile, L"AnimationMaterial");
+			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
+			bossScript->AddProjectileObject(gameObject);
+			bossObject->AddChildObject(gameObject);
+		}
 
 		return bossScript;
 	}

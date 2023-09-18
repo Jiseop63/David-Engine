@@ -6,16 +6,9 @@ namespace da
 {
 	class Animator;
 	class PlayerScript;
+	class SkellBossProjectileScript;	
 	class SkellBossScript : public Script
 	{
-
-		enum class eBossPattern
-		{
-			Barrage,
-			OneWayLaser,
-			ThreeWayLayer,
-			SwardRain,
-		};
 		enum class eBossState
 		{
 			Idle,
@@ -31,35 +24,39 @@ namespace da
 
 #pragma region FSM
 	private:
-		void ChangeState(eBossState state);
+		void ChangeStateAnimation(eBossState state);
 		void BossFSM();
-		void SkellBossHandleIdle();
+		void SkellBossHandleIdle();					// 이건 솔직히 안씀
 		void SkellBossHandleAttack();
 		void SkellBossHandleDead();
 #pragma endregion
+
+#pragma region Attack Func
+	private:
+		void prepareForAttack();	// 공격 선딜
+		void doAttack();			// 공격 진행
+		void readyForAttackDelay(); // 공격 후딜
+
+		void patternCondition();
+
+		void callLaserAttack();
+		void callProjectileAttack();
+#pragma endregion
+
 	public:
 		Transform* GetBossTransform() { return mBossTransform; }
 		void SetLeftHand(SkellBossHandScript* left) { mLeftHand = left; }
 		void SetRightHand(SkellBossHandScript* right) { mRightHand = right; }
+		void IncreaseDamageCount() { ++mGetDamageCount; }
+		void AddProjectileObject(GameObject* projectile);
+
 
 	private:
-		void attackCoolDown();
+		SkellBossProjectileScript* callProjectile();
 		
-#pragma region AttackPettern
-		void shootLaser();
-
-		// 빔 날리는 패턴				4초 동안 피해받지 않으면
-		// 빔 세번 날리는 패턴		점프를 3초 동안 안하면
-		// 탄막 날리는 패턴			점프를 6회 이상 하면
-		// 칼 떨어뜨리는 패턴			대시를 6번 이상 사용하면
-		// 가장먼저 조건 충족되는대로 패턴 고정
-
-
-		// 패턴 구현하려면 Time값을 가지는 변수가 많이 필요할듯?
-#pragma endregion
 	private:
 		void retIdle();
-
+		void attackingAnimation();
 
 
 
@@ -76,6 +73,13 @@ namespace da
 
 
 	private:
+		std::vector<SkellBossProjectileScript*>	mBossProjectiles;
+
+		structs::sBossProjectileStat*	mBossProjectileInfo;
+		math::Vector2					mBossProjectileSize;
+
+
+	private:
 		SkellBossHandScript*	mLeftHand;
 		SkellBossHandScript*	mRightHand;
 		bool					mLeftHandTurn;
@@ -84,16 +88,32 @@ namespace da
 
 	private:
 		eBossState		mBossActiveState;
-		eBossPattern	mBossPattern;
 		bool			mAttackReady;
 		float			mAttackCoolDownDelayTime;
 		float			mAttackCoolDownAccumulateTime;
 
-
+		bool			mPrepareAttack;
+		float			mPrepareDurationTime;
+		float			mPrepareDurationDecay;
+		bool			mAttackProgress;
+		float			mReadyDurationTime;
+		float			mReadyDurationDecay;
 		
 
-		// 파티클 스크립트
-		// 이펙트 스크립트
-		// 투사체 스크립트
+
+		int		mPlayerJumpCount;
+		int		mPlayerDashCount;
+		int		mGetDamageCount;
+
+
+		bool	mProjectileAttackOn;
+		bool	mLaserAttackOn;
+
+		float	mLaserCallDelayTime;
+		float	mLaserCallDelayDecay;
+		float	mProjectileCallDelayTime;
+		float	mProjectileCallDelayDecay;
+
+		float	mRotatePerSeconds;
 	};
 }

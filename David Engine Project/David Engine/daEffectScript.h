@@ -28,10 +28,11 @@ namespace da
 		virtual void PlayEffect(const std::wstring name);
 		virtual void OnActive();
 			
+		// 이펙트 이동방식
 	protected:
-		void stayEffect();
-		void directionEffect();
-		void rotateEffect();
+		void stayEffect();		// 이동 안함
+		void directionEffect();	// dir방향으로 이동
+		void rotateEffect();	// 회전하여 up 방향으로 이동
 
 	public:
 		Transform* GetTransform() { return mEffectTransform; }

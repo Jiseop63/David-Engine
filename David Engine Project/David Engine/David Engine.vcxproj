@@ -183,6 +183,7 @@
     <ClInclude Include="daScene_Title.h" />
     <ClInclude Include="daScene_Town.h" />
     <ClInclude Include="daSkellBossHandScript.h" />
+    <ClInclude Include="daSkellBossProjectileScript.h" />
     <ClInclude Include="daSkellBossScript.h" />
     <ClInclude Include="daSkelScript.h" />
     <ClInclude Include="daSubCameraScript.h" />
@@ -229,6 +230,7 @@
     <ClCompile Include="daScene_Title.cpp" />
     <ClCompile Include="daScene_Town.cpp" />
     <ClCompile Include="daSkellBossHandScript.cpp" />
+    <ClCompile Include="daSkellBossProjectileScript.cpp" />
     <ClCompile Include="daSkellBossScript.cpp" />
     <ClCompile Include="daSkelScript.cpp" />
     <ClCompile Include="daSubCameraScript.cpp" />

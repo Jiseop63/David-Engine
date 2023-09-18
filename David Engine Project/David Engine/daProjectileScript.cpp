@@ -119,7 +119,8 @@ namespace da
 			SkellBossScript* bossScript = creatureObj->GetComponent<SkellBossScript>();
 			// 보스 피격 호출
 			mCombatScript->CallHitEffect(bossScript->GetBossTransform()->GetPosition());
-			SceneManager::GetMainCameraScript()->SetOscillation(120.0f, 0.1250f);
+			bossScript->IncreaseDamageCount();
+			SceneManager::GetMainCameraScript()->SetOscillation(120.0f, 0.1250f);	// 카메라 진동
 		}
 		if (enums::eLayerType::Monster == other->GetOwner()->GetLayerType()
 			&& other->IsBody())

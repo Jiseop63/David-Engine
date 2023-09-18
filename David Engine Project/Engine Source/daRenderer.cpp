@@ -507,6 +507,8 @@ namespace renderer
 		Resources::Load<Texture>(L"BansheeBulletHit", L"..\\Resources\\Texture\\Monster\\Banshee\\BansheeBulletHit.png");
 		
 		Resources::Load<Texture>(L"BossSpriteSheet", L"..\\Resources\\Texture\\SkellBoss\\SkellBossSpriteSheet.png");
+		Resources::Load<Texture>(L"SkellBossAttacking", L"..\\Resources\\Texture\\SkellBoss\\SkellBossAttacking.png");
+		
 		Resources::Load<Texture>(L"SkellBossHandIdle", L"..\\Resources\\Texture\\SkellBoss\\SkellBossHandIdle.png");
 		Resources::Load<Texture>(L"SkellBossHandAttack", L"..\\Resources\\Texture\\SkellBoss\\SkellBossHandAttack.png");
 		Resources::Load<Texture>(L"SkellBossProjectile", L"..\\Resources\\Texture\\SkellBoss\\SkellBossProjectile.png");

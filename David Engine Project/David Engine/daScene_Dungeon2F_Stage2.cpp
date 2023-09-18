@@ -58,6 +58,7 @@ namespace da
 		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.40f, 0.40f, 0.40f, 1.0f));
 
 		CollisionManager::SetLayer(enums::eLayerType::PlayableProjectile, enums::eLayerType::Boss);
+		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::BossProjectile);
 
 	}
 	void Scene_Dungeon2F_Stage2::OnExit()
@@ -173,7 +174,7 @@ namespace da
 		// skell Boss
 		{
 			SkellBossScript* bossScript = objects::InstantiateSkellBoss(this);
-			bossScript->GetOwner()->GetTransform()->SetPosition(Vector3(0.0f, 0.0f, ObjectZ));
+			bossScript->GetOwner()->GetTransform()->SetPosition(Vector3(0.0f, -0.50f, ObjectZ));
 		}
 	}
 }

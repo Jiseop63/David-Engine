@@ -29,7 +29,7 @@ namespace da
 		mHandRenderer = GetOwner()->GetComponent<MeshRenderer>();
 		mHandAnimator = GetOwner()->AddComponent<Animator>();
 		mHandCollider = GetOwner()->AddComponent<Collider2D>();
-		mHandCollider->SetSize(math::Vector2(10.0f, 1.0f));
+		mHandCollider->SetSize(math::Vector2(4.0f, 0.60f));
 		mHandCollider->ApplyComponentUsing(false);
 
 		mPlayerScript = SceneManager::GetPlayerScript();
@@ -73,10 +73,11 @@ namespace da
 		if (distance <= 0.05)
 		{
 			mChasePlayer = false;
-			shootLaser();
+			shootLaser();			// 애니메이션과 충돌기능 활성화
 		}
 
-		handPosition.y += mMovePositionY * (float)Time::DeltaTime();
+		// 이동하기
+		handPosition.y += 4.50f * mMovePositionY * (float)Time::DeltaTime();
 		mHandTransform->SetPosition(handPosition);
 	}
 	void SkellBossHandScript::findPlayer()
@@ -90,29 +91,40 @@ namespace da
 	}
 	void SkellBossHandScript::shootLaser()
 	{
-		mHandCollider->ApplyComponentUsing(true);
+		activeCollider();
 		mHandAnimator->PlayAnimation(L"SkellBossHandAttack");
+		
 	}
 	void SkellBossHandScript::retIdle()
 	{
 		mHandAnimator->PlayAnimation(L"SkellBossHandIdle");
+		mHandCollider->ApplyComponentUsing(false);
 	}
 
 	void SkellBossHandScript::activeCollider()
 	{
 		if (misLeftHand)
-		{
 			mHandCollider->SetCenter(math::Vector2(5.0f, 0.0f));
-		}
 		else
-		{
 			mHandCollider->SetCenter(math::Vector2(-5.0f, 0.0f));
-		}
+		mHandCollider->ApplyComponentUsing(true);
 	}
 
 	void SkellBossHandScript::OnCollisionEnter(Collider2D* other)
 	{
+		if (enums::eLayerType::Playable == other->GetOwner()->GetLayerType()
+			&& other->IsBody())
+		{
+			mHandCollider->ApplyComponentUsing(false);
+			GameObject* creatureObj = other->GetOwner();
+			CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
+
+			// 최종 피해량
+			float totalDamage = 5.0f;
+			// 피격 호출
+			creatureScript->OnDamaged(totalDamage);
+		}
 		// 플레이어와 충돌한 경우 피해를 주고 충돌 비활성 시킴
-		mHandCollider->ApplyComponentUsing(false);
+		
 	}
 }
