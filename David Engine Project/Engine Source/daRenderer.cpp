@@ -506,8 +506,10 @@ namespace renderer
 		Resources::Load<Texture>(L"BansheeBulletIdle", L"..\\Resources\\Texture\\Monster\\Banshee\\BansheeBulletIdle.png");
 		Resources::Load<Texture>(L"BansheeBulletHit", L"..\\Resources\\Texture\\Monster\\Banshee\\BansheeBulletHit.png");
 		
-		Resources::Load<Texture>(L"BossSpriteSheet", L"..\\Resources\\Texture\\Scene_Dungeon2F\\SkellBossSpriteSheet.png");
-		//Resources::Load<Texture>(L"BossSpriteSheet", L"..\\Resources\\Texture\\Scene_Dungeon2F\\SkellBossSpriteSheet.png"); 투사체
+		Resources::Load<Texture>(L"BossSpriteSheet", L"..\\Resources\\Texture\\SkellBoss\\SkellBossSpriteSheet.png");
+		Resources::Load<Texture>(L"SkellBossHandIdle", L"..\\Resources\\Texture\\SkellBoss\\SkellBossHandIdle.png");
+		Resources::Load<Texture>(L"SkellBossHandAttack", L"..\\Resources\\Texture\\SkellBoss\\SkellBossHandAttack.png");
+		Resources::Load<Texture>(L"SkellBossProjectile", L"..\\Resources\\Texture\\SkellBoss\\SkellBossProjectile.png");
 		//Resources::Load<Texture>(L"BossSpriteSheet", L"..\\Resources\\Texture\\Scene_Dungeon2F\\SkellBossSpriteSheet.png"); 레이저
 		//Resources::Load<Texture>(L"BossSpriteSheet", L"..\\Resources\\Texture\\Scene_Dungeon2F\\SkellBossSpriteSheet.png"); 칼
 		

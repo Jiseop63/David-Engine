@@ -172,7 +172,7 @@ namespace da
 
 		// skell Boss
 		{
-			SkellBossScript* bossScript = objects::InstantiateBoss<SkellBossScript>(this);
+			SkellBossScript* bossScript = objects::InstantiateSkellBoss(this);
 			bossScript->GetOwner()->GetTransform()->SetPosition(Vector3(0.0f, 0.0f, ObjectZ));
 		}
 	}

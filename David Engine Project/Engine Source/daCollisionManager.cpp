@@ -88,6 +88,9 @@ namespace da
 				if (Collider2D::eDetectionType::Inactive == left->GetDetectionType()
 					|| Collider2D::eDetectionType::Inactive == right->GetDetectionType())
 					return;
+				if (!left->IsComponentUsing()
+					|| !right->IsComponentUsing())
+					return;
 				//Enter
 				iter->second = true;
 				left->OnCollisionEnter(right);
@@ -96,7 +99,7 @@ namespace da
 			}
 			else
 			{
-				// 둘중 하나가 비활성 상태임, Exit 호출
+				// 충돌중에 둘중 하나가 비활성인 경우, Exit 호출
 				if (GameObject::eObjectState::Active != left->GetOwner()->GetObjectState()
 					|| GameObject::eObjectState::Active != right->GetOwner()->GetObjectState())
 				{					
@@ -115,7 +118,15 @@ namespace da
 					right->OnCollisionExit(left);
 					return;
 				}
-
+				if (!left->IsComponentUsing()
+					|| !right->IsComponentUsing())
+				{
+					//Exit
+					iter->second = false;
+					left->OnCollisionExit(right);
+					right->OnCollisionExit(left);
+					return;
+				}
 				//Stay
 				left->OnCollisionStay(right);
 				right->OnCollisionStay(left);

@@ -1,7 +1,6 @@
 #pragma once
 #include "daScript.h"
-
-// Resources::Load<Texture>(L"BossSpriteSheet", L"..\\Resources\\Texture\\Scene_Dungeon2F\\SkellBossSpriteSheet.png");
+#include "daSkellBossHandScript.h"
 
 namespace da
 {
@@ -40,14 +39,15 @@ namespace da
 #pragma endregion
 	public:
 		Transform* GetBossTransform() { return mBossTransform; }
+		void SetLeftHand(SkellBossHandScript* left) { mLeftHand = left; }
+		void SetRightHand(SkellBossHandScript* right) { mRightHand = right; }
 
 	private:
 		void attackCoolDown();
 		
-	private:
-		void retIdle();
-
 #pragma region AttackPettern
+		void shootLaser();
+
 		// 빔 날리는 패턴				4초 동안 피해받지 않으면
 		// 빔 세번 날리는 패턴		점프를 3초 동안 안하면
 		// 탄막 날리는 패턴			점프를 6회 이상 하면
@@ -57,6 +57,9 @@ namespace da
 
 		// 패턴 구현하려면 Time값을 가지는 변수가 많이 필요할듯?
 #pragma endregion
+	private:
+		void retIdle();
+
 
 
 
@@ -71,6 +74,14 @@ namespace da
 		Animator*		mBossAnimator;
 		PlayerScript*	mPlayerScript;
 
+
+	private:
+		SkellBossHandScript*	mLeftHand;
+		SkellBossHandScript*	mRightHand;
+		bool					mLeftHandTurn;
+		int						mMaxLaserCount;
+		int						mCurLaserCount;
+
 	private:
 		eBossState		mBossActiveState;
 		eBossPattern	mBossPattern;
@@ -78,7 +89,8 @@ namespace da
 		float			mAttackCoolDownDelayTime;
 		float			mAttackCoolDownAccumulateTime;
 
-		// 비주얼 용도로 손? 스크립트 (이펙트랑 같이 사용하면 될듯)
+
+		
 
 		// 파티클 스크립트
 		// 이펙트 스크립트

@@ -20,6 +20,9 @@ namespace da
 		, mAttackReady(false)
 		, mAttackCoolDownDelayTime(0.0f)
 		, mAttackCoolDownAccumulateTime(0.0f)
+		, mLeftHandTurn(true)
+		, mMaxLaserCount(0)
+		, mCurLaserCount(0)
 	{
 	}
 	SkellBossScript::~SkellBossScript()
@@ -33,7 +36,7 @@ namespace da
 
 		mPlayerScript = SceneManager::GetPlayerScript();
 		// Tr
-		mBossTransform->SetScale(math::Vector3(5.50f, 5.50f, 1.0f));
+		mBossTransform->SetScale(math::Vector3(6.0f, 6.0f, 1.0f));
 		// 보스 충돌체
 		mBossCollider->ImBody();
 		mBossCollider->SetDetectionType(Collider2D::eDetectionType::Default);
@@ -51,7 +54,7 @@ namespace da
 		// 변수
 		mAttackReady = false;
 		mAttackCoolDownDelayTime = 3.0f;
-		
+		mMaxLaserCount = 3;
 	}
 	void SkellBossScript::Update()
 	{
@@ -119,6 +122,33 @@ namespace da
 			mAttackReady = true;
 		}			
 	}
+	void SkellBossScript::shootLaser()
+	{
+		
+
+
+
+		
+		if (0 < mCurLaserCount)
+		{
+			if (mLeftHandTurn)
+			{
+				mLeftHand->DoAttack();
+				mLeftHandTurn = false;
+				mCurLaserCount--;
+			}
+			else
+			{
+				mRightHand->DoAttack();
+				mLeftHandTurn = true;
+				mCurLaserCount--;
+			}
+		}
+		
+
+
+	}
+
 	void SkellBossScript::retIdle()
 	{
 		ChangeState(eBossState::Idle);

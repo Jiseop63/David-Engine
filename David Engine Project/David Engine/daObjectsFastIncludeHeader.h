@@ -57,4 +57,6 @@
 #include "daBansheeScript.h"
 #include "daBansheeCombatScript.h"
 
+// Boss
 #include "daSkellBossScript.h"
+#include "daSkellBossHandScript.h"

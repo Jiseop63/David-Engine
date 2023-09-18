@@ -34,7 +34,7 @@ namespace da
 		void ChangeLandColor(bool isCollision);
 		void ChangeColliderColor(bool isCollision);
 
-	public:	
+	public:
 		void SetColliderShapeType(enums::eColliderShape type) { mColliderShape = type; }
 		enums::eColliderShape GetColliderType() { return mColliderShape; }
 		

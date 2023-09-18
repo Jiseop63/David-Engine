@@ -40,8 +40,7 @@ namespace da
 	}
 	void Collider2D::Initialize()
 	{
-		mTransform = GetOwner()->GetComponent<Transform>();
-		
+		mTransform = GetOwner()->GetComponent<Transform>();		
 	}
 	void Collider2D::Update()
 	{

@@ -32,6 +32,7 @@ namespace da::enums
 		Monster,
 		MonsterProjectile,
 		Boss,
+		BossProjectile,
 		
 		Effect,
 		Playable,

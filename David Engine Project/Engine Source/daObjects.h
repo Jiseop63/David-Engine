@@ -64,9 +64,23 @@ namespace da::objects
 		return obj;
 	}
 #pragma endregion
-#pragma region Quick Init objects
-	
-	// UI에 쓰임
+
+#pragma region Quick Init UI Objects
+	static GameObject* InstantiateGridObject(Scene* scene, CameraObject* cameraObject)
+	{
+		GameObject* obj = new GameObject();
+		Layer& myLayer = scene->GetLayer(enums::eLayerType::Default);
+		myLayer.AddGameObject(obj);
+		GridScript* gridScript = obj->AddComponent<GridScript>();
+		gridScript->SetCamera(cameraObject->GetCameraComponent());
+
+		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
+		meshRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		meshRenderer->SetMaterial(Resources::Find<Material>(L"GridMaterial"));
+		obj->Initialize();
+		return obj;
+	}
+
 	template <typename T>
 	static T* InstantiateButtonObject(Scene* scene, const std::wstring& material, const std::wstring& first, const std::wstring& second)
 	{
@@ -91,6 +105,9 @@ namespace da::objects
 		uiScript->SetSlotTextures(Resources::Find<graphics::Texture>(first), Resources::Find<graphics::Texture>(second));
 		return obj;
 	}
+#pragma endregion
+
+#pragma region Quick Init Creature Objects	
 	static GameObject* InstantiatePlayer(Scene* scene)
 	{
 
@@ -233,17 +250,29 @@ namespace da::objects
 
 		return enemyScript;
 	}
-	template <typename T>
-	static T* InstantiateBoss(Scene* scene)
+	static SkellBossScript* InstantiateSkellBoss(Scene* scene)
 	{
 		// enemyObject 추가
-		GameObject* enemyObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Boss, L"AnimationMaterial");
+		GameObject* bossObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Boss, L"AnimationMaterial");
 		// BossScript 추가
-		T* enemyScript = enemyObject->AddComponent<T>();
+		SkellBossScript* bossScript = bossObject->AddComponent<SkellBossScript>();
 
-		return enemyScript;
+		GameObject* leftHand = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Boss, L"AnimationMaterial");
+		leftHand->GetTransform()->SetPosition(math::Vector2(-4.150f, -2.450f));
+		SkellBossHandScript* leftHandScript = leftHand->AddComponent<SkellBossHandScript>();
+		leftHandScript->SetLeftHand();
+		bossScript->SetLeftHand(leftHandScript);
+
+		GameObject* rightHand = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Boss, L"AnimationMaterial");
+		rightHand->GetTransform()->SetPosition(math::Vector2(4.150f, -0.550f));
+		SkellBossHandScript* rightHandScript = rightHand->AddComponent<SkellBossHandScript>();
+		bossScript->SetRightHand(rightHandScript);
+
+		return bossScript;
 	}
 
+	
+#pragma endregion
 	static GameObject* InstantiateLandObject(Scene* scene, math::Vector3 location, math::Vector3 scale)
 	{
 		GameObject* obj = new GameObject();
@@ -263,7 +292,6 @@ namespace da::objects
 
 		return obj;
 	}
-
 	static GameObject* InstantiatePlatformObject(Scene* scene, math::Vector3 location, math::Vector3 scale)
 	{
 		GameObject* obj = new GameObject();
@@ -283,21 +311,6 @@ namespace da::objects
 
 		return obj;
 	}
-	static GameObject* InstantiateGridObject(Scene* scene, CameraObject* cameraObject)
-	{
-		GameObject* obj = new GameObject();
-		Layer& myLayer = scene->GetLayer(enums::eLayerType::Default);
-		myLayer.AddGameObject(obj);
-		GridScript* gridScript = obj->AddComponent<GridScript>();
-		gridScript->SetCamera(cameraObject->GetCameraComponent());
-
-		MeshRenderer* meshRenderer = obj->AddComponent<MeshRenderer>();
-		meshRenderer->SetMesh( Resources::Find<Mesh>(L"RectMesh") );
-		meshRenderer->SetMaterial( Resources::Find<Material>(L"GridMaterial") );
-		obj->Initialize();
-		return obj;
-	}
-#pragma endregion 
 #pragma region Camera objects
 	static CameraObject* InstantiateMainCamera(Scene* scene)
 	{
