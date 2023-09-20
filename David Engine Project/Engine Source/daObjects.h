@@ -9,6 +9,8 @@
 
 #include "daObjectsFastIncludeHeader.h"
 
+
+#define PLAYER_ACTIONUNIT_POOL 50
 #define PLAYER_EFFECT_POOL 20
 #define PLAYER_PROJECTILE_POOL 15
 #define PLAYER_WEAPON_EFFECT_POOL 15
@@ -126,6 +128,15 @@ namespace da::objects
 		// 플레이어 스크립트 추가
 		PlayerScript* playerScript = player->AddComponent<PlayerScript>();
 		SceneManager::AddPlayerObject(player);
+
+		// 플레이어 이펙트 세팅
+		for (int index = 0; index < PLAYER_ACTIONUNIT_POOL; index++)
+		{
+			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
+			player->AddChildObject(gameObject);
+			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
+			playerScript->AddActionUnit(gameObject);
+		}
 
 		// 플레이어 이펙트 세팅
 		for (int index = 0; index < PLAYER_EFFECT_POOL; index++)

@@ -66,19 +66,19 @@ namespace da
 
 	void GameDataManager::ChangeArmour()
 	{
-		// swap armour
-		structs::sArmour temp = *mActiveArmour;
-		mActiveArmour = mSubArmour;
-		mSubArmour = &temp;
+		//// swap armour
+		//structs::sArmour temp = *mActiveArmour;
+		//mActiveArmour = mSubArmour;
+		//mSubArmour = &temp;
 
-		// change UI
-		SceneManager::GetInventoryScript()->ChangeArmour();
-		// 패널 이미지 변경해주기
-		// SceneManager::GetHUDObject()->Get
-		
-		
-		// control weaponScript
-		SceneManager::GetPlayerScript()->GetWeaponScript()->EquipWeapon();
+		//// change UI
+		//SceneManager::GetInventoryScript()->ChangeArmour();
+		//// 패널 이미지 변경해주기
+		//// SceneManager::GetHUDObject()->Get
+		//
+		//
+		//// control weaponScript
+		//SceneManager::GetPlayerScript()->GetWeaponScript()->EquipWeapon();
 	}
 	structs::sArmour* GameDataManager::GetActiveArmour()
 	{

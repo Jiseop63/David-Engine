@@ -4,11 +4,11 @@
 namespace da
 {
 	class CombatScript;
-	class ProjectileScript : public Script
+	class lProjectileScript : public Script
 	{
 	public:
-		ProjectileScript();
-		virtual ~ProjectileScript();
+		lProjectileScript();
+		virtual ~lProjectileScript();
 
 		virtual void Initialize() override;
 		virtual void Update() override;

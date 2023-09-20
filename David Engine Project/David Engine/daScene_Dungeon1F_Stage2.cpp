@@ -221,15 +221,21 @@ namespace da
 	}
 	void Scene_Dungeon1F_Stage2::addGameObjects()
 	{
+		//// test enemy
+		//{
+		//	SkelScript* skelScript = objects::InstantiateSkel(this);
+		//	skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(3.50f, 2.0f, ObjectZ));
+		//}
 		// test enemy
 		{
 			SkelScript* skelScript = objects::InstantiateSkel(this);
-			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(3.50f, 2.0f, ObjectZ));
+			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(1.50f, 0.0f, ObjectZ));
 		}
+
 		// test enemy
 		{
 			SkelScript* skelScript = objects::InstantiateSkel(this);
-			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(1.50f, 2.0f, ObjectZ));
+			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(-1.50f, 0.0f, ObjectZ));
 		}
 		// test enemy
 		{
@@ -240,13 +246,13 @@ namespace da
 		// test enemy
 		{
 			BansheeScript* bansheeScript = objects::InstantiateBanshee(this);
-			bansheeScript->GetOwner()->GetTransform()->SetPosition(Vector3(-6.50f, 2.50f, ObjectZ));
+			bansheeScript->GetOwner()->GetTransform()->SetPosition(Vector3(-5.50f, 2.50f, ObjectZ));
 		}
 
 		// test enemy
 		{
 			BansheeScript* bansheeScript = objects::InstantiateBanshee(this);
-			bansheeScript->GetOwner()->GetTransform()->SetPosition(Vector3(6.50f, 2.50f, ObjectZ));
+			bansheeScript->GetOwner()->GetTransform()->SetPosition(Vector3(5.50f, 2.50f, ObjectZ));
 		}
 	}
 }

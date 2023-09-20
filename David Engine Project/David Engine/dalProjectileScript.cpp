@@ -1,4 +1,4 @@
-#include "daProjectileScript.h"
+#include "dalProjectileScript.h"
 #include "daGameObject.h"
 #include "daTime.h"
 #include "daPlayerCombatScript.h"
@@ -9,7 +9,7 @@
 #include "daGameDataManager.h"
 namespace da
 {
-	ProjectileScript::ProjectileScript()
+	lProjectileScript::lProjectileScript()
 		: mProjectileTransform(nullptr)
 		, mProjectileCollider(nullptr)
 		, mCombatScript(nullptr)
@@ -17,19 +17,19 @@ namespace da
 		, mIsCollision(false)
 	{
 	}
-	ProjectileScript::~ProjectileScript()
+	lProjectileScript::~lProjectileScript()
 	{
 	}
-	void ProjectileScript::Initialize()
+	void lProjectileScript::Initialize()
 	{
 		mProjectileTransform = GetOwner()->GetTransform();
 		mProjectileCollider = GetOwner()->AddComponent<Collider2D>();
 	}
-	void ProjectileScript::Update()
+	void lProjectileScript::Update()
 	{
 		projectileProcess();
 	}
-	void ProjectileScript::OnActive()
+	void lProjectileScript::OnActive()
 	{
 		mBeginPosition = mCombatScript->GetOwnerScript()->GetCreatureTransform()->GetPosition();
 		mProjectileTransform->SetPosition(mBeginPosition);
@@ -39,7 +39,7 @@ namespace da
 		mProjectileInfo->ProjectileActive = true;
 		GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 	}
-	void ProjectileScript::projectileProcess()
+	void lProjectileScript::projectileProcess()
 	{
 		switch (mProjectileInfo->ProjectileType)
 		{
@@ -56,11 +56,11 @@ namespace da
 			break;
 		}
 	}
-	void ProjectileScript::meleeProcess()
+	void lProjectileScript::meleeProcess()
 	{
 		outOfTime();
 	}
-	void ProjectileScript::rangeProcess()
+	void lProjectileScript::rangeProcess()
 	{
 		// 이동
 		math::Vector3 retPosition = mProjectileTransform->GetPosition(); 
@@ -81,13 +81,13 @@ namespace da
 			ClearProjectile();
 		}
 	}
-	void ProjectileScript::bodyProcess()
+	void lProjectileScript::bodyProcess()
 	{
 		if (!mCombatScript->GetOwnerScript()->GetCreatureTransform())
 			mProjectileTransform->SetPosition(mCombatScript->GetOwnerScript()->GetCreatureTransform()->GetPosition());
 		outOfTime();
 	}
-	void ProjectileScript::outOfTime()
+	void lProjectileScript::outOfTime()
 	{
 		// 활성화 되고
 		if (mProjectileInfo->ProjectileActive)
@@ -101,7 +101,7 @@ namespace da
 		}
 	}
 
-	void ProjectileScript::ClearProjectile()
+	void lProjectileScript::ClearProjectile()
 	{
 		mProjectileInfo->ProjectileValidAccumulateTime = 0.0f;
 		mProjectileInfo->ProjectileCollision = false;
@@ -109,7 +109,7 @@ namespace da
 		GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
 	}
 
-	void ProjectileScript::OnCollisionEnter(Collider2D* other)
+	void lProjectileScript::OnCollisionEnter(Collider2D* other)
 	{
 		if (enums::eLayerType::Boss == other->GetOwner()->GetLayerType()
 			&& other->IsBody())
@@ -120,7 +120,7 @@ namespace da
 			// 보스 피격 호출
 			mCombatScript->CallHitEffect(bossScript->GetBossTransform()->GetPosition());
 			bossScript->IncreaseDamageCount();
-			SceneManager::GetMainCameraScript()->SetOscillation(120.0f, 0.1250f);	// 카메라 진동
+			//SceneManager::GetMainCameraScript()->SetOscillation(120.0f, 0.1250f);	// 카메라 진동
 		}
 		if (enums::eLayerType::Monster == other->GetOwner()->GetLayerType()
 			&& other->IsBody())
@@ -130,10 +130,10 @@ namespace da
 			CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
 			// 이펙트 호출
 			mCombatScript->CallHitEffect(creatureScript->GetCreatureTransform()->GetPosition());
-			SceneManager::GetMainCameraScript()->SetOscillation(120.0f, 0.1250f);
+			//SceneManager::GetMainCameraScript()->SetOscillation(120.0f, 0.1250f);
 
 			// 최종 피해량
-			float totalDamage = 5.0f;
+			float totalDamage = 6.0f;
 
 
 			// 피격 호출

@@ -27,7 +27,7 @@ namespace da
 		mSlotRenderer = GetOwner()->GetComponent<MeshRenderer>();
 		mFirstTexture = first;
 		mSecondTexture = second;
-		mSlotRenderer->ChangeSlotTexture(first);
+		mSlotRenderer->ChangeMaterialTexture(first);
 	}
 	void ItemScript::SetScreenPosision()
 	{
@@ -48,11 +48,11 @@ namespace da
 	}
 	void ItemScript::ChangeItemTexture(std::shared_ptr<graphics::Texture> texture)
 	{
-		mItemRenderer->ChangeSlotTexture(texture);
+		mItemRenderer->ChangeMaterialTexture(texture);
 	}
 	void ItemScript::ChangeSlotTexture(std::shared_ptr<graphics::Texture> texture)
 	{		
-		mSlotRenderer->ChangeSlotTexture(texture);
+		mSlotRenderer->ChangeMaterialTexture(texture);
 	}
 	void ItemScript::focusCheck()
 	{

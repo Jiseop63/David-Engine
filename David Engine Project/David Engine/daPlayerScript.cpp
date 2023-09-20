@@ -14,6 +14,8 @@
 #include "daPlayerCombatScript.h"
 #include "daPlayerEffectScript.h"
 
+#include "daPlayerActionUnitScript.h"
+
 namespace da
 {
     PlayerScript::PlayerScript()
@@ -24,7 +26,8 @@ namespace da
         , mpreviousState(ePlayerState::Idle)
         , mMoveCondition(0)
 
-        , mDustAccumulateTime(0.0f)
+        , mDustTime{}
+        , mDashTime{}
 
         , mJumpData{}
         , mDashData{}
@@ -134,6 +137,12 @@ namespace da
     }
 #pragma endregion
 #pragma region Debuging Func
+    void PlayerScript::AddActionUnit(GameObject* unit)
+    {
+        PlayerActionUnitScript* actionUnit = unit->AddComponent<PlayerActionUnitScript>();
+        actionUnit->SetOwnerScript(this);
+        mActionUnits.push_back(actionUnit);
+    }
     void PlayerScript::AddEffectObject(GameObject* effectObject)
     {
         PlayerEffectScript* enemyEffect = effectObject->AddComponent<PlayerEffectScript>();
@@ -226,10 +235,21 @@ namespace da
     {
         if (!mIsDead)
         {
-            EffectScript* playerEffect = CreatureScript::callEffect();
-            playerEffect->SetReverse(isLeft());
-            todoActiveEffect(playerEffect, L"Dying");
-            mWeaponScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
+            ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
+            actionUnit->SetUnitTypes(UnitActionType::Stay, UnitUsageType::OnlyAnimation);
+            actionUnit->SetNextAnimation(L"Dying", false);
+            actionUnit->SetReverse(isLeft());
+            actionUnit->SetOffsetPosition(Vector3(0.0f, -0.20f, 0.0f));
+            structs::sActionUnitInfo info = {};
+            info.Time.End = 2.0f;
+            actionUnit->SetUnitInfo(info);
+            actionUnit->OnActive();
+
+
+            //EffectScript* playerEffect = CreatureScript::callEffect();
+            //playerEffect->SetReverse(isLeft());
+            //todoActiveEffect(playerEffect, L"Dying");
+            //mWeaponScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
         }
         mIsDead = true;
         if (0 < mCreatureStat.CurHP)
@@ -324,18 +344,28 @@ namespace da
         if (ePlayerState::Move != mActiveState)
             return;
 
-        mDustAccumulateTime += (float)Time::DeltaTime();
-        if (0.30f <= mDustAccumulateTime)
+        mDustTime.Start += (float)Time::DeltaTime();
+        if (mDustTime.End <= mDustTime.Start)
         {            
             todoDustSpawn();
-            mDustAccumulateTime = 0.0f;
+            mDustTime.Start = 0.0f;
         }
     }
     void PlayerScript::todoDustSpawn()
     {
-        EffectScript* playerEffect = CreatureScript::callEffect();
-        playerEffect->SetReverse(isLeft());
-        todoActiveEffect(playerEffect, L"DustEffect");
+        ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
+        actionUnit->SetUnitTypes(UnitActionType::Stay, UnitUsageType::OnlyAnimation);
+        actionUnit->SetNextAnimation(L"DustEffect", false);
+        actionUnit->SetReverse(isLeft());
+        actionUnit->SetOffsetPosition(Vector3(0.0f, -0.20f, 0.0f));
+        structs::sActionUnitInfo info = {};
+        info.Time.End = 2.0f;
+        actionUnit->SetUnitInfo(info);
+        actionUnit->OnActive();
+
+        //EffectScript* playerEffect = CreatureScript::callEffect();
+        //playerEffect->SetReverse(isLeft());
+        //todoActiveEffect(playerEffect, L"DustEffect");
     }
 #pragma endregion
 #pragma region Jump & Dash Logic
@@ -424,10 +454,10 @@ namespace da
         {
             if (mDashRunning)
             {
-                mHoldingDashTime += (float)Time::DeltaTime();
-                if (0.250f <= mHoldingDashTime)
+                mDashTime.Start += (float)Time::DeltaTime();
+                if (mDashTime.End<= mDashTime.Start)
                 {
-                    mHoldingDashTime = 0.0f;
+                    mDashTime.Start = 0.0f;
                     mDashRunning = false;
                     mCreatureRigidbody->GravityAble(true);
                     mCreatureRigidbody->OverrideVelocity(math::Vector2::UnitY, 0.010f);
@@ -438,9 +468,21 @@ namespace da
         {
             if (ePlayerState::Jump != mActiveState)
                 ChangeState(ePlayerState::Jump);
-            EffectScript* playerEffect = CreatureScript::callEffect();
-            playerEffect->SetReverse(isLeft());
-            todoActiveEffect(playerEffect, L"Jumping");
+
+            ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
+            actionUnit->SetUnitTypes(UnitActionType::Stay, UnitUsageType::OnlyAnimation);
+            actionUnit->SetNextAnimation(L"Jumping", false);
+            actionUnit->SetReverse(isLeft());
+            actionUnit->SetOffsetPosition(Vector3(0.0f, -0.20f, 0.0f));
+            structs::sActionUnitInfo info = {};
+
+            info.Time.End = 2.0f;
+            actionUnit->SetUnitInfo(info);
+            actionUnit->OnActive();
+
+            //EffectScript* playerEffect = CreatureScript::callEffect();
+            //playerEffect->SetReverse(isLeft());
+            //todoActiveEffect(playerEffect, L"Jumping");
 
             // 최소 높이 설정
             float minForceRatio = 0.8750f;
@@ -485,7 +527,7 @@ namespace da
     }
     void PlayerScript::initializeData()
     {
-        mCreatureStat.MaxHP = 30;
+        mCreatureStat.MaxHP = 40;
         mCreatureStat.CurHP = mCreatureStat.MaxHP;
         mCreatureStat.MoveSpeed = 3.50f;
 
@@ -502,9 +544,8 @@ namespace da
         mJumpData.BufferedJump = false;
         mJumpData.ExtraJump = true;
 
-        //GameDataManager::SetPlayerStat(mCreatureStat);
-        //GameDataManager::SetDashCount(mDashData);
-        //GameDataManager::SetJumpCount(mJumpData);
+        mDustTime.End = 0.30f;
+        mDashTime.End = 0.250f;
     }
 #pragma endregion
 #pragma region Collision Func

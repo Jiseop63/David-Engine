@@ -9,7 +9,7 @@
 #include "daMeshRenderer.h"
 
 #include "daMonsterScript.h"
-#include "daProjectileScript.h"
+#include "dalProjectileScript.h"
 
 namespace da
 {
@@ -61,7 +61,7 @@ namespace da
 	}
 	void SkelCombatScript::AddProjectileObject(GameObject* object)
 	{
-		ProjectileScript* weaponProjectile = object->AddComponent<ProjectileScript>();
+		lProjectileScript* weaponProjectile = object->AddComponent<lProjectileScript>();
 		weaponProjectile->SetCombatScript(this);
 		mCombatProjectiles.push_back(weaponProjectile);
 	}
@@ -73,7 +73,7 @@ namespace da
 	void SkelCombatScript::attackProjectile()
 	{
 		// 유효한 객체 가져오기
-		ProjectileScript* projectile = callProjectile();
+		lProjectileScript* projectile = callProjectile();
 
 		// 초기화 데이터 세팅
 		mWeaponInfo->ProjectileStat.ProjectileActive = true;

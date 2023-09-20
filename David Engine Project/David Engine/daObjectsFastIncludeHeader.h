@@ -44,13 +44,13 @@
 // Player
 #include "daPlayerScript.h"
 #include "daPlayerCombatScript.h"
+
 #include "daPlayerEffectScript.h"
 #include "daAttackEffectScript.h"
-#include "daProjectileScript.h"
+#include "dalProjectileScript.h"
 
 // Monster
 #include "daMonsterScript.h"
-#include "daFlyingMonsterScript.h"
 #include "daCreatureLifebarScript.h"
 #include "daSkelScript.h"
 #include "daSkelCombatScript.h"

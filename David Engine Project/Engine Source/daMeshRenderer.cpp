@@ -38,7 +38,7 @@ namespace da
 			dashbar->BindConstantBuffer();
 
 		Animator* animator = GetOwner()->GetComponent<Animator>();
-		if (animator)
+		if (animator && animator->IsComponentUsing())
 			animator->Binds();
 
 		BindReverseCB();

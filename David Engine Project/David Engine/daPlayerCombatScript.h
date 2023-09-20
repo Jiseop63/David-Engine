@@ -7,7 +7,7 @@ namespace da
 {
 	// WeaponScript -> CombatScript 로 변경할 것 !!
 	class PlayerScript;
-	class ProjectileScript;
+	class lProjectileScript;
 	class EffectScript;
 	class PlayerCombatScript : public CombatScript
 	{

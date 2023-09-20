@@ -81,14 +81,14 @@ namespace da
 		mLaserCallDelayDecay = mLaserCallDelayTime;
 
 		// 투사체 호출 딜레이 (60개가 호출됨 ㄷㄷ)
-		mProjectileCallDelayTime = 0.1250f; // 4.5초동안 공격한다는 가정하에 60개가 화면에 나타날 예정
+		mProjectileCallDelayTime = 0.150f; // 4.5초동안 공격한다는 가정하에 60개가 화면에 나타날 예정
 		mProjectileCallDelayDecay = mProjectileCallDelayTime;
 
 
 		mBossProjectileInfo = new structs::sBossProjectileStat();
 
-		mBossProjectileInfo->ProjectileRange = 6.5f;							// 최대거리
-		mBossProjectileInfo->ProjectileSpeed = 4.0f;							// 속도
+		mBossProjectileInfo->ProjectileRange = 5.5f;							// 최대거리
+		mBossProjectileInfo->ProjectileSpeed = 4.50f;							// 속도
 		mBossProjectileInfo->ProjectileDamage = 5.0f;
 
 
@@ -292,7 +292,7 @@ namespace da
 		{
 			float deltaTime = (float)Time::DeltaTime();
 			mProjectileCallDelayDecay -= deltaTime;
-			mRotatePerSeconds += deltaTime;
+			mRotatePerSeconds += deltaTime / 1.50f;
 			if (0 >= mProjectileCallDelayDecay) // 딜레이 충족
 			{
 				mProjectileCallDelayDecay = mProjectileCallDelayTime;	// 딜레이 시간 초기화

@@ -7,6 +7,7 @@
 namespace da
 {
 	class EffectScript;
+	class ActionUnitScript;
 	class CreatureScript : public Script
 	{
 	public:
@@ -14,44 +15,45 @@ namespace da
 		virtual ~CreatureScript();
 
 		virtual void Initialize();
-#pragma region common Func
-	
 
-	public:
-		bool IsCreatureGround() { return mCreatureFootCollider->IsGround(); }
-		void CreatureIsNotGround() { mCreatureFootCollider->ClearGroundBuffer(); }
-		math::Vector2 GetCreatureDir() { return mCreatureDir; }
+#pragma region ActionUnit func
+		virtual void AddActionUnit(GameObject* unit) {}
+		ActionUnitScript* callActionUnit();
+#pragma endregion
 
+#pragma region Clear func
+		void InactiveObejct();
+		void ActiveObejct();
+		void ClearVelocity() { mCreatureRigidbody->OverrideVelocity(math::Vector2::Zero, 0.0f); }
+		void ClearGround() { mCreatureFootCollider->ClearGroundBuffer(); }
 
-
-		void SetCreatureVelocity(math::Vector2 vector2) { mCreatureRigidbody->OverrideVelocity(vector2, 0.0f); }
 		void SetCreaturePosition(math::Vector3 vector3) { mCreatureTransform->SetPosition(vector3); }
 #pragma endregion
 
-
-#pragma region public Func
-	public:
-		Transform* GetCreatureTransform() { return mCreatureTransform; }		
-		const structs::sCreatureStat* GetCreatureStat() { return &mCreatureStat; }
-		// 상속받는 각 클래스마다 직접 구현해주기
-		virtual void AddEffectObject(GameObject* effectScript) {}
-	protected:
-		EffectScript* callEffect();		// 이펙트 배열에서 유요한 이펙트를 가져오기
+#pragma region Ground func
+		void NotUseGravity() { mCreatureRigidbody->ApplyComponentUsing(false); }
+		void UseGravity() { mCreatureRigidbody->ApplyComponentUsing(); }
+		bool IsGround() { return mCreatureFootCollider->IsGround(); }
 #pragma endregion
 
-#pragma region Monster 공용 함수
-	protected:
+#pragma region Get component & value
+		Transform* GetCreatureTransform() { return mCreatureTransform; }
+		const structs::sCreatureStat* GetCreatureStat() { return &mCreatureStat; }
+		math::Vector2 GetCreatureDir() { return mCreatureDir; }
+#pragma endregion
+
+#pragma region Visual func
 		bool isLeft() { if (0 >= mCreatureDir.x) return true; else return false; }
 		void reverseTexture() { mCreatureRenderer->SetReverse(isLeft()); }
 		void visualUpdate();														// 왼쪽 오른쪽 구분해서 반전시킴
+#pragma endregion
 
+#pragma region Common creature func
 		void moveLeft();
 		void moveRight();
 #pragma endregion
 
-
-
-#pragma region Collision Func
+#pragma region Collision func
 	public:
 		virtual void OnCollisionEnter(Collider2D* other);
 		virtual void OnCollisionExit(Collider2D* other) {}
@@ -60,7 +62,24 @@ namespace da
 
 
 
+#pragma region common Func
+	public:
+		void CreatureIsNotGround() { mCreatureFootCollider->ClearGroundBuffer(); }	// 안씀
 
+		// 이건 필요할것 같은데 분류가 필요함
+		
+
+
+		void SetCreatureVelocity(math::Vector2 vector2) { mCreatureRigidbody->OverrideVelocity(vector2, 0.0f); }	// 안씀
+#pragma endregion
+
+
+#pragma region public Func
+	public:		
+		virtual void AddEffectObject(GameObject* effectScript) {}
+	protected:
+		EffectScript* callEffect();
+#pragma endregion
 
 #pragma region Components
 	protected:
@@ -74,6 +93,7 @@ namespace da
 
 #pragma region Other script
 	protected:
+		std::vector<ActionUnitScript*> mActionUnits;
 		std::vector<EffectScript*> mEffects;
 
 #pragma endregion
@@ -81,14 +101,16 @@ namespace da
 #pragma region Datas
 	protected:
 		structs::sCreatureStat	mCreatureStat;				// 공용
+		math::Vector2			mCreatureDir;
 #pragma endregion
 
 #pragma region condition
 	protected:
-		math::Vector2			mCreatureDir;
 		bool					mIsDead;
-		bool					mBodyCollision;	// 사실 안쓰는 기능임
-		bool					mFootCollision;	// 사실 안쓰는 기능임
+
+
+		bool					mBodyCollision;
+		bool					mFootCollision;
 #pragma endregion
 
 	};

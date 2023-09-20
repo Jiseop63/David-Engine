@@ -3,7 +3,7 @@
 #include "daTime.h"
 #include "daGameObject.h"
 #include "daEffectScript.h"
-#include "daProjectileScript.h"
+#include "dalProjectileScript.h"
 #include "daCreatureScript.h"
 
 namespace da
@@ -48,7 +48,7 @@ namespace da
 		}
 		return nullptr;
 	}
-	ProjectileScript* CombatScript::callProjectile()
+	lProjectileScript* CombatScript::callProjectile()
 	{
 		for (size_t projectile = 0; projectile < mCombatProjectiles.size(); ++projectile)
 		{

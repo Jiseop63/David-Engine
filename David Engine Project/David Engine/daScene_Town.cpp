@@ -55,6 +55,7 @@ namespace da
 		player->ChangeState(ePlayerState::Idle);
 		player->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 		player->IsPlayerInDungeon(false);
+		player->ActiveWeapon();
 		math::Vector3 playerPos = player->GetOwner()->GetTransform()->GetPosition();
 		// Camera ¼¼ÆÃ
 		GameDataManager::SetCameraMovableRange(math::Vector2(22.0f, 1.80f));

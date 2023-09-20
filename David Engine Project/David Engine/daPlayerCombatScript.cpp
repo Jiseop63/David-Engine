@@ -7,7 +7,9 @@
 #include "daResources.h"
 #include "daTime.h"
 #include "daAttackEffectScript.h"
-#include "daProjectileScript.h"
+#include "dalProjectileScript.h"
+
+#include "daActionUnitScript.h"
 #include "daPlayerScript.h"
 
 namespace da
@@ -25,12 +27,9 @@ namespace da
 	void PlayerCombatScript::Initialize()
 	{
 		CombatScript::Initialize();
-		// mActiveArmour = GameDataManager::GetActiveArmour();
-		// = SceneManager::GetPlayerScript();
 
 		mWeaponInfo = new structs::sWeaponInfo();
 		EquipWeapon();
-		int a = 0;
 		// 초기화 및 관련 객체 등록해주기
 	}
 	void PlayerCombatScript::Update()
@@ -100,7 +99,7 @@ namespace da
 	void PlayerCombatScript::attackProjectile()
 	{
 		// 유효한 객체 가져오기
-		ProjectileScript* projectile = callProjectile();
+		lProjectileScript* projectile = callProjectile();
 
 		// 초기화 데이터 세팅
 		mWeaponInfo->ProjectileStat.ProjectileActive = true;
@@ -121,7 +120,7 @@ namespace da
 	}
 	void PlayerCombatScript::AddProjectileObject(GameObject* object)
 	{
-		ProjectileScript* weaponProjectile = object->AddComponent<ProjectileScript>();
+		lProjectileScript* weaponProjectile = object->AddComponent<lProjectileScript>();
 		weaponProjectile->SetCombatScript(this);
 		mCombatProjectiles.push_back(weaponProjectile);
 	}
@@ -147,11 +146,15 @@ namespace da
 
 			mCombatTransform->SetScale(math::Vector3(0.090f * 4.0f, 0.440f * 4.0f, 1.0f));
 			mWeaponTexture = Resources::Find<Texture>(L"LongSwordTestTexture");
-			mWeaponInfo->ProjectileStat.EffectName = L"GreatSwing";
+			mWeaponInfo->ProjectileStat.EffectName = L"Swing";
 			mEffectScale = math::Vector3(2.50f, 2.50f, 1.0f);
 
 			if (mWeaponTexture)
-				mCombatRenderer->ChangeSlotTexture(mWeaponTexture);
+				mCombatRenderer->ChangeMaterialTexture(mWeaponTexture);
+
+			GameObject::eObjectState test = GetOwner()->GetObjectState();
+
+			int a = 0;
 		}
 		break;
 		case enums::eWeaponName::LongSword:
@@ -167,11 +170,11 @@ namespace da
 			mProjectileSize = math::Vector2(2.50f, 1.750f);
 			mCombatTransform->SetScale(math::Vector3(0.090f * 4.0f, 0.440f * 4.0f, 1.0f));
 			mWeaponTexture = Resources::Find<Texture>(L"LongSwordTestTexture");
-			mWeaponInfo->ProjectileStat.EffectName = L"GreatSwing";
+			mWeaponInfo->ProjectileStat.EffectName = L"Swing";
 			mEffectScale = math::Vector3(2.50f, 2.50f, 1.0f);
 
 			if (mWeaponTexture)
-				mCombatRenderer->ChangeSlotTexture(mWeaponTexture);
+				mCombatRenderer->ChangeMaterialTexture(mWeaponTexture);
 		}
 		break;
 		default:
@@ -182,9 +185,34 @@ namespace da
 	{
 		if (mWeaponInfo->AttackStat.AttackReady)
 		{
-			CombatScript::attackPlay();
-			CombatScript::attackEffect();
-			attackProjectile();
+			CombatScript::attackPlay();		// 이건 사용하는게 맞음
+			ActionUnitScript* actionUnit = mOwnerScript->callActionUnit();
+			/////////////////////////////////////////////////////////////////////
+
+			// 1 객체 가져오고
+			// 2 스케일 적용
+			// 3 회전 적용
+			// 4 위치 적용
+			// 5 애니메이션 등록
+			// 6 활성화
+
+			// 2 ~ 5까지는 데이터 세팅해주는 과정임
+			structs::sActionUnitInfo unitInfo = {};
+			unitInfo.Time.End = 0.250f;
+			unitInfo.RotateAngle = mEffectAngle - 1.570f;
+			
+			actionUnit->SetUnitTypes(UnitUsageType::Default, UnitActionType::JustRotate);
+			actionUnit->SetUnitInfo(unitInfo);
+			actionUnit->SetNextAnimation(mWeaponInfo->ProjectileStat.EffectName, false);
+			//actionUnit->SetOffsetPosition(math::Vector3(0.0f, 0.30f, 0.0f)); // 아직 문제있음
+			actionUnit->OnActive();
+
+			// 무기 정보 구조체
+			// 1. 이름(텍스쳐 혹은 애니메이션)
+			// 2. 데미지
+			
+			//CombatScript::attackEffect();
+			//attackProjectile();
 			mWeaponInfo->AttackStat.AttackReady = false;
 		}
 	}

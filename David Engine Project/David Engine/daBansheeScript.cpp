@@ -42,10 +42,10 @@ namespace da
 
 
 		// Ω∫≈› √ ±‚»≠
-		mCreatureStat.MaxHP = 25.0f;
-		mCreatureStat.CurHP = 25.0f;
+		mCreatureStat.MaxHP = 22.0f;
+		mCreatureStat.CurHP = 22.0f;
 
-		mMonsterAttackStat.AttackRange = 7.0f;
+		mMonsterAttackStat.AttackRange = 6.0f;
 		mMonsterAttackStat.AttackDelayAccumulateTime = 0.0f;
 		mMonsterAttackStat.AttackDelay = 4.0f;
 

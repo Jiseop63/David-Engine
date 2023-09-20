@@ -4,7 +4,6 @@
 #include "daGameObject.h"
 
 #include "daCreatureScript.h"
-#include "daFlyingCreatureScript.h"
 
 namespace da
 {
@@ -22,12 +21,6 @@ namespace da
 		if (mCreatureScript)
 		{
 			math::Vector3 creaturePos = mCreatureScript->GetCreatureTransform()->GetPosition();
-			creaturePos.y += 0.750f;
-			GetOwner()->GetTransform()->SetPosition(creaturePos);
-		}
-		else if (mFlyingCreatureScript)
-		{
-			math::Vector3 creaturePos = mFlyingCreatureScript->GetCreatureTransform()->GetPosition();
 			creaturePos.y += 0.750f;
 			GetOwner()->GetTransform()->SetPosition(creaturePos);
 		}

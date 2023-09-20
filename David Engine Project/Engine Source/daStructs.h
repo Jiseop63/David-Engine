@@ -3,6 +3,19 @@
 
 namespace da::structs
 {
+	struct sActionTimeValues
+	{
+		float Start;
+		float End;
+	};
+	struct sActionUnitInfo
+	{
+		float Speed;
+		float RotateAngle;
+		float Range;
+		sActionTimeValues Time;
+	};
+
 	struct sCreatureStat
 	{
 		float MaxHP;

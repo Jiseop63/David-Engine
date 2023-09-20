@@ -16,7 +16,7 @@ namespace da
 	public:
 		GameObject* GetOwner() { return mOwner; }
 		void SetOwner(GameObject* target) { mOwner = target; }
-		void ApplyComponentUsing(bool value) { mUsing = value; }
+		void ApplyComponentUsing(bool value = true) { mUsing = value; }
 		bool IsComponentUsing() { return mUsing; }
 
 	protected:

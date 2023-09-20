@@ -96,11 +96,11 @@ namespace da
 		MeshRenderer* meshRenderer = GetOwner()->GetComponent<MeshRenderer>();
 		mFirstTexture = first;
 		mSecondTexture = second;
-		meshRenderer->ChangeSlotTexture(first);
+		meshRenderer->ChangeMaterialTexture(first);
 	}
 	void InventoryScript::ChangeSlotTexture(std::shared_ptr<graphics::Texture> texture)
 	{
 		MeshRenderer* meshRenderer = GetOwner()->GetComponent<MeshRenderer>();
-		meshRenderer->ChangeSlotTexture(texture);
+		meshRenderer->ChangeMaterialTexture(texture);
 	}
 }

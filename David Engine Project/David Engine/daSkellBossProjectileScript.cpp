@@ -31,9 +31,9 @@ namespace da
 		mProjectileRenderer = GetOwner()->GetComponent <MeshRenderer>();
 		mProjectileCollider = GetOwner()->AddComponent<Collider2D>();
 		mProjectileAnimator = GetOwner()->AddComponent<Animator>();
-
+		
 		mProjectileTransform->SetScale(math::Vector3(1.50f, 1.50f, 1.0f));
-		mProjectileCollider->SetSize(math::Vector2(1.0f, 1.0f));
+		mProjectileCollider->SetSize(math::Vector2(2.0f, 2.0f));
 
 		// 애니메이션 초기화
 		mProjectileAnimator->Create(L"SkellBossProjectile", Resources::Find<Texture>(L"SkellBossProjectile"), math::Vector2::Zero, math::Vector2(50.0f, 50.0f), 10, math::Vector2::Zero, 0.10f, 80.0f);

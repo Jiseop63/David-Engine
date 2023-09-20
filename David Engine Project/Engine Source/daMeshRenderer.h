@@ -18,7 +18,7 @@ namespace da
 		std::shared_ptr<Mesh> GetMesh() { return mMesh; }
 		std::shared_ptr<Material> GetMaterial() { return mMaterial; }
 	public:
-		void ChangeSlotTexture(std::shared_ptr<graphics::Texture> texture) { mMaterial->SetTexture(texture); }
+		void ChangeMaterialTexture(std::shared_ptr<graphics::Texture> texture) { mMaterial->SetTexture(texture); }
 
 		void SetReverse(bool isReverse) { mReverse = isReverse; }
 		void BindReverseCB();

@@ -51,7 +51,7 @@ namespace da
 		// senser
 		{
 			mMonsterSensorCollider->SetDetectionType(Collider2D::eDetectionType::Sensor);
-			mMonsterSensorCollider->SetSize(math::Vector2(4.50f, 1.90f));
+			mMonsterSensorCollider->SetSize(math::Vector2(3.50f, 1.90f));
 			mMonsterSensorCollider->SetCenter(math::Vector2(0.0f, 0.450f));
 		}
 

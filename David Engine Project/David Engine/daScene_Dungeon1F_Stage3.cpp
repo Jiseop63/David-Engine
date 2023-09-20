@@ -139,5 +139,38 @@ namespace da
 	}
 	void Scene_Dungeon1F_Stage3::addGameObjects()
 	{
+		// test enemy
+		{
+			SkelScript* skelScript = objects::InstantiateSkel(this);
+			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(1.50f, 1.250f, ObjectZ));
+		}
+		// test enemy
+		{
+			SkelScript* skelScript = objects::InstantiateSkel(this);
+			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(-1.50f, 1.250f, ObjectZ));
+		}
+
+		// test enemy
+		{
+			BansheeScript* skelScript = objects::InstantiateBanshee(this);
+			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(2.50f, -2.50f, ObjectZ));
+		}
+		// test enemy
+		{
+			BansheeScript* skelScript = objects::InstantiateBanshee(this);
+			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(-2.50f, -2.50f, ObjectZ));
+		}
+
+		// test enemy
+		{
+			BansheeScript* bansheeScript = objects::InstantiateBanshee(this);
+			bansheeScript->GetOwner()->GetTransform()->SetPosition(Vector3(-3.50f, 2.80f, ObjectZ));
+		}
+
+		// test enemy
+		{
+			BansheeScript* bansheeScript = objects::InstantiateBanshee(this);
+			bansheeScript->GetOwner()->GetTransform()->SetPosition(Vector3(3.50f, 2.80f, ObjectZ));
+		}
 	}
 }

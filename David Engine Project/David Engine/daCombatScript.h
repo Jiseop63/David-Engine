@@ -6,7 +6,7 @@
 namespace da
 {
 	class CreatureScript;
-	class ProjectileScript;
+	class lProjectileScript;
 	class EffectScript;
 	class CombatScript : public Script
 	{
@@ -27,7 +27,7 @@ namespace da
 
 	protected:
 		EffectScript* callEffect();
-		ProjectileScript* callProjectile();
+		lProjectileScript* callProjectile();
 #pragma endregion
 
 #pragma region call by player
@@ -61,7 +61,7 @@ namespace da
 		MeshRenderer*					mCombatRenderer;
 		
 		std::vector<EffectScript*>		mCombatEffects;
-		std::vector<ProjectileScript*>	mCombatProjectiles;
+		std::vector<lProjectileScript*>	mCombatProjectiles;
 
 	protected:
 		CreatureScript*					mOwnerScript;

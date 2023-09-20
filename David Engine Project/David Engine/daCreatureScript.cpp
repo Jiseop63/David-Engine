@@ -4,6 +4,7 @@
 #include "daResources.h"
 #include "daSceneManager.h"
 #include "daEffectScript.h"
+#include "daActionUnitScript.h"
 #include "daTime.h"
 
 namespace da
@@ -46,6 +47,27 @@ namespace da
 		mCreatureFootCollider->SetName(L"FootCollider");
 		mCreatureFootCollider->SetDetectionType(Collider2D::eDetectionType::Default);
 		GetOwner()->SetFootCollider(mCreatureFootCollider);
+	}
+
+	ActionUnitScript* CreatureScript::callActionUnit()
+	{
+		for (size_t unit = 0; unit < mEffects.size(); unit++)
+		{
+			if (GameObject::eObjectState::Inactive ==
+				mActionUnits[unit]->GetOwner()->GetObjectState())
+				return mActionUnits[unit];
+		}
+		return nullptr;
+	}
+
+	void CreatureScript::InactiveObejct()
+	{
+		GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
+	}
+
+	void CreatureScript::ActiveObejct()
+	{
+		GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 	}
 
 	EffectScript* CreatureScript::callEffect()

@@ -34,6 +34,6 @@ namespace da
 		else
 			texture = Resources::Find<Texture>(L"BasicCursorTexture");
 		MeshRenderer* mr = GetOwner()->GetComponent<MeshRenderer>();
-		mr->ChangeSlotTexture(texture);
+		mr->ChangeMaterialTexture(texture);
 	}
 }

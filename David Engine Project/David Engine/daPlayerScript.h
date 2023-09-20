@@ -1,5 +1,6 @@
 #pragma once
 #include "daCreatureScript.h"
+#include "daGameObject.h"
 #include "daRigidbody.h"
 #include "daAnimator.h"
 #include "daMeshRenderer.h"
@@ -39,7 +40,7 @@ namespace da
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 
-
+		virtual void AddActionUnit(GameObject* unit) override;
 		virtual void AddEffectObject(GameObject* effectObject) override;
 		void GetDamage();
 		void GetHeal();
@@ -85,6 +86,8 @@ namespace da
 	public:
 		PlayerCombatScript* SetWeaponObject(GameObject* object);
 		PlayerCombatScript* GetWeaponScript() { return mWeaponScript; }
+		void ActiveWeapon() { mWeaponScript->GetOwner()->SetObjectState(GameObject::eObjectState::Active); }
+
 		const structs::sDashData* GetDashData() const { return &mDashData; }
 
 		void downDashCount() { mDashData.CurDashCount--; }
@@ -162,11 +165,11 @@ namespace da
 		ePlayerState	mpreviousState;
 
 		int				mMoveCondition;
-		float			mDustAccumulateTime;
+		structs::sActionTimeValues mDustTime;
+		structs::sActionTimeValues mDashTime;
 
 		bool			mDashRunning;
 		float			mHoldingDashTime;
-
 		// ÇÃ·¿Æû ¿¹¿ÜÃ³¸® º¯¼ö
 	private:
 		bool			mJumping;
