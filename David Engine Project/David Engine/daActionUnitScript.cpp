@@ -1,7 +1,8 @@
 #include "daActionUnitScript.h"
+#include "daTime.h"
 #include "daGameObject.h"
 #include "daCreatureScript.h"
-#include "daTime.h"
+#include "daSkellBossScript.h"
 namespace da
 {
 	ActionUnitScript::ActionUnitScript()
@@ -75,14 +76,13 @@ namespace da
 	}
 	void ActionUnitScript::OnActive()
 	{
-		mUnitBeginPosition = mOwnerScript->GetCreatureTransform()->GetPosition() + mOffsetPosition;
 		// Transform 세팅		
+		mActionUnitTransform->SetScale(math::Vector3(mUnitInfo.Scale, mUnitInfo.Scale, 1.0f));
+		mUnitBeginPosition = mOwnerScript->GetCreatureTransform()->GetPosition() + mOffsetPosition;
 		if (UnitActionType::JustRotate == mUnitActionType
 			|| UnitActionType::UsingRotation == mUnitActionType)
 		{
 			mActionUnitTransform->SetRotation(math::Vector3(0.0f, 0.0f, mUnitInfo.RotateAngle));
-			/*math::Vector3 dir = mOffsetPosition.y * mActionUnitTransform->Up();
-			mUnitBeginPosition = mOwnerScript->GetCreatureTransform()->GetPosition() + dir;*/
 		}
 		mActionUnitTransform->SetPosition(mUnitBeginPosition);
 
@@ -121,6 +121,43 @@ namespace da
 
 	void ActionUnitScript::OnCollisionEnter(Collider2D* other)
 	{
+		
+		if (enums::eLayerType::Monster == other->GetOwner()->GetLayerType()
+			&& other->IsBody())
+		{
+			GameObject* creatureObj = other->GetOwner();
+			CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
+			// 피격 호출
+			mOwnerScript->CallHitEffect(creatureScript->GetCreatureTransform()->GetPosition());			
+			//SceneManager::GetMainCameraScript()->SetOscillation(120.0f, 0.1250f);
 
+			// 최종 피해량
+			float totalDamage = 6.0f;
+
+
+			// 피격 호출
+			creatureScript->OnDamaged(totalDamage);
+		}
+		if (enums::eLayerType::Boss == other->GetOwner()->GetLayerType()
+			&& other->IsBody())
+		{
+			GameObject* creatureObj = other->GetOwner();
+			SkellBossScript* bossScript = creatureObj->GetComponent<SkellBossScript>();
+			// 보스 피격 호출
+			mOwnerScript->CallHitEffect(bossScript->GetCreatureTransform()->GetPosition());
+			bossScript->IncreaseDamageCount();
+			//SceneManager::GetMainCameraScript()->SetOscillation(120.0f, 0.1250f);	// 카메라 진동
+		}
+		if (enums::eLayerType::Playable == other->GetOwner()->GetLayerType()
+			&& other->IsBody())
+		{
+			GameObject* creatureObj = other->GetOwner();
+			CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
+
+			// 최종 피해량
+			float totalDamage = 5.0f;
+			// 피격 호출
+			creatureScript->OnDamaged(totalDamage);
+		}
 	}
 }

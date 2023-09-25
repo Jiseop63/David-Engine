@@ -3,9 +3,9 @@
 #include "daGameObject.h"
 #include "daResources.h"
 #include "daSceneManager.h"
-#include "daEffectScript.h"
-#include "daActionUnitScript.h"
 #include "daTime.h"
+
+#include "daActionUnitScript.h"
 
 namespace da
 {
@@ -51,7 +51,7 @@ namespace da
 
 	ActionUnitScript* CreatureScript::callActionUnit()
 	{
-		for (size_t unit = 0; unit < mEffects.size(); unit++)
+		for (size_t unit = 0; unit < mActionUnits.size(); unit++)
 		{
 			if (GameObject::eObjectState::Inactive ==
 				mActionUnits[unit]->GetOwner()->GetObjectState())
@@ -69,18 +69,7 @@ namespace da
 	{
 		GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 	}
-
-	EffectScript* CreatureScript::callEffect()
-	{
-		for (size_t effect = 0; effect < mEffects.size(); effect++)
-		{
-			if (GameObject::eObjectState::Inactive ==
-				mEffects[effect]->GetOwner()->GetObjectState())
-				return mEffects[effect];
-		}
-		return nullptr;
-	}
-
+		
 	void CreatureScript::visualUpdate()
 	{
 		reverseTexture();
@@ -141,5 +130,22 @@ namespace da
 		mCreatureStat.CurHP -= damage;
 		if (0 >= mCreatureStat.CurHP)
 			mCreatureStat.CurHP = 0;
+	}
+	void CreatureScript::CallHitEffect(math::Vector3 position)
+	{
+		if (7 <= mHitEffectAngle)
+			mHitEffectAngle = 0.0f;
+		mHitEffectAngle += 1.80f;
+		// 방향 구하기
+		ActionUnitScript* actionUnit = callActionUnit();
+		actionUnit->SetUnitTypes(UnitActionType::Stay, UnitUsageType::OnlyAnimation);
+		actionUnit->SetNextAnimation(L"Slash", false);
+		actionUnit->SetOffsetPosition(math::Vector3(0.0f, -0.20f, 0.0f));
+		structs::sActionUnitInfo unitInfo = {};
+		unitInfo.Scale = 1.750f;
+		unitInfo.Time.End = 2.0f;
+		unitInfo.RotateAngle = mHitEffectAngle;
+		actionUnit->SetUnitInfo(unitInfo);
+		actionUnit->OnActive();
 	}
 }

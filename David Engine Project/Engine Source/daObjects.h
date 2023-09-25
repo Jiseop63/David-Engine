@@ -11,14 +11,8 @@
 
 
 #define PLAYER_ACTIONUNIT_POOL 50
-#define PLAYER_EFFECT_POOL 20
-#define PLAYER_PROJECTILE_POOL 15
-#define PLAYER_WEAPON_EFFECT_POOL 15
-
-#define MONSTER_PROJECTILE_POOL 15
-#define MONSTER_WEAPON_EFFECT_POOL 15
-
-#define BOSS_PROJECTILE_POOL 400
+#define MONSTER_ACTIONUNIT_POOL 50
+#define BOSS_ACTIONUNIT_POOL 400
 
 namespace da::objects
 {
@@ -114,10 +108,7 @@ namespace da::objects
 #pragma region Quick Init Creature Objects	
 	static GameObject* InstantiatePlayer(Scene* scene)
 	{
-
 		GameObject* player = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Playable, L"AnimationMaterial");
-		Layer& myLayer = scene->GetLayer(enums::eLayerType::Playable);
-		
 		// 라이트
 		{
 			Light* playerLight = player->AddComponent<Light>();
@@ -129,22 +120,13 @@ namespace da::objects
 		PlayerScript* playerScript = player->AddComponent<PlayerScript>();
 		SceneManager::AddPlayerObject(player);
 
-		// 플레이어 이펙트 세팅
+		// Action unit 추가
 		for (int index = 0; index < PLAYER_ACTIONUNIT_POOL; index++)
 		{
-			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
+			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::PlayableProjectile, L"AnimationMaterial");
 			player->AddChildObject(gameObject);
 			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
 			playerScript->AddActionUnit(gameObject);
-		}
-
-		// 플레이어 이펙트 세팅
-		for (int index = 0; index < PLAYER_EFFECT_POOL; index++)
-		{
-			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
-			player->AddChildObject(gameObject);
-			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
-			playerScript->AddEffectObject(gameObject);
 		}
 
 		// weapon 세팅
@@ -152,104 +134,64 @@ namespace da::objects
 		player->AddChildObject(weaponObject);
 		PlayerCombatScript* weaponScript = playerScript->SetWeaponObject(weaponObject);
 
-		// weapon effect 세팅
-		for (int index = 0; index < PLAYER_WEAPON_EFFECT_POOL; index++)
-		{
-			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
-			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
-			weaponScript->AddEffectObject(gameObject);
-			player->AddChildObject(gameObject);
-		}
-
-		// Weapon Projectile 세팅
-		for (int index = 0; index < PLAYER_PROJECTILE_POOL; index++)
-		{
-			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::PlayableProjectile, L"ProjectileMaterial");
-			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
-			weaponScript->AddProjectileObject(gameObject);
-			player->AddChildObject(gameObject);
-		}
 		return player;
 	}
-
 	static SkelScript* InstantiateSkel(Scene* scene)
 	{
 		// enemyObject 추가
-		GameObject* enemyObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Monster, L"AnimationMaterial");
-		enemyObject->SetName(L"SkelObject");
+		GameObject* skel = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Monster, L"AnimationMaterial");
+		skel->SetName(L"SkelObject");
 		// MonsterScript 추가
-		SkelScript* enemyScript = enemyObject->AddComponent<SkelScript>();
-		MonsterScript* monsterScript = dynamic_cast<MonsterScript*>(enemyScript);
-		enemyScript->SetName(L"SkelScript");
-		// Effect 추가
-		GameObject* effectObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
-		enemyObject->AddChildObject(effectObject);
-		effectObject->SetObjectState(GameObject::eObjectState::Inactive);
-		monsterScript->AddEffectObject(effectObject);
-
+		SkelScript* skelScript = skel->AddComponent<SkelScript>();
+		MonsterScript* monsterScript = dynamic_cast<MonsterScript*>(skelScript);
+		skelScript->SetName(L"SkelScript");
+		
 		// weapon 세팅
-		GameObject* enemyWeaponObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Monster, L"AnimationMaterial");
-		enemyWeaponObj->SetName(L"SkelWeaponScript");
-		enemyObject->AddChildObject(enemyWeaponObj);
-		SkelCombatScript* enemyWeaponScript = enemyWeaponObj->AddComponent<SkelCombatScript>();
-		monsterScript->SetEnemyWeaponScript(enemyWeaponScript);
-		enemyWeaponScript->AddOwnerScript(monsterScript);
-		for (int index = 0; index < MONSTER_PROJECTILE_POOL; index++)
+		GameObject* monsterCombatObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Monster, L"AnimationMaterial");
+		monsterCombatObj->SetName(L"SkelWeaponScript");
+		skel->AddChildObject(monsterCombatObj);
+		skelScript->AddCombatObject(monsterCombatObj);
+
+		for (int index = 0; index < MONSTER_ACTIONUNIT_POOL; index++)
 		{
-			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::MonsterProjectile, L"ProjectileMaterial");
+			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::MonsterProjectile, L"AnimationMaterial");
+			skel->AddChildObject(gameObject);
 			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
-			enemyWeaponScript->AddProjectileObject(gameObject);
-			enemyObject->AddChildObject(gameObject);
+			monsterScript->AddActionUnit(gameObject);
 		}
 
 		// life Bar 추가해야함
-		GameObject* enemyLifeObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Monster, L"CreatureLifeBarMaterial");
-		enemyLifeObj->SetName(L"SkelLifeBarObject");
-		CreatureLifebarScript* creatureLifeBarScript = enemyLifeObj->AddComponent<CreatureLifebarScript>();
+		GameObject* monsterlifeObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Monster, L"CreatureLifeBarMaterial");
+		monsterlifeObject->SetName(L"SkelLifeBarObject");
+		CreatureLifebarScript* creatureLifeBarScript = monsterlifeObject->AddComponent<CreatureLifebarScript>();
 		creatureLifeBarScript->SetName(L"SkelLifeBarScript");
 		monsterScript->SetCreatureLifeScript(creatureLifeBarScript);
 		creatureLifeBarScript->SetValue(&monsterScript->GetCreatureStat()->MaxHP, &monsterScript->GetCreatureStat()->CurHP);
-		enemyLifeObj->GetTransform()->SetScale(1.0f, 0.250f, 1.0f);
+		monsterlifeObject->GetTransform()->SetScale(1.0f, 0.250f, 1.0f);
 
-		return enemyScript;
+		return skelScript;
 	}
 	static BansheeScript* InstantiateBanshee(Scene* scene)
 	{
 		// enemyObject 추가
-		GameObject* enemyObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Monster, L"AnimationMaterial");
-		enemyObject->SetName(L"BansheeObject");
+		GameObject* banshee = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Monster, L"AnimationMaterial");
+		banshee->SetName(L"BansheeObject");
 		// MonsterScript 추가
-		BansheeScript* enemyScript = enemyObject->AddComponent<BansheeScript>();
-		enemyScript->SetName(L"BansheeScript");
-		MonsterScript* monsterScript = dynamic_cast<MonsterScript*>(enemyScript);
-
-		// Effect 추가
-		GameObject* effectObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
-		enemyObject->AddChildObject(effectObject);
-		effectObject->SetObjectState(GameObject::eObjectState::Inactive);
-		monsterScript->AddEffectObject(effectObject);
-
+		BansheeScript* bansheeScript = banshee->AddComponent<BansheeScript>();
+		bansheeScript->SetName(L"BansheeScript");
+				
+		for (int index = 0; index < MONSTER_ACTIONUNIT_POOL; index++)
+		{
+			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::MonsterProjectile, L"AnimationMaterial");
+			banshee->AddChildObject(gameObject);
+			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
+			bansheeScript->AddActionUnit(gameObject);
+		}
 		// weapon 세팅
 		GameObject* enemyWeaponObj = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Monster, L"AnimationMaterial");
+		banshee->AddChildObject(enemyWeaponObj);
 		enemyWeaponObj->SetName(L"BansheeWeaponScript");
-		enemyObject->AddChildObject(enemyWeaponObj);
-		BansheeCombatScript* enemyWeaponScript = enemyWeaponObj->AddComponent<BansheeCombatScript>();
-		monsterScript->SetEnemyWeaponScript(enemyWeaponScript);
-		enemyWeaponScript->AddOwnerScript(monsterScript);
-		for (int index = 0; index < MONSTER_WEAPON_EFFECT_POOL; index++)
-		{
-			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Effect, L"AnimationMaterial");
-			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
-			enemyWeaponScript->AddEffectObject(gameObject);
-			enemyObject->AddChildObject(gameObject);
-		}
-		for (int index = 0; index < MONSTER_PROJECTILE_POOL; index++)
-		{
-			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::MonsterProjectile, L"ProjectileMaterial");
-			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
-			enemyWeaponScript->AddProjectileObject(gameObject);
-			enemyObject->AddChildObject(gameObject);
-		}
+		bansheeScript->AddCombatObject(enemyWeaponObj);
 
 
 		// life Bar 추가해야함
@@ -257,41 +199,42 @@ namespace da::objects
 		enemyLifeObj->SetName(L"BansheeLifeBarObject");
 		CreatureLifebarScript* creatureLifeBarScript = enemyLifeObj->AddComponent<CreatureLifebarScript>();
 		creatureLifeBarScript->SetName(L"BansheeLifeBarScript");
-		monsterScript->SetCreatureLifeScript(creatureLifeBarScript);
-		creatureLifeBarScript->SetValue(&monsterScript->GetCreatureStat()->MaxHP, &monsterScript->GetCreatureStat()->CurHP);
+		bansheeScript->SetCreatureLifeScript(creatureLifeBarScript);
+		creatureLifeBarScript->SetValue(&bansheeScript->GetCreatureStat()->MaxHP, &bansheeScript->GetCreatureStat()->CurHP);
 		enemyLifeObj->GetTransform()->SetScale(1.0f, 0.250f, 1.0f);
 
-		return enemyScript;
+		return bansheeScript;
 	}
 	static SkellBossScript* InstantiateSkellBoss(Scene* scene)
 	{
 		// enemyObject 추가
-		GameObject* bossObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Boss, L"AnimationMaterial");
+		GameObject* skellBoss = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Boss, L"AnimationMaterial");
 		// BossScript 추가
-		SkellBossScript* bossScript = bossObject->AddComponent<SkellBossScript>();
+		SkellBossScript* bossScript = skellBoss->AddComponent<SkellBossScript>();
 
-		GameObject* leftHand = InstantiateGameObject<GameObject>(scene, enums::eLayerType::BossProjectile, L"AnimationMaterial");
-		leftHand->GetTransform()->SetPosition(math::Vector2(-4.150f, -2.450f));
-		SkellBossHandScript* leftHandScript = leftHand->AddComponent<SkellBossHandScript>();
-		leftHandScript->SetLeftHand();
-		bossScript->SetLeftHand(leftHandScript);
+		{
+			GameObject* leftHand = InstantiateGameObject<GameObject>(scene, enums::eLayerType::BossProjectile, L"AnimationMaterial");
+			leftHand->GetTransform()->SetPosition(math::Vector2(-4.150f, -2.450f));
+			SkellBossHandScript* leftHandScript = leftHand->AddComponent<SkellBossHandScript>();
+			leftHandScript->SetLeftHand();
+			bossScript->SetLeftHand(leftHandScript);
 
-		GameObject* rightHand = InstantiateGameObject<GameObject>(scene, enums::eLayerType::BossProjectile, L"AnimationMaterial");
-		rightHand->GetTransform()->SetPosition(math::Vector2(4.150f, -0.550f));
-		SkellBossHandScript* rightHandScript = rightHand->AddComponent<SkellBossHandScript>();
-		bossScript->SetRightHand(rightHandScript);
+			GameObject* rightHand = InstantiateGameObject<GameObject>(scene, enums::eLayerType::BossProjectile, L"AnimationMaterial");
+			rightHand->GetTransform()->SetPosition(math::Vector2(4.150f, -0.550f));
+			SkellBossHandScript* rightHandScript = rightHand->AddComponent<SkellBossHandScript>();
+			bossScript->SetRightHand(rightHandScript);
+		}
 
-		for (int index = 0; index < BOSS_PROJECTILE_POOL; index++)
+		for (int index = 0; index < BOSS_ACTIONUNIT_POOL; index++)
 		{
 			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::BossProjectile, L"AnimationMaterial");
+			skellBoss->AddChildObject(gameObject);
 			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
-			bossScript->AddProjectileObject(gameObject);
-			bossObject->AddChildObject(gameObject);
+			bossScript->AddActionUnit(gameObject);
 		}
 
 		return bossScript;
 	}
-
 	
 #pragma endregion
 	static GameObject* InstantiateLandObject(Scene* scene, math::Vector3 location, math::Vector3 scale)

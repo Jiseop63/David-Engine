@@ -8,9 +8,11 @@
 #include "daResources.h"
 #include "daGameObject.h"
 
-#include "daSkelCombatScript.h"
-#include "daEffectEnemyScript.h"
 #include "daPlayerScript.h"
+
+#include "daSkelCombatScript.h"
+#include "daActionUnitScript.h"
+
 
 namespace da
 {
@@ -95,6 +97,13 @@ namespace da
 	{
 		CreatureScript::visualUpdate();
 	}
+	CombatScript* SkelScript::AddCombatObject(GameObject* object)
+	{
+		SkelCombatScript* combatScript = object->AddComponent<SkelCombatScript>();
+		combatScript->SetOwnerScript(this);
+		mMonsterCombatScript = combatScript;
+		return mMonsterCombatScript;
+	}
 #pragma endregion
 
 
@@ -162,13 +171,13 @@ namespace da
 		calcTargetDir();
 
 		// 이동하기 *이동하기전에 벽 충돌 방향 확인하는 코드 필요함
-		Collider2D::eWallCollisionState wallCollisionState = mCreatureBodyCollider->IsWallCollision();	// 벽 충돌 체크
-		math::Vector3 skelPosition = mCreatureTransform->GetPosition();									// 내 위치
-		float moveMagnitude = mCreatureStat.MoveSpeed * (float)Time::DeltaTime();						// 이동량
+		Collider2D::eWallCollisionState wallCollisionState = mCreatureBodyCollider->IsWallCollision();				// 벽 충돌 체크
+		math::Vector3 skelPosition = mCreatureTransform->GetPosition();												// 내 위치
+		float moveMagnitude = mCreatureStat.MoveSpeed * (float)Time::DeltaTime();									// 이동량
 		math::Vector2 moveDir = daRotateVector2(mCreatureDir, mCreatureFootCollider->GetEnvRotate());	// 회전까지 고려한 이동방향
-		math::Vector2 movePosition = moveDir * moveMagnitude;											// 이동위치
-		skelPosition.x += movePosition.x;																// 이동한 위치
-		skelPosition.y += movePosition.y;																// 이동한 위치
+		math::Vector2 movePosition = moveDir * moveMagnitude;														// 이동위치
+		skelPosition.x += movePosition.x;																			// 이동한 위치
+		skelPosition.y += movePosition.y;																			// 이동한 위치
 
 		// 벽 충돌 방향에 따른 이동 적용
 		if (0 <= mCreatureDir.x)
@@ -234,8 +243,8 @@ namespace da
 		if (!mAttackProgress)
 		{
 			mCreatureAnimator->PlayAnimation(L"SkelIdle");	// 애니메이션 호출
-			mMonsterCombatScript->ToDoAttack();				// 공격 기능 호출
-			mAttackProgress = true;							// 다음 진행으로 넘기기
+			mMonsterCombatScript->ToDoAttack();					// 공격 기능 호출
+			mAttackProgress = true;								// 다음 진행으로 넘기기
 		}
 	}
 	void SkelScript::readyForAttackDelay()
@@ -255,16 +264,28 @@ namespace da
 			}
 		}
 	}
+
+	CombatScript* SkelScript::AddCombatScript(GameObject* targetObj)
+	{
+		SkelCombatScript* combatScript = targetObj->AddComponent<SkelCombatScript>();
+		combatScript->SetOwnerScript(this);
+		mMonsterCombatScript = combatScript;
+		return combatScript;
+	}
 	void SkelScript::SkelHandleDead()
 	{
 		if (!mIsDead)
 		{
-			// 사망 이펙트 실행
 			mMonsterCombatScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
-			EffectScript* effect = CreatureScript::callEffect();
-			effect->SetEffectPosition(mCreatureTransform->GetPosition() + math::Vector3(0.0f, -0.20f, 0.0f));
-			effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-			effect->PlayEffect(L"Dying");
+			ActionUnitScript* unit = CreatureScript::callActionUnit();
+			unit->SetUnitTypes(UnitActionType::Stay, UnitUsageType::OnlyAnimation);
+			unit->SetNextAnimation(L"Dying", false);
+			unit->SetReverse(isLeft());
+			unit->SetOffsetPosition(math::Vector3(0.0f, -0.20f, 0.0f));
+			structs::sActionUnitInfo info = {};
+			info.Time.End = 2.0f;
+			unit->SetUnitInfo(info);
+			unit->OnActive();
 		}
 		mIsDead = true;
 	}

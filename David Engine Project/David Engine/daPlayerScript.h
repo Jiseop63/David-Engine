@@ -27,7 +27,6 @@ namespace da
 		Dead,
 	};
 
-	class EffectScript;
 	class PlayerScript : public CreatureScript
 	{
 	public:
@@ -41,7 +40,9 @@ namespace da
 		virtual void LateUpdate() override;
 
 		virtual void AddActionUnit(GameObject* unit) override;
-		virtual void AddEffectObject(GameObject* effectObject) override;
+		PlayerCombatScript* AddCombatObject(GameObject* object);
+
+
 		void GetDamage();
 		void GetHeal();
 #pragma endregion
@@ -84,9 +85,9 @@ namespace da
 
 #pragma region public Func
 	public:
-		PlayerCombatScript* SetWeaponObject(GameObject* object);
-		PlayerCombatScript* GetWeaponScript() { return mWeaponScript; }
-		void ActiveWeapon() { mWeaponScript->GetOwner()->SetObjectState(GameObject::eObjectState::Active); }
+		PlayerCombatScript* SetWeaponObject(GameObject* object);				// 삭제 예정
+		PlayerCombatScript* GetWeaponScript() { return mPlayerCombatScript; }
+		void ActiveWeapon() { mPlayerCombatScript->GetOwner()->SetObjectState(GameObject::eObjectState::Active); }
 
 		const structs::sDashData* GetDashData() const { return &mDashData; }
 
@@ -109,7 +110,6 @@ namespace da
 
 #pragma region ToDo func
 	private:
-		void todoActiveEffect(EffectScript* effect, const std::wstring name);
 		void todoDustSpawn();
 		void todoDash();
 		void todoJump();
@@ -150,7 +150,7 @@ namespace da
 #pragma region Components
 	private:
 		Light*				mLight;
-		PlayerCombatScript*		mWeaponScript;
+		PlayerCombatScript*	mPlayerCombatScript;
 #pragma endregion
 
 #pragma region Global Data

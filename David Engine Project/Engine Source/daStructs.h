@@ -7,13 +7,20 @@ namespace da::structs
 	{
 		float Start;
 		float End;
+		sActionTimeValues()
+			: Start(0.0f), End(1.0f)
+		{}
 	};
 	struct sActionUnitInfo
 	{
+		float Scale;
 		float Speed;
 		float RotateAngle;
 		float Range;
 		sActionTimeValues Time;
+		sActionUnitInfo()
+			: Scale(1.0f), Speed(0.0f), RotateAngle(0.0f), Range(0.0f), Time{}
+		{}
 	};
 
 	struct sCreatureStat

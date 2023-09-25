@@ -12,10 +12,7 @@
 namespace da
 {
 	SkellBossScript::SkellBossScript()
-		: mBossTransform(nullptr)
-		, mBossCollider(nullptr)
-		, mBossAnimator(nullptr)
-		, mPlayerScript(nullptr)
+		: mPlayerScript(nullptr)
 		, mBossActiveState(eBossState::Idle)
 		, mAttackReady(false)
 		
@@ -44,26 +41,26 @@ namespace da
 	}
 	void SkellBossScript::Initialize()
 	{
-		mBossTransform = GetOwner()->GetTransform();
-		mBossCollider = GetOwner()->AddComponent<Collider2D>();
-		mBossAnimator = GetOwner()->AddComponent<Animator>();
-
+		CreatureScript::Initialize();
+		
 		mPlayerScript = SceneManager::GetPlayerScript();
 		// Tr
-		mBossTransform->SetScale(math::Vector3(6.0f, 6.0f, 1.0f));
+		mCreatureTransform->SetScale(math::Vector3(6.0f, 6.0f, 1.0f));
 		// 보스 충돌체
-		mBossCollider->ImBody();
-		mBossCollider->SetDetectionType(Collider2D::eDetectionType::Default);
-		mBossCollider->SetSize(math::Vector2(0.45f, 0.7f));
+		mCreatureBodyCollider->ImBody();
+		mCreatureBodyCollider->SetDetectionType(Collider2D::eDetectionType::Default);
+		mCreatureBodyCollider->SetSize(math::Vector2(0.45f, 0.7f));
+		mCreatureRigidbody->ApplyComponentUsing(false);
+		mCreatureFootCollider->ApplyComponentUsing(false);
 		// 보스 애니메이션
 		std::shared_ptr<Texture> texture = Resources::Load<Texture>(L"BossSpriteSheet", L"..\\Resources\\Texture\\\\Skel\\SpriteSheet.png");
-		mBossAnimator->Create(L"SkellBossIdle", texture, math::Vector2(0.0f, 0.0f), math::Vector2(85.0f, 99.0f), 10, math::Vector2(0.0f, 0.0f), 0.10f, 150.0f);
-		mBossAnimator->Create(L"SkellBossAttact", texture, math::Vector2(0.0f, 99.0f), math::Vector2(85.0f, 128.0f), 10, math::Vector2(0.0f, 0.0f), 0.10f, 150.0f);
-		mBossAnimator->Create(L"SkellBossAttacking", Resources::Find<Texture>(L"SkellBossAttacking"), math::Vector2(0.0f, 0.0f), math::Vector2(85.0f, 128.0f), 4, math::Vector2(0.0f, 0.0f), 0.10f, 150.0f);
-		mBossAnimator->Create(L"SkellBossDead", texture, math::Vector2(0.0f, 227.0f), math::Vector2(85.0f, 128.0f), 1, math::Vector2(0.0f, 0.0f), 0.10f, 150.0f);
+		mCreatureAnimator->Create(L"SkellBossIdle", texture, math::Vector2(0.0f, 0.0f), math::Vector2(85.0f, 99.0f), 10, math::Vector2(0.0f, 0.0f), 0.10f, 150.0f);
+		mCreatureAnimator->Create(L"SkellBossAttact", texture, math::Vector2(0.0f, 99.0f), math::Vector2(85.0f, 128.0f), 10, math::Vector2(0.0f, 0.0f), 0.10f, 150.0f);
+		mCreatureAnimator->Create(L"SkellBossAttacking", Resources::Find<Texture>(L"SkellBossAttacking"), math::Vector2(0.0f, 0.0f), math::Vector2(85.0f, 128.0f), 4, math::Vector2(0.0f, 0.0f), 0.10f, 150.0f);
+		mCreatureAnimator->Create(L"SkellBossDead", texture, math::Vector2(0.0f, 227.0f), math::Vector2(85.0f, 128.0f), 1, math::Vector2(0.0f, 0.0f), 0.10f, 150.0f);
 		
-		mBossAnimator->CompleteEvent(L"SkellBossAttact") = std::bind(&SkellBossScript::attackingAnimation, this);
-		mBossAnimator->PlayAnimation(L"SkellBossIdle");
+		mCreatureAnimator->CompleteEvent(L"SkellBossAttact") = std::bind(&SkellBossScript::attackingAnimation, this);
+		mCreatureAnimator->PlayAnimation(L"SkellBossIdle");
 
 
 		mMaxLaserCount = 3;
@@ -81,7 +78,7 @@ namespace da
 		mLaserCallDelayDecay = mLaserCallDelayTime;
 
 		// 투사체 호출 딜레이 (60개가 호출됨 ㄷㄷ)
-		mProjectileCallDelayTime = 0.150f; // 4.5초동안 공격한다는 가정하에 60개가 화면에 나타날 예정
+		mProjectileCallDelayTime = 0.20f; // 4.5초동안 공격한다는 가정하에 60개가 화면에 나타날 예정
 		mProjectileCallDelayDecay = mProjectileCallDelayTime;
 
 
@@ -107,13 +104,13 @@ namespace da
 		switch (state)
 		{
 		case da::SkellBossScript::eBossState::Idle:
-			mBossAnimator->PlayAnimation(L"SkellBossIdle");
+			mCreatureAnimator->PlayAnimation(L"SkellBossIdle");
 			break;
 		case da::SkellBossScript::eBossState::Attack:
 			//mBossAnimator->PlayAnimation(L"SkellBossAttact",false);
 			break;
 		case da::SkellBossScript::eBossState::Dead:
-			mBossAnimator->PlayAnimation(L"SkellBossDead");
+			mCreatureAnimator->PlayAnimation(L"SkellBossDead");
 			break;
 		default:
 			break;
@@ -182,7 +179,7 @@ namespace da
 			// 공격 패턴 선택
 			if (mProjectileAttackOn)
 			{
-				mBossAnimator->PlayAnimation(L"SkellBossAttact");
+				mCreatureAnimator->PlayAnimation(L"SkellBossAttact");
 			}
 			else
 				mLaserAttackOn = true;
@@ -209,7 +206,7 @@ namespace da
 				mCurLaserCount = mMaxLaserCount;			// 레이저 공격 횟수 초기화
 				mRotatePerSeconds = 0.0f;
 				mBossActiveState = eBossState::Idle;
-				mBossAnimator->PlayAnimation(L"SkellBossIdle");
+				mCreatureAnimator->PlayAnimation(L"SkellBossIdle");
 			}
 		}
 	}
@@ -220,6 +217,13 @@ namespace da
 			mProjectileAttackOn = true;
 		else
 			mProjectileAttackOn = false;
+	}
+
+	void SkellBossScript::AddActionUnit(GameObject* unit)
+	{
+		SkellBossProjectileScript* bossProjectile = unit->AddComponent<SkellBossProjectileScript>();
+		bossProjectile->SetOwnerScript(this);
+		mBossProjectiles.push_back(bossProjectile);
 	}
 
 	void SkellBossScript::AddProjectileObject(GameObject* projectile)
@@ -300,12 +304,22 @@ namespace da
 				// 투사체를 4갈래로 각각 호출해주기!
 				for (size_t projectile = 0; projectile < 4; ++projectile)
 				{
+
 					SkellBossProjectileScript* targetProjectile = callProjectile();
-					// 초기화 데이터 세팅
-					mBossProjectileInfo->ProjectileAngle = projectile * 1.570f + mRotatePerSeconds;	// 회전값
-					targetProjectile->SetProjectileInfo(*mBossProjectileInfo);
-					targetProjectile->SetProjectileSize(mBossProjectileSize);
-					targetProjectile->OnActive();					
+
+					mBossProjectileInfo->ProjectileDamage = 5.0f;
+
+					structs::sActionUnitInfo unitInfo = {};
+					unitInfo.Scale = 2.0f;
+					unitInfo.Time.End = 2.0f;
+					unitInfo.Range = 5.5f;
+					unitInfo.Speed = 4.50f;
+					math::Vector3 moveDirection = math::daRotateVector3(math::Vector3::UnitY, projectile * 1.570f + mRotatePerSeconds);
+					targetProjectile->SetUnitInfo(unitInfo);
+					targetProjectile->SetUnitTypes(UnitActionType::UsingDirection, UnitUsageType::Default);
+					targetProjectile->SetNextAnimation(L"SkellBossProjectile", true);
+					targetProjectile->SetMoveDirection(moveDirection);
+					targetProjectile->OnActive();
 				}				
 			}			
 		}
@@ -315,11 +329,11 @@ namespace da
 
 	void SkellBossScript::retIdle()
 	{
-		mBossAnimator->PlayAnimation(L"SkellBossIdle");
+		mCreatureAnimator->PlayAnimation(L"SkellBossIdle");
 		mBossActiveState = eBossState::Idle;
 	}
 	void SkellBossScript::attackingAnimation()
 	{
-		mBossAnimator->PlayAnimation(L"SkellBossAttacking");
+		mCreatureAnimator->PlayAnimation(L"SkellBossAttacking");
 	}
 }

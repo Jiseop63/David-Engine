@@ -6,7 +6,6 @@
 
 namespace da
 {
-	class EffectScript;
 	class ActionUnitScript;
 	class CreatureScript : public Script
 	{
@@ -58,28 +57,17 @@ namespace da
 		virtual void OnCollisionEnter(Collider2D* other);
 		virtual void OnCollisionExit(Collider2D* other) {}
 		void OnDamaged(float damage);
+		void CallHitEffect(math::Vector3 position);
 #pragma endregion
 
 
 
 #pragma region common Func
 	public:
-		void CreatureIsNotGround() { mCreatureFootCollider->ClearGroundBuffer(); }	// 안씀
-
-		// 이건 필요할것 같은데 분류가 필요함
-		
-
-
-		void SetCreatureVelocity(math::Vector2 vector2) { mCreatureRigidbody->OverrideVelocity(vector2, 0.0f); }	// 안씀
+		void CreatureIsNotGround() { mCreatureFootCollider->ClearGroundBuffer(); }	// 안쓸 예정
+		void SetCreatureVelocity(math::Vector2 vector2) { mCreatureRigidbody->OverrideVelocity(vector2, 0.0f); }	// 안쓸 예정
 #pragma endregion
 
-
-#pragma region public Func
-	public:		
-		virtual void AddEffectObject(GameObject* effectScript) {}
-	protected:
-		EffectScript* callEffect();
-#pragma endregion
 
 #pragma region Components
 	protected:
@@ -94,7 +82,6 @@ namespace da
 #pragma region Other script
 	protected:
 		std::vector<ActionUnitScript*> mActionUnits;
-		std::vector<EffectScript*> mEffects;
 
 #pragma endregion
 
@@ -106,6 +93,7 @@ namespace da
 
 #pragma region condition
 	protected:
+		float					mHitEffectAngle;
 		bool					mIsDead;
 
 

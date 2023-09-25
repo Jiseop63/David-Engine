@@ -10,6 +10,7 @@ namespace da
 		Attack,
 		Dead,
 	};
+
 	class SkelScript : public MonsterScript
 	{
 	public:
@@ -20,9 +21,10 @@ namespace da
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 
+	public:
+		CombatScript* AddCombatObject(GameObject* object);
+		
 #pragma region Spawn
-		// 초기 위치와 스텟 정하기
-		// 등장 이펙트? 애니메이션? 진행하기
 #pragma endregion
 
 #pragma region Common Func
@@ -54,11 +56,9 @@ namespace da
 		void readyForAttackDelay(); // 공격 후딜
 #pragma endregion
 
+	public:
+		virtual CombatScript* AddCombatScript(GameObject* targetObj);  // 삭제 예정
 
-
-#pragma region Collision
-		
-#pragma endregion
 		eSkulState				mMonsterActiveState;
 		
 #pragma region Chase Value

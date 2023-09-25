@@ -9,6 +9,7 @@ namespace da
 		Attack,
 		Dead,
 	};
+
 	class BansheeScript : public MonsterScript
 	{
 	public:
@@ -18,6 +19,11 @@ namespace da
 		virtual void Initialize() override;
 		virtual void Update() override;
 		virtual void LateUpdate() override;
+
+	public:
+		virtual void AddActionUnit(GameObject* unit) override;
+		CombatScript* AddCombatObject(GameObject* object);
+
 
 #pragma region Spawn
 		// 초기 위치와 스텟 정하기

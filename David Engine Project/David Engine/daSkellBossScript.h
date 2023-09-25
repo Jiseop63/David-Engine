@@ -1,5 +1,5 @@
 #pragma once
-#include "daScript.h"
+#include "daCreatureScript.h"
 #include "daSkellBossHandScript.h"
 
 namespace da
@@ -7,7 +7,7 @@ namespace da
 	class Animator;
 	class PlayerScript;
 	class SkellBossProjectileScript;	
-	class SkellBossScript : public Script
+	class SkellBossScript : public CreatureScript
 	{
 		enum class eBossState
 		{
@@ -44,13 +44,17 @@ namespace da
 #pragma endregion
 
 	public:
-		Transform* GetBossTransform() { return mBossTransform; }
+		Transform* GetBossTransform() { return mCreatureTransform; }
 		void SetLeftHand(SkellBossHandScript* left) { mLeftHand = left; }
 		void SetRightHand(SkellBossHandScript* right) { mRightHand = right; }
 		void IncreaseDamageCount() { ++mGetDamageCount; }
+
+
+
+	public:
+		virtual void AddActionUnit(GameObject* unit) override;
+
 		void AddProjectileObject(GameObject* projectile);
-
-
 	private:
 		SkellBossProjectileScript* callProjectile();
 		
@@ -66,9 +70,6 @@ namespace da
 
 
 	private:
-		Transform*		mBossTransform;
-		Collider2D*		mBossCollider;
-		Animator*		mBossAnimator;
 		PlayerScript*	mPlayerScript;
 
 

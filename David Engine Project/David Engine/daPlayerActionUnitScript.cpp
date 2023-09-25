@@ -22,6 +22,7 @@ namespace da
 		mActionUnitAnimator->Create(L"Swing", Resources::Find<Texture>(L"SwingFX"), math::Vector2::Zero, math::Vector2(40.0f, 28.0f), 3, math::Vector2::Zero, 0.0750f, 25.0f);
 		mActionUnitAnimator->Create(L"Slash", Resources::Find<Texture>(L"SlashFX"), math::Vector2::Zero, math::Vector2(42.0f, 5.0f), 4, math::Vector2::Zero, 0.0750f, 25.0f);
 		mActionUnitAnimator->CompleteEvent(L"GreatSwing") = std::bind(&ActionUnitScript::ClearUnit, this);
+		mActionUnitAnimator->CompleteEvent(L"Swing") = std::bind(&ActionUnitScript::ClearUnit, this);
 		mActionUnitAnimator->CompleteEvent(L"Slash") = std::bind(&ActionUnitScript::ClearUnit, this);
 	}
 }

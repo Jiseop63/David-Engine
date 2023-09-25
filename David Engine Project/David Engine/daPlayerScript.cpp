@@ -12,15 +12,15 @@
 
 #include "daMonsterScript.h"
 #include "daPlayerCombatScript.h"
-#include "daPlayerEffectScript.h"
 
 #include "daPlayerActionUnitScript.h"
+#include "daBansheeProjectileScript.h"
 
 namespace da
 {
     PlayerScript::PlayerScript()
         : mLight(nullptr)
-        , mWeaponScript(nullptr)
+        , mPlayerCombatScript(nullptr)
 
         , mActiveState(ePlayerState::Idle)
         , mpreviousState(ePlayerState::Idle)
@@ -127,14 +127,6 @@ namespace da
         playerDir.Normalize();
         mCreatureDir = playerDir;
     }
-    void PlayerScript::todoActiveEffect(EffectScript* effect, const std::wstring name)
-    {
-        if (!effect)
-            return;
-        effect->SetEffectPosition(mCreatureTransform->GetPosition() + Vector3(0.0f, -0.20f, 0.0f));
-        effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-        effect->PlayEffect(name);
-    }
 #pragma endregion
 #pragma region Debuging Func
     void PlayerScript::AddActionUnit(GameObject* unit)
@@ -143,10 +135,12 @@ namespace da
         actionUnit->SetOwnerScript(this);
         mActionUnits.push_back(actionUnit);
     }
-    void PlayerScript::AddEffectObject(GameObject* effectObject)
+    PlayerCombatScript* PlayerScript::AddCombatObject(GameObject* object)
     {
-        PlayerEffectScript* enemyEffect = effectObject->AddComponent<PlayerEffectScript>();
-        mEffects.push_back(enemyEffect);
+        PlayerCombatScript* combatScript = object->AddComponent<PlayerCombatScript>();
+        combatScript->SetOwnerScript(this);
+        mPlayerCombatScript = combatScript;
+        return mPlayerCombatScript;
     }
     void PlayerScript::GetDamage()
     {
@@ -240,23 +234,18 @@ namespace da
             actionUnit->SetNextAnimation(L"Dying", false);
             actionUnit->SetReverse(isLeft());
             actionUnit->SetOffsetPosition(Vector3(0.0f, -0.20f, 0.0f));
-            structs::sActionUnitInfo info = {};
-            info.Time.End = 2.0f;
-            actionUnit->SetUnitInfo(info);
+            structs::sActionUnitInfo unitInfo = {};
+            unitInfo.Scale = 1.20f;
+            unitInfo.Time.End = 2.0f;
+            actionUnit->SetUnitInfo(unitInfo);
             actionUnit->OnActive();
-
-
-            //EffectScript* playerEffect = CreatureScript::callEffect();
-            //playerEffect->SetReverse(isLeft());
-            //todoActiveEffect(playerEffect, L"Dying");
-            //mWeaponScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
         }
         mIsDead = true;
         if (0 < mCreatureStat.CurHP)
         {
             mIsDead = false;
             ChangeState(ePlayerState::Idle);
-            mWeaponScript->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+            mPlayerCombatScript->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
         }
     }
 #pragma endregion
@@ -266,9 +255,9 @@ namespace da
         if (Input::GetKeyDown(eKeyCode::LBTN))
         {
             // 비활성이라면 활성화 시켜줌
-            if (GameObject::eObjectState::Active != mWeaponScript->GetOwner()->GetObjectState())
-                mWeaponScript->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-            mWeaponScript->ToDoAttack();
+            if (GameObject::eObjectState::Active != mPlayerCombatScript->GetOwner()->GetObjectState())
+                mPlayerCombatScript->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+            mPlayerCombatScript->ToDoAttack();
         }
     }
 #pragma endregion
@@ -353,19 +342,32 @@ namespace da
     }
     void PlayerScript::todoDustSpawn()
     {
+        /*for (int index = 0; index < 12; ++index)
+        {
+            ActionUnitScript* projectile = callActionUnit();
+            structs::sActionUnitInfo unitInfo = {};
+            unitInfo.Scale = 1.20f;
+            unitInfo.Time.End = 2.0f;
+            unitInfo.Range = 3.0f;
+            unitInfo.Speed = 3.0f;
+            math::Vector3 moveDirection = math::daRotateVector3(math::Vector3::UnitY, index * 0.520f);
+            projectile->SetUnitInfo(unitInfo);
+            projectile->SetUnitTypes(UnitActionType::UsingDirection, UnitUsageType::Default);
+            projectile->SetNextAnimation(L"DustEffect", true);
+            projectile->SetOffsetPosition(math::Vector3(0.0f, -0.20f, 0.0f));
+            projectile->SetMoveDirection(moveDirection);
+            projectile->OnActive();
+        }*/
         ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
         actionUnit->SetUnitTypes(UnitActionType::Stay, UnitUsageType::OnlyAnimation);
         actionUnit->SetNextAnimation(L"DustEffect", false);
         actionUnit->SetReverse(isLeft());
         actionUnit->SetOffsetPosition(Vector3(0.0f, -0.20f, 0.0f));
-        structs::sActionUnitInfo info = {};
-        info.Time.End = 2.0f;
-        actionUnit->SetUnitInfo(info);
+        structs::sActionUnitInfo unitInfo = {};
+        unitInfo.Scale = 1.20f;
+        unitInfo.Time.End = 2.0f;
+        actionUnit->SetUnitInfo(unitInfo);
         actionUnit->OnActive();
-
-        //EffectScript* playerEffect = CreatureScript::callEffect();
-        //playerEffect->SetReverse(isLeft());
-        //todoActiveEffect(playerEffect, L"DustEffect");
     }
 #pragma endregion
 #pragma region Jump & Dash Logic
@@ -474,10 +476,10 @@ namespace da
             actionUnit->SetNextAnimation(L"Jumping", false);
             actionUnit->SetReverse(isLeft());
             actionUnit->SetOffsetPosition(Vector3(0.0f, -0.20f, 0.0f));
-            structs::sActionUnitInfo info = {};
-
-            info.Time.End = 2.0f;
-            actionUnit->SetUnitInfo(info);
+            structs::sActionUnitInfo unitInfo = {};
+            unitInfo.Scale = 1.20f;
+            unitInfo.Time.End = 2.0f;
+            actionUnit->SetUnitInfo(unitInfo);
             actionUnit->OnActive();
 
             //EffectScript* playerEffect = CreatureScript::callEffect();
@@ -590,9 +592,9 @@ namespace da
 #pragma region public Func
     PlayerCombatScript* PlayerScript::SetWeaponObject(GameObject* object)
     {
-        mWeaponScript = object->AddComponent<PlayerCombatScript>();
-        mWeaponScript->AddOwnerScript(this);
-        return mWeaponScript;
+        mPlayerCombatScript = object->AddComponent<PlayerCombatScript>();
+        mPlayerCombatScript->SetOwnerScript(this);
+        return mPlayerCombatScript;
     }
 #pragma endregion
 }

@@ -7,9 +7,13 @@
 #include "daResources.h"
 #include "daGameObject.h"
 
-#include "daBansheeCombatScript.h"
-#include "daEffectEnemyScript.h"
 #include "daPlayerScript.h"
+#include "daBansheeCombatScript.h"
+#include "daActionUnitScript.h"
+#include "daBansheeProjectileScript.h"
+#include "daPlayerActionUnitScript.h"
+
+
 namespace da
 {
 	BansheeScript::BansheeScript()
@@ -78,8 +82,9 @@ namespace da
 		std::shared_ptr<Texture> texture = Resources::Find<Texture>(L"BansheeSpriteSheet");
 		mCreatureAnimator->Create(L"BansheeIdle", texture, math::Vector2(0.0f, 0.0f), math::Vector2(20.0f, 22.0f), 6, math::Vector2(0.0f, 0.0f), 0.1f, 60.0f);
 		mCreatureAnimator->Create(L"BansheeAttact", texture, math::Vector2(0.0f, 22.0f), math::Vector2(20.0f, 22.0f), 6, math::Vector2(0.0f, 0.0f), 0.1f, 60.0f);
-		mCreatureAnimator->PlayAnimation(L"BansheeIdle");
 		mCreatureAnimator->CompleteEvent(L"BansheeAttact") = std::bind(&BansheeScript::retIdle, this);
+
+		mCreatureAnimator->PlayAnimation(L"BansheeIdle");
 
 		mPlayerScript = SceneManager::GetPlayerScript();
 	}
@@ -91,6 +96,20 @@ namespace da
 	void BansheeScript::LateUpdate()
 	{
 		CreatureScript::visualUpdate();
+	}
+	void BansheeScript::AddActionUnit(GameObject* unit)
+	{
+		BansheeProjectileScript* projectile = unit->AddComponent<BansheeProjectileScript>();
+		projectile->SetOwnerScript(this);
+		mActionUnits.push_back(projectile);
+	}
+	CombatScript* BansheeScript::AddCombatObject(GameObject* object)
+	{
+		BansheeCombatScript* combatScript = object->AddComponent<BansheeCombatScript>();
+		combatScript->SetOwnerScript(this);
+		mMonsterCombatScript = combatScript;
+
+		return mMonsterCombatScript;
 	}
 	void BansheeScript::retIdle()
 	{
@@ -115,10 +134,10 @@ namespace da
 		switch (mMonsterActiveState)
 		{
 		case da::eBansheeState::Idle:
-			mCreatureAnimator->PlayAnimation(L"BansheeIdle");
+			//mCreatureAnimator->PlayAnimation(L"BansheeIdle");
 			break;
 		case da::eBansheeState::Attack:
-			mCreatureAnimator->PlayAnimation(L"BansheeAttack", false);
+			//mCreatureAnimator->PlayAnimation(L"BansheeAttack", false);
 			break;
 		case da::eBansheeState::Dead:
 			GetOwner()->SetObjectState(GameObject::eObjectState::Hide);
@@ -167,10 +186,16 @@ namespace da
 		{
 			// 사망 이펙트 실행
 			mMonsterCombatScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
-			EffectScript* effect = CreatureScript::callEffect();
-			effect->SetEffectPosition(mCreatureTransform->GetPosition() + math::Vector3(0.0f, -0.20f, 0.0f));
-			effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-			effect->PlayEffect(L"Dying");
+			ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
+			actionUnit->SetUnitTypes(UnitActionType::Stay, UnitUsageType::OnlyAnimation);
+			actionUnit->SetNextAnimation(L"Dying", false);
+			actionUnit->SetReverse(isLeft());
+			actionUnit->SetOffsetPosition(math::Vector3(0.0f, -0.20f, 0.0f));
+			structs::sActionUnitInfo unitInfo = {};
+			unitInfo.Scale = 1.20f;
+			unitInfo.Time.End = 2.0f;
+			actionUnit->SetUnitInfo(unitInfo);
+			actionUnit->OnActive();
 		}
 		mIsDead = true;
 	}
@@ -212,8 +237,24 @@ namespace da
 		// 공격하기 전이라면
 		if (!mAttackProgress)
 		{
-			mCreatureAnimator->PlayAnimation(L"BansheeIdle");	// 애니메이션 호출
-			mMonsterCombatScript->ToDoAttack();						// 공격 기능 호출
+			mCreatureAnimator->PlayAnimation(L"BansheeAttack", false);	// 애니메이션 호출
+			//mMonsterCombatScript->ToDoAttack();						// 공격 기능 호출
+			for (int index = 0; index < 10; ++index)
+			{
+				ActionUnitScript* projectile = CreatureScript::callActionUnit();
+				structs::sActionUnitInfo unitInfo = {};
+				unitInfo.Scale = 2.750f;
+				unitInfo.Time.End = 2.0f;
+				unitInfo.Range = 4.50f;
+				unitInfo.Speed = 2.250f;
+				math::Vector3 moveDirection = math::daRotateVector3(math::Vector3::UnitY, index * 0.620f);
+				projectile->SetUnitInfo(unitInfo);
+				projectile->SetUnitTypes(UnitActionType::UsingDirection, UnitUsageType::Default);
+				projectile->SetNextAnimation(L"BansheeBulletIdle", true);
+				projectile->SetOffsetPosition(math::Vector3(0.0f, -0.20f, 0.0f));
+				projectile->SetMoveDirection(moveDirection);
+				projectile->OnActive();
+			}
 			mAttackProgress = true;									// 다음 진행으로 넘기기
 			mIsAttacked = false;									// 애니메이션 초기화
 		}

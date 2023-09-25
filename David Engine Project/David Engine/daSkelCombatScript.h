@@ -16,8 +16,6 @@ namespace da
 		virtual void LateUpdate() override;
 
 	public:
-		virtual void AddProjectileObject(GameObject* object) override;
-
 		virtual void ToDoAttack() override;
 		virtual void attackProjectile() override;
 

@@ -3,8 +3,8 @@
 #include "daTime.h"
 #include "daGameObject.h"
 #include "daEffectScript.h"
-#include "dalProjectileScript.h"
 #include "daCreatureScript.h"
+#include "daActionUnitScript.h"
 
 namespace da
 {
@@ -12,8 +12,6 @@ namespace da
 		: mCombatTransform(nullptr)
 		, mCombatRenderer(nullptr)
 		, mCombatAnimator(nullptr)
-		, mCombatEffects{}
-		, mCombatProjectiles{}
 		, mOwnerScript(nullptr)
 		, mOwnerPosition(math::Vector3::Zero)
 		, mOwnerDir(math::Vector2::UnitX)
@@ -37,39 +35,6 @@ namespace da
 		mCombatRenderer = GetOwner()->GetComponent<MeshRenderer>();
 		mCombatAnimator = GetOwner()->AddComponent<Animator>();
 	}
-
-	EffectScript* CombatScript::callEffect()
-	{
-		for (size_t effect = 0; effect < mCombatEffects.size(); effect++)
-		{
-			if (GameObject::eObjectState::Inactive ==
-				mCombatEffects[effect]->GetOwner()->GetObjectState())
-				return mCombatEffects[effect];
-		}
-		return nullptr;
-	}
-	lProjectileScript* CombatScript::callProjectile()
-	{
-		for (size_t projectile = 0; projectile < mCombatProjectiles.size(); ++projectile)
-		{
-			if (GameObject::eObjectState::Inactive ==
-				mCombatProjectiles[projectile]->GetOwner()->GetObjectState())
-				return mCombatProjectiles[projectile];
-		}
-		return nullptr;
-	}
-
-	//void CombatScript::ToDoAttack()
-	//{
-	//	// Weapon 정보가 필요함
-	//	if (mOwnerWeapon->AttackStat.AttackReady)
-	//	{
-	//		attackEffect();
-	//		attackProjectile();
-	//		attackPlay();
-	//		mOwnerWeapon->AttackStat.AttackReady = false;
-	//	}
-	//}
 
 	void CombatScript::updateReverseRenderer()
 	{		
@@ -98,18 +63,6 @@ namespace da
 			}
 		}
 	}
-	void CombatScript::attackEffect()
-	{
-		// 유효한 객체 가져오기
-		EffectScript* effect = callEffect();
-		// 세팅 해주기
-		math::Vector3 ownerDir(mOwnerDir.x, mOwnerDir.y, 0.0f);
-		effect->SetEffectScale(mEffectScale);
-		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, mEffectAngle - 1.570f));
-		effect->SetEffectPosition(mCombatTransform->GetPosition() + (ownerDir * mWeaponInfo->ProjectileStat.ProjectileCenterPadding));
-		effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-		effect->PlayEffect(mWeaponInfo->ProjectileStat.EffectName);
-	}
 	void CombatScript::attackPlay()
 	{
 		// combat 클래스에서는 일단 이렇게 만들고, 상속받은 객체의 weapon정보로 진행될것
@@ -127,19 +80,5 @@ namespace da
 			else
 				mWeaponAttacked = true;			
 		}
-	}
-
-	void CombatScript::CallHitEffect(math::Vector3 position)
-	{
-		if (7 <= mHitEffectAngle)
-			mHitEffectAngle = 0.0f;
-		mHitEffectAngle += 1.80f;
-		// 방향 구하기
-		EffectScript* effect = callEffect();
-		effect->SetEffectScale(math::Vector3(1.50f, 1.50f, 1.0f));
-		effect->SetEffectRotation(math::Vector3(0.0f, 0.0f, mHitEffectAngle));
-		effect->SetEffectPosition(position - math::Vector3(0.0f, 0.2f, 0.0f));
-		effect->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-		effect->PlayEffect(L"Slash");
 	}
 }

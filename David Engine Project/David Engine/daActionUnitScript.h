@@ -71,13 +71,13 @@ namespace da
 
 		CreatureScript* mOwnerScript;
 
-	private:
+	protected:
 		math::Vector3	mOffsetPosition;
 		math::Vector3	mUnitBeginPosition;
 		math::Vector3	mUnitDirection;
 
 		structs::sActionUnitInfo mUnitInfo;
-	private:
+	protected:
 		UnitActionType	mUnitActionType;
 		UnitUsageType	mUnitUsageType;
 		std::wstring	mUnitAnimationName;

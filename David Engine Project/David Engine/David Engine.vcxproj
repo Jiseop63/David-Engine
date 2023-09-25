@@ -148,7 +148,7 @@
   <ItemGroup>
     <ClInclude Include="daActionUnitScript.h" />
     <ClInclude Include="daArmourScript.h" />
-    <ClInclude Include="daBansheeAttackEffect.h" />
+    <ClInclude Include="daBansheeProjectileScript.h" />
     <ClInclude Include="daBansheeCombatScript.h" />
     <ClInclude Include="daBansheeScript.h" />
     <ClInclude Include="daButtonScript.h" />
@@ -158,11 +158,10 @@
     <ClInclude Include="daCreatureLifebarScript.h" />
     <ClInclude Include="daCreatureScript.h" />
     <ClInclude Include="daEffectEnemyScript.h" />
+    <ClInclude Include="daMonsterActionUnitScript.h" />
     <ClInclude Include="daMonsterScript.h" />
     <ClInclude Include="daPlayerActionUnitScript.h" />
-    <ClInclude Include="daPlayerEffectScript.h" />
     <ClInclude Include="daEffectScript.h" />
-    <ClInclude Include="daAttackEffectScript.h" />
     <ClInclude Include="daSkelCombatScript.h" />
     <ClInclude Include="daGameDataManager.h" />
     <ClInclude Include="daGridScript.h" />
@@ -172,9 +171,7 @@
     <ClInclude Include="daLifeBarScript.h" />
     <ClInclude Include="daLoadScenes.h" />
     <ClInclude Include="daCursorScript.h" />
-    <ClInclude Include="daPlayerProjectileScript.h" />
     <ClInclude Include="daPlayerScript.h" />
-    <ClInclude Include="dalProjectileScript.h" />
     <ClInclude Include="daScene_Dungeon1F_Stage1.h" />
     <ClInclude Include="daScene_Dungeon1F_Stage2.h" />
     <ClInclude Include="daScene_Dungeon1F_Stage3.h" />
@@ -195,7 +192,7 @@
   <ItemGroup>
     <ClCompile Include="daActionUnitScript.cpp" />
     <ClCompile Include="daArmourScript.cpp" />
-    <ClCompile Include="daBansheeAttackEffect.cpp" />
+    <ClCompile Include="daBansheeProjectileScript.cpp" />
     <ClCompile Include="daBansheeCombatScript.cpp" />
     <ClCompile Include="daBansheeScript.cpp" />
     <ClCompile Include="daButtonScript.cpp" />
@@ -206,11 +203,10 @@
     <ClCompile Include="daCreatureScript.cpp" />
     <ClCompile Include="daDashCountScript.cpp" />
     <ClCompile Include="daEffectEnemyScript.cpp" />
+    <ClCompile Include="daMonsterActionUnitScript.cpp" />
     <ClCompile Include="daMonsterScript.cpp" />
     <ClCompile Include="daPlayerActionUnitScript.cpp" />
-    <ClCompile Include="daPlayerEffectScript.cpp" />
     <ClCompile Include="daEffectScript.cpp" />
-    <ClCompile Include="daAttackEffectScript.cpp" />
     <ClCompile Include="daSkelCombatScript.cpp" />
     <ClCompile Include="daGameDataManager.cpp" />
     <ClCompile Include="daCursorScript.cpp" />
@@ -219,9 +215,7 @@
     <ClCompile Include="daItemScript.cpp" />
     <ClCompile Include="daLayerScript.cpp" />
     <ClCompile Include="daLifeBarScript.cpp" />
-    <ClCompile Include="daPlayerProjectileScript.cpp" />
     <ClCompile Include="daPlayerScript.cpp" />
-    <ClCompile Include="dalProjectileScript.cpp" />
     <ClCompile Include="daScene_Dungeon1F_Stage1.cpp" />
     <ClCompile Include="daScene_Dungeon1F_Stage2.cpp" />
     <ClCompile Include="daScene_Dungeon1F_Stage3.cpp" />

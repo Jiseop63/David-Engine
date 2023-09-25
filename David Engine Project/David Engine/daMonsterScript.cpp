@@ -1,8 +1,9 @@
 #include "daMonsterScript.h"
+
 #include "daGameObject.h"
 #include "daCreatureLifebarScript.h"
-#include "daEffectEnemyScript.h"
 #include "daCombatScript.h"
+#include "daMonsterActionUnitScript.h"
 
 namespace da
 {
@@ -23,13 +24,13 @@ namespace da
 		CreatureScript::Initialize();
 		mMonsterSensorCollider = GetOwner()->AddComponent<Collider2D>();
 	}
-	void MonsterScript::AddEffectObject(GameObject* effectObject)
+	void MonsterScript::AddActionUnit(GameObject* unit)
 	{
-		EffectEnemyScript* enemyEffect = effectObject->AddComponent<EffectEnemyScript>();
-		mEffects.push_back(enemyEffect);
+		MonsterActionUnitScript* actionUnit = unit->AddComponent<MonsterActionUnitScript>();
+		actionUnit->SetOwnerScript(this);
+		mActionUnits.push_back(actionUnit);
 	}
 
-#pragma region Init other script
 	CreatureLifebarScript* MonsterScript::SetCreatureLifeScript(CreatureLifebarScript* creature)
 	{
 		mMonsterLifeScript = creature;
@@ -37,5 +38,4 @@ namespace da
 		mMonsterLifeScript->SetValue(&mCreatureStat.MaxHP, &mCreatureStat.CurHP);
 		return creature;
 	}
-#pragma endregion
 }

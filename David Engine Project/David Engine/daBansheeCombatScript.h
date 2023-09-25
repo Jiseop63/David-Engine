@@ -16,15 +16,7 @@ namespace da
 		virtual void LateUpdate() override;
 
 	public:
-		virtual void AddEffectObject(GameObject* object) override;
-		virtual void AddProjectileObject(GameObject* object) override;
-
 		virtual void ToDoAttack() override;
-		virtual void attackEffect() override;
-		virtual void attackProjectile() override;
-
-	protected:
-		virtual void updateWeaponPosition() override;
 
 	public:
 		void attackFinished() { mAttackFinished = true; }

@@ -9,7 +9,8 @@
 #include "daMeshRenderer.h"
 
 #include "daMonsterScript.h"
-#include "dalProjectileScript.h"
+#include "daActionUnitScript.h"
+
 
 namespace da
 {
@@ -59,29 +60,24 @@ namespace da
 			mWeaponInfo->ProjectileStat.ProjectileAngle = -1.570f;
 
 	}
-	void SkelCombatScript::AddProjectileObject(GameObject* object)
-	{
-		lProjectileScript* weaponProjectile = object->AddComponent<lProjectileScript>();
-		weaponProjectile->SetCombatScript(this);
-		mCombatProjectiles.push_back(weaponProjectile);
-	}
 	void SkelCombatScript::ToDoAttack()
 	{
-		CombatScript::attackPlay();
+		CombatScript::attackPlay();		
 	}
 
 	void SkelCombatScript::attackProjectile()
 	{
-		// 유효한 객체 가져오기
-		lProjectileScript* projectile = callProjectile();
+		ActionUnitScript* actionUnit = mOwnerScript->callActionUnit();
+		structs::sActionUnitInfo unitInfo = {};
+		unitInfo.Scale = 1.20f;
+		unitInfo.Time.End = 0.20f;
+		unitInfo.RotateAngle = mWeaponInfo->ProjectileStat.ProjectileAngle;
 
-		// 초기화 데이터 세팅
-		mWeaponInfo->ProjectileStat.ProjectileActive = true;
-		mWeaponInfo->ProjectileStat.ProjectileValidAccumulateTime = 0.0f;
+		actionUnit->SetUnitTypes(UnitUsageType::OnlyCollider, UnitActionType::JustRotate);
+		actionUnit->SetUnitInfo(unitInfo);
+		actionUnit->SetOffsetPosition(math::Vector3(mOwnerDir.x * mWeaponInfo->ProjectileStat.ProjectileCenterPadding, mOwnerDir.y * mWeaponInfo->ProjectileStat.ProjectileCenterPadding, 0.0f)); // 아직 문제있음
 
-		projectile->SetProjectileInfo(&mWeaponInfo->ProjectileStat);
-		projectile->SetProjectileSize(mProjectileSize);
-		projectile->OnActive();
+		actionUnit->OnActive();
 	}
 
 	void SkelCombatScript::OnCollisionEnter(Collider2D* other)

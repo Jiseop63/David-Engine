@@ -45,15 +45,13 @@
 #include "daPlayerScript.h"
 #include "daPlayerCombatScript.h"
 
-#include "daPlayerEffectScript.h"
-#include "daAttackEffectScript.h"
-#include "dalProjectileScript.h"
-
 // Monster
 #include "daMonsterScript.h"
 #include "daCreatureLifebarScript.h"
+
 #include "daSkelScript.h"
 #include "daSkelCombatScript.h"
+
 #include "daBansheeScript.h"
 #include "daBansheeCombatScript.h"
 
