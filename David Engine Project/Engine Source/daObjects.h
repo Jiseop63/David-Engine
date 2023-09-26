@@ -213,16 +213,14 @@ namespace da::objects
 		SkellBossScript* bossScript = skellBoss->AddComponent<SkellBossScript>();
 
 		{
-			GameObject* leftHand = InstantiateGameObject<GameObject>(scene, enums::eLayerType::BossProjectile, L"AnimationMaterial");
-			leftHand->GetTransform()->SetPosition(math::Vector2(-4.150f, -2.450f));
-			SkellBossHandScript* leftHandScript = leftHand->AddComponent<SkellBossHandScript>();
-			leftHandScript->SetLeftHand();
-			bossScript->SetLeftHand(leftHandScript);
 
-			GameObject* rightHand = InstantiateGameObject<GameObject>(scene, enums::eLayerType::BossProjectile, L"AnimationMaterial");
+			GameObject* leftHand = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Boss, L"AnimationMaterial");
+			bossScript->SetLeftHand(leftHand);
+			leftHand->GetTransform()->SetPosition(math::Vector2(-4.150f, -2.450f));
+
+			GameObject* rightHand = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Boss, L"AnimationMaterial");
+			bossScript->SetRightHand(rightHand);
 			rightHand->GetTransform()->SetPosition(math::Vector2(4.150f, -0.550f));
-			SkellBossHandScript* rightHandScript = rightHand->AddComponent<SkellBossHandScript>();
-			bossScript->SetRightHand(rightHandScript);
 		}
 
 		for (int index = 0; index < BOSS_ACTIONUNIT_POOL; index++)

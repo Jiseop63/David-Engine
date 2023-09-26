@@ -7,6 +7,12 @@ namespace da
 {
 	enum class UnitActionType
 	{
+		Duration,
+		Range,
+		None,
+	};
+	enum class UnitRenderType
+	{
 		Stay,				// dont move
 		JustRotate,			// dont move & rotate
 		UsingDirection,		// move to dir
@@ -32,8 +38,30 @@ namespace da
 
 #pragma region Initialize type
 	public:
-		void SetUnitTypes(UnitActionType actionType, UnitUsageType usageType) { mUnitActionType = actionType; mUnitUsageType = usageType; }
-		void SetUnitTypes(UnitUsageType usageType, UnitActionType actionType) { mUnitActionType = actionType; mUnitUsageType = usageType; }
+		void SetUnitTypes(UnitRenderType actionType, UnitUsageType usageType, UnitActionType unitActionType)
+		{
+			mUnitRenderType = actionType; mUnitUsageType = usageType; mUnitActionType = unitActionType;
+		}
+		void SetUnitTypes(UnitRenderType actionType, UnitActionType unitActionType, UnitUsageType usageType)
+		{
+			mUnitRenderType = actionType; mUnitUsageType = usageType; mUnitActionType = unitActionType;
+		}
+		void SetUnitTypes(UnitActionType unitActionType, UnitRenderType actionType, UnitUsageType usageType)
+		{
+			mUnitRenderType = actionType; mUnitUsageType = usageType; mUnitActionType = unitActionType;
+		}
+		void SetUnitTypes(UnitActionType unitActionType, UnitUsageType usageType, UnitRenderType actionType)
+		{
+			mUnitRenderType = actionType; mUnitUsageType = usageType; mUnitActionType = unitActionType;
+		}
+		void SetUnitTypes(UnitUsageType usageType, UnitActionType unitActionType, UnitRenderType actionType)
+		{
+			mUnitRenderType = actionType; mUnitUsageType = usageType; mUnitActionType = unitActionType;
+		}
+		void SetUnitTypes(UnitUsageType usageType, UnitRenderType actionType, UnitActionType unitActionType)
+		{
+			mUnitRenderType = actionType; mUnitUsageType = usageType; mUnitActionType = unitActionType;
+		}
 		void SetOwnerScript(CreatureScript* ownerScript) { mOwnerScript = ownerScript; }
 		void SetUnitInfo(const structs::sActionUnitInfo unitInfo)  { mUnitInfo = unitInfo; }
 		const structs::sActionUnitInfo GetUnitInfo() { return mUnitInfo; }
@@ -42,6 +70,7 @@ namespace da
 #pragma region Initialize transform
 		void SetOffsetPosition(math::Vector3 offset) { mOffsetPosition = offset; }
 		void SetMoveDirection(math::Vector3 direction) { mUnitDirection = direction; }
+		void SetOverridePosition(math::Vector3 position) { mUnitBeginPosition = position; mActionUnitTransform->SetPosition(position); }
 #pragma endregion
 
 #pragma region initialize visual
@@ -78,8 +107,9 @@ namespace da
 
 		structs::sActionUnitInfo mUnitInfo;
 	protected:
-		UnitActionType	mUnitActionType;
+		UnitRenderType	mUnitRenderType;
 		UnitUsageType	mUnitUsageType;
+		UnitActionType	mUnitActionType;
 		std::wstring	mUnitAnimationName;
 		bool			mUnitAnimationLoop;
 	};

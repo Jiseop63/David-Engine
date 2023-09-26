@@ -49,6 +49,10 @@ namespace da
 		std::function<void()>& CompleteEvent(const std::wstring& name);
 		std::function<void()>& EndEvent(const std::wstring& name);
 		std::function<void()>& ActionEvent(const std::wstring& name, UINT index);
+
+
+	public:
+		Animation* GetActiveAnimation() { return mActiveAnimation; }
 		
 	private:
 		std::map<std::wstring, Animation*>	mAnimations;

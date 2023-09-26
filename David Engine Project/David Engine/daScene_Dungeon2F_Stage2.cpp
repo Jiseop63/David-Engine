@@ -59,7 +59,7 @@ namespace da
 
 		CollisionManager::SetLayer(enums::eLayerType::PlayableProjectile, enums::eLayerType::Boss);
 		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::BossProjectile);
-
+		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Boss);
 	}
 	void Scene_Dungeon2F_Stage2::OnExit()
 	{

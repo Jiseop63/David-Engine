@@ -1,4 +1,6 @@
 #include "daSkellBossScript.h"
+#include "daSkellBossScript.h"
+#include "daSkellBossScript.h"
 #include "daResources.h"
 #include "daTime.h"
 #include "daGameObject.h"
@@ -8,7 +10,7 @@
 #include "daPlayerScript.h"
 #include "daSceneManager.h"
 #include "daSkellBossProjectileScript.h"
-
+#include "daSkellBossHandScript.h"
 namespace da
 {
 	SkellBossScript::SkellBossScript()
@@ -226,13 +228,7 @@ namespace da
 		mBossProjectiles.push_back(bossProjectile);
 	}
 
-	void SkellBossScript::AddProjectileObject(GameObject* projectile)
-	{
-		SkellBossProjectileScript* bossProjectile = projectile->AddComponent<SkellBossProjectileScript>();
-		bossProjectile->SetOwnerScript(this);
-		mBossProjectiles.push_back(bossProjectile);
-	}
-	SkellBossProjectileScript* SkellBossScript::callProjectile()
+	SkellBossProjectileScript* SkellBossScript::CallProjectile()
 	{
 		for (size_t projectile = 0; projectile < mBossProjectiles.size(); ++projectile)
 		{
@@ -305,18 +301,18 @@ namespace da
 				for (size_t projectile = 0; projectile < 4; ++projectile)
 				{
 
-					SkellBossProjectileScript* targetProjectile = callProjectile();
+					SkellBossProjectileScript* targetProjectile = CallProjectile();
 
 					mBossProjectileInfo->ProjectileDamage = 5.0f;
 
 					structs::sActionUnitInfo unitInfo = {};
-					unitInfo.Scale = 2.0f;
+					unitInfo.Scale = 1.0f;
 					unitInfo.Time.End = 2.0f;
-					unitInfo.Range = 5.5f;
+					unitInfo.Range = 6.5f;
 					unitInfo.Speed = 4.50f;
 					math::Vector3 moveDirection = math::daRotateVector3(math::Vector3::UnitY, projectile * 1.570f + mRotatePerSeconds);
 					targetProjectile->SetUnitInfo(unitInfo);
-					targetProjectile->SetUnitTypes(UnitActionType::UsingDirection, UnitUsageType::Default);
+					targetProjectile->SetUnitTypes(UnitRenderType::UsingDirection, UnitUsageType::Default, UnitActionType::Range);
 					targetProjectile->SetNextAnimation(L"SkellBossProjectile", true);
 					targetProjectile->SetMoveDirection(moveDirection);
 					targetProjectile->OnActive();
@@ -324,6 +320,21 @@ namespace da
 			}			
 		}
 		// 투사체 호출텀에 제한이 있어야함
+	}
+
+	void SkellBossScript::SetLeftHand(GameObject* left)
+	{
+		SkellBossHandScript* leftHandScript = left->AddComponent<SkellBossHandScript>();
+		leftHandScript->SetLeftHand();
+		leftHandScript->SetOwnerScript(this);
+		mLeftHand = leftHandScript;
+	}
+
+	void SkellBossScript::SetRightHand(GameObject* right)
+	{
+		SkellBossHandScript* rightHandScript = right->AddComponent<SkellBossHandScript>();
+		rightHandScript->SetOwnerScript(this);
+		mRightHand = rightHandScript;
 	}
 
 

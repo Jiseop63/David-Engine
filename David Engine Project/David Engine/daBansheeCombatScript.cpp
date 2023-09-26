@@ -47,7 +47,7 @@ namespace da
 			unitInfo.Speed = mWeaponInfo->ProjectileStat.ProjectileSpeed;
 			math::Vector3 moveDirection = math::daRotateVector3(math::Vector3::UnitY, index * 0.520f);
 			projectile->SetUnitInfo(unitInfo);
-			projectile->SetUnitTypes(UnitActionType::UsingDirection, UnitUsageType::Default);
+			projectile->SetUnitTypes(UnitRenderType::UsingDirection, UnitUsageType::Default, UnitActionType::Range);
 			projectile->SetNextAnimation(L"BansheeBulletIdle", true);
 			projectile->SetOffsetPosition(math::Vector3(0.0f, -0.20f, 0.0f));
 			projectile->SetMoveDirection(moveDirection);

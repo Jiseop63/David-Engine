@@ -24,5 +24,8 @@ namespace da
 		mActionUnitAnimator->CompleteEvent(L"GreatSwing") = std::bind(&ActionUnitScript::ClearUnit, this);
 		mActionUnitAnimator->CompleteEvent(L"Swing") = std::bind(&ActionUnitScript::ClearUnit, this);
 		mActionUnitAnimator->CompleteEvent(L"Slash") = std::bind(&ActionUnitScript::ClearUnit, this);
+
+		mActionUnitAnimator->Create(L"SkellBossLaser", Resources::Find<Texture>(L"SkellBossLaser"), math::Vector2::Zero, math::Vector2(256.0f, 55.0f), 7, math::Vector2::Zero, 0.10f, 400.0f);
+		mActionUnitAnimator->CompleteEvent(L"SkellBossLaser") = std::bind(&ActionUnitScript::ClearUnit, this);
 	}
 }

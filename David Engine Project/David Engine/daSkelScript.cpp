@@ -278,7 +278,7 @@ namespace da
 		{
 			mMonsterCombatScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
 			ActionUnitScript* unit = CreatureScript::callActionUnit();
-			unit->SetUnitTypes(UnitActionType::Stay, UnitUsageType::OnlyAnimation);
+			unit->SetUnitTypes(UnitRenderType::Stay, UnitUsageType::OnlyAnimation, UnitActionType::None);
 			unit->SetNextAnimation(L"Dying", false);
 			unit->SetReverse(isLeft());
 			unit->SetOffsetPosition(math::Vector3(0.0f, -0.20f, 0.0f));

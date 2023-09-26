@@ -45,18 +45,15 @@ namespace da
 
 	public:
 		Transform* GetBossTransform() { return mCreatureTransform; }
-		void SetLeftHand(SkellBossHandScript* left) { mLeftHand = left; }
-		void SetRightHand(SkellBossHandScript* right) { mRightHand = right; }
+		void SetLeftHand(GameObject* left);
+		void SetRightHand(GameObject* right);
 		void IncreaseDamageCount() { ++mGetDamageCount; }
 
 
 
 	public:
 		virtual void AddActionUnit(GameObject* unit) override;
-
-		void AddProjectileObject(GameObject* projectile);
-	private:
-		SkellBossProjectileScript* callProjectile();
+		SkellBossProjectileScript* CallProjectile();
 		
 	private:
 		void retIdle();

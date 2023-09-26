@@ -230,7 +230,7 @@ namespace da
         if (!mIsDead)
         {
             ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
-            actionUnit->SetUnitTypes(UnitActionType::Stay, UnitUsageType::OnlyAnimation);
+            actionUnit->SetUnitTypes(UnitRenderType::Stay, UnitUsageType::OnlyAnimation, UnitActionType::None);
             actionUnit->SetNextAnimation(L"Dying", false);
             actionUnit->SetReverse(isLeft());
             actionUnit->SetOffsetPosition(Vector3(0.0f, -0.20f, 0.0f));
@@ -359,7 +359,7 @@ namespace da
             projectile->OnActive();
         }*/
         ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
-        actionUnit->SetUnitTypes(UnitActionType::Stay, UnitUsageType::OnlyAnimation);
+        actionUnit->SetUnitTypes(UnitRenderType::Stay, UnitUsageType::OnlyAnimation, UnitActionType::None);
         actionUnit->SetNextAnimation(L"DustEffect", false);
         actionUnit->SetReverse(isLeft());
         actionUnit->SetOffsetPosition(Vector3(0.0f, -0.20f, 0.0f));
@@ -472,7 +472,7 @@ namespace da
                 ChangeState(ePlayerState::Jump);
 
             ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
-            actionUnit->SetUnitTypes(UnitActionType::Stay, UnitUsageType::OnlyAnimation);
+            actionUnit->SetUnitTypes(UnitRenderType::Stay, UnitUsageType::OnlyAnimation, UnitActionType::None);
             actionUnit->SetNextAnimation(L"Jumping", false);
             actionUnit->SetReverse(isLeft());
             actionUnit->SetOffsetPosition(Vector3(0.0f, -0.20f, 0.0f));

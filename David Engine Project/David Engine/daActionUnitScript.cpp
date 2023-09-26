@@ -11,7 +11,7 @@ namespace da
 		, mActionUnitRenderer(nullptr)
 		, mActionUnitAnimator(nullptr)
 		, mUnitInfo{}
-		, mUnitActionType(UnitActionType::Stay)
+		, mUnitRenderType(UnitRenderType::Stay)
 		, mUnitUsageType(UnitUsageType::Default)
 		, mUnitBeginPosition(math::Vector3::Zero)
 		, mUnitDirection(math::Vector3::UnitY)
@@ -32,14 +32,13 @@ namespace da
 	void ActionUnitScript::Update()
 	{
 		// 종료 조건
-		if (UnitActionType::Stay == mUnitActionType
-			|| UnitActionType::JustRotate == mUnitActionType)
+		if (UnitActionType::Duration == mUnitActionType)
 		{
 			mUnitInfo.Time.Start += (float)Time::DeltaTime();
 			if (mUnitInfo.Time.End <= mUnitInfo.Time.Start)
 				ClearUnit();
 		}
-		else
+		else if (UnitActionType::Range == mUnitActionType)
 		{
 			math::Vector3 currentPosition = mActionUnitTransform->GetPosition();
 			math::Vector3 moveDistance = mUnitBeginPosition - currentPosition;
@@ -50,18 +49,18 @@ namespace da
 	void ActionUnitScript::LateUpdate()
 	{
 		// 이동 조건
-		switch (mUnitActionType)
+		switch (mUnitRenderType)
 		{
-		case da::UnitActionType::Stay:
+		case da::UnitRenderType::Stay:
 			break;
-		case da::UnitActionType::UsingDirection:
+		case da::UnitRenderType::UsingDirection:
 		{
 			math::Vector3 retPosition = mActionUnitTransform->GetPosition();
 			retPosition += mUnitDirection * mUnitInfo.Speed * (float)Time::DeltaTime();
 			mActionUnitTransform->SetPosition(retPosition);
 		}
 			break;
-		case da::UnitActionType::UsingRotation:
+		case da::UnitRenderType::UsingRotation:
 		{
 			math::Vector3 retPosition = mActionUnitTransform->GetPosition();
 			retPosition += mActionUnitTransform->Up() * mUnitInfo.Speed * (float)Time::DeltaTime();
@@ -79,8 +78,8 @@ namespace da
 		// Transform 세팅		
 		mActionUnitTransform->SetScale(math::Vector3(mUnitInfo.Scale, mUnitInfo.Scale, 1.0f));
 		mUnitBeginPosition = mOwnerScript->GetCreatureTransform()->GetPosition() + mOffsetPosition;
-		if (UnitActionType::JustRotate == mUnitActionType
-			|| UnitActionType::UsingRotation == mUnitActionType)
+		if (UnitRenderType::JustRotate == mUnitRenderType
+			|| UnitRenderType::UsingRotation == mUnitRenderType)
 		{
 			mActionUnitTransform->SetRotation(math::Vector3(0.0f, 0.0f, mUnitInfo.RotateAngle));
 		}

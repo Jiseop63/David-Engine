@@ -158,9 +158,9 @@ namespace da
 			unitInfo.Time.End = 0.250f;
 			unitInfo.RotateAngle = mEffectAngle - 1.570f;
 			
-			actionUnit->SetUnitTypes(UnitUsageType::Default, UnitActionType::JustRotate);
+			actionUnit->SetUnitTypes(UnitUsageType::Default, UnitRenderType::JustRotate, UnitActionType::None);
 			actionUnit->SetUnitInfo(unitInfo);
-			actionUnit->SetNextAnimation(mWeaponInfo->ProjectileStat.EffectName, false);			
+			actionUnit->SetNextAnimation(mWeaponInfo->ProjectileStat.EffectName, false);
 			actionUnit->SetOffsetPosition(math::Vector3(mOwnerDir.x * mWeaponInfo->ProjectileStat.ProjectileCenterPadding, mOwnerDir.y * mWeaponInfo->ProjectileStat.ProjectileCenterPadding, 0.0f)); // 아직 문제있음
 			actionUnit->OnActive();
 

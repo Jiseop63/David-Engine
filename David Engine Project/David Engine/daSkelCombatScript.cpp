@@ -73,7 +73,7 @@ namespace da
 		unitInfo.Time.End = 0.20f;
 		unitInfo.RotateAngle = mWeaponInfo->ProjectileStat.ProjectileAngle;
 
-		actionUnit->SetUnitTypes(UnitUsageType::OnlyCollider, UnitActionType::JustRotate);
+		actionUnit->SetUnitTypes(UnitUsageType::OnlyCollider, UnitRenderType::JustRotate, UnitActionType::Duration);
 		actionUnit->SetUnitInfo(unitInfo);
 		actionUnit->SetOffsetPosition(math::Vector3(mOwnerDir.x * mWeaponInfo->ProjectileStat.ProjectileCenterPadding, mOwnerDir.y * mWeaponInfo->ProjectileStat.ProjectileCenterPadding, 0.0f)); // 아직 문제있음
 

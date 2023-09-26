@@ -187,7 +187,7 @@ namespace da
 			// »ç¸Á ÀÌÆåÆ® ½ÇÇà
 			mMonsterCombatScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
 			ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
-			actionUnit->SetUnitTypes(UnitActionType::Stay, UnitUsageType::OnlyAnimation);
+			actionUnit->SetUnitTypes(UnitRenderType::Stay, UnitUsageType::OnlyAnimation, UnitActionType::None);
 			actionUnit->SetNextAnimation(L"Dying", false);
 			actionUnit->SetReverse(isLeft());
 			actionUnit->SetOffsetPosition(math::Vector3(0.0f, -0.20f, 0.0f));
@@ -196,8 +196,8 @@ namespace da
 			unitInfo.Time.End = 2.0f;
 			actionUnit->SetUnitInfo(unitInfo);
 			actionUnit->OnActive();
-		}
-		mIsDead = true;
+			mIsDead = true;
+		}		
 	}
 	void BansheeScript::findingPlayer()
 	{
@@ -249,7 +249,7 @@ namespace da
 				unitInfo.Speed = 2.250f;
 				math::Vector3 moveDirection = math::daRotateVector3(math::Vector3::UnitY, index * 0.620f);
 				projectile->SetUnitInfo(unitInfo);
-				projectile->SetUnitTypes(UnitActionType::UsingDirection, UnitUsageType::Default);
+				projectile->SetUnitTypes(UnitRenderType::UsingDirection, UnitUsageType::Default, UnitActionType::Range);
 				projectile->SetNextAnimation(L"BansheeBulletIdle", true);
 				projectile->SetOffsetPosition(math::Vector3(0.0f, -0.20f, 0.0f));
 				projectile->SetMoveDirection(moveDirection);

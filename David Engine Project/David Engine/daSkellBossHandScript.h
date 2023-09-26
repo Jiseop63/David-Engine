@@ -1,7 +1,7 @@
 #pragma once
 #include "daScript.h"
 #include "daMeshRenderer.h"
-
+#include "daAnimator.h"
 namespace da
 {
 	enum class eHandFSM
@@ -10,8 +10,8 @@ namespace da
 		Chase,
 		Attack,
 	};
-	class Animator;
 	class PlayerScript;
+	class SkellBossScript;
 	class SkellBossHandScript : public Script
 	{
 	public:
@@ -23,10 +23,10 @@ namespace da
 		virtual void LateUpdate() override;
 
 	public:
+		void SetOwnerScript(SkellBossScript* owner) { mOwnerScript = owner; }
 		void SetLeftHand(bool left = true) { misLeftHand = left; }
 
 		void DoAttack();
-
 
 	private:
 		void updateMoveToPlayer();
@@ -36,12 +36,10 @@ namespace da
 		void reverseTexture() { mHandRenderer->SetReverse(!isLeft()); }
 
 	private:
-		void findPlayer();
 		void shootLaser();
 	private:
 		void retIdle();
 		void activeCollider();
-
 
 	public:
 		virtual void OnCollisionEnter(Collider2D* other) override;
@@ -54,6 +52,8 @@ namespace da
 		Collider2D*		mHandCollider;
 		PlayerScript*	mPlayerScript;
 		eHandFSM		mHandState;
+
+		SkellBossScript* mOwnerScript;
 
 	private:
 		bool			misLeftHand;

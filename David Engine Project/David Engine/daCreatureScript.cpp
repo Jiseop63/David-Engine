@@ -138,7 +138,7 @@ namespace da
 		mHitEffectAngle += 1.80f;
 		// 방향 구하기
 		ActionUnitScript* actionUnit = callActionUnit();
-		actionUnit->SetUnitTypes(UnitActionType::Stay, UnitUsageType::OnlyAnimation);
+		actionUnit->SetUnitTypes(UnitRenderType::Stay, UnitUsageType::OnlyAnimation, UnitActionType::None);
 		actionUnit->SetNextAnimation(L"Slash", false);
 		actionUnit->SetOffsetPosition(math::Vector3(0.0f, -0.20f, 0.0f));
 		structs::sActionUnitInfo unitInfo = {};
