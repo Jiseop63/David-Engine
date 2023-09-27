@@ -41,6 +41,8 @@ namespace da
 	{
 		if (eObjectState::Paused == mObjectState)
 			return;
+		if (eObjectState::Hide == mObjectState)
+			return;
 		if (eObjectState::Inactive == mObjectState)
 			return;
 		for (Component* component : mComponents)
@@ -54,7 +56,7 @@ namespace da
 	}
 	void GameObject::LateUpdate()
 	{
-		if (eObjectState::Paused == mObjectState)
+		if (eObjectState::Hide == mObjectState)
 			return;
 		if (eObjectState::Inactive == mObjectState)
 			return;

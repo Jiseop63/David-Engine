@@ -1,5 +1,6 @@
 #pragma once
 #include "daScene.h"
+#include "daLayer.h"
 
 #include "..\\David Engine\\daCameraScript.h"
 #include "..\\David Engine\\daSubCameraScript.h"
@@ -67,6 +68,10 @@ namespace da
 		
 		static void AddCursourObject(GameObject* cursour) { mCursourScrip = cursour->GetComponent<CursorScript>(); }
 		static CursorScript* GetCursourScrip() { return mCursourScrip; }
+
+	public:
+		static void ClearProjectileObjects();
+
 
 	private:
 		static Scene* mActiveScene;

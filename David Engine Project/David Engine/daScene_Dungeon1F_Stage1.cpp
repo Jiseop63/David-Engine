@@ -46,10 +46,8 @@ namespace da
 	{
 		// player 세팅
 		PlayerScript* player = SceneManager::GetPlayerScript();
-		player->SetCreaturePosition(math::Vector3(-2.0f, -1.0f, ObjectZ));					 
-		player->SetCreatureVelocity(math::Vector2::Zero);									 
-		player->ChangeState(ePlayerState::Idle);
-		player->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+		player->ClearCreature();
+		player->SetCreaturePosition(math::Vector3(-3.0f, -1.0f, ObjectZ));
 		player->IsPlayerInDungeon(true);
 		math::Vector3 playerPos = player->GetOwner()->GetTransform()->GetPosition();
 		// Camera 세팅

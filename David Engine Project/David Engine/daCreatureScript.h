@@ -64,6 +64,19 @@ namespace da
 
 #pragma region common Func
 	public:
+		void ApplayControl(bool value = true) { mIsControl = value; }
+
+		virtual void ClearCreature()
+		{
+			// 중력 충돌 초기화
+			if (mCreatureFootCollider)
+				mCreatureFootCollider->ClearGroundBuffer();
+			// 입력 초기화
+			ApplayControl();
+			// 속도 초기화
+			mCreatureRigidbody->OverrideVelocity(math::Vector2::Zero, 0.0f);
+		}
+
 		void CreatureIsNotGround() { mCreatureFootCollider->ClearGroundBuffer(); }	// 안쓸 예정
 		void SetCreatureVelocity(math::Vector2 vector2) { mCreatureRigidbody->OverrideVelocity(vector2, 0.0f); }	// 안쓸 예정
 #pragma endregion
@@ -93,10 +106,12 @@ namespace da
 
 #pragma region condition
 	protected:
+		bool					mIsControl;
 		float					mHitEffectAngle;
 		bool					mIsDead;
 
 
+		// foot, body collision check 변수는 플랫폼 예외처리하는 용도로 사용될 예정
 		bool					mBodyCollision;
 		bool					mFootCollision;
 #pragma endregion

@@ -41,7 +41,7 @@ namespace da
 #pragma region FSM
 	private:
 		void ChangeState(eBansheeState state);
-		void skelFSM();
+		void monsterFSM();
 		void BansheeHandleIdle();
 		void BansheeHandleAttack();
 		void BansheeHandleDead();

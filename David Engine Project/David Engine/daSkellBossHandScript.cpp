@@ -16,6 +16,7 @@ namespace da
 		, mHandRenderer(nullptr)
 		, mHandAnimator(nullptr)
 		, mHandCollider(nullptr)
+		, mOwnerScript(nullptr)
 		, mPlayerScript(nullptr)
 		, mHandState(eHandFSM::Idle)
 		, misLeftHand(false)

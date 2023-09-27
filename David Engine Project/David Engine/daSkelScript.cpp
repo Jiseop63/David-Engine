@@ -90,6 +90,8 @@ namespace da
 
 	void SkelScript::Update()
 	{
+		if (!mIsControl)
+			return;
 		skelFSM();
 		lifeCheck();
 	}

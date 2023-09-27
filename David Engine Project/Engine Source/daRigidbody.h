@@ -39,7 +39,6 @@ namespace da
 		// unit : 속도 통제 방향, inner : 현재 속도
 		void EraseVelocity(math::Vector2 dir, math::Vector2 velocity);
 
-
 	private:
 		eDimensionType	mDimensionType;
 		float			mMass;			// 질량

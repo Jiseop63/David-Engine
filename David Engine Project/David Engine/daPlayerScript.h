@@ -137,7 +137,23 @@ namespace da
 		void initializeAnimation();
 		void initializeCollider();
 		void initializeData();
+
+
 #pragma endregion
+	public:
+		virtual void ClearCreature() override
+		{
+			// 제어 초기화
+			if (mCreatureFootCollider)
+				mCreatureFootCollider->ClearGroundBuffer();
+			ApplayControl();
+			mCreatureRigidbody->OverrideVelocity(math::Vector2::Zero, 0.0f);
+			// 상태 초기화
+			GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+			ChangeState(ePlayerState::Idle);
+			ActiveWeapon();
+		}
+		
 
 #pragma region Collision Func
 	public:

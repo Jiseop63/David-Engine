@@ -514,10 +514,14 @@ namespace renderer
 		Resources::Load<Texture>(L"SkellBossHandAttack", L"..\\Resources\\Texture\\SkellBoss\\SkellBossHandAttack.png");
 		Resources::Load<Texture>(L"SkellBossProjectile", L"..\\Resources\\Texture\\SkellBoss\\SkellBossProjectile.png");
 		Resources::Load<Texture>(L"SkellBossLaser", L"..\\Resources\\Texture\\SkellBoss\\SkellBossLaser.png");
-		//Resources::Load<Texture>(L"BossSpriteSheet", L"..\\Resources\\Texture\\Scene_Dungeon2F\\SkellBossSpriteSheet.png"); 레이저
 		//Resources::Load<Texture>(L"BossSpriteSheet", L"..\\Resources\\Texture\\Scene_Dungeon2F\\SkellBossSpriteSheet.png"); 칼
 		
-		
+		// portal
+		Resources::Load<Texture>(L"DungeonEat", L"..\\Resources\\Texture\\Scene_Town\\DungeonEat.png");
+		Resources::Load<Texture>(L"SteleClose", L"..\\Resources\\Texture\\Dungeon\\SteleClose.png");
+		Resources::Load<Texture>(L"SteleIdle", L"..\\Resources\\Texture\\Dungeon\\SteleIdle.png");
+		Resources::Load<Texture>(L"SteleOpen", L"..\\Resources\\Texture\\Dungeon\\SteleOpen.png");
+
 		
 		// dungeonTexture
 		Resources::Load<Texture>(L"1FStage1Texture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\1FStage1.png");

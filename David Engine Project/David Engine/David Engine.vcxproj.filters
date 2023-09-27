@@ -94,6 +94,18 @@
     <Filter Include="Objects\Creature\2 ActionUnitScript">
       <UniqueIdentifier>{9c4aace8-4121-4244-a6a4-c42b6ffe2e4f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Portal">
+      <UniqueIdentifier>{350f2c07-4ea3-4fa4-a3c4-ab9087820174}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Portal\TownPortal">
+      <UniqueIdentifier>{1577fc2d-1e43-468a-a8ee-be757f383e5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Portal\DungeonPortal">
+      <UniqueIdentifier>{a40b0aba-5bf7-4322-a5db-7b5828ad3525}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Portal\BossPortal">
+      <UniqueIdentifier>{46f631a2-77a8-442b-8cfa-db8a9ca3d0d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -222,6 +234,15 @@
     <ClInclude Include="daMonsterActionUnitScript.h">
       <Filter>Objects\Creature\Monster\0 Base</Filter>
     </ClInclude>
+    <ClInclude Include="daPortalScript.h">
+      <Filter>Objects\Portal</Filter>
+    </ClInclude>
+    <ClInclude Include="daTownPortalScript.h">
+      <Filter>Objects\Portal\TownPortal</Filter>
+    </ClInclude>
+    <ClInclude Include="daDungeonPortalScript.h">
+      <Filter>Objects\Portal\DungeonPortal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -349,6 +370,15 @@
     </ClCompile>
     <ClCompile Include="daMonsterActionUnitScript.cpp">
       <Filter>Objects\Creature\Monster\0 Base</Filter>
+    </ClCompile>
+    <ClCompile Include="daPortalScript.cpp">
+      <Filter>Objects\Portal</Filter>
+    </ClCompile>
+    <ClCompile Include="daTownPortalScript.cpp">
+      <Filter>Objects\Portal\TownPortal</Filter>
+    </ClCompile>
+    <ClCompile Include="daDungeonPortalScript.cpp">
+      <Filter>Objects\Portal\DungeonPortal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

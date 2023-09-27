@@ -23,6 +23,8 @@ namespace da
 		, mIsDead(false)
 		, mBodyCollision(false)
 		, mFootCollision(false)
+		, mIsControl(true)
+		, mHitEffectAngle(0.0f)
 	{
 	}
 	CreatureScript::~CreatureScript()

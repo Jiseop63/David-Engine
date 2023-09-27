@@ -157,11 +157,13 @@
     <ClInclude Include="daCombatScript.h" />
     <ClInclude Include="daCreatureLifebarScript.h" />
     <ClInclude Include="daCreatureScript.h" />
+    <ClInclude Include="daDungeonPortalScript.h" />
     <ClInclude Include="daEffectEnemyScript.h" />
     <ClInclude Include="daMonsterActionUnitScript.h" />
     <ClInclude Include="daMonsterScript.h" />
     <ClInclude Include="daPlayerActionUnitScript.h" />
     <ClInclude Include="daEffectScript.h" />
+    <ClInclude Include="daPortalScript.h" />
     <ClInclude Include="daSkelCombatScript.h" />
     <ClInclude Include="daGameDataManager.h" />
     <ClInclude Include="daGridScript.h" />
@@ -184,6 +186,7 @@
     <ClInclude Include="daSkellBossScript.h" />
     <ClInclude Include="daSkelScript.h" />
     <ClInclude Include="daSubCameraScript.h" />
+    <ClInclude Include="daTownPortalScript.h" />
     <ClInclude Include="daUIObject.h" />
     <ClInclude Include="daUIScript.h" />
     <ClInclude Include="framework.h" />
@@ -202,11 +205,13 @@
     <ClCompile Include="daCreatureLifebarScript.cpp" />
     <ClCompile Include="daCreatureScript.cpp" />
     <ClCompile Include="daDashCountScript.cpp" />
+    <ClCompile Include="daDungeonPortalScript.cpp" />
     <ClCompile Include="daEffectEnemyScript.cpp" />
     <ClCompile Include="daMonsterActionUnitScript.cpp" />
     <ClCompile Include="daMonsterScript.cpp" />
     <ClCompile Include="daPlayerActionUnitScript.cpp" />
     <ClCompile Include="daEffectScript.cpp" />
+    <ClCompile Include="daPortalScript.cpp" />
     <ClCompile Include="daSkelCombatScript.cpp" />
     <ClCompile Include="daGameDataManager.cpp" />
     <ClCompile Include="daCursorScript.cpp" />
@@ -228,6 +233,7 @@
     <ClCompile Include="daSkellBossScript.cpp" />
     <ClCompile Include="daSkelScript.cpp" />
     <ClCompile Include="daSubCameraScript.cpp" />
+    <ClCompile Include="daTownPortalScript.cpp" />
     <ClCompile Include="daUIObject.cpp" />
     <ClCompile Include="daUIScript.cpp" />
     <ClCompile Include="David Engine.cpp" />

@@ -29,6 +29,7 @@ namespace da
 		, mAttackProgress(false)
 		, mReadyDurationTime(0.0f)
 		, mReadyDurationDecay(0.0f)
+		, mIsAttacked(false)
 	{
 	}
 	BansheeScript::~BansheeScript()
@@ -90,7 +91,9 @@ namespace da
 	}
 	void BansheeScript::Update()
 	{
-		skelFSM();
+		if (!mIsControl)
+			return;
+		monsterFSM();
 		lifeCheck();
 	}
 	void BansheeScript::LateUpdate()
@@ -146,7 +149,7 @@ namespace da
 			break;
 		}
 	}
-	void BansheeScript::skelFSM()
+	void BansheeScript::monsterFSM()
 	{
 		switch (mMonsterActiveState)
 		{

@@ -154,7 +154,8 @@ namespace da::objects
 
 		for (int index = 0; index < MONSTER_ACTIONUNIT_POOL; index++)
 		{
-			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::MonsterProjectile, L"AnimationMaterial");
+			GameObject* gameObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::MonsterProjectile, L"AnimationMaterial");
+			gameObject->SetName(L"MonsterProjectile");
 			skel->AddChildObject(gameObject);
 			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
 			monsterScript->AddActionUnit(gameObject);
@@ -182,7 +183,8 @@ namespace da::objects
 				
 		for (int index = 0; index < MONSTER_ACTIONUNIT_POOL; index++)
 		{
-			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::MonsterProjectile, L"AnimationMaterial");
+			GameObject* gameObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::MonsterProjectile, L"AnimationMaterial");
+			gameObject->SetName(L"MonsterProjectile");
 			banshee->AddChildObject(gameObject);
 			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
 			bansheeScript->AddActionUnit(gameObject);
@@ -213,7 +215,6 @@ namespace da::objects
 		SkellBossScript* bossScript = skellBoss->AddComponent<SkellBossScript>();
 
 		{
-
 			GameObject* leftHand = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Boss, L"AnimationMaterial");
 			bossScript->SetLeftHand(leftHand);
 			leftHand->GetTransform()->SetPosition(math::Vector2(-4.150f, -2.450f));
@@ -225,7 +226,8 @@ namespace da::objects
 
 		for (int index = 0; index < BOSS_ACTIONUNIT_POOL; index++)
 		{
-			GameObject* gameObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::BossProjectile, L"AnimationMaterial");
+			GameObject* gameObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::BossProjectile, L"AnimationMaterial");
+			gameObject->SetName(L"BossProjectile");
 			skellBoss->AddChildObject(gameObject);
 			gameObject->SetObjectState(GameObject::eObjectState::Inactive);
 			bossScript->AddActionUnit(gameObject);

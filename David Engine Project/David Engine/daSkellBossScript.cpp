@@ -94,6 +94,9 @@ namespace da
 	}
 	void SkellBossScript::Update()
 	{
+		// 인트로 씬에서는 움직이면 안되니까 여기서 제어함
+		if (!mIsControl)
+			return;
 		// 패턴 조건 찾기 (둘 중 하나가 충족되면 끝)
 		patternCondition();
 
@@ -152,6 +155,9 @@ namespace da
 	}
 	void SkellBossScript::SkellBossHandleDead()
 	{
+		// 중력에 영향을 받고, 비주얼적으로 회색이 들어가야함
+
+		// boss hand 또한 본체와 같이 중력에 영향을 받아야함
 	}
 	void SkellBossScript::prepareForAttack()
 	{

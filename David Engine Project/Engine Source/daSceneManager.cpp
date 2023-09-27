@@ -1,5 +1,5 @@
 #include "daSceneManager.h"
-
+#include "daLayer.h"
 
 namespace da
 {
@@ -21,7 +21,7 @@ namespace da
 	CursorScript* SceneManager::mCursourScrip = nullptr;
 	
 	void SceneManager::Initialize()
-	{		
+	{
 	}
 	void SceneManager::Update()
 	{
@@ -42,7 +42,6 @@ namespace da
 			delete iter.second;
 			iter.second = nullptr;
 		}
-
 	}
 	Scene* SceneManager::LoadScene(std::wstring name)
 	{
@@ -58,6 +57,25 @@ namespace da
 		{
 			// Dont Destroy Object 가져오기
 			commonObjects = mActiveScene->GetCommonObjects();
+			
+			for (GameObject* target : commonObjects)
+			{
+				if (enums::eLayerType::PlayableProjectile == target->GetLayerType()
+					&& GameObject::eObjectState::Inactive != target->GetObjectState())
+				{
+					target->SetObjectState(GameObject::eObjectState::Inactive);
+				}
+				if (enums::eLayerType::MonsterProjectile == target->GetLayerType()
+					&& GameObject::eObjectState::Inactive != target->GetObjectState())
+				{
+					target->SetObjectState(GameObject::eObjectState::Inactive);
+				}
+				if (enums::eLayerType::BossProjectile == target->GetLayerType()
+					&& GameObject::eObjectState::Inactive != target->GetObjectState())
+				{
+					target->SetObjectState(GameObject::eObjectState::Inactive);
+				}
+			}
 			// Exit 호출
 			mActiveScene->OnExit();
 		}
@@ -70,13 +88,14 @@ namespace da
 		{
 			enums::eLayerType type = target->GetLayerType();
 			mActiveScene->AddGameObject(type, target);
-		}		
-
-		int a = 0;
+		}
+		
 		// 현재 씬 Enter 호출
 		mActiveScene->OnEnter();
-
-
+		
 		return mActiveScene;
+	}
+	void SceneManager::ClearProjectileObjects()
+	{
 	}
 }

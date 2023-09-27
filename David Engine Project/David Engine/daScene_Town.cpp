@@ -12,6 +12,7 @@
 
 // UI, Object, Components and Camera
 #include "daObjectsFastIncludeHeader.h"
+#include "daTownPortalScript.h"
 
 extern da::Application application;
 
@@ -50,12 +51,9 @@ namespace da
 
 		// player 세팅
 		PlayerScript* player = SceneManager::GetPlayerScript();
+		player->ClearCreature();
 		player->SetCreaturePosition(math::Vector3(-12.0f, -1.50f, ObjectZ));
-		player->SetCreatureVelocity(math::Vector2::Zero);
-		player->ChangeState(ePlayerState::Idle);
-		player->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 		player->IsPlayerInDungeon(false);
-		player->ActiveWeapon();
 		math::Vector3 playerPos = player->GetOwner()->GetTransform()->GetPosition();
 		// Camera 세팅
 		GameDataManager::SetCameraMovableRange(math::Vector2(22.0f, 1.80f));
@@ -71,6 +69,7 @@ namespace da
 		CollisionManager::SetLayer(enums::eLayerType::Platform, enums::eLayerType::Playable);
 		CollisionManager::SetLayer(enums::eLayerType::Platform, enums::eLayerType::Monster);
 		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Monster);
+		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Portal);
 	}
 	void Scene_Town::OnExit()
 	{
@@ -222,16 +221,8 @@ namespace da
 	}
 	void Scene_Town::addGameObjects()
 	{
-		// test enemy
-		{
-			SkelScript* skelScript = objects::InstantiateSkel(this);
-			skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(1.50f, 0.0f, ObjectZ));
-		}
-
-		// test enemy
-		{
-			BansheeScript* bansheeScript = objects::InstantiateBanshee(this);
-			bansheeScript->GetOwner()->GetTransform()->SetPosition(Vector3(-4.50f, 0.0f, ObjectZ));
-		}
+		GameObject* portalObject = objects::InstantiateGameObject<GameObject>(this, enums::eLayerType::Portal, L"AnimationMaterial");
+		portalObject->AddComponent<TownPortalScript>();
+		portalObject->GetTransform()->SetPosition(math::Vector3(-5.0f, -2.70f, 0.0f));
 	}
 }

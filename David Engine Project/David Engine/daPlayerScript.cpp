@@ -58,6 +58,9 @@ namespace da
 	}
     void PlayerScript::Update()
     {
+        if (!mIsControl)
+            return;
+
         updateDashRegen();
         updateJumpRegen();
         updateBufferedJump();
@@ -359,15 +362,18 @@ namespace da
             projectile->OnActive();
         }*/
         ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
-        actionUnit->SetUnitTypes(UnitRenderType::Stay, UnitUsageType::OnlyAnimation, UnitActionType::None);
-        actionUnit->SetNextAnimation(L"DustEffect", false);
-        actionUnit->SetReverse(isLeft());
-        actionUnit->SetOffsetPosition(Vector3(0.0f, -0.20f, 0.0f));
-        structs::sActionUnitInfo unitInfo = {};
-        unitInfo.Scale = 1.20f;
-        unitInfo.Time.End = 2.0f;
-        actionUnit->SetUnitInfo(unitInfo);
-        actionUnit->OnActive();
+        if (actionUnit)
+        {
+            actionUnit->SetUnitTypes(UnitRenderType::Stay, UnitUsageType::OnlyAnimation, UnitActionType::None);
+            actionUnit->SetNextAnimation(L"DustEffect", false);
+            actionUnit->SetReverse(isLeft());
+            actionUnit->SetOffsetPosition(Vector3(0.0f, -0.20f, 0.0f));
+            structs::sActionUnitInfo unitInfo = {};
+            unitInfo.Scale = 1.20f;
+            unitInfo.Time.End = 2.0f;
+            actionUnit->SetUnitInfo(unitInfo);
+            actionUnit->OnActive();
+        }
     }
 #pragma endregion
 #pragma region Jump & Dash Logic

@@ -47,10 +47,8 @@ namespace da
 	{
 		// player ¼¼ÆÃ
 		PlayerScript* player = SceneManager::GetPlayerScript();
+		player->ClearCreature();
 		player->SetCreaturePosition(math::Vector3(0.0f, -2.0f, ObjectZ));
-		player->SetCreatureVelocity(math::Vector2::Zero);
-		player->ChangeState(ePlayerState::Idle);
-		player->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 		player->IsPlayerInDungeon(true);
 		math::Vector3 playerPos = player->GetOwner()->GetTransform()->GetPosition();
 

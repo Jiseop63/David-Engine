@@ -36,6 +36,7 @@ namespace da::enums
 		
 		Playable,
 		PlayableProjectile,
+		Portal,
 
 		// Graphic
 		Light,
