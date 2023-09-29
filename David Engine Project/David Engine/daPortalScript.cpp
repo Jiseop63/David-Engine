@@ -9,6 +9,9 @@ namespace da
 		, mPortalRenderer(nullptr)
 		, mPortalAnimator(nullptr)
 		, mPortalBodyCollider(nullptr)
+		, mGatePass(false)
+		, mGateClose(false)
+		, mGateOpen(false)
 	{
 	}
 	PortalScript::~PortalScript()
@@ -30,5 +33,17 @@ namespace da
 	void PortalScript::ChangeScene()
 	{
 		SceneManager::LoadScene(mSceneName);
+	}
+	void PortalScript::GatePass()
+	{
+		mGatePass = true;
+	}
+	void PortalScript::GateClose()
+	{
+		mGateClose = true;
+	}
+	void PortalScript::GateOpen()
+	{
+		mGateOpen = true;
 	}
 }

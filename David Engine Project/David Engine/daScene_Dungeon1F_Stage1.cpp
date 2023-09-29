@@ -13,6 +13,8 @@
 // UI, Object, Components and Camera
 #include "daObjects.h"
 #include "daObjectsFastIncludeHeader.h"
+#include "daDungeonPortalScript.h"
+
 namespace da
 {
 	Scene_Dungeon1F_Stage1::Scene_Dungeon1F_Stage1()
@@ -58,6 +60,7 @@ namespace da
 		// 충돌 세팅
 		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::MonsterProjectile);
 		CollisionManager::SetLayer(enums::eLayerType::PlayableProjectile, enums::eLayerType::Monster);
+		// 던전 포탈 세팅
 	}
 	void Scene_Dungeon1F_Stage1::OnExit()
 	{
@@ -112,15 +115,33 @@ namespace da
 			landObject->SetName(L"LandObj");
 		}
 
-		// right
+		// right top
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
 				this, Vector3(7.150f, 1.950f, 0.0f), Vector3(1.50f, 2.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
+		
 	}
+
 	void Scene_Dungeon1F_Stage1::addGameObjects()
 	{
-		
+		{
+			/*GameObject* portalObject = objects::InstantiateGameObject<GameObject>(this, enums::eLayerType::Portal, L"AnimationMaterial");
+			
+			DungeonPortalScript* portal = portalObject->AddComponent<DungeonPortalScript>();
+			portals.push_back(portal);
+			portalObject->GetTransform()->SetPosition(math::Vector3(7.150f, 0.0f, 0.0f));
+			portal->SetSceneName(L"Scene_Dungeon1F_Stage2");
+			portal->SetRotate(-1.570f);*/
+
+
+
+			DungeonPortalScript* portalScript = objects::InstantiateDungeonPortal(this);
+			portalScript->SetPosition(math::Vector3(7.150f, 0.0f, 0.0f));
+			portalScript->SetSceneName(L"Scene_Dungeon1F_Stage2");
+			portalScript->SetRotate(-1.570f);
+			mPortals.push_back(portalScript);
+		}
 	}
 }

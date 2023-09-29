@@ -115,8 +115,8 @@ namespace da
     {
         if (Input::GetKeyDown(eKeyCode::V))
             GameDataManager::CallInventory();
-        if (Input::GetKeyDown(eKeyCode::TILDE))
-            GameDataManager::ChangeArmour();
+        //if (Input::GetKeyDown(eKeyCode::TILDE))
+            //GameDataManager::ChangeArmour();
     }
     void PlayerScript::updatePlayerDir()
     {

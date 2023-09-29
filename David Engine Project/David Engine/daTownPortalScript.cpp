@@ -25,6 +25,8 @@ namespace da
 		mPortalAnimator->Create(L"DungeonPortalEat", Resources::Find<Texture>(L"DungeonEat")
 			, math::Vector2::Zero, math::Vector2(117.0f, 85.0f), 28, math::Vector2::Zero, 0.10f, 200.0f);
 		mPortalAnimator->CompleteEvent(L"DungeonPortalEat") = std::bind(&PortalScript::ChangeScene, this);
+		mPortalAnimator->ActionEvent(L"DungeonPortalEat", 10) = std::bind(&TownPortalScript::HidePlayer, this);
+
 		SetSceneName(L"Scene_Dungeon1F_Stage1");
 
 		// 충돌체 세팅
@@ -47,4 +49,8 @@ namespace da
 		mPortalAnimator->PlayAnimation(L"DungeonPortalEat", false);
 	}
 
+	void TownPortalScript::HidePlayer()
+	{
+		mPortalTransform->SetPosition(mPortalTransform->GetPosition() + math::Vector3(0.0f, 0.0f, -1.0f));
+	}
 }

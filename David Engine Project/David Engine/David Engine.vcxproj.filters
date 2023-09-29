@@ -243,6 +243,15 @@
     <ClInclude Include="daDungeonPortalScript.h">
       <Filter>Objects\Portal\DungeonPortal</Filter>
     </ClInclude>
+    <ClInclude Include="daPortalWallScript.h">
+      <Filter>Objects\Portal\DungeonPortal</Filter>
+    </ClInclude>
+    <ClInclude Include="daBossPortalScript.h">
+      <Filter>Objects\Portal\BossPortal</Filter>
+    </ClInclude>
+    <ClInclude Include="daPortalIconScript.h">
+      <Filter>Objects\Portal\BossPortal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -379,6 +388,15 @@
     </ClCompile>
     <ClCompile Include="daDungeonPortalScript.cpp">
       <Filter>Objects\Portal\DungeonPortal</Filter>
+    </ClCompile>
+    <ClCompile Include="daPortalWallScript.cpp">
+      <Filter>Objects\Portal\DungeonPortal</Filter>
+    </ClCompile>
+    <ClCompile Include="daBossPortalScript.cpp">
+      <Filter>Objects\Portal\BossPortal</Filter>
+    </ClCompile>
+    <ClCompile Include="daPortalIconScript.cpp">
+      <Filter>Objects\Portal\BossPortal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

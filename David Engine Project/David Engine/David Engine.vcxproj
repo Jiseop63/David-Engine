@@ -151,6 +151,7 @@
     <ClInclude Include="daBansheeProjectileScript.h" />
     <ClInclude Include="daBansheeCombatScript.h" />
     <ClInclude Include="daBansheeScript.h" />
+    <ClInclude Include="daBossPortalScript.h" />
     <ClInclude Include="daButtonScript.h" />
     <ClInclude Include="daCameraObject.h" />
     <ClInclude Include="daCameraScript.h" />
@@ -163,7 +164,9 @@
     <ClInclude Include="daMonsterScript.h" />
     <ClInclude Include="daPlayerActionUnitScript.h" />
     <ClInclude Include="daEffectScript.h" />
+    <ClInclude Include="daPortalIconScript.h" />
     <ClInclude Include="daPortalScript.h" />
+    <ClInclude Include="daPortalWallScript.h" />
     <ClInclude Include="daSkelCombatScript.h" />
     <ClInclude Include="daGameDataManager.h" />
     <ClInclude Include="daGridScript.h" />
@@ -198,6 +201,7 @@
     <ClCompile Include="daBansheeProjectileScript.cpp" />
     <ClCompile Include="daBansheeCombatScript.cpp" />
     <ClCompile Include="daBansheeScript.cpp" />
+    <ClCompile Include="daBossPortalScript.cpp" />
     <ClCompile Include="daButtonScript.cpp" />
     <ClCompile Include="daCameraObject.cpp" />
     <ClCompile Include="daCameraScript.cpp" />
@@ -211,7 +215,9 @@
     <ClCompile Include="daMonsterScript.cpp" />
     <ClCompile Include="daPlayerActionUnitScript.cpp" />
     <ClCompile Include="daEffectScript.cpp" />
+    <ClCompile Include="daPortalIconScript.cpp" />
     <ClCompile Include="daPortalScript.cpp" />
+    <ClCompile Include="daPortalWallScript.cpp" />
     <ClCompile Include="daSkelCombatScript.cpp" />
     <ClCompile Include="daGameDataManager.cpp" />
     <ClCompile Include="daCursorScript.cpp" />

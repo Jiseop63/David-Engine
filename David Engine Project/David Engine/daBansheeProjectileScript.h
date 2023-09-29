@@ -1,10 +1,10 @@
 #pragma once
-#include "daActionUnitScript.h"
+#include "daMonsterActionUnitScript.h"
 
 namespace da
 {
 	class BansheeCombatScript;
-	class BansheeProjectileScript : public ActionUnitScript
+	class BansheeProjectileScript : public MonsterActionUnitScript
 	{
 	public:
 		BansheeProjectileScript();

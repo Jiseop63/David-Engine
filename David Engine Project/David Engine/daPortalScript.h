@@ -16,9 +16,15 @@ namespace da
 
 	public:
 		virtual void ChangeScene();
+		void SetMaterial(std::shared_ptr<Material> material) { mPortalRenderer->SetMaterial(material); }
+		void SetSceneName(const std::wstring sceneName) { mSceneName = sceneName; }
 
 	public:
-		void SetSceneName(const std::wstring sceneName) { mSceneName = sceneName; }
+		virtual void GatePass();
+		virtual void GateClose();
+		virtual void GateOpen();
+
+
 
 	protected:
 		Transform*		mPortalTransform;
@@ -28,5 +34,9 @@ namespace da
 
 	protected:
 		std::wstring	mSceneName;
+		bool			mGatePass;
+		bool			mGateClose;
+		bool			mGateOpen;
+		
 	};
 }

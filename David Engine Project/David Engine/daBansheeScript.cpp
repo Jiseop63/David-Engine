@@ -1,17 +1,18 @@
 #include "daBansheeScript.h"
 #include "daSceneManager.h"
 
-
+#include "daGameDataManager.h"
 #include "daTime.h"
 
 #include "daResources.h"
 #include "daGameObject.h"
 
-#include "daPlayerScript.h"
 #include "daBansheeCombatScript.h"
-#include "daActionUnitScript.h"
+#include "daPlayerScript.h"
+
 #include "daBansheeProjectileScript.h"
-#include "daPlayerActionUnitScript.h"
+
+#include "daDungeonPortalScript.h"
 
 
 namespace da
@@ -50,7 +51,7 @@ namespace da
 		mCreatureStat.MaxHP = 22.0f;
 		mCreatureStat.CurHP = 22.0f;
 
-		mMonsterAttackStat.AttackRange = 6.0f;
+		mMonsterAttackStat.AttackRange = 4.0f;
 		mMonsterAttackStat.AttackDelayAccumulateTime = 0.0f;
 		mMonsterAttackStat.AttackDelay = 4.0f;
 
@@ -143,7 +144,7 @@ namespace da
 			//mCreatureAnimator->PlayAnimation(L"BansheeAttack", false);
 			break;
 		case da::eBansheeState::Dead:
-			GetOwner()->SetObjectState(GameObject::eObjectState::Hide);
+			//
 			break;
 		default:
 			break;
@@ -200,7 +201,9 @@ namespace da
 			actionUnit->SetUnitInfo(unitInfo);
 			actionUnit->OnActive();
 			mIsDead = true;
-		}		
+
+			GameDataManager::DecreaseMonsterCount(SceneManager::GetActiveScene()->GetPortals());
+		}
 	}
 	void BansheeScript::findingPlayer()
 	{
@@ -241,15 +244,15 @@ namespace da
 		if (!mAttackProgress)
 		{
 			mCreatureAnimator->PlayAnimation(L"BansheeAttack", false);	// 애니메이션 호출
-			//mMonsterCombatScript->ToDoAttack();						// 공격 기능 호출
+			//mMonsterCombatScript->ToDoAttack();									// 공격 기능 호출
 			for (int index = 0; index < 10; ++index)
 			{
 				ActionUnitScript* projectile = CreatureScript::callActionUnit();
 				structs::sActionUnitInfo unitInfo = {};
-				unitInfo.Scale = 2.750f;
+				unitInfo.Scale = 2.250f;
 				unitInfo.Time.End = 2.0f;
 				unitInfo.Range = 4.50f;
-				unitInfo.Speed = 2.250f;
+				unitInfo.Speed = 2.0f;
 				math::Vector3 moveDirection = math::daRotateVector3(math::Vector3::UnitY, index * 0.620f);
 				projectile->SetUnitInfo(unitInfo);
 				projectile->SetUnitTypes(UnitRenderType::UsingDirection, UnitUsageType::Default, UnitActionType::Range);

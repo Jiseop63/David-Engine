@@ -4,6 +4,7 @@
 #include "daInventoryScript.h"
 #include "daLifeBarScript.h"
 #include "daDashCountScript.h"
+#include "daDungeonPortalScript.h"
 
 namespace da
 {
@@ -16,7 +17,10 @@ namespace da
 	da::math::Vector2 GameDataManager::mCameraMovableRange = Vector2::Zero;
 	da::math::Vector2 GameDataManager::mCameraMovePosition = Vector2::Zero;
 	
+
 	bool GameDataManager::mDebuging = false;
+	std::vector<int> GameDataManager::mMonsterCounts((UINT)eDungeonScene::End, 0);
+	int GameDataManager::mCurrentMonsterCount = 0;
 
 	void GameDataManager::Initialize()
 	{
@@ -33,6 +37,61 @@ namespace da
 		mInventoryData.Armour2 = *mSubArmour;
 	}
 
+	void GameDataManager::EnterMonsterCount(eDungeonScene scene, std::vector<PortalScript*> portals)
+	{
+		if (0 == portals.size())
+		{
+			mCurrentMonsterCount = 0;
+			return;
+		}
+		// 현재 씬이 Clear상태인지 확인
+		bool isClear;
+		if (0 == mMonsterCounts[(UINT)scene])
+			isClear = true;
+		else
+			isClear = false;
+
+		// 포탈 제어하기
+		if (isClear)
+		{
+			for (PortalScript* target : portals)
+			{
+				target->GatePass();
+			}
+		}
+		else
+		{
+			for (PortalScript* target : portals)
+			{
+				target->GateClose();
+			}
+		}
+
+		// 외부에서 접근하기 편하도록 current 변수에 값 옮기기
+		mCurrentMonsterCount = mMonsterCounts[(UINT)scene];
+	}
+
+	void GameDataManager::ExitMonsterCount(eDungeonScene scene)
+	{
+		// 마지막 상태를 갱신해주기
+		mMonsterCounts[(UINT)scene] = mCurrentMonsterCount;
+	}
+
+	void GameDataManager::DecreaseMonsterCount(std::vector<PortalScript*> portals)
+	{
+		// count 감소
+		if (0 !=mCurrentMonsterCount)
+			mCurrentMonsterCount--;
+
+		// 만약 몬스터를 다잡은 경우
+		if (0 == mCurrentMonsterCount)
+		{
+			for (PortalScript* target : portals)
+			{
+				target->GateOpen();
+			}
+		}
+	}
 
 	void GameDataManager::SetCameraMovaPosition(da::math::Vector2 vector2, bool shake)
 	{		
@@ -64,22 +123,6 @@ namespace da
 		SceneManager::GetInventoryScript()->CallInventory();
 	}
 
-	void GameDataManager::ChangeArmour()
-	{
-		//// swap armour
-		//structs::sArmour temp = *mActiveArmour;
-		//mActiveArmour = mSubArmour;
-		//mSubArmour = &temp;
-
-		//// change UI
-		//SceneManager::GetInventoryScript()->ChangeArmour();
-		//// 패널 이미지 변경해주기
-		//// SceneManager::GetHUDObject()->Get
-		//
-		//
-		//// control weaponScript
-		//SceneManager::GetPlayerScript()->GetWeaponScript()->EquipWeapon();
-	}
 	structs::sArmour* GameDataManager::GetActiveArmour()
 	{
 		return mActiveArmour;

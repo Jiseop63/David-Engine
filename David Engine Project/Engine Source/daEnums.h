@@ -34,9 +34,9 @@ namespace da::enums
 		Boss,
 		BossProjectile,
 		
+		Portal,
 		Playable,
 		PlayableProjectile,
-		Portal,
 
 		// Graphic
 		Light,

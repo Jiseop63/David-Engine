@@ -1,8 +1,16 @@
 #pragma once
 #include "daGameObject.h"
 // or David Engine.h
+
+
 namespace da
 {
+	enum class eDungeonScene
+	{
+		F1Stage2,
+		F1Stage3,
+		End,
+	};
 	class GameDataManager
 	{
 	public:
@@ -20,6 +28,13 @@ namespace da
 		static bool IsDebuging() { return mDebuging; }
 
 	public:
+		static void InitializeMonsterCount(eDungeonScene scene, int value) { mMonsterCounts[(UINT)scene] = value; }
+		
+		static void EnterMonsterCount(eDungeonScene scene, std::vector<class PortalScript*> portals);
+		static void ExitMonsterCount(eDungeonScene scene);
+		static void DecreaseMonsterCount(std::vector<class PortalScript*> portals);
+
+	public:
 		static structs::sInventory& GetInventory() { return mInventoryData; }
 
 #pragma region Scene Enter Func
@@ -35,7 +50,6 @@ namespace da
 #pragma region Inventory Func
 	public:
 		static void CallInventory();
-		static void ChangeArmour();
 		static structs::sArmour* GetActiveArmour();
 #pragma endregion
 
@@ -49,8 +63,9 @@ namespace da
 		static da::math::Vector2		mCameraMovableRange;
 		static da::math::Vector2		mCameraMovePosition;
 
-
 		static bool mDebuging;
+		static std::vector<int>	mMonsterCounts;
+		static int				mCurrentMonsterCount;
 #pragma endregion
 	};
 }

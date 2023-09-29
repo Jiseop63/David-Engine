@@ -10,9 +10,11 @@ namespace da
 		, mActionUnitCollider(nullptr)
 		, mActionUnitRenderer(nullptr)
 		, mActionUnitAnimator(nullptr)
+		, mOwnerScript(nullptr)
 		, mUnitInfo{}
-		, mUnitRenderType(UnitRenderType::Stay)
 		, mUnitUsageType(UnitUsageType::Default)
+		, mUnitActionType(UnitActionType::None)
+		, mUnitRenderType(UnitRenderType::Stay)
 		, mUnitBeginPosition(math::Vector3::Zero)
 		, mUnitDirection(math::Vector3::UnitY)
 		, mUnitAnimationName()

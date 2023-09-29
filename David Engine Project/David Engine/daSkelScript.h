@@ -57,7 +57,6 @@ namespace da
 #pragma endregion
 
 	public:
-		virtual CombatScript* AddCombatScript(GameObject* targetObj);  // 삭제 예정
 
 		eSkulState				mMonsterActiveState;
 		

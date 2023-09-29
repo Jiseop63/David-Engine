@@ -6,6 +6,7 @@ namespace da
 {
 	using namespace enums;
 	Scene::Scene()
+		: mPortals()
 	{
 		mLayers.resize((int)eLayerType::End);
 	}

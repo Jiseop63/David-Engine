@@ -48,7 +48,7 @@ namespace da
 	void ArmourScript::ChangeArmour()
 	{
 		// 데이터 변경
-		GameDataManager::ChangeArmour();
+		//GameDataManager::ChangeArmour();
 
 		// 교체 기능
 		math::Vector3 getPos = mTransform->GetPosition();

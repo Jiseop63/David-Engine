@@ -450,6 +450,10 @@ namespace renderer
 		Resources::Load<Texture>(L"Armour1Texture", L"..\\Resources\\Texture\\Hud\\Armour\\Armour1.png");
 		Resources::Load<Texture>(L"Armour2Texture", L"..\\Resources\\Texture\\Hud\\Armour\\Armour2.png");
 		Resources::Load<Texture>(L"GreatSwordIconTexture", L"..\\Resources\\Texture\\Items\\GreatSword.png");
+
+		Resources::Load<Texture>(L"KeyFTexture", L"..\\Resources\\Texture\\InputIcon\\Keyboard_F.png");
+
+
 		// inventory
 		Resources::Load<Texture>(L"InventoryPanelATexture", L"..\\Resources\\Texture\\Inventory\\InventoryPanelA.png");
 		Resources::Load<Texture>(L"InventoryPanelBTexture", L"..\\Resources\\Texture\\Inventory\\InventoryPanelB.png");
@@ -518,9 +522,16 @@ namespace renderer
 		
 		// portal
 		Resources::Load<Texture>(L"DungeonEat", L"..\\Resources\\Texture\\Scene_Town\\DungeonEat.png");
+		
 		Resources::Load<Texture>(L"SteleClose", L"..\\Resources\\Texture\\Dungeon\\SteleClose.png");
 		Resources::Load<Texture>(L"SteleIdle", L"..\\Resources\\Texture\\Dungeon\\SteleIdle.png");
 		Resources::Load<Texture>(L"SteleOpen", L"..\\Resources\\Texture\\Dungeon\\SteleOpen.png");
+
+		Resources::Load<Texture>(L"Stage1DoorClose", L"..\\Resources\\Texture\\Dungeon\\close1F.png");
+		Resources::Load<Texture>(L"Stage1DoorOpen", L"..\\Resources\\Texture\\Dungeon\\open1F.png");
+		Resources::Load<Texture>(L"Stage1DoorClosing", L"..\\Resources\\Texture\\Dungeon\\Door1FClosing.png");
+		Resources::Load<Texture>(L"Stage1DoorOpening", L"..\\Resources\\Texture\\Dungeon\\Door1FOpening.png");
+
 
 		
 		// dungeonTexture
@@ -988,6 +999,15 @@ namespace renderer
 			material->SetTexture(texture);
 			material->SetShader(shader);
 			Resources::Insert<Material>(L"1FStage3Material", material);
+		}
+		
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"KeyFTexture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"IconMaterial", material);
 		}
 #pragma endregion
 #pragma region 2F material

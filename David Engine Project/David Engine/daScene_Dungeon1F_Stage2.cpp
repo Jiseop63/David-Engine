@@ -13,7 +13,7 @@
 // UI, Object, Components and Camera
 #include "daObjects.h"
 #include "daObjectsFastIncludeHeader.h"
-
+#include "daDungeonPortalScript.h"
 namespace da
 {
 	Scene_Dungeon1F_Stage2::Scene_Dungeon1F_Stage2()
@@ -26,6 +26,7 @@ namespace da
 	{
 		addBackgroundObjects();
 		addGameObjects();
+		GameDataManager::InitializeMonsterCount(eDungeonScene::F1Stage2, 5);
 	}
 	void Scene_Dungeon1F_Stage2::Update()
 	{
@@ -48,7 +49,7 @@ namespace da
 		// player ¼¼ÆÃ
 		PlayerScript* player = SceneManager::GetPlayerScript();
 		player->ClearCreature();
-		player->SetCreaturePosition(math::Vector3(-7.0f, -4.0f, ObjectZ));
+		player->SetCreaturePosition(math::Vector3(-7.50f, -3.0f, ObjectZ));
 		player->IsPlayerInDungeon(true);
 		math::Vector3 playerPos = player->GetOwner()->GetTransform()->GetPosition();
 		
@@ -56,10 +57,11 @@ namespace da
 		GameDataManager::SetCameraMovableRange(math::Vector2(2.750f, 1.850f));
 		GameDataManager::SetCameraMovaPosition(math::Vector2(playerPos.x, playerPos.y));
 		
+		GameDataManager::EnterMonsterCount(eDungeonScene::F1Stage2, mPortals);
 	}
 	void Scene_Dungeon1F_Stage2::OnExit()
 	{
-		SceneManager::GetPlayerScript()->CreatureIsNotGround();
+		GameDataManager::ExitMonsterCount(eDungeonScene::F1Stage2);
 	}
 	void Scene_Dungeon1F_Stage2::addBackgroundObjects()
 	{
@@ -216,14 +218,26 @@ namespace da
 				this, Vector3(0.0f, 4.40f, 0.0f), Vector3(1.30f, 0.250f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
+
+
+		// Æ÷Å» °´Ã¼
+		{
+			DungeonPortalScript* portalScript = objects::InstantiateDungeonPortal(this);
+			portalScript->SetPosition(math::Vector3(-9.30f, -2.50f, 0.0f));
+			portalScript->SetRotate(1.570f);
+			portalScript->SetSceneName(L"Scene_Dungeon1F_Stage1");
+			mPortals.push_back(portalScript);
+
+		}
+		{
+			DungeonPortalScript* portalScript = objects::InstantiateDungeonPortal(this);
+			portalScript->SetPosition(math::Vector3(0.0f, 5.0f, 0.0f));
+			portalScript->SetSceneName(L"Scene_Dungeon1F_Stage3");
+			mPortals.push_back(portalScript);
+		}
 	}
 	void Scene_Dungeon1F_Stage2::addGameObjects()
 	{
-		//// test enemy
-		//{
-		//	SkelScript* skelScript = objects::InstantiateSkel(this);
-		//	skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(3.50f, 2.0f, ObjectZ));
-		//}
 		// test enemy
 		{
 			SkelScript* skelScript = objects::InstantiateSkel(this);

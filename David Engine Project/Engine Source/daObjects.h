@@ -112,7 +112,7 @@ namespace da::objects
 		// ¶óÀÌÆ®
 		{
 			Light* playerLight = player->AddComponent<Light>();
-			playerLight->SetRadius(3.0f);
+			playerLight->SetRadius(3.50f);
 			playerLight->SetLightType(enums::eLightType::Point);
 			playerLight->SetColor(math::Vector4(0.450f, 0.450f, 0.450f, 1.0f));
 		}
@@ -234,9 +234,39 @@ namespace da::objects
 		}
 
 		return bossScript;
-	}
-	
+	}	
 #pragma endregion
+
+#pragma region ENV Objects
+	static DungeonPortalScript* InstantiateDungeonPortal(Scene* scene)
+	{
+
+		GameObject* portal = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Portal, L"NoneMaterial");
+		portal->SetName(L"portalObject");
+		DungeonPortalScript* portalScript = portal->AddComponent<DungeonPortalScript>();
+
+		GameObject* wall = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Land, L"NoneMaterial");
+		portalScript->AddWallScript(wall);
+
+		return portalScript;
+	}
+	static BossPortalScript* InstantiateBossPortal(Scene* scene)
+	{
+
+		GameObject* portal = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Portal, L"AnimationMaterial");
+		portal->SetName(L"portalObject");
+		BossPortalScript* portalScript = portal->AddComponent<BossPortalScript>();
+
+		GameObject* icon = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Portal, L"IconMaterial");
+		portalScript->AddIconScript(icon);
+
+
+		return portalScript;
+	}
+#pragma endregion
+
+
+
 	static GameObject* InstantiateLandObject(Scene* scene, math::Vector3 location, math::Vector3 scale)
 	{
 		GameObject* obj = new GameObject();

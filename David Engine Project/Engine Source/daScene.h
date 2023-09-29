@@ -20,8 +20,7 @@ namespace da
 		virtual void OnEnter() {}
 		virtual void OnExit() {}
 		
-		void AddGameObject(enums::eLayerType layerType, GameObject* target);
-		
+		void AddGameObject(enums::eLayerType layerType, GameObject* target);		
 		std::vector<GameObject*> GetCommonObjects();
 		template <typename T>
 		std::vector<T*> GetTypeOfObjects()
@@ -39,9 +38,16 @@ namespace da
 			}
 			return retObjects;
 		}
+
+	public:
 		Layer& GetLayer(enums::eLayerType targetLayer) { return mLayers[(UINT)targetLayer]; }
+		std::vector<class PortalScript*> GetPortals() { return mPortals; }
 
 	private:
 		std::vector<Layer> mLayers;
+
+	protected:
+		std::vector<class PortalScript*> mPortals;
+
 	};
 }

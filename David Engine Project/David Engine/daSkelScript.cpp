@@ -1,7 +1,7 @@
 #include "daSkelScript.h"
 
 #include "daSceneManager.h"
-
+#include "daGameDataManager.h"
 
 #include "daTime.h"
 
@@ -12,7 +12,7 @@
 
 #include "daSkelCombatScript.h"
 #include "daActionUnitScript.h"
-
+#include "daDungeonPortalScript.h"
 
 namespace da
 {
@@ -71,14 +71,12 @@ namespace da
 		// ½ºÅÝ ÃÊ±âÈ­
 		mCreatureStat.MaxHP = 25.0f;
 		mCreatureStat.CurHP = 25.0f;
-
 		mCreatureStat.MoveSpeed = 1.250f;
+
 
 		mMonsterAttackStat.AttackRange = 0.750f;
 		mMonsterAttackStat.AttackDelayAccumulateTime = 0.0f;
 		mMonsterAttackStat.AttackDelay = 4.0f;
-
-		mCreatureStat.MoveSpeed = 1.50f;
 
 		mChaseDurationTime = 1.50f;
 		mChaseDurationDecay = mChaseDurationTime;
@@ -267,13 +265,6 @@ namespace da
 		}
 	}
 
-	CombatScript* SkelScript::AddCombatScript(GameObject* targetObj)
-	{
-		SkelCombatScript* combatScript = targetObj->AddComponent<SkelCombatScript>();
-		combatScript->SetOwnerScript(this);
-		mMonsterCombatScript = combatScript;
-		return combatScript;
-	}
 	void SkelScript::SkelHandleDead()
 	{
 		if (!mIsDead)
@@ -288,6 +279,8 @@ namespace da
 			info.Time.End = 2.0f;
 			unit->SetUnitInfo(info);
 			unit->OnActive();
+
+			GameDataManager::DecreaseMonsterCount(SceneManager::GetActiveScene()->GetPortals());
 		}
 		mIsDead = true;
 	}
@@ -307,7 +300,7 @@ namespace da
 			mCreatureAnimator->PlayAnimation(L"SkelIdle");
 			break;
 		case da::eSkulState::Dead:
-			GetOwner()->SetObjectState(GameObject::eObjectState::Hide);
+			//GetOwner()->SetObjectState(GameObject::eObjectState::Hide);
 			break;
 		default:
 			break;

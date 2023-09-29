@@ -41,6 +41,12 @@
 #include "daArmourScript.h"
 #include "daInventoryScript.h"
 
+// env
+#include "daDungeonPortalScript.h"
+#include "daBossPortalScript.h"
+#include "daPortalWallScript.h"
+#include "daPortalIconScript.h"
+
 // Player
 #include "daPlayerScript.h"
 #include "daPlayerCombatScript.h"

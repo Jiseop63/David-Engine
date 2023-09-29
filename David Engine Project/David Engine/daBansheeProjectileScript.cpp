@@ -15,7 +15,7 @@ namespace da
 	}
 	void BansheeProjectileScript::Initialize()
 	{
-		ActionUnitScript::Initialize();
+		MonsterActionUnitScript::Initialize();
 		mActionUnitAnimator->Create(L"BansheeBulletIdle", Resources::Find<Texture>(L"BansheeBulletIdle"), math::Vector2::Zero, math::Vector2(13.0f, 16.0f), 4, math::Vector2::Zero, 0.10f, 70.0f);
 		mActionUnitAnimator->Create(L"BansheeBulletHit", Resources::Find<Texture>(L"BansheeBulletHit"), math::Vector2::Zero, math::Vector2(20.0f, 27.0f), 6, math::Vector2::Zero, 0.10f, 80.0f);
 		
