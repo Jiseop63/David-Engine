@@ -36,7 +36,7 @@ namespace da
 		void PortalActive();
 
 	private:
-		PortalWallScript* mWallScript;
-		bool mIsClear;
+		PortalWallScript*	mWallScript;
+		bool				mIsClear;
 	};
 }

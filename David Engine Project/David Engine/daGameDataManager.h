@@ -9,6 +9,7 @@ namespace da
 	{
 		F1Stage2,
 		F1Stage3,
+		F2Stage2,
 		End,
 	};
 	class GameDataManager

@@ -70,10 +70,10 @@ namespace da
 		ActionUnitScript* actionUnit = mOwnerScript->callActionUnit();
 		structs::sActionUnitInfo unitInfo = {};
 		unitInfo.Scale = 1.20f;
-		unitInfo.Time.End = 0.20f;
+		unitInfo.DurationTime.End = 0.20f;
 		unitInfo.RotateAngle = mWeaponInfo->ProjectileStat.ProjectileAngle;
 
-		actionUnit->SetUnitTypes(UnitUsageType::OnlyCollider, UnitRenderType::JustRotate, UnitActionType::Duration);
+		actionUnit->SetUnitTypes(enums::eUnitUsageType::OnlyCollider, enums::eUnitRenderType::JustRotate, enums::eUnitActionType::Duration);
 		actionUnit->SetUnitInfo(unitInfo);
 		actionUnit->SetOffsetPosition(math::Vector3(mOwnerDir.x * mWeaponInfo->ProjectileStat.ProjectileCenterPadding, mOwnerDir.y * mWeaponInfo->ProjectileStat.ProjectileCenterPadding, 0.0f)); // 아직 문제있음
 

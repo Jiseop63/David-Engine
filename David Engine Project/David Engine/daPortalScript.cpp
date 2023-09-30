@@ -1,7 +1,7 @@
 #include "daPortalScript.h"
 #include "daGameObject.h"
 #include "daSceneManager.h"
-
+#include "daPlayerScript.h"
 namespace da
 {
 	PortalScript::PortalScript()
@@ -9,6 +9,7 @@ namespace da
 		, mPortalRenderer(nullptr)
 		, mPortalAnimator(nullptr)
 		, mPortalBodyCollider(nullptr)
+		, mExitPosition(math::Vector3::Zero)
 		, mGatePass(false)
 		, mGateClose(false)
 		, mGateOpen(false)
@@ -32,6 +33,9 @@ namespace da
 	}
 	void PortalScript::ChangeScene()
 	{
+		PlayerScript* player = SceneManager::GetPlayerScript();
+		player->ClearCreature();
+		player->SetCreaturePosition(mExitPosition);
 		SceneManager::LoadScene(mSceneName);
 	}
 	void PortalScript::GatePass()

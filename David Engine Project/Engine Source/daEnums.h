@@ -29,12 +29,13 @@ namespace da::enums
 
 		// Object Collision
 		ENV,
+		Portal,
+
 		Monster,
 		MonsterProjectile,
 		Boss,
 		BossProjectile,
 		
-		Portal,
 		Playable,
 		PlayableProjectile,
 
@@ -81,6 +82,27 @@ namespace da::enums
 		End,
 	};
 #pragma region Contents
+	enum class eUnitActionType
+	{
+		Duration,
+		Range,
+		None,
+	};
+	enum class eUnitRenderType
+	{
+		Stay,				// dont move
+		JustRotate,			// dont move & rotate
+		UsingDirection,		// move to dir
+		UsingRotation,		// move to rotate
+	};
+	enum class eUnitUsageType
+	{
+		Default,			// Animation & Collider
+		OnlyTexture,		// Texture 
+		OnlyAnimation,		// Animation
+		OnlyCollider,		// Collider
+	};
+
 	enum class eWeaponName
 	{
 		Default,
@@ -101,6 +123,7 @@ namespace da::enums
 		Default,
 	};
 
+	// 안쓸예정
 	enum class eProjectileType
 	{
 		Melee,

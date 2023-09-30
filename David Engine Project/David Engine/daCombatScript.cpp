@@ -2,7 +2,6 @@
 
 #include "daTime.h"
 #include "daGameObject.h"
-#include "daEffectScript.h"
 #include "daCreatureScript.h"
 #include "daActionUnitScript.h"
 

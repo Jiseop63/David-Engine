@@ -42,12 +42,12 @@ namespace da
 			ActionUnitScript* projectile = mOwnerScript->callActionUnit();
 			structs::sActionUnitInfo unitInfo = {};
 			unitInfo.Scale = 1.20f;
-			unitInfo.Time.End = 2.0f;
+			unitInfo.DurationTime.End = 2.0f;
 			unitInfo.Range = mWeaponInfo->ProjectileStat.ProjectileRange;
 			unitInfo.Speed = mWeaponInfo->ProjectileStat.ProjectileSpeed;
 			math::Vector3 moveDirection = math::daRotateVector3(math::Vector3::UnitY, index * 0.520f);
 			projectile->SetUnitInfo(unitInfo);
-			projectile->SetUnitTypes(UnitRenderType::UsingDirection, UnitUsageType::Default, UnitActionType::Range);
+			projectile->SetUnitTypes(enums::eUnitRenderType::UsingDirection, enums::eUnitUsageType::Default, enums::eUnitActionType::Range);
 			projectile->SetNextAnimation(L"BansheeBulletIdle", true);
 			projectile->SetOffsetPosition(math::Vector3(0.0f, -0.20f, 0.0f));
 			projectile->SetMoveDirection(moveDirection);

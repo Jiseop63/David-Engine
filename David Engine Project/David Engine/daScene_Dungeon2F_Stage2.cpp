@@ -24,6 +24,7 @@ namespace da
 	{
 		addBackgroundObjects();
 		addGameObjects();
+		GameDataManager::InitializeMonsterCount(eDungeonScene::F2Stage2, 1);
 	}
 	void Scene_Dungeon2F_Stage2::Update()
 	{
@@ -45,11 +46,9 @@ namespace da
 	{
 		// player 세팅
 		PlayerScript* player = SceneManager::GetPlayerScript();
-		player->ClearCreature();
-		player->SetCreaturePosition(math::Vector3::Zero);
 		player->IsPlayerInDungeon(true);
-		math::Vector3 playerPos = player->GetOwner()->GetTransform()->GetPosition();
 		// Camera 세팅
+		math::Vector3 playerPos = player->GetOwner()->GetTransform()->GetPosition();
 		GameDataManager::SetCameraMovableRange(math::Vector2(0.210f, 2.240f));
 		GameDataManager::SetCameraMovaPosition(math::Vector2(playerPos.x, playerPos.y));
 		// light 세팅
@@ -58,10 +57,13 @@ namespace da
 		CollisionManager::SetLayer(enums::eLayerType::PlayableProjectile, enums::eLayerType::Boss);
 		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::BossProjectile);
 		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Boss);
+
+		GameDataManager::EnterMonsterCount(eDungeonScene::F2Stage2, mPortals);
 	}
 	void Scene_Dungeon2F_Stage2::OnExit()
 	{
 		SceneManager::GetPlayerScript()->CreatureIsNotGround();
+		GameDataManager::ExitMonsterCount(eDungeonScene::F2Stage2);
 	}
 	void Scene_Dungeon2F_Stage2::addBackgroundObjects()
 	{
@@ -162,13 +164,22 @@ namespace da
 	}
 	void Scene_Dungeon2F_Stage2::addGameObjects()
 	{
-		//
-		//// test enemy
-		//{
-		//	SkelScript* skelScript = objects::InstantiateSkel(this);
-		//	skelScript->GetOwner()->GetTransform()->SetPosition(Vector3(-0.50f, 0.0f, ObjectZ));
-		//}
-
+		{
+			DungeonPortalScript* portalScript = objects::InstantiateDungeonPortal(this);
+			portalScript->SetPosition(math::Vector3(6.50f, -4.20f, 0.0f));
+			portalScript->SetSceneName(L"Scene_Dungeon2F_Stage1");
+			portalScript->SetExitPosition(math::Vector3(6.0f, -1.0f, 0.0f));
+			portalScript->SetRotate(1.570f);
+			mPortals.push_back(portalScript);
+		}
+		{
+			DungeonPortalScript* portalScript = objects::InstantiateDungeonPortal(this);
+			portalScript->SetPosition(math::Vector3(-6.50f, -4.20f, 0.0f));
+			portalScript->SetSceneName(L"Scene_Town");
+			portalScript->SetExitPosition(math::Vector3(-12.0f, -1.50f, 0.0f));
+			portalScript->SetRotate(-1.570f);
+			mPortals.push_back(portalScript);
+		}
 		// skell Boss
 		{
 			SkellBossScript* bossScript = objects::InstantiateSkellBoss(this);

@@ -12,9 +12,9 @@ namespace da
 		, mActionUnitAnimator(nullptr)
 		, mOwnerScript(nullptr)
 		, mUnitInfo{}
-		, mUnitUsageType(UnitUsageType::Default)
-		, mUnitActionType(UnitActionType::None)
-		, mUnitRenderType(UnitRenderType::Stay)
+		, mUnitUsageType(enums::eUnitUsageType::Default)
+		, mUnitActionType(enums::eUnitActionType::None)
+		, mUnitRenderType(enums::eUnitRenderType::Stay)
 		, mUnitBeginPosition(math::Vector3::Zero)
 		, mUnitDirection(math::Vector3::UnitY)
 		, mUnitAnimationName()
@@ -34,13 +34,13 @@ namespace da
 	void ActionUnitScript::Update()
 	{
 		// 종료 조건
-		if (UnitActionType::Duration == mUnitActionType)
+		if (enums::eUnitActionType::Duration == mUnitActionType)
 		{
-			mUnitInfo.Time.Start += (float)Time::DeltaTime();
-			if (mUnitInfo.Time.End <= mUnitInfo.Time.Start)
+			mUnitInfo.DurationTime.Start += (float)Time::DeltaTime();
+			if (mUnitInfo.DurationTime.End <= mUnitInfo.DurationTime.Start)
 				ClearUnit();
 		}
-		else if (UnitActionType::Range == mUnitActionType)
+		else if (enums::eUnitActionType::Range == mUnitActionType)
 		{
 			math::Vector3 currentPosition = mActionUnitTransform->GetPosition();
 			math::Vector3 moveDistance = mUnitBeginPosition - currentPosition;
@@ -53,16 +53,16 @@ namespace da
 		// 이동 조건
 		switch (mUnitRenderType)
 		{
-		case da::UnitRenderType::Stay:
+		case da::enums::eUnitRenderType::Stay:
 			break;
-		case da::UnitRenderType::UsingDirection:
+		case da::enums::eUnitRenderType::UsingDirection:
 		{
 			math::Vector3 retPosition = mActionUnitTransform->GetPosition();
 			retPosition += mUnitDirection * mUnitInfo.Speed * (float)Time::DeltaTime();
 			mActionUnitTransform->SetPosition(retPosition);
 		}
 			break;
-		case da::UnitRenderType::UsingRotation:
+		case da::enums::eUnitRenderType::UsingRotation:
 		{
 			math::Vector3 retPosition = mActionUnitTransform->GetPosition();
 			retPosition += mActionUnitTransform->Up() * mUnitInfo.Speed * (float)Time::DeltaTime();
@@ -80,8 +80,8 @@ namespace da
 		// Transform 세팅		
 		mActionUnitTransform->SetScale(math::Vector3(mUnitInfo.Scale, mUnitInfo.Scale, 1.0f));
 		mUnitBeginPosition = mOwnerScript->GetCreatureTransform()->GetPosition() + mOffsetPosition;
-		if (UnitRenderType::JustRotate == mUnitRenderType
-			|| UnitRenderType::UsingRotation == mUnitRenderType)
+		if (enums::eUnitRenderType::JustRotate == mUnitRenderType
+			|| enums::eUnitRenderType::UsingRotation == mUnitRenderType)
 		{
 			mActionUnitTransform->SetRotation(math::Vector3(0.0f, 0.0f, mUnitInfo.RotateAngle));
 		}
@@ -89,8 +89,8 @@ namespace da
 
 
 		// collider 세팅
-		if (UnitUsageType::Default == mUnitUsageType
-			|| UnitUsageType::OnlyCollider == mUnitUsageType)
+		if (enums::eUnitUsageType::Default == mUnitUsageType
+			|| enums::eUnitUsageType::OnlyCollider == mUnitUsageType)
 		{
 			mActionUnitCollider->ApplyComponentUsing(true);
 			// collider detail
@@ -101,8 +101,8 @@ namespace da
 		}
 
 		// animation 활성화
-		if (UnitUsageType::Default == mUnitUsageType
-			|| UnitUsageType::OnlyAnimation == mUnitUsageType)
+		if (enums::eUnitUsageType::Default == mUnitUsageType
+			|| enums::eUnitUsageType::OnlyAnimation == mUnitUsageType)
 		{
 			mActionUnitAnimator->ApplyComponentUsing(true);
 			mActionUnitAnimator->PlayAnimation(mUnitAnimationName, mUnitAnimationLoop);

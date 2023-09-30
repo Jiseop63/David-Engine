@@ -313,12 +313,12 @@ namespace da
 
 					structs::sActionUnitInfo unitInfo = {};
 					unitInfo.Scale = 1.0f;
-					unitInfo.Time.End = 2.0f;
+					unitInfo.DurationTime.End = 2.0f;
 					unitInfo.Range = 6.5f;
 					unitInfo.Speed = 4.50f;
 					math::Vector3 moveDirection = math::daRotateVector3(math::Vector3::UnitY, projectile * 1.570f + mRotatePerSeconds);
 					targetProjectile->SetUnitInfo(unitInfo);
-					targetProjectile->SetUnitTypes(UnitRenderType::UsingDirection, UnitUsageType::Default, UnitActionType::Range);
+					targetProjectile->SetUnitTypes(enums::eUnitRenderType::UsingDirection, enums::eUnitUsageType::Default, enums::eUnitActionType::Range);
 					targetProjectile->SetNextAnimation(L"SkellBossProjectile", true);
 					targetProjectile->SetMoveDirection(moveDirection);
 					targetProjectile->OnActive();

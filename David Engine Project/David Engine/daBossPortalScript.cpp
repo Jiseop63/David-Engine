@@ -33,7 +33,7 @@ namespace da
 		//mPortalAnimator->CompleteEvent(L"SteleClose") = std::bind(&DungeonPortalScript::IdleAnimation, this);
 		mPortalAnimator->CompleteEvent(L"Stage1DoorClosing") = std::bind(&BossPortalScript::PlayDoorClose, this);
 		mPortalAnimator->CompleteEvent(L"Stage1DoorOpening") = std::bind(&BossPortalScript::PlayDoorOpen, this);
-		mPortalAnimator->ActionEvent(L"Stage1DoorOpening", 4) = std::bind(&BossPortalScript::HidePlayer, this);
+		//mPortalAnimator->ActionEvent(L"Stage1DoorOpening", 4) = std::bind(&BossPortalScript::HidePlayer, this);
 
 		// 기본값은 충돌 가능한 상태
 		mPortalBodyCollider->SetSize(math::Vector2(0.570f, 0.650f));
@@ -49,24 +49,7 @@ namespace da
 			}
 		}
 	}
-
-	void BossPortalScript::OnCollisionEnter(Collider2D* other)
-	{		
-		if (mIsClear)
-		{
-			mFocused = true;
-			mPortalIcon->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
-		}
-	}
-	void BossPortalScript::OnCollisionExit(Collider2D* other)
-	{
-		if (mIsClear)
-		{
-			mFocused = false;
-			mPortalIcon->ApplyIcon(false);
-			mPortalIcon->GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
-		}
-	}
+		
 	void BossPortalScript::SetPosition(math::Vector3 position)
 	{
 		mPortalTransform->SetPosition(position);
@@ -76,8 +59,12 @@ namespace da
 	{
 		mPortalIcon = object->AddComponent<PortalIconScript>();
 	}
+
 	void BossPortalScript::GatePass()
 	{
+		mIsClear = true;
+		mPortalAnimator->PlayAnimation(L"Stage1DoorOpen", false);
+		mPortalBodyCollider->ApplyComponentUsing(true);
 	}
 	void BossPortalScript::GateClose()
 	{
@@ -90,17 +77,6 @@ namespace da
 	{
 		mPortalAnimator->PlayAnimation(L"Stage1DoorOpening", false);
 	}
-	void BossPortalScript::DoorOpening()
-	{
-		mPortalAnimator->PlayAnimation(L"Stage1DoorOpening", false);
-	}
-	void BossPortalScript::DoorClosing()
-	{
-		mIsClear = false;
-		mPortalBodyCollider->ApplyComponentUsing(false);
-		mPortalAnimator->PlayAnimation(L"Stage1DoorClosing", false);
-	}
-
 
 	void BossPortalScript::PlayDoorOpen()
 	{
@@ -112,8 +88,26 @@ namespace da
 	{
 		mPortalAnimator->PlayAnimation(L"Stage1DoorClose", false);
 	}
+
 	void BossPortalScript::HidePlayer()
 	{
 		SetPosition(mPortalTransform->GetPosition() + math::Vector3(0.0f, 0.0f, -1.0f));
+	}
+
+	void BossPortalScript::OnCollisionEnter(Collider2D* other)
+	{
+		if (mIsClear)
+		{
+			mFocused = true;
+			mPortalIcon->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+		}
+	}
+	void BossPortalScript::OnCollisionExit(Collider2D* other)
+	{
+		if (mIsClear)
+		{
+			mFocused = false;
+			mPortalIcon->GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
+		}
 	}
 }

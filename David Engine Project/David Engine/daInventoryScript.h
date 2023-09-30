@@ -5,6 +5,11 @@
 
 namespace da
 {
+	enum class ItemSlot
+	{
+		
+	};
+
 	class InventoryScript : public Script
 	{
 	public:

@@ -222,7 +222,8 @@ namespace da
 	void Scene_Town::addGameObjects()
 	{
 		GameObject* portalObject = objects::InstantiateGameObject<GameObject>(this, enums::eLayerType::Portal, L"AnimationMaterial");
-		portalObject->AddComponent<TownPortalScript>();
-		portalObject->GetTransform()->SetPosition(math::Vector3(-5.0f, -2.70f, 0.0f));
+		portalObject->GetTransform()->SetPosition(math::Vector3(-3.0f, -2.70f, 0.0f));
+		TownPortalScript* portalScript = portalObject->AddComponent<TownPortalScript>();
+		portalScript->SetExitPosition(math::Vector3(-3.0f, -0.20f, 0.0f));
 	}
 }

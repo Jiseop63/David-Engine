@@ -5,26 +5,7 @@
 
 namespace da
 {
-	enum class UnitActionType
-	{
-		Duration,
-		Range,
-		None,
-	};
-	enum class UnitRenderType
-	{
-		Stay,				// dont move
-		JustRotate,			// dont move & rotate
-		UsingDirection,		// move to dir
-		UsingRotation,		// move to rotate
-	};
-	enum class UnitUsageType
-	{
-		Default,			// Animation & Collider
-		OnlyTexture,		// Texture 
-		OnlyAnimation,		// Animation
-		OnlyCollider,		// Collider
-	};
+	
 	class CreatureScript;
 	class ActionUnitScript : public Script
 	{
@@ -38,27 +19,27 @@ namespace da
 
 #pragma region Initialize type
 	public:
-		void SetUnitTypes(UnitRenderType actionType, UnitUsageType usageType, UnitActionType unitActionType)
+		void SetUnitTypes(enums::eUnitRenderType actionType, enums::eUnitUsageType usageType, enums::eUnitActionType unitActionType)
 		{
 			mUnitRenderType = actionType; mUnitUsageType = usageType; mUnitActionType = unitActionType;
 		}
-		void SetUnitTypes(UnitRenderType actionType, UnitActionType unitActionType, UnitUsageType usageType)
+		void SetUnitTypes(enums::eUnitRenderType actionType, enums::eUnitActionType unitActionType, enums::eUnitUsageType usageType)
 		{
 			mUnitRenderType = actionType; mUnitUsageType = usageType; mUnitActionType = unitActionType;
 		}
-		void SetUnitTypes(UnitActionType unitActionType, UnitRenderType actionType, UnitUsageType usageType)
+		void SetUnitTypes(enums::eUnitActionType unitActionType, enums::eUnitRenderType actionType, enums::eUnitUsageType usageType)
 		{
 			mUnitRenderType = actionType; mUnitUsageType = usageType; mUnitActionType = unitActionType;
 		}
-		void SetUnitTypes(UnitActionType unitActionType, UnitUsageType usageType, UnitRenderType actionType)
+		void SetUnitTypes(enums::eUnitActionType unitActionType, enums::eUnitUsageType usageType, enums::eUnitRenderType actionType)
 		{
 			mUnitRenderType = actionType; mUnitUsageType = usageType; mUnitActionType = unitActionType;
 		}
-		void SetUnitTypes(UnitUsageType usageType, UnitActionType unitActionType, UnitRenderType actionType)
+		void SetUnitTypes(enums::eUnitUsageType usageType, enums::eUnitActionType unitActionType, enums::eUnitRenderType actionType)
 		{
 			mUnitRenderType = actionType; mUnitUsageType = usageType; mUnitActionType = unitActionType;
 		}
-		void SetUnitTypes(UnitUsageType usageType, UnitRenderType actionType, UnitActionType unitActionType)
+		void SetUnitTypes(enums::eUnitUsageType usageType, enums::eUnitRenderType actionType, enums::eUnitActionType unitActionType)
 		{
 			mUnitRenderType = actionType; mUnitUsageType = usageType; mUnitActionType = unitActionType;
 		}
@@ -107,9 +88,9 @@ namespace da
 
 		structs::sActionUnitInfo mUnitInfo;
 	protected:
-		UnitRenderType	mUnitRenderType;
-		UnitUsageType	mUnitUsageType;
-		UnitActionType	mUnitActionType;
+		enums::eUnitRenderType	mUnitRenderType;
+		enums::eUnitUsageType	mUnitUsageType;
+		enums::eUnitActionType	mUnitActionType;
 		std::wstring	mUnitAnimationName;
 		bool			mUnitAnimationLoop;
 	};

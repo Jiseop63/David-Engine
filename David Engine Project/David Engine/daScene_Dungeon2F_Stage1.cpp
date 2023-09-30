@@ -46,8 +46,6 @@ namespace da
 		
 		// player 세팅
 		PlayerScript* player = SceneManager::GetPlayerScript();
-		player->ClearCreature();
-		player->SetCreaturePosition(math::Vector3(-3.0f, -1.30f, ObjectZ));
 		player->IsPlayerInDungeon(true);
 		math::Vector3 playerPos = player->GetOwner()->GetTransform()->GetPosition();
 		// Camera 세팅
@@ -62,9 +60,6 @@ namespace da
 	}
 	void Scene_Dungeon2F_Stage1::addBackgroundObjects()
 	{
-	}
-	void Scene_Dungeon2F_Stage1::addGameObjects()
-	{
 		// Stage : 336 208
 		{
 			GameObject* stageObject = objects::InstantiateGameObject
@@ -72,7 +67,7 @@ namespace da
 			stageObject->GetTransform()->SetScale(math::Vector3(3.680f * 4.0f, 2.080f * 4.0f, 1.0f));
 			stageObject->GetTransform()->SetPosition(math::Vector3(0.0f, 0.0f, ObjectZ));
 		}
-		
+
 		// Close Door : 57, 65
 		{
 			GameObject* doorObject = objects::InstantiateGameObject
@@ -106,6 +101,17 @@ namespace da
 			GameObject* landObject = objects::InstantiateLandObject(
 				this, Vector3(7.250f, 1.30f, 0.0f), Vector3(1.0f, 2.0f, 1.0f));
 			landObject->SetName(L"LandObj");
+		}
+	}
+	void Scene_Dungeon2F_Stage1::addGameObjects()
+	{
+		{
+			DungeonPortalScript* portalScript = objects::InstantiateDungeonPortal(this);
+			portalScript->SetSceneName(L"Scene_Dungeon2F_Stage2");
+			portalScript->SetPosition(math::Vector3(7.0f, -1.0f, 0.0f));
+			portalScript->SetExitPosition(math::Vector3(7.250f, -4.20f, 0.0f));
+			portalScript->SetRotate(-1.570f);
+			mPortals.push_back(portalScript);
 		}
 	}
 }

@@ -159,11 +159,10 @@
     <ClInclude Include="daCreatureLifebarScript.h" />
     <ClInclude Include="daCreatureScript.h" />
     <ClInclude Include="daDungeonPortalScript.h" />
-    <ClInclude Include="daEffectEnemyScript.h" />
+    <ClInclude Include="daItem.h" />
     <ClInclude Include="daMonsterActionUnitScript.h" />
     <ClInclude Include="daMonsterScript.h" />
     <ClInclude Include="daPlayerActionUnitScript.h" />
-    <ClInclude Include="daEffectScript.h" />
     <ClInclude Include="daPortalIconScript.h" />
     <ClInclude Include="daPortalScript.h" />
     <ClInclude Include="daPortalWallScript.h" />
@@ -210,11 +209,10 @@
     <ClCompile Include="daCreatureScript.cpp" />
     <ClCompile Include="daDashCountScript.cpp" />
     <ClCompile Include="daDungeonPortalScript.cpp" />
-    <ClCompile Include="daEffectEnemyScript.cpp" />
+    <ClCompile Include="daItem.cpp" />
     <ClCompile Include="daMonsterActionUnitScript.cpp" />
     <ClCompile Include="daMonsterScript.cpp" />
     <ClCompile Include="daPlayerActionUnitScript.cpp" />
-    <ClCompile Include="daEffectScript.cpp" />
     <ClCompile Include="daPortalIconScript.cpp" />
     <ClCompile Include="daPortalScript.cpp" />
     <ClCompile Include="daPortalWallScript.cpp" />

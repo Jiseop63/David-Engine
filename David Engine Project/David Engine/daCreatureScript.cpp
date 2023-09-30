@@ -140,12 +140,12 @@ namespace da
 		mHitEffectAngle += 1.80f;
 		// 방향 구하기
 		ActionUnitScript* actionUnit = callActionUnit();
-		actionUnit->SetUnitTypes(UnitRenderType::Stay, UnitUsageType::OnlyAnimation, UnitActionType::None);
+		actionUnit->SetUnitTypes(enums::eUnitRenderType::Stay, enums::eUnitUsageType::OnlyAnimation, enums::eUnitActionType::None);
 		actionUnit->SetNextAnimation(L"Slash", false);
 		actionUnit->SetOffsetPosition(math::Vector3(0.0f, -0.20f, 0.0f));
 		structs::sActionUnitInfo unitInfo = {};
 		unitInfo.Scale = 1.750f;
-		unitInfo.Time.End = 2.0f;
+		unitInfo.DurationTime.End = 2.0f;
 		unitInfo.RotateAngle = mHitEffectAngle;
 		actionUnit->SetUnitInfo(unitInfo);
 		actionUnit->OnActive();

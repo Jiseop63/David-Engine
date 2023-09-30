@@ -14,7 +14,6 @@ namespace da
 
 	public:
 		void SetPosition(math::Vector3 position);
-		void ApplyIcon(bool value = true);
 
 	private:
 		Transform*		mIconTransform;

@@ -49,21 +49,19 @@ namespace da
 	{
 		// player 세팅
 		PlayerScript* player = SceneManager::GetPlayerScript();
-		player->ClearCreature();
-		player->SetCreaturePosition(math::Vector3(-1.0f, -2.0f, ObjectZ));
 		player->IsPlayerInDungeon(true);
-		math::Vector3 playerPos = player->GetOwner()->GetTransform()->GetPosition();
-
+		
 		// Camera 세팅
+		math::Vector3 playerPos = player->GetOwner()->GetTransform()->GetPosition();
 		GameDataManager::SetCameraMovableRange(math::Vector2(0.80f, 6.0f));
 		GameDataManager::SetCameraMovaPosition(math::Vector2(playerPos.x, playerPos.y));
 
-		// 
 		GameDataManager::EnterMonsterCount(eDungeonScene::F1Stage3, mPortals);
 	}
 	void Scene_Dungeon1F_Stage3::OnExit()
 	{
 		SceneManager::GetPlayerScript()->CreatureIsNotGround();
+		GameDataManager::ExitMonsterCount(eDungeonScene::F1Stage3);
 	}
 	void Scene_Dungeon1F_Stage3::addBackgroundObjects()
 	{
@@ -151,11 +149,12 @@ namespace da
 			DungeonPortalScript* portalScript = objects::InstantiateDungeonPortal(this);
 			portalScript->SetPosition(math::Vector3(0.0f, -4.350f, 0.0f));
 			portalScript->SetSceneName(L"Scene_Dungeon1F_Stage2");
+			portalScript->SetExitPosition(math::Vector3(0.0f, 4.250f, 0.0f));
 			mPortals.push_back(portalScript);
 		}
 		{
 			BossPortalScript* portalScript = objects::InstantiateBossPortal(this);
-			portalScript->SetPosition(math::Vector3(0.0f, 1.750f, 0.0f));
+			portalScript->SetPosition(math::Vector3(-1.0f, 1.0f, 0.0f));
 			portalScript->SetSceneName(L"Scene_Dungeon2F_Stage1");
 			mPortals.push_back(portalScript);
 		}

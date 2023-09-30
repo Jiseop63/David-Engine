@@ -106,6 +106,9 @@
     <Filter Include="Objects\Portal\BossPortal">
       <UniqueIdentifier>{46f631a2-77a8-442b-8cfa-db8a9ca3d0d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Creature\3 Item">
+      <UniqueIdentifier>{8e7cfccf-1d5c-4556-b859-fe4e094fc81b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -177,12 +180,6 @@
     <ClInclude Include="daSkelScript.h">
       <Filter>Objects\Creature\Monster\Skel</Filter>
     </ClInclude>
-    <ClInclude Include="daEffectScript.h">
-      <Filter>Objects\Creature\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="daEffectEnemyScript.h">
-      <Filter>Objects\Creature\Monster\0 Base</Filter>
-    </ClInclude>
     <ClInclude Include="daCreatureLifebarScript.h">
       <Filter>Objects\Creature\Monster\0 Base</Filter>
     </ClInclude>
@@ -251,6 +248,9 @@
     </ClInclude>
     <ClInclude Include="daPortalIconScript.h">
       <Filter>Objects\Portal\BossPortal</Filter>
+    </ClInclude>
+    <ClInclude Include="daItem.h">
+      <Filter>Objects\Creature\3 Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -323,12 +323,6 @@
     <ClCompile Include="daSkelScript.cpp">
       <Filter>Objects\Creature\Monster\Skel</Filter>
     </ClCompile>
-    <ClCompile Include="daEffectScript.cpp">
-      <Filter>Objects\Creature\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="daEffectEnemyScript.cpp">
-      <Filter>Objects\Creature\Monster\0 Base</Filter>
-    </ClCompile>
     <ClCompile Include="daCreatureLifebarScript.cpp">
       <Filter>Objects\Creature\Monster\0 Base</Filter>
     </ClCompile>
@@ -397,6 +391,9 @@
     </ClCompile>
     <ClCompile Include="daPortalIconScript.cpp">
       <Filter>Objects\Portal\BossPortal</Filter>
+    </ClCompile>
+    <ClCompile Include="daItem.cpp">
+      <Filter>Objects\Creature\3 Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -30,7 +30,7 @@ namespace da
 		SetSceneName(L"Scene_Dungeon1F_Stage1");
 
 		// 충돌체 세팅
-		mPortalBodyCollider->SetSize(math::Vector2(2.0f, 0.10f));
+		mPortalBodyCollider->SetSize(math::Vector2(1.0f, 0.10f));
 		mPortalBodyCollider->SetCenter(math::Vector2(0.0f, -0.90f));
 	}
 
@@ -44,6 +44,7 @@ namespace da
 		math::Vector3 portalPos = mPortalTransform->GetPosition();
 		portalPos.x = playerPos.x;
 		mPortalTransform->SetPosition(portalPos);
+
 		// 애니메이션 재생
 		mPortalRenderer->SetMaterial(Resources::Find<Material>(L"AnimationMaterial"));
 		mPortalAnimator->PlayAnimation(L"DungeonPortalEat", false);

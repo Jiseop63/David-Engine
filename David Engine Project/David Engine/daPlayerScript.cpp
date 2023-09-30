@@ -233,13 +233,13 @@ namespace da
         if (!mIsDead)
         {
             ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
-            actionUnit->SetUnitTypes(UnitRenderType::Stay, UnitUsageType::OnlyAnimation, UnitActionType::None);
+            actionUnit->SetUnitTypes(enums::eUnitRenderType::Stay, enums::eUnitUsageType::OnlyAnimation, enums::eUnitActionType::None);
             actionUnit->SetNextAnimation(L"Dying", false);
             actionUnit->SetReverse(isLeft());
             actionUnit->SetOffsetPosition(Vector3(0.0f, -0.20f, 0.0f));
             structs::sActionUnitInfo unitInfo = {};
             unitInfo.Scale = 1.20f;
-            unitInfo.Time.End = 2.0f;
+            unitInfo.DurationTime.End = 2.0f;
             actionUnit->SetUnitInfo(unitInfo);
             actionUnit->OnActive();
         }
@@ -364,13 +364,13 @@ namespace da
         ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
         if (actionUnit)
         {
-            actionUnit->SetUnitTypes(UnitRenderType::Stay, UnitUsageType::OnlyAnimation, UnitActionType::None);
+            actionUnit->SetUnitTypes(enums::eUnitRenderType::Stay, enums::eUnitUsageType::OnlyAnimation, enums::eUnitActionType::None);
             actionUnit->SetNextAnimation(L"DustEffect", false);
             actionUnit->SetReverse(isLeft());
             actionUnit->SetOffsetPosition(Vector3(0.0f, -0.20f, 0.0f));
             structs::sActionUnitInfo unitInfo = {};
             unitInfo.Scale = 1.20f;
-            unitInfo.Time.End = 2.0f;
+            unitInfo.DurationTime.End = 2.0f;
             actionUnit->SetUnitInfo(unitInfo);
             actionUnit->OnActive();
         }
@@ -478,13 +478,13 @@ namespace da
                 ChangeState(ePlayerState::Jump);
 
             ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
-            actionUnit->SetUnitTypes(UnitRenderType::Stay, UnitUsageType::OnlyAnimation, UnitActionType::None);
+            actionUnit->SetUnitTypes(enums::eUnitRenderType::Stay, enums::eUnitUsageType::OnlyAnimation, enums::eUnitActionType::None);
             actionUnit->SetNextAnimation(L"Jumping", false);
             actionUnit->SetReverse(isLeft());
             actionUnit->SetOffsetPosition(Vector3(0.0f, -0.20f, 0.0f));
             structs::sActionUnitInfo unitInfo = {};
             unitInfo.Scale = 1.20f;
-            unitInfo.Time.End = 2.0f;
+            unitInfo.DurationTime.End = 2.0f;
             actionUnit->SetUnitInfo(unitInfo);
             actionUnit->OnActive();
 
@@ -493,7 +493,7 @@ namespace da
             //todoActiveEffect(playerEffect, L"Jumping");
 
             // 최소 높이 설정
-            float minForceRatio = 0.8750f;
+            float minForceRatio = 0.50f;
             if (minForceRatio >= mJumpData.JumpForceRatio)
                 mJumpData.JumpForceRatio = minForceRatio;
 

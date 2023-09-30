@@ -48,12 +48,10 @@ namespace da
 	{
 		// player ¼¼ÆÃ
 		PlayerScript* player = SceneManager::GetPlayerScript();
-		player->ClearCreature();
-		player->SetCreaturePosition(math::Vector3(-7.50f, -3.0f, ObjectZ));
 		player->IsPlayerInDungeon(true);
-		math::Vector3 playerPos = player->GetOwner()->GetTransform()->GetPosition();
 		
 		// Camera ¼¼ÆÃ
+		math::Vector3 playerPos = player->GetOwner()->GetTransform()->GetPosition();
 		GameDataManager::SetCameraMovableRange(math::Vector2(2.750f, 1.850f));
 		GameDataManager::SetCameraMovaPosition(math::Vector2(playerPos.x, playerPos.y));
 		
@@ -223,16 +221,19 @@ namespace da
 		// Æ÷Å» °´Ã¼
 		{
 			DungeonPortalScript* portalScript = objects::InstantiateDungeonPortal(this);
-			portalScript->SetPosition(math::Vector3(-9.30f, -2.50f, 0.0f));
-			portalScript->SetRotate(1.570f);
 			portalScript->SetSceneName(L"Scene_Dungeon1F_Stage1");
+			portalScript->SetPosition(math::Vector3(-9.30f, -2.50f, 0.0f));
+			portalScript->SetExitPosition(math::Vector3(6.0f, 0.0f, 0.0f));
+			portalScript->SetRotate(1.570f);
+			
 			mPortals.push_back(portalScript);
 
 		}
 		{
 			DungeonPortalScript* portalScript = objects::InstantiateDungeonPortal(this);
-			portalScript->SetPosition(math::Vector3(0.0f, 5.0f, 0.0f));
 			portalScript->SetSceneName(L"Scene_Dungeon1F_Stage3");
+			portalScript->SetPosition(math::Vector3(0.0f, 5.0f, 0.0f));
+			portalScript->SetExitPosition(math::Vector3(0.0f, -3.0f, 0.0f));
 			mPortals.push_back(portalScript);
 		}
 	}

@@ -3,12 +3,28 @@
 
 namespace da::structs
 {
+
+	struct sAnimationInfo
+	{
+		std::wstring Name;
+		bool		 Loop;
+		sAnimationInfo() : Name(), Loop(true)
+		{}
+	};
+	struct sUnitTypes
+	{
+		enums::eUnitActionType	ActionType;
+		enums::eUnitUsageType	UsageType;
+		enums::eUnitRenderType	RenderType;
+		sUnitTypes() : ActionType(enums::eUnitActionType::None), UsageType(enums::eUnitUsageType::Default), RenderType(enums::eUnitRenderType::Stay)
+		{}
+	};
+
 	struct sActionTimeValues
 	{
 		float Start;
 		float End;
-		sActionTimeValues()
-			: Start(0.0f), End(1.0f)
+		sActionTimeValues() : Start(0.0f), End(1.0f)
 		{}
 	};
 	struct sActionUnitInfo
@@ -17,11 +33,18 @@ namespace da::structs
 		float Speed;
 		float RotateAngle;
 		float Range;
-		sActionTimeValues Time;
-		sActionUnitInfo()
-			: Scale(1.0f), Speed(0.0f), RotateAngle(0.0f), Range(0.0f), Time{}
+		sActionTimeValues DurationTime;
+		sActionUnitInfo() : Scale(1.0f), Speed(0.0f), RotateAngle(0.0f), Range(0.0f), DurationTime{}
 		{}
 	};
+	//struct sAttackStat
+	//{
+	//	sActionTimeValues AttackDelayTime;
+	//	float			  AttackDamage;
+	//	sAttackStat() : AttackDelayTime{}, AttackDamage(0.0f)
+	//	{}
+	//};
+
 
 	struct sCreatureStat
 	{

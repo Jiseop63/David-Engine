@@ -41,7 +41,7 @@ namespace da
 	void DungeonPortalScript::OnCollisionEnter(Collider2D* other)
 	{
 		if (mIsClear)
-			PortalScript::ChangeScene();
+			PortalScript::ChangeScene(); // Exit -> Enter
 	}
 	
 	void DungeonPortalScript::SetRotate(float angle)

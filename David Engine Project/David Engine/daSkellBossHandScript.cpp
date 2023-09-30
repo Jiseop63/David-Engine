@@ -86,8 +86,8 @@ namespace da
 		ActionUnitScript* actionUnit = mOwnerScript->CallProjectile();
 		structs::sActionUnitInfo unitInfo = {};
 		unitInfo.Scale = 10.50f;
-		unitInfo.Time.End = 0.250f;
-		actionUnit->SetUnitTypes(UnitUsageType::Default, UnitRenderType::JustRotate, UnitActionType::None);
+		unitInfo.DurationTime.End = 0.250f;
+		actionUnit->SetUnitTypes(enums::eUnitUsageType::Default, enums::eUnitRenderType::JustRotate, enums::eUnitActionType::None);
 		actionUnit->SetUnitInfo(unitInfo);
 		actionUnit->SetNextAnimation(L"SkellBossLaser", false);
 

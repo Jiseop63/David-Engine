@@ -48,11 +48,9 @@ namespace da
 	{
 		// player 세팅
 		PlayerScript* player = SceneManager::GetPlayerScript();
-		player->ClearCreature();
-		player->SetCreaturePosition(math::Vector3(-3.0f, -1.0f, ObjectZ));
 		player->IsPlayerInDungeon(true);
-		math::Vector3 playerPos = player->GetOwner()->GetTransform()->GetPosition();
 		// Camera 세팅
+		math::Vector3 playerPos = player->GetOwner()->GetTransform()->GetPosition();
 		GameDataManager::SetCameraMovableRange(math::Vector2(0.80f, 0.0f));
 		GameDataManager::SetCameraMovaPosition(math::Vector2(playerPos.x, playerPos.y));
 		// light 세팅
@@ -127,19 +125,10 @@ namespace da
 	void Scene_Dungeon1F_Stage1::addGameObjects()
 	{
 		{
-			/*GameObject* portalObject = objects::InstantiateGameObject<GameObject>(this, enums::eLayerType::Portal, L"AnimationMaterial");
-			
-			DungeonPortalScript* portal = portalObject->AddComponent<DungeonPortalScript>();
-			portals.push_back(portal);
-			portalObject->GetTransform()->SetPosition(math::Vector3(7.150f, 0.0f, 0.0f));
-			portal->SetSceneName(L"Scene_Dungeon1F_Stage2");
-			portal->SetRotate(-1.570f);*/
-
-
-
 			DungeonPortalScript* portalScript = objects::InstantiateDungeonPortal(this);
-			portalScript->SetPosition(math::Vector3(7.150f, 0.0f, 0.0f));
 			portalScript->SetSceneName(L"Scene_Dungeon1F_Stage2");
+			portalScript->SetPosition(math::Vector3(7.150f, 0.0f, 0.0f));
+			portalScript->SetExitPosition(math::Vector3(-8.750f, -2.0f, 0.0f));
 			portalScript->SetRotate(-1.570f);
 			mPortals.push_back(portalScript);
 		}
