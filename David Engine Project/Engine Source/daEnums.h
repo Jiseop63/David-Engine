@@ -82,6 +82,17 @@ namespace da::enums
 		End,
 	};
 #pragma region Contents
+	enum class ItemSlot
+	{
+		Slot00, Slot01, Slot02, Slot03,			// weapon & Shiled
+		Slot10, Slot11, Slot12, Slot13,			// accessory
+		Slot20, Slot21, Slot22, Slot23, Slot24,	// etc
+		Slot30, Slot31, Slot32, Slot33, Slot34,	// etc
+		Slot40, Slot41, Slot42, Slot43, Slot44,	// etc
+		End,
+	};
+
+	// 투사체 정보
 	enum class eUnitActionType
 	{
 		Duration,
@@ -103,6 +114,8 @@ namespace da::enums
 		OnlyCollider,		// Collider
 	};
 
+
+	// 안쓸 예정
 	enum class eWeaponName
 	{
 		Default,

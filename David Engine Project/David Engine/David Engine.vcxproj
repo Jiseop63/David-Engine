@@ -159,7 +159,7 @@
     <ClInclude Include="daCreatureLifebarScript.h" />
     <ClInclude Include="daCreatureScript.h" />
     <ClInclude Include="daDungeonPortalScript.h" />
-    <ClInclude Include="daItem.h" />
+    <ClInclude Include="daItemScript.h" />
     <ClInclude Include="daMonsterActionUnitScript.h" />
     <ClInclude Include="daMonsterScript.h" />
     <ClInclude Include="daPlayerActionUnitScript.h" />
@@ -170,7 +170,7 @@
     <ClInclude Include="daGameDataManager.h" />
     <ClInclude Include="daGridScript.h" />
     <ClInclude Include="daInventoryScript.h" />
-    <ClInclude Include="daItemScript.h" />
+    <ClInclude Include="daItemSlotScript.h" />
     <ClInclude Include="daLayerScript.h" />
     <ClInclude Include="daLifeBarScript.h" />
     <ClInclude Include="daLoadScenes.h" />
@@ -209,7 +209,7 @@
     <ClCompile Include="daCreatureScript.cpp" />
     <ClCompile Include="daDashCountScript.cpp" />
     <ClCompile Include="daDungeonPortalScript.cpp" />
-    <ClCompile Include="daItem.cpp" />
+    <ClCompile Include="daItemScript.cpp" />
     <ClCompile Include="daMonsterActionUnitScript.cpp" />
     <ClCompile Include="daMonsterScript.cpp" />
     <ClCompile Include="daPlayerActionUnitScript.cpp" />
@@ -221,7 +221,7 @@
     <ClCompile Include="daCursorScript.cpp" />
     <ClCompile Include="daGridScript.cpp" />
     <ClCompile Include="daInventoryScript.cpp" />
-    <ClCompile Include="daItemScript.cpp" />
+    <ClCompile Include="daItemSlotScript.cpp" />
     <ClCompile Include="daLayerScript.cpp" />
     <ClCompile Include="daLifeBarScript.cpp" />
     <ClCompile Include="daPlayerScript.cpp" />

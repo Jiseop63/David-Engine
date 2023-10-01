@@ -20,14 +20,11 @@ namespace da
 	protected:
 		void focusCheck();
 
-
 	protected:
-		bool mFocusOn;
-
-	private:
 		std::shared_ptr<graphics::Texture> mFirstTexture;
 		std::shared_ptr<graphics::Texture> mSecondTexture;
 
+		bool mFocusOn;
 		math::Vector2 mScreenPosition;
 		math::Vector2 mSize;
 	};

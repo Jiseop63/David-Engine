@@ -2,48 +2,65 @@
 #include "daScript.h"
 #include "daGameObject.h"
 #include "daTexture.h"
+#include "daItemSlotScript.h"
 
 namespace da
 {
-	enum class ItemSlot
-	{
-		
-	};
-
 	class InventoryScript : public Script
 	{
+		struct sSwapNumber
+		{
+			int	First;
+			int Second;
+			sSwapNumber() : First(-1), Second(-1)
+			{}
+			void Clear() { First = -1; Second = -1; }
+		};
 	public:
 		InventoryScript();
 		virtual ~InventoryScript();
-
+				
 		virtual void Update() override;
-		
-		void CallInventory();
-		void ChangeArmour();
-		void Open();
-		void Close();
 
+#pragma region visual
 	public:
 		void SetSlotTextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second);
 		void ChangeSlotTexture(std::shared_ptr<graphics::Texture> texture);
 
-		void AddWeaonSlot(GameObject* weapon) { mWeapon.push_back(weapon); }
-		void AddShiledSlot(GameObject* shiled) { mShiled.push_back(shiled); }
-		void AddAccessorySlot(GameObject* accessory) { mAccessory.push_back(accessory); }
-		void AddItemSlot(GameObject* item) { mItem.push_back(item); }
+	public:
+		void CallInventory();
+		void ChangeArmour();
+#pragma endregion
+
+		ItemSlotScript* AddItemSlotScript(GameObject* itemObject);
+
+#pragma region Item
+		void SelectForSwap();
+		void ChangeItems();
+		ItemScript* GetActiveItemScript();
+#pragma endregion
+
+
 
 	protected:
 		bool mInventoryOpen;
 		bool mSelectLeft;
 		
-		// 무기 2개 방패 2개 장신구 4개 아이템 15개
-		std::vector<GameObject*> mWeapon;
-		std::vector<GameObject*> mShiled;
-		std::vector<GameObject*> mAccessory;
-		std::vector<GameObject*> mItem;
-
 	private:
-		std::shared_ptr<graphics::Texture> mFirstTexture;
-		std::shared_ptr<graphics::Texture> mSecondTexture;
+		static int							itemSlot;
+		std::shared_ptr<graphics::Texture>	mFirstTexture;
+		std::shared_ptr<graphics::Texture>	mSecondTexture;
+
+		std::vector<ItemSlotScript*>		mItemSlots;
+
+		ItemSlotScript*						mActiveItemSlot;
+
+		sSwapNumber							mSwapIndex;
+
+		ItemSlotScript*						mSelectItemSlot;
+		ItemSlotScript*						mTempItemSlot;
+
+
+
 	};
 }

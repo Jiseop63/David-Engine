@@ -1,54 +1,61 @@
 #pragma once
 #include "daScript.h"
-#include "daTexture.h"
 #include "daMeshRenderer.h"
 
 namespace da
 {
 	class ItemScript : public Script
 	{
-		enum class eItemType
-		{
-			Weapon,
-			Shiled,
-			Accessory,
-			Item,
-		};
 	public:
 		ItemScript();
 		virtual ~ItemScript();
 
-		virtual void Update() override;
-
-		// 씬에서 해주는 일
+#pragma region UnitType
 	public:
-		void SetSlotTextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second);
-		void SetScreenPosision();
-
-		// Manager에 의해 호출
+		void SetUnitTypes(enums::eUnitRenderType actionType, enums::eUnitUsageType usageType, enums::eUnitActionType unitActionType)
+		{
+			mUnitTypes.RenderType = actionType; mUnitTypes.UsageType = usageType; mUnitTypes.ActionType = unitActionType;
+		}
+		void SetUnitTypes(enums::eUnitRenderType actionType, enums::eUnitActionType unitActionType, enums::eUnitUsageType usageType)
+		{
+			mUnitTypes.RenderType = actionType; mUnitTypes.UsageType = usageType; mUnitTypes.ActionType = unitActionType;
+		}
+		void SetUnitTypes(enums::eUnitActionType unitActionType, enums::eUnitRenderType actionType, enums::eUnitUsageType usageType)
+		{
+			mUnitTypes.RenderType = actionType; mUnitTypes.UsageType = usageType; mUnitTypes.ActionType = unitActionType;
+		}
+		void SetUnitTypes(enums::eUnitActionType unitActionType, enums::eUnitUsageType usageType, enums::eUnitRenderType actionType)
+		{
+			mUnitTypes.RenderType = actionType; mUnitTypes.UsageType = usageType; mUnitTypes.ActionType = unitActionType;
+		}
+		void SetUnitTypes(enums::eUnitUsageType usageType, enums::eUnitActionType unitActionType, enums::eUnitRenderType actionType)
+		{
+			mUnitTypes.RenderType = actionType; mUnitTypes.UsageType = usageType; mUnitTypes.ActionType = unitActionType;
+		}
+		void SetUnitTypes(enums::eUnitUsageType usageType, enums::eUnitRenderType actionType, enums::eUnitActionType unitActionType)
+		{
+			mUnitTypes.RenderType = actionType; mUnitTypes.UsageType = usageType; mUnitTypes.ActionType = unitActionType;
+		}
+		const structs::sUnitTypes GetUnitTypes() { return mUnitTypes; }
+#pragma endregion
 	public:
-		void ChangeItemTexture(std::shared_ptr<graphics::Texture> texture);
-		bool IsFocus() { return mFocusOn; }
+		void SetUnitInfo(const structs::sActionUnitInfo unitInfo) { mUnitInfo = unitInfo; }
+		const structs::sActionUnitInfo GetUnitInfo() { return mUnitInfo; }
+		void SetUnitAnimation(const std::wstring name, bool loop = true) { mUnitAnimationInfo.Name = name; mUnitAnimationInfo.Loop = loop; }
+		const structs::sAnimationInfo GetAnimationInfo() { return mUnitAnimationInfo; }
 
 	protected:
-		void ChangeSlotTexture(std::shared_ptr<graphics::Texture> texture);
-		void focusCheck();
+		Transform*					mItemTransform;
+		MeshRenderer*				mItemRenderer;
+
 
 	protected:
-		MeshRenderer* mSlotRenderer;
-		MeshRenderer* mItemRenderer;
-
-		// 마우스 입력
-	protected:
-		bool mFocusOn;
-		math::Vector2 mScreenPosition;
-		math::Vector2 mSize;
-
-		// 배경 텍스쳐 값
-	private:
-		std::shared_ptr<graphics::Texture> mFirstTexture;
-		std::shared_ptr<graphics::Texture> mSecondTexture;
-
-		
+		std::wstring				mItemName;
+		// 투사체 속성
+		structs::sUnitTypes			mUnitTypes;
+		structs::sActionUnitInfo	mUnitInfo;
+		structs::sAnimationInfo		mUnitAnimationInfo;
+		// 공격 속성
+		structs::sAttackStat		mAttackStat;
 	};
 }

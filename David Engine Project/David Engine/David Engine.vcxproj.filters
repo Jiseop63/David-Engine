@@ -150,7 +150,7 @@
     <ClInclude Include="daGridScript.h">
       <Filter>Objects\UI\Grid</Filter>
     </ClInclude>
-    <ClInclude Include="daItemScript.h">
+    <ClInclude Include="daItemSlotScript.h">
       <Filter>Objects\Inventory</Filter>
     </ClInclude>
     <ClInclude Include="daLifeBarScript.h">
@@ -249,8 +249,8 @@
     <ClInclude Include="daPortalIconScript.h">
       <Filter>Objects\Portal\BossPortal</Filter>
     </ClInclude>
-    <ClInclude Include="daItem.h">
-      <Filter>Objects\Creature\3 Item</Filter>
+    <ClInclude Include="daItemScript.h">
+      <Filter>Objects\Inventory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -290,7 +290,7 @@
     <ClCompile Include="daGridScript.cpp">
       <Filter>Objects\UI\Grid</Filter>
     </ClCompile>
-    <ClCompile Include="daItemScript.cpp">
+    <ClCompile Include="daItemSlotScript.cpp">
       <Filter>Objects\Inventory</Filter>
     </ClCompile>
     <ClCompile Include="daLifeBarScript.cpp">
@@ -392,8 +392,8 @@
     <ClCompile Include="daPortalIconScript.cpp">
       <Filter>Objects\Portal\BossPortal</Filter>
     </ClCompile>
-    <ClCompile Include="daItem.cpp">
-      <Filter>Objects\Creature\3 Item</Filter>
+    <ClCompile Include="daItemScript.cpp">
+      <Filter>Objects\Inventory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

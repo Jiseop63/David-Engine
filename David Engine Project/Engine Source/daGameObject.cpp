@@ -41,8 +41,8 @@ namespace da
 	{
 		if (eObjectState::Paused == mObjectState)
 			return;
-		if (eObjectState::Hide == mObjectState)
-			return;
+		/*if (eObjectState::Hide == mObjectState)
+			return;*/
 		if (eObjectState::Inactive == mObjectState)
 			return;
 		for (Component* component : mComponents)
