@@ -1,7 +1,8 @@
 #pragma once
 #include "daScript.h"
 #include "daMeshRenderer.h"
-
+#include "daItemIconScript.h"
+#include "daItemSlotScript.h"
 namespace da
 {
 	class ArmourScript : public Script
@@ -12,14 +13,24 @@ namespace da
 
 		virtual void Initialize() override;
 		virtual void Update() override;
-		virtual void LateUpdate() override;
 
+
+	public:
+		void AddIconScript(GameObject* iconObject);
 		void SetBackup(bool isBackupArmour) { mBackup = isBackupArmour; }
+		void SetSlotScript(ItemSlotScript* slotScript) { mSlotScript = slotScript; }
+	public:
 		void ChangeArmour();
+		void ChangeIcon();
+		void ClearPosition() { mIconScript->SetIconPosition(mPanelTransform->GetPosition()); }
+
 	protected:
-		Transform*		mTransform;
+		Transform*		mPanelTransform;
 		MeshRenderer*	mPanelRenderer;
-		MeshRenderer*	mIconRenderer;
+		
+	protected:
+		ItemSlotScript* mSlotScript;
+		ItemIconScript* mIconScript;
 
 	private:
 		float			mPadding;

@@ -63,6 +63,8 @@ namespace da
 			ChangeSlotTexture(mFirstTexture);
 			mSelectLeft = true;
 		}
+		mMainArmourScript->ChangeArmour();
+		mSubArmourScript->ChangeArmour();
 	}
 	void InventoryScript::SetSlotTextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second)
 	{
@@ -153,7 +155,6 @@ namespace da
 		if (mItemSlots[mSwapIndex.Second]->GetItemScript())
 			mItemSlots[mSwapIndex.Second]->ClearPosition();
 		mSwapIndex.Clear();
-
 	}
 
 	ItemScript* InventoryScript::GetActiveItemScript()
@@ -164,5 +165,21 @@ namespace da
 	{
 		mItemSlots[(UINT)slot]->SetItemScript(item);
 		mItemSlots[(UINT)slot]->ClearPosition();
+
+		// 이미 슬롯이 할당되고, 패널도 생성된 상태이므로 아이템이 장비칸에 추가될때 패널에 세팅해주면 될듯
+
+		if (enums::eItemSlot::Slot00 == slot)
+		{
+			mMainArmourScript->SetSlotScript(mItemSlots[(UINT)slot]);
+			mMainArmourScript->ClearPosition();
+			mMainArmourScript->ChangeIcon();
+		}
+		if (enums::eItemSlot::Slot02 == slot)
+		{
+			mSubArmourScript->SetSlotScript(mItemSlots[(UINT)slot]);
+			mSubArmourScript->ClearPosition();
+			mSubArmourScript->ChangeIcon();
+		}
+
 	}
 }

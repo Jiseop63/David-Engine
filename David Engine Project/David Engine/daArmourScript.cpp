@@ -9,9 +9,10 @@
 namespace da
 {
 	ArmourScript::ArmourScript()
-		: mTransform(nullptr)
+		: mPanelTransform(nullptr)
 		, mPanelRenderer(nullptr)
-		, mIconRenderer(nullptr)
+		, mSlotScript(nullptr)
+		, mIconScript(nullptr)
 		, mPadding(0.20f)
 		, mSwapTime(0.0f)
 		, mBackup(false)
@@ -23,35 +24,28 @@ namespace da
 
 	void ArmourScript::Initialize()
 	{
-		mTransform = GetOwner()->GetComponent<Transform>();
+		mPanelTransform = GetOwner()->GetComponent<Transform>();
 		mPanelRenderer = GetOwner()->GetComponent<MeshRenderer>();
-		mIconRenderer = GetOwner()->AddComponent<MeshRenderer>();
-
-		mIconRenderer->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-		std::shared_ptr<Material> material
-			= Resources::Find<Material>(L"WeaponIconMaterial");
-		mIconRenderer->SetMaterial(material);
 
 	}
 
 	void ArmourScript::Update()
 	{
-		if (Input::GetKeyDown(eKeyCode::TILDE))
+		/*if (Input::GetKeyDown(eKeyCode::TILDE))
 		{
 			ChangeArmour();
-		}
+		}*/
 	}
-	void ArmourScript::LateUpdate()
+
+	void ArmourScript::AddIconScript(GameObject* iconObject)
 	{
+		mIconScript = iconObject->AddComponent<ItemIconScript>();
 	}
 
 	void ArmourScript::ChangeArmour()
 	{
-		// 데이터 변경
-		//GameDataManager::ChangeArmour();
-
 		// 교체 기능
-		math::Vector3 getPos = mTransform->GetPosition();
+		math::Vector3 getPos = mPanelTransform->GetPosition();
 
 		// 전방으로 이동
 		if (mBackup)
@@ -65,7 +59,16 @@ namespace da
 			mBackup = true;
 			getPos += math::Vector3(mPadding, mPadding, 0.0001f);
 		}
-		mTransform->SetPosition(getPos);
+		mPanelTransform->SetPosition(getPos);
+	}
+
+	void ArmourScript::ChangeIcon()
+	{
+		if (mSlotScript->HasItem())
+		{
+			mIconScript->SetIconTexture(mSlotScript->GetItemScript()->GetItemTexture());
+			mIconScript->SetIconScale(mSlotScript->GetItemScript()->GetItemScale());
+		}
 	}
 
 }

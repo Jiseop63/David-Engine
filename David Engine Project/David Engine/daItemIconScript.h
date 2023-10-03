@@ -19,7 +19,7 @@ namespace da
 
 		void SetIconScale(math::Vector3 scale) { mIconTransform->SetScale(scale); }
 		math::Vector3 GetIconScale() { return mIconTransform->GetScale(); }
-
+		
 	protected:
 		Transform*		mIconTransform;
 		MeshRenderer*	mIconRenderer;

@@ -703,6 +703,20 @@ namespace renderer
 			material->SetShader(shader);
 			Resources::Insert<Material>(L"WeaponIconMaterial", material);
 		}
+		// armourPanel Icon
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ArmourIconAMaterial", material);
+		}
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"ArmourIconBMaterial", material);
+		}
+
 #pragma endregion
 #pragma region Inventory Material
 		// InventorySelect : NoneTexture Material | Sprite Shader

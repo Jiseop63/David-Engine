@@ -123,6 +123,11 @@ namespace da
 		SceneManager::GetInventoryScript()->CallInventory();
 	}
 
+	void GameDataManager::ChangeArmour()
+	{
+		SceneManager::GetInventoryScript()->ChangeArmour();
+	}
+
 	structs::sArmour* GameDataManager::GetActiveArmour()
 	{
 		return mActiveArmour;

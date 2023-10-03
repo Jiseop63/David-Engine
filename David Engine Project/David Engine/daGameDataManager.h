@@ -37,7 +37,6 @@ namespace da
 
 	public:
 		static structs::sInventory& GetInventory() { return mInventoryData; }
-
 #pragma region Scene Enter Func
 	public:
 		// Dx기준 좌표계 사용 ㄱㄱ
@@ -51,6 +50,7 @@ namespace da
 #pragma region Inventory Func
 	public:
 		static void CallInventory();
+		static void ChangeArmour();
 		static structs::sArmour* GetActiveArmour();
 #pragma endregion
 

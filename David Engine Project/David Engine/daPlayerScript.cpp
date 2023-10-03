@@ -115,8 +115,8 @@ namespace da
     {
         if (Input::GetKeyDown(eKeyCode::V))
             GameDataManager::CallInventory();
-        //if (Input::GetKeyDown(eKeyCode::TILDE))
-            //GameDataManager::ChangeArmour();
+        if (Input::GetKeyDown(eKeyCode::TILDE))
+            GameDataManager::ChangeArmour();
     }
     void PlayerScript::updatePlayerDir()
     {
@@ -487,10 +487,6 @@ namespace da
             unitInfo.DurationTime.End = 2.0f;
             actionUnit->SetUnitInfo(unitInfo);
             actionUnit->OnActive();
-
-            //EffectScript* playerEffect = CreatureScript::callEffect();
-            //playerEffect->SetReverse(isLeft());
-            //todoActiveEffect(playerEffect, L"Jumping");
 
             // 최소 높이 설정
             float minForceRatio = 0.50f;

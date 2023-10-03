@@ -255,40 +255,7 @@ namespace da
 				math::Vector3 dashActivePosition = dashPanelPosition + math::Vector3(0.0f, 0.0f, -0.0001f);
 				dashActivateTransform->SetPosition(dashActivePosition);
 			}
-			// player Amour panel A, B
-			{
-				// Panel A 积己
-				GameObject* weaponPanelA = objects::InstantiateCommonObject
-					<GameObject>(this, enums::eLayerType::UI, L"Armour1Material");
-				playerHUD->AddChildObject(weaponPanelA);
-				weaponPanelA->AddComponent<ArmourScript>();
-				// Scale Position 技泼 34 24
-				Transform* weaponPanelATransform = weaponPanelA->GetTransform();
-				float weaponPanelScaleX = 0.340f * 4.0f;
-				float weaponPanelScaleY = 0.240f * 4.0f;
-				float armourPadding = 0.20f;
-
-				math::Vector3 armourPanelScale(weaponPanelScaleX, weaponPanelScaleY, 1.0f);
-				math::Vector3 armourPanelPosition(MaxPositionX - (weaponPanelScaleX / 2.0f) - armourPadding * 2.0f
-					, -MaxPositionY + (weaponPanelScaleY / 2.0f) + armourPadding, HUDZ);
-
-				weaponPanelATransform->SetScale(armourPanelScale);
-				weaponPanelATransform->SetPosition(armourPanelPosition);
-
-				// Panel B 积己
-				GameObject* weaponPanelB = objects::InstantiateCommonObject
-					<GameObject>(this, enums::eLayerType::UI, L"Armour2Material");
-				playerHUD->AddChildObject(weaponPanelB);
-				ArmourScript* armourBScript = weaponPanelB->AddComponent<ArmourScript>();
-				armourBScript->SetBackup(true);
-				Transform* weaponPanelBTransform = weaponPanelB->GetTransform();
-
-				weaponPanelBTransform->SetScale(armourPanelScale);
-				weaponPanelBTransform->SetPosition(
-					armourPanelPosition + math::Vector3(armourPadding, armourPadding, 0.0001f));
-				// A, B Padding 瞒捞
-				// X : armourPadding * 3, Y : armourPadding
-			}
+			
 		}
 		// mouse - done
 		GameObject* cursorObject = objects::InstantiateCommonObject
@@ -661,9 +628,44 @@ namespace da
 				slotObject->GetComponent<UIScript>()->SetScreenPosision();
 			}
 
+			// player Amour panel A, B
+			{
+				// Panel A 积己
+				GameObject* armourPanelAObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"Armour1Material");
+				ArmourScript* armourScriptA = inventoryScript->AddArmourScript(armourPanelAObject);
+				armourScriptA->SetName(L"ArmourA");
+				GameObject* iconObjectA = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"ArmourIconAMaterial");
+				armourScriptA->AddIconScript(iconObjectA);
+				playerHUD->AddChildObject(armourPanelAObject);
+				// Scale Position 技泼 34 24
+				Transform* weaponPanelATransform = armourPanelAObject->GetTransform();
+				float weaponPanelScaleX = 0.340f * 4.0f;
+				float weaponPanelScaleY = 0.240f * 4.0f;
+				float armourPadding = 0.20f;
 
+				math::Vector3 armourPanelScale(weaponPanelScaleX, weaponPanelScaleY, 1.0f);
+				math::Vector3 armourPanelPosition(MaxPositionX - (weaponPanelScaleX / 2.0f) - armourPadding * 2.0f
+					, -MaxPositionY + (weaponPanelScaleY / 2.0f) + armourPadding, HUDZ);
 
-			GameObject* defaultItemObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"NoneMaterial");
+				weaponPanelATransform->SetScale(armourPanelScale);
+				weaponPanelATransform->SetPosition(armourPanelPosition);
+
+				// Panel B 积己
+				GameObject* armourPanelBObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"Armour2Material");
+				ArmourScript* armourScriptB = inventoryScript->AddArmourScript(armourPanelBObject);
+				armourScriptB->SetName(L"ArmourB");
+				GameObject* iconObjectB = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"ArmourIconBMaterial");
+				armourScriptB->AddIconScript(iconObjectB);
+				playerHUD->AddChildObject(armourPanelBObject);
+				armourScriptB->SetBackup(true);
+				Transform* weaponPanelBTransform = armourPanelBObject->GetTransform();
+
+				weaponPanelBTransform->SetScale(armourPanelScale);
+				weaponPanelBTransform->SetPosition(armourPanelPosition + math::Vector3(armourPadding, armourPadding, 0.0001f));
+				// A, B Padding 瞒捞 // X : armourPadding * 3, Y : armourPadding
+			}
+
+			GameObject* defaultItemObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"WeaponIconMaterial");
 			defaultItemObject->SetObjectState(GameObject::eObjectState::Inactive);
 			ItemScript* defalutWeapon = defaultItemObject->AddComponent<ItemScript>();
 			structs::sUnitTypes defalutWeaponTypes;
@@ -680,10 +682,11 @@ namespace da
 			defalutWeapon->SetUnitAnimation(L"Swing", false);
 			defalutWeapon->SetItemName(L"LongSword");
 			defalutWeapon->SetItemTexture(Resources::Find<Texture>(L"LongSword"));
-			defalutWeapon->SetItemScale(math::Vector3(0.360f * 0.760f, 1.760f * 0.760f, 1.0f));
+			defalutWeapon->SetItemScale(math::Vector3(0.360f * 0.760f, 0.760f * 0.760f, 1.0f));
 
 			ItemManager::AddItem(L"LongSword", defalutWeapon);
-			inventoryScript->AddItemToSlot(enums::eItemSlot::Slot00, defalutWeapon);
+			//inventoryScript->AddItemToSlot(enums::eItemSlot::Slot00, defalutWeapon);
+
 
 		}
 #pragma endregion
