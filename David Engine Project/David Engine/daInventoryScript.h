@@ -3,6 +3,7 @@
 #include "daGameObject.h"
 #include "daTexture.h"
 #include "daItemSlotScript.h"
+#include "daArmourScript.h"
 
 namespace da
 {
@@ -33,11 +34,13 @@ namespace da
 #pragma endregion
 
 		ItemSlotScript* AddItemSlotScript(GameObject* itemObject);
+		ArmourScript* AddArmourScript(GameObject* armourObject);
 
 #pragma region Item
 		void SelectForSwap();
 		void ChangeItems();
 		ItemScript* GetActiveItemScript();
+		void AddItemToSlot(enums::eItemSlot slot, ItemScript* item);
 #pragma endregion
 
 
@@ -57,10 +60,9 @@ namespace da
 
 		sSwapNumber							mSwapIndex;
 
-		ItemSlotScript*						mSelectItemSlot;
-		ItemSlotScript*						mTempItemSlot;
 
-
+		ArmourScript*						mMainArmourScript;
+		ArmourScript*						mSubArmourScript;
 
 	};
 }

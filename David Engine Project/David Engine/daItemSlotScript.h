@@ -19,19 +19,24 @@ namespace da
 		ItemSlotScript();
 		virtual ~ItemSlotScript();
 
+		virtual void Initialize() override;
+
+
 	public:
-		void SetItemSlot(enums::ItemSlot slot) { mItemSlot = slot; }
+		void SetItemSlot(enums::eItemSlot slot) { mItemSlot = slot; }
 		void SetItemScript(ItemScript* itemScript) { mItemScript = itemScript; }
 
+		void ClearPosition() { mItemScript->SetPosition(mSlotTransform->GetPosition()); }
 		ItemScript* GetItemScript() { return mItemScript; }
 		bool IsFocus() { return mFocusOn; }
+		bool HasItem() { return (nullptr != mItemScript) ? true : false; }
 
 	protected:
 		Transform*		mSlotTransform;
 		MeshRenderer*	mSlotRenderer;
 
 		// 아이템 속성
-		enums::ItemSlot	mItemSlot;
+		enums::eItemSlot	mItemSlot;
 		ItemScript*		mItemScript;
 	};
 }

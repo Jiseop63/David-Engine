@@ -13,6 +13,11 @@ namespace da
 	{
 	}
 	ItemSlotScript::~ItemSlotScript()
+	{		
+	}
+	void ItemSlotScript::Initialize()
 	{
+		mSlotTransform = GetOwner()->GetTransform();
+		mSlotRenderer = GetOwner()->GetComponent<MeshRenderer>();
 	}
 }

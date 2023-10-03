@@ -21,8 +21,7 @@ namespace da
 
 	void InventoryScript::Update()
 	{
-		SelectForSwap();
-		
+		SelectForSwap();		
 	}
 
 	void InventoryScript::CallInventory()
@@ -31,11 +30,25 @@ namespace da
 		{
 			mInventoryOpen = true;
 			GetOwner()->SetObjectStates(GameObject::eObjectState::Active);
+			for (ItemSlotScript* slot : mItemSlots)
+			{
+				if (slot->HasItem())
+				{
+					slot->GetItemScript()->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+				}
+			}
 		}
 		else
 		{
 			mInventoryOpen = false;
 			GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
+			for (ItemSlotScript* slot : mItemSlots)
+			{
+				if (slot->HasItem())
+				{
+					slot->GetItemScript()->GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
+				}
+			}
 		}
 	}
 	void InventoryScript::ChangeArmour()
@@ -67,10 +80,23 @@ namespace da
 	ItemSlotScript* InventoryScript::AddItemSlotScript(GameObject* itemObject)
 	{
 		ItemSlotScript* itemSlotScript = itemObject->AddComponent<ItemSlotScript>();
-		itemSlotScript->SetItemSlot((enums::ItemSlot)itemSlot++);
+		itemSlotScript->SetItemSlot((enums::eItemSlot)itemSlot++);
 		mItemSlots.push_back(itemSlotScript);
 		itemSlotScript->GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
 		return itemSlotScript;
+	}
+	ArmourScript* InventoryScript::AddArmourScript(GameObject* armourObject)
+	{
+		if (!mMainArmourScript)
+		{
+			mMainArmourScript = armourObject->AddComponent<ArmourScript>();
+			return mMainArmourScript;
+		}
+		else
+		{
+			mSubArmourScript = armourObject->AddComponent<ArmourScript>();
+			return mSubArmourScript;
+		}
 	}
 	void InventoryScript::SelectForSwap()
 	{
@@ -81,7 +107,7 @@ namespace da
 			if (Input::GetKeyDown(eKeyCode::LBTN))
 			{
 				// 슬롯을 순회하며 focus를 가진 객체를 찾음
-				for (UINT slotIndex = 0; slotIndex < (UINT)enums::ItemSlot::End; slotIndex++)
+				for (UINT slotIndex = 0; slotIndex < (UINT)enums::eItemSlot::End; slotIndex++)
 				{
 					if (mItemSlots[slotIndex]->IsFocus())
 					{
@@ -92,7 +118,7 @@ namespace da
 			if (Input::GetKeyUp(eKeyCode::LBTN))
 			{
 				// 슬롯을 순회하며 focus를 가진 객체를 찾음
-				for (UINT slotIndex = 0; slotIndex < (UINT)enums::ItemSlot::End; slotIndex++)
+				for (UINT slotIndex = 0; slotIndex < (UINT)enums::eItemSlot::End; slotIndex++)
 				{
 					if (mItemSlots[slotIndex]->IsFocus())
 					{
@@ -118,14 +144,25 @@ namespace da
 	}
 	void InventoryScript::ChangeItems()
 	{
-		ItemSlotScript* tempSlot = mItemSlots[mSwapIndex.First];
-		mItemSlots[mSwapIndex.First] = mItemSlots[mSwapIndex.Second];
-		mItemSlots[mSwapIndex.Second] = tempSlot;
+		ItemScript* tempItem = mItemSlots[mSwapIndex.First]->GetItemScript();
+		mItemSlots[mSwapIndex.First]->SetItemScript(mItemSlots[mSwapIndex.Second]->GetItemScript());
+		mItemSlots[mSwapIndex.Second]->SetItemScript(tempItem);
+
+		if (mItemSlots[mSwapIndex.First]->GetItemScript())
+			mItemSlots[mSwapIndex.First]->ClearPosition();
+		if (mItemSlots[mSwapIndex.Second]->GetItemScript())
+			mItemSlots[mSwapIndex.Second]->ClearPosition();
 		mSwapIndex.Clear();
+
 	}
 
 	ItemScript* InventoryScript::GetActiveItemScript()
 	{		
 		return mActiveItemSlot->GetItemScript();
+	}
+	void InventoryScript::AddItemToSlot(enums::eItemSlot slot, ItemScript* item)
+	{
+		mItemSlots[(UINT)slot]->SetItemScript(item);
+		mItemSlots[(UINT)slot]->ClearPosition();
 	}
 }

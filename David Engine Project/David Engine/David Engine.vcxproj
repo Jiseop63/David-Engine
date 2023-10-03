@@ -159,6 +159,8 @@
     <ClInclude Include="daCreatureLifebarScript.h" />
     <ClInclude Include="daCreatureScript.h" />
     <ClInclude Include="daDungeonPortalScript.h" />
+    <ClInclude Include="daItemIconScript.h" />
+    <ClInclude Include="daItemManager.h" />
     <ClInclude Include="daItemScript.h" />
     <ClInclude Include="daMonsterActionUnitScript.h" />
     <ClInclude Include="daMonsterScript.h" />
@@ -209,6 +211,8 @@
     <ClCompile Include="daCreatureScript.cpp" />
     <ClCompile Include="daDashCountScript.cpp" />
     <ClCompile Include="daDungeonPortalScript.cpp" />
+    <ClCompile Include="daItemIconScript.cpp" />
+    <ClCompile Include="daItemManager.cpp" />
     <ClCompile Include="daItemScript.cpp" />
     <ClCompile Include="daMonsterActionUnitScript.cpp" />
     <ClCompile Include="daMonsterScript.cpp" />

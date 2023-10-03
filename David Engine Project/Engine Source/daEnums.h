@@ -82,7 +82,7 @@ namespace da::enums
 		End,
 	};
 #pragma region Contents
-	enum class ItemSlot
+	enum class eItemSlot
 	{
 		Slot00, Slot01, Slot02, Slot03,			// weapon & Shiled
 		Slot10, Slot11, Slot12, Slot13,			// accessory

@@ -1,4 +1,5 @@
 #include "daItemScript.h"
+#include "daGameObject.h"
 
 namespace da
 {
@@ -7,6 +8,11 @@ namespace da
 	}
 	ItemScript::~ItemScript()
 	{
+	}
+	void ItemScript::Initialize()
+	{
+		mItemTransform = GetOwner()->GetTransform();
+		mItemRenderer = GetOwner()->GetComponent<MeshRenderer>();
 	}
 }
 

@@ -4,7 +4,7 @@
 // Init
 #include "daSceneManager.h"
 #include "daGameDataManager.h"
-
+#include "daItemManager.h"
 // resource
 #include "daResources.h"
 #include "daTexture.h"
@@ -660,6 +660,31 @@ namespace da
 				slotTransform->SetPosition(slotPos);
 				slotObject->GetComponent<UIScript>()->SetScreenPosision();
 			}
+
+
+
+			GameObject* defaultItemObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"NoneMaterial");
+			defaultItemObject->SetObjectState(GameObject::eObjectState::Inactive);
+			ItemScript* defalutWeapon = defaultItemObject->AddComponent<ItemScript>();
+			structs::sUnitTypes defalutWeaponTypes;
+			defalutWeaponTypes.ActionType = enums::eUnitActionType::None;
+			defalutWeaponTypes.RenderType = enums::eUnitRenderType::JustRotate;
+			defalutWeaponTypes.UsageType = enums::eUnitUsageType::Default;
+			defalutWeapon->SetUnitTypes(defalutWeaponTypes);
+			structs::sActionUnitInfo defalutWeaponInfo;
+			defalutWeaponInfo.DurationTime = structs::sActionTimeValues(); // ±âº»°ª 0 - 1
+			defalutWeaponInfo.Range = 0.50f;
+			defalutWeaponInfo.Scale = 1.60f;
+			defalutWeaponInfo.Speed = 0.0f;
+			defalutWeapon->SetUnitInfo(defalutWeaponInfo);
+			defalutWeapon->SetUnitAnimation(L"Swing", false);
+			defalutWeapon->SetItemName(L"LongSword");
+			defalutWeapon->SetItemTexture(Resources::Find<Texture>(L"LongSword"));
+			defalutWeapon->SetItemScale(math::Vector3(0.360f * 0.760f, 1.760f * 0.760f, 1.0f));
+
+			ItemManager::AddItem(L"LongSword", defalutWeapon);
+			inventoryScript->AddItemToSlot(enums::eItemSlot::Slot00, defalutWeapon);
+
 		}
 #pragma endregion
 	}

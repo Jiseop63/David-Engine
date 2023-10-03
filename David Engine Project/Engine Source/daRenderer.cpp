@@ -465,12 +465,18 @@ namespace renderer
 		Resources::Load<Texture>(L"AccessorySlotSelectTexture", L"..\\Resources\\Texture\\Inventory\\accessorySelect.png");
 		Resources::Load<Texture>(L"ItemSlotTexture", L"..\\Resources\\Texture\\Inventory\\ItemSlot.png");
 		Resources::Load<Texture>(L"ItemSlotSelectTexture", L"..\\Resources\\Texture\\Inventory\\ItemSlotSelect.png");
-		// item
+		
+		// item (안씀)
 		Resources::Load<Texture>(L"LongSwordTexture", L"..\\Resources\\Texture\\Items\\LongSword.png");
 		Resources::Load<Texture>(L"LongSwordTestTexture", L"..\\Resources\\Texture\\Items\\LongSwordTest.png");
 		Resources::Load<Texture>(L"GreatSwordTexture", L"..\\Resources\\Texture\\Items\\GreatSword.png");
 		Resources::Load<Texture>(L"GreatSword0Texture", L"..\\Resources\\Texture\\Items\\GreatSword0.png");
 		Resources::Load<Texture>(L"GreatSword1Texture", L"..\\Resources\\Texture\\Items\\GreatSword1.png");
+
+		// items
+		Resources::Load<Texture>(L"LongSword", L"..\\Resources\\Texture\\Items\\LongSword.png");
+
+
 		// effect
 		Resources::Load<Texture>(L"GreatSwingFX", L"..\\Resources\\Texture\\Items\\GreatSword\\GreatSwingFX.png");
 		Resources::Load<Texture>(L"SwingFX", L"..\\Resources\\Texture\\Adventurer\\FX\\SwingFX.png");
