@@ -87,13 +87,11 @@ namespace da
 		}
 		mActionUnitTransform->SetPosition(mUnitBeginPosition);
 
-
 		// collider ¼¼ÆÃ
-		if (enums::eUnitUsageType::Default == mUnitUsageType
-			|| enums::eUnitUsageType::OnlyCollider == mUnitUsageType)
+		if (!(enums::eUnitUsageType::OnlyTexture == mUnitUsageType
+			|| enums::eUnitUsageType::OnlyAnimation == mUnitUsageType))
 		{
 			mActionUnitCollider->ApplyComponentUsing(true);
-			// collider detail
 		}
 		else
 		{

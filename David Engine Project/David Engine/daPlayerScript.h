@@ -181,7 +181,8 @@ namespace da
 		ePlayerState	mpreviousState;
 
 		int				mMoveCondition;
-		structs::sActionTimeValues mDustTime;
+		structs::sActionTimeValues mDustDelayTime;
+		structs::sActionTimeValues mAfterimageTime;
 		structs::sActionTimeValues mDashTime;
 
 		bool			mDashRunning;

@@ -109,6 +109,7 @@ namespace da::enums
 	enum class eUnitUsageType
 	{
 		Default,			// Animation & Collider
+		TextureProjectile,	// Texture & Collider
 		OnlyTexture,		// Texture 
 		OnlyAnimation,		// Animation
 		OnlyCollider,		// Collider

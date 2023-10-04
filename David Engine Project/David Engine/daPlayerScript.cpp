@@ -26,7 +26,8 @@ namespace da
         , mpreviousState(ePlayerState::Idle)
         , mMoveCondition(0)
 
-        , mDustTime{}
+        , mDustDelayTime{}
+        , mAfterimageTime{}
         , mDashTime{}
 
         , mJumpData{}
@@ -94,12 +95,12 @@ namespace da
         inputCameraMove();
         inputMove();
         inputDash();
-        inputAttack();        
+        inputAttack();
     }
     void PlayerScript::inputDebug()
     {
         if (Input::GetKeyDown(eKeyCode::R))
-            GetHeal(); 
+            GetHeal();
         if (Input::GetKeyDown(eKeyCode::E))
             downDashCount();
         if (Input::GetKeyDown(eKeyCode::T))
@@ -108,7 +109,6 @@ namespace da
         {
             GameDataManager::DebugMode();
             bool isDebug = GameDataManager::IsDebuging();
-            int a = 0;
         }
     }
     void PlayerScript::inputUI()
@@ -336,11 +336,11 @@ namespace da
         if (ePlayerState::Move != mActiveState)
             return;
 
-        mDustTime.Start += (float)Time::DeltaTime();
-        if (mDustTime.End <= mDustTime.Start)
+        mDustDelayTime.Start += (float)Time::DeltaTime();
+        if (mDustDelayTime.End <= mDustDelayTime.Start)
         {            
             todoDustSpawn();
-            mDustTime.Start = 0.0f;
+            mDustDelayTime.Start = 0.0f;
         }
     }
     void PlayerScript::todoDustSpawn()
@@ -434,6 +434,16 @@ namespace da
             // 이게 있어야 바닥뚫고 대시 가능
             if (mCreatureFootCollider->IsPlatformCollision())
                 mCreatureFootCollider->ClearGroundBuffer();
+            
+            /*structs::sUnitTypes unitType;
+            unitType.ActionType = enums::eUnitActionType::Duration;
+            unitType.RenderType = enums::eUnitRenderType::Stay;
+            unitType.UsageType = enums::eUnitUsageType::Default;*/
+
+
+
+           
+
 
             //// 투사체 정보 갱신
             //mWeaponScript->ModifyProjectile(
@@ -463,6 +473,25 @@ namespace da
             if (mDashRunning)
             {
                 mDashTime.Start += (float)Time::DeltaTime();
+                mAfterimageTime.Start += (float)Time::DeltaTime();
+                if (mAfterimageTime.End <= mAfterimageTime.Start)
+                {
+                    ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
+
+                    actionUnit->SetUnitTypes(enums::eUnitActionType::Duration, enums::eUnitRenderType::Stay, enums::eUnitUsageType::TextureProjectile);
+                    actionUnit->SetTexture(Resources::Find<Texture>(L"DashEffect"));
+                    actionUnit->SetReverse(isLeft());
+                    actionUnit->SetOffsetPosition(Vector3(0.0f, -0.20f, 0.0f));
+                    structs::sActionUnitInfo unitInfo = {};
+                    unitInfo.Scale = 1.20f;
+                    unitInfo.DurationTime.End = 0.10f;
+                    actionUnit->SetUnitInfo(unitInfo);
+                    actionUnit->OnActive();
+
+                    // 다시 시간 돌리기
+                    mAfterimageTime.Start = 0.0f;
+                }
+
                 if (mDashTime.End<= mDashTime.Start)
                 {
                     mDashTime.Start = 0.0f;
@@ -548,7 +577,8 @@ namespace da
         mJumpData.BufferedJump = false;
         mJumpData.ExtraJump = true;
 
-        mDustTime.End = 0.30f;
+        mDustDelayTime.End = 0.30f;
+        mAfterimageTime.End = 0.10f;
         mDashTime.End = 0.250f;
     }
 #pragma endregion
