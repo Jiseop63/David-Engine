@@ -20,4 +20,10 @@ namespace da
 		mSlotTransform = GetOwner()->GetTransform();
 		mSlotRenderer = GetOwner()->GetComponent<MeshRenderer>();
 	}
+	void ItemSlotScript::ClearPosition()
+	{
+		math::Vector3 slotPosition = mSlotTransform->GetPosition();
+		// 왜 이부분에서 버그가 생길까
+		mItemScript->SetPosition(slotPosition);
+	}
 }

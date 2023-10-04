@@ -88,7 +88,7 @@ namespace da
 	{
 		for (size_t index = 0; index < mChildren.size(); index++)
 		{
-			mChildren[index]->SetObjectState(state);
+			mChildren[index]->SetObjectStates(state);
 		}
 		mObjectState = state;
 	}

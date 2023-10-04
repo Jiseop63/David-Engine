@@ -283,28 +283,33 @@ namespace da
 			inventoryTransform->SetScale(math::Vector3(inventoryScaleX * 4.0f, inventoryScaleY * 4.0f, 1.0f));
 			math::Vector3 inventoryPosition(MaxPositionX - (inventoryScaleX * 2.0f), 0.0f, OverlayZ);
 			inventoryTransform->SetPosition(inventoryPosition);
-
+			
 			// 인벤 스크립트 세팅
 			InventoryScript* inventoryScript = inventoryObject->AddComponent<InventoryScript>();
 			SceneManager::SetInventoryScript(inventoryObject);
 			inventoryScript->SetSlotTextures(Resources::Find<graphics::Texture>(L"InventoryPanelATexture"), Resources::Find<graphics::Texture>(L"InventoryPanelBTexture"));
 
+			float slotPosZ = -0.0040f;
+
 			// SetA
 			{
+				// 슬롯 오브젝트 생성
 				GameObject* slotObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"WeaponSlot1Material");
+				// 인벤토리에 슬롯 오브젝트를 자식으로 추가
 				inventoryObject->AddChildObject(slotObject);
+				// 슬롯오브젝트에 슬롯스크립트를 추가
 				ItemSlotScript* itemSlotScript = inventoryScript->AddItemSlotScript(slotObject);
+				// 스크립트에 텍스쳐 2개를 할당
 				itemSlotScript->SetSlotTextures(Resources::Find<Texture>(L"WeaponSlotTexture"), Resources::Find<Texture>(L"WeaponSlotSelectTexture"));
 
-
-				// Slot Transform 세팅
-				// 19 * 4
+				// Slot Transform 세팅 | 19 * 4
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x - (slotSize.x * 2.0f) - 0.080f, inventoryPosition.y + (slotSize.y * 2.50f) + 0.080f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x - (slotSize.x * 2.0f) - 0.080f, inventoryPosition.y + (slotSize.y * 2.50f) + 0.080f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				// 슬롯의 스크린 위치값을 저장
+				itemSlotScript->SetScreenPosision();
 			}
 			{
 				GameObject* slotObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"ShiledSlot1Material");
@@ -317,9 +322,9 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x - slotSize.x + 0.040f, inventoryPosition.y + (slotSize.y * 2.50f) + 0.080f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x - slotSize.x + 0.040f, inventoryPosition.y + (slotSize.y * 2.50f) + 0.080f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 			// SetB
 			{
@@ -333,9 +338,10 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + slotSize.x, inventoryPosition.y + (slotSize.y * 2.50f) + 0.080f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + slotSize.x, inventoryPosition.y + (slotSize.y * 2.50f) + 0.080f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+
+				itemSlotScript->SetScreenPosision();
 			}
 			{
 				GameObject* slotObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"ShiledSlot2Material");
@@ -348,9 +354,9 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + (slotSize.x * 2.0f) + 0.120f, inventoryPosition.y + (slotSize.y * 2.50f) + 0.080f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + (slotSize.x * 2.0f) + 0.120f, inventoryPosition.y + (slotSize.y * 2.50f) + 0.080f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 			// accessory
 			{
@@ -363,9 +369,9 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x - (slotSize.x * 1.50f) + 0.020f, inventoryPosition.y + slotSize.y + 0.10f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x - (slotSize.x * 1.50f) + 0.020f, inventoryPosition.y + slotSize.y + 0.10f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 			{
 				GameObject* slotObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"AccessorySlot2Material");
@@ -378,9 +384,9 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x - (slotSize.x * 0.50f) + 0.060f, inventoryPosition.y + slotSize.y + 0.10f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x - (slotSize.x * 0.50f) + 0.060f, inventoryPosition.y + slotSize.y + 0.10f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 			{
 				GameObject* slotObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"AccessorySlot3Material");
@@ -393,9 +399,9 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + (slotSize.x * 0.50f) + 0.10f, inventoryPosition.y + slotSize.y + 0.10f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + (slotSize.x * 0.50f) + 0.10f, inventoryPosition.y + slotSize.y + 0.10f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 			{
 				GameObject* slotObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"AccessorySlot4Material");
@@ -407,9 +413,9 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + (slotSize.x * 1.50f) + 0.140f, inventoryPosition.y + slotSize.y + 0.10f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + (slotSize.x * 1.50f) + 0.140f, inventoryPosition.y + slotSize.y + 0.10f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 			// item
 			{
@@ -423,9 +429,9 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x - (slotSize.x * 2.0f) - 0.160f, inventoryPosition.y - (slotSize.y * 0.50f) + 0.040f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x - (slotSize.x * 2.0f) - 0.160f, inventoryPosition.y - (slotSize.y * 0.50f) + 0.040f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 			{
 				GameObject* slotObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"ItemSlot01Material");
@@ -438,9 +444,9 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x - slotSize.x - 0.040f, inventoryPosition.y - (slotSize.y * 0.50f) + 0.040f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x - slotSize.x - 0.040f, inventoryPosition.y - (slotSize.y * 0.50f) + 0.040f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 			{
 				GameObject* slotObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"ItemSlot02Material");
@@ -452,9 +458,9 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + 0.080f, inventoryPosition.y - (slotSize.y * 0.50f) + 0.040f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + 0.080f, inventoryPosition.y - (slotSize.y * 0.50f) + 0.040f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 			{
 				GameObject* slotObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"ItemSlot03Material");
@@ -466,9 +472,9 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + (slotSize.x * 1.50f) - 0.180f, inventoryPosition.y - (slotSize.y * 0.50f) + 0.040f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + (slotSize.x * 1.50f) - 0.180f, inventoryPosition.y - (slotSize.y * 0.50f) + 0.040f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 			{
 				GameObject* slotObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"ItemSlot04Material");
@@ -480,9 +486,9 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + (slotSize.x * 2.50f) - 0.060f, inventoryPosition.y - (slotSize.y * 0.50f) + 0.040f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + (slotSize.x * 2.50f) - 0.060f, inventoryPosition.y - (slotSize.y * 0.50f) + 0.040f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 
 			{
@@ -495,9 +501,9 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x - (slotSize.x * 2.0f) - 0.160f, inventoryPosition.y - (slotSize.y * 1.50f) - 0.120f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x - (slotSize.x * 2.0f) - 0.160f, inventoryPosition.y - (slotSize.y * 1.50f) - 0.120f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 			{
 				GameObject* slotObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"ItemSlot11Material");
@@ -509,9 +515,9 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x - slotSize.x - 0.040f, inventoryPosition.y - (slotSize.y * 1.50f) - 0.120f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x - slotSize.x - 0.040f, inventoryPosition.y - (slotSize.y * 1.50f) - 0.120f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 			{
 				GameObject* slotObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"ItemSlot12Material");
@@ -523,9 +529,9 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + 0.080f, inventoryPosition.y - (slotSize.y * 1.50f) - 0.120f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + 0.080f, inventoryPosition.y - (slotSize.y * 1.50f) - 0.120f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 			{
 				GameObject* slotObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"ItemSlot13Material");
@@ -537,9 +543,9 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + (slotSize.x * 1.50f) - 0.180f, inventoryPosition.y - (slotSize.y * 1.50f) - 0.120f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + (slotSize.x * 1.50f) - 0.180f, inventoryPosition.y - (slotSize.y * 1.50f) - 0.120f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 			{
 				GameObject* slotObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"ItemSlot14Material");
@@ -551,9 +557,9 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + (slotSize.x * 2.50f) - 0.060f, inventoryPosition.y - (slotSize.y * 1.50f) - 0.120f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + (slotSize.x * 2.50f) - 0.060f, inventoryPosition.y - (slotSize.y * 1.50f) - 0.120f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 
 			{
@@ -566,9 +572,9 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x - (slotSize.x * 2.0f) - 0.160f, inventoryPosition.y - (slotSize.y * 2.50f) - 0.240f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x - (slotSize.x * 2.0f) - 0.160f, inventoryPosition.y - (slotSize.y * 2.50f) - 0.240f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 			{
 				GameObject* slotObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"ItemSlot21Material");
@@ -580,9 +586,9 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x - slotSize.x - 0.040f, inventoryPosition.y - (slotSize.y * 2.50f) - 0.240f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x - slotSize.x - 0.040f, inventoryPosition.y - (slotSize.y * 2.50f) - 0.240f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 			{
 				GameObject* slotObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"ItemSlot22Material");
@@ -595,9 +601,9 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + 0.080f, inventoryPosition.y - (slotSize.y * 2.50f) - 0.240f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + 0.080f, inventoryPosition.y - (slotSize.y * 2.50f) - 0.240f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 			{
 				GameObject* slotObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"ItemSlot23Material");
@@ -609,9 +615,9 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + (slotSize.x * 1.50f) - 0.180f, inventoryPosition.y - (slotSize.y * 2.50f) - 0.240f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + (slotSize.x * 1.50f) - 0.180f, inventoryPosition.y - (slotSize.y * 2.50f) - 0.240f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 			{
 				GameObject* slotObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"ItemSlot24Material");
@@ -623,43 +629,44 @@ namespace da
 				Transform* slotTransform = slotObject->GetComponent<Transform>();
 				math::Vector3 slotSize(0.190f * 4.0f, 0.190f * 4.0f, 1.0f);
 				slotTransform->SetScale(slotSize);
-				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + (slotSize.x * 2.50f) - 0.060f, inventoryPosition.y - (slotSize.y * 2.50f) - 0.240f, inventoryPosition.z);
+				math::Vector3 slotPos = math::Vector3(inventoryPosition.x + (slotSize.x * 2.50f) - 0.060f, inventoryPosition.y - (slotSize.y * 2.50f) - 0.240f, slotPosZ);
 				slotTransform->SetPosition(slotPos);
-				slotObject->GetComponent<UIScript>()->SetScreenPosision();
+				itemSlotScript->SetScreenPosision();
 			}
 
 			// player Amour panel A, B
 			{
 				// Panel A 생성
 				GameObject* armourPanelAObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"Armour1Material");
+				playerHUD->AddChildObject(armourPanelAObject);
 				ArmourScript* armourScriptA = inventoryScript->AddArmourScript(armourPanelAObject);
-				armourScriptA->SetName(L"ArmourA");
 				GameObject* iconObjectA = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"ArmourIconAMaterial");
 				armourScriptA->AddIconScript(iconObjectA);
-				playerHUD->AddChildObject(armourPanelAObject);
+				playerHUD->AddChildObject(iconObjectA);
+
+
 				// Scale Position 세팅 34 24
 				Transform* weaponPanelATransform = armourPanelAObject->GetTransform();
 				float weaponPanelScaleX = 0.340f * 4.0f;
 				float weaponPanelScaleY = 0.240f * 4.0f;
 				float armourPadding = 0.20f;
-
 				math::Vector3 armourPanelScale(weaponPanelScaleX, weaponPanelScaleY, 1.0f);
 				math::Vector3 armourPanelPosition(MaxPositionX - (weaponPanelScaleX / 2.0f) - armourPadding * 2.0f
 					, -MaxPositionY + (weaponPanelScaleY / 2.0f) + armourPadding, HUDZ);
-
 				weaponPanelATransform->SetScale(armourPanelScale);
 				weaponPanelATransform->SetPosition(armourPanelPosition);
 
 				// Panel B 생성
 				GameObject* armourPanelBObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"Armour2Material");
+				playerHUD->AddChildObject(armourPanelBObject);
 				ArmourScript* armourScriptB = inventoryScript->AddArmourScript(armourPanelBObject);
-				armourScriptB->SetName(L"ArmourB");
+				armourScriptB->SetBackup(true);
 				GameObject* iconObjectB = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"ArmourIconBMaterial");
 				armourScriptB->AddIconScript(iconObjectB);
-				playerHUD->AddChildObject(armourPanelBObject);
-				armourScriptB->SetBackup(true);
-				Transform* weaponPanelBTransform = armourPanelBObject->GetTransform();
+				playerHUD->AddChildObject(iconObjectB);
 
+
+				Transform* weaponPanelBTransform = armourPanelBObject->GetTransform();
 				weaponPanelBTransform->SetScale(armourPanelScale);
 				weaponPanelBTransform->SetPosition(armourPanelPosition + math::Vector3(armourPadding, armourPadding, 0.0001f));
 				// A, B Padding 차이 // X : armourPadding * 3, Y : armourPadding
@@ -685,7 +692,7 @@ namespace da
 			defalutWeapon->SetItemScale(math::Vector3(0.360f * 0.760f, 0.760f * 0.760f, 1.0f));
 
 			ItemManager::AddItem(L"LongSword", defalutWeapon);
-			//inventoryScript->AddItemToSlot(enums::eItemSlot::Slot00, defalutWeapon);
+			inventoryScript->AddItemToSlot(enums::eItemSlot::Slot00, ItemManager::GetItem(L"LongSword"));
 
 
 		}

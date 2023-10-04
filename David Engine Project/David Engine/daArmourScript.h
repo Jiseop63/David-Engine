@@ -18,11 +18,14 @@ namespace da
 	public:
 		void AddIconScript(GameObject* iconObject);
 		void SetBackup(bool isBackupArmour) { mBackup = isBackupArmour; }
-		void SetSlotScript(ItemSlotScript* slotScript) { mSlotScript = slotScript; }
+		void SetSlotScript(ItemSlotScript* slotScript) 
+		{ 
+			mSlotScript = slotScript;
+		}
 	public:
 		void ChangeArmour();
 		void ChangeIcon();
-		void ClearPosition() { mIconScript->SetIconPosition(mPanelTransform->GetPosition()); }
+		void ClearPosition();
 
 	protected:
 		Transform*		mPanelTransform;

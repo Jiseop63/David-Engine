@@ -31,10 +31,6 @@ namespace da
 	}
 	void Scene_Town::Update()
 	{
-		if (Input::GetKeyDown(eKeyCode::N))
-		{
-			SceneManager::LoadScene(L"Scene_Dungeon1F_Stage1");
-		}
 		Scene::Update();
 	}
 	void Scene_Town::LateUpdate()

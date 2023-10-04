@@ -26,7 +26,7 @@ namespace da
 		void SetItemSlot(enums::eItemSlot slot) { mItemSlot = slot; }
 		void SetItemScript(ItemScript* itemScript) { mItemScript = itemScript; }
 
-		void ClearPosition() { mItemScript->SetPosition(mSlotTransform->GetPosition()); }
+		void ClearPosition();
 		ItemScript* GetItemScript() { return mItemScript; }
 		bool IsFocus() { return mFocusOn; }
 		bool HasItem() { return (nullptr != mItemScript) ? true : false; }

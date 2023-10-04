@@ -31,6 +31,15 @@ namespace da
 
 	void ArmourScript::Update()
 	{
+		if (mBackup)
+		{
+			int a = 0;
+		}
+		else
+		{
+			int a = 0;
+		}
+
 		/*if (Input::GetKeyDown(eKeyCode::TILDE))
 		{
 			ChangeArmour();
@@ -45,21 +54,22 @@ namespace da
 	void ArmourScript::ChangeArmour()
 	{
 		// 교체 기능
-		math::Vector3 getPos = mPanelTransform->GetPosition();
+		math::Vector3 retPosition = mPanelTransform->GetPosition();
 
 		// 전방으로 이동
 		if (mBackup)
 		{
 			mBackup = false;
-			getPos += math::Vector3(-mPadding, -mPadding, -0.0001f);
+			retPosition += math::Vector3(-mPadding, -mPadding, -0.0001f);
 		}
 		// 후방으로 이동
 		else
 		{
 			mBackup = true;
-			getPos += math::Vector3(mPadding, mPadding, 0.0001f);
+			retPosition += math::Vector3(mPadding, mPadding, 0.0001f);
 		}
-		mPanelTransform->SetPosition(getPos);
+		mPanelTransform->SetPosition(retPosition);
+		ClearPosition();
 	}
 
 	void ArmourScript::ChangeIcon()
@@ -68,7 +78,20 @@ namespace da
 		{
 			mIconScript->SetIconTexture(mSlotScript->GetItemScript()->GetItemTexture());
 			mIconScript->SetIconScale(mSlotScript->GetItemScript()->GetItemScale());
+			ClearPosition();
 		}
+		else
+		{
+			mIconScript->SetIconTexture(nullptr);
+			ClearPosition();
+		}
+	}
+
+	void ArmourScript::ClearPosition()
+	{
+		math::Vector3 panelPos = mPanelTransform->GetPosition();
+		panelPos.z += -0.00001f;
+		mIconScript->SetIconPosition(panelPos);
 	}
 
 }

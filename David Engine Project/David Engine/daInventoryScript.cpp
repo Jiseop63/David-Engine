@@ -11,7 +11,10 @@ namespace da
 {
 	int InventoryScript::itemSlot = 0;
 	InventoryScript::InventoryScript()
-		: mInventoryOpen(false)
+		: mActiveItemSlot(nullptr)
+		, mMainArmourScript(nullptr)
+		, mSubArmourScript(nullptr)
+		, mInventoryOpen(false)
 		, mSelectLeft(true)
 	{
 	}
@@ -154,6 +157,29 @@ namespace da
 			mItemSlots[mSwapIndex.First]->ClearPosition();
 		if (mItemSlots[mSwapIndex.Second]->GetItemScript())
 			mItemSlots[mSwapIndex.Second]->ClearPosition();
+
+		// 슬롯에 추가됨
+		if (enums::eItemSlot::Slot00 == (enums::eItemSlot)mSwapIndex.Second)
+		{
+			mMainArmourScript->SetSlotScript(mItemSlots[mSwapIndex.Second]);
+			mMainArmourScript->ChangeIcon();
+		}
+		if (enums::eItemSlot::Slot02 == (enums::eItemSlot)mSwapIndex.Second)
+		{
+			mSubArmourScript->SetSlotScript(mItemSlots[mSwapIndex.Second]);
+			mSubArmourScript->ChangeIcon();
+		}
+		// 슬롯에 변경됨
+		if (enums::eItemSlot::Slot00 == (enums::eItemSlot)mSwapIndex.First)
+		{
+			mMainArmourScript->SetSlotScript(mItemSlots[mSwapIndex.First]);
+			mMainArmourScript->ChangeIcon();
+		}
+		if (enums::eItemSlot::Slot02 == (enums::eItemSlot)mSwapIndex.First)
+		{
+			mSubArmourScript->SetSlotScript(mItemSlots[mSwapIndex.First]);
+			mSubArmourScript->ChangeIcon();
+		}
 		mSwapIndex.Clear();
 	}
 
@@ -163,21 +189,20 @@ namespace da
 	}
 	void InventoryScript::AddItemToSlot(enums::eItemSlot slot, ItemScript* item)
 	{
+		int a = 0;
 		mItemSlots[(UINT)slot]->SetItemScript(item);
 		mItemSlots[(UINT)slot]->ClearPosition();
 
-		// 이미 슬롯이 할당되고, 패널도 생성된 상태이므로 아이템이 장비칸에 추가될때 패널에 세팅해주면 될듯
+		//// 이미 슬롯이 할당되고, 패널도 생성된 상태이므로 아이템이 장비칸에 추가될때 패널에 세팅해주면 될듯
 
 		if (enums::eItemSlot::Slot00 == slot)
 		{
 			mMainArmourScript->SetSlotScript(mItemSlots[(UINT)slot]);
-			mMainArmourScript->ClearPosition();
 			mMainArmourScript->ChangeIcon();
 		}
 		if (enums::eItemSlot::Slot02 == slot)
 		{
 			mSubArmourScript->SetSlotScript(mItemSlots[(UINT)slot]);
-			mSubArmourScript->ClearPosition();
 			mSubArmourScript->ChangeIcon();
 		}
 
