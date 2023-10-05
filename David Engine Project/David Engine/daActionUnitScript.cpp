@@ -130,8 +130,7 @@ namespace da
 			CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
 			// 피격 호출
 			mOwnerScript->CallHitEffect(creatureScript->GetCreatureTransform()->GetPosition());			
-			SceneManager::GetMainCameraScript()->SetOscillation(30.0f, 0.1250f);
-			
+			SceneManager::GetMainCameraScript()->SetOscillation(20.0f, 0.250f);	// 카메라 진동
 			// 피격 호출
 			creatureScript->OnDamaged(mUnitAttackStat.AtaackDamage);
 		}
@@ -143,7 +142,7 @@ namespace da
 			// 보스 피격 호출
 			mOwnerScript->CallHitEffect(bossScript->GetCreatureTransform()->GetPosition());
 			bossScript->IncreaseDamageCount();
-			SceneManager::GetMainCameraScript()->SetOscillation(30.0f, 0.1250f);	// 카메라 진동
+			SceneManager::GetMainCameraScript()->SetOscillation(20.0f, 0.250f);	// 카메라 진동
 		}
 		if (enums::eLayerType::Playable == other->GetOwner()->GetLayerType()
 			&& other->IsBody())

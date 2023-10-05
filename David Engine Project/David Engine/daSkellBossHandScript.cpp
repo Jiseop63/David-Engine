@@ -65,6 +65,7 @@ namespace da
 			{
 				mAttackDelay.Clear();
 				shootLaser();
+				mAttackAble = false;
 			}
 		}
 	}
@@ -118,19 +119,16 @@ namespace da
 		actionUnit->SetUnitAttackStat(effectAttackStat);
 
 		math::Vector3 offsetVector;
-		if (isLeft())
-		{
-			actionUnit->SetUnitReverse(isLeft());
+		if (misLeftHand)
 			offsetVector = math::Vector3(4.0f, 0.0f, 0.0f);
-		}
 		else
 			offsetVector = math::Vector3(-4.0f, 0.0f, 0.0f);
-
-		actionUnit->SetUnitReverse(isLeft());
+		actionUnit->SetUnitReverse(!misLeftHand);
 
 		actionUnit->SetUnitOffset(offsetVector);
 		actionUnit->OnActive();
-
+		math::Vector3 handPosition = mHandTransform->GetPosition();
+		actionUnit->SetUnitOverridePosition(handPosition + offsetVector);
 
 		//// 투사체 가져오기
 		//ActionUnitScript* actionUnit = mOwnerScript->CallProjectile();
@@ -160,7 +158,7 @@ namespace da
 	void SkellBossHandScript::retIdle()
 	{
 		mHandAnimator->PlayAnimation(L"SkellBossHandIdle");
-		mAttackAble = false;
+		mAttackAble = true;
 		mHandCollider->ApplyComponentUsing(false);
 	}
 

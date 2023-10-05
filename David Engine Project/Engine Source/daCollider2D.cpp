@@ -170,13 +170,17 @@ namespace da
 		PlayerScript* player = dynamic_cast<PlayerScript*>(scripts[0]);
 		if (player)
 		{
-			if (player->IsPassingPlatform())
+			if (enums::eLayerType::Land != other->GetOwner()->GetLayerType())
 			{
-				mGroundBuffer = 0;
-				player->ApplyPassingPlatform(false);
+				if (player->IsPassingPlatform())
+				{
 
-				return;
-			}
+					mGroundBuffer = 0;
+					player->ApplyPassingPlatform(false);
+
+					return;
+				}
+			}			
 		}
 
 		if (isEnter)

@@ -332,7 +332,7 @@ namespace da
 					math::Vector3 moveDirection = math::daRotateVector3(math::Vector3::UnitY, projectile * 1.570f + mRotatePerSeconds);
 					actionUnit->SetUnitDirection(moveDirection);
 
-					actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
+					actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.750f, 0.0f));
 					actionUnit->OnActive();
 				}				
 			}			

@@ -15,7 +15,7 @@ namespace da
 {
 	CameraScript::CameraScript()
 		: mCameraComponent(nullptr)
-		, mCameraShaking(false)
+		, mTurnOnShaking(false)
 		, mOriginPosition(math::Vector3::Zero)
 		, mOscillationPower(0.0f)
 		, mShakeAccumulateTime(0.0f)
@@ -36,7 +36,7 @@ namespace da
 	void CameraScript::moveCamera()
 	{
 		// 카메라가 진동중이면 사용안함
-		if (mCameraShaking)
+		if (mTurnOnShaking)
 			return;
 
 		// 내 위치 가져오기
@@ -71,18 +71,18 @@ namespace da
 
 	void CameraScript::cameraShake()
 	{
-		if (!mCameraShaking)
+		if (!mTurnOnShaking)
 			return;
 
 		// 진동이 끝나면 원래 위치로 돌아가기
-		if (mShakeAccumulateTime >= mShakeValidTime)
+		mOscillationTime.Start += (float)Time::DeltaTime();
+		if (mOscillationTime.TimeOut())
 		{
-			mShakeAccumulateTime = 0.0f;
-			mCameraShaking = false;
+			mOscillationTime.Clear();
+			mTurnOnShaking = false;
+			mIsOscillation = false;
 			GameDataManager::SetCameraMovaPosition(math::Vector2(mOriginPosition.x, mOriginPosition.y));
-		}
-		else
-			mShakeAccumulateTime += (float)Time::DeltaTime();
+		}		
 
 		// X흔들림 크기 (누적된 시간)
 		float oscillationX = cos(mShakeAccumulateTime * mOscillationPower);
@@ -112,16 +112,15 @@ namespace da
 		else if (currentPosition.y >= maxRange.y)
 			oscillationPosition.y = maxRange.y;
 
-
 		// 흔들림 보정
 		float oscillationRatio = 35.0f;
-		Vector2 setPosition = Vector2(
-			currentPosition.x + oscillationX / oscillationRatio, currentPosition.y + oscillationY / oscillationRatio);
+		Vector2 setPosition = Vector2(currentPosition.x + oscillationX / oscillationRatio, currentPosition.y + oscillationY / oscillationRatio);
 		
 		GameDataManager::SetCameraMovaPosition(setPosition, true);
 		Transform* cameraTr = GetOwner()->GetComponent<Transform>();
 		cameraTr->SetPosition(setPosition);
 	}
+
 	void CameraScript::debugInputCamera()
 	{
 		Camera* cameraComponent = GetOwner()->GetComponent<Camera>();

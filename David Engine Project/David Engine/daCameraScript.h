@@ -17,8 +17,12 @@ namespace da
 		// 흔들리는정도, 흔들림 유지시간
 		void SetOscillation(float oscillationPower, float time)
 		{
-			mCameraShaking = true;
+			if (mIsOscillation)
+				return;
+			mTurnOnShaking = true;	// 흔들리는 조건
+			mIsOscillation = true;
 			mOscillationPower = oscillationPower;
+			mOscillationTime.End = time;
 			mShakeValidTime = time;
 		}
 	private:
@@ -34,8 +38,10 @@ namespace da
 
 	private:
 		math::Vector3 mOriginPosition;
-		bool	mCameraShaking;
+		bool	mTurnOnShaking;
+		bool	mIsOscillation;
 		float	mOscillationPower;
+		structs::sActionTimeValues mOscillationTime;
 		float	mShakeAccumulateTime;
 		float	mShakeValidTime;
 	};
