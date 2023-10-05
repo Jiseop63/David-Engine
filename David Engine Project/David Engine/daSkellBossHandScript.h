@@ -27,7 +27,7 @@ namespace da
 		void SetLeftHand(bool left = true) { misLeftHand = left; }
 
 		void DoAttack();
-
+		bool IsAttackReady() { return mAttackReady; }
 	private:
 		void updateMoveToPlayer();
 
@@ -57,10 +57,13 @@ namespace da
 
 	private:
 		bool			misLeftHand;
-		bool			mChasePlayer;
-		bool			mAttackAble;
-	private:
 		float			mMovePositionY;
+
+		bool			mChasePlayer;
+		bool			mTargetFind;
+		bool			mAttackReady;
 		structs::sActionTimeValues mAttackDelay;
+		structs::sActionTimeValues mAttackCooldown;
+
 	};
 }

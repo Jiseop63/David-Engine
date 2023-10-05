@@ -514,9 +514,12 @@ namespace renderer
 		Resources::Load<Texture>(L"Open1FTexture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\open1F.png");
 		// monster
 		Resources::Load<Texture>(L"SkelSprite", L"..\\Resources\\Texture\\Monster\\Skel\\SpriteSheet.png");
+		Resources::Load<Texture>(L"SkelHead", L"..\\Resources\\Texture\\Monster\\Skel\\SkelHead.png");
+		
 		Resources::Load<Texture>(L"EnemyGreatSword", L"..\\Resources\\Texture\\Monster\\Skel\\GreatSwordSpriteSheet.png");
 
 		Resources::Load<Texture>(L"BansheeSpriteSheet", L"..\\Resources\\Texture\\Monster\\Banshee\\BansheeSpriteSheet.png");
+		Resources::Load<Texture>(L"BansheeDead", L"..\\Resources\\Texture\\Monster\\Banshee\\BansheeDead.png");
 		Resources::Load<Texture>(L"BansheeBulletIdle", L"..\\Resources\\Texture\\Monster\\Banshee\\BansheeBulletIdle.png");
 		Resources::Load<Texture>(L"BansheeBulletHit", L"..\\Resources\\Texture\\Monster\\Banshee\\BansheeBulletHit.png");
 		

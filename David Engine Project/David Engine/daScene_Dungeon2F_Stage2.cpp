@@ -169,7 +169,7 @@ namespace da
 			portalScript->SetPosition(math::Vector3(6.50f, -4.20f, 0.0f));
 			portalScript->SetSceneName(L"Scene_Dungeon2F_Stage1");
 			portalScript->SetExitPosition(math::Vector3(6.0f, -1.0f, 0.0f));
-			portalScript->SetRotate(1.570f);
+			portalScript->SetRotate(-1.570f);
 			mPortals.push_back(portalScript);
 		}
 		{
@@ -177,7 +177,7 @@ namespace da
 			portalScript->SetPosition(math::Vector3(-6.50f, -4.20f, 0.0f));
 			portalScript->SetSceneName(L"Scene_Town");
 			portalScript->SetExitPosition(math::Vector3(-12.0f, -1.50f, 0.0f));
-			portalScript->SetRotate(-1.570f);
+			portalScript->SetRotate(1.570f);
 			mPortals.push_back(portalScript);
 		}
 		// skell Boss

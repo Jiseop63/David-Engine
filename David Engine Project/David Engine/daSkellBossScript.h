@@ -68,14 +68,7 @@ namespace da
 
 	private:
 		PlayerScript*	mPlayerScript;
-
-
-	private:
 		std::vector<SkellBossProjectileScript*>	mBossProjectiles;
-
-		structs::sBossProjectileStat*	mBossProjectileInfo;
-		math::Vector2					mBossProjectileSize;
-
 
 	private:
 		SkellBossHandScript*	mLeftHand;
@@ -93,25 +86,21 @@ namespace da
 		bool			mPrepareAttack;
 		float			mPrepareDurationTime;
 		float			mPrepareDurationDecay;
+		
 		bool			mAttackProgress;
 		float			mReadyDurationTime;
 		float			mReadyDurationDecay;
 		
+		int			mPlayerJumpCount;
+		int			mPlayerDashCount;
+		int			mGetDamageCount;
 
+		bool		mProjectileAttackOn;
+		bool		mLaserAttackOn;
+		float		mRotatePerSeconds;
+		
+		structs::sActionTimeValues mLaserCallDelayTime;
+		structs::sActionTimeValues mProjectileCallDelayTime;
 
-		int		mPlayerJumpCount;
-		int		mPlayerDashCount;
-		int		mGetDamageCount;
-
-
-		bool	mProjectileAttackOn;
-		bool	mLaserAttackOn;
-
-		float	mLaserCallDelayTime;
-		float	mLaserCallDelayDecay;
-		float	mProjectileCallDelayTime;
-		float	mProjectileCallDelayDecay;
-
-		float	mRotatePerSeconds;
 	};
 }

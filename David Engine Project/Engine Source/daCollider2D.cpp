@@ -174,13 +174,12 @@ namespace da
 			{
 				if (player->IsPassingPlatform())
 				{
-
 					mGroundBuffer = 0;
 					player->ApplyPassingPlatform(false);
 
 					return;
 				}
-			}			
+			}
 		}
 
 		if (isEnter)

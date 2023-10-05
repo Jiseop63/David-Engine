@@ -63,6 +63,7 @@ namespace da
 		mCreatureAnimator->Create(L"SkelIdle", texture, math::Vector2(0.0f, 0.0f), math::Vector2(32.0f, 32.0f), 1, math::Vector2(0.0f, 0.0f), 0.1f);
 		mCreatureAnimator->Create(L"SkelMove", texture, math::Vector2(0.0f, 32.0f), math::Vector2(32.0f, 32.0f), 6, math::Vector2(0.0f, 0.0f), 0.1f);
 		mCreatureAnimator->Create(L"SkelAttact", texture, math::Vector2(0.0f, 0.0f), math::Vector2(32.0f, 32.0f), 1, math::Vector2(0.0f, 0.0f), 0.1f);
+		mCreatureAnimator->Create(L"SkelDead", Resources::Find<Texture>(L"SkelHead"), math::Vector2(0.0f, 0.0f), math::Vector2(32.0f, 32.0f), 1, math::Vector2(0.0f, 0.0f), 0.1f);
 		mCreatureAnimator->PlayAnimation(L"SkelIdle");
 
 		mPlayerScript = SceneManager::GetPlayerScript();
@@ -293,6 +294,12 @@ namespace da
 			actionUnit->OnActive();
 
 			GameDataManager::DecreaseMonsterCount(SceneManager::GetActiveScene()->GetPortals());
+
+			// ½ÃÃ¼
+			mCreatureAnimator->PlayAnimation(L"SkelDead");
+			mMonsterSensorCollider->ApplyComponentUsing(false);
+			mCreatureBodyCollider->ApplyComponentUsing(false);
+			mCreatureFootCollider->SetCenter(math::Vector2(0.0f, -0.20f));
 		}
 		mIsDead = true;
 	}

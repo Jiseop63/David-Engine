@@ -105,6 +105,7 @@ namespace da::enums
 		JustRotate,			// dont move & rotate
 		UsingDirection,		// move to dir
 		UsingRotation,		// move to rotate
+		None,				// dont draw
 	};
 	enum class eUnitUsageType
 	{

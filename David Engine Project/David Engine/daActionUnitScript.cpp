@@ -4,6 +4,7 @@
 #include "daCreatureScript.h"
 #include "daSkellBossScript.h"
 #include "daSceneManager.h"
+#include "daResources.h"
 namespace da
 {
 	ActionUnitScript::ActionUnitScript()
@@ -80,14 +81,23 @@ namespace da
 		// Transform 세팅		
 		mActionUnitTransform->SetScale(mUnitScale);
 		mUnitBeginPosition = mOwnerScript->GetCreatureTransform()->GetPosition() + mUnitOffset;
+		mActionUnitTransform->SetPosition(mUnitBeginPosition);
+				
+		
 		if (enums::eUnitRenderType::JustRotate == mUnitTypes.RenderType
 			|| enums::eUnitRenderType::UsingRotation == mUnitTypes.RenderType)
 		{
 			mActionUnitTransform->SetRotation(math::Vector3(0.0f, 0.0f, mUnitRotateAngle));
 		}
+		else if (enums::eUnitRenderType::None == mUnitTypes.RenderType)
+		{
+			mActionUnitRenderer->GetMaterial()->SetTexture(nullptr);
+		}
 		else
+		{
 			mActionUnitTransform->SetRotation(math::Vector3(0.0f, 0.0f, 0.0f));
-		mActionUnitTransform->SetPosition(mUnitBeginPosition);
+		}
+
 
 		// collider 세팅
 		if (!(enums::eUnitUsageType::OnlyTexture == mUnitTypes.UsageType
@@ -130,7 +140,7 @@ namespace da
 			CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
 			// 피격 호출
 			mOwnerScript->CallHitEffect(creatureScript->GetCreatureTransform()->GetPosition());			
-			SceneManager::GetMainCameraScript()->SetOscillation(20.0f, 0.250f);	// 카메라 진동
+			//SceneManager::GetMainCameraScript()->SetOscillation(20.0f, 0.250f);	// 카메라 진동
 			// 피격 호출
 			creatureScript->OnDamaged(mUnitAttackStat.AtaackDamage);
 		}
@@ -142,7 +152,7 @@ namespace da
 			// 보스 피격 호출
 			mOwnerScript->CallHitEffect(bossScript->GetCreatureTransform()->GetPosition());
 			bossScript->IncreaseDamageCount();
-			SceneManager::GetMainCameraScript()->SetOscillation(20.0f, 0.250f);	// 카메라 진동
+			//SceneManager::GetMainCameraScript()->SetOscillation(20.0f, 0.250f);	// 카메라 진동
 		}
 		if (enums::eLayerType::Playable == other->GetOwner()->GetLayerType()
 			&& other->IsBody())

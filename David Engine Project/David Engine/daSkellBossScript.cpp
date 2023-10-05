@@ -31,10 +31,8 @@ namespace da
 
 		, mProjectileAttackOn(false)
 		, mLaserAttackOn(false)
-		, mLaserCallDelayTime(0.0f)
-		, mLaserCallDelayDecay(0.0f)
-		, mProjectileCallDelayTime(0.0f)
-		, mProjectileCallDelayDecay(0.0f)
+		, mLaserCallDelayTime{}
+		, mProjectileCallDelayTime{}
 		, mRotatePerSeconds(0.0f)
 	{
 	}
@@ -76,20 +74,9 @@ namespace da
 		mReadyDurationDecay = mReadyDurationTime;
 
 		// 레이저 호출 딜레이 (3번 호출됨)
-		mLaserCallDelayTime = 2.250f;
-		mLaserCallDelayDecay = mLaserCallDelayTime;
-
+		mLaserCallDelayTime.End = 2.250f;
 		// 투사체 호출 딜레이 (60개가 호출됨 ㄷㄷ)
-		mProjectileCallDelayTime = 0.20f; // 4.5초동안 공격한다는 가정하에 60개가 화면에 나타날 예정
-		mProjectileCallDelayDecay = mProjectileCallDelayTime;
-
-
-		mBossProjectileInfo = new structs::sBossProjectileStat();
-
-		mBossProjectileInfo->ProjectileRange = 5.5f;							// 최대거리
-		mBossProjectileInfo->ProjectileSpeed = 4.50f;							// 속도
-		mBossProjectileInfo->ProjectileDamage = 5.0f;
-
+		mProjectileCallDelayTime.End = 0.20f; // 4.5초동안 공격한다는 가정하에 60개가 화면에 나타날 예정
 
 	}
 	void SkellBossScript::Update()
@@ -246,9 +233,9 @@ namespace da
 	}
 	void SkellBossScript::callLaserAttack()
 	{
-		if (mProjectileAttackOn)	// 투사체 공격중이라면
+		if (mProjectileAttackOn)	// 투사체 공격중이라면 ret
 			return;
-		if (!mLaserAttackOn)		// 레이저 공격이 아니라면
+		if (!mLaserAttackOn)		// 레이저 공격이 아니라면 ret
 			return;
 		if (eBossState::Idle == mBossActiveState)
 			return;
@@ -257,28 +244,28 @@ namespace da
 		// 레이저 호출횟수가 남아잉슴
 		if (0 < mCurLaserCount)
 		{
-			// 딜레이 계산
-			mLaserCallDelayDecay -= (float)Time::DeltaTime();
+			// 호출할 대상 찾기
 			
-			if (0 >= mLaserCallDelayDecay) // 딜레이 충족
+			if (mLeftHandTurn)
 			{
-				mLaserCallDelayDecay = mLaserCallDelayTime;	// 딜레이 시간 초기화
-
-				// Hand의 레이저를 호출하고, 카운트 감소
-				if (mLeftHandTurn)
+				// 공격준비가 됬는지 응답받기
+				if (mLeftHand->IsAttackReady())
 				{
+					// Hand의 레이저를 호출하고, 카운트 감소
 					mLeftHand->DoAttack();
 					mLeftHandTurn = false;
-					mCurLaserCount--;
-				}
-				else
+					mCurLaserCount--;					
+				}				
+			}
+			else
+			{
+				if (mRightHand->IsAttackReady())
 				{
 					mRightHand->DoAttack();
 					mLeftHandTurn = true;
 					mCurLaserCount--;
 				}
-			}
-			
+			}					
 		}
 		// 카운트를 다했다면? 레이저 종료
 		else
@@ -297,11 +284,12 @@ namespace da
 		// 딜레이 계산
 		{
 			float deltaTime = (float)Time::DeltaTime();
-			mProjectileCallDelayDecay -= deltaTime;
+
+			mProjectileCallDelayTime.Start += deltaTime;
 			mRotatePerSeconds += deltaTime / 1.50f;
-			if (0 >= mProjectileCallDelayDecay) // 딜레이 충족
+			if (mProjectileCallDelayTime.TimeOut()) // 딜레이 충족
 			{
-				mProjectileCallDelayDecay = mProjectileCallDelayTime;	// 딜레이 시간 초기화
+				mProjectileCallDelayTime.Clear();	// 딜레이 시간 초기화
 
 				// 투사체를 4갈래로 각각 호출해주기!
 				for (size_t projectile = 0; projectile < 4; ++projectile)

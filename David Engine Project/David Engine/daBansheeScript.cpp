@@ -3,6 +3,7 @@
 
 #include "daGameDataManager.h"
 #include "daTime.h"
+#include "daInput.h"
 
 #include "daResources.h"
 #include "daGameObject.h"
@@ -83,8 +84,9 @@ namespace da
 
 		std::shared_ptr<Texture> texture = Resources::Find<Texture>(L"BansheeSpriteSheet");
 		mCreatureAnimator->Create(L"BansheeIdle", texture, math::Vector2(0.0f, 0.0f), math::Vector2(20.0f, 22.0f), 6, math::Vector2(0.0f, 0.0f), 0.1f, 60.0f);
-		mCreatureAnimator->Create(L"BansheeAttact", texture, math::Vector2(0.0f, 22.0f), math::Vector2(20.0f, 22.0f), 6, math::Vector2(0.0f, 0.0f), 0.1f, 60.0f);
-		mCreatureAnimator->CompleteEvent(L"BansheeAttact") = std::bind(&BansheeScript::retIdle, this);
+		mCreatureAnimator->Create(L"BansheeAttack", texture, math::Vector2(0.0f, 22.0f), math::Vector2(20.0f, 22.0f), 6, math::Vector2(0.0f, 0.0f), 0.1f, 60.0f);
+		mCreatureAnimator->Create(L"BansheeDead", texture, math::Vector2(0.0f, 22.0f), math::Vector2(20.0f, 22.0f), 1, math::Vector2(0.0f, 0.0f), 0.1f, 60.0f);
+		mCreatureAnimator->CompleteEvent(L"BansheeAttack") = std::bind(&BansheeScript::retIdle, this);
 
 		mCreatureAnimator->PlayAnimation(L"BansheeIdle");
 
@@ -133,22 +135,7 @@ namespace da
 	}
 	void BansheeScript::ChangeState(eBansheeState state)
 	{
-		mMonsterActiveState = state;
-		
-		switch (mMonsterActiveState)
-		{
-		case da::eBansheeState::Idle:
-			//mCreatureAnimator->PlayAnimation(L"BansheeIdle");
-			break;
-		case da::eBansheeState::Attack:
-			//mCreatureAnimator->PlayAnimation(L"BansheeAttack", false);
-			break;
-		case da::eBansheeState::Dead:
-			//
-			break;
-		default:
-			break;
-		}
+		mMonsterActiveState = state;		
 	}
 	void BansheeScript::monsterFSM()
 	{
@@ -214,6 +201,14 @@ namespace da
 			mIsDead = true;
 
 			GameDataManager::DecreaseMonsterCount(SceneManager::GetActiveScene()->GetPortals());
+
+			mCreatureRigidbody->ApplyComponentUsing(true);
+			mMonsterSensorCollider->ApplyComponentUsing(false);
+			mCreatureBodyCollider->ApplyComponentUsing(false);
+			mCreatureFootCollider->ApplyComponentUsing(true);
+			mCreatureFootCollider->SetSize(math::Vector2(0.10f, 0.20F));
+			mCreatureFootCollider->SetCenter(math::Vector2(0.0f, -0.20F));
+			mCreatureAnimator->PlayAnimation(L"BansheeDead");
 		}
 	}
 	void BansheeScript::findingPlayer()
@@ -254,7 +249,6 @@ namespace da
 		// 공격하기 전이라면
 		if (!mAttackProgress)
 		{
-			mCreatureAnimator->PlayAnimation(L"BansheeAttack", false);	// 애니메이션 호출
 			//mMonsterCombatScript->ToDoAttack();									// 공격 기능 호출
 			for (int index = 0; index < 10; ++index)
 			{				
@@ -287,8 +281,9 @@ namespace da
 				actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
 				actionUnit->OnActive();
 			}
-			mAttackProgress = true;									// 다음 진행으로 넘기기
-			mIsAttacked = false;									// 애니메이션 초기화
+			mCreatureAnimator->PlayAnimation(L"BansheeAttack", false);	// 애니메이션 호출
+			mAttackProgress = true;													// 다음 진행으로 넘기기
+			mIsAttacked = false;													// 애니메이션 초기화
 		}
 	}
 	void BansheeScript::readyForAttackDelay()

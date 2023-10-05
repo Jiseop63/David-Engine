@@ -22,7 +22,8 @@ namespace da
 		, misLeftHand(false)
 		, mChasePlayer(false)
 		, mMovePositionY(0.0f)
-		, mAttackAble(false)
+		, mTargetFind(false)
+		, mAttackReady(true)
 
 	{
 	}
@@ -49,7 +50,7 @@ namespace da
 		mHandAnimator->PlayAnimation(L"SkellBossHandIdle");
 
 		mAttackDelay.End = 0.10f;
-
+		mAttackCooldown.End = 2.0f;
 	}
 	void SkellBossHandScript::Update()
 	{
@@ -58,16 +59,35 @@ namespace da
 			DoAttack();
 		}
 
-		if (mAttackAble)
-		{
-			mAttackDelay.Start += (float)Time::DeltaTime();
-			if (mAttackDelay.TimeOut())
+		if (mAttackReady)
+		{			
+			// 공격 준비됨
+			if (mAttackCooldown.TimeOut())
 			{
-				mAttackDelay.Clear();
-				shootLaser();
-				mAttackAble = false;
+				mAttackCooldown.Clear();
+				// 공격 대상을 찾음
+				if (mTargetFind)
+				{
+					// 공격 선딜레이 기다림
+					mAttackDelay.Start += (float)Time::DeltaTime();
+					if (mAttackDelay.TimeOut())
+					{
+						// 레이저 발사 후 공격 비활성화
+						mAttackDelay.Clear();
+						shootLaser();
+						mTargetFind = false;	// 레이저 공격이 끝나면 자동으로 활성화됨
+						mAttackReady = false;
+					}
+				}
+
 			}
 		}
+		else
+		{
+			// 공격 준비가 안됬으면 기다림
+			mAttackCooldown.Start += (float)Time::DeltaTime();
+		}
+		
 	}
 	void SkellBossHandScript::LateUpdate()
 	{
@@ -129,36 +149,11 @@ namespace da
 		actionUnit->OnActive();
 		math::Vector3 handPosition = mHandTransform->GetPosition();
 		actionUnit->SetUnitOverridePosition(handPosition + offsetVector);
-
-		//// 투사체 가져오기
-		//ActionUnitScript* actionUnit = mOwnerScript->CallProjectile();
-		//structs::sActionUnitInfo unitInfo = {};
-		//unitInfo.Scale = 10.50f;
-		//unitInfo.DurationTime.End = 0.250f;
-		//actionUnit->SetUnitTypes(enums::eUnitUsageType::Default, enums::eUnitRenderType::JustRotate, enums::eUnitActionType::None);
-		//actionUnit->SetUnitInfo(unitInfo);
-		//actionUnit->SetUnitAnimation(L"SkellBossLaser", false);
-
-		//math::Vector3 offsetVector;
-		//if (!misLeftHand)
-		//{
-		//	unitInfo.RotateAngle = 3.140f;
-		//	offsetVector = math::Vector3(-4.0f, 0.0f, 0.0f);
-		//}
-		//else
-		//{
-		//	unitInfo.RotateAngle = 0.0f;
-		//	offsetVector = math::Vector3(4.0f, 0.0f, 0.0f);
-		//}
-
-		//actionUnit->OnActive();
-		//math::Vector3 handPosition = mHandTransform->GetPosition();
-		//actionUnit->SetUnitOverridePosition(handPosition + offsetVector);
 	}
 	void SkellBossHandScript::retIdle()
 	{
 		mHandAnimator->PlayAnimation(L"SkellBossHandIdle");
-		mAttackAble = true;
+		mTargetFind = true;
 		mHandCollider->ApplyComponentUsing(false);
 	}
 
@@ -179,23 +174,7 @@ namespace da
 		{
 			// 플레이어와 충돌했으므로 공격 애니메이션과 레이져 발사
 			mChasePlayer = false;
-			mAttackAble = true;
-
-			//shootLaser();			// 애니메이션과 충돌기능 활성화
+			mTargetFind = true;
 		}
-
-		//if (enums::eLayerType::Playable == other->GetOwner()->GetLayerType()
-		//	&& other->IsBody())
-		//{
-		//	mHandCollider->ApplyComponentUsing(false);
-		//	GameObject* creatureObj = other->GetOwner();
-		//	CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
-
-		//	// 최종 피해량
-		//	float totalDamage = 5.0f;
-		//	// 피격 호출
-		//	creatureScript->OnDamaged(totalDamage);
-		//}
-		// 플레이어와 충돌한 경우 피해를 주고 충돌 비활성 시킴		
 	}
 }
