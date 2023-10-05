@@ -26,25 +26,33 @@ namespace da::structs
 		float End;
 		sActionTimeValues() : Start(0.0f), End(1.0f)
 		{}
+		void Clear() { Start = 0.0f; }
+		bool TimeOut() { return (End <= Start) ? true : false; }
 	};
 	struct sActionUnitInfo
 	{
-		float Scale;
 		float Speed;
-		float RotateAngle;
 		float Range;
 		sActionTimeValues DurationTime;
-		sActionUnitInfo() : Scale(1.0f), Speed(0.0f), RotateAngle(0.0f), Range(0.0f), DurationTime{}
+		sActionUnitInfo() : Speed(0.0f), Range(0.0f), DurationTime{}
 		{}
 	};
-	//struct sAttackStat
-	//{
-	//	sActionTimeValues AttackDelayTime;
-	//	float			  AttackDamage;
-	//	sAttackStat() : AttackDelayTime{}, AttackDamage(0.0f)
-	//	{}
-	//};
+	struct sAttackStat
+	{
+		float						AtaackDamage;
+		sActionTimeValues			AttackDelayTime;
 
+		sAttackStat()
+			: AtaackDamage(0.0f)
+			, AttackDelayTime{}
+		{}
+	};
+	struct sItemInfo
+	{
+		enums::eItemRenderType	RenderType;
+		sItemInfo() : RenderType(enums::eItemRenderType::Texture)
+		{}
+	};
 
 	struct sCreatureStat
 	{
@@ -101,19 +109,7 @@ namespace da::structs
 			: MaxDashCount(0), CurDashCount(0), DashForce(0.0f), DashAccumulateTime(0.0f), DashRegenTime(0.0f)
 		{}
 	};
-	struct sAttackStat
-	{		
-		bool						AttackReady;
-		float						AtaackDamage;
-		float						AttackDelayAccumulateTime;
-		float						AttackDelayTime;
-		sAttackStat()
-			: AttackReady(true)
-			, AtaackDamage(0.0f)
-			, AttackDelayAccumulateTime(0.0f)
-			, AttackDelayTime(0.0f)
-		{}
-	};
+
 	struct sProjectileStat
 	{
 		std::wstring				EffectName;

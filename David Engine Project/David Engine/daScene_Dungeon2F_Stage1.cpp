@@ -109,7 +109,7 @@ namespace da
 			DungeonPortalScript* portalScript = objects::InstantiateDungeonPortal(this);
 			portalScript->SetSceneName(L"Scene_Dungeon2F_Stage2");
 			portalScript->SetPosition(math::Vector3(7.0f, -1.0f, 0.0f));
-			portalScript->SetExitPosition(math::Vector3(7.250f, -4.20f, 0.0f));
+			portalScript->SetExitPosition(math::Vector3(-5.250f, -4.20f, 0.0f));
 			portalScript->SetRotate(-1.570f);
 			mPortals.push_back(portalScript);
 		}

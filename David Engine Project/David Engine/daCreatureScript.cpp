@@ -81,6 +81,7 @@ namespace da
 	{
 		Vector3 myPos = mCreatureTransform->GetPosition();
 		float moveMagnitude = mCreatureStat.MoveSpeed * (float)Time::DeltaTime();
+
 		Collider2D::eWallCollisionState wallCollisionState = mCreatureBodyCollider->IsWallCollision();
 		if (Collider2D::eWallCollisionState::Left == wallCollisionState)
 			return;
@@ -140,14 +141,22 @@ namespace da
 		mHitEffectAngle += 1.80f;
 		// 방향 구하기
 		ActionUnitScript* actionUnit = callActionUnit();
-		actionUnit->SetUnitTypes(enums::eUnitRenderType::Stay, enums::eUnitUsageType::OnlyAnimation, enums::eUnitActionType::None);
-		actionUnit->SetNextAnimation(L"Slash", false);
-		actionUnit->SetOffsetPosition(math::Vector3(0.0f, -0.20f, 0.0f));
-		structs::sActionUnitInfo unitInfo = {};
-		unitInfo.Scale = 1.750f;
-		unitInfo.DurationTime.End = 2.0f;
-		unitInfo.RotateAngle = mHitEffectAngle;
-		actionUnit->SetUnitInfo(unitInfo);
+
+		structs::sUnitTypes effectUnitTypes = {};
+		effectUnitTypes.ActionType = enums::eUnitActionType::None;
+		effectUnitTypes.RenderType = enums::eUnitRenderType::Stay;
+		effectUnitTypes.UsageType = enums::eUnitUsageType::OnlyAnimation;
+		actionUnit->SetUnitTypes(effectUnitTypes);
+		structs::sActionUnitInfo effectUnitInfo = {};
+		actionUnit->SetUnitInfo(effectUnitInfo);
+		actionUnit->SetUnitScale(math::Vector3(1.750f, 1.750f, 1.0f));
+		actionUnit->SetUnitRotateAngle(mHitEffectAngle);
+		structs::sAnimationInfo effectUnitAnimation = {};
+		effectUnitAnimation.Name = L"Slash";
+		effectUnitAnimation.Loop = false;
+		actionUnit->SetUnitAnimation(effectUnitAnimation);
+		actionUnit->SetUnitReverse(isLeft());
+		actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
 		actionUnit->OnActive();
 	}
 }

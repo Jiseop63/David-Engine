@@ -270,15 +270,27 @@ namespace da
 		if (!mIsDead)
 		{
 			mMonsterCombatScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
-			ActionUnitScript* unit = CreatureScript::callActionUnit();
-			unit->SetUnitTypes(enums::eUnitRenderType::Stay, enums::eUnitUsageType::OnlyAnimation, enums::eUnitActionType::None);
-			unit->SetNextAnimation(L"Dying", false);
-			unit->SetReverse(isLeft());
-			unit->SetOffsetPosition(math::Vector3(0.0f, -0.20f, 0.0f));
-			structs::sActionUnitInfo info = {};
-			info.DurationTime.End = 2.0f;
-			unit->SetUnitInfo(info);
-			unit->OnActive();
+			ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
+
+			structs::sUnitTypes effectUnitTypes = {};
+			effectUnitTypes.ActionType = enums::eUnitActionType::None;
+			effectUnitTypes.RenderType = enums::eUnitRenderType::Stay;
+			effectUnitTypes.UsageType = enums::eUnitUsageType::OnlyAnimation;
+			actionUnit->SetUnitTypes(effectUnitTypes);
+
+			structs::sActionUnitInfo effectUnitInfo = {};
+			actionUnit->SetUnitInfo(effectUnitInfo);
+			actionUnit->SetUnitScale(math::Vector3(1.20f, 1.20f, 1.0f));
+
+			structs::sAnimationInfo effectUnitAnimation = {};
+			effectUnitAnimation.Name = L"Dying";
+			effectUnitAnimation.Loop = false;
+			actionUnit->SetUnitAnimation(effectUnitAnimation);
+
+			actionUnit->SetUnitReverse(isLeft());
+
+			actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
+			actionUnit->OnActive();
 
 			GameDataManager::DecreaseMonsterCount(SceneManager::GetActiveScene()->GetPortals());
 		}

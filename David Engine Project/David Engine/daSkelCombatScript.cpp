@@ -36,17 +36,16 @@ namespace da
 		mCombatAnimator->PlayAnimation(L"EnemyGreatSwordIdle", false);
 
 
-		mProjectileSize = math::Vector2(1.20f, 1.40f);
 		mCombatTransform->SetScale(math::Vector3(0.510f * 4.0f, 0.490f * 4.0f, 1.0f));
 
-		mWeaponInfo = new structs::sWeaponInfo();
-		mWeaponInfo->IsAnimationType = true;
-		mWeaponInfo->AnimationName = L"EnemyGreatSwordSwing";
-		mWeaponInfo->ProjectileStat.ProjectileValidTime = 0.250f;
-		mWeaponInfo->ProjectileStat.ProjectileCenterPadding = 0.30f;
-		mWeaponInfo->ProjectileStat.ProjectileRange = 3.5f;
-		mWeaponInfo->ProjectileStat.ProjectileAngle = -1.570f;
-
+		// mProjectileSize = math::Vector2(1.20f, 1.40f);
+		// mWeaponInfo = new structs::sWeaponInfo();
+		// mWeaponInfo->IsAnimationType = true;
+		// mWeaponInfo->AnimationName = L"EnemyGreatSwordSwing";
+		// mWeaponInfo->ProjectileStat.ProjectileValidTime = 0.250f;
+		// mWeaponInfo->ProjectileStat.ProjectileCenterPadding = 0.30f;
+		// mWeaponInfo->ProjectileStat.ProjectileRange = 3.5f;
+		// mWeaponInfo->ProjectileStat.ProjectileAngle = -1.570f;
 	}
 	void SkelCombatScript::LateUpdate()
 	{
@@ -55,27 +54,41 @@ namespace da
 
 		bool value = isLeft();
 		if (value)
-			mWeaponInfo->ProjectileStat.ProjectileAngle = 1.570f;
+			mWeaponAngle = 1.570f;
 		else
-			mWeaponInfo->ProjectileStat.ProjectileAngle = -1.570f;
+			mWeaponAngle = -1.570f;
 
 	}
 	void SkelCombatScript::ToDoAttack()
 	{
-		CombatScript::attackPlay();		
+		mCombatAnimator->PlayAnimation(L"EnemyGreatSwordSwing", false);
 	}
 
 	void SkelCombatScript::attackProjectile()
 	{
 		ActionUnitScript* actionUnit = mOwnerScript->callActionUnit();
-		structs::sActionUnitInfo unitInfo = {};
-		unitInfo.Scale = 1.20f;
-		unitInfo.DurationTime.End = 0.20f;
-		unitInfo.RotateAngle = mWeaponInfo->ProjectileStat.ProjectileAngle;
 
-		actionUnit->SetUnitTypes(enums::eUnitUsageType::OnlyCollider, enums::eUnitRenderType::JustRotate, enums::eUnitActionType::Duration);
-		actionUnit->SetUnitInfo(unitInfo);
-		actionUnit->SetOffsetPosition(math::Vector3(mOwnerDir.x * mWeaponInfo->ProjectileStat.ProjectileCenterPadding, mOwnerDir.y * mWeaponInfo->ProjectileStat.ProjectileCenterPadding, 0.0f)); // 아직 문제있음
+		structs::sUnitTypes mMonsterUnitTypes = {};
+		mMonsterUnitTypes.ActionType = enums::eUnitActionType::Duration;
+		mMonsterUnitTypes.RenderType = enums::eUnitRenderType::JustRotate;
+		mMonsterUnitTypes.UsageType = enums::eUnitUsageType::OnlyCollider;
+		actionUnit->SetUnitTypes(mMonsterUnitTypes);
+
+		structs::sActionUnitInfo mMonsterUnitInfo = {};
+		mMonsterUnitInfo.DurationTime.End = 0.250f;
+		actionUnit->SetUnitInfo(mMonsterUnitInfo);
+		actionUnit->SetUnitScale(math::Vector3(1.20f, 1.40f, 1.0f));
+
+		structs::sAttackStat mMonsterAttackStat = {};
+		mMonsterAttackStat.AtaackDamage = 3.0f;
+		actionUnit->SetUnitAttackStat(mMonsterAttackStat);
+
+		actionUnit->SetUnitRotateAngle(mWeaponAngle);
+
+		math::Vector3 offsetPosition = math::Vector3::Zero;
+		offsetPosition.x = mOwnerDir.x * 0.30f;
+		offsetPosition.y = mOwnerDir.y * 0.30f;
+		actionUnit->SetUnitOffset(offsetPosition);
 
 		actionUnit->OnActive();
 	}

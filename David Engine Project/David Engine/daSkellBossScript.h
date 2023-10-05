@@ -53,7 +53,7 @@ namespace da
 
 	public:
 		virtual void AddActionUnit(GameObject* unit) override;
-		SkellBossProjectileScript* CallProjectile();
+		SkellBossProjectileScript* CallBossProjectile();
 		
 	private:
 		void retIdle();

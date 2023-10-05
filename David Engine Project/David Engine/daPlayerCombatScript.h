@@ -2,10 +2,10 @@
 #include "daCombatScript.h"
 #include "daAnimator.h"
 #include "daMeshRenderer.h"
+#include "daItemScript.h"
 
 namespace da
 {
-	class PlayerScript;
 	class PlayerCombatScript : public CombatScript
 	{
 	public:
@@ -17,15 +17,18 @@ namespace da
 		virtual void LateUpdate() override;
 
 	public:
-		void EquipWeapon(); 							// 무기 교체시 인벤토리를 통해서 호출됨		
+		void EquipWeapon(ItemScript* weaponItem); 		// 무기 교체시 인벤토리를 통해서 호출됨
+
 		virtual void ToDoAttack() override;				// playerScript에서 호출
 	private:
 		virtual void updateWeaponRotate() override;
+		void updateAttackCooldown();
 
 	private:
-		std::shared_ptr<Texture>			mWeaponTexture;
+		std::shared_ptr<Texture>	mWeaponTexture;
+		ItemScript*					mWeaponItem;
 
-		std::shared_ptr<Texture>			mFirstTexture;
-		std::shared_ptr<Texture>			mSecondTexture;
+		bool						mWeaponCooldownReady;
+		structs::sActionTimeValues	mWeaponCooldownTime;
 	};
 }

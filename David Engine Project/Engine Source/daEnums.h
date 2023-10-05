@@ -114,6 +114,11 @@ namespace da::enums
 		OnlyAnimation,		// Animation
 		OnlyCollider,		// Collider
 	};
+	enum class eItemRenderType
+	{
+		Texture,
+		Animation,
+	};
 
 
 	// 안쓸 예정

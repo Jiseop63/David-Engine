@@ -7,6 +7,7 @@
 
 namespace da
 {
+	class PlayerScript;
 	class InventoryScript : public Script
 	{
 		struct sSwapNumber
@@ -33,10 +34,13 @@ namespace da
 		void ChangeArmour();
 #pragma endregion
 
+	public:
 		ItemSlotScript* AddItemSlotScript(GameObject* itemObject);
 		ArmourScript* AddArmourScript(GameObject* armourObject);
+		void SetPlayerScript(GameObject* player);
 
 #pragma region Item
+	public:
 		void SelectForSwap();
 		void ChangeItems();
 		ItemScript* GetActiveItemScript();
@@ -50,19 +54,20 @@ namespace da
 		bool mSelectLeft;
 		
 	private:
-		static int							itemSlot;
+		static int							itemSlotCount;
 		std::shared_ptr<graphics::Texture>	mFirstTexture;
 		std::shared_ptr<graphics::Texture>	mSecondTexture;
 
+
 		std::vector<ItemSlotScript*>		mItemSlots;
+		sSwapNumber							mSwapIndex;
 
 		ItemSlotScript*						mActiveItemSlot;
 
-		sSwapNumber							mSwapIndex;
-
-
 		ArmourScript*						mMainArmourScript;
 		ArmourScript*						mSubArmourScript;
+
+		PlayerScript*						mPlayerScript;
 
 	};
 }

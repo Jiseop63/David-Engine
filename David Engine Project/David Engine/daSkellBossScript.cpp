@@ -234,7 +234,7 @@ namespace da
 		mBossProjectiles.push_back(bossProjectile);
 	}
 
-	SkellBossProjectileScript* SkellBossScript::CallProjectile()
+	SkellBossProjectileScript* SkellBossScript::CallBossProjectile()
 	{
 		for (size_t projectile = 0; projectile < mBossProjectiles.size(); ++projectile)
 		{
@@ -306,22 +306,34 @@ namespace da
 				// 투사체를 4갈래로 각각 호출해주기!
 				for (size_t projectile = 0; projectile < 4; ++projectile)
 				{
+					ActionUnitScript* actionUnit = CallBossProjectile();
 
-					SkellBossProjectileScript* targetProjectile = CallProjectile();
+					structs::sUnitTypes mMonsterUnitTypes = {};
+					mMonsterUnitTypes.ActionType = enums::eUnitActionType::Range;
+					mMonsterUnitTypes.RenderType = enums::eUnitRenderType::UsingDirection;
+					mMonsterUnitTypes.UsageType = enums::eUnitUsageType::Default;
+					actionUnit->SetUnitTypes(mMonsterUnitTypes);
 
-					mBossProjectileInfo->ProjectileDamage = 5.0f;
+					structs::sActionUnitInfo mMonsterUnitInfo = {};
+					mMonsterUnitInfo.Speed = 4.50f;
+					mMonsterUnitInfo.Range = 6.5f;
+					actionUnit->SetUnitInfo(mMonsterUnitInfo);
+					actionUnit->SetUnitScale(math::Vector3(1.250f, 1.250f, 1.0f));
 
-					structs::sActionUnitInfo unitInfo = {};
-					unitInfo.Scale = 1.0f;
-					unitInfo.DurationTime.End = 2.0f;
-					unitInfo.Range = 6.5f;
-					unitInfo.Speed = 4.50f;
+					structs::sAnimationInfo mMonsterUnitAnimation = {};
+					mMonsterUnitAnimation.Name = L"SkellBossProjectile";
+					mMonsterUnitAnimation.Loop = true;
+					actionUnit->SetUnitAnimation(mMonsterUnitAnimation);
+
+					structs::sAttackStat mMonsterAttackStat = {};
+					mMonsterAttackStat.AtaackDamage = 2.50f;
+					actionUnit->SetUnitAttackStat(mMonsterAttackStat);
+
 					math::Vector3 moveDirection = math::daRotateVector3(math::Vector3::UnitY, projectile * 1.570f + mRotatePerSeconds);
-					targetProjectile->SetUnitInfo(unitInfo);
-					targetProjectile->SetUnitTypes(enums::eUnitRenderType::UsingDirection, enums::eUnitUsageType::Default, enums::eUnitActionType::Range);
-					targetProjectile->SetNextAnimation(L"SkellBossProjectile", true);
-					targetProjectile->SetMoveDirection(moveDirection);
-					targetProjectile->OnActive();
+					actionUnit->SetUnitDirection(moveDirection);
+
+					actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
+					actionUnit->OnActive();
 				}				
 			}			
 		}

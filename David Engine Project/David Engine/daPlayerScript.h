@@ -6,6 +6,7 @@
 #include "daMeshRenderer.h"
 #include "daLight.h"
 #include "daPlayerCombatScript.h"
+#include "daInventoryScript.h"
 
 namespace da
 {
@@ -27,6 +28,7 @@ namespace da
 		Dead,
 	};
 
+	class InventoryScript;
 	class PlayerScript : public CreatureScript
 	{
 	public:
@@ -39,9 +41,7 @@ namespace da
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 
-		virtual void AddActionUnit(GameObject* unit) override;
-		PlayerCombatScript* AddCombatObject(GameObject* object);
-
+		
 
 		void GetDamage();
 		void GetHeal();
@@ -85,8 +85,8 @@ namespace da
 
 #pragma region public Func
 	public:
-		PlayerCombatScript* SetWeaponObject(GameObject* object);				// 삭제 예정
-		PlayerCombatScript* GetWeaponScript() { return mPlayerCombatScript; }
+		PlayerCombatScript* GetCombatScript() { return mPlayerCombatScript; }
+		InventoryScript* GetInventoryScript() { return mInventoryScript; }
 		void ActiveWeapon() { mPlayerCombatScript->GetOwner()->SetObjectState(GameObject::eObjectState::Active); }
 
 		const structs::sDashData* GetDashData() const { return &mDashData; }
@@ -119,6 +119,7 @@ namespace da
 			mJumpData.BufferedJump = false;
 			mJumpData.JumpForceRatio = 0.0f;
 			mJumpData.JumpAccumulateTime = 0.0f;
+			mCreatureFootCollider->ClearGroundBuffer();
 		}
 		bool useDash()
 		{
@@ -138,6 +139,10 @@ namespace da
 		void initializeCollider();
 		void initializeData();
 
+		void SetInventoryScript(InventoryScript* inventoryScript) { mInventoryScript = inventoryScript; }
+		PlayerCombatScript* AddWeaponObject(GameObject* object);
+		virtual void AddActionUnit(GameObject* unit) override;
+		PlayerCombatScript* AddCombatObject(GameObject* object);
 
 #pragma endregion
 	public:
@@ -152,6 +157,7 @@ namespace da
 			GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 			ChangeState(ePlayerState::Idle);
 			ActiveWeapon();
+			mPlayerCombatScript->EquipWeapon(mInventoryScript->GetActiveItemScript());
 		}
 		
 
@@ -167,6 +173,7 @@ namespace da
 	private:
 		Light*				mLight;
 		PlayerCombatScript*	mPlayerCombatScript;
+		InventoryScript*	mInventoryScript;
 #pragma endregion
 
 #pragma region Global Data

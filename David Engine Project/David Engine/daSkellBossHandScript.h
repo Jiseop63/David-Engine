@@ -58,7 +58,9 @@ namespace da
 	private:
 		bool			misLeftHand;
 		bool			mChasePlayer;
+		bool			mAttackAble;
 	private:
 		float			mMovePositionY;
+		structs::sActionTimeValues mAttackDelay;
 	};
 }

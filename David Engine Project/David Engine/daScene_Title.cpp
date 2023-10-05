@@ -675,26 +675,38 @@ namespace da
 			GameObject* defaultItemObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"WeaponIconMaterial");
 			defaultItemObject->SetObjectState(GameObject::eObjectState::Inactive);
 			ItemScript* defalutWeapon = defaultItemObject->AddComponent<ItemScript>();
+
+			// Item Setting
+			defalutWeapon->SetItemName(L"LongSword");
+			defalutWeapon->SetItemRenderType(enums::eItemRenderType::Texture);
+			structs::sAttackStat defalutWeaponStat;
+			defalutWeaponStat.AtaackDamage = 8.0f;
+			defalutWeaponStat.AttackDelayTime.End = 0.350f;
+			defalutWeapon->SetItemAttackStat(defalutWeaponStat);
+			defalutWeapon->SetItemScale(math::Vector3(0.360f * 0.760f, 1.060f * 0.760f, 1.0f));			
+			defalutWeapon->SetItemTexture(Resources::Find<Texture>(L"LongSword"));
+			// Item Unit Setting
 			structs::sUnitTypes defalutWeaponTypes;
 			defalutWeaponTypes.ActionType = enums::eUnitActionType::None;
 			defalutWeaponTypes.RenderType = enums::eUnitRenderType::JustRotate;
 			defalutWeaponTypes.UsageType = enums::eUnitUsageType::Default;
-			defalutWeapon->SetUnitTypes(defalutWeaponTypes);
+			defalutWeapon->SetItemUnitTypes(defalutWeaponTypes);
 			structs::sActionUnitInfo defalutWeaponInfo;
 			defalutWeaponInfo.DurationTime = structs::sActionTimeValues(); // ±âº»°ª 0 - 1
 			defalutWeaponInfo.Range = 0.50f;
-			defalutWeaponInfo.Scale = 1.60f;
 			defalutWeaponInfo.Speed = 0.0f;
-			defalutWeapon->SetUnitInfo(defalutWeaponInfo);
-			defalutWeapon->SetUnitAnimation(L"Swing", false);
-			defalutWeapon->SetItemName(L"LongSword");
-			defalutWeapon->SetItemTexture(Resources::Find<Texture>(L"LongSword"));
-			defalutWeapon->SetItemScale(math::Vector3(0.360f * 0.760f, 0.760f * 0.760f, 1.0f));
+			defalutWeapon->SetItemUnitInfo(defalutWeaponInfo);
+			defalutWeapon->SetItemUnitScale(math::Vector3(1.60f, 1.60f, 1.0f));
+			defalutWeapon->SetItemUnitOffset(math::Vector3(0.50f, 0.50f, 0.0f));
+			structs::sAnimationInfo unitAnimation;
+			unitAnimation.Name = L"Swing";
+			unitAnimation.Loop = false;
+			defalutWeapon->SetItemUnitAnimation(unitAnimation);
 
 			ItemManager::AddItem(L"LongSword", defalutWeapon);
+
 			inventoryScript->AddItemToSlot(enums::eItemSlot::Slot00, ItemManager::GetItem(L"LongSword"));
-
-
+			inventoryScript->SetPlayerScript(playerObject);
 		}
 #pragma endregion
 	}

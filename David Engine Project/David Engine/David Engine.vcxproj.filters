@@ -252,6 +252,12 @@
     <ClInclude Include="daItemScript.h">
       <Filter>Objects\Inventory</Filter>
     </ClInclude>
+    <ClInclude Include="daItemManager.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="daItemIconScript.h">
+      <Filter>Objects\UI\HUD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -394,6 +400,12 @@
     </ClCompile>
     <ClCompile Include="daItemScript.cpp">
       <Filter>Objects\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="daItemManager.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="daItemIconScript.cpp">
+      <Filter>Objects\UI\HUD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

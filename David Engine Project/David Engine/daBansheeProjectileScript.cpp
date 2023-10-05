@@ -27,8 +27,8 @@ namespace da
 	void BansheeProjectileScript::Update()
 	{
 		// 종료 조건
-		if (enums::eUnitRenderType::Stay == mUnitRenderType
-			|| enums::eUnitRenderType::JustRotate == mUnitRenderType)
+		if (enums::eUnitRenderType::Stay == mUnitTypes.RenderType
+			|| enums::eUnitRenderType::JustRotate == mUnitTypes.RenderType)
 		{
 			mUnitInfo.DurationTime.Start += (float)Time::DeltaTime();
 			if (mUnitInfo.DurationTime.End <= mUnitInfo.DurationTime.Start)
@@ -51,7 +51,7 @@ namespace da
 		math::Vector3 totalscale = mActionUnitCollider->GetTotalScale();
 
 		mChnaged = true;
-		mUnitRenderType = enums::eUnitRenderType::Stay;
+		mUnitTypes.RenderType = enums::eUnitRenderType::Stay;
 		mActionUnitAnimator->PlayAnimation(L"BansheeBulletHit", false);
 	}
 	void BansheeProjectileScript::OnCollisionEnter(Collider2D* other)

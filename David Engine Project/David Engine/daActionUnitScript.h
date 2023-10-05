@@ -19,45 +19,28 @@ namespace da
 
 #pragma region Initialize type
 	public:
-		void SetUnitTypes(enums::eUnitRenderType actionType, enums::eUnitUsageType usageType, enums::eUnitActionType unitActionType)
-		{
-			mUnitRenderType = actionType; mUnitUsageType = usageType; mUnitActionType = unitActionType;
-		}
-		void SetUnitTypes(enums::eUnitRenderType actionType, enums::eUnitActionType unitActionType, enums::eUnitUsageType usageType)
-		{
-			mUnitRenderType = actionType; mUnitUsageType = usageType; mUnitActionType = unitActionType;
-		}
-		void SetUnitTypes(enums::eUnitActionType unitActionType, enums::eUnitRenderType actionType, enums::eUnitUsageType usageType)
-		{
-			mUnitRenderType = actionType; mUnitUsageType = usageType; mUnitActionType = unitActionType;
-		}
-		void SetUnitTypes(enums::eUnitActionType unitActionType, enums::eUnitUsageType usageType, enums::eUnitRenderType actionType)
-		{
-			mUnitRenderType = actionType; mUnitUsageType = usageType; mUnitActionType = unitActionType;
-		}
-		void SetUnitTypes(enums::eUnitUsageType usageType, enums::eUnitActionType unitActionType, enums::eUnitRenderType actionType)
-		{
-			mUnitRenderType = actionType; mUnitUsageType = usageType; mUnitActionType = unitActionType;
-		}
-		void SetUnitTypes(enums::eUnitUsageType usageType, enums::eUnitRenderType actionType, enums::eUnitActionType unitActionType)
-		{
-			mUnitRenderType = actionType; mUnitUsageType = usageType; mUnitActionType = unitActionType;
-		}
 		void SetOwnerScript(CreatureScript* ownerScript) { mOwnerScript = ownerScript; }
+		
+		void SetUnitTypes(structs::sUnitTypes unitTypes) { mUnitTypes = unitTypes; }		
 		void SetUnitInfo(const structs::sActionUnitInfo unitInfo)  { mUnitInfo = unitInfo; }
+		void SetUnitAttackStat(structs::sAttackStat unitAttackStat) { mUnitAttackStat = unitAttackStat; }
+
+
 		const structs::sActionUnitInfo GetUnitInfo() { return mUnitInfo; }
 #pragma endregion
 
 #pragma region Initialize transform
-		void SetOffsetPosition(math::Vector3 offset) { mOffsetPosition = offset; }
-		void SetMoveDirection(math::Vector3 direction) { mUnitDirection = direction; }
-		void SetOverridePosition(math::Vector3 position) { mUnitBeginPosition = position; mActionUnitTransform->SetPosition(position); }
+		void SetUnitScale(math::Vector3 scale) { mUnitScale = scale; }
+		void SetUnitOffset(math::Vector3 offset) { mUnitOffset = offset; }
+		void SetUnitDirection(math::Vector3 direction) { mUnitDirection = direction; }
+		void SetUnitRotateAngle(float angle) { mUnitRotateAngle = angle; }
+		void SetUnitOverridePosition(math::Vector3 position) { mUnitBeginPosition = position; mActionUnitTransform->SetPosition(position); }
 #pragma endregion
 
 #pragma region initialize visual
-		virtual void SetNextAnimation(const std::wstring name, bool loop = true) { mUnitAnimationName = name; mUnitAnimationLoop = loop; }
-		void SetTexture(const std::shared_ptr<class Texture> texture) { mActionUnitRenderer->ChangeMaterialTexture(texture); }
-		void SetReverse(bool value) { mActionUnitRenderer->SetReverse(value); }
+		virtual void SetUnitAnimation(structs::sAnimationInfo unitAnimationInfo) { mUnitAnimationInfo = unitAnimationInfo; }
+		void SetUnitTexture(const std::shared_ptr<class Texture> texture) { mActionUnitRenderer->ChangeMaterialTexture(texture); }
+		void SetUnitReverse(bool value) { mActionUnitRenderer->SetReverse(value); }
 #pragma endregion
 		
 	public:
@@ -82,16 +65,19 @@ namespace da
 		CreatureScript* mOwnerScript;
 
 	protected:
-		math::Vector3	mOffsetPosition;
+		math::Vector3	mUnitScale;
 		math::Vector3	mUnitBeginPosition;
+		math::Vector3	mUnitOffset;
 		math::Vector3	mUnitDirection;
+		float			mUnitRotateAngle;
 
-		structs::sActionUnitInfo mUnitInfo;
 	protected:
-		enums::eUnitRenderType	mUnitRenderType;
-		enums::eUnitUsageType	mUnitUsageType;
-		enums::eUnitActionType	mUnitActionType;
-		std::wstring	mUnitAnimationName;
-		bool			mUnitAnimationLoop;
+		std::wstring				mUnitName;		// texture?
+		// 투사체 속성
+		structs::sActionUnitInfo	mUnitInfo;
+		structs::sUnitTypes			mUnitTypes;
+		structs::sAnimationInfo		mUnitAnimationInfo;
+		// 공격 속성
+		structs::sAttackStat		mUnitAttackStat;
 	};
 }

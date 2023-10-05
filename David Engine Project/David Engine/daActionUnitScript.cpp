@@ -3,6 +3,7 @@
 #include "daGameObject.h"
 #include "daCreatureScript.h"
 #include "daSkellBossScript.h"
+#include "daSceneManager.h"
 namespace da
 {
 	ActionUnitScript::ActionUnitScript()
@@ -11,14 +12,13 @@ namespace da
 		, mActionUnitRenderer(nullptr)
 		, mActionUnitAnimator(nullptr)
 		, mOwnerScript(nullptr)
-		, mUnitInfo{}
-		, mUnitUsageType(enums::eUnitUsageType::Default)
-		, mUnitActionType(enums::eUnitActionType::None)
-		, mUnitRenderType(enums::eUnitRenderType::Stay)
 		, mUnitBeginPosition(math::Vector3::Zero)
 		, mUnitDirection(math::Vector3::UnitY)
-		, mUnitAnimationName()
-		, mUnitAnimationLoop(false)
+		, mUnitRotateAngle(0.0f)
+		, mUnitInfo{}
+		, mUnitTypes{}
+		, mUnitAnimationInfo{}
+		, mUnitAttackStat{}
 	{
 	}
 	ActionUnitScript::~ActionUnitScript()
@@ -34,13 +34,13 @@ namespace da
 	void ActionUnitScript::Update()
 	{
 		// 종료 조건
-		if (enums::eUnitActionType::Duration == mUnitActionType)
+		if (enums::eUnitActionType::Duration == mUnitTypes.ActionType)
 		{
 			mUnitInfo.DurationTime.Start += (float)Time::DeltaTime();
 			if (mUnitInfo.DurationTime.End <= mUnitInfo.DurationTime.Start)
 				ClearUnit();
 		}
-		else if (enums::eUnitActionType::Range == mUnitActionType)
+		else if (enums::eUnitActionType::Range == mUnitTypes.ActionType)
 		{
 			math::Vector3 currentPosition = mActionUnitTransform->GetPosition();
 			math::Vector3 moveDistance = mUnitBeginPosition - currentPosition;
@@ -51,7 +51,7 @@ namespace da
 	void ActionUnitScript::LateUpdate()
 	{
 		// 이동 조건
-		switch (mUnitRenderType)
+		switch (mUnitTypes.RenderType)
 		{
 		case da::enums::eUnitRenderType::Stay:
 			break;
@@ -78,18 +78,20 @@ namespace da
 	void ActionUnitScript::OnActive()
 	{
 		// Transform 세팅		
-		mActionUnitTransform->SetScale(math::Vector3(mUnitInfo.Scale, mUnitInfo.Scale, 1.0f));
-		mUnitBeginPosition = mOwnerScript->GetCreatureTransform()->GetPosition() + mOffsetPosition;
-		if (enums::eUnitRenderType::JustRotate == mUnitRenderType
-			|| enums::eUnitRenderType::UsingRotation == mUnitRenderType)
+		mActionUnitTransform->SetScale(mUnitScale);
+		mUnitBeginPosition = mOwnerScript->GetCreatureTransform()->GetPosition() + mUnitOffset;
+		if (enums::eUnitRenderType::JustRotate == mUnitTypes.RenderType
+			|| enums::eUnitRenderType::UsingRotation == mUnitTypes.RenderType)
 		{
-			mActionUnitTransform->SetRotation(math::Vector3(0.0f, 0.0f, mUnitInfo.RotateAngle));
+			mActionUnitTransform->SetRotation(math::Vector3(0.0f, 0.0f, mUnitRotateAngle));
 		}
+		else
+			mActionUnitTransform->SetRotation(math::Vector3(0.0f, 0.0f, 0.0f));
 		mActionUnitTransform->SetPosition(mUnitBeginPosition);
 
 		// collider 세팅
-		if (!(enums::eUnitUsageType::OnlyTexture == mUnitUsageType
-			|| enums::eUnitUsageType::OnlyAnimation == mUnitUsageType))
+		if (!(enums::eUnitUsageType::OnlyTexture == mUnitTypes.UsageType
+			|| enums::eUnitUsageType::OnlyAnimation == mUnitTypes.UsageType))
 		{
 			mActionUnitCollider->ApplyComponentUsing(true);
 		}
@@ -99,11 +101,11 @@ namespace da
 		}
 
 		// animation 활성화
-		if (enums::eUnitUsageType::Default == mUnitUsageType
-			|| enums::eUnitUsageType::OnlyAnimation == mUnitUsageType)
+		if (enums::eUnitUsageType::Default == mUnitTypes.UsageType
+			|| enums::eUnitUsageType::OnlyAnimation == mUnitTypes.UsageType)
 		{
 			mActionUnitAnimator->ApplyComponentUsing(true);
-			mActionUnitAnimator->PlayAnimation(mUnitAnimationName, mUnitAnimationLoop);
+			mActionUnitAnimator->PlayAnimation(mUnitAnimationInfo.Name, mUnitAnimationInfo.Loop);
 		}
 		else
 		{
@@ -128,14 +130,10 @@ namespace da
 			CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
 			// 피격 호출
 			mOwnerScript->CallHitEffect(creatureScript->GetCreatureTransform()->GetPosition());			
-			//SceneManager::GetMainCameraScript()->SetOscillation(120.0f, 0.1250f);
-
-			// 최종 피해량
-			float totalDamage = 6.0f;
-
-
+			SceneManager::GetMainCameraScript()->SetOscillation(30.0f, 0.1250f);
+			
 			// 피격 호출
-			creatureScript->OnDamaged(totalDamage);
+			creatureScript->OnDamaged(mUnitAttackStat.AtaackDamage);
 		}
 		if (enums::eLayerType::Boss == other->GetOwner()->GetLayerType()
 			&& other->IsBody())
@@ -145,7 +143,7 @@ namespace da
 			// 보스 피격 호출
 			mOwnerScript->CallHitEffect(bossScript->GetCreatureTransform()->GetPosition());
 			bossScript->IncreaseDamageCount();
-			//SceneManager::GetMainCameraScript()->SetOscillation(120.0f, 0.1250f);	// 카메라 진동
+			SceneManager::GetMainCameraScript()->SetOscillation(30.0f, 0.1250f);	// 카메라 진동
 		}
 		if (enums::eLayerType::Playable == other->GetOwner()->GetLayerType()
 			&& other->IsBody())
@@ -153,10 +151,8 @@ namespace da
 			GameObject* creatureObj = other->GetOwner();
 			CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
 
-			// 최종 피해량
-			float totalDamage = 5.0f;
 			// 피격 호출
-			creatureScript->OnDamaged(totalDamage);
+			creatureScript->OnDamaged(mUnitAttackStat.AtaackDamage);
 		}
 	}
 }

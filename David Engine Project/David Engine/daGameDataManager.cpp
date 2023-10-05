@@ -9,33 +9,14 @@
 namespace da
 {
 	using namespace math;
-	structs::sInventory GameDataManager::mInventoryData = {};
-
-	structs::sArmour* GameDataManager::mActiveArmour = nullptr;
-	structs::sArmour* GameDataManager::mSubArmour = nullptr;
 
 	da::math::Vector2 GameDataManager::mCameraMovableRange = Vector2::Zero;
-	da::math::Vector2 GameDataManager::mCameraMovePosition = Vector2::Zero;
-	
+	da::math::Vector2 GameDataManager::mCameraMovePosition = Vector2::Zero;	
 
 	bool GameDataManager::mDebuging = false;
+
 	std::vector<int> GameDataManager::mMonsterCounts((UINT)eDungeonScene::End, 0);
 	int GameDataManager::mCurrentMonsterCount = 0;
-
-	void GameDataManager::Initialize()
-	{
-		InitializeInventory();
-	}
-
-	void GameDataManager::InitializeInventory()
-	{
-		mActiveArmour = new structs::sArmour();
-		mActiveArmour->Weapon.WeaponName = enums::eWeaponName::LongSword;
-		mSubArmour = new structs::sArmour();
-
-		mInventoryData.Armour1 = *mActiveArmour;
-		mInventoryData.Armour2 = *mSubArmour;
-	}
 
 	void GameDataManager::EnterMonsterCount(eDungeonScene scene, std::vector<PortalScript*> portals)
 	{
@@ -116,20 +97,5 @@ namespace da
 			mCameraMovePosition = vector2;
 		else
 			mCameraMovePosition = calcPos;
-	}
-
-	void GameDataManager::CallInventory()
-	{
-		SceneManager::GetInventoryScript()->CallInventory();
-	}
-
-	void GameDataManager::ChangeArmour()
-	{
-		SceneManager::GetInventoryScript()->ChangeArmour();
-	}
-
-	structs::sArmour* GameDataManager::GetActiveArmour()
-	{
-		return mActiveArmour;
 	}
 }

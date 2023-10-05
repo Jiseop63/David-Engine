@@ -17,6 +17,7 @@ namespace da
 		mActionUnitAnimator->CompleteEvent(L"Jumping") = std::bind(&ActionUnitScript::ClearUnit, this);
 		mActionUnitAnimator->CompleteEvent(L"DustEffect") = std::bind(&ActionUnitScript::ClearUnit, this);
 		mActionUnitAnimator->CompleteEvent(L"Dying") = std::bind(&ActionUnitScript::ClearUnit, this);
+		mActionUnitAnimator->Create(L"DashEffect", Resources::Find<Texture>(L"DashEffect"), math::Vector2::Zero, math::Vector2(32.0f, 32.0f), 1, math::Vector2::Zero, 0.10f);
 
 		mActionUnitAnimator->Create(L"GreatSwing", Resources::Find<Texture>(L"GreatSwingFX"), math::Vector2::Zero, math::Vector2(32.0f, 25.0f), 4, math::Vector2::Zero, 0.0750f);
 		mActionUnitAnimator->Create(L"Swing", Resources::Find<Texture>(L"SwingFX"), math::Vector2::Zero, math::Vector2(40.0f, 28.0f), 3, math::Vector2::Zero, 0.0750f, 25.0f);

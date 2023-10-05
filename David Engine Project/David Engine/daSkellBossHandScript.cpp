@@ -22,6 +22,7 @@ namespace da
 		, misLeftHand(false)
 		, mChasePlayer(false)
 		, mMovePositionY(0.0f)
+		, mAttackAble(false)
 
 	{
 	}
@@ -47,12 +48,24 @@ namespace da
 
 		mHandAnimator->PlayAnimation(L"SkellBossHandIdle");
 
+		mAttackDelay.End = 0.10f;
+
 	}
 	void SkellBossHandScript::Update()
 	{
 		if (Input::GetKeyDown(eKeyCode::Q))
 		{
 			DoAttack();
+		}
+
+		if (mAttackAble)
+		{
+			mAttackDelay.Start += (float)Time::DeltaTime();
+			if (mAttackDelay.TimeOut())
+			{
+				mAttackDelay.Clear();
+				shootLaser();
+			}
 		}
 	}
 	void SkellBossHandScript::LateUpdate()
@@ -82,34 +95,72 @@ namespace da
 	void SkellBossHandScript::shootLaser()
 	{
 		mHandAnimator->PlayAnimation(L"SkellBossHandAttack", false);
-		// 투사체 가져오기
-		ActionUnitScript* actionUnit = mOwnerScript->CallProjectile();
-		structs::sActionUnitInfo unitInfo = {};
-		unitInfo.Scale = 10.50f;
-		unitInfo.DurationTime.End = 0.250f;
-		actionUnit->SetUnitTypes(enums::eUnitUsageType::Default, enums::eUnitRenderType::JustRotate, enums::eUnitActionType::None);
-		actionUnit->SetUnitInfo(unitInfo);
-		actionUnit->SetNextAnimation(L"SkellBossLaser", false);
+
+		ActionUnitScript* actionUnit = mOwnerScript->CallBossProjectile();
+
+		structs::sUnitTypes effectUnitTypes = {};
+		effectUnitTypes.ActionType = enums::eUnitActionType::None;
+		effectUnitTypes.RenderType = enums::eUnitRenderType::Stay;
+		effectUnitTypes.UsageType = enums::eUnitUsageType::Default;
+		actionUnit->SetUnitTypes(effectUnitTypes);
+
+		structs::sActionUnitInfo effectUnitInfo = {};
+		actionUnit->SetUnitInfo(effectUnitInfo);
+		actionUnit->SetUnitScale(math::Vector3(10.50f, 10.50f, 1.0f));
+
+		structs::sAnimationInfo effectUnitAnimation = {};
+		effectUnitAnimation.Name = L"SkellBossLaser";
+		effectUnitAnimation.Loop = false;
+		actionUnit->SetUnitAnimation(effectUnitAnimation);
+
+		structs::sAttackStat effectAttackStat = {};
+		effectAttackStat.AtaackDamage = 4.0f;
+		actionUnit->SetUnitAttackStat(effectAttackStat);
 
 		math::Vector3 offsetVector;
-		if (!misLeftHand)
+		if (isLeft())
 		{
-			unitInfo.RotateAngle = 3.140f;
-			offsetVector = math::Vector3(-4.0f, 0.0f, 0.0f);
-		}
-		else
-		{
-			unitInfo.RotateAngle = 0.0f;
+			actionUnit->SetUnitReverse(isLeft());
 			offsetVector = math::Vector3(4.0f, 0.0f, 0.0f);
 		}
+		else
+			offsetVector = math::Vector3(-4.0f, 0.0f, 0.0f);
 
+		actionUnit->SetUnitReverse(isLeft());
+
+		actionUnit->SetUnitOffset(offsetVector);
 		actionUnit->OnActive();
-		math::Vector3 handPosition = mHandTransform->GetPosition();
-		actionUnit->SetOverridePosition(handPosition + offsetVector);
+
+
+		//// 투사체 가져오기
+		//ActionUnitScript* actionUnit = mOwnerScript->CallProjectile();
+		//structs::sActionUnitInfo unitInfo = {};
+		//unitInfo.Scale = 10.50f;
+		//unitInfo.DurationTime.End = 0.250f;
+		//actionUnit->SetUnitTypes(enums::eUnitUsageType::Default, enums::eUnitRenderType::JustRotate, enums::eUnitActionType::None);
+		//actionUnit->SetUnitInfo(unitInfo);
+		//actionUnit->SetUnitAnimation(L"SkellBossLaser", false);
+
+		//math::Vector3 offsetVector;
+		//if (!misLeftHand)
+		//{
+		//	unitInfo.RotateAngle = 3.140f;
+		//	offsetVector = math::Vector3(-4.0f, 0.0f, 0.0f);
+		//}
+		//else
+		//{
+		//	unitInfo.RotateAngle = 0.0f;
+		//	offsetVector = math::Vector3(4.0f, 0.0f, 0.0f);
+		//}
+
+		//actionUnit->OnActive();
+		//math::Vector3 handPosition = mHandTransform->GetPosition();
+		//actionUnit->SetUnitOverridePosition(handPosition + offsetVector);
 	}
 	void SkellBossHandScript::retIdle()
 	{
 		mHandAnimator->PlayAnimation(L"SkellBossHandIdle");
+		mAttackAble = false;
 		mHandCollider->ApplyComponentUsing(false);
 	}
 
@@ -130,7 +181,9 @@ namespace da
 		{
 			// 플레이어와 충돌했으므로 공격 애니메이션과 레이져 발사
 			mChasePlayer = false;
-			shootLaser();			// 애니메이션과 충돌기능 활성화
+			mAttackAble = true;
+
+			//shootLaser();			// 애니메이션과 충돌기능 활성화
 		}
 
 		//if (enums::eLayerType::Playable == other->GetOwner()->GetLayerType()

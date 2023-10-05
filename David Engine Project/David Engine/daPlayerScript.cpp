@@ -5,6 +5,7 @@
 #include "daInput.h"
 #include "daTime.h"
 #include "daGameDataManager.h"
+#include "daItemManager.h"
 
 #include "daConstantBuffer.h"
 #include "daRenderer.h"
@@ -21,6 +22,7 @@ namespace da
     PlayerScript::PlayerScript()
         : mLight(nullptr)
         , mPlayerCombatScript(nullptr)
+        , mInventoryScript(nullptr)
 
         , mActiveState(ePlayerState::Idle)
         , mpreviousState(ePlayerState::Idle)
@@ -95,7 +97,7 @@ namespace da
         inputCameraMove();
         inputMove();
         inputDash();
-        inputAttack();
+        //inputAttack();
     }
     void PlayerScript::inputDebug()
     {
@@ -114,9 +116,9 @@ namespace da
     void PlayerScript::inputUI()
     {
         if (Input::GetKeyDown(eKeyCode::V))
-            GameDataManager::CallInventory();
+            mInventoryScript->CallInventory();
         if (Input::GetKeyDown(eKeyCode::TILDE))
-            GameDataManager::ChangeArmour();
+            mInventoryScript->ChangeArmour();
     }
     void PlayerScript::updatePlayerDir()
     {
@@ -233,14 +235,25 @@ namespace da
         if (!mIsDead)
         {
             ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
-            actionUnit->SetUnitTypes(enums::eUnitRenderType::Stay, enums::eUnitUsageType::OnlyAnimation, enums::eUnitActionType::None);
-            actionUnit->SetNextAnimation(L"Dying", false);
-            actionUnit->SetReverse(isLeft());
-            actionUnit->SetOffsetPosition(Vector3(0.0f, -0.20f, 0.0f));
-            structs::sActionUnitInfo unitInfo = {};
-            unitInfo.Scale = 1.20f;
-            unitInfo.DurationTime.End = 2.0f;
-            actionUnit->SetUnitInfo(unitInfo);
+
+            structs::sUnitTypes effectUnitTypes = {};
+            effectUnitTypes.ActionType = enums::eUnitActionType::None;
+            effectUnitTypes.RenderType = enums::eUnitRenderType::Stay;
+            effectUnitTypes.UsageType = enums::eUnitUsageType::OnlyAnimation;
+            actionUnit->SetUnitTypes(effectUnitTypes);
+
+            structs::sActionUnitInfo effectUnitInfo = {};
+            actionUnit->SetUnitInfo(effectUnitInfo);
+            actionUnit->SetUnitScale(math::Vector3(1.20f, 1.20f, 1.0f));
+
+            structs::sAnimationInfo effectUnitAnimation = {};
+            effectUnitAnimation.Name = L"Dying";
+            effectUnitAnimation.Loop = false;
+            actionUnit->SetUnitAnimation(effectUnitAnimation);
+
+            actionUnit->SetUnitReverse(isLeft());
+
+            actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
             actionUnit->OnActive();
         }
         mIsDead = true;
@@ -364,14 +377,26 @@ namespace da
         ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
         if (actionUnit)
         {
-            actionUnit->SetUnitTypes(enums::eUnitRenderType::Stay, enums::eUnitUsageType::OnlyAnimation, enums::eUnitActionType::None);
-            actionUnit->SetNextAnimation(L"DustEffect", false);
-            actionUnit->SetReverse(isLeft());
-            actionUnit->SetOffsetPosition(Vector3(0.0f, -0.20f, 0.0f));
-            structs::sActionUnitInfo unitInfo = {};
-            unitInfo.Scale = 1.20f;
-            unitInfo.DurationTime.End = 2.0f;
-            actionUnit->SetUnitInfo(unitInfo);
+            ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
+
+            structs::sUnitTypes effectUnitTypes = {};
+            effectUnitTypes.ActionType = enums::eUnitActionType::None;
+            effectUnitTypes.RenderType = enums::eUnitRenderType::Stay;
+            effectUnitTypes.UsageType = enums::eUnitUsageType::OnlyAnimation;
+            actionUnit->SetUnitTypes(effectUnitTypes);
+
+            structs::sActionUnitInfo effectUnitInfo = {};
+            actionUnit->SetUnitInfo(effectUnitInfo);
+            actionUnit->SetUnitScale(math::Vector3(1.20f, 1.20f, 1.0f));
+
+            structs::sAnimationInfo effectUnitAnimation = {};
+            effectUnitAnimation.Name = L"DustEffect";
+            effectUnitAnimation.Loop = false;
+            actionUnit->SetUnitAnimation(effectUnitAnimation);
+
+            actionUnit->SetUnitReverse(isLeft());
+
+            actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
             actionUnit->OnActive();
         }
     }
@@ -478,14 +503,29 @@ namespace da
                 {
                     ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
 
-                    actionUnit->SetUnitTypes(enums::eUnitActionType::Duration, enums::eUnitRenderType::Stay, enums::eUnitUsageType::TextureProjectile);
-                    actionUnit->SetTexture(Resources::Find<Texture>(L"DashEffect"));
-                    actionUnit->SetReverse(isLeft());
-                    actionUnit->SetOffsetPosition(Vector3(0.0f, -0.20f, 0.0f));
-                    structs::sActionUnitInfo unitInfo = {};
-                    unitInfo.Scale = 1.20f;
-                    unitInfo.DurationTime.End = 0.10f;
-                    actionUnit->SetUnitInfo(unitInfo);
+                    structs::sUnitTypes effectUnitTypes = {};
+                    effectUnitTypes.ActionType = enums::eUnitActionType::Duration;
+                    effectUnitTypes.RenderType = enums::eUnitRenderType::Stay;
+                    effectUnitTypes.UsageType = enums::eUnitUsageType::Default;
+                    actionUnit->SetUnitTypes(effectUnitTypes);
+
+                    structs::sActionUnitInfo effectUnitInfo = {};
+                    effectUnitInfo.DurationTime.End = 0.20f;
+                    actionUnit->SetUnitInfo(effectUnitInfo);
+                    actionUnit->SetUnitScale(math::Vector3(1.20f, 1.20f, 1.0f));
+
+                    structs::sAnimationInfo effectUnitAnimation = {};
+                    effectUnitAnimation.Name = L"DashEffect";
+                    effectUnitAnimation.Loop = false;
+                    actionUnit->SetUnitAnimation(effectUnitAnimation);
+
+                    structs::sAttackStat effectAttackStat = {};
+                    effectAttackStat.AtaackDamage = 4.0f;
+                    actionUnit->SetUnitAttackStat(effectAttackStat);
+                    
+                    actionUnit->SetUnitReverse(isLeft());
+
+                    actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
                     actionUnit->OnActive();
 
                     // 다시 시간 돌리기
@@ -507,15 +547,27 @@ namespace da
                 ChangeState(ePlayerState::Jump);
 
             ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
-            actionUnit->SetUnitTypes(enums::eUnitRenderType::Stay, enums::eUnitUsageType::OnlyAnimation, enums::eUnitActionType::None);
-            actionUnit->SetNextAnimation(L"Jumping", false);
-            actionUnit->SetReverse(isLeft());
-            actionUnit->SetOffsetPosition(Vector3(0.0f, -0.20f, 0.0f));
-            structs::sActionUnitInfo unitInfo = {};
-            unitInfo.Scale = 1.20f;
-            unitInfo.DurationTime.End = 2.0f;
-            actionUnit->SetUnitInfo(unitInfo);
+
+            structs::sUnitTypes effectUnitTypes = {};
+            effectUnitTypes.ActionType = enums::eUnitActionType::None;
+            effectUnitTypes.RenderType = enums::eUnitRenderType::Stay;
+            effectUnitTypes.UsageType = enums::eUnitUsageType::OnlyAnimation;
+            actionUnit->SetUnitTypes(effectUnitTypes);
+
+            structs::sActionUnitInfo effectUnitInfo = {};
+            actionUnit->SetUnitInfo(effectUnitInfo);
+            actionUnit->SetUnitScale(math::Vector3(1.20f, 1.20f, 1.0f));
+
+            structs::sAnimationInfo effectUnitAnimation = {};
+            effectUnitAnimation.Name = L"Jumping";
+            effectUnitAnimation.Loop = false;
+            actionUnit->SetUnitAnimation(effectUnitAnimation);
+
+            actionUnit->SetUnitReverse(isLeft());
+
+            actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
             actionUnit->OnActive();
+
 
             // 최소 높이 설정
             float minForceRatio = 0.50f;
@@ -564,22 +616,22 @@ namespace da
         mCreatureStat.CurHP = mCreatureStat.MaxHP;
         mCreatureStat.MoveSpeed = 3.50f;
 
-        mDashData.DashForce = 10.50f;
+        mDashData.DashForce = 16.50f;
         mDashData.MaxDashCount = 2;
         mDashData.CurDashCount = mDashData.MaxDashCount;
         mDashData.DashAccumulateTime = 0.0f;
-        mDashData.DashRegenTime = 2.250f;
+        mDashData.DashRegenTime = 1.50f;
 
         mJumpData.JumpForce = 8.50f;
         mJumpData.JumpAccumulateTime = 0.0f;
-        mJumpData.JumpLimitTime = 0.1250f;
+        mJumpData.JumpLimitTime = 0.0750f;
         mJumpData.JumpForceRatio = 0.0f;
         mJumpData.BufferedJump = false;
         mJumpData.ExtraJump = true;
 
-        mDustDelayTime.End = 0.30f;
-        mAfterimageTime.End = 0.10f;
-        mDashTime.End = 0.250f;
+        mDustDelayTime.End = 0.250f;
+        mAfterimageTime.End = 0.0550f;
+        mDashTime.End = 0.20f;
     }
 #pragma endregion
 #pragma region Collision Func
@@ -622,7 +674,7 @@ namespace da
     }
 #pragma endregion
 #pragma region public Func
-    PlayerCombatScript* PlayerScript::SetWeaponObject(GameObject* object)
+    PlayerCombatScript* PlayerScript::AddWeaponObject(GameObject* object)
     {
         mPlayerCombatScript = object->AddComponent<PlayerCombatScript>();
         mPlayerCombatScript->SetOwnerScript(this);

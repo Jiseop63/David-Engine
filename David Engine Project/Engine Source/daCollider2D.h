@@ -57,7 +57,11 @@ namespace da
 		void ApplyGround(bool isGround) { mGrounded = isGround; }
 
 		int GetGroundBuffer() { return mGroundBuffer; }
-		void ClearGroundBuffer(int value = 0) { mGroundBuffer = value; }
+		void ClearGroundBuffer(int value = 0) 
+		{ 
+			mGroundBuffer = value; 
+			mEnvRotate = 0.0f;
+		}
 
 		bool IsPlatformCollision() { return mPlatformCollision; }
 		eWallCollisionState IsWallCollision() { return mWallCollision; }

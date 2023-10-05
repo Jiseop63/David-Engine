@@ -132,7 +132,7 @@ namespace da::objects
 		// weapon 세팅
 		GameObject* weaponObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Playable, L"WeaponMaterial");
 		player->AddChildObject(weaponObject);
-		PlayerCombatScript* weaponScript = playerScript->SetWeaponObject(weaponObject);
+		PlayerCombatScript* weaponScript = playerScript->AddWeaponObject(weaponObject);
 
 		return player;
 	}
@@ -213,7 +213,6 @@ namespace da::objects
 		GameObject* skellBoss = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Boss, L"AnimationMaterial");
 		// BossScript 추가
 		SkellBossScript* bossScript = skellBoss->AddComponent<SkellBossScript>();
-
 		{
 			GameObject* leftHand = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Boss, L"AnimationMaterial");
 			bossScript->SetLeftHand(leftHand);

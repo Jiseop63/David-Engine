@@ -191,14 +191,25 @@ namespace da
 			// 사망 이펙트 실행
 			mMonsterCombatScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
 			ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
-			actionUnit->SetUnitTypes(enums::eUnitRenderType::Stay, enums::eUnitUsageType::OnlyAnimation, enums::eUnitActionType::None);
-			actionUnit->SetNextAnimation(L"Dying", false);
-			actionUnit->SetReverse(isLeft());
-			actionUnit->SetOffsetPosition(math::Vector3(0.0f, -0.20f, 0.0f));
-			structs::sActionUnitInfo unitInfo = {};
-			unitInfo.Scale = 1.20f;
-			unitInfo.DurationTime.End = 2.0f;
-			actionUnit->SetUnitInfo(unitInfo);
+
+			structs::sUnitTypes effectUnitTypes = {};
+			effectUnitTypes.ActionType = enums::eUnitActionType::None;
+			effectUnitTypes.RenderType = enums::eUnitRenderType::Stay;
+			effectUnitTypes.UsageType = enums::eUnitUsageType::OnlyAnimation;
+			actionUnit->SetUnitTypes(effectUnitTypes);
+
+			structs::sActionUnitInfo effectUnitInfo = {};
+			actionUnit->SetUnitInfo(effectUnitInfo);
+			actionUnit->SetUnitScale(math::Vector3(1.20f, 1.20f, 1.0f));
+
+			structs::sAnimationInfo effectUnitAnimation = {};
+			effectUnitAnimation.Name = L"Dying";
+			effectUnitAnimation.Loop = false;
+			actionUnit->SetUnitAnimation(effectUnitAnimation);
+
+			actionUnit->SetUnitReverse(isLeft());
+
+			actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
 			actionUnit->OnActive();
 			mIsDead = true;
 
@@ -246,20 +257,35 @@ namespace da
 			mCreatureAnimator->PlayAnimation(L"BansheeAttack", false);	// 애니메이션 호출
 			//mMonsterCombatScript->ToDoAttack();									// 공격 기능 호출
 			for (int index = 0; index < 10; ++index)
-			{
-				ActionUnitScript* projectile = CreatureScript::callActionUnit();
-				structs::sActionUnitInfo unitInfo = {};
-				unitInfo.Scale = 2.250f;
-				unitInfo.DurationTime.End = 2.0f;
-				unitInfo.Range = 4.50f;
-				unitInfo.Speed = 2.0f;
+			{				
+				ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
+
+				structs::sUnitTypes mMonsterUnitTypes = {};
+				mMonsterUnitTypes.ActionType = enums::eUnitActionType::Range;
+				mMonsterUnitTypes.RenderType = enums::eUnitRenderType::UsingDirection;
+				mMonsterUnitTypes.UsageType = enums::eUnitUsageType::Default;
+				actionUnit->SetUnitTypes(mMonsterUnitTypes);
+
+				structs::sActionUnitInfo mMonsterUnitInfo = {};
+				mMonsterUnitInfo.Speed = 2.0f;
+				mMonsterUnitInfo.Range = 4.50f;
+				actionUnit->SetUnitInfo(mMonsterUnitInfo);
+				actionUnit->SetUnitScale(math::Vector3(2.250f, 2.250f, 1.0f));
+
+				structs::sAnimationInfo mMonsterUnitAnimation = {};
+				mMonsterUnitAnimation.Name = L"BansheeBulletIdle";
+				mMonsterUnitAnimation.Loop = true;
+				actionUnit->SetUnitAnimation(mMonsterUnitAnimation);
+
+				structs::sAttackStat mMonsterAttackStat = {};
+				mMonsterAttackStat.AtaackDamage = 4.0f;
+				actionUnit->SetUnitAttackStat(mMonsterAttackStat);
+
 				math::Vector3 moveDirection = math::daRotateVector3(math::Vector3::UnitY, index * 0.620f);
-				projectile->SetUnitInfo(unitInfo);
-				projectile->SetUnitTypes(enums::eUnitRenderType::UsingDirection, enums::eUnitUsageType::Default, enums::eUnitActionType::Range);
-				projectile->SetNextAnimation(L"BansheeBulletIdle", true);
-				projectile->SetOffsetPosition(math::Vector3(0.0f, -0.20f, 0.0f));
-				projectile->SetMoveDirection(moveDirection);
-				projectile->OnActive();
+				actionUnit->SetUnitDirection(moveDirection);
+
+				actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
+				actionUnit->OnActive();
 			}
 			mAttackProgress = true;									// 다음 진행으로 넘기기
 			mIsAttacked = false;									// 애니메이션 초기화

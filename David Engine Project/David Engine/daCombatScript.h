@@ -26,7 +26,6 @@ namespace da
 		virtual void updateWeaponPosition();
 		virtual void updateWeaponRotate() {} // 상속해서 만드세요
 
-		void updateAttackCoolDown(); // 공격 스텟 정보로 쿨다운 적용하기
 #pragma endregion
 #pragma region Attack func
 	public:
@@ -45,14 +44,9 @@ namespace da
 		CreatureScript*					mOwnerScript;
 		math::Vector3					mOwnerPosition;
 		math::Vector2					mOwnerDir;
-		structs::sWeaponInfo*			mWeaponInfo;
-
-	protected:
-		math::Vector3					mEffectScale;		// 개편 필요함
-		math::Vector2					mProjectileSize;	// 개편 필요함
 		
 	protected:
-		float							mEffectAngle;
+		float							mWeaponAngle;
 		float							mHitEffectAngle;
 		bool							mWeaponAttacked;
 	};

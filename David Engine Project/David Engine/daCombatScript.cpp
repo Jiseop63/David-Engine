@@ -14,10 +14,7 @@ namespace da
 		, mOwnerScript(nullptr)
 		, mOwnerPosition(math::Vector3::Zero)
 		, mOwnerDir(math::Vector2::UnitX)
-		, mWeaponInfo(nullptr)
-		, mEffectScale(math::Vector3::One)
-		, mProjectileSize(math::Vector2::One)
-		, mEffectAngle(0.0f)
+		, mWeaponAngle(0.0f)
 		, mHitEffectAngle(0.0f)
 		, mWeaponAttacked(false)
 	{
@@ -49,35 +46,22 @@ namespace da
 		mCombatTransform->SetPosition(ownerPosition);
 		mOwnerDir = mOwnerScript->GetCreatureDir();
 	}
-	void CombatScript::updateAttackCoolDown()
-	{
-		if (!mWeaponInfo->AttackStat.AttackReady)
-		{
-			mWeaponInfo->AttackStat.AttackDelayAccumulateTime += (float)Time::DeltaTime();
-
-			if (mWeaponInfo->AttackStat.AttackDelayTime <= mWeaponInfo->AttackStat.AttackDelayAccumulateTime)
-			{
-				mWeaponInfo->AttackStat.AttackReady = true;
-				mWeaponInfo->AttackStat.AttackDelayAccumulateTime = 0.0f;
-			}
-		}
-	}
 	void CombatScript::attackPlay()
 	{
-		// combat 클래스에서는 일단 이렇게 만들고, 상속받은 객체의 weapon정보로 진행될것
+		//// combat 클래스에서는 일단 이렇게 만들고, 상속받은 객체의 weapon정보로 진행될것
 
-		if (mWeaponInfo->IsAnimationType)
-		{
-			// Play animation 
-			mCombatAnimator->PlayAnimation(mWeaponInfo->AnimationName, false);	// 애니메이션 호출
-		}
-		else
-		{
-			// Change texture
-			if (mWeaponAttacked)
-				mWeaponAttacked = false;
-			else
-				mWeaponAttacked = true;			
-		}
+		//if (mWeaponInfo->IsAnimationType)
+		//{
+		//	// Play animation 
+		//	mCombatAnimator->PlayAnimation(mWeaponInfo->AnimationName, false);	// 애니메이션 호출
+		//}
+		//else
+		//{
+		//	// Change texture
+		//	if (mWeaponAttacked)
+		//		mWeaponAttacked = false;
+		//	else
+		//		mWeaponAttacked = true;			
+		//}
 	}
 }

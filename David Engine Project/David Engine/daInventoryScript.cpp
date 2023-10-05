@@ -1,19 +1,19 @@
 #include "daInventoryScript.h"
 
 #include "daInput.h"
-
-#include "daGameObject.h"
-
 #include "daMeshRenderer.h"
 
+#include "daGameObject.h"
+#include "daPlayerScript.h"
 
 namespace da
 {
-	int InventoryScript::itemSlot = 0;
+	int InventoryScript::itemSlotCount = 0;
 	InventoryScript::InventoryScript()
 		: mActiveItemSlot(nullptr)
 		, mMainArmourScript(nullptr)
 		, mSubArmourScript(nullptr)
+		, mPlayerScript(nullptr)
 		, mInventoryOpen(false)
 		, mSelectLeft(true)
 	{
@@ -60,14 +60,19 @@ namespace da
 		{
 			ChangeSlotTexture(mSecondTexture);
 			mSelectLeft = false;
+			// 오른쪽
+			mActiveItemSlot = mItemSlots[(UINT)enums::eItemSlot::Slot02];
 		}
 		else
 		{
 			ChangeSlotTexture(mFirstTexture);
 			mSelectLeft = true;
+			// 왼쪽
+			mActiveItemSlot = mItemSlots[(UINT)enums::eItemSlot::Slot00];
 		}
 		mMainArmourScript->ChangeArmour();
 		mSubArmourScript->ChangeArmour();
+		mPlayerScript->GetCombatScript()->EquipWeapon(mActiveItemSlot->GetItemScript());
 	}
 	void InventoryScript::SetSlotTextures(std::shared_ptr<graphics::Texture> first, std::shared_ptr<graphics::Texture> second)
 	{
@@ -85,7 +90,7 @@ namespace da
 	ItemSlotScript* InventoryScript::AddItemSlotScript(GameObject* itemObject)
 	{
 		ItemSlotScript* itemSlotScript = itemObject->AddComponent<ItemSlotScript>();
-		itemSlotScript->SetItemSlot((enums::eItemSlot)itemSlot++);
+		itemSlotScript->SetItemSlot((enums::eItemSlot)itemSlotCount++);
 		mItemSlots.push_back(itemSlotScript);
 		itemSlotScript->GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
 		return itemSlotScript;
@@ -103,6 +108,13 @@ namespace da
 			return mSubArmourScript;
 		}
 	}
+	
+	void InventoryScript::SetPlayerScript(GameObject* player)
+	{
+		mPlayerScript = player->GetComponent<PlayerScript>();
+		mPlayerScript->SetInventoryScript(this);
+	}
+
 	void InventoryScript::SelectForSwap()
 	{
 		// 인벤토리가 열림
@@ -181,6 +193,8 @@ namespace da
 			mSubArmourScript->ChangeIcon();
 		}
 		mSwapIndex.Clear();
+		// 혹시라도 무기가 바뀐다면 한번 갱신해주기
+		mPlayerScript->GetCombatScript()->EquipWeapon(mActiveItemSlot->GetItemScript());
 	}
 
 	ItemScript* InventoryScript::GetActiveItemScript()
@@ -193,8 +207,6 @@ namespace da
 		mItemSlots[(UINT)slot]->SetItemScript(item);
 		mItemSlots[(UINT)slot]->ClearPosition();
 
-		//// 이미 슬롯이 할당되고, 패널도 생성된 상태이므로 아이템이 장비칸에 추가될때 패널에 세팅해주면 될듯
-
 		if (enums::eItemSlot::Slot00 == slot)
 		{
 			mMainArmourScript->SetSlotScript(mItemSlots[(UINT)slot]);
@@ -205,6 +217,9 @@ namespace da
 			mSubArmourScript->SetSlotScript(mItemSlots[(UINT)slot]);
 			mSubArmourScript->ChangeIcon();
 		}
-
+		if (mSelectLeft)
+			mActiveItemSlot = mItemSlots[(UINT)enums::eItemSlot::Slot00];
+		else
+			mActiveItemSlot = mItemSlots[(UINT)enums::eItemSlot::Slot02];
 	}
 }

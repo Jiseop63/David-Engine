@@ -12,61 +12,49 @@ namespace da
 		
 		virtual void Initialize() override;
 
-#pragma region UnitType
-	public:
-		void SetUnitTypes(structs::sUnitTypes unitTypes) { mUnitTypes = unitTypes; }		
-		void SetUnitTypes(enums::eUnitRenderType actionType, enums::eUnitUsageType usageType, enums::eUnitActionType unitActionType)
-		{
-			mUnitTypes.RenderType = actionType; mUnitTypes.UsageType = usageType; mUnitTypes.ActionType = unitActionType;
-		}
-		void SetUnitTypes(enums::eUnitRenderType actionType, enums::eUnitActionType unitActionType, enums::eUnitUsageType usageType)
-		{
-			mUnitTypes.RenderType = actionType; mUnitTypes.UsageType = usageType; mUnitTypes.ActionType = unitActionType;
-		}
-		void SetUnitTypes(enums::eUnitActionType unitActionType, enums::eUnitRenderType actionType, enums::eUnitUsageType usageType)
-		{
-			mUnitTypes.RenderType = actionType; mUnitTypes.UsageType = usageType; mUnitTypes.ActionType = unitActionType;
-		}
-		void SetUnitTypes(enums::eUnitActionType unitActionType, enums::eUnitUsageType usageType, enums::eUnitRenderType actionType)
-		{
-			mUnitTypes.RenderType = actionType; mUnitTypes.UsageType = usageType; mUnitTypes.ActionType = unitActionType;
-		}
-		void SetUnitTypes(enums::eUnitUsageType usageType, enums::eUnitActionType unitActionType, enums::eUnitRenderType actionType)
-		{
-			mUnitTypes.RenderType = actionType; mUnitTypes.UsageType = usageType; mUnitTypes.ActionType = unitActionType;
-		}
-		void SetUnitTypes(enums::eUnitUsageType usageType, enums::eUnitRenderType actionType, enums::eUnitActionType unitActionType)
-		{
-			mUnitTypes.RenderType = actionType; mUnitTypes.UsageType = usageType; mUnitTypes.ActionType = unitActionType;
-		}
-		const structs::sUnitTypes GetUnitTypes() { return mUnitTypes; }
-#pragma endregion
-
 	public:
 		void SetItemName(const std::wstring name) { mItemName = name; }
+		const std::wstring GetItemName() { return mItemName; }
+		void SetItemRenderType(enums::eItemRenderType itemRenderType) { mItemRenderType = itemRenderType; }
+		const enums::eItemRenderType GetItemRenderType() { return mItemRenderType; }
 		void SetItemTexture(std::shared_ptr<graphics::Texture> texture) { mItemRenderer->GetMaterial()->SetTexture(texture); }
 		std::shared_ptr<graphics::Texture> GetItemTexture() { return mItemRenderer->GetMaterial()->GetTexture(); }
+		void SetItemAnimationInfo(structs::sAnimationInfo animationInfo) { mItemAnimationInfo = animationInfo; }
+		structs::sAnimationInfo GetItemAnimationInfo() { return mItemAnimationInfo; }
+		void SetItemAttackStat(structs::sAttackStat attackStat) { mItemAttackStat = attackStat; }
+		structs::sAttackStat GetItemAttackStat() { return mItemAttackStat; }
 		void SetItemScale(math::Vector3 scale) { mItemTransform->SetScale(scale); }
 		math::Vector3 GetItemScale() { return mItemTransform->GetScale(); }
-		void SetPosition(math::Vector3 position) { mItemTransform->SetPosition(position); }
-		void SetUnitInfo(const structs::sActionUnitInfo unitInfo) { mUnitInfo = unitInfo; }
-		const structs::sActionUnitInfo GetUnitInfo() { return mUnitInfo; }
-		void SetUnitAnimation(const std::wstring name, bool loop = true) { mUnitAnimationInfo.Name = name; mUnitAnimationInfo.Loop = loop; }
-		const structs::sAnimationInfo GetAnimationInfo() { return mUnitAnimationInfo; }
+		void SetItemPosition(math::Vector3 position) { mItemTransform->SetPosition(position); }
 
+	public:
+		void SetItemUnitTypes(structs::sUnitTypes unitTypes) { mItemUnitTypes = unitTypes; }
+		const structs::sUnitTypes GetItemUnitTypes() { return mItemUnitTypes; }
+		void SetItemUnitInfo(const structs::sActionUnitInfo unitInfo) { mItemUnitInfo = unitInfo; }
+		const structs::sActionUnitInfo GetItemUnitInfo() { return mItemUnitInfo; }		
+		void SetItemUnitAnimation(structs::sAnimationInfo animationInfo) { mItemUnitAnimationInfo = animationInfo; }
+		const structs::sAnimationInfo GetItemUnitAnimationInfo() { return mItemUnitAnimationInfo; }
+		void SetItemUnitScale(math::Vector3 scale) { mItemUnitScale = scale; }
+		math::Vector3 GetItemUnitScale() { return mItemUnitScale; }
+		void SetItemUnitOffset(math::Vector3 offset) { mItemUnitOffset = offset; }
+		math::Vector3 GetItemUnitOffset() { return mItemUnitOffset; }
 
 	protected:
 		Transform*					mItemTransform;
 		MeshRenderer*				mItemRenderer;
 
-
 	protected:
 		std::wstring				mItemName;
-		// 투사체 속성
-		structs::sUnitTypes			mUnitTypes;
-		structs::sActionUnitInfo	mUnitInfo;
-		structs::sAnimationInfo		mUnitAnimationInfo;
-		// 공격 속성
-		structs::sAttackStat		mAttackStat;
+		enums::eItemRenderType		mItemRenderType;
+		structs::sAnimationInfo		mItemAnimationInfo;
+		structs::sAttackStat		mItemAttackStat;
+
+	protected:
+		structs::sUnitTypes			mItemUnitTypes;
+		structs::sActionUnitInfo	mItemUnitInfo;
+		structs::sAnimationInfo		mItemUnitAnimationInfo;
+		math::Vector3				mItemUnitScale;
+		math::Vector3				mItemUnitOffset;
+
 	};
 }

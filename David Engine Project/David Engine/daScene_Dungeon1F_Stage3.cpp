@@ -154,7 +154,8 @@ namespace da
 		}
 		{
 			BossPortalScript* portalScript = objects::InstantiateBossPortal(this);
-			portalScript->SetPosition(math::Vector3(.0f, 2.0f, 0.0f));
+			portalScript->SetPosition(math::Vector3(0.0f, 2.0f, 0.0f));
+			portalScript->SetExitPosition(math::Vector3(-4.0f, -1.0f, 0.0f));
 			portalScript->SetSceneName(L"Scene_Dungeon2F_Stage1");
 			mPortals.push_back(portalScript);
 		}
