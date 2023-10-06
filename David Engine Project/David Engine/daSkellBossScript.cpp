@@ -314,7 +314,7 @@ namespace da
 					actionUnit->SetUnitAnimation(mMonsterUnitAnimation);
 
 					structs::sAttackStat mMonsterAttackStat = {};
-					mMonsterAttackStat.AtaackDamage = 2.50f;
+					mMonsterAttackStat.AtaackDamage = 1.50f;
 					actionUnit->SetUnitAttackStat(mMonsterAttackStat);
 
 					math::Vector3 moveDirection = math::daRotateVector3(math::Vector3::UnitY, projectile * 1.570f + mRotatePerSeconds);

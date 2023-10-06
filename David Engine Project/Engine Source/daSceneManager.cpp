@@ -1,12 +1,14 @@
 #include "daSceneManager.h"
 #include "daLayer.h"
-
+#include "daAudioListener.h"
 namespace da
 {
 	Scene* SceneManager::mActiveScene = nullptr;
 	std::map<std::wstring, Scene*> SceneManager::mScenes = {};
 
 	GameObject* SceneManager::mLightObject = nullptr;
+	GameObject* SceneManager::mSoundListenerObject = nullptr;
+	
 	CameraScript* SceneManager::mMainCameraScript = nullptr;
 	SubCameraScript* SceneManager::mSubCameraScript = nullptr;
 
@@ -94,11 +96,5 @@ namespace da
 		mActiveScene->OnEnter();
 		
 		return mActiveScene;
-	}
-	void SceneManager::AddSoundObject(GameObject* light)
-	{
-	}
-	void SceneManager::ClearProjectileObjects()
-	{
 	}
 }

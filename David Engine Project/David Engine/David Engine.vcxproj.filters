@@ -109,6 +109,9 @@
     <Filter Include="Objects\Creature\3 Item">
       <UniqueIdentifier>{8e7cfccf-1d5c-4556-b859-fe4e094fc81b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\AudioObject">
+      <UniqueIdentifier>{36929ef9-de45-4cd3-aaf0-9fad4380c342}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -258,6 +261,9 @@
     <ClInclude Include="daItemIconScript.h">
       <Filter>Objects\UI\HUD</Filter>
     </ClInclude>
+    <ClInclude Include="daAudioScript.h">
+      <Filter>Objects\AudioObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -406,6 +412,9 @@
     </ClCompile>
     <ClCompile Include="daItemIconScript.cpp">
       <Filter>Objects\UI\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="daAudioScript.cpp">
+      <Filter>Objects\AudioObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

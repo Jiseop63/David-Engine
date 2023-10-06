@@ -19,7 +19,7 @@
 #include "daParticleRenderer.h"
 
 #include "daAudioSource.h"
-
+#include "daAudioScript.h"
 extern da::Application application;
 
 namespace da
@@ -52,7 +52,8 @@ namespace da
 	void Scene_Title::OnEnter()
 	{
 		// 각종 객체들 Inactive 해주기
-		SceneManager::GetLightObject()->GetComponent<Light>()->SetColor(math::Vector4(0.70f, 0.70f, 0.70f, 1.0f));
+		GameObject* light = SceneManager::GetLightObject();
+		light->GetComponent<Light>()->SetColor(math::Vector4(0.70f, 0.70f, 0.70f, 1.0f));
 		SceneManager::GetPlayerScript()->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
 		SceneManager::GetHUDObject()->SetObjectStates(GameObject::eObjectState::Inactive);
 		GameDataManager::SetCameraMovableRange(math::Vector2(0.0f, 0.0f));
@@ -162,7 +163,13 @@ namespace da
 		light->SetLightType(enums::eLightType::Directional);
 		light->SetColor(math::Vector4(0.90f, 0.90f, 0.90f, 1.0f));
 		lightObj->AddComponent<AudioSource>();
+		lightObj->AddComponent<AudioScript>();
 
+		GameObject* audioListenerObj = objects::InstantiateCommonObject
+			<GameObject>(this, enums::eLayerType::Default, L"NoneMaterial");
+		SceneManager::AddSoundListenerObject(audioListenerObj);
+		audioListenerObj->AddComponent<AudioScript>();
+		audioListenerObj->AddComponent<AudioListener>();
 		// player - done
 		GameObject* playerObject = objects::InstantiatePlayer(this);
 		SceneManager::AddPlayerObject(playerObject);
