@@ -6,6 +6,7 @@ namespace da
 	class PlayerScript;
 	class CombatScript;
 	class CreatureLifebarScript;
+	
 	class MonsterScript : public CreatureScript
 	{
 
@@ -24,13 +25,20 @@ namespace da
 		void SetAttackRange(float value) { mMonsterAttackStat.AttackRange = value; }
 
 		// player에 의해 호출됨
+		
 		void MonsterFindsPlayer(bool value) { mDetectPlayer = value; }
+
+
+
+	public:
+		void MonsterDeadEffects();
 
 #pragma region Components
 	protected:
 		Collider2D*				mMonsterSensorCollider;
 		CombatScript*			mMonsterCombatScript;
-		CreatureLifebarScript*	mMonsterLifeScript;
+		CreatureLifebarScript*	mMonsterLifeScript;		
+
 		PlayerScript*			mPlayerScript;
 #pragma endregion
 

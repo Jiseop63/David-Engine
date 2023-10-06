@@ -234,6 +234,8 @@ namespace da
 
 			actionUnit->OnActive();
 			mWeaponCooldownReady = false;
+			mOwnerScript->GetCreatureAudio()->Play(Resources::Find<AudioClip>(L"swing"), 60.0f);
+
 		}
 	}
 

@@ -13,6 +13,7 @@
 #include "daSkelCombatScript.h"
 #include "daActionUnitScript.h"
 #include "daDungeonPortalScript.h"
+#include "daAudioSource.h"
 
 namespace da
 {
@@ -245,7 +246,7 @@ namespace da
 		{
 			mCreatureAnimator->PlayAnimation(L"SkelIdle");	// 애니메이션 호출
 			mMonsterCombatScript->ToDoAttack();					// 공격 기능 호출
-			mAttackProgress = true;								// 다음 진행으로 넘기기
+			mAttackProgress = true;								// 다음 진행으로 넘기기			
 		}
 	}
 	void SkelScript::readyForAttackDelay()
@@ -270,28 +271,7 @@ namespace da
 	{
 		if (!mIsDead)
 		{
-			mMonsterCombatScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
-			ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
-
-			structs::sUnitTypes effectUnitTypes = {};
-			effectUnitTypes.ActionType = enums::eUnitActionType::None;
-			effectUnitTypes.RenderType = enums::eUnitRenderType::Stay;
-			effectUnitTypes.UsageType = enums::eUnitUsageType::OnlyAnimation;
-			actionUnit->SetUnitTypes(effectUnitTypes);
-
-			structs::sActionUnitInfo effectUnitInfo = {};
-			actionUnit->SetUnitInfo(effectUnitInfo);
-			actionUnit->SetUnitScale(math::Vector3(1.20f, 1.20f, 1.0f));
-
-			structs::sAnimationInfo effectUnitAnimation = {};
-			effectUnitAnimation.Name = L"Dying";
-			effectUnitAnimation.Loop = false;
-			actionUnit->SetUnitAnimation(effectUnitAnimation);
-
-			actionUnit->SetUnitReverse(isLeft());
-
-			actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
-			actionUnit->OnActive();
+			MonsterScript::MonsterDeadEffects();
 
 			GameDataManager::DecreaseMonsterCount(SceneManager::GetActiveScene()->GetPortals());
 
@@ -317,11 +297,6 @@ namespace da
 			break;
 		case da::eSkulState::Attack:
 			mCreatureAnimator->PlayAnimation(L"SkelIdle");
-			break;
-		case da::eSkulState::Dead:
-			//GetOwner()->SetObjectState(GameObject::eObjectState::Hide);
-			break;
-		default:
 			break;
 		}
 	}

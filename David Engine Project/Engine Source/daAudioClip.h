@@ -17,6 +17,7 @@ namespace da
 		void Stop();
 		void Set3DAttributes(const math::Vector3 pos, const math::Vector3 vel);
 		void SetLoop(bool loop) { mbLoop = loop; }
+		void SetVolume(float volume);
 
 	private:
 		FMOD::Sound* mSound;

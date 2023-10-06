@@ -6,6 +6,7 @@
 #include "daTime.h"
 
 #include "daActionUnitScript.h"
+#include "daAudioSource.h"
 
 namespace da
 {
@@ -18,6 +19,7 @@ namespace da
 		, mCreatureAnimator(nullptr)
 		, mCreatureBodyCollider(nullptr)
 		, mCreatureFootCollider(nullptr)
+		, mCreatureAudio(nullptr)
 		, mCreatureStat{}
 		, mCreatureDir(math::Vector2::Zero) 
 		, mIsDead(false)
@@ -37,6 +39,7 @@ namespace da
 		mCreatureRenderer = GetOwner()->GetComponent <MeshRenderer>();
 		mCreatureRigidbody = GetOwner()->AddComponent<Rigidbody>();
 		mCreatureAnimator = GetOwner()->AddComponent<Animator>();
+		mCreatureAudio = GetOwner()->AddComponent<AudioSource>();
 		
 		mCreatureBodyCollider = GetOwner()->AddComponent<Collider2D>();
 		mCreatureBodyCollider->ImBody();
@@ -158,5 +161,6 @@ namespace da
 		actionUnit->SetUnitReverse(isLeft());
 		actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
 		actionUnit->OnActive();
+		actionUnit->SetUnitOverridePosition(position);
 	}
 }

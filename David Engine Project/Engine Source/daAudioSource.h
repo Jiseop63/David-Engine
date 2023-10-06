@@ -13,6 +13,7 @@ namespace da
 		virtual void LateUpdate() override;
 
 		void Play();
+		void Play(std::shared_ptr<AudioClip> clip, float volume, bool loop = false);
 		void Stop();
 		void SetLoop(bool loop);
 

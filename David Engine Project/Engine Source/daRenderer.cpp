@@ -7,7 +7,7 @@
 #include "daStructuredBuffer.h"
 #include "daPaintShader.h"
 #include "daParticleShader.h"
-
+#include "daAudioClip.h"
 using namespace da;
 using namespace da::graphics;
 using namespace da::math;
@@ -552,6 +552,20 @@ namespace renderer
 		Resources::Load<Texture>(L"1FStage3Texture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\1FStage3.png");
 		Resources::Load<Texture>(L"2FStage1Texture", L"..\\Resources\\Texture\\Scene_Dungeon2F\\EntranceBossroom.png");
 		Resources::Load<Texture>(L"2FStage2Texture", L"..\\Resources\\Texture\\Scene_Dungeon2F\\Bossroom.png");
+
+		Resources::Load<AudioClip>(L"BansheeAttack_pre", L"..\\Resources\\Sound\\monster\\BansheeAttack_pre.ogg");
+		Resources::Load<AudioClip>(L"Hit_Monster", L"..\\Resources\\Sound\\monster\\Hit_Monster.ogg");
+		Resources::Load<AudioClip>(L"LilithAttack", L"..\\Resources\\Sound\\monster\\LilithAttack.ogg");
+		Resources::Load<AudioClip>(L"MonsterDie", L"..\\Resources\\Sound\\monster\\MonsterDie.ogg");
+		Resources::Load<AudioClip>(L"SpawnMonster", L"..\\Resources\\Sound\\monster\\SpawnMonster.ogg");
+		Resources::Load<AudioClip>(L"swish", L"..\\Resources\\Sound\\player\\swish-1.ogg");
+
+		Resources::Load<AudioClip>(L"Jumping", L"..\\Resources\\Sound\\player\\Jumping.ogg");
+		Resources::Load<AudioClip>(L"dash", L"..\\Resources\\Sound\\player\\dash.ogg");
+		Resources::Load<AudioClip>(L"Hit_Player", L"..\\Resources\\Sound\\player\\Hit_Player.ogg");
+		Resources::Load<AudioClip>(L"swing", L"..\\Resources\\Sound\\player\\swing.ogg");
+		Resources::Load<AudioClip>(L"crossbow", L"..\\Resources\\Sound\\player\\crossbow.ogg");
+		Resources::Load<AudioClip>(L"Hit_Monster", L"..\\Resources\\Sound\\player\\Hit_Monster.ogg");
 	}
 	void LoadMaterial()
 	{

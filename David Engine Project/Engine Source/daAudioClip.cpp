@@ -46,4 +46,8 @@ namespace da
 
 		mChannel->set3DAttributes(&fmodPos, &fmodVel);
 	}
+	void AudioClip::SetVolume(float volume)
+	{
+		mChannel->setVolume(volume);
+	}
 }

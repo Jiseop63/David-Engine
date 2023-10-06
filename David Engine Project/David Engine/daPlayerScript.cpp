@@ -11,8 +11,8 @@
 #include "daRenderer.h"
 #include "daResources.h"
 
-#include "daMonsterScript.h"
 #include "daPlayerCombatScript.h"
+#include "daMonsterScript.h"
 
 #include "daPlayerActionUnitScript.h"
 #include "daBansheeProjectileScript.h"
@@ -53,7 +53,7 @@ namespace da
 	{
         CreatureScript::Initialize();
         mLight = GetOwner()->GetComponent<Light>();
-
+       
         initializeAnimation();
         initializeCollider();
         initializeData();
@@ -358,22 +358,6 @@ namespace da
     }
     void PlayerScript::todoDustSpawn()
     {
-        /*for (int index = 0; index < 12; ++index)
-        {
-            ActionUnitScript* projectile = callActionUnit();
-            structs::sActionUnitInfo unitInfo = {};
-            unitInfo.Scale = 1.20f;
-            unitInfo.Time.End = 2.0f;
-            unitInfo.Range = 3.0f;
-            unitInfo.Speed = 3.0f;
-            math::Vector3 moveDirection = math::daRotateVector3(math::Vector3::UnitY, index * 0.520f);
-            projectile->SetUnitInfo(unitInfo);
-            projectile->SetUnitTypes(UnitActionType::UsingDirection, UnitUsageType::Default);
-            projectile->SetNextAnimation(L"DustEffect", true);
-            projectile->SetOffsetPosition(math::Vector3(0.0f, -0.20f, 0.0f));
-            projectile->SetMoveDirection(moveDirection);
-            projectile->OnActive();
-        }*/
         ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
         if (actionUnit)
         {
@@ -456,25 +440,13 @@ namespace da
             mCreatureRigidbody->GravityAble(false);
             mPassPlatform = true;
 
+            mCreatureAudio->Play(Resources::Find<AudioClip>(L"dash"), 60.0f);
+
+
             // 이게 있어야 바닥뚫고 대시 가능
             if (mCreatureFootCollider->IsPlatformCollision())
                 mCreatureFootCollider->ClearGroundBuffer();
-            
-            /*structs::sUnitTypes unitType;
-            unitType.ActionType = enums::eUnitActionType::Duration;
-            unitType.RenderType = enums::eUnitRenderType::Stay;
-            unitType.UsageType = enums::eUnitUsageType::Default;*/
-
-
-
-           
-
-
-            //// 투사체 정보 갱신
-            //mWeaponScript->ModifyProjectile(
-            //    math::Vector2(0.80f, 1.20f), 0.0f, 0.30f, enums::eProjectileType::Body);
-            //// 투사체 활성화
-            //mWeaponScript->ActiveProjectile();
+                       
         }
         void PlayerScript::updateBufferedJump()
         {
@@ -581,6 +553,8 @@ namespace da
             else
                 mCreatureRigidbody->OverrideVelocity(Vector2::UnitY, mJumpData.JumpForce * mJumpData.JumpForceRatio);
             clearJumpBuffer();
+            mCreatureAudio->Play(Resources::Find<AudioClip>(L"Jumping"), 60.0f);
+
         }
 #pragma endregion
 

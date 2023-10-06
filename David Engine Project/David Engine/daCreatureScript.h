@@ -3,6 +3,7 @@
 #include "daMeshRenderer.h"
 #include "daRigidbody.h"
 #include "daAnimator.h"
+#include "daAudioSource.h"
 
 namespace da
 {
@@ -37,6 +38,7 @@ namespace da
 
 #pragma region Get component & value
 		Transform* GetCreatureTransform() { return mCreatureTransform; }
+		AudioSource* GetCreatureAudio() { return mCreatureAudio; }
 		const structs::sCreatureStat* GetCreatureStat() { return &mCreatureStat; }
 		math::Vector2 GetCreatureDir() { return mCreatureDir; }
 #pragma endregion
@@ -90,6 +92,7 @@ namespace da
 		Animator*				mCreatureAnimator;
 		Collider2D*				mCreatureBodyCollider;
 		Collider2D*				mCreatureFootCollider;
+		AudioSource*			mCreatureAudio;
 #pragma endregion
 
 #pragma region Other script

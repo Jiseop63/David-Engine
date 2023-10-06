@@ -7,7 +7,6 @@
 #include "daLight.h"
 #include "daPlayerCombatScript.h"
 #include "daInventoryScript.h"
-
 namespace da
 {
 	// 라디안 방향
@@ -71,8 +70,6 @@ namespace da
 		void updateDashValidTime();
 #pragma endregion
 
-
-
 #pragma region FSM Func
 	public:
 		void ChangeState(ePlayerState state);
@@ -86,6 +83,7 @@ namespace da
 #pragma region public Func
 	public:
 		PlayerCombatScript* GetCombatScript() { return mPlayerCombatScript; }
+		AudioSource* GetPlayerAudio() { return mPlayerAudio; }
 		InventoryScript* GetInventoryScript() { return mInventoryScript; }
 		void ActiveWeapon() { mPlayerCombatScript->GetOwner()->SetObjectState(GameObject::eObjectState::Active); }
 
@@ -106,6 +104,9 @@ namespace da
 		void ApplyPassingPlatform(bool value) { mPassPlatform = value; }
 		bool IsJumping() { return mJumping; }
 		void StartJump() { mJumping = true; }
+
+
+
 #pragma endregion
 
 #pragma region ToDo func
@@ -172,6 +173,8 @@ namespace da
 #pragma region Components
 	private:
 		Light*				mLight;
+		AudioSource*		mPlayerAudio;
+
 		PlayerCombatScript*	mPlayerCombatScript;
 		InventoryScript*	mInventoryScript;
 #pragma endregion

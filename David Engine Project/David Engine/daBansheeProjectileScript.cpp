@@ -64,6 +64,9 @@ namespace da
 			CreatureScript* creatureScript = target->GetComponent<CreatureScript>();
 			if (!mChnaged)
 				projectileHitEffect();
+
+			// 피격 호출
+			creatureScript->OnDamaged(mUnitAttackStat.AtaackDamage);
 		}
 	}
 	void BansheeProjectileScript::ClearUnit()

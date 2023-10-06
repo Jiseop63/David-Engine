@@ -10,7 +10,7 @@
 
 #include "daMonsterScript.h"
 #include "daActionUnitScript.h"
-
+#include "daAudioSource.h"
 
 namespace da
 {
