@@ -95,6 +95,9 @@ namespace da
 		
 		return mActiveScene;
 	}
+	void SceneManager::AddSoundObject(GameObject* light)
+	{
+	}
 	void SceneManager::ClearProjectileObjects()
 	{
 	}

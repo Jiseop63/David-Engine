@@ -42,6 +42,13 @@ namespace da
 		mMonsterLifeScript->SetValue(&mCreatureStat.MaxHP, &mCreatureStat.CurHP);
 		return creature;
 	}
+	void MonsterScript::OnDamaged(float damage)
+	{
+		mCreatureStat.CurHP -= damage;
+		if (0 >= mCreatureStat.CurHP)
+			mCreatureStat.CurHP = 0;
+		mCreatureAudio->Play(Resources::Find<AudioClip>(L"Hit_Monster"), 40.0f);
+	}
 	void MonsterScript::MonsterDeadEffects()
 	{
 		mMonsterCombatScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
@@ -67,7 +74,7 @@ namespace da
 		actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
 		actionUnit->OnActive();
 		mIsDead = true;
-		mCreatureAudio->SetClip(Resources::Find<AudioClip>(L"MonsterDie"));
-		mCreatureAudio->Play();
+
+		mCreatureAudio->Play(Resources::Find<AudioClip>(L"MonsterDie"), 50.0f);
 	}
 }

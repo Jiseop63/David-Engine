@@ -58,7 +58,7 @@ namespace da
 	public:
 		virtual void OnCollisionEnter(Collider2D* other);
 		virtual void OnCollisionExit(Collider2D* other) {}
-		void OnDamaged(float damage);
+		virtual void OnDamaged(float damage);
 		void CallHitEffect(math::Vector3 position);
 #pragma endregion
 

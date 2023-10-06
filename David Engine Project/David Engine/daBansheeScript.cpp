@@ -250,7 +250,7 @@ namespace da
 				actionUnit->SetUnitAnimation(mMonsterUnitAnimation);
 
 				structs::sAttackStat mMonsterAttackStat = {};
-				mMonsterAttackStat.AtaackDamage = 4.0f;
+				mMonsterAttackStat.AtaackDamage = 1.50f;
 				actionUnit->SetUnitAttackStat(mMonsterAttackStat);
 
 				math::Vector3 moveDirection = math::daRotateVector3(math::Vector3::UnitY, index * 0.620f);
@@ -262,6 +262,7 @@ namespace da
 			mCreatureAnimator->PlayAnimation(L"BansheeAttack", false);	// 애니메이션 호출
 			mAttackProgress = true;													// 다음 진행으로 넘기기
 			mIsAttacked = false;													// 애니메이션 초기화
+			mCreatureAudio->Play(Resources::Find<AudioClip>(L"LilithAttack"), 60.0f);
 		}
 	}
 	void BansheeScript::readyForAttackDelay()

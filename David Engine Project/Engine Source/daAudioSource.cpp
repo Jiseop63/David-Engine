@@ -29,9 +29,10 @@ namespace da
 	{
 		if (!clip)
 			int a = 0;
-		clip->SetVolume(volume);
-		clip->SetLoop(loop);
-		clip->Play();
+		mAudioClip = clip;
+		mAudioClip->SetVolume(volume);
+		mAudioClip->SetLoop(loop);
+		mAudioClip->Play();
 	}
 	void AudioSource::Stop()
 	{

@@ -2,6 +2,7 @@
 #include "daResources.h"
 #include "daGameDataManager.h"
 #include "daPortalWallScript.h"
+#include "daAudioSource.h"
 
 namespace da
 {
@@ -16,6 +17,8 @@ namespace da
 	void DungeonPortalScript::Initialize()
 	{
 		PortalScript::Initialize();
+		GetOwner()->AddComponent<AudioSource>();
+
 		mPortalTransform->SetScale(math::Vector3(8.0f, 8.0f, 1.0f));
 
 		mPortalAnimator->Create(L"SteleClose", Resources::Find<Texture>(L"SteleClose")
@@ -71,6 +74,7 @@ namespace da
 	{
 		SetMaterial(Resources::Find<Material>(L"AnimationMaterial"));
 		mPortalAnimator->PlayAnimation(L"SteleOpen", false);
+		GetOwner()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"stoneDoor"), 60.0f);
 	}
 	void DungeonPortalScript::GateClose()
 	{
@@ -79,6 +83,7 @@ namespace da
 		mPortalBodyCollider->ApplyComponentUsing(false);
 		SetMaterial(Resources::Find<Material>(L"AnimationMaterial"));
 		mPortalAnimator->PlayAnimation(L"SteleClose", false);
+		GetOwner()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"stoneDoor"), 60.0f);
 	}
 
 

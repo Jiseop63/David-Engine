@@ -18,7 +18,7 @@
 #include "daPaintShader.h"
 #include "daParticleRenderer.h"
 
-
+#include "daAudioSource.h"
 
 extern da::Application application;
 
@@ -57,9 +57,12 @@ namespace da
 		SceneManager::GetHUDObject()->SetObjectStates(GameObject::eObjectState::Inactive);
 		GameDataManager::SetCameraMovableRange(math::Vector2(0.0f, 0.0f));
 		GameDataManager::SetCameraMovaPosition(math::Vector2::Zero);
+
+		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"title"), 40.0f, true);
 	}
 	void Scene_Title::OnExit()
 	{
+		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Stop();
 	}
 
 	void Scene_Title::addBackgroundObjects()
@@ -158,6 +161,7 @@ namespace da
 		Light* light = lightObj->AddComponent<Light>();
 		light->SetLightType(enums::eLightType::Directional);
 		light->SetColor(math::Vector4(0.90f, 0.90f, 0.90f, 1.0f));
+		lightObj->AddComponent<AudioSource>();
 
 		// player - done
 		GameObject* playerObject = objects::InstantiatePlayer(this);
@@ -272,6 +276,7 @@ namespace da
 #pragma region Inventory
 		GameObject* inventoryObject = objects::InstantiateCommonObject<GameObject>
 			(this, enums::eLayerType::UI, L"InventoryPanelMaterial");
+		inventoryObject->AddComponent<AudioSource>();
 		inventoryObject->SetObjectState(GameObject::eObjectState::Inactive);
 		SceneManager::SetInventoryObject(inventoryObject);
 		// Inventory Base

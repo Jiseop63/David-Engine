@@ -31,6 +31,7 @@ namespace da
 
 
 	public:
+		virtual void OnDamaged(float damage);
 		void MonsterDeadEffects();
 
 #pragma region Components

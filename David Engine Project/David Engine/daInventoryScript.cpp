@@ -5,7 +5,8 @@
 
 #include "daGameObject.h"
 #include "daPlayerScript.h"
-
+#include "daAudioSource.h"
+#include "daResources.h"
 namespace da
 {
 	int InventoryScript::itemSlotCount = 0;
@@ -17,6 +18,7 @@ namespace da
 		, mInventoryOpen(false)
 		, mSelectLeft(true)
 	{
+		
 	}
 	InventoryScript::~InventoryScript()
 	{
@@ -31,6 +33,7 @@ namespace da
 	{
 		if (false == mInventoryOpen)
 		{
+			GetOwner()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"OpenInventory"), 60.0f);
 			mInventoryOpen = true;
 			GetOwner()->SetObjectStates(GameObject::eObjectState::Active);
 			for (ItemSlotScript* slot : mItemSlots)

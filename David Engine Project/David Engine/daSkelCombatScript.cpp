@@ -80,7 +80,7 @@ namespace da
 		actionUnit->SetUnitScale(math::Vector3(1.20f, 1.40f, 1.0f));
 
 		structs::sAttackStat mMonsterAttackStat = {};
-		mMonsterAttackStat.AtaackDamage = 3.0f;
+		mMonsterAttackStat.AtaackDamage = 2.0f;
 		actionUnit->SetUnitAttackStat(mMonsterAttackStat);
 
 		actionUnit->SetUnitRotateAngle(mWeaponAngle);
@@ -91,6 +91,7 @@ namespace da
 		actionUnit->SetUnitOffset(offsetPosition);
 
 		actionUnit->OnActive();
+		mOwnerScript->GetCreatureAudio()->Play(Resources::Find<AudioClip>(L"swish"), 60.0f);		
 	}
 
 	void SkelCombatScript::OnCollisionEnter(Collider2D* other)

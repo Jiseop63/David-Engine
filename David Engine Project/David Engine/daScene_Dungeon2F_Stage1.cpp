@@ -57,6 +57,7 @@ namespace da
 	void Scene_Dungeon2F_Stage1::OnExit()
 	{
 		SceneManager::GetPlayerScript()->CreatureIsNotGround();
+		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Stop();
 	}
 	void Scene_Dungeon2F_Stage1::addBackgroundObjects()
 	{

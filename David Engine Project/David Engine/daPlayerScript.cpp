@@ -264,6 +264,13 @@ namespace da
             mPlayerCombatScript->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
         }
     }
+    void PlayerScript::OnDamaged(float damage)
+    {
+        mCreatureStat.CurHP -= damage;
+        if (0 >= mCreatureStat.CurHP)
+            mCreatureStat.CurHP = 0;
+        mCreatureAudio->Play(Resources::Find<AudioClip>(L"Hit_Player"), 60.0f);
+    }
 #pragma endregion
 #pragma region Weapon Logic
     void PlayerScript::inputAttack()

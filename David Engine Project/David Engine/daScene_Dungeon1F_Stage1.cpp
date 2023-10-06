@@ -59,6 +59,9 @@ namespace da
 		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::MonsterProjectile);
 		CollisionManager::SetLayer(enums::eLayerType::PlayableProjectile, enums::eLayerType::Monster);
 		// 던전 포탈 세팅
+
+
+		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"JailField"), 40.0f, true);
 	}
 	void Scene_Dungeon1F_Stage1::OnExit()
 	{

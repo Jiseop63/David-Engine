@@ -82,6 +82,7 @@ namespace da
 
 #pragma region public Func
 	public:
+		virtual void OnDamaged(float damage) override;
 		PlayerCombatScript* GetCombatScript() { return mPlayerCombatScript; }
 		AudioSource* GetPlayerAudio() { return mPlayerAudio; }
 		InventoryScript* GetInventoryScript() { return mInventoryScript; }

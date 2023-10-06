@@ -43,6 +43,9 @@ namespace da
 		static void AddLightObject(GameObject* light) { mLightObject = light; }
 		static GameObject* GetLightObject() { return mLightObject; }
 
+		static void AddSoundObject(GameObject* light);
+		static GameObject* GetSoundObject() { return mSoundListenerObject; }
+
 		static void AddMainCameraObject(GameObject* mainCamera) { mMainCameraScript = mainCamera->GetComponent<CameraScript>(); }
 		static CameraScript* GetMainCameraScript() { return mMainCameraScript; }
 		static void AddSubCameraObject(GameObject* subCamera) { mSubCameraScript = subCamera->GetComponent<SubCameraScript>(); }
@@ -80,6 +83,8 @@ namespace da
 	private:
 		// light
 		static GameObject*		mLightObject;
+		static GameObject*		mSoundListenerObject;
+		static GameObject*		mSoundAudioObject;
 		// camera
 		static CameraScript*	mMainCameraScript;
 		static SubCameraScript* mSubCameraScript;

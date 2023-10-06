@@ -553,6 +553,14 @@ namespace renderer
 		Resources::Load<Texture>(L"2FStage1Texture", L"..\\Resources\\Texture\\Scene_Dungeon2F\\EntranceBossroom.png");
 		Resources::Load<Texture>(L"2FStage2Texture", L"..\\Resources\\Texture\\Scene_Dungeon2F\\Bossroom.png");
 
+		Resources::Load<AudioClip>(L"title", L"..\\Resources\\Sound\\background\\title.ogg");
+		Resources::Load<AudioClip>(L"Town", L"..\\Resources\\Sound\\background\\0.Town.ogg");
+		Resources::Load<AudioClip>(L"JailField", L"..\\Resources\\Sound\\background\\1.JailField.ogg");
+		Resources::Load<AudioClip>(L"JailBoss", L"..\\Resources\\Sound\\background\\1.JailBoss.ogg");
+
+		Resources::Load<AudioClip>(L"stoneDoor", L"..\\Resources\\Sound\\etc\\stoneDoor.ogg");
+		Resources::Load<AudioClip>(L"OpenInventory", L"..\\Resources\\Sound\\etc\\OpenInventory.ogg");
+
 		Resources::Load<AudioClip>(L"BansheeAttack_pre", L"..\\Resources\\Sound\\monster\\BansheeAttack_pre.ogg");
 		Resources::Load<AudioClip>(L"Hit_Monster", L"..\\Resources\\Sound\\monster\\Hit_Monster.ogg");
 		Resources::Load<AudioClip>(L"LilithAttack", L"..\\Resources\\Sound\\monster\\LilithAttack.ogg");
