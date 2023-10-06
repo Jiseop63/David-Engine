@@ -244,28 +244,26 @@ namespace da
 		// 레이저 호출횟수가 남아잉슴
 		if (0 < mCurLaserCount)
 		{
-			// 호출할 대상 찾기
-			
-			if (mLeftHandTurn)
+			// 공격 대기시간 기다리기
+			mLaserCallDelayTime.Start += (float)Time::DeltaTime();
+			if (mLaserCallDelayTime.TimeOut())
 			{
-				// 공격준비가 됬는지 응답받기
-				if (mLeftHand->IsAttackReady())
+				// 호출할 대상 찾기
+				if (mLeftHandTurn)
 				{
 					// Hand의 레이저를 호출하고, 카운트 감소
 					mLeftHand->DoAttack();
 					mLeftHandTurn = false;
-					mCurLaserCount--;					
-				}				
-			}
-			else
-			{
-				if (mRightHand->IsAttackReady())
+					mCurLaserCount--;
+				}
+				else
 				{
 					mRightHand->DoAttack();
 					mLeftHandTurn = true;
 					mCurLaserCount--;
 				}
-			}					
+				mLaserCallDelayTime.Clear();
+			}								
 		}
 		// 카운트를 다했다면? 레이저 종료
 		else

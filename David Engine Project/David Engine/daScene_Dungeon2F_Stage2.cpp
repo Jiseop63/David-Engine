@@ -61,7 +61,7 @@ namespace da
 		GameDataManager::EnterMonsterCount(eDungeonScene::F2Stage2, mPortals);
 
 
-		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"JailBoss"), 40.0f, true);
+		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"JailBoss"), 30.0f, true);
 	}
 	void Scene_Dungeon2F_Stage2::OnExit()
 	{

@@ -59,35 +59,19 @@ namespace da
 			DoAttack();
 		}
 
-		if (mAttackReady)
-		{			
-			// 공격 준비됨
-			if (mAttackCooldown.TimeOut())
-			{
-				mAttackCooldown.Clear();
-				// 공격 대상을 찾음
-				if (mTargetFind)
-				{
-					// 공격 선딜레이 기다림
-					mAttackDelay.Start += (float)Time::DeltaTime();
-					if (mAttackDelay.TimeOut())
-					{
-						// 레이저 발사 후 공격 비활성화
-						mAttackDelay.Clear();
-						shootLaser();
-						mTargetFind = false;	// 레이저 공격이 끝나면 자동으로 활성화됨
-						mAttackReady = false;
-					}
-				}
-
-			}
-		}
-		else
+		// 공격 대상을 찾음
+		if (mTargetFind)
 		{
-			// 공격 준비가 안됬으면 기다림
-			mAttackCooldown.Start += (float)Time::DeltaTime();
-		}
-		
+			// 공격 선딜레이 기다림
+			mAttackDelay.Start += (float)Time::DeltaTime();
+			if (mAttackDelay.TimeOut())
+			{
+				// 레이저 발사 후 공격 비활성화
+				shootLaser();
+				mAttackDelay.Clear();
+				mTargetFind = false;
+			}
+		}		
 	}
 	void SkellBossHandScript::LateUpdate()
 	{
@@ -96,6 +80,7 @@ namespace da
 	}
 	void SkellBossHandScript::DoAttack()
 	{
+		// 플레이어 추격 활성화
 		mChasePlayer = true;
 		activeCollider();
 	}
@@ -135,7 +120,7 @@ namespace da
 		actionUnit->SetUnitAnimation(effectUnitAnimation);
 
 		structs::sAttackStat effectAttackStat = {};
-		effectAttackStat.AtaackDamage = 4.0f;
+		effectAttackStat.AtaackDamage = 2.0f;
 		actionUnit->SetUnitAttackStat(effectAttackStat);
 
 		math::Vector3 offsetVector;
@@ -153,7 +138,7 @@ namespace da
 	void SkellBossHandScript::retIdle()
 	{
 		mHandAnimator->PlayAnimation(L"SkellBossHandIdle");
-		mTargetFind = true;
+		mTargetFind = false;
 		mHandCollider->ApplyComponentUsing(false);
 	}
 
@@ -168,12 +153,13 @@ namespace da
 
 	void SkellBossHandScript::OnCollisionEnter(Collider2D* other)
 	{
-		int a = 0;
 		if (enums::eLayerType::Playable == other->GetOwner()->GetLayerType()
 			&& other->IsBody())
 		{
-			// 플레이어와 충돌했으므로 공격 애니메이션과 레이져 발사
+			// 플레이어와 충돌했으므로 추격 중단
 			mChasePlayer = false;
+
+			// 발사가 준비됬으므로 update에서 조건에 따라 공격 실행
 			mTargetFind = true;
 		}
 	}
