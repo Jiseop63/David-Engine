@@ -106,7 +106,7 @@ namespace da
 		bool IsJumping() { return mJumping; }
 		void StartJump() { mJumping = true; }
 
-
+		void DungeonClearSound();
 
 #pragma endregion
 

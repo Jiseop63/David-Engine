@@ -49,7 +49,7 @@ namespace da
 
 		mHandAnimator->PlayAnimation(L"SkellBossHandIdle");
 
-		mAttackDelay.End = 0.10f;
+		mAttackDelay.End = 0.50f;
 		mAttackCooldown.End = 2.0f;
 	}
 	void SkellBossHandScript::Update()
@@ -101,6 +101,7 @@ namespace da
 	void SkellBossHandScript::shootLaser()
 	{
 		mHandAnimator->PlayAnimation(L"SkellBossHandAttack", false);
+		mOwnerScript->GetCreatureAudio()->Play(Resources::Find<AudioClip>(L"jumperLaserFire"), 10.0f, false);
 
 		ActionUnitScript* actionUnit = mOwnerScript->CallBossProjectile();
 

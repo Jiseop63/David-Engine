@@ -232,6 +232,14 @@ namespace da::objects
 			bossScript->AddActionUnit(gameObject);
 		}
 
+#define WINDOW_WIDTH 1366
+#define WINDOW_HEIGHT 768
+
+		GameObject* bossLifeObject = InstantiateGameObject<GameObject>(scene, enums::eLayerType::UI, L"CreatureLifeBarMaterial");
+		LifeBarScript* bossLifeBarScript = bossLifeObject->AddComponent<LifeBarScript>();
+		bossLifeBarScript->SetValue(&bossScript->GetCreatureStat()->MaxHP, &bossScript->GetCreatureStat()->CurHP);
+		bossLifeObject->GetTransform()->SetScale(13.660f, 0.20f, 1.0f);
+		bossLifeObject->GetTransform()->SetPosition(0.0f, 3.830f, -0.0001f);
 		return bossScript;
 	}	
 #pragma endregion

@@ -1,6 +1,7 @@
 #include "daSkellBossScript.h"
 #include "daSkellBossScript.h"
 #include "daSkellBossScript.h"
+#include "daSkellBossScript.h"
 #include "daResources.h"
 #include "daTime.h"
 #include "daGameObject.h"
@@ -34,6 +35,7 @@ namespace da
 		, mLaserCallDelayTime{}
 		, mProjectileCallDelayTime{}
 		, mRotatePerSeconds(0.0f)
+		, mDeadTrigger(false)
 	{
 	}
 	SkellBossScript::~SkellBossScript()
@@ -45,11 +47,11 @@ namespace da
 		
 		mPlayerScript = SceneManager::GetPlayerScript();
 		// Tr
-		mCreatureTransform->SetScale(math::Vector3(6.0f, 6.0f, 1.0f));
+		mCreatureTransform->SetScale(math::Vector3(5.50f, 5.50f, 1.0f));
 		// 보스 충돌체
 		mCreatureBodyCollider->ImBody();
 		mCreatureBodyCollider->SetDetectionType(Collider2D::eDetectionType::Default);
-		mCreatureBodyCollider->SetSize(math::Vector2(0.45f, 0.7f));
+		mCreatureBodyCollider->SetSize(math::Vector2(0.60f, 0.60f));
 		mCreatureRigidbody->ApplyComponentUsing(false);
 		mCreatureFootCollider->ApplyComponentUsing(false);
 		// 보스 애니메이션
@@ -78,6 +80,10 @@ namespace da
 		// 투사체 호출 딜레이 (60개가 호출됨 ㄷㄷ)
 		mProjectileCallDelayTime.End = 0.20f; // 4.5초동안 공격한다는 가정하에 60개가 화면에 나타날 예정
 
+		// 스텟 초기화
+		mCreatureStat.MaxHP = 320.0f;
+		mCreatureStat.CurHP = mCreatureStat.MaxHP;
+
 	}
 	void SkellBossScript::Update()
 	{
@@ -86,10 +92,10 @@ namespace da
 			return;
 		// 패턴 조건 찾기 (둘 중 하나가 충족되면 끝)
 		patternCondition();
-
+		BossFSM();
 		callLaserAttack();
 		callProjectileAttack();
-		BossFSM();
+		lifeCheck();
 	}
 	void SkellBossScript::ChangeStateAnimation(eBossState state)
 	{
@@ -142,9 +148,23 @@ namespace da
 	}
 	void SkellBossScript::SkellBossHandleDead()
 	{
-		// 중력에 영향을 받고, 비주얼적으로 회색이 들어가야함
+		if (mDeadTrigger)
+		{
+			// 손 치우기
+			mRightHand->GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
+			mLeftHand->GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
 
-		// boss hand 또한 본체와 같이 중력에 영향을 받아야함
+			// 중력 활성화
+			mCreatureRigidbody->ApplyComponentUsing(true);
+			mCreatureFootCollider->ApplyComponentUsing(true);
+			mCreatureBodyCollider->ApplyComponentUsing(false);
+			// 사망 애니메이션
+			mCreatureTransform->SetScale(math::Vector3(5.0f, 5.0f, 1.0f));
+			mCreatureAnimator->PlayAnimation(L"SkellBossDead");
+			mCreatureFootCollider->SetSize(math::Vector2(0.10f, 0.10f));
+
+			mDeadTrigger = false;
+		}
 	}
 	void SkellBossScript::prepareForAttack()
 	{
@@ -208,7 +228,8 @@ namespace da
 
 	void SkellBossScript::patternCondition()
 	{
-		if (6 <= mGetDamageCount)
+		if (8 <= mGetDamageCount
+			&& !mLaserAttackOn)
 			mProjectileAttackOn = true;
 		else
 			mProjectileAttackOn = false;
@@ -276,7 +297,7 @@ namespace da
 			return;
 		if (!mProjectileAttackOn)		// 투사체 공격 시간이 아니라면
 			return;
-		if (eBossState::Idle == mBossActiveState)
+		if (eBossState::Attack != mBossActiveState)
 			return;
 
 		// 딜레이 계산
@@ -288,7 +309,8 @@ namespace da
 			if (mProjectileCallDelayTime.TimeOut()) // 딜레이 충족
 			{
 				mProjectileCallDelayTime.Clear();	// 딜레이 시간 초기화
-
+				mCreatureAudio->Play(Resources::Find<AudioClip>(L"RifleFire"), 10.0f, false);
+				
 				// 투사체를 4갈래로 각각 호출해주기!
 				for (size_t projectile = 0; projectile < 4; ++projectile)
 				{
@@ -305,6 +327,7 @@ namespace da
 					mMonsterUnitInfo.Range = 6.5f;
 					actionUnit->SetUnitInfo(mMonsterUnitInfo);
 					actionUnit->SetUnitScale(math::Vector3(1.250f, 1.250f, 1.0f));
+					actionUnit->SetUnitColliderSize(math::Vector2(0.70f, 0.70f));
 
 					structs::sAnimationInfo mMonsterUnitAnimation = {};
 					mMonsterUnitAnimation.Name = L"SkellBossProjectile";
@@ -312,16 +335,17 @@ namespace da
 					actionUnit->SetUnitAnimation(mMonsterUnitAnimation);
 
 					structs::sAttackStat mMonsterAttackStat = {};
-					mMonsterAttackStat.AtaackDamage = 1.50f;
+					mMonsterAttackStat.AtaackDamage = 1.250f;
 					actionUnit->SetUnitAttackStat(mMonsterAttackStat);
 
 					math::Vector3 moveDirection = math::daRotateVector3(math::Vector3::UnitY, projectile * 1.570f + mRotatePerSeconds);
 					actionUnit->SetUnitDirection(moveDirection);
 
-					actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.750f, 0.0f));
+					actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.90f, 0.0f));
 					actionUnit->OnActive();
-				}				
-			}			
+				}
+
+			}
 		}
 		// 투사체 호출텀에 제한이 있어야함
 	}
@@ -341,6 +365,16 @@ namespace da
 		mRightHand = rightHandScript;
 	}
 
+
+	void SkellBossScript::lifeCheck()
+	{
+		if (0 >= mCreatureStat.CurHP)
+		{
+			mBossActiveState = eBossState::Dead;
+			mDeadTrigger = true;
+		}
+			
+	}
 
 	void SkellBossScript::retIdle()
 	{

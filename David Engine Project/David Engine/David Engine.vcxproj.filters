@@ -264,6 +264,9 @@
     <ClInclude Include="daAudioScript.h">
       <Filter>Objects\AudioObject</Filter>
     </ClInclude>
+    <ClInclude Include="daBossLifebarScript.h">
+      <Filter>Objects\Creature\Monster\SkellBoss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">

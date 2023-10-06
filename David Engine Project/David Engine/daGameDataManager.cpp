@@ -45,9 +45,9 @@ namespace da
 			for (PortalScript* target : portals)
 			{
 				target->GateClose();
+				SceneManager::GetPlayerScript()->DungeonClearSound();
 			}
 		}
-
 		// 외부에서 접근하기 편하도록 current 변수에 값 옮기기
 		mCurrentMonsterCount = mMonsterCounts[(UINT)scene];
 	}
@@ -70,6 +70,7 @@ namespace da
 			for (PortalScript* target : portals)
 			{
 				target->GateOpen();
+				SceneManager::GetPlayerScript()->DungeonClearSound();
 			}
 		}
 	}

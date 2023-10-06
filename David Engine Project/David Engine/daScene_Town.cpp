@@ -67,12 +67,13 @@ namespace da
 		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Monster);
 		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Portal);
 
-		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"Town"), 40.0f, true);
+		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"Town"), 60.0f, true);
 	}
 	void Scene_Town::OnExit()
 	{
 		SceneManager::GetPlayerScript()->CreatureIsNotGround();
 		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Stop();
+		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"JailField"), 50.0f, true);
 	}
 
 	void Scene_Town::addBackgroundObject()

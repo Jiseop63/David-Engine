@@ -59,7 +59,7 @@ namespace da
 		GameDataManager::SetCameraMovableRange(math::Vector2(0.0f, 0.0f));
 		GameDataManager::SetCameraMovaPosition(math::Vector2::Zero);
 
-		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"title"), 40.0f, true);
+		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"title"), 70.0f, true);
 	}
 	void Scene_Title::OnExit()
 	{

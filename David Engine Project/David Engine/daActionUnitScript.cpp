@@ -79,7 +79,8 @@ namespace da
 	void ActionUnitScript::OnActive()
 	{
 		// Transform 세팅		
-		mActionUnitTransform->SetScale(mUnitScale);
+		mActionUnitTransform->SetScale(mUnitScale);		
+
 		mUnitBeginPosition = mOwnerScript->GetCreatureTransform()->GetPosition() + mUnitOffset;
 		mActionUnitTransform->SetPosition(mUnitBeginPosition);
 				
@@ -104,6 +105,7 @@ namespace da
 			|| enums::eUnitUsageType::OnlyAnimation == mUnitTypes.UsageType))
 		{
 			mActionUnitCollider->ApplyComponentUsing(true);
+			mActionUnitCollider->SetSize(mUnitColliderSize);
 		}
 		else
 		{
@@ -126,6 +128,9 @@ namespace da
 	}
 	void ActionUnitScript::ClearUnit()
 	{
+		mUnitRotateAngle = 0.0f;
+		mUnitScale = math::Vector3::One;
+		mUnitColliderSize = math::Vector2::One;
 		// 각종 변수 초기화 해주기
 		GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
 	}
@@ -152,6 +157,7 @@ namespace da
 			// 보스 피격 호출
 			mOwnerScript->CallHitEffect(bossScript->GetCreatureTransform()->GetPosition());
 			bossScript->IncreaseDamageCount();
+			bossScript->OnDamaged(mUnitAttackStat.AtaackDamage);
 			//SceneManager::GetMainCameraScript()->SetOscillation(20.0f, 0.250f);	// 카메라 진동
 		}
 		if (enums::eLayerType::Playable == other->GetOwner()->GetLayerType()

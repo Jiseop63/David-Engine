@@ -57,6 +57,8 @@ namespace da
 		GameDataManager::SetCameraMovaPosition(math::Vector2(playerPos.x, playerPos.y));
 
 		GameDataManager::EnterMonsterCount(eDungeonScene::F1Stage3, mPortals);
+
+
 	}
 	void Scene_Dungeon1F_Stage3::OnExit()
 	{

@@ -61,7 +61,6 @@ namespace da
 		// 던전 포탈 세팅
 
 
-		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"JailField"), 40.0f, true);
 	}
 	void Scene_Dungeon1F_Stage1::OnExit()
 	{
@@ -89,7 +88,7 @@ namespace da
 			GameObject* doorObject = objects::InstantiateGameObject
 				<GameObject>(this, enums::eLayerType::ENV, L"Close1FMaterial");
 			doorObject->GetTransform()->SetScale(math::Vector3(0.570f * 4.0f, 0.650f * 4.0f, 1.0f));
-			doorObject->GetTransform()->SetPosition(math::Vector3(-3.0f, -1.0f + 0.080f, FrontLayerZ));
+			doorObject->GetTransform()->SetPosition(math::Vector3(-3.0f, -1.0f + 0.080f, ObjectZ + 0.00010f));
 		}
 		// ground
 		{

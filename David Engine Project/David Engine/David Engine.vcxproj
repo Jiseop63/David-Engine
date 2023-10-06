@@ -152,6 +152,7 @@
     <ClInclude Include="daBansheeProjectileScript.h" />
     <ClInclude Include="daBansheeCombatScript.h" />
     <ClInclude Include="daBansheeScript.h" />
+    <ClInclude Include="daBossLifebarScript.h" />
     <ClInclude Include="daBossPortalScript.h" />
     <ClInclude Include="daButtonScript.h" />
     <ClInclude Include="daCameraObject.h" />

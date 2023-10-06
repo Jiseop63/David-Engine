@@ -561,6 +561,9 @@ namespace renderer
 		Resources::Load<AudioClip>(L"stoneDoor", L"..\\Resources\\Sound\\etc\\stoneDoor.ogg");
 		Resources::Load<AudioClip>(L"OpenInventory", L"..\\Resources\\Sound\\etc\\OpenInventory.ogg");
 
+		Resources::Load<AudioClip>(L"RifleFire", L"..\\Resources\\Sound\\boss\\RifleFire.ogg");
+		Resources::Load<AudioClip>(L"jumperLaserFire", L"..\\Resources\\Sound\\boss\\jumperLaserFire.ogg");
+
 		Resources::Load<AudioClip>(L"BansheeAttack_pre", L"..\\Resources\\Sound\\monster\\BansheeAttack_pre.ogg");
 		Resources::Load<AudioClip>(L"Hit_Monster", L"..\\Resources\\Sound\\monster\\Hit_Monster.ogg");
 		Resources::Load<AudioClip>(L"LilithAttack", L"..\\Resources\\Sound\\monster\\LilithAttack.ogg");

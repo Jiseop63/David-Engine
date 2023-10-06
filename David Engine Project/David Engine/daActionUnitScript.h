@@ -31,6 +31,7 @@ namespace da
 
 #pragma region Initialize transform
 		void SetUnitScale(math::Vector3 scale) { mUnitScale = scale; }
+		void SetUnitColliderSize(math::Vector2 size) { mUnitColliderSize = size; }
 		void SetUnitOffset(math::Vector3 offset) { mUnitOffset = offset; }
 		void SetUnitDirection(math::Vector3 direction) { mUnitDirection = direction; }
 		void SetUnitRotateAngle(float angle) { mUnitRotateAngle = angle; }
@@ -69,6 +70,7 @@ namespace da
 		math::Vector3	mUnitBeginPosition;
 		math::Vector3	mUnitOffset;
 		math::Vector3	mUnitDirection;
+		math::Vector2	mUnitColliderSize;
 		float			mUnitRotateAngle;
 
 	protected:

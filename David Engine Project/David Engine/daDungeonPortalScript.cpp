@@ -74,7 +74,7 @@ namespace da
 	{
 		SetMaterial(Resources::Find<Material>(L"AnimationMaterial"));
 		mPortalAnimator->PlayAnimation(L"SteleOpen", false);
-		GetOwner()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"stoneDoor"), 60.0f);
+		//GetOwner()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"stoneDoor"), 20.0f);
 	}
 	void DungeonPortalScript::GateClose()
 	{
@@ -83,7 +83,7 @@ namespace da
 		mPortalBodyCollider->ApplyComponentUsing(false);
 		SetMaterial(Resources::Find<Material>(L"AnimationMaterial"));
 		mPortalAnimator->PlayAnimation(L"SteleClose", false);
-		GetOwner()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"stoneDoor"), 60.0f);
+		//GetOwner()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"stoneDoor"), 20.0f);
 	}
 
 

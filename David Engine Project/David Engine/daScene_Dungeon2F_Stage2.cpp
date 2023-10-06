@@ -57,16 +57,18 @@ namespace da
 		CollisionManager::SetLayer(enums::eLayerType::PlayableProjectile, enums::eLayerType::Boss);
 		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::BossProjectile);
 		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Boss);
+		CollisionManager::SetLayer(enums::eLayerType::Boss, enums::eLayerType::Land);
 
 		GameDataManager::EnterMonsterCount(eDungeonScene::F2Stage2, mPortals);
 
-
+		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Stop();
 		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"JailBoss"), 30.0f, true);
 	}
 	void Scene_Dungeon2F_Stage2::OnExit()
 	{
 		SceneManager::GetPlayerScript()->CreatureIsNotGround();
 		GameDataManager::ExitMonsterCount(eDungeonScene::F2Stage2);
+		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Stop();
 	}
 	void Scene_Dungeon2F_Stage2::addBackgroundObjects()
 	{

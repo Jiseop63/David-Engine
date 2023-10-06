@@ -54,7 +54,11 @@ namespace da
 	public:
 		virtual void AddActionUnit(GameObject* unit) override;
 		SkellBossProjectileScript* CallBossProjectile();
-		
+		//void SetBossLifeScript(LifeBarScript* lifeBar);
+
+	private:
+		void lifeCheck();
+
 	private:
 		void retIdle();
 		void attackingAnimation();
@@ -67,6 +71,8 @@ namespace da
 
 
 	private:
+
+
 		PlayerScript*	mPlayerScript;
 		std::vector<SkellBossProjectileScript*>	mBossProjectiles;
 
@@ -102,5 +108,6 @@ namespace da
 		structs::sActionTimeValues mLaserCallDelayTime;
 		structs::sActionTimeValues mProjectileCallDelayTime;
 
+		bool		mDeadTrigger;
 	};
 }

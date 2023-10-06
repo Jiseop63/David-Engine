@@ -1,4 +1,5 @@
 #include "daPlayerScript.h"
+#include "daPlayerScript.h"
 
 #include "daGameObject.h"
 
@@ -362,6 +363,10 @@ namespace da
             todoDustSpawn();
             mDustDelayTime.Start = 0.0f;
         }
+    }
+    void PlayerScript::DungeonClearSound()
+    {
+        mCreatureAudio->Play(Resources::Find<AudioClip>(L"stoneDoor"), 2.50f);
     }
     void PlayerScript::todoDustSpawn()
     {
