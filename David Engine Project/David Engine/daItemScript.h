@@ -30,7 +30,8 @@ namespace da
 			mItemTransform->SetScale(mItemScale);
 		}
 		math::Vector3 GetItemScale() { return mItemScale; }
-
+		void SetItemOffset(math::Vector3 itemOffset) { mItemOffset = itemOffset; }
+		math::Vector3 GetItemOffset() { return mItemOffset; }
 		// item function
 	public:
 		void SetItemInfo(structs::sItemInfo itemInfo) { mItemInfo = itemInfo; }
@@ -65,6 +66,7 @@ namespace da
 	protected:
 		std::shared_ptr<Texture>	mItemTexture;
 		math::Vector3				mItemScale;
+		math::Vector3				mItemOffset;
 
 		// function
 	protected:
