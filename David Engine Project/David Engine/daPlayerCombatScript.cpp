@@ -46,14 +46,15 @@ namespace da
 	{
 		// 초기화
 		if (mWeaponItem)
-			mWeaponItem->GetItemAttackStat().AttackDelayTime.Clear();
+			mWeaponItem->GetItemInfo().AttackDelayTime.Clear();
+
 		mWeaponItem = weaponItem;
 
 		// 아이템 공격 세팅
 		if (weaponItem)
 		{
 			mWeaponCooldownReady = true;
-			mWeaponCooldownTime = mWeaponItem->GetItemAttackStat().AttackDelayTime;
+			mWeaponCooldownTime = mWeaponItem->GetItemInfo().AttackDelayTime;
 		}
 		
 		// 아이템 렌더링 세팅
@@ -64,15 +65,15 @@ namespace da
 		}
 		else
 		{
-			if (enums::eItemRenderType::Animation == mWeaponItem->GetItemRenderType())
+			if (mWeaponItem->GetItemInfo().UseAnimation)
 				mCombatAnimator->ApplyComponentUsing(true);
-			else if (enums::eItemRenderType::Texture == mWeaponItem->GetItemRenderType())
-			{
+			else
 				mCombatRenderer->ChangeMaterialTexture(mWeaponItem->GetItemTexture());
-			}
+
 			mCombatTransform->SetScale(mWeaponItem->GetItemScale());			
 		}		
 	}
+
 	void PlayerCombatScript::updateWeaponRotate()
 	{
 		// # 내 위치 가져오기
@@ -82,47 +83,54 @@ namespace da
 		float angle = atan2(mOwnerDir.y, mOwnerDir.x);
 		mWeaponAngle = angle;
 
-		// Weapon Position 구하기
-		math::Vector2 armUp(-0.050f, 0.0f);
-		math::Vector2 armDown(0.050f, -0.40f);
 
-		// 공격할때마다 무기 회전값과 위치값 적용
-		if (isLeft())
+		if (enums::eItemAttackType::Swing == mWeaponItem->GetItemInfo().AttackType)
 		{
-			if (!mWeaponAttacked)
+
+			// Weapon Position 구하기
+			math::Vector2 armUp(-0.050f, 0.0f);
+			math::Vector2 armDown(0.050f, -0.40f);
+
+			// 공격할때마다 무기 회전값과 위치값 적용
+			if (isLeft())
 			{
-				angle += 2.710f;
-				myPosition.x += armUp.x;
-				myPosition.y += armDown.y;
+				if (!mWeaponAttacked)
+				{
+					angle += 2.710f;
+					myPosition.x += armUp.x;
+					myPosition.y += armDown.y;
+				}
+				else
+				{
+					angle -= 0.3930f;
+					myPosition.x += armDown.x;
+				}
 			}
 			else
 			{
-				angle -= 0.3930f;
-				myPosition.x += armDown.x;
-			}
-		}
-		else
-		{
-			if (!mWeaponAttacked)
-			{
-				angle -= 2.710f;
-				myPosition.x -= armUp.x;
-				myPosition.y += armDown.y;
+				if (!mWeaponAttacked)
+				{
+					angle -= 2.710f;
+					myPosition.x -= armUp.x;
+					myPosition.y += armDown.y;
 
+				}
+				else
+				{
+					angle += 0.3930f;
+					myPosition.x -= armDown.x;
+				}
 			}
-			else
-			{
-				angle += 0.3930f;
-				myPosition.x -= armDown.x;
-			}
+
+			myPosition.x -= mOwnerDir.x * 0.050f;
+			myPosition.y -= mOwnerDir.y * 0.050f;
+			// 변경된 값을 Weapon Transform에 적용하기
 		}
 
-		myPosition.x -= mOwnerDir.x * 0.050f;
-		myPosition.y -= mOwnerDir.y * 0.050f;
-		// 변경된 값을 Weapon Transform에 적용하기
 		mCombatTransform->SetRotation(math::Vector3(0.0f, 0.0f, angle));
 		mCombatTransform->SetPosition(myPosition);
 	}
+
 	void PlayerCombatScript::updateAttackCooldown()
 	{
 		if (!mWeaponCooldownReady)
@@ -205,37 +213,35 @@ namespace da
 
 		if (mWeaponCooldownReady)
 		{
-			if (enums::eItemRenderType::Animation == mWeaponItem->GetItemRenderType())
+			if (enums::eItemAttackType::Swing == mWeaponItem->GetItemInfo().AttackType)
 			{
-				// Play animation 
-				mCombatAnimator->PlayAnimation(mWeaponItem->GetItemAnimationInfo().Name, mWeaponItem->GetItemAnimationInfo().Loop);
-			}
-			else
-			{
-				// Change texture
 				if (mWeaponAttacked)
 					mWeaponAttacked = false;
 				else
 					mWeaponAttacked = true;
 			}
+			else if (enums::eItemAttackType::Shoot == mWeaponItem->GetItemInfo().AttackType)
+			{				
+				mCombatAnimator->PlayAnimation(mWeaponItem->GetItemInfo().Animation.Action);
+			}
+
 
 			ActionUnitScript* actionUnit = mOwnerScript->callActionUnit();
-			
-			actionUnit->SetUnitTypes(mWeaponItem->GetItemUnitTypes());
-			actionUnit->SetUnitInfo(mWeaponItem->GetItemUnitInfo());
-			actionUnit->SetUnitAnimation(mWeaponItem->GetItemUnitAnimationInfo());
-			actionUnit->SetUnitAttackStat(mWeaponItem->GetItemAttackStat());
+
+			actionUnit->SetUnitTypes(mWeaponItem->GetProjectileTypes());
+			actionUnit->SetUnitInfo(mWeaponItem->GetProjectileStat());
 
 			actionUnit->SetUnitRotateAngle(mWeaponAngle - 1.570f);
-			math::Vector3 offsetPosition = mWeaponItem->GetItemUnitOffset();
+			math::Vector3 offsetPosition = mWeaponItem->GetProjectileOffset();
 			offsetPosition.x *= mOwnerDir.x;
 			offsetPosition.y *= mOwnerDir.y;
 			actionUnit->SetUnitOffset(offsetPosition);
+			actionUnit->SetUnitColliderSize(mWeaponItem->GetProjectileSize());
 
 			actionUnit->OnActive();
+
 			mWeaponCooldownReady = false;
 			mOwnerScript->GetCreatureAudio()->Play(Resources::Find<AudioClip>(L"swing"), 60.0f);
-
 		}
 	}
 

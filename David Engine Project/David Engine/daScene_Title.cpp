@@ -689,35 +689,36 @@ namespace da
 			ItemScript* defalutWeapon = defaultItemObject->AddComponent<ItemScript>();
 
 			// Item Setting
-			defalutWeapon->SetItemName(L"LongSword");
-			defalutWeapon->SetItemRenderType(enums::eItemRenderType::Texture);
-			structs::sAttackStat defalutWeaponStat;
-			defalutWeaponStat.AtaackDamage = 8.0f;
-			defalutWeaponStat.AttackDelayTime.End = 0.350f;
-			defalutWeapon->SetItemAttackStat(defalutWeaponStat);
-			defalutWeapon->SetItemScale(math::Vector3(0.360f * 0.760f, 1.060f * 0.760f, 1.0f));			
+			std::wstring itemName = L"LongSword";
+			defalutWeapon->SetItemName(itemName);
+			
 			defalutWeapon->SetItemTexture(Resources::Find<Texture>(L"LongSword"));
-			// Item Unit Setting
-			structs::sUnitTypes defalutWeaponTypes;
-			defalutWeaponTypes.ActionType = enums::eUnitActionType::None;
-			defalutWeaponTypes.RenderType = enums::eUnitRenderType::JustRotate;
-			defalutWeaponTypes.UsageType = enums::eUnitUsageType::Default;
-			defalutWeapon->SetItemUnitTypes(defalutWeaponTypes);
-			structs::sActionUnitInfo defalutWeaponInfo;
-			defalutWeaponInfo.DurationTime = structs::sActionTimeValues(); // 기본값 0 - 1
-			defalutWeaponInfo.Range = 0.50f;
-			defalutWeaponInfo.Speed = 0.0f;
-			defalutWeapon->SetItemUnitInfo(defalutWeaponInfo);
-			defalutWeapon->SetItemUnitScale(math::Vector3(1.60f, 1.60f, 1.0f));
-			defalutWeapon->SetItemUnitOffset(math::Vector3(0.50f, 0.50f, 0.0f));
-			structs::sAnimationInfo unitAnimation;
-			unitAnimation.Name = L"Swing";
-			unitAnimation.Loop = false;
-			defalutWeapon->SetItemUnitAnimation(unitAnimation);
+			defalutWeapon->SetItemScale(math::Vector3(0.360f * 0.760f, 1.060f * 0.760f, 1.0f));
 
-			ItemManager::AddItem(L"LongSword", defalutWeapon);
+			structs::sItemInfo itemInfo;
+			itemInfo.UseAnimation = false;
+			itemInfo.AttackType = enums::eItemAttackType::Swing;
+			itemInfo.AttackDelayTime.End = 0.30f;
+			defalutWeapon->SetItemInfo(itemInfo);
 
-			inventoryScript->AddItemToSlot(enums::eItemSlot::Slot00, ItemManager::GetItem(L"LongSword"));
+			structs::sActionUnitTypes itemProjectileTypes;
+			itemProjectileTypes.Usage = enums::eUnitUsageType::AnimationProjectile;
+			itemProjectileTypes.LifeCycle = enums::eUnitLifeType::AnimationEnd;		// Range인 경우 실행할 애니메이션은 Idle
+			itemProjectileTypes.Action = enums::eUnitActionType::UsingRotation;
+			defalutWeapon->SetProjectileTypes(itemProjectileTypes);
+
+			structs::sActionUnitStat itemProjectileStat;
+			itemProjectileStat.Animation.Action = L"Swing";
+			itemProjectileStat.AtaackDamage = 6.50f;
+			defalutWeapon->SetProjectileStat(itemProjectileStat);
+
+			defalutWeapon->SetProjectileScale(math::Vector3(1.60f, 1.60f, 1.0f));
+			defalutWeapon->SetProjectileOffset(math::Vector3(0.50f, 0.50f, 0.0f));
+			defalutWeapon->SetProjectileSize(math::Vector2(1.0f, 1.0f));
+			// Add item
+			ItemManager::AddItem(itemName, defalutWeapon);
+
+			inventoryScript->AddItemToSlot(enums::eItemSlot::Slot00, ItemManager::GetItem(itemName));
 			inventoryScript->SetPlayerScript(playerObject);
 		}
 #pragma endregion

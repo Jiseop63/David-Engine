@@ -68,21 +68,18 @@ namespace da
 	{
 		ActionUnitScript* actionUnit = mOwnerScript->callActionUnit();
 
-		structs::sUnitTypes mMonsterUnitTypes = {};
-		mMonsterUnitTypes.ActionType = enums::eUnitActionType::Duration;
-		mMonsterUnitTypes.RenderType = enums::eUnitRenderType::JustRotate;
-		mMonsterUnitTypes.UsageType = enums::eUnitUsageType::OnlyCollider;
+		structs::sActionUnitTypes mMonsterUnitTypes = {};
+		mMonsterUnitTypes.Usage = enums::eUnitUsageType::InvisibleProjectile;
+		mMonsterUnitTypes.LifeCycle = enums::eUnitLifeType::Duration;
+		mMonsterUnitTypes.Action = enums::eUnitActionType::UsingRotation;
 		actionUnit->SetUnitTypes(mMonsterUnitTypes);
 
-		structs::sActionUnitInfo mMonsterUnitInfo = {};
+		structs::sActionUnitStat mMonsterUnitInfo = {};
+		mMonsterUnitInfo.Speed = 0.01f;
 		mMonsterUnitInfo.DurationTime.End = 0.250f;
+		mMonsterUnitInfo.AtaackDamage = 2.0f;
 		actionUnit->SetUnitInfo(mMonsterUnitInfo);
 		actionUnit->SetUnitScale(math::Vector3(1.20f, 1.40f, 1.0f));
-
-		structs::sAttackStat mMonsterAttackStat = {};
-		mMonsterAttackStat.AtaackDamage = 2.0f;
-		actionUnit->SetUnitAttackStat(mMonsterAttackStat);
-
 		actionUnit->SetUnitRotateAngle(mWeaponAngle);
 
 		math::Vector3 offsetPosition = math::Vector3::Zero;

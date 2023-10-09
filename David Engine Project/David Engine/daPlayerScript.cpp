@@ -237,23 +237,17 @@ namespace da
         {
             ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
 
-            structs::sUnitTypes effectUnitTypes = {};
-            effectUnitTypes.ActionType = enums::eUnitActionType::None;
-            effectUnitTypes.RenderType = enums::eUnitRenderType::Stay;
-            effectUnitTypes.UsageType = enums::eUnitUsageType::OnlyAnimation;
+            structs::sActionUnitTypes effectUnitTypes = {};
+            effectUnitTypes.Usage = enums::eUnitUsageType::JustAnimation;
+            effectUnitTypes.LifeCycle = enums::eUnitLifeType::AnimationEnd;
+            effectUnitTypes.Action = enums::eUnitActionType::Stay;
             actionUnit->SetUnitTypes(effectUnitTypes);
 
-            structs::sActionUnitInfo effectUnitInfo = {};
+            structs::sActionUnitStat effectUnitInfo = {};
+            effectUnitInfo.Animation.Action = L"Dying";
             actionUnit->SetUnitInfo(effectUnitInfo);
-            actionUnit->SetUnitScale(math::Vector3(1.20f, 1.20f, 1.0f));
-
-            structs::sAnimationInfo effectUnitAnimation = {};
-            effectUnitAnimation.Name = L"Dying";
-            effectUnitAnimation.Loop = false;
-            actionUnit->SetUnitAnimation(effectUnitAnimation);
-
             actionUnit->SetUnitReverse(isLeft());
-
+            actionUnit->SetUnitScale(math::Vector3(1.20f, 1.20f, 1.0f));
             actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
             actionUnit->OnActive();
         }
@@ -375,23 +369,17 @@ namespace da
         {
             ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
 
-            structs::sUnitTypes effectUnitTypes = {};
-            effectUnitTypes.ActionType = enums::eUnitActionType::None;
-            effectUnitTypes.RenderType = enums::eUnitRenderType::Stay;
-            effectUnitTypes.UsageType = enums::eUnitUsageType::OnlyAnimation;
+            structs::sActionUnitTypes effectUnitTypes = {};
+            effectUnitTypes.Usage = enums::eUnitUsageType::JustAnimation;
+            effectUnitTypes.LifeCycle = enums::eUnitLifeType::AnimationEnd;
+            effectUnitTypes.Action = enums::eUnitActionType::Stay;
             actionUnit->SetUnitTypes(effectUnitTypes);
 
-            structs::sActionUnitInfo effectUnitInfo = {};
+            structs::sActionUnitStat effectUnitInfo = {};
+            effectUnitInfo.Animation.Action = L"DustEffect";
             actionUnit->SetUnitInfo(effectUnitInfo);
-            actionUnit->SetUnitScale(math::Vector3(1.20f, 1.20f, 1.0f));
-
-            structs::sAnimationInfo effectUnitAnimation = {};
-            effectUnitAnimation.Name = L"DustEffect";
-            effectUnitAnimation.Loop = false;
-            actionUnit->SetUnitAnimation(effectUnitAnimation);
-
             actionUnit->SetUnitReverse(isLeft());
-
+            actionUnit->SetUnitScale(math::Vector3(1.20f, 1.20f, 1.0f));
             actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
             actionUnit->OnActive();
         }
@@ -487,28 +475,19 @@ namespace da
                 {
                     ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
 
-                    structs::sUnitTypes effectUnitTypes = {};
-                    effectUnitTypes.ActionType = enums::eUnitActionType::Duration;
-                    effectUnitTypes.RenderType = enums::eUnitRenderType::Stay;
-                    effectUnitTypes.UsageType = enums::eUnitUsageType::Default;
+                    structs::sActionUnitTypes effectUnitTypes = {};
+                    effectUnitTypes.Usage = enums::eUnitUsageType::AnimationProjectile;
+                    effectUnitTypes.LifeCycle = enums::eUnitLifeType::Duration;
+                    effectUnitTypes.Action = enums::eUnitActionType::Stay;
                     actionUnit->SetUnitTypes(effectUnitTypes);
 
-                    structs::sActionUnitInfo effectUnitInfo = {};
+                    structs::sActionUnitStat effectUnitInfo = {};
+                    effectUnitInfo.Animation.Idle = L"DashEffect";
                     effectUnitInfo.DurationTime.End = 0.20f;
+                    effectUnitInfo.AtaackDamage = 4.0f;
                     actionUnit->SetUnitInfo(effectUnitInfo);
-                    actionUnit->SetUnitScale(math::Vector3(1.20f, 1.20f, 1.0f));
-
-                    structs::sAnimationInfo effectUnitAnimation = {};
-                    effectUnitAnimation.Name = L"DashEffect";
-                    effectUnitAnimation.Loop = false;
-                    actionUnit->SetUnitAnimation(effectUnitAnimation);
-
-                    structs::sAttackStat effectAttackStat = {};
-                    effectAttackStat.AtaackDamage = 4.0f;
-                    actionUnit->SetUnitAttackStat(effectAttackStat);
-                    
                     actionUnit->SetUnitReverse(isLeft());
-
+                    actionUnit->SetUnitScale(math::Vector3(1.20f, 1.20f, 1.0f));
                     actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
                     actionUnit->OnActive();
 
@@ -532,23 +511,17 @@ namespace da
 
             ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
 
-            structs::sUnitTypes effectUnitTypes = {};
-            effectUnitTypes.ActionType = enums::eUnitActionType::None;
-            effectUnitTypes.RenderType = enums::eUnitRenderType::Stay;
-            effectUnitTypes.UsageType = enums::eUnitUsageType::OnlyAnimation;
+            structs::sActionUnitTypes effectUnitTypes = {};
+            effectUnitTypes.Usage = enums::eUnitUsageType::JustAnimation;
+            effectUnitTypes.LifeCycle = enums::eUnitLifeType::AnimationEnd;
+            effectUnitTypes.Action = enums::eUnitActionType::Stay;
             actionUnit->SetUnitTypes(effectUnitTypes);
 
-            structs::sActionUnitInfo effectUnitInfo = {};
+            structs::sActionUnitStat effectUnitInfo = {};
+            effectUnitInfo.Animation.Action = L"Jumping";
             actionUnit->SetUnitInfo(effectUnitInfo);
-            actionUnit->SetUnitScale(math::Vector3(1.20f, 1.20f, 1.0f));
-
-            structs::sAnimationInfo effectUnitAnimation = {};
-            effectUnitAnimation.Name = L"Jumping";
-            effectUnitAnimation.Loop = false;
-            actionUnit->SetUnitAnimation(effectUnitAnimation);
-
             actionUnit->SetUnitReverse(isLeft());
-
+            actionUnit->SetUnitScale(math::Vector3(1.20f, 1.20f, 1.0f));
             actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
             actionUnit->OnActive();
 

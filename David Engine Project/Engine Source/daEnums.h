@@ -93,32 +93,41 @@ namespace da::enums
 	};
 
 	// 투사체 정보
-	enum class eUnitActionType
+	enum class eUnitUsageType
+	{
+		JustAnimation		,
+		JustTexture			,
+		
+		TextureProjectile	,
+		AnimationProjectile	,
+		InvisibleProjectile	,
+	};
+	enum class eUnitLifeType
 	{
 		Duration,
 		Range,
-		None,
+		AnimationEnd,
 	};
-	enum class eUnitRenderType
+	enum class eUnitActionType
 	{
 		Stay,				// dont move
-		JustRotate,			// dont move & rotate
 		UsingDirection,		// move to dir
 		UsingRotation,		// move to rotate
-		None,				// dont draw
 	};
-	enum class eUnitUsageType
-	{
-		Default,			// Animation & Collider
-		TextureProjectile,	// Texture & Collider
-		OnlyTexture,		// Texture 
-		OnlyAnimation,		// Animation
-		OnlyCollider,		// Collider
-	};
+
+
 	enum class eItemRenderType
 	{
 		Texture,
 		Animation,
+	};
+
+	enum class eItemAttackType
+	{
+		Swing,		// 매 공격시 위->아래->위 휘두르는 패턴
+		Shoot,		// 공격시 반동을 받아 살작 흔들리는 패턴
+		Spin,		// 공격중이면 빙빙 돌리는 패턴
+		None,
 	};
 
 

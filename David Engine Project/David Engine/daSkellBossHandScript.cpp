@@ -105,24 +105,17 @@ namespace da
 
 		ActionUnitScript* actionUnit = mOwnerScript->CallBossProjectile();
 
-		structs::sUnitTypes effectUnitTypes = {};
-		effectUnitTypes.ActionType = enums::eUnitActionType::None;
-		effectUnitTypes.RenderType = enums::eUnitRenderType::Stay;
-		effectUnitTypes.UsageType = enums::eUnitUsageType::Default;
+		structs::sActionUnitTypes effectUnitTypes = {};
+		effectUnitTypes.Usage = enums::eUnitUsageType::AnimationProjectile;
+		effectUnitTypes.LifeCycle = enums::eUnitLifeType::AnimationEnd;
+		effectUnitTypes.Action = enums::eUnitActionType::Stay;
 		actionUnit->SetUnitTypes(effectUnitTypes);
 
-		structs::sActionUnitInfo effectUnitInfo = {};
+		structs::sActionUnitStat effectUnitInfo = {};
+		effectUnitInfo.Animation.Action = L"SkellBossLaser";
+		effectUnitInfo.AtaackDamage = 2.0f;
 		actionUnit->SetUnitInfo(effectUnitInfo);
 		actionUnit->SetUnitScale(math::Vector3(10.50f, 10.50f, 1.0f));
-
-		structs::sAnimationInfo effectUnitAnimation = {};
-		effectUnitAnimation.Name = L"SkellBossLaser";
-		effectUnitAnimation.Loop = false;
-		actionUnit->SetUnitAnimation(effectUnitAnimation);
-
-		structs::sAttackStat effectAttackStat = {};
-		effectAttackStat.AtaackDamage = 2.0f;
-		actionUnit->SetUnitAttackStat(effectAttackStat);
 
 		math::Vector3 offsetVector;
 		if (misLeftHand)

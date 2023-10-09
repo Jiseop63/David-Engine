@@ -653,6 +653,27 @@ namespace renderer
 			//material->SetRenderingMode(eRenderingMode::Transparent);
 			Resources::Insert(L"ParticleMaterial", material);
 		}
+		// None projectile material
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"NoneProjectileMaterial", material);
+		}
+		// Animation projectile material
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"AnimationShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"AnimationProjectileMaterial", material);
+		}
+		// Texture projectile material
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"TextureProjectileMaterial", material);
+		}
 #pragma endregion
 #pragma region HUD Material		
 		// Basic Cursor

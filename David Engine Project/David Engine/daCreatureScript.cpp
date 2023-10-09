@@ -145,20 +145,18 @@ namespace da
 		// 방향 구하기
 		ActionUnitScript* actionUnit = callActionUnit();
 
-		structs::sUnitTypes effectUnitTypes = {};
-		effectUnitTypes.ActionType = enums::eUnitActionType::None;
-		effectUnitTypes.RenderType = enums::eUnitRenderType::Stay;
-		effectUnitTypes.UsageType = enums::eUnitUsageType::OnlyAnimation;
+		structs::sActionUnitTypes effectUnitTypes = {};
+		effectUnitTypes.Usage = enums::eUnitUsageType::JustAnimation;
+		effectUnitTypes.LifeCycle = enums::eUnitLifeType::AnimationEnd;
+		effectUnitTypes.Action = enums::eUnitActionType::Stay;
 		actionUnit->SetUnitTypes(effectUnitTypes);
-		structs::sActionUnitInfo effectUnitInfo = {};
+
+		structs::sActionUnitStat effectUnitInfo = {};
+		effectUnitInfo.Animation.Action = L"Slash";
 		actionUnit->SetUnitInfo(effectUnitInfo);
-		actionUnit->SetUnitScale(math::Vector3(1.750f, 1.750f, 1.0f));
 		actionUnit->SetUnitRotateAngle(mHitEffectAngle);
-		structs::sAnimationInfo effectUnitAnimation = {};
-		effectUnitAnimation.Name = L"Slash";
-		effectUnitAnimation.Loop = false;
-		actionUnit->SetUnitAnimation(effectUnitAnimation);
 		actionUnit->SetUnitReverse(isLeft());
+		actionUnit->SetUnitScale(math::Vector3(1.750f, 1.750f, 1.0f));
 		actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
 		actionUnit->OnActive();
 		actionUnit->SetUnitOverridePosition(position);

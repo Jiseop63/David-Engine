@@ -229,29 +229,23 @@ namespace da
 		{
 			//mMonsterCombatScript->ToDoAttack();									// 공격 기능 호출
 			for (int index = 0; index < 10; ++index)
-			{				
+			{
 				ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
 
-				structs::sUnitTypes mMonsterUnitTypes = {};
-				mMonsterUnitTypes.ActionType = enums::eUnitActionType::Range;
-				mMonsterUnitTypes.RenderType = enums::eUnitRenderType::UsingDirection;
-				mMonsterUnitTypes.UsageType = enums::eUnitUsageType::Default;
+				structs::sActionUnitTypes mMonsterUnitTypes = {};
+				mMonsterUnitTypes.Usage = enums::eUnitUsageType::AnimationProjectile;
+				mMonsterUnitTypes.LifeCycle = enums::eUnitLifeType::Range;
+				mMonsterUnitTypes.Action = enums::eUnitActionType::UsingDirection; 
 				actionUnit->SetUnitTypes(mMonsterUnitTypes);
 
-				structs::sActionUnitInfo mMonsterUnitInfo = {};
+				structs::sActionUnitStat mMonsterUnitInfo = {};
 				mMonsterUnitInfo.Speed = 2.0f;
 				mMonsterUnitInfo.Range = 4.50f;
+				mMonsterUnitInfo.Animation.Idle = L"BansheeBulletIdle";
+				mMonsterUnitInfo.Animation.Action = L"BansheeBulletHit";
+				mMonsterUnitInfo.AtaackDamage = 1.50f;
 				actionUnit->SetUnitInfo(mMonsterUnitInfo);
 				actionUnit->SetUnitScale(math::Vector3(2.250f, 2.250f, 1.0f));
-
-				structs::sAnimationInfo mMonsterUnitAnimation = {};
-				mMonsterUnitAnimation.Name = L"BansheeBulletIdle";
-				mMonsterUnitAnimation.Loop = true;
-				actionUnit->SetUnitAnimation(mMonsterUnitAnimation);
-
-				structs::sAttackStat mMonsterAttackStat = {};
-				mMonsterAttackStat.AtaackDamage = 1.50f;
-				actionUnit->SetUnitAttackStat(mMonsterAttackStat);
 
 				math::Vector3 moveDirection = math::daRotateVector3(math::Vector3::UnitY, index * 0.620f);
 				actionUnit->SetUnitDirection(moveDirection);

@@ -21,12 +21,9 @@ namespace da
 	public:
 		void SetOwnerScript(CreatureScript* ownerScript) { mOwnerScript = ownerScript; }
 		
-		void SetUnitTypes(structs::sUnitTypes unitTypes) { mUnitTypes = unitTypes; }		
-		void SetUnitInfo(const structs::sActionUnitInfo unitInfo)  { mUnitInfo = unitInfo; }
-		void SetUnitAttackStat(structs::sAttackStat unitAttackStat) { mUnitAttackStat = unitAttackStat; }
-
-
-		const structs::sActionUnitInfo GetUnitInfo() { return mUnitInfo; }
+		void SetUnitTypes(structs::sActionUnitTypes unitTypes) { mUnitTypes = unitTypes; }		
+		void SetUnitInfo(const structs::sActionUnitStat unitInfo)  { mUnitInfo = unitInfo; }
+		const structs::sActionUnitStat GetUnitInfo() { return mUnitInfo; }
 #pragma endregion
 
 #pragma region Initialize transform
@@ -39,7 +36,6 @@ namespace da
 #pragma endregion
 
 #pragma region initialize visual
-		virtual void SetUnitAnimation(structs::sAnimationInfo unitAnimationInfo) { mUnitAnimationInfo = unitAnimationInfo; }
 		void SetUnitTexture(const std::shared_ptr<class Texture> texture) { mActionUnitRenderer->ChangeMaterialTexture(texture); }
 		void SetUnitReverse(bool value) { mActionUnitRenderer->SetReverse(value); }
 #pragma endregion
@@ -76,10 +72,7 @@ namespace da
 	protected:
 		std::wstring				mUnitName;		// texture?
 		// 투사체 속성
-		structs::sActionUnitInfo	mUnitInfo;
-		structs::sUnitTypes			mUnitTypes;
-		structs::sAnimationInfo		mUnitAnimationInfo;
-		// 공격 속성
-		structs::sAttackStat		mUnitAttackStat;
+		structs::sActionUnitStat	mUnitInfo;
+		structs::sActionUnitTypes	mUnitTypes;
 	};
 }

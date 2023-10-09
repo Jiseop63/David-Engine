@@ -316,38 +316,29 @@ namespace da
 				{
 					ActionUnitScript* actionUnit = CallBossProjectile();
 
-					structs::sUnitTypes mMonsterUnitTypes = {};
-					mMonsterUnitTypes.ActionType = enums::eUnitActionType::Range;
-					mMonsterUnitTypes.RenderType = enums::eUnitRenderType::UsingDirection;
-					mMonsterUnitTypes.UsageType = enums::eUnitUsageType::Default;
+					structs::sActionUnitTypes mMonsterUnitTypes = {};
+					mMonsterUnitTypes.Usage = enums::eUnitUsageType::AnimationProjectile;
+					mMonsterUnitTypes.LifeCycle = enums::eUnitLifeType::Range;
+					mMonsterUnitTypes.Action = enums::eUnitActionType::UsingDirection;
 					actionUnit->SetUnitTypes(mMonsterUnitTypes);
 
-					structs::sActionUnitInfo mMonsterUnitInfo = {};
+					structs::sActionUnitStat mMonsterUnitInfo = {};
 					mMonsterUnitInfo.Speed = 4.50f;
 					mMonsterUnitInfo.Range = 6.5f;
+					mMonsterUnitInfo.Animation.Idle = L"SkellBossProjectile";
+					mMonsterUnitInfo.AtaackDamage = 1.250f;
 					actionUnit->SetUnitInfo(mMonsterUnitInfo);
 					actionUnit->SetUnitScale(math::Vector3(1.250f, 1.250f, 1.0f));
 					actionUnit->SetUnitColliderSize(math::Vector2(0.70f, 0.70f));
 
-					structs::sAnimationInfo mMonsterUnitAnimation = {};
-					mMonsterUnitAnimation.Name = L"SkellBossProjectile";
-					mMonsterUnitAnimation.Loop = true;
-					actionUnit->SetUnitAnimation(mMonsterUnitAnimation);
-
-					structs::sAttackStat mMonsterAttackStat = {};
-					mMonsterAttackStat.AtaackDamage = 1.250f;
-					actionUnit->SetUnitAttackStat(mMonsterAttackStat);
-
 					math::Vector3 moveDirection = math::daRotateVector3(math::Vector3::UnitY, projectile * 1.570f + mRotatePerSeconds);
 					actionUnit->SetUnitDirection(moveDirection);
-
 					actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.90f, 0.0f));
+
 					actionUnit->OnActive();
 				}
-
 			}
 		}
-		// 투사체 호출텀에 제한이 있어야함
 	}
 
 	void SkellBossScript::SetLeftHand(GameObject* left)

@@ -15,46 +15,68 @@ namespace da
 	public:
 		void SetItemName(const std::wstring name) { mItemName = name; }
 		const std::wstring GetItemName() { return mItemName; }
-		void SetItemRenderType(enums::eItemRenderType itemRenderType) { mItemRenderType = itemRenderType; }
-		const enums::eItemRenderType GetItemRenderType() { return mItemRenderType; }
-		void SetItemTexture(std::shared_ptr<graphics::Texture> texture) { mItemRenderer->GetMaterial()->SetTexture(texture); }
-		std::shared_ptr<graphics::Texture> GetItemTexture() { return mItemRenderer->GetMaterial()->GetTexture(); }
-		void SetItemAnimationInfo(structs::sAnimationInfo animationInfo) { mItemAnimationInfo = animationInfo; }
-		structs::sAnimationInfo GetItemAnimationInfo() { return mItemAnimationInfo; }
-		void SetItemAttackStat(structs::sAttackStat attackStat) { mItemAttackStat = attackStat; }
-		structs::sAttackStat GetItemAttackStat() { return mItemAttackStat; }
-		void SetItemScale(math::Vector3 scale) { mItemTransform->SetScale(scale); }
-		math::Vector3 GetItemScale() { return mItemTransform->GetScale(); }
+
+		// visual
+	public:
+		void SetItemTexture(std::shared_ptr<graphics::Texture> texture) 
+		{ 
+			mItemTexture = texture;
+			mItemRenderer->GetMaterial()->SetTexture(mItemTexture);
+		}
+		std::shared_ptr<graphics::Texture> GetItemTexture() { return mItemTexture; }
+		void SetItemScale(math::Vector3 itemScale)
+		{
+			mItemScale = itemScale;
+			mItemTransform->SetScale(mItemScale);
+		}
+		math::Vector3 GetItemScale() { return mItemScale; }
+
+		// item function
+	public:
+		void SetItemInfo(structs::sItemInfo itemInfo) { mItemInfo = itemInfo; }
+		structs::sItemInfo GetItemInfo() { return mItemInfo; }
+
 		void SetItemPosition(math::Vector3 position) { mItemTransform->SetPosition(position); }
 
+		// projectile
 	public:
-		void SetItemUnitTypes(structs::sUnitTypes unitTypes) { mItemUnitTypes = unitTypes; }
-		const structs::sUnitTypes GetItemUnitTypes() { return mItemUnitTypes; }
-		void SetItemUnitInfo(const structs::sActionUnitInfo unitInfo) { mItemUnitInfo = unitInfo; }
-		const structs::sActionUnitInfo GetItemUnitInfo() { return mItemUnitInfo; }		
-		void SetItemUnitAnimation(structs::sAnimationInfo animationInfo) { mItemUnitAnimationInfo = animationInfo; }
-		const structs::sAnimationInfo GetItemUnitAnimationInfo() { return mItemUnitAnimationInfo; }
-		void SetItemUnitScale(math::Vector3 scale) { mItemUnitScale = scale; }
-		math::Vector3 GetItemUnitScale() { return mItemUnitScale; }
-		void SetItemUnitOffset(math::Vector3 offset) { mItemUnitOffset = offset; }
-		math::Vector3 GetItemUnitOffset() { return mItemUnitOffset; }
+		void SetProjectileTypes(structs::sActionUnitTypes projectileTypes) { mProjectileTypes = projectileTypes; }
+		structs::sActionUnitTypes GetProjectileTypes() { return mProjectileTypes; }
+
+		void SetProjectileStat(structs::sActionUnitStat projectileStat) { mProjectileStat = projectileStat; }
+		structs::sActionUnitStat GetProjectileStat() { return mProjectileStat; }
+
+		void SetProjectileScale(math::Vector3 scale) { mProjectileScale = scale; }
+		math::Vector3 GetProjectileScale() { return mProjectileScale; }
+		void SetProjectileOffset(math::Vector3 offset) { mProjectileOffset = offset; }
+		math::Vector3 GetProjectileOffset() { return mProjectileOffset; }
+		void SetProjectileSize(math::Vector2 size) { mProjectileSize = size; }
+		math::Vector2 GetProjectileSize() { return mProjectileSize; }
+
 
 	protected:
 		Transform*					mItemTransform;
 		MeshRenderer*				mItemRenderer;
 
-	protected:
+		// 이거 필요없는거같음
 		std::wstring				mItemName;
-		enums::eItemRenderType		mItemRenderType;
-		structs::sAnimationInfo		mItemAnimationInfo;
-		structs::sAttackStat		mItemAttackStat;
 
+		// visual
 	protected:
-		structs::sUnitTypes			mItemUnitTypes;
-		structs::sActionUnitInfo	mItemUnitInfo;
-		structs::sAnimationInfo		mItemUnitAnimationInfo;
-		math::Vector3				mItemUnitScale;
-		math::Vector3				mItemUnitOffset;
+		std::shared_ptr<Texture>	mItemTexture;
+		math::Vector3				mItemScale;
 
+		// function
+	protected:
+		structs::sItemInfo			mItemInfo;
+
+		// projectile
+	protected:
+		structs::sActionUnitTypes	mProjectileTypes;
+		structs::sActionUnitStat	mProjectileStat;
+
+		math::Vector3				mProjectileScale;	// Transform
+		math::Vector3				mProjectileOffset;	// Transform
+		math::Vector2				mProjectileSize;	// collider
 	};
 }

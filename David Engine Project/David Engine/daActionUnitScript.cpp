@@ -18,8 +18,6 @@ namespace da
 		, mUnitRotateAngle(0.0f)
 		, mUnitInfo{}
 		, mUnitTypes{}
-		, mUnitAnimationInfo{}
-		, mUnitAttackStat{}
 	{
 	}
 	ActionUnitScript::~ActionUnitScript()
@@ -35,13 +33,13 @@ namespace da
 	void ActionUnitScript::Update()
 	{
 		// 종료 조건
-		if (enums::eUnitActionType::Duration == mUnitTypes.ActionType)
+		if (enums::eUnitLifeType::Duration == mUnitTypes.LifeCycle)
 		{
 			mUnitInfo.DurationTime.Start += (float)Time::DeltaTime();
 			if (mUnitInfo.DurationTime.End <= mUnitInfo.DurationTime.Start)
 				ClearUnit();
 		}
-		else if (enums::eUnitActionType::Range == mUnitTypes.ActionType)
+		else if (enums::eUnitLifeType::Range == mUnitTypes.LifeCycle)
 		{
 			math::Vector3 currentPosition = mActionUnitTransform->GetPosition();
 			math::Vector3 moveDistance = mUnitBeginPosition - currentPosition;
@@ -52,18 +50,18 @@ namespace da
 	void ActionUnitScript::LateUpdate()
 	{
 		// 이동 조건
-		switch (mUnitTypes.RenderType)
+		switch (mUnitTypes.Action)
 		{
-		case da::enums::eUnitRenderType::Stay:
+		case da::enums::eUnitActionType::Stay:
 			break;
-		case da::enums::eUnitRenderType::UsingDirection:
+		case da::enums::eUnitActionType::UsingDirection:
 		{
 			math::Vector3 retPosition = mActionUnitTransform->GetPosition();
 			retPosition += mUnitDirection * mUnitInfo.Speed * (float)Time::DeltaTime();
 			mActionUnitTransform->SetPosition(retPosition);
 		}
 			break;
-		case da::enums::eUnitRenderType::UsingRotation:
+		case da::enums::eUnitActionType::UsingRotation:
 		{
 			math::Vector3 retPosition = mActionUnitTransform->GetPosition();
 			retPosition += mActionUnitTransform->Up() * mUnitInfo.Speed * (float)Time::DeltaTime();
@@ -73,8 +71,6 @@ namespace da
 		default:
 			break;
 		}
-		// 비주얼 조건
-		// 따로 뭐 없을듯?
 	}
 	void ActionUnitScript::OnActive()
 	{
@@ -83,46 +79,60 @@ namespace da
 
 		mUnitBeginPosition = mOwnerScript->GetCreatureTransform()->GetPosition() + mUnitOffset;
 		mActionUnitTransform->SetPosition(mUnitBeginPosition);
-				
 		
-		if (enums::eUnitRenderType::JustRotate == mUnitTypes.RenderType
-			|| enums::eUnitRenderType::UsingRotation == mUnitTypes.RenderType)
+
+		// 단순 이팩트 재생
+		if (enums::eUnitUsageType::JustAnimation == mUnitTypes.Usage
+			|| enums::eUnitUsageType::JustTexture == mUnitTypes.Usage)
 		{
-			mActionUnitTransform->SetRotation(math::Vector3(0.0f, 0.0f, mUnitRotateAngle));
-		}
-		else if (enums::eUnitRenderType::None == mUnitTypes.RenderType)
-		{
-			mActionUnitRenderer->GetMaterial()->SetTexture(nullptr);
+			mActionUnitCollider->ApplyComponentUsing(false);
+			if (enums::eUnitUsageType::JustTexture== mUnitTypes.Usage)
+			{
+				mActionUnitRenderer->SetMaterial(Resources::Find<Material>(L"TextureProjectileMaterial"));
+				mActionUnitRenderer->ChangeMaterialTexture(Resources::Find<Texture>(mUnitName));
+			}
+			else if (enums::eUnitUsageType::JustAnimation == mUnitTypes.Usage)
+			{
+				mActionUnitRenderer->SetMaterial(Resources::Find<Material>(L"AnimationProjectileMaterial"));
+				// 애니메이션만 나오는경우 3가지 유형에 따라 애니메이션 세팅
+				if (enums::eUnitLifeType::AnimationEnd == mUnitTypes.LifeCycle)
+					mActionUnitAnimator->PlayAnimation(mUnitInfo.Animation.Action, false);
+				else 
+					mActionUnitAnimator->PlayAnimation(mUnitInfo.Animation.Idle, true);			
+			}
 		}
 		else
-		{
-			mActionUnitTransform->SetRotation(math::Vector3(0.0f, 0.0f, 0.0f));
-		}
-
-
-		// collider 세팅
-		if (!(enums::eUnitUsageType::OnlyTexture == mUnitTypes.UsageType
-			|| enums::eUnitUsageType::OnlyAnimation == mUnitTypes.UsageType))
 		{
 			mActionUnitCollider->ApplyComponentUsing(true);
 			mActionUnitCollider->SetSize(mUnitColliderSize);
-		}
-		else
-		{
-			mActionUnitCollider->ApplyComponentUsing(false);
-		}
 
-		// animation 활성화
-		if (enums::eUnitUsageType::Default == mUnitTypes.UsageType
-			|| enums::eUnitUsageType::OnlyAnimation == mUnitTypes.UsageType)
-		{
-			mActionUnitAnimator->ApplyComponentUsing(true);
-			mActionUnitAnimator->PlayAnimation(mUnitAnimationInfo.Name, mUnitAnimationInfo.Loop);
+			if (enums::eUnitUsageType::TextureProjectile == mUnitTypes.Usage)
+			{
+				// 텍스쳐만 나오는 경우 텍스쳐 세팅
+				mActionUnitRenderer->SetMaterial(Resources::Find<Material>(L"TextureProjectileMaterial"));
+				mActionUnitRenderer->ChangeMaterialTexture(Resources::Find<Texture>(mUnitName));				
+			}
+			else if (enums::eUnitUsageType::AnimationProjectile == mUnitTypes.Usage)
+			{
+				mActionUnitRenderer->SetMaterial(Resources::Find<Material>(L"AnimationProjectileMaterial"));
+
+				if (enums::eUnitLifeType::AnimationEnd == mUnitTypes.LifeCycle)
+					mActionUnitAnimator->PlayAnimation(mUnitInfo.Animation.Action, false);
+				else
+					mActionUnitAnimator->PlayAnimation(mUnitInfo.Animation.Idle, true);
+			}
+			else
+			{
+				mActionUnitRenderer->SetMaterial(Resources::Find<Material>(L"NoneProjectileMaterial"));
+				mActionUnitRenderer->GetMaterial()->SetTexture(nullptr);
+			}
 		}
+				
+		if (enums::eUnitActionType::UsingRotation == mUnitTypes.Action)
+			mActionUnitTransform->SetRotation(math::Vector3(0.0f, 0.0f, mUnitRotateAngle));
 		else
-		{
-			mActionUnitAnimator->ApplyComponentUsing(false);
-		}
+			mActionUnitTransform->SetRotation(math::Vector3(0.0f, 0.0f, 0.0f));
+
 		// active object
 		GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 	}
@@ -147,7 +157,7 @@ namespace da
 			mOwnerScript->CallHitEffect(creatureScript->GetCreatureTransform()->GetPosition());			
 			//SceneManager::GetMainCameraScript()->SetOscillation(20.0f, 0.250f);	// 카메라 진동
 			// 피격 호출
-			creatureScript->OnDamaged(mUnitAttackStat.AtaackDamage);
+			creatureScript->OnDamaged(mUnitInfo.AtaackDamage);
 		}
 		if (enums::eLayerType::Boss == other->GetOwner()->GetLayerType()
 			&& other->IsBody())
@@ -157,7 +167,7 @@ namespace da
 			// 보스 피격 호출
 			mOwnerScript->CallHitEffect(bossScript->GetCreatureTransform()->GetPosition());
 			bossScript->IncreaseDamageCount();
-			bossScript->OnDamaged(mUnitAttackStat.AtaackDamage);
+			bossScript->OnDamaged(mUnitInfo.AtaackDamage);
 			//SceneManager::GetMainCameraScript()->SetOscillation(20.0f, 0.250f);	// 카메라 진동
 		}
 		if (enums::eLayerType::Playable == other->GetOwner()->GetLayerType()
@@ -167,7 +177,7 @@ namespace da
 			CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
 
 			// 피격 호출
-			creatureScript->OnDamaged(mUnitAttackStat.AtaackDamage);
+			creatureScript->OnDamaged(mUnitInfo.AtaackDamage);
 		}
 	}
 }

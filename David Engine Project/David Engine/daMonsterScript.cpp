@@ -54,20 +54,16 @@ namespace da
 		mMonsterCombatScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
 		ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
 
-		structs::sUnitTypes effectUnitTypes = {};
-		effectUnitTypes.ActionType = enums::eUnitActionType::None;
-		effectUnitTypes.RenderType = enums::eUnitRenderType::Stay;
-		effectUnitTypes.UsageType = enums::eUnitUsageType::OnlyAnimation;
+		structs::sActionUnitTypes effectUnitTypes = {};
+		effectUnitTypes.Usage = enums::eUnitUsageType::JustAnimation;
+		effectUnitTypes.LifeCycle = enums::eUnitLifeType::AnimationEnd;
+		effectUnitTypes.Action = enums::eUnitActionType::Stay;
 		actionUnit->SetUnitTypes(effectUnitTypes);
 
-		structs::sActionUnitInfo effectUnitInfo = {};
+		structs::sActionUnitStat effectUnitInfo = {};
+		effectUnitInfo.Animation.Action = L"Dying";
 		actionUnit->SetUnitInfo(effectUnitInfo);
 		actionUnit->SetUnitScale(math::Vector3(1.20f, 1.20f, 1.0f));
-
-		structs::sAnimationInfo effectUnitAnimation = {};
-		effectUnitAnimation.Name = L"Dying";
-		effectUnitAnimation.Loop = false;
-		actionUnit->SetUnitAnimation(effectUnitAnimation);
 
 		actionUnit->SetUnitReverse(isLeft());
 
