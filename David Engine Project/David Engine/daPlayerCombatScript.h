@@ -21,8 +21,10 @@ namespace da
 
 		virtual void ToDoAttack() override;				// playerScript에서 호출
 	private:
-		virtual void updateWeaponRotate() override;
+		virtual void updateWeaponRotation() override;
 		void updateAttackCooldown();
+
+		void retCrossbow();
 
 	private:
 		std::shared_ptr<Texture>	mWeaponTexture;

@@ -684,41 +684,88 @@ namespace da
 				// A, B Padding 차이 // X : armourPadding * 3, Y : armourPadding
 			}
 
-			GameObject* defaultItemObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"WeaponIconMaterial");
-			defaultItemObject->SetObjectState(GameObject::eObjectState::Inactive);
-			ItemScript* defalutWeapon = defaultItemObject->AddComponent<ItemScript>();
+			GameObject* longSwordItemObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"WeaponIconMaterial");
+			longSwordItemObject->SetObjectState(GameObject::eObjectState::Inactive);
 
 			// Item Setting
+			ItemScript* longswordItemScript = longSwordItemObject->AddComponent<ItemScript>();
 			std::wstring itemName = L"LongSword";
-			defalutWeapon->SetItemName(itemName);
-			
-			defalutWeapon->SetItemTexture(Resources::Find<Texture>(L"LongSword"));
-			defalutWeapon->SetItemScale(math::Vector3(0.360f * 0.760f, 1.060f * 0.760f, 1.0f));
+			{
+				longswordItemScript->SetItemName(itemName);
 
-			structs::sItemInfo itemInfo;
-			itemInfo.UseAnimation = false;
-			itemInfo.AttackType = enums::eItemAttackType::Swing;
-			itemInfo.AttackDelayTime.End = 0.30f;
-			defalutWeapon->SetItemInfo(itemInfo);
+				longswordItemScript->SetItemTexture(Resources::Find<Texture>(L"LongSword"));
+				longswordItemScript->SetItemScale(math::Vector3(0.360f * 0.760f, 0.880f * 0.760f, 1.0f));
+				longswordItemScript->SetItemOffset(math::Vector3(-0.10f, -0.80f, 0.0f));
 
-			structs::sActionUnitTypes itemProjectileTypes;
-			itemProjectileTypes.Usage = enums::eUnitUsageType::AnimationProjectile;
-			itemProjectileTypes.LifeCycle = enums::eUnitLifeType::AnimationEnd;		// Range인 경우 실행할 애니메이션은 Idle
-			itemProjectileTypes.Action = enums::eUnitActionType::UsingRotation;
-			defalutWeapon->SetProjectileTypes(itemProjectileTypes);
+				structs::sItemInfo itemInfo;
+				itemInfo.UseAnimation = false;
+				itemInfo.AttackType = enums::eItemAttackType::Swing;
+				itemInfo.AttackDelayTime.End = 0.30f;
+				itemInfo.Sound = L"swing";
+				longswordItemScript->SetItemInfo(itemInfo);
 
-			structs::sActionUnitStat itemProjectileStat;
-			itemProjectileStat.Animation.Action = L"Swing";
-			itemProjectileStat.AtaackDamage = 6.50f;
-			defalutWeapon->SetProjectileStat(itemProjectileStat);
+				structs::sActionUnitTypes itemProjectileTypes;
+				itemProjectileTypes.Usage = enums::eUnitUsageType::AnimationProjectile;
+				itemProjectileTypes.LifeCycle = enums::eUnitLifeType::AnimationEnd;		// Range인 경우 실행할 애니메이션은 Idle
+				itemProjectileTypes.Action = enums::eUnitActionType::UsingRotation;
+				longswordItemScript->SetProjectileTypes(itemProjectileTypes);
 
-			defalutWeapon->SetProjectileScale(math::Vector3(1.60f, 1.60f, 1.0f));
-			defalutWeapon->SetProjectileOffset(math::Vector3(0.50f, 0.50f, 0.0f));
-			defalutWeapon->SetProjectileSize(math::Vector2(1.0f, 1.0f));
+				structs::sActionUnitStat itemProjectileStat;
+				itemProjectileStat.Animation.Action = L"Swing";
+				itemProjectileStat.AtaackDamage = 6.50f;
+				longswordItemScript->SetProjectileStat(itemProjectileStat);
+
+				longswordItemScript->SetProjectileScale(math::Vector3(1.60f, 1.60f, 1.0f));
+				longswordItemScript->SetProjectileOffset(math::Vector3(0.50f, 0.50f, 0.0f));
+				longswordItemScript->SetProjectileSize(math::Vector2(1.0f, 1.0f));
+			}
 			// Add item
-			ItemManager::AddItem(itemName, defalutWeapon);
+			ItemManager::AddItem(L"LongSword", longswordItemScript);
 
-			inventoryScript->AddItemToSlot(enums::eItemSlot::Slot00, ItemManager::GetItem(itemName));
+			inventoryScript->AddItemToSlot(enums::eItemSlot::Slot00, ItemManager::GetItem(L"LongSword"));
+
+			GameObject* crossbowItemObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"WeaponIconMaterial");
+			crossbowItemObject->SetObjectState(GameObject::eObjectState::Inactive);
+
+			// Item Setting
+			ItemScript* crossbowItemScript = crossbowItemObject->AddComponent<ItemScript>();
+			itemName = L"Crossbow";
+			{
+				crossbowItemScript->SetItemName(itemName);
+
+				crossbowItemScript->SetItemTexture(Resources::Find<Texture>(L"Crossbow"));				
+				crossbowItemScript->SetItemScale(math::Vector3(0.720f * 0.760f, 0.440f * 0.760f, 1.0f));
+				crossbowItemScript->SetItemOffset(math::Vector3(0.20f, -0.30f, 0.0f));
+
+				structs::sItemInfo itemInfo;
+				itemInfo.UseAnimation = true;
+				itemInfo.AttackType = enums::eItemAttackType::Shoot;
+				itemInfo.AttackDelayTime.End = 0.40f;
+				itemInfo.Animation.Idle = L"CrossbowIdle";
+				itemInfo.Animation.Action = L"CrossbowShot";
+				itemInfo.Sound = L"crossbow";
+				crossbowItemScript->SetItemInfo(itemInfo);
+
+				structs::sActionUnitTypes itemProjectileTypes;
+				itemProjectileTypes.Usage = enums::eUnitUsageType::TextureProjectile;
+				itemProjectileTypes.LifeCycle = enums::eUnitLifeType::Range;		// Range인 경우 실행할 애니메이션은 Idle
+				itemProjectileTypes.Action = enums::eUnitActionType::UsingRotation;
+				crossbowItemScript->SetProjectileTypes(itemProjectileTypes);
+
+				structs::sActionUnitStat itemProjectileStat;
+				itemProjectileStat.AtaackDamage = 4.50f;
+				itemProjectileStat.Range = 6.50f;
+				itemProjectileStat.Speed = 10.0f;
+				itemProjectileStat.Texture = L"CrossbowArrow";
+				crossbowItemScript->SetProjectileStat(itemProjectileStat);
+
+				crossbowItemScript->SetProjectileScale(math::Vector3(1.60f, 1.60f, 1.0f));
+				crossbowItemScript->SetProjectileOffset(math::Vector3(0.20f, 0.20f, 0.0f));
+				crossbowItemScript->SetProjectileSize(math::Vector2(1.0f, 1.0f));
+			}
+			ItemManager::AddItem(L"Crossbow", crossbowItemScript);
+			inventoryScript->AddItemToSlot(enums::eItemSlot::Slot02, ItemManager::GetItem(L"Crossbow"));
+
 			inventoryScript->SetPlayerScript(playerObject);
 		}
 #pragma endregion

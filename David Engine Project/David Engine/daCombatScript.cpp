@@ -44,24 +44,5 @@ namespace da
 		math::Vector3 ownerPosition = mOwnerScript->GetCreatureTransform()->GetPosition();
 		// 내 위치에 적용하기
 		mCombatTransform->SetPosition(ownerPosition);
-		mOwnerDir = mOwnerScript->GetCreatureDir();
-	}
-	void CombatScript::attackPlay()
-	{
-		//// combat 클래스에서는 일단 이렇게 만들고, 상속받은 객체의 weapon정보로 진행될것
-
-		//if (mWeaponInfo->IsAnimationType)
-		//{
-		//	// Play animation 
-		//	mCombatAnimator->PlayAnimation(mWeaponInfo->AnimationName, false);	// 애니메이션 호출
-		//}
-		//else
-		//{
-		//	// Change texture
-		//	if (mWeaponAttacked)
-		//		mWeaponAttacked = false;
-		//	else
-		//		mWeaponAttacked = true;			
-		//}
 	}
 }

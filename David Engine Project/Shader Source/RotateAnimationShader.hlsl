@@ -29,9 +29,9 @@ VSOut mainVS(VSIn In)
     
     if (cReverse)
     {
-        Out.UV.x = 1.0f - In.UV.x;
+        Out.UV.y = 1.0f - In.UV.y;
     }
-        
+    
     return Out;
 }
 

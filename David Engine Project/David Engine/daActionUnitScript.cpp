@@ -76,7 +76,7 @@ namespace da
 	{
 		// Transform ¼¼ÆÃ		
 		mActionUnitTransform->SetScale(mUnitScale);		
-
+		mUnitOffset.y += -0.20f;
 		mUnitBeginPosition = mOwnerScript->GetCreatureTransform()->GetPosition() + mUnitOffset;
 		mActionUnitTransform->SetPosition(mUnitBeginPosition);
 		
@@ -89,7 +89,7 @@ namespace da
 			if (enums::eUnitUsageType::JustTexture== mUnitTypes.Usage)
 			{
 				mActionUnitRenderer->SetMaterial(Resources::Find<Material>(L"TextureProjectileMaterial"));
-				mActionUnitRenderer->ChangeMaterialTexture(Resources::Find<Texture>(mUnitName));
+				mActionUnitRenderer->ChangeMaterialTexture(Resources::Find<Texture>(mUnitInfo.Texture));
 			}
 			else if (enums::eUnitUsageType::JustAnimation == mUnitTypes.Usage)
 			{
@@ -123,7 +123,7 @@ namespace da
 			}
 			else
 			{
-				mActionUnitRenderer->SetMaterial(Resources::Find<Material>(L"NoneProjectileMaterial"));
+				mActionUnitRenderer->SetMaterial(Resources::Find<Material>(L"InvisibleProjectileMaterial"));
 				mActionUnitRenderer->GetMaterial()->SetTexture(nullptr);
 			}
 		}

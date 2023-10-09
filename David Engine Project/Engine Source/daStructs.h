@@ -39,9 +39,11 @@ namespace da::structs
 		sActionTimeValues	DurationTime;
 		// animationEnd
 		sAnimationInfo		Animation;
+		// using texture
+		std::wstring		Texture;
 		float				AtaackDamage;
 
-		sActionUnitStat() : Speed(0.0f), Range(0.0f), DurationTime(), Animation(), AtaackDamage(0.0f)
+		sActionUnitStat() : Speed(0.0f), Range(0.0f), DurationTime(), Animation(), Texture(), AtaackDamage(0.0f)
 		{}
 	};
 
@@ -50,6 +52,7 @@ namespace da::structs
 	{
 		bool					UseAnimation;
 		enums::eItemAttackType	AttackType;
+		std::wstring			Sound;
 		sAnimationInfo			Animation;
 		sActionTimeValues		AttackDelayTime;
 

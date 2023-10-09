@@ -27,6 +27,9 @@ namespace da
 	void PlayerCombatScript::Initialize()
 	{
 		CombatScript::Initialize();
+		mCombatAnimator->Create(L"CrossbowIdle", Resources::Find<Texture>(L"CrossbowIdle"), math::Vector2::Zero, math::Vector2(18.0f, 11.0f), 1, math::Vector2::Zero, 0.050f, 25.0f);
+		mCombatAnimator->Create(L"CrossbowShot", Resources::Find<Texture>(L"CrossbowShot"), math::Vector2::Zero, math::Vector2(18.0f, 11.0f), 2, math::Vector2::Zero, 0.050f, 25.0f);
+		mCombatAnimator->CompleteEvent(L"CrossbowShot") = std::bind(&PlayerCombatScript::retCrossbow, this);
 	}
 	void PlayerCombatScript::Update()
 	{
@@ -40,7 +43,7 @@ namespace da
 	{
 		CombatScript::updateWeaponPosition();
 		CombatScript::updateReverseRenderer();
-		updateWeaponRotate();
+		updateWeaponRotation();
 	}
 	void PlayerCombatScript::EquipWeapon(ItemScript* weaponItem)
 	{
@@ -66,69 +69,87 @@ namespace da
 		else
 		{
 			if (mWeaponItem->GetItemInfo().UseAnimation)
+			{
+				mCombatTransform->SetScale(math::Vector3::One);
+				mCombatRenderer->SetMaterial(Resources::Find<Material>(L"RotateAnimationMaterial"));
 				mCombatAnimator->ApplyComponentUsing(true);
+				mCombatAnimator->PlayAnimation(mWeaponItem->GetItemInfo().Animation.Idle);
+			}
 			else
+			{
+				mCombatTransform->SetScale(mWeaponItem->GetItemScale());
+				mCombatRenderer->SetMaterial(Resources::Find<Material>(L"WeaponMaterial"));
 				mCombatRenderer->ChangeMaterialTexture(mWeaponItem->GetItemTexture());
-
-			mCombatTransform->SetScale(mWeaponItem->GetItemScale());			
+				mCombatAnimator->ApplyComponentUsing(false);
+			}
+						
 		}		
 	}
 
-	void PlayerCombatScript::updateWeaponRotate()
+	void PlayerCombatScript::updateWeaponRotation()
 	{
-		// # 내 위치 가져오기
+		if (!mWeaponItem)
+			return;
+		// 오프셋 적용하기
 		math::Vector3 myPosition = mCombatTransform->GetPosition();
+		math::Vector3 weaponOffset = mWeaponItem->GetItemOffset();
+		if (isLeft())
+			weaponOffset.x *= -1;
+
+
+
 
 		// 무기 회전방향 구하기
+		mOwnerDir = mOwnerScript->GetCreatureDir();
 		float angle = atan2(mOwnerDir.y, mOwnerDir.x);
 		mWeaponAngle = angle;
 
 
 		if (enums::eItemAttackType::Swing == mWeaponItem->GetItemInfo().AttackType)
 		{
-
-			// Weapon Position 구하기
-			math::Vector2 armUp(-0.050f, 0.0f);
-			math::Vector2 armDown(0.050f, -0.40f);
-
 			// 공격할때마다 무기 회전값과 위치값 적용
 			if (isLeft())
 			{
-				if (!mWeaponAttacked)
+				if (mWeaponAttacked)
 				{
 					angle += 2.710f;
-					myPosition.x += armUp.x;
-					myPosition.y += armDown.y;
+					myPosition.x -= weaponOffset.x;
+					myPosition.y += weaponOffset.y * 1.40f;
 				}
 				else
 				{
 					angle -= 0.3930f;
-					myPosition.x += armDown.x;
+					myPosition.x += weaponOffset.x;
+					myPosition.y += weaponOffset.y;
 				}
 			}
 			else
 			{
-				if (!mWeaponAttacked)
+				if (mWeaponAttacked)
 				{
 					angle -= 2.710f;
-					myPosition.x -= armUp.x;
-					myPosition.y += armDown.y;
-
+					myPosition.x -= weaponOffset.x;
+					myPosition.y += weaponOffset.y * 1.40f;
 				}
 				else
 				{
 					angle += 0.3930f;
-					myPosition.x -= armDown.x;
+					myPosition.x += weaponOffset.x;
+					myPosition.y += weaponOffset.y;
 				}
 			}
 
 			myPosition.x -= mOwnerDir.x * 0.050f;
-			myPosition.y -= mOwnerDir.y * 0.050f;
+			myPosition.y -= mOwnerDir.y * 0.050f + weaponOffset.y;
+			mCombatTransform->SetPosition(myPosition);
 			// 변경된 값을 Weapon Transform에 적용하기
+		}
+		else if (enums::eItemAttackType::Shoot == mWeaponItem->GetItemInfo().AttackType)
+		{
+			mCombatTransform->SetPosition(myPosition + weaponOffset);
 		}
 
 		mCombatTransform->SetRotation(math::Vector3(0.0f, 0.0f, angle));
-		mCombatTransform->SetPosition(myPosition);
 	}
 
 	void PlayerCombatScript::updateAttackCooldown()
@@ -144,62 +165,10 @@ namespace da
 			}
 		}
 	}
-	//void PlayerCombatScript::EquipWeapon()
-	//{
-	//	// 나중에는 여기서 세팅하는게 아니라 아이템이 세팅되어서 넘겨질 예정임
-	//	switch (mWeaponInfo->WeaponName)
-	//	{
-	//	case enums::eWeaponName::Default:
-	//	{
-	//		// 무기 정보 세팅
-	//		mWeaponInfo->IsAnimationType = false;
-	//		mWeaponInfo->AttackStat.AttackDelayTime = 0.450f;
-	//		mWeaponInfo->AttackStat.AttackDelayAccumulateTime = 0.0f;
-	//		mWeaponInfo->AttackStat.AtaackDamage = 5.0f;
-	//		
-	//		mWeaponInfo->ProjectileStat.ProjectileValidTime = 0.250f;
-	//		mWeaponInfo->ProjectileStat.ProjectileCenterPadding = 0.50f;
-	//		mWeaponInfo->ProjectileStat.ProjectileRange = 3.5f;
-	//		mProjectileSize = math::Vector2(2.50f, 1.750f);
-
-	//		mCombatTransform->SetScale(math::Vector3(0.090f * 4.0f, 0.440f * 4.0f, 1.0f));
-	//		mWeaponTexture = Resources::Find<Texture>(L"LongSwordTestTexture");
-	//		mWeaponInfo->ProjectileStat.EffectName = L"Swing";
-	//		mEffectScale = math::Vector3(2.50f, 2.50f, 1.0f);
-
-	//		if (mWeaponTexture)
-	//			mCombatRenderer->ChangeMaterialTexture(mWeaponTexture);
-
-	//		GameObject::eObjectState test = GetOwner()->GetObjectState();
-
-	//		int a = 0;
-	//	}
-	//	break;
-	//	case enums::eWeaponName::LongSword:
-	//	{
-	//		// 무기 정보 세팅
-	//		mWeaponInfo->IsAnimationType = false;
-	//		mWeaponInfo->AttackStat.AttackDelayTime = 0.450f;
-	//		mWeaponInfo->AttackStat.AttackDelayAccumulateTime = 0.0f;
-	//		mWeaponInfo->AttackStat.AtaackDamage = 5.0f;
-	//		mWeaponInfo->ProjectileStat.ProjectileValidTime = 0.250f;
-	//		mWeaponInfo->ProjectileStat.ProjectileCenterPadding = 0.50f;
-	//		mWeaponInfo->ProjectileStat.ProjectileRange = 3.5f;
-	//		mProjectileSize = math::Vector2(2.50f, 1.750f);
-	//		mCombatTransform->SetScale(math::Vector3(0.090f * 4.0f, 0.440f * 4.0f, 1.0f));
-	//		mWeaponTexture = Resources::Find<Texture>(L"LongSwordTestTexture");
-	//		mWeaponInfo->ProjectileStat.EffectName = L"Swing";
-	//		mEffectScale = math::Vector3(2.50f, 2.50f, 1.0f);
-
-	//		if (mWeaponTexture)
-	//			mCombatRenderer->ChangeMaterialTexture(mWeaponTexture);
-	//	}
-	//	break;
-	//	default:
-	//		break;
-	//	}
-	//}
-	
+	void PlayerCombatScript::retCrossbow()
+	{
+		mCombatAnimator->PlayAnimation(L"CrossbowIdle", true);
+	}
 	void PlayerCombatScript::ToDoAttack()
 	{
 		if (!mWeaponItem)
@@ -241,7 +210,7 @@ namespace da
 			actionUnit->OnActive();
 
 			mWeaponCooldownReady = false;
-			mOwnerScript->GetCreatureAudio()->Play(Resources::Find<AudioClip>(L"swing"), 60.0f);
+			mOwnerScript->GetCreatureAudio()->Play(Resources::Find<AudioClip>(mWeaponItem->GetItemInfo().Sound), 60.0f);
 		}
 	}
 

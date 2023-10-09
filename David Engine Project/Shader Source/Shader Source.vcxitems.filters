@@ -34,6 +34,12 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)ParticleShader.hlsl">
       <Filter>2 Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)InvisibleShader.hlsl">
+      <Filter>2 Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)RotateAnimationShader.hlsl">
+      <Filter>2 Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Globals.hlsli">

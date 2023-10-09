@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="$(MSBuildThisFileDirectory)AnimationShader.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)InvisibleShader.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)LifeBarShader.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)DashCountShader.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)DebugShader.hlsl" />
@@ -22,6 +23,7 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)MovingBGShader.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)Paint.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)ParticleShader.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)RotateAnimationShader.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)SpriteShader.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)TilingLayerShader.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)TriangleShader.hlsl" />

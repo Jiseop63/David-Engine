@@ -193,6 +193,20 @@ namespace renderer
 			shader->Create(eShaderStage::PS, L"AnimationShader.hlsl", "mainPS");
 			Resources::Insert(L"AnimationShader", shader);
 		}
+		// Rotate anim
+		{
+			shader = std::make_shared<Shader>();
+			shader->Create(eShaderStage::VS, L"RotateAnimationShader.hlsl", "mainVS");
+			shader->Create(eShaderStage::PS, L"RotateAnimationShader.hlsl", "mainPS");
+			Resources::Insert(L"RotateAnimationShader", shader);
+		}
+		// Invisible
+		{
+			shader = std::make_shared<Shader>();
+			shader->Create(eShaderStage::VS, L"InvisibleShader.hlsl", "mainVS");
+			shader->Create(eShaderStage::PS, L"InvisibleShader.hlsl", "mainPS");
+			Resources::Insert(L"InvisibleShader", shader);
+		}
 		// Background Shaders
 		{
 			shader = std::make_shared<Shader>();
@@ -328,6 +342,17 @@ namespace renderer
 		GetDevice()->CreateInputLayout(arrLayout, numElement
 			, shader->GetVSCode()
 			, shader->GetInputLayoutAddressOf());
+
+		shader = Resources::Find<Shader>(L"InvisibleShader");
+		GetDevice()->CreateInputLayout(arrLayout, numElement
+			, shader->GetVSCode()
+			, shader->GetInputLayoutAddressOf());
+
+		shader = Resources::Find<Shader>(L"RotateAnimationShader");
+		GetDevice()->CreateInputLayout(arrLayout, numElement
+			, shader->GetVSCode()
+			, shader->GetInputLayoutAddressOf());
+		
 
 #pragma endregion
 #pragma region Sampler State
@@ -475,7 +500,11 @@ namespace renderer
 
 		// items
 		Resources::Load<Texture>(L"LongSword", L"..\\Resources\\Texture\\Items\\LongSword.png");
-
+		Resources::Load<Texture>(L"Crossbow", L"..\\Resources\\Texture\\Items\\CrossbowIdle.png");
+		Resources::Load<Texture>(L"CrossbowIdle", L"..\\Resources\\Texture\\Items\\CrossBow\\CrossbowIdle.png");
+		Resources::Load<Texture>(L"CrossbowShot", L"..\\Resources\\Texture\\Items\\CrossBow\\CrossbowShot.png");
+		Resources::Load<Texture>(L"CrossbowArrow", L"..\\Resources\\Texture\\Items\\CrossBow\\CrossbowArrow.png");
+		
 
 		// effect
 		Resources::Load<Texture>(L"GreatSwingFX", L"..\\Resources\\Texture\\Items\\GreatSword\\GreatSwingFX.png");
@@ -571,6 +600,9 @@ namespace renderer
 		Resources::Load<AudioClip>(L"SpawnMonster", L"..\\Resources\\Sound\\monster\\SpawnMonster.ogg");
 		Resources::Load<AudioClip>(L"swish", L"..\\Resources\\Sound\\player\\swish-1.ogg");
 
+
+
+		// sound
 		Resources::Load<AudioClip>(L"Jumping", L"..\\Resources\\Sound\\player\\Jumping.ogg");
 		Resources::Load<AudioClip>(L"dash", L"..\\Resources\\Sound\\player\\dash.ogg");
 		Resources::Load<AudioClip>(L"Hit_Player", L"..\\Resources\\Sound\\player\\Hit_Player.ogg");
@@ -622,6 +654,12 @@ namespace renderer
 			material->SetShader(shader);
 			Resources::Insert<Material>(L"WeaponMaterial", material);
 		}
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"RotateAnimationShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"RotateAnimationMaterial", material);
+		}
 		// projectile material
 		{
 			material = std::make_shared<Material>();
@@ -656,9 +694,9 @@ namespace renderer
 		// None projectile material
 		{
 			material = std::make_shared<Material>();
-			shader = Resources::Find<Shader>(L"SpriteShader");
+			shader = Resources::Find<Shader>(L"InvisibleShader");
 			material->SetShader(shader);
-			Resources::Insert<Material>(L"NoneProjectileMaterial", material);
+			Resources::Insert<Material>(L"InvisibleProjectileMaterial", material);
 		}
 		// Animation projectile material
 		{

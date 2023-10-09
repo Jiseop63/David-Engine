@@ -13,5 +13,4 @@ namespace da
 	{
 		mItems.insert(std::make_pair(name, item));
 	}
-
 }

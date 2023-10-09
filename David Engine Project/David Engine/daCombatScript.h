@@ -24,7 +24,7 @@ namespace da
 		bool isLeft() { if (0 >= mOwnerDir.x) return true; else return false; }
 		void updateReverseRenderer();
 		virtual void updateWeaponPosition();
-		virtual void updateWeaponRotate() {} // 상속해서 만드세요
+		virtual void updateWeaponRotation() {} // 상속해서 만드세요
 
 #pragma endregion
 #pragma region Attack func
@@ -32,7 +32,6 @@ namespace da
 		virtual void ToDoAttack() {}		// 상속해서 만드세용
 	protected:
 		virtual void attackProjectile() {}	// 공격 투사체 세팅
-		void attackPlay();					// 무기 이미지 재생		
 #pragma endregion
 
 	protected:
