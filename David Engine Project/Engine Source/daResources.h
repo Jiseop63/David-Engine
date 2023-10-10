@@ -42,6 +42,7 @@ namespace da
 
 			resource->SetKey(key);
 			resource->SetPath(path);
+			resource->SetName(key);
 			mResources.insert(std::make_pair(key, resource));
 
 			return std::dynamic_pointer_cast<T>(resource);

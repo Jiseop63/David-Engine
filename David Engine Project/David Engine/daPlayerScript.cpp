@@ -351,12 +351,30 @@ namespace da
         if (ePlayerState::Move != mActiveState)
             return;
 
-        mDustDelayTime.Start += (float)Time::DeltaTime();
-        if (mDustDelayTime.TimeOut())
+        if (mCreatureFootCollider->IsGround())
         {
-            mDustDelayTime.Clear();
-            todoDustSpawn();
-        }
+            mDustDelayTime.Start += (float)Time::DeltaTime();
+            if (mDustDelayTime.TimeOut())
+            {
+                mDustDelayTime.Clear();
+
+                ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
+
+                structs::sActionUnitTypes effectUnitTypes = {};
+                effectUnitTypes.Usage = enums::eUnitUsageType::JustAnimation;
+                effectUnitTypes.LifeCycle = enums::eUnitLifeType::AnimationEnd;
+                effectUnitTypes.Action = enums::eUnitActionType::Stay;
+                actionUnit->SetUnitTypes(effectUnitTypes);
+
+                structs::sActionUnitStat effectUnitInfo = {};
+                effectUnitInfo.Animation.Action = L"DustEffect";
+                actionUnit->SetUnitInfo(effectUnitInfo);
+                actionUnit->SetUnitReverse(isLeft());
+                actionUnit->SetUnitScale(math::Vector3(1.20f, 1.20f, 1.0f));
+                actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
+                actionUnit->OnActive();                
+            }
+        }        
     }
     void PlayerScript::DungeonClearSound()
     {
@@ -364,25 +382,7 @@ namespace da
     }
     void PlayerScript::todoDustSpawn()
     {
-        ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
-        if (actionUnit)
-        {
-            ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
-
-            structs::sActionUnitTypes effectUnitTypes = {};
-            effectUnitTypes.Usage = enums::eUnitUsageType::JustAnimation;
-            effectUnitTypes.LifeCycle = enums::eUnitLifeType::AnimationEnd;
-            effectUnitTypes.Action = enums::eUnitActionType::Stay;
-            actionUnit->SetUnitTypes(effectUnitTypes);
-
-            structs::sActionUnitStat effectUnitInfo = {};
-            effectUnitInfo.Animation.Action = L"DustEffect";
-            actionUnit->SetUnitInfo(effectUnitInfo);
-            actionUnit->SetUnitReverse(isLeft());
-            actionUnit->SetUnitScale(math::Vector3(1.20f, 1.20f, 1.0f));
-            actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
-            actionUnit->OnActive();
-        }
+        
     }
 #pragma endregion
 #pragma region Jump & Dash Logic

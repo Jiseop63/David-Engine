@@ -130,7 +130,7 @@ namespace da::objects
 		}
 
 		// weapon ¼¼ÆÃ
-		GameObject* weaponObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Playable, L"WeaponMaterial");
+		GameObject* weaponObject = InstantiateCommonObject<GameObject>(scene, enums::eLayerType::Playable, L"RangeWeaponMaterial");
 		player->AddChildObject(weaponObject);
 		PlayerCombatScript* weaponScript = playerScript->AddWeaponObject(weaponObject);
 

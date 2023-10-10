@@ -63,14 +63,12 @@ namespace da
 		{
 			ChangeSlotTexture(mSecondTexture);
 			mSelectLeft = false;
-			// ¿À¸¥ÂÊ
 			mActiveItemSlot = mItemSlots[(UINT)enums::eItemSlot::Slot02];
 		}
 		else
 		{
 			ChangeSlotTexture(mFirstTexture);
 			mSelectLeft = true;
-			// ¿ÞÂÊ
 			mActiveItemSlot = mItemSlots[(UINT)enums::eItemSlot::Slot00];
 		}
 		mMainArmourScript->ChangeArmour();

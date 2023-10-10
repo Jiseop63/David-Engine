@@ -652,7 +652,13 @@ namespace renderer
 			material = std::make_shared<Material>();
 			shader = Resources::Find<Shader>(L"SpriteShader");
 			material->SetShader(shader);
-			Resources::Insert<Material>(L"WeaponMaterial", material);
+			Resources::Insert<Material>(L"MeleeWeaponMaterial", material);
+		}
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"RotateAnimationShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"RangeWeaponMaterial", material);
 		}
 		{
 			material = std::make_shared<Material>();

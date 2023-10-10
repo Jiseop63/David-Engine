@@ -64,26 +64,23 @@ namespace da
 		if (!mWeaponItem)
 		{
 			mCombatRenderer->ChangeMaterialTexture(nullptr);
-			mCombatAnimator->ApplyComponentUsing(false);
 		}
 		else
 		{
+			mCombatRenderer->SetMaterial(mWeaponItem->GetItemMaterial());
 			if (mWeaponItem->GetItemInfo().UseAnimation)
 			{
 				mCombatTransform->SetScale(math::Vector3::One);
-				mCombatRenderer->SetMaterial(Resources::Find<Material>(L"RotateAnimationMaterial"));
 				mCombatAnimator->ApplyComponentUsing(true);
 				mCombatAnimator->PlayAnimation(mWeaponItem->GetItemInfo().Animation.Idle);
 			}
 			else
 			{
 				mCombatTransform->SetScale(mWeaponItem->GetItemScale());
-				mCombatRenderer->SetMaterial(Resources::Find<Material>(L"WeaponMaterial"));
 				mCombatRenderer->ChangeMaterialTexture(mWeaponItem->GetItemTexture());
 				mCombatAnimator->ApplyComponentUsing(false);
 			}
-						
-		}		
+		}
 	}
 
 	void PlayerCombatScript::updateWeaponRotation()
@@ -190,7 +187,7 @@ namespace da
 					mWeaponAttacked = true;
 			}
 			else if (enums::eItemAttackType::Shoot == mWeaponItem->GetItemInfo().AttackType)
-			{				
+			{
 				mCombatAnimator->PlayAnimation(mWeaponItem->GetItemInfo().Animation.Action);
 			}
 

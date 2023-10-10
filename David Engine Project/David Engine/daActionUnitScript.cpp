@@ -79,69 +79,61 @@ namespace da
 		mUnitOffset.y += -0.20f;
 		mUnitBeginPosition = mOwnerScript->GetCreatureTransform()->GetPosition() + mUnitOffset;
 		mActionUnitTransform->SetPosition(mUnitBeginPosition);
-		
-
-		// 단순 이팩트 재생
-		if (enums::eUnitUsageType::JustAnimation == mUnitTypes.Usage
-			|| enums::eUnitUsageType::JustTexture == mUnitTypes.Usage)
-		{
-			mActionUnitCollider->ApplyComponentUsing(false);
-			if (enums::eUnitUsageType::JustTexture== mUnitTypes.Usage)
-			{
-				mActionUnitRenderer->SetMaterial(Resources::Find<Material>(L"TextureProjectileMaterial"));
-				mActionUnitRenderer->ChangeMaterialTexture(Resources::Find<Texture>(mUnitInfo.Texture));
-			}
-			else if (enums::eUnitUsageType::JustAnimation == mUnitTypes.Usage)
-			{
-				mActionUnitRenderer->SetMaterial(Resources::Find<Material>(L"AnimationProjectileMaterial"));
-				// 애니메이션만 나오는경우 3가지 유형에 따라 애니메이션 세팅
-				if (enums::eUnitLifeType::AnimationEnd == mUnitTypes.LifeCycle)
-					mActionUnitAnimator->PlayAnimation(mUnitInfo.Animation.Action, false);
-				else 
-					mActionUnitAnimator->PlayAnimation(mUnitInfo.Animation.Idle, true);			
-			}
-		}
-		else
-		{
-			mActionUnitCollider->ApplyComponentUsing(true);
-			mActionUnitCollider->SetSize(mUnitColliderSize);
-			mActionUnitAnimator->ApplyComponentUsing(false);
-
-			if (enums::eUnitUsageType::TextureProjectile == mUnitTypes.Usage)
-			{				
-				mActionUnitRenderer->SetMaterial(Resources::Find<Material>(L"TextureProjectileMaterial"));
-				mActionUnitRenderer->ChangeMaterialTexture(Resources::Find<Texture>(mUnitInfo.Texture));
-			}
-			else if (enums::eUnitUsageType::AnimationProjectile == mUnitTypes.Usage)
-			{
-				mActionUnitAnimator->ApplyComponentUsing(true);
-				mActionUnitRenderer->SetMaterial(Resources::Find<Material>(L"AnimationProjectileMaterial"));
-
-				if (enums::eUnitLifeType::AnimationEnd == mUnitTypes.LifeCycle)
-					mActionUnitAnimator->PlayAnimation(mUnitInfo.Animation.Action, false);
-				else
-					mActionUnitAnimator->PlayAnimation(mUnitInfo.Animation.Idle, true);
-			}
-			else
-			{
-				mActionUnitRenderer->SetMaterial(Resources::Find<Material>(L"InvisibleProjectileMaterial"));
-				mActionUnitRenderer->GetMaterial()->SetTexture(nullptr);
-			}
-		}
-				
 		if (enums::eUnitActionType::UsingRotation == mUnitTypes.Action)
 			mActionUnitTransform->SetRotation(math::Vector3(0.0f, 0.0f, mUnitRotateAngle));
 		else
 			mActionUnitTransform->SetRotation(math::Vector3(0.0f, 0.0f, 0.0f));
 
+
+		// 렌더러 세팅
+		if (enums::eUnitUsageType::JustAnimation == mUnitTypes.Usage
+			|| enums::eUnitUsageType::AnimationProjectile == mUnitTypes.Usage)
+		{
+			mActionUnitRenderer->SetMaterial(Resources::Find<Material>(L"AnimationProjectileMaterial"));
+			mActionUnitAnimator->ApplyComponentUsing(true);
+			if (enums::eUnitLifeType::AnimationEnd == mUnitTypes.LifeCycle)
+				mActionUnitAnimator->PlayAnimation(mUnitInfo.Animation.Action);
+			else
+				mActionUnitAnimator->PlayAnimation(mUnitInfo.Animation.Idle);
+		}
+		if (enums::eUnitUsageType::TextureProjectile == mUnitTypes.Usage
+			|| enums::eUnitUsageType::JustTexture == mUnitTypes.Usage)
+		{
+			mActionUnitRenderer->SetMaterial(Resources::Find<Material>(L"TextureProjectileMaterial"));
+			mActionUnitRenderer->ChangeMaterialTexture(Resources::Find<Texture>(mUnitInfo.Texture));
+			mActionUnitAnimator->ApplyComponentUsing(false);
+		}
+		if (enums::eUnitUsageType::InvisibleProjectile == mUnitTypes.Usage)
+		{
+			mActionUnitRenderer->SetMaterial(Resources::Find<Material>(L"InvisibleProjectileMaterial"));
+			mActionUnitAnimator->ApplyComponentUsing(false);
+		}
+
+		// 콜라이더 세팅
+		if (enums::eUnitUsageType::JustAnimation == mUnitTypes.Usage
+			|| enums::eUnitUsageType::JustTexture == mUnitTypes.Usage)
+		{
+			mActionUnitCollider->ApplyComponentUsing(false);
+		}
+		else
+		{
+			mActionUnitCollider->ApplyComponentUsing(true);
+			mActionUnitCollider->SetSize(mUnitColliderSize);
+		}
+
 		// active object
 		GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 	}
+
 	void ActionUnitScript::ClearUnit()
 	{
-		mUnitRotateAngle = 0.0f;
+		mUnitInfo.Clear();
+		mUnitBeginPosition = math::Vector3::Zero;
 		mUnitScale = math::Vector3::One;
 		mUnitColliderSize = math::Vector2::One;
+		mUnitOffset = math::Vector3::Zero;
+		mUnitDirection = math::Vector3::Zero;
+		mUnitRotateAngle = 0.0f;
 		// 각종 변수 초기화 해주기
 		GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
 	}

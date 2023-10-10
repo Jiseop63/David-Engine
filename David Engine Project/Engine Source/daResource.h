@@ -17,9 +17,12 @@ namespace da
 		void SetPath(const std::wstring& path) { mPath = path; }
 		enums::eResourceType GetResourceType() { return mResourceType; }
 
+		void SetName(const std::wstring& path) { mName = path; }
+		std::wstring GetName(const std::wstring& path) { return mName; }
 	private:
 		const enums::eResourceType mResourceType;
 		std::wstring mKey;
 		std::wstring mPath;
+		std::wstring mName;
 	};
 }

@@ -10,6 +10,11 @@ namespace da::structs
 		std::wstring Action;
 		sAnimationInfo() : Idle(), Action()
 		{}
+		void Clear()
+		{
+			Idle = L"";
+			Action = L"";
+		}
 	};
 	struct sActionTimeValues
 	{
@@ -45,6 +50,15 @@ namespace da::structs
 
 		sActionUnitStat() : Speed(0.0f), Range(0.0f), DurationTime(), Animation(), Texture(), AtaackDamage(0.0f)
 		{}
+		void Clear()
+		{
+			Speed = 0;
+			Range = 0;
+			DurationTime.Clear();
+			Animation.Clear();
+			Texture = L"";
+			AtaackDamage = 0;
+		}
 	};
 
 	// Item (Weapon)

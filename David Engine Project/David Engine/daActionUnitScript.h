@@ -70,7 +70,6 @@ namespace da
 		float			mUnitRotateAngle;
 
 	protected:
-		std::wstring				mUnitName;		// texture?
 		// 투사체 속성
 		structs::sActionUnitStat	mUnitInfo;
 		structs::sActionUnitTypes	mUnitTypes;

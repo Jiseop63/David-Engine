@@ -24,14 +24,20 @@ namespace da
 			mItemRenderer->GetMaterial()->SetTexture(mItemTexture);
 		}
 		std::shared_ptr<graphics::Texture> GetItemTexture() { return mItemTexture; }
+		
+		void SetItemMaterial(std::shared_ptr<graphics::Material> material) { mItemMaterial = material; }
+		std::shared_ptr<graphics::Material> GetItemMaterial() { return mItemMaterial; }
+
 		void SetItemScale(math::Vector3 itemScale)
 		{
 			mItemScale = itemScale;
 			mItemTransform->SetScale(mItemScale);
 		}
 		math::Vector3 GetItemScale() { return mItemScale; }
+
 		void SetItemOffset(math::Vector3 itemOffset) { mItemOffset = itemOffset; }
 		math::Vector3 GetItemOffset() { return mItemOffset; }
+
 		// item function
 	public:
 		void SetItemInfo(structs::sItemInfo itemInfo) { mItemInfo = itemInfo; }
@@ -65,6 +71,7 @@ namespace da
 		// visual
 	protected:
 		std::shared_ptr<Texture>	mItemTexture;
+		std::shared_ptr<Material>	mItemMaterial;
 		math::Vector3				mItemScale;
 		math::Vector3				mItemOffset;
 

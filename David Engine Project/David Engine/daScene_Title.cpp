@@ -695,6 +695,7 @@ namespace da
 
 				std::shared_ptr<Texture> longswordTexture = Resources::Find<Texture>(L"LongSword");
 				longswordItemScript->SetItemTexture(longswordTexture);
+				longswordItemScript->SetItemMaterial(Resources::Find<Material>(L"MeleeWeaponMaterial"));
 				longswordItemScript->SetItemScale(math::Vector3(0.360f * 0.760f, 0.880f * 0.760f, 1.0f));
 				longswordItemScript->SetItemOffset(math::Vector3(-0.10f, -0.80f, 0.0f));
 
@@ -736,6 +737,7 @@ namespace da
 
 				std::shared_ptr<Texture> crossbowTexture = Resources::Find<Texture>(L"Crossbow");
 				crossbowItemScript->SetItemTexture(crossbowTexture);
+				crossbowItemScript->SetItemMaterial(Resources::Find<Material>(L"RangeWeaponMaterial"));
 				crossbowItemScript->SetItemScale(math::Vector3(0.720f * 0.760f, 0.440f * 0.760f, 1.0f));
 				crossbowItemScript->SetItemOffset(math::Vector3(0.20f, -0.30f, 0.0f));
 
