@@ -352,10 +352,10 @@ namespace da
             return;
 
         mDustDelayTime.Start += (float)Time::DeltaTime();
-        if (mDustDelayTime.End <= mDustDelayTime.Start)
-        {            
+        if (mDustDelayTime.TimeOut())
+        {
+            mDustDelayTime.Clear();
             todoDustSpawn();
-            mDustDelayTime.Start = 0.0f;
         }
     }
     void PlayerScript::DungeonClearSound()
@@ -603,11 +603,6 @@ namespace da
             GameObject* creatureObj = other->GetOwner();
             MonsterScript* creatureScript = creatureObj->GetComponent<MonsterScript>();
             creatureScript->MonsterFindsPlayer(true);
-        }
-        if (Collider2D::eDetectionType::Env == other->GetDetectionType()
-            && mCreatureFootCollider->IsGround())
-        {
-            todoDustSpawn();
         }
     }
     void PlayerScript::OnCollisionExit(Collider2D* other)

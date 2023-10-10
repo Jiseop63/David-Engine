@@ -58,9 +58,10 @@ namespace da
 	{
 		for (size_t unit = 0; unit < mActionUnits.size(); unit++)
 		{
-			if (GameObject::eObjectState::Inactive ==
+			if (GameObject::eObjectState::Active ==
 				mActionUnits[unit]->GetOwner()->GetObjectState())
-				return mActionUnits[unit];
+				continue;
+			return mActionUnits[unit];
 		}
 		return nullptr;
 	}

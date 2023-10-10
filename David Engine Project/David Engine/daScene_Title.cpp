@@ -684,7 +684,7 @@ namespace da
 				// A, B Padding Â÷ÀÌ // X : armourPadding * 3, Y : armourPadding
 			}
 
-			GameObject* longSwordItemObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"WeaponIconMaterial");
+			GameObject* longSwordItemObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"WeaponIconAMaterial");
 			longSwordItemObject->SetObjectState(GameObject::eObjectState::Inactive);
 
 			// Item Setting
@@ -693,7 +693,8 @@ namespace da
 			{
 				longswordItemScript->SetItemName(itemName);
 
-				longswordItemScript->SetItemTexture(Resources::Find<Texture>(L"LongSword"));
+				std::shared_ptr<Texture> longswordTexture = Resources::Find<Texture>(L"LongSword");
+				longswordItemScript->SetItemTexture(longswordTexture);
 				longswordItemScript->SetItemScale(math::Vector3(0.360f * 0.760f, 0.880f * 0.760f, 1.0f));
 				longswordItemScript->SetItemOffset(math::Vector3(-0.10f, -0.80f, 0.0f));
 
@@ -715,7 +716,7 @@ namespace da
 				itemProjectileStat.AtaackDamage = 6.50f;
 				longswordItemScript->SetProjectileStat(itemProjectileStat);
 
-				longswordItemScript->SetProjectileScale(math::Vector3(1.60f, 1.60f, 1.0f));
+				longswordItemScript->SetProjectileScale(math::Vector3(1.40f, 1.40f, 1.0f));
 				longswordItemScript->SetProjectileOffset(math::Vector3(0.50f, 0.50f, 0.0f));
 				longswordItemScript->SetProjectileSize(math::Vector2(1.0f, 1.0f));
 			}
@@ -724,7 +725,7 @@ namespace da
 
 			inventoryScript->AddItemToSlot(enums::eItemSlot::Slot00, ItemManager::GetItem(L"LongSword"));
 
-			GameObject* crossbowItemObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"WeaponIconMaterial");
+			GameObject* crossbowItemObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"WeaponIconBMaterial");
 			crossbowItemObject->SetObjectState(GameObject::eObjectState::Inactive);
 
 			// Item Setting
@@ -733,7 +734,8 @@ namespace da
 			{
 				crossbowItemScript->SetItemName(itemName);
 
-				crossbowItemScript->SetItemTexture(Resources::Find<Texture>(L"Crossbow"));				
+				std::shared_ptr<Texture> crossbowTexture = Resources::Find<Texture>(L"Crossbow");
+				crossbowItemScript->SetItemTexture(crossbowTexture);
 				crossbowItemScript->SetItemScale(math::Vector3(0.720f * 0.760f, 0.440f * 0.760f, 1.0f));
 				crossbowItemScript->SetItemOffset(math::Vector3(0.20f, -0.30f, 0.0f));
 
@@ -759,7 +761,7 @@ namespace da
 				itemProjectileStat.Texture = L"CrossbowArrow";
 				crossbowItemScript->SetProjectileStat(itemProjectileStat);
 
-				crossbowItemScript->SetProjectileScale(math::Vector3(1.60f, 1.60f, 1.0f));
+				crossbowItemScript->SetProjectileScale(math::Vector3(0.120f * 1.30f, 0.440f * 1.30f, 1.0f));
 				crossbowItemScript->SetProjectileOffset(math::Vector3(0.20f, 0.20f, 0.0f));
 				crossbowItemScript->SetProjectileSize(math::Vector2(1.0f, 1.0f));
 			}

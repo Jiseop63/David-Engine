@@ -204,6 +204,7 @@ namespace da
 			math::Vector3 offsetPosition = mWeaponItem->GetProjectileOffset();
 			offsetPosition.x *= mOwnerDir.x;
 			offsetPosition.y *= mOwnerDir.y;
+			actionUnit->SetUnitScale(mWeaponItem->GetProjectileScale());
 			actionUnit->SetUnitOffset(offsetPosition);
 			actionUnit->SetUnitColliderSize(mWeaponItem->GetProjectileSize());
 

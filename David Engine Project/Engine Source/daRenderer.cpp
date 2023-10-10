@@ -500,7 +500,7 @@ namespace renderer
 
 		// items
 		Resources::Load<Texture>(L"LongSword", L"..\\Resources\\Texture\\Items\\LongSword.png");
-		Resources::Load<Texture>(L"Crossbow", L"..\\Resources\\Texture\\Items\\CrossbowIdle.png");
+		Resources::Load<Texture>(L"Crossbow", L"..\\Resources\\Texture\\Items\\CrossBow\\CrossbowIdle.png");
 		Resources::Load<Texture>(L"CrossbowIdle", L"..\\Resources\\Texture\\Items\\CrossBow\\CrossbowIdle.png");
 		Resources::Load<Texture>(L"CrossbowShot", L"..\\Resources\\Texture\\Items\\CrossBow\\CrossbowShot.png");
 		Resources::Load<Texture>(L"CrossbowArrow", L"..\\Resources\\Texture\\Items\\CrossBow\\CrossbowArrow.png");
@@ -791,7 +791,13 @@ namespace renderer
 			material = std::make_shared<Material>();
 			shader = Resources::Find<Shader>(L"SpriteShader");
 			material->SetShader(shader);
-			Resources::Insert<Material>(L"WeaponIconMaterial", material);
+			Resources::Insert<Material>(L"WeaponIconAMaterial", material);
+		}
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"WeaponIconBMaterial", material);
 		}
 		// armourPanel Icon
 		{

@@ -24,11 +24,8 @@ namespace da
 		void SetDetectRange(float value) { mMonsterSensorCollider->SetSize(math::Vector2(value * 2.0f, 0.90f)); }
 		void SetAttackRange(float value) { mMonsterAttackStat.AttackRange = value; }
 
-		// player에 의해 호출됨
-		
+		// player에 의해 호출됨		
 		void MonsterFindsPlayer(bool value) { mDetectPlayer = value; }
-
-
 
 	public:
 		virtual void OnDamaged(float damage);

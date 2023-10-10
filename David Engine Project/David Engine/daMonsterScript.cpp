@@ -15,7 +15,7 @@ namespace da
 		, mMonsterCombatScript(nullptr)
 		, mMonsterLifeScript(nullptr)
 		, mMonsterAttackStat{}
-		, mDetectPlayer(0.0f)
+		, mDetectPlayer(false)
 	{
 	}
 	MonsterScript::~MonsterScript()
@@ -48,6 +48,8 @@ namespace da
 		if (0 >= mCreatureStat.CurHP)
 			mCreatureStat.CurHP = 0;
 		mCreatureAudio->Play(Resources::Find<AudioClip>(L"Hit_Monster"), 40.0f);
+
+		MonsterFindsPlayer(true);
 	}
 	void MonsterScript::MonsterDeadEffects()
 	{

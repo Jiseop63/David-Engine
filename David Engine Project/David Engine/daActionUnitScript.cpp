@@ -105,15 +105,16 @@ namespace da
 		{
 			mActionUnitCollider->ApplyComponentUsing(true);
 			mActionUnitCollider->SetSize(mUnitColliderSize);
+			mActionUnitAnimator->ApplyComponentUsing(false);
 
 			if (enums::eUnitUsageType::TextureProjectile == mUnitTypes.Usage)
-			{
-				// 텍스쳐만 나오는 경우 텍스쳐 세팅
+			{				
 				mActionUnitRenderer->SetMaterial(Resources::Find<Material>(L"TextureProjectileMaterial"));
-				mActionUnitRenderer->ChangeMaterialTexture(Resources::Find<Texture>(mUnitName));				
+				mActionUnitRenderer->ChangeMaterialTexture(Resources::Find<Texture>(mUnitInfo.Texture));
 			}
 			else if (enums::eUnitUsageType::AnimationProjectile == mUnitTypes.Usage)
 			{
+				mActionUnitAnimator->ApplyComponentUsing(true);
 				mActionUnitRenderer->SetMaterial(Resources::Find<Material>(L"AnimationProjectileMaterial"));
 
 				if (enums::eUnitLifeType::AnimationEnd == mUnitTypes.LifeCycle)
