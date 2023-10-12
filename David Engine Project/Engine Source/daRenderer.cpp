@@ -504,6 +504,7 @@ namespace renderer
 		Resources::Load<Texture>(L"CrossbowIdle", L"..\\Resources\\Texture\\Items\\CrossBow\\CrossbowIdle.png");
 		Resources::Load<Texture>(L"CrossbowShot", L"..\\Resources\\Texture\\Items\\CrossBow\\CrossbowShot.png");
 		Resources::Load<Texture>(L"CrossbowArrow", L"..\\Resources\\Texture\\Items\\CrossBow\\CrossbowArrow.png");
+		Resources::Load<Texture>(L"QuarterStaff", L"..\\Resources\\Texture\\Items\\QuarterStaff\\QuarterStaff_Big.png");
 		
 
 		// effect
@@ -541,6 +542,12 @@ namespace renderer
 		Resources::Load<Texture>(L"DungeonSubBGTexture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\SubBG.png");
 		Resources::Load<Texture>(L"Close1FTexture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\close1F.png");
 		Resources::Load<Texture>(L"Open1FTexture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\open1F.png");
+
+		// dungeon etc
+		Resources::Load<Texture>(L"FairyTexture", L"..\\Resources\\Texture\\Object\\FairyL.png");
+		// light, box 추가하면 좋을거같은데
+
+
 		// monster
 		Resources::Load<Texture>(L"SkelSprite", L"..\\Resources\\Texture\\Monster\\Skel\\SpriteSheet.png");
 		Resources::Load<Texture>(L"SkelHead", L"..\\Resources\\Texture\\Monster\\Skel\\SkelHead.png");
@@ -582,6 +589,7 @@ namespace renderer
 		Resources::Load<Texture>(L"2FStage1Texture", L"..\\Resources\\Texture\\Scene_Dungeon2F\\EntranceBossroom.png");
 		Resources::Load<Texture>(L"2FStage2Texture", L"..\\Resources\\Texture\\Scene_Dungeon2F\\Bossroom.png");
 
+		// sound
 		Resources::Load<AudioClip>(L"title", L"..\\Resources\\Sound\\background\\title.ogg");
 		Resources::Load<AudioClip>(L"Town", L"..\\Resources\\Sound\\background\\0.Town.ogg");
 		Resources::Load<AudioClip>(L"JailField", L"..\\Resources\\Sound\\background\\1.JailField.ogg");
@@ -602,7 +610,6 @@ namespace renderer
 
 
 
-		// sound
 		Resources::Load<AudioClip>(L"Jumping", L"..\\Resources\\Sound\\player\\Jumping.ogg");
 		Resources::Load<AudioClip>(L"dash", L"..\\Resources\\Sound\\player\\dash.ogg");
 		Resources::Load<AudioClip>(L"Hit_Player", L"..\\Resources\\Sound\\player\\Hit_Player.ogg");
@@ -653,6 +660,24 @@ namespace renderer
 			shader = Resources::Find<Shader>(L"SpriteShader");
 			material->SetShader(shader);
 			Resources::Insert<Material>(L"MeleeWeaponMaterial", material);
+		}
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"LongSwordIconMaterial", material);
+		}
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"CrossBowIconMaterial", material);
+		}
+		{
+			material = std::make_shared<Material>();
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"QuarterStaffIconMaterial", material);
 		}
 		{
 			material = std::make_shared<Material>();

@@ -69,9 +69,9 @@ namespace da
 		{
 			for (PortalScript* target : portals)
 			{
-				target->GateOpen();
-				SceneManager::GetPlayerScript()->DungeonClearSound();
+				target->GateOpen();				
 			}
+			SceneManager::GetPlayerScript()->DungeonClearSound();
 		}
 	}
 

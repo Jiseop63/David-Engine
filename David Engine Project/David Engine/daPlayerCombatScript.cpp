@@ -33,10 +33,41 @@ namespace da
 	}
 	void PlayerCombatScript::Update()
 	{
-		if (Input::GetKeyDown(eKeyCode::LBTN))
+		if (mWeaponItem)
 		{
-			ToDoAttack();
-		}		
+			if (mWeaponItem->GetItemInfo().UseAnimation)
+			{
+				if (Input::GetKey(eKeyCode::LBTN))
+					ToDoAttack();
+			}
+			else
+			{
+				if (Input::GetKeyDown(eKeyCode::LBTN))
+					ToDoAttack();
+			}
+
+			if (enums::eItemAttackType::Swing == mWeaponItem->GetItemInfo().AttackType)
+			{
+				if (Input::GetKeyDown(eKeyCode::LBTN))
+					ToDoAttack();
+			}
+			else if (enums::eItemAttackType::Shoot == mWeaponItem->GetItemInfo().AttackType)
+			{
+				if (Input::GetKey(eKeyCode::LBTN))
+					ToDoAttack();
+			}
+			else if (enums::eItemAttackType::Spin == mWeaponItem->GetItemInfo().AttackType)
+			{
+				if (Input::GetKeyDown(eKeyCode::LBTN))
+					mIsSpin = true;
+				if (Input::GetKeyUp(eKeyCode::LBTN))
+					mIsSpin = false;
+
+				if (Input::GetKey(eKeyCode::LBTN))
+					ToDoAttack();
+			}
+
+		}				
 		updateAttackCooldown();
 	}
 	void PlayerCombatScript::LateUpdate()
@@ -44,6 +75,29 @@ namespace da
 		CombatScript::updateWeaponPosition();
 		CombatScript::updateReverseRenderer();
 		updateWeaponRotation();
+
+		if (mWeaponItem)
+		{
+			if (enums::eItemAttackType::Spin == mWeaponItem->GetItemInfo().AttackType)
+			{
+				if (mIsSpin)
+				{
+					float currrentZ = mCombatTransform->GetRotation().z;
+					mSpinRotate += (float)Time::DeltaTime() * 30.0f;
+					currrentZ += mSpinRotate;
+					mCombatTransform->SetRotation(math::Vector3(0.0f,0.0f, currrentZ));
+				}
+				else
+				{
+					mSpinRotate = 0.0f;
+					float rotateZ = mCombatTransform->GetRotation().z;
+					rotateZ += 0.7850f;
+					mCombatTransform->SetRotation(math::Vector3(0.0f, 0.0f, rotateZ));
+				}
+			}
+		}
+
+		
 	}
 	void PlayerCombatScript::EquipWeapon(ItemScript* weaponItem)
 	{
@@ -190,7 +244,7 @@ namespace da
 			{
 				mCombatAnimator->PlayAnimation(mWeaponItem->GetItemInfo().Animation.Action);
 			}
-
+			
 
 			ActionUnitScript* actionUnit = mOwnerScript->callActionUnit();
 

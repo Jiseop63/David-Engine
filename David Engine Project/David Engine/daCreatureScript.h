@@ -88,8 +88,8 @@ namespace da
 	protected:
 		Transform*				mCreatureTransform;
 		MeshRenderer*			mCreatureRenderer;
-		Rigidbody*				mCreatureRigidbody;
 		Animator*				mCreatureAnimator;
+		Rigidbody*				mCreatureRigidbody;
 		Collider2D*				mCreatureBodyCollider;
 		Collider2D*				mCreatureFootCollider;
 		AudioSource*			mCreatureAudio;

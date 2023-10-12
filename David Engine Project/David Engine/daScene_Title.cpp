@@ -684,7 +684,7 @@ namespace da
 				// A, B Padding 차이 // X : armourPadding * 3, Y : armourPadding
 			}
 
-			GameObject* longSwordItemObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"WeaponIconAMaterial");
+			GameObject* longSwordItemObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"LongSwordIconMaterial");
 			longSwordItemObject->SetObjectState(GameObject::eObjectState::Inactive);
 
 			// Item Setting
@@ -695,7 +695,7 @@ namespace da
 
 				std::shared_ptr<Texture> longswordTexture = Resources::Find<Texture>(L"LongSword");
 				longswordItemScript->SetItemTexture(longswordTexture);
-				longswordItemScript->SetItemMaterial(Resources::Find<Material>(L"MeleeWeaponMaterial"));
+				longswordItemScript->SetItemMaterial(Resources::Find<Material>(L"LongSwordIconMaterial"));
 				longswordItemScript->SetItemScale(math::Vector3(0.360f * 0.760f, 0.880f * 0.760f, 1.0f));
 				longswordItemScript->SetItemOffset(math::Vector3(-0.10f, -0.80f, 0.0f));
 
@@ -714,7 +714,7 @@ namespace da
 
 				structs::sActionUnitStat itemProjectileStat;
 				itemProjectileStat.Animation.Action = L"Swing";
-				itemProjectileStat.AtaackDamage = 6.50f;
+				itemProjectileStat.AtaackDamage = 7.50f;
 				longswordItemScript->SetProjectileStat(itemProjectileStat);
 
 				longswordItemScript->SetProjectileScale(math::Vector3(1.40f, 1.40f, 1.0f));
@@ -726,7 +726,7 @@ namespace da
 
 			inventoryScript->AddItemToSlot(enums::eItemSlot::Slot00, ItemManager::GetItem(L"LongSword"));
 
-			GameObject* crossbowItemObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"WeaponIconBMaterial");
+			GameObject* crossbowItemObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"CrossBowIconMaterial");
 			crossbowItemObject->SetObjectState(GameObject::eObjectState::Inactive);
 
 			// Item Setting
@@ -769,6 +769,48 @@ namespace da
 			}
 			ItemManager::AddItem(L"Crossbow", crossbowItemScript);
 			inventoryScript->AddItemToSlot(enums::eItemSlot::Slot02, ItemManager::GetItem(L"Crossbow"));
+
+			GameObject* quarterStaffItemObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"QuarterStaffIconMaterial");
+			quarterStaffItemObject->SetObjectState(GameObject::eObjectState::Inactive);
+
+			// Item Setting
+			ItemScript* quarterStaffItemScript = quarterStaffItemObject->AddComponent<ItemScript>();
+			itemName = L"QuarterStaff";
+			{
+				longswordItemScript->SetItemName(itemName);
+
+				std::shared_ptr<Texture> quarterStaffTexture = Resources::Find<Texture>(L"QuarterStaff");
+				quarterStaffItemScript->SetItemTexture(quarterStaffTexture);
+				quarterStaffItemScript->SetItemMaterial(Resources::Find<Material>(L"QuarterStaffIconMaterial"));
+				quarterStaffItemScript->SetItemScale(math::Vector3(0.20f * 0.760f, 1.320f * 0.760f, 1.0f));
+				quarterStaffItemScript->SetItemOffset(math::Vector3(0.0f, -0.40f, 0.0f));
+
+				structs::sItemInfo itemInfo;
+				itemInfo.UseAnimation = false;
+				itemInfo.AttackType = enums::eItemAttackType::Spin;
+				itemInfo.AttackDelayTime.End = 0.150f;
+				itemInfo.Sound = L"swing";
+				quarterStaffItemScript->SetItemInfo(itemInfo);
+
+				structs::sActionUnitTypes itemProjectileTypes;
+				itemProjectileTypes.Usage = enums::eUnitUsageType::InvisibleProjectile;
+				itemProjectileTypes.LifeCycle = enums::eUnitLifeType::Duration;		// Range인 경우 실행할 애니메이션은 Idle
+				itemProjectileTypes.Action = enums::eUnitActionType::Stay;
+				quarterStaffItemScript->SetProjectileTypes(itemProjectileTypes);
+
+				structs::sActionUnitStat itemProjectileStat;
+				itemProjectileStat.DurationTime.End = 0.10f;
+				itemProjectileStat.AtaackDamage = 4.50f;
+				quarterStaffItemScript->SetProjectileStat(itemProjectileStat);
+
+				quarterStaffItemScript->SetProjectileScale(math::Vector3(1.40f, 1.40f, 1.0f));
+				quarterStaffItemScript->SetProjectileOffset(math::Vector3(0.0f, 0.0f, 0.0f));
+				quarterStaffItemScript->SetProjectileSize(math::Vector2(1.0f, 1.0f));
+			}
+			// Add item
+			ItemManager::AddItem(L"QuarterStaff", quarterStaffItemScript);
+
+			inventoryScript->AddItemToSlot(enums::eItemSlot::Slot20, ItemManager::GetItem(L"QuarterStaff"));
 
 			inventoryScript->SetPlayerScript(playerObject);
 		}

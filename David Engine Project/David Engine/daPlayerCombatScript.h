@@ -32,5 +32,7 @@ namespace da
 
 		bool						mWeaponCooldownReady;
 		structs::sActionTimeValues	mWeaponCooldownTime;
+		bool						mIsSpin;
+		float						mSpinRotate;
 	};
 }
