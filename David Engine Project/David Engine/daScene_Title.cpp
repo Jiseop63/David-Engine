@@ -788,7 +788,7 @@ namespace da
 				structs::sItemInfo itemInfo;
 				itemInfo.UseAnimation = false;
 				itemInfo.AttackType = enums::eItemAttackType::Spin;
-				itemInfo.AttackDelayTime.End = 0.150f;
+				itemInfo.AttackDelayTime.End = 0.20f;
 				itemInfo.Sound = L"swing";
 				quarterStaffItemScript->SetItemInfo(itemInfo);
 

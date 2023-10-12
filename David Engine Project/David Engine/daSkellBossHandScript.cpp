@@ -117,6 +117,7 @@ namespace da
 		effectUnitInfo.AtaackDamage = 2.0f;
 		actionUnit->SetUnitInfo(effectUnitInfo);
 		actionUnit->SetUnitScale(math::Vector3(10.50f, 10.50f, 1.0f));
+		actionUnit->SetUnitColliderSize(math::Vector2(1.0f, 0.050f));
 
 		math::Vector3 offsetVector;
 		if (misLeftHand)

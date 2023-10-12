@@ -380,7 +380,7 @@ namespace da
     }
     void PlayerScript::DungeonClearSound()
     {
-        mCreatureAudio->Play(Resources::Find<AudioClip>(L"stoneDoor"), 2.50f);
+        mCreatureAudio->Play(Resources::Find<AudioClip>(L"stoneDoor"), 0.30f);
     }
     void PlayerScript::todoDustSpawn()
     {

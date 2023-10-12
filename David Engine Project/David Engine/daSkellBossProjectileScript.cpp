@@ -26,7 +26,7 @@ namespace da
 
 		// 애니메이션 초기화
 		mActionUnitAnimator->Create(L"SkellBossProjectile", Resources::Find<Texture>(L"SkellBossProjectile"), math::Vector2::Zero, math::Vector2(50.0f, 50.0f), 10, math::Vector2::Zero, 0.10f, 80.0f);
-		mActionUnitAnimator->Create(L"SkellBossLaser", Resources::Find<Texture>(L"SkellBossLaser"), math::Vector2::Zero, math::Vector2(256.0f, 55.0f), 7, math::Vector2::Zero, 0.20f, 400.0f);
+		mActionUnitAnimator->Create(L"SkellBossLaser", Resources::Find<Texture>(L"SkellBossLaser"), math::Vector2::Zero, math::Vector2(256.0f, 55.0f), 7, math::Vector2::Zero, 0.10f, 400.0f);
 		mActionUnitAnimator->CompleteEvent(L"SkellBossLaser") = std::bind(&ActionUnitScript::ClearUnit, this);
 	}
 

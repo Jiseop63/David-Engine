@@ -62,13 +62,14 @@ namespace da
 		mCreatureAnimator->Create(L"SkellBossDead", texture, math::Vector2(0.0f, 227.0f), math::Vector2(85.0f, 128.0f), 1, math::Vector2(0.0f, 0.0f), 0.10f, 150.0f);
 		
 		mCreatureAnimator->CompleteEvent(L"SkellBossAttact") = std::bind(&SkellBossScript::attackingAnimation, this);
+		mCreatureAnimator->ActionEvent(L"SkellBossAttact", 4) = std::bind(&SkellBossScript::attackingAnimation, this);
 		mCreatureAnimator->PlayAnimation(L"SkellBossIdle");
 
 
 		mMaxLaserCount = 3;
 		mCurLaserCount = mMaxLaserCount;
 		// 선딜 (공격 패턴 대기시간)
-		mPrepareDurationTime = 5.50f;
+		mPrepareDurationTime = 3.0f;
 		mPrepareDurationDecay = mPrepareDurationTime;
 
 		// 후딜
@@ -134,14 +135,15 @@ namespace da
 	}
 	void SkellBossScript::SkellBossHandleIdle()
 	{
+		// 공격 준비가 되면 Attack 상태로 변경
 		if (!mPrepareAttack)
 			mBossActiveState = eBossState::Attack;
 	}
 	void SkellBossScript::SkellBossHandleAttack()
 	{
-		// 공격 선딜
+		// 공격 선딜 3초 대기
 		prepareForAttack();
-		// 패턴 선택 및 공격
+		// 패턴 선택 및 공격 진행
 		doAttack();
 		// 공격 후딜
 		readyForAttackDelay();
@@ -162,7 +164,7 @@ namespace da
 			mCreatureTransform->SetScale(math::Vector3(5.0f, 5.0f, 1.0f));
 			mCreatureAnimator->PlayAnimation(L"SkellBossDead");
 			mCreatureFootCollider->SetSize(math::Vector2(0.10f, 0.10f));
-
+			mCreatureFootCollider->SetCenter(math::Vector2(0.0f, -0.80f));
 			mDeadTrigger = false;
 		}
 	}
