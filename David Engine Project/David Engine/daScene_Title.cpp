@@ -757,9 +757,9 @@ namespace da
 				crossbowItemScript->SetProjectileTypes(itemProjectileTypes);
 
 				structs::sActionUnitStat itemProjectileStat;
-				itemProjectileStat.AtaackDamage = 4.50f;
-				itemProjectileStat.Range = 6.50f;
-				itemProjectileStat.Speed = 10.0f;
+				itemProjectileStat.AtaackDamage = 6.0f;
+				itemProjectileStat.Range = 7.0f;
+				itemProjectileStat.Speed = 20.0f;
 				itemProjectileStat.Texture = L"CrossbowArrow";
 				crossbowItemScript->SetProjectileStat(itemProjectileStat);
 

@@ -51,7 +51,6 @@ namespace da
 	{
 		CombatScript::updateWeaponPosition();
 		CombatScript::updateReverseRenderer();
-
 		bool value = isLeft();
 		if (value)
 			mWeaponAngle = 1.570f;
@@ -67,6 +66,7 @@ namespace da
 	void SkelCombatScript::attackProjectile()
 	{
 		ActionUnitScript* actionUnit = mOwnerScript->callActionUnit();
+		actionUnit->SetUnitPosition(mOwnerPosition);
 
 		structs::sActionUnitTypes mMonsterUnitTypes = {};
 		mMonsterUnitTypes.Usage = enums::eUnitUsageType::InvisibleProjectile;

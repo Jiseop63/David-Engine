@@ -515,6 +515,7 @@ namespace renderer
 		Resources::Load<Texture>(L"SlashFX", L"..\\Resources\\Texture\\Adventurer\\FX\\SlashFX.png");
 		Resources::Load<Texture>(L"DyingFX", L"..\\Resources\\Texture\\Adventurer\\FX\\DyingFX.png");
 		Resources::Load<Texture>(L"DashEffect", L"..\\Resources\\Texture\\Adventurer\\DashEffect.png");
+		Resources::Load<Texture>(L"HitEffect", L"..\\Resources\\Texture\\FX\\Arrow\\ArrowFX.png");
 
 
 

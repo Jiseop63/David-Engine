@@ -33,16 +33,19 @@ namespace da
 	}
 
 	void CombatScript::updateReverseRenderer()
-	{		
+	{
+		mOwnerDir = mOwnerScript->GetCreatureDir();
 		bool value = isLeft();
+		/*if (value)*/
+		
 		mCombatRenderer->SetReverse(value);
 	}
 
 	void CombatScript::updateWeaponPosition()
 	{
 		// 플레이어 위치 가져오기
-		math::Vector3 ownerPosition = mOwnerScript->GetCreatureTransform()->GetPosition();
+		mOwnerPosition = mOwnerScript->GetCreatureTransform()->GetPosition();
 		// 내 위치에 적용하기
-		mCombatTransform->SetPosition(ownerPosition);
+		mCombatTransform->SetPosition(mOwnerPosition);
 	}
 }

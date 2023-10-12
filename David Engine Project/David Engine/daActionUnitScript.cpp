@@ -77,7 +77,7 @@ namespace da
 		// Transform ¼¼ÆÃ		
 		mActionUnitTransform->SetScale(mUnitScale);		
 		mUnitOffset.y += -0.20f;
-		mUnitBeginPosition = mOwnerScript->GetCreatureTransform()->GetPosition() + mUnitOffset;
+		mUnitBeginPosition = mUnitPosition + mUnitOffset;
 		mActionUnitTransform->SetPosition(mUnitBeginPosition);
 		if (enums::eUnitActionType::UsingRotation == mUnitTypes.Action)
 			mActionUnitTransform->SetRotation(math::Vector3(0.0f, 0.0f, mUnitRotateAngle));
@@ -128,6 +128,7 @@ namespace da
 	void ActionUnitScript::ClearUnit()
 	{
 		mUnitInfo.Clear();
+		mUnitPosition = math::Vector3::Zero;
 		mUnitBeginPosition = math::Vector3::Zero;
 		mUnitScale = math::Vector3::One;
 		mUnitColliderSize = math::Vector2::One;

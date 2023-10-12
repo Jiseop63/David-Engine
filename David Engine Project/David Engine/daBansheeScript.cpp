@@ -60,9 +60,9 @@ namespace da
 
 		mChaseDurationTime = 1.50f;
 		mChaseDurationDecay = mChaseDurationTime;
-		mPrepareDurationTime = 1.750f;
+		mPrepareDurationTime = 1.250f;
 		mPrepareDurationDecay = mPrepareDurationTime;
-		mReadyDurationTime = 7.50f;
+		mReadyDurationTime = 5.50f;
 		mReadyDurationDecay = mReadyDurationTime;
 
 		// 충돌체 설정하기
@@ -231,6 +231,7 @@ namespace da
 			for (int index = 0; index < 10; ++index)
 			{
 				ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
+				actionUnit->SetUnitPosition(mCreatureTransform->GetPosition());
 
 				structs::sActionUnitTypes mMonsterUnitTypes = {};
 				mMonsterUnitTypes.Usage = enums::eUnitUsageType::AnimationProjectile;

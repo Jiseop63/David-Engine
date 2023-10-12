@@ -21,7 +21,7 @@ namespace da
 #pragma endregion
 #pragma region update Transform & Render & Condition
 	protected:
-		bool isLeft() { if (0 >= mOwnerDir.x) return true; else return false; }
+		bool isLeft() { return (0 >= mOwnerDir.x) ? true : false; }
 		void updateReverseRenderer();
 		virtual void updateWeaponPosition();
 		virtual void updateWeaponRotation() {} // 상속해서 만드세요

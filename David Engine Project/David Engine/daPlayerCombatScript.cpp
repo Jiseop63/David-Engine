@@ -247,7 +247,7 @@ namespace da
 			
 
 			ActionUnitScript* actionUnit = mOwnerScript->callActionUnit();
-
+			actionUnit->SetUnitPosition(mOwnerPosition);
 			actionUnit->SetUnitTypes(mWeaponItem->GetProjectileTypes());
 			actionUnit->SetUnitInfo(mWeaponItem->GetProjectileStat());
 

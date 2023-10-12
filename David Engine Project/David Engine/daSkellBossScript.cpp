@@ -315,6 +315,7 @@ namespace da
 				for (size_t projectile = 0; projectile < 4; ++projectile)
 				{
 					ActionUnitScript* actionUnit = CallBossProjectile();
+					actionUnit->SetUnitPosition(mCreatureTransform->GetPosition());
 
 					structs::sActionUnitTypes mMonsterUnitTypes = {};
 					mMonsterUnitTypes.Usage = enums::eUnitUsageType::AnimationProjectile;

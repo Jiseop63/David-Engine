@@ -55,6 +55,7 @@ namespace da
 	{
 		mMonsterCombatScript->GetOwner()->SetObjectStates(GameObject::eObjectState::Inactive);
 		ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
+		actionUnit->SetUnitPosition(mCreatureTransform->GetPosition());
 
 		structs::sActionUnitTypes effectUnitTypes = {};
 		effectUnitTypes.Usage = enums::eUnitUsageType::JustAnimation;

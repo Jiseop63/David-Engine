@@ -140,26 +140,26 @@ namespace da
 	}
 	void CreatureScript::CallHitEffect(math::Vector3 position)
 	{
-		if (7 <= mHitEffectAngle)
-			mHitEffectAngle = 0.0f;
-		mHitEffectAngle += 1.80f;
-		// 방향 구하기
-		ActionUnitScript* actionUnit = callActionUnit();
+		//if (7 <= mHitEffectAngle)
+		//	mHitEffectAngle = 0.0f;
+		//mHitEffectAngle += 1.80f;
+		//// 방향 구하기
+		//ActionUnitScript* actionUnit = callActionUnit();
 
-		structs::sActionUnitTypes effectUnitTypes = {};
-		effectUnitTypes.Usage = enums::eUnitUsageType::JustAnimation;
-		effectUnitTypes.LifeCycle = enums::eUnitLifeType::AnimationEnd;
-		effectUnitTypes.Action = enums::eUnitActionType::Stay;
-		actionUnit->SetUnitTypes(effectUnitTypes);
+		//structs::sActionUnitTypes effectUnitTypes = {};
+		//effectUnitTypes.Usage = enums::eUnitUsageType::JustAnimation;
+		//effectUnitTypes.LifeCycle = enums::eUnitLifeType::AnimationEnd;
+		//effectUnitTypes.Action = enums::eUnitActionType::Stay;
+		//actionUnit->SetUnitTypes(effectUnitTypes);
 
-		structs::sActionUnitStat effectUnitInfo = {};
-		effectUnitInfo.Animation.Action = L"Slash";
-		actionUnit->SetUnitInfo(effectUnitInfo);
-		actionUnit->SetUnitRotateAngle(mHitEffectAngle);
-		actionUnit->SetUnitReverse(isLeft());
-		actionUnit->SetUnitScale(math::Vector3(1.750f, 1.750f, 1.0f));
-		actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
-		actionUnit->OnActive();
-		actionUnit->SetUnitOverridePosition(position);
+		//structs::sActionUnitStat effectUnitInfo = {};
+		//effectUnitInfo.Animation.Action = L"Slash";
+		//actionUnit->SetUnitInfo(effectUnitInfo);
+		//actionUnit->SetUnitRotateAngle(mHitEffectAngle);
+		//actionUnit->SetUnitReverse(isLeft());
+		//actionUnit->SetUnitScale(math::Vector3(1.750f, 1.750f, 1.0f));
+		//actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
+		//actionUnit->OnActive();
+		//actionUnit->SetUnitOverridePosition(position);
 	}
 }

@@ -236,6 +236,7 @@ namespace da
         if (!mIsDead)
         {
             ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
+            actionUnit->SetUnitPosition(mCreatureTransform->GetPosition());
 
             structs::sActionUnitTypes effectUnitTypes = {};
             effectUnitTypes.Usage = enums::eUnitUsageType::JustAnimation;
@@ -359,6 +360,7 @@ namespace da
                 mDustDelayTime.Clear();
 
                 ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
+                actionUnit->SetUnitPosition(mCreatureTransform->GetPosition());
 
                 structs::sActionUnitTypes effectUnitTypes = {};
                 effectUnitTypes.Usage = enums::eUnitUsageType::JustAnimation;
@@ -474,6 +476,7 @@ namespace da
                 if (mAfterimageTime.End <= mAfterimageTime.Start)
                 {
                     ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
+                    actionUnit->SetUnitPosition(mCreatureTransform->GetPosition());
 
                     structs::sActionUnitTypes effectUnitTypes = {};
                     effectUnitTypes.Usage = enums::eUnitUsageType::AnimationProjectile;
@@ -510,6 +513,7 @@ namespace da
                 ChangeState(ePlayerState::Jump);
 
             ActionUnitScript* actionUnit = CreatureScript::callActionUnit();
+            actionUnit->SetUnitPosition(mCreatureTransform->GetPosition());
 
             structs::sActionUnitTypes effectUnitTypes = {};
             effectUnitTypes.Usage = enums::eUnitUsageType::JustAnimation;

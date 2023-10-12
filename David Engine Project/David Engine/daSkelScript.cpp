@@ -73,7 +73,7 @@ namespace da
 		// ½ºÅÝ ÃÊ±âÈ­
 		mCreatureStat.MaxHP = 25.0f;
 		mCreatureStat.CurHP = 25.0f;
-		mCreatureStat.MoveSpeed = 1.250f;
+		mCreatureStat.MoveSpeed = 3.250f;
 
 
 		mMonsterAttackStat.AttackRange = 0.750f;
@@ -95,6 +95,7 @@ namespace da
 		skelFSM();
 		lifeCheck();
 	}
+
 	void SkelScript::LateUpdate()
 	{
 		CreatureScript::visualUpdate();
@@ -116,9 +117,13 @@ namespace da
 
 		mDistanceFromPlayer = mPlayerScript->GetOwner()->GetTransform()->GetPosition().x - mCreatureTransform->GetPosition().x;
 		if (0 >= mDistanceFromPlayer)
+		{
 			mCreatureDir = -math::Vector2::UnitX;
+		}
 		else
+		{
 			mCreatureDir = math::Vector2::UnitX;
+		}
 	}
 	void SkelScript::lifeCheck()
 	{

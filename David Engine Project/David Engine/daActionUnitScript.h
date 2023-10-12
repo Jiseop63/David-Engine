@@ -27,6 +27,7 @@ namespace da
 #pragma endregion
 
 #pragma region Initialize transform
+		void SetUnitPosition(math::Vector3 position) { mUnitPosition = position; }
 		void SetUnitScale(math::Vector3 scale) { mUnitScale = scale; }
 		void SetUnitColliderSize(math::Vector2 size) { mUnitColliderSize = size; }
 		void SetUnitOffset(math::Vector3 offset) { mUnitOffset = offset; }
@@ -63,6 +64,7 @@ namespace da
 
 	protected:
 		math::Vector3	mUnitScale;
+		math::Vector3	mUnitPosition;
 		math::Vector3	mUnitBeginPosition;
 		math::Vector3	mUnitOffset;
 		math::Vector3	mUnitDirection;

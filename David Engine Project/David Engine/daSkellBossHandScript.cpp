@@ -104,6 +104,7 @@ namespace da
 		mOwnerScript->GetCreatureAudio()->Play(Resources::Find<AudioClip>(L"jumperLaserFire"), 10.0f, false);
 
 		ActionUnitScript* actionUnit = mOwnerScript->CallBossProjectile();
+		actionUnit->SetUnitPosition(mHandTransform->GetPosition());
 
 		structs::sActionUnitTypes effectUnitTypes = {};
 		effectUnitTypes.Usage = enums::eUnitUsageType::AnimationProjectile;
@@ -126,8 +127,8 @@ namespace da
 
 		actionUnit->SetUnitOffset(offsetVector);
 		actionUnit->OnActive();
-		math::Vector3 handPosition = mHandTransform->GetPosition();
-		actionUnit->SetUnitOverridePosition(handPosition + offsetVector);
+		/*math::Vector3 handPosition = mHandTransform->GetPosition();
+		actionUnit->SetUnitOverridePosition(handPosition + offsetVector);*/
 	}
 	void SkellBossHandScript::retIdle()
 	{
