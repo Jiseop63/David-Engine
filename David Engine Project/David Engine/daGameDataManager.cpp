@@ -5,6 +5,7 @@
 #include "daLifeBarScript.h"
 #include "daDashCountScript.h"
 #include "daDungeonPortalScript.h"
+#include "daFairyScript.h"
 
 namespace da
 {
@@ -67,11 +68,18 @@ namespace da
 		// 만약 몬스터를 다잡은 경우
 		if (0 == mCurrentMonsterCount)
 		{
+			// 던전 열어주고
 			for (PortalScript* target : portals)
 			{
-				target->GateOpen();				
+				target->GateOpen();
 			}
+			// 사운드 재생
 			SceneManager::GetPlayerScript()->DungeonClearSound();
+			// 회복객체 배치하기
+			FairyScript* fairy = SceneManager::GetActiveScene()->GetFairySript();
+
+			if (fairy)
+				fairy->DungeonFinished();
 		}
 	}
 

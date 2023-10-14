@@ -67,15 +67,6 @@ namespace da
 	}
 	void Scene_Dungeon1F_Stage3::addBackgroundObjects()
 	{
-
-		//// Close Door : 57, 65
-		//{
-		//	GameObject* doorObject = objects::InstantiateGameObject
-		//		<GameObject>(this, enums::eLayerType::ENV, L"Close1FMaterial");
-		//	doorObject->GetTransform()->SetScale(math::Vector3(0.570f * 4.0f, 0.650f * 4.0f, 1.0f));
-		//	doorObject->GetTransform()->SetPosition(math::Vector3(0.0f, 1.90f, FrontLayerZ));
-		//}
-
 		// Stage : 288 256
 		{
 			GameObject* stageObject = objects::InstantiateGameObject
@@ -196,6 +187,12 @@ namespace da
 		{
 			BansheeScript* bansheeScript = objects::InstantiateBanshee(this);
 			bansheeScript->GetOwner()->GetTransform()->SetPosition(Vector3(3.50f, 2.80f, ObjectZ));
+		}
+
+		{
+			FairyScript* fairyScript = objects::InstantiateFairy(this);
+			fairyScript->SetPosition(-2.0f, -1.0f);
+			mFairySript = fairyScript;
 		}
 	}
 }

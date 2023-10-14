@@ -103,7 +103,7 @@ namespace da
     void PlayerScript::inputDebug()
     {
         if (Input::GetKeyDown(eKeyCode::R))
-            GetHeal();
+            GetHeal(5.0f);
         if (Input::GetKeyDown(eKeyCode::E))
             downDashCount();
         if (Input::GetKeyDown(eKeyCode::T))
@@ -156,9 +156,8 @@ namespace da
             mCreatureStat.CurHP = 0;
         //GameDataManager::GetDamage(value);
     }
-    void PlayerScript::GetHeal()    
+    void PlayerScript::GetHeal(float value)
     {
-        float value = 5.0f;
         mCreatureStat.CurHP += value;
         if (mCreatureStat.MaxHP <= mCreatureStat.CurHP)
             mCreatureStat.CurHP = mCreatureStat.MaxHP;

@@ -332,7 +332,7 @@ namespace da
 					mMonsterUnitInfo.AtaackDamage = 1.250f;
 					actionUnit->SetUnitInfo(mMonsterUnitInfo);
 					actionUnit->SetUnitScale(math::Vector3(1.250f, 1.250f, 1.0f));
-					actionUnit->SetUnitColliderSize(math::Vector2(0.70f, 0.70f));
+					actionUnit->SetUnitColliderSize(math::Vector2(0.40f, 0.40f));
 
 					math::Vector3 moveDirection = math::daRotateVector3(math::Vector3::UnitY, projectile * 1.570f + mRotatePerSeconds);
 					actionUnit->SetUnitDirection(moveDirection);

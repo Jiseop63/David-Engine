@@ -248,7 +248,7 @@ namespace da::objects
 	static DungeonPortalScript* InstantiateDungeonPortal(Scene* scene)
 	{
 
-		GameObject* portal = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Portal, L"NoneMaterial");
+		GameObject* portal = InstantiateGameObject<GameObject>(scene, enums::eLayerType::ENV, L"NoneMaterial");
 		portal->SetName(L"portalObject");
 		DungeonPortalScript* portalScript = portal->AddComponent<DungeonPortalScript>();
 
@@ -260,15 +260,27 @@ namespace da::objects
 	static BossPortalScript* InstantiateBossPortal(Scene* scene)
 	{
 
-		GameObject* portal = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Portal, L"AnimationMaterial");
+		GameObject* portal = InstantiateGameObject<GameObject>(scene, enums::eLayerType::ENV, L"AnimationMaterial");
 		portal->SetName(L"portalObject");
 		BossPortalScript* portalScript = portal->AddComponent<BossPortalScript>();
 
-		GameObject* icon = InstantiateGameObject<GameObject>(scene, enums::eLayerType::Portal, L"IconMaterial");
+		GameObject* icon = InstantiateGameObject<GameObject>(scene, enums::eLayerType::ENV, L"IconMaterial");
 		portalScript->AddIconScript(icon);
 
 
 		return portalScript;
+	}
+	static FairyScript* InstantiateFairy(Scene* scene)
+	{
+		// enemyObject 추가
+		GameObject* fairy = InstantiateGameObject<GameObject>(scene, enums::eLayerType::ENV, L"AnimationMaterial");
+		fairy->SetName(L"fairyObject");
+		fairy->SetObjectState(GameObject::eObjectState::Inactive);
+		// MonsterScript 추가
+		FairyScript* fairyScript = fairy->AddComponent<FairyScript>();
+		fairyScript->SetName(L"fairyScript");
+
+		return fairyScript;
 	}
 #pragma endregion
 

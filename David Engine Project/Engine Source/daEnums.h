@@ -29,7 +29,6 @@ namespace da::enums
 
 		// Object Collision
 		ENV,
-		Portal,
 
 		Monster,
 		MonsterProjectile,

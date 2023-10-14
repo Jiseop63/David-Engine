@@ -9,11 +9,9 @@
 #include "daResources.h"
 #include "daTexture.h"
 
-
 // UI, Object, Components and Camera
 #include "daObjects.h"
 #include "daObjectsFastIncludeHeader.h"
-#include "daDungeonPortalScript.h"
 namespace da
 {
 	Scene_Dungeon1F_Stage2::Scene_Dungeon1F_Stage2()
@@ -266,6 +264,12 @@ namespace da
 		{
 			BansheeScript* bansheeScript = objects::InstantiateBanshee(this);
 			bansheeScript->GetOwner()->GetTransform()->SetPosition(Vector3(5.50f, 2.50f, ObjectZ));
+		}
+
+		{
+			FairyScript* fairyScript = objects::InstantiateFairy(this);
+			fairyScript->SetPosition(-1.50f, 2.0f);
+			mFairySript = fairyScript;
 		}
 	}
 }

@@ -112,6 +112,9 @@
     <Filter Include="Objects\AudioObject">
       <UniqueIdentifier>{36929ef9-de45-4cd3-aaf0-9fad4380c342}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Env">
+      <UniqueIdentifier>{0a13dac2-073b-49d2-adb8-bc7b6bfd0853}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -267,6 +270,9 @@
     <ClInclude Include="daBossLifebarScript.h">
       <Filter>Objects\Creature\Monster\SkellBoss</Filter>
     </ClInclude>
+    <ClInclude Include="daFairyScript.h">
+      <Filter>Objects\Env</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -418,6 +424,9 @@
     </ClCompile>
     <ClCompile Include="daAudioScript.cpp">
       <Filter>Objects\AudioObject</Filter>
+    </ClCompile>
+    <ClCompile Include="daFairyScript.cpp">
+      <Filter>Objects\Env</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

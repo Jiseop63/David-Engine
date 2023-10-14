@@ -814,6 +814,8 @@ namespace da
 
 			inventoryScript->SetPlayerScript(playerObject);
 		}
-#pragma endregion
+
+
+#pragma endregion		
 	}
 }

@@ -65,7 +65,7 @@ namespace da
 		CollisionManager::SetLayer(enums::eLayerType::Platform, enums::eLayerType::Playable);
 		CollisionManager::SetLayer(enums::eLayerType::Platform, enums::eLayerType::Monster);
 		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Monster);
-		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::Portal);
+		CollisionManager::SetLayer(enums::eLayerType::Playable, enums::eLayerType::ENV);
 
 		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"Town"), 60.0f, true);
 	}
@@ -221,7 +221,7 @@ namespace da
 	}
 	void Scene_Town::addGameObjects()
 	{
-		GameObject* portalObject = objects::InstantiateGameObject<GameObject>(this, enums::eLayerType::Portal, L"AnimationMaterial");
+		GameObject* portalObject = objects::InstantiateGameObject<GameObject>(this, enums::eLayerType::ENV, L"AnimationMaterial");
 		portalObject->GetTransform()->SetPosition(math::Vector3(-3.0f, -2.70f, 0.0f));
 		TownPortalScript* portalScript = portalObject->AddComponent<TownPortalScript>();
 		portalScript->SetExitPosition(math::Vector3(-3.0f, -0.20f, 0.0f));

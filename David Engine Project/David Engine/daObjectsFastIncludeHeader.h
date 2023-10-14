@@ -46,6 +46,7 @@
 #include "daBossPortalScript.h"
 #include "daPortalWallScript.h"
 #include "daPortalIconScript.h"
+#include "daFairyScript.h"
 
 // Player
 #include "daPlayerScript.h"

@@ -43,7 +43,7 @@ namespace da
 		
 
 		void GetDamage();
-		void GetHeal();
+		void GetHeal(float value);
 #pragma endregion
 
 #pragma region Input func
