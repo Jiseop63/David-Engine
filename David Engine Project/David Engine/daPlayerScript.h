@@ -68,6 +68,7 @@ namespace da
 		void updatePassPlatformCheck();
 		void updateBufferedJump();
 		void updateDashValidTime();
+		void updateDamageCap();
 #pragma endregion
 
 #pragma region FSM Func
@@ -190,14 +191,17 @@ namespace da
 	private:
 		ePlayerState	mActiveState;
 		ePlayerState	mpreviousState;
-
 		int				mMoveCondition;
+
 		structs::sActionTimeValues mDustDelayTime;
 		structs::sActionTimeValues mAfterimageTime;
-		structs::sActionTimeValues mDashTime;
 
+		structs::sActionTimeValues mDashTime;
 		bool			mDashRunning;
 		float			mHoldingDashTime;
+
+		structs::sActionTimeValues mDamageDelayTime;
+		bool			mhitted;
 		// ÇÃ·¿Æû ¿¹¿ÜÃ³¸® º¯¼ö
 	private:
 		bool			mJumping;

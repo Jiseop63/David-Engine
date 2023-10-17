@@ -72,6 +72,7 @@ namespace da
         updateDashValidTime();
 
         updatePlayerConditionCheck();
+        updateDamageCap();
         updatePlayerInput();
         updatePlayerFSM();
     }
@@ -261,10 +262,14 @@ namespace da
     }
     void PlayerScript::OnDamaged(float damage)
     {
-        mCreatureStat.CurHP -= damage;
-        if (0 >= mCreatureStat.CurHP)
-            mCreatureStat.CurHP = 0;
-        mCreatureAudio->Play(Resources::Find<AudioClip>(L"Hit_Player"), 60.0f);
+        if (!mhitted)
+        {
+            mCreatureStat.CurHP -= damage;
+            if (0 >= mCreatureStat.CurHP)
+                mCreatureStat.CurHP = 0;
+            mCreatureAudio->Play(Resources::Find<AudioClip>(L"Hit_Player"), 60.0f);
+            mhitted = true;
+        }        
     }
 #pragma endregion
 #pragma region Weapon Logic
@@ -506,6 +511,18 @@ namespace da
                 }
             }
         }
+        void PlayerScript::updateDamageCap()
+        {
+            if (mhitted)
+            {
+                mDamageDelayTime.Start += (float)Time::DeltaTime();
+                if (mDamageDelayTime.TimeOut())
+                {
+                    mDamageDelayTime.Clear();
+                    mhitted = false;
+                }
+            }
+        }
         void PlayerScript::todoJump()
         {
             if (ePlayerState::Jump != mActiveState)
@@ -594,6 +611,7 @@ namespace da
         mDustDelayTime.End = 0.250f;
         mAfterimageTime.End = 0.0550f;
         mDashTime.End = 0.20f;
+        mDamageDelayTime.End = 0.1250f;
     }
 #pragma endregion
 #pragma region Collision Func
