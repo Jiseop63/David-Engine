@@ -162,6 +162,7 @@
     <ClInclude Include="daCreatureScript.h" />
     <ClInclude Include="daDungeonPortalScript.h" />
     <ClInclude Include="daFairyScript.h" />
+    <ClInclude Include="daItemBox.h" />
     <ClInclude Include="daItemIconScript.h" />
     <ClInclude Include="daItemManager.h" />
     <ClInclude Include="daItemScript.h" />

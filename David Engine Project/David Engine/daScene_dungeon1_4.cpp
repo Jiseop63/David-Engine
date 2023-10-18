@@ -23,7 +23,7 @@ namespace da
 	{
 		addBackgroundObjects();
 		addGameObjects();
-		GameDataManager::InitializeMonsterCount(eDungeonScene::dungeon1_4, 1);
+		GameDataManager::InitializeMonsterCount(eDungeonScene::dungeon1_4, 6);
 	}
 	void Scene_dungeon1_4::Update()
 	{
@@ -169,9 +169,38 @@ namespace da
 			skelScript->GetOwner()->GetTransform()->SetPosition(math::Vector3(1.50f, 0.0f, ObjectZ));
 		}
 
+		// test enemy
+		{
+			BansheeScript* bansheeScript = objects::InstantiateBanshee(this);
+			bansheeScript->GetOwner()->GetTransform()->SetPosition(math::Vector3(-2.750f, 3.50f, ObjectZ));
+		}
+
+		// test enemy
+		{
+			BansheeScript* bansheeScript = objects::InstantiateBanshee(this);
+			bansheeScript->GetOwner()->GetTransform()->SetPosition(math::Vector3(-0.30f, 1.0f, ObjectZ));
+		}
+
+		// test enemy
+		{
+			BansheeScript* bansheeScript = objects::InstantiateBanshee(this);
+			bansheeScript->GetOwner()->GetTransform()->SetPosition(math::Vector3(4.0f, -3.50f, ObjectZ));
+		}
+		// test enemy
+		{
+			BansheeScript* bansheeScript = objects::InstantiateBanshee(this);
+			bansheeScript->GetOwner()->GetTransform()->SetPosition(math::Vector3(5.50f, 4.0f, ObjectZ));
+		}
+		// test enemy
+		{
+			SkelScript* skelScript = objects::InstantiateSkel(this);
+			skelScript->GetOwner()->GetTransform()->SetPosition(math::Vector3(-2.0f, 0.20f, ObjectZ));
+		}
+
+
 		{
 			FairyScript* fairyScript = objects::InstantiateFairy(this);
-			fairyScript->SetPosition(-1.50f, 2.0f);
+			fairyScript->SetPosition(6.50f, 2.0f);
 			mFairySript = fairyScript;
 		}
 	}

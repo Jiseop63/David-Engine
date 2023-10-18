@@ -33,7 +33,7 @@ namespace da
 			// 대상의 채력을 회복시킴
 			PlayerScript* player = creatureObj->GetComponent<PlayerScript>();
 			player->GetHeal(10.0f);
-			mFairyAudio->Play(Resources::Find<AudioClip>(L"Heal"), 100.0f, false);
+			mFairyAudio->Play(Resources::Find<AudioClip>(L"Heal"), 175.0f, false);
 
 			// 나를 비활성화
 			GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);

@@ -52,7 +52,7 @@ namespace da
 		mCreatureStat.MaxHP = 24.0f;
 		mCreatureStat.CurHP = mCreatureStat.MaxHP;
 
-		mMonsterAttackStat.AttackRange = 5.0f;
+		mMonsterAttackStat.AttackRange = 7.0f;
 		mMonsterAttackStat.AttackDelayAccumulateTime = 0.0f;
 		mMonsterAttackStat.AttackDelay = 3.0f;
 
@@ -240,8 +240,8 @@ namespace da
 				actionUnit->SetUnitTypes(mMonsterUnitTypes);
 
 				structs::sActionUnitStat mMonsterUnitInfo = {};
-				mMonsterUnitInfo.Speed = 2.20f;
-				mMonsterUnitInfo.Range = 4.50f;
+				mMonsterUnitInfo.Speed = 2.750f;
+				mMonsterUnitInfo.Range = 6.50f;
 				mMonsterUnitInfo.Animation.Idle = L"BansheeBulletIdle";
 				mMonsterUnitInfo.Animation.Action = L"BansheeBulletHit";
 				mMonsterUnitInfo.AtaackDamage = 3.0f;

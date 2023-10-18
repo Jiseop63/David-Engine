@@ -115,6 +115,12 @@
     <Filter Include="Objects\Env\Portal\BossPortal">
       <UniqueIdentifier>{46f631a2-77a8-442b-8cfa-db8a9ca3d0d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Env\Fairy">
+      <UniqueIdentifier>{1884020f-04d4-4293-b891-cb9c93ab1d47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Env\ItemBox">
+      <UniqueIdentifier>{1fc5020b-b043-4439-a65a-e7ef5303a0b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -255,9 +261,6 @@
     <ClInclude Include="daBossLifebarScript.h">
       <Filter>Objects\Creature\Monster\SkellBoss</Filter>
     </ClInclude>
-    <ClInclude Include="daFairyScript.h">
-      <Filter>Objects\Env</Filter>
-    </ClInclude>
     <ClInclude Include="daScene_dungeon1_1.h">
       <Filter>Scenes\03 Dungeon</Filter>
     </ClInclude>
@@ -281,6 +284,12 @@
     </ClInclude>
     <ClInclude Include="daScene_dungeon2_boss.h">
       <Filter>Scenes\03 Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="daFairyScript.h">
+      <Filter>Objects\Env\Fairy</Filter>
+    </ClInclude>
+    <ClInclude Include="daItemBox.h">
+      <Filter>Objects\Env\ItemBox</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -419,9 +428,6 @@
     <ClCompile Include="daAudioScript.cpp">
       <Filter>Objects\AudioObject</Filter>
     </ClCompile>
-    <ClCompile Include="daFairyScript.cpp">
-      <Filter>Objects\Env</Filter>
-    </ClCompile>
     <ClCompile Include="daScene_dungeon1_1.cpp">
       <Filter>Scenes\03 Dungeon</Filter>
     </ClCompile>
@@ -445,6 +451,9 @@
     </ClCompile>
     <ClCompile Include="daScene_dungeon2_boss.cpp">
       <Filter>Scenes\03 Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="daFairyScript.cpp">
+      <Filter>Objects\Env\Fairy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

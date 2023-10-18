@@ -24,7 +24,7 @@ namespace da
 	{
 		addBackgroundObjects();
 		addGameObjects();
-		GameDataManager::InitializeMonsterCount(eDungeonScene::dungeon1_final, 1);
+		GameDataManager::InitializeMonsterCount(eDungeonScene::dungeon1_final, 6);
 
 	}
 	void Scene_dungeon1_final::Update()
@@ -155,34 +155,34 @@ namespace da
 			skelScript->GetOwner()->GetTransform()->SetPosition(math::Vector3(1.50f, 1.250f, ObjectZ));
 		}
 
-		//// test enemy
-		//{
-		//	SkelScript* skelScript = objects::InstantiateSkel(this);
-		//	skelScript->GetOwner()->GetTransform()->SetPosition(math::Vector3(-1.50f, 1.250f, ObjectZ));
-		//}
+		// test enemy
+		{
+			SkelScript* skelScript = objects::InstantiateSkel(this);
+			skelScript->GetOwner()->GetTransform()->SetPosition(math::Vector3(-1.50f, 1.250f, ObjectZ));
+		}
 
-		//// test enemy
-		//{
-		//	BansheeScript* skelScript = objects::InstantiateBanshee(this);
-		//	skelScript->GetOwner()->GetTransform()->SetPosition(math::Vector3(2.750f, -2.50f, ObjectZ));
-		//}
-		//// test enemy
-		//{
-		//	BansheeScript* skelScript = objects::InstantiateBanshee(this);
-		//	skelScript->GetOwner()->GetTransform()->SetPosition(math::Vector3(-2.750f, -2.50f, ObjectZ));
-		//}
+		// test enemy
+		{
+			BansheeScript* skelScript = objects::InstantiateBanshee(this);
+			skelScript->GetOwner()->GetTransform()->SetPosition(math::Vector3(2.750f, -2.50f, ObjectZ));
+		}
+		// test enemy
+		{
+			BansheeScript* skelScript = objects::InstantiateBanshee(this);
+			skelScript->GetOwner()->GetTransform()->SetPosition(math::Vector3(-2.750f, -2.50f, ObjectZ));
+		}
 
-		//// test enemy
-		//{
-		//	BansheeScript* bansheeScript = objects::InstantiateBanshee(this);
-		//	bansheeScript->GetOwner()->GetTransform()->SetPosition(math::Vector3(-3.50f, 2.80f, ObjectZ));
-		//}
+		// test enemy
+		{
+			BansheeScript* bansheeScript = objects::InstantiateBanshee(this);
+			bansheeScript->GetOwner()->GetTransform()->SetPosition(math::Vector3(-3.50f, 2.80f, ObjectZ));
+		}
 
-		//// test enemy
-		//{
-		//	BansheeScript* bansheeScript = objects::InstantiateBanshee(this);
-		//	bansheeScript->GetOwner()->GetTransform()->SetPosition(math::Vector3(3.50f, 2.80f, ObjectZ));
-		//}
+		// test enemy
+		{
+			BansheeScript* bansheeScript = objects::InstantiateBanshee(this);
+			bansheeScript->GetOwner()->GetTransform()->SetPosition(math::Vector3(3.50f, 2.80f, ObjectZ));
+		}
 
 		{
 			FairyScript* fairyScript = objects::InstantiateFairy(this);
