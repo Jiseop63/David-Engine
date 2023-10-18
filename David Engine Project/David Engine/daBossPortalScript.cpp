@@ -29,7 +29,6 @@ namespace da
 			, math::Vector2::Zero, math::Vector2(57.0f, 65.0f), 1, math::Vector2::Zero, 0.10f, 100.0f);
 		mPortalAnimator->Create(L"Stage1DoorOpen", Resources::Find<Texture>(L"Stage1DoorOpen")
 			, math::Vector2::Zero, math::Vector2(57.0f, 65.0f), 1, math::Vector2::Zero, 0.10f, 100.0f);
-
 		//mPortalAnimator->CompleteEvent(L"SteleClose") = std::bind(&DungeonPortalScript::IdleAnimation, this);
 		mPortalAnimator->CompleteEvent(L"Stage1DoorClosing") = std::bind(&BossPortalScript::PlayDoorClose, this);
 		mPortalAnimator->CompleteEvent(L"Stage1DoorOpening") = std::bind(&BossPortalScript::PlayDoorOpen, this);
@@ -38,6 +37,8 @@ namespace da
 		// 기본값은 충돌 가능한 상태
 		mPortalBodyCollider->SetSize(math::Vector2(0.570f, 0.650f));
 		mPortalBodyCollider->SetDetectionType(Collider2D::eDetectionType::Default);
+
+		mPortalAudio = GetOwner()->AddComponent<AudioSource>();
 	}
 	void BossPortalScript::Update()
 	{
@@ -76,6 +77,11 @@ namespace da
 	void BossPortalScript::GateOpen()
 	{
 		mPortalAnimator->PlayAnimation(L"Stage1DoorOpening", false);
+	}
+
+	void BossPortalScript::PlayOpenSound()
+	{
+		mPortalAudio->Play(Resources::Find<AudioClip>(L"JailOpen"), 60.0f, false);
 	}
 
 	void BossPortalScript::PlayDoorOpen()

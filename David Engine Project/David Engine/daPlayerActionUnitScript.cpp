@@ -83,7 +83,7 @@ namespace da
 			effectUnitInfo.Animation.Action = L"HitEffect";
 			actionUnit->SetUnitInfo(effectUnitInfo);
 			actionUnit->SetUnitRotateAngle(mUnitRotateAngle);
-			actionUnit->SetUnitScale(math::Vector3(1.0f, 1.0f, 1.0f));
+			actionUnit->SetUnitScale(math::Vector3(1.50f, 1.50f, 1.0f));
 			actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
 			actionUnit->OnActive();
 		}		

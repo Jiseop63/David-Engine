@@ -24,19 +24,14 @@ namespace da
 
 #pragma region FSM
 	private:
-		void ChangeStateAnimation(eBossState state);
 		void BossFSM();
-		void SkellBossHandleIdle();					// 이건 솔직히 안씀
+		void SkellBossHandleIdle();
 		void SkellBossHandleAttack();
 		void SkellBossHandleDead();
 #pragma endregion
 
 #pragma region Attack Func
 	private:
-		void prepareForAttack();	// 공격 선딜
-		void doAttack();			// 공격 진행
-		void readyForAttackDelay(); // 공격 후딜
-
 		void patternCondition();
 
 		void callLaserAttack();
@@ -53,7 +48,13 @@ namespace da
 
 	public:
 		virtual void AddActionUnit(GameObject* unit) override;
-		SkellBossProjectileScript* CallBossProjectile();
+		SkellBossProjectileScript* CallBossActionUnit();
+		void BossFindPlayer(bool value = true)
+		{
+			mPlayerFind = value;
+			mBossOpeningCollider->ApplyComponentUsing(false);
+		}
+
 		//void SetBossLifeScript(LifeBarScript* lifeBar);
 
 	private:
@@ -61,53 +62,50 @@ namespace da
 
 	private:
 		void retIdle();
-		void attackingAnimation();
-
-
-
-#pragma region Collision
-
-#pragma endregion
-
+		void playAttackingAnimation();
+		void startProjectileAttack();
 
 	private:
-
-
-		PlayerScript*	mPlayerScript;
-		std::vector<SkellBossProjectileScript*>	mBossProjectiles;
-
-	private:
+		Collider2D*				mBossOpeningCollider;
+		
 		SkellBossHandScript*	mLeftHand;
 		SkellBossHandScript*	mRightHand;
-		bool					mLeftHandTurn;
-		int						mMaxLaserCount;
-		int						mCurLaserCount;
+		std::vector<SkellBossProjectileScript*>	mBossProjectiles;
+
+		PlayerScript*	mPlayerScript;
 
 	private:
-		eBossState		mBossActiveState;
-		bool			mAttackReady;
-		float			mAttackCoolDownDelayTime;
-		float			mAttackCoolDownAccumulateTime;
 
-		bool			mPrepareAttack;
-		float			mPrepareDurationTime;
-		float			mPrepareDurationDecay;
-		
-		bool			mAttackProgress;
-		float			mReadyDurationTime;
-		float			mReadyDurationDecay;
-		
-		int			mPlayerJumpCount;
-		int			mPlayerDashCount;
-		int			mGetDamageCount;
 
-		bool		mProjectileAttackOn;
-		bool		mLaserAttackOn;
-		float		mRotatePerSeconds;
-		
-		structs::sActionTimeValues mLaserCallDelayTime;
-		structs::sActionTimeValues mProjectileCallDelayTime;
+	private:
+		eBossState					mBossActiveState;
 
-		bool		mDeadTrigger;
+		bool						mPlayerFind;
+
+		structs::sActionTimeValues	mIdleStayTime;
+		int							mGetDamageCount;
+
+		bool						mAttacking;
+		bool						mProjectileAttackActive;
+		structs::sActionTimeValues	mProjectileCallDelayTime;
+		structs::sActionTimeValues	mProjectileFinishTime;
+
+		
+		bool						mNextLaserAttackReady;		
+		structs::sActionTimeValues	mLaserCallDelayTime;
+		bool						mLaserAttakFinished;
+
+
+	private:
+		int				mPlayerJumpCount;
+		int				mPlayerDashCount;
+		bool			mProjectileAttackOn;
+		float			mRotatePerSeconds;
+
+		bool			mLeftHandTurn;
+		int				mMaxLaserCount;
+		int				mCurLaserCount;
+
+		bool			mDeadTrigger;
 	};
 }

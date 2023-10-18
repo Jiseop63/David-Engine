@@ -71,20 +71,19 @@ namespace da
 
 
 		// Ω∫≈› √ ±‚»≠
-		mCreatureStat.MaxHP = 25.0f;
-		mCreatureStat.CurHP = 25.0f;
-		mCreatureStat.MoveSpeed = 3.250f;
+		mCreatureStat.MaxHP = 40.0f;
+		mCreatureStat.CurHP = mCreatureStat.MaxHP;
+		mCreatureStat.MoveSpeed = 2.250f;
 
-
-		mMonsterAttackStat.AttackRange = 0.750f;
+		mMonsterAttackStat.AttackRange = 0.550f;
 		mMonsterAttackStat.AttackDelayAccumulateTime = 0.0f;
-		mMonsterAttackStat.AttackDelay = 4.0f;
+		mMonsterAttackStat.AttackDelay = 2.0f;
 
 		mChaseDurationTime = 1.50f;
 		mChaseDurationDecay = mChaseDurationTime;
-		mPrepareDurationTime = 0.250f;
+		mPrepareDurationTime = 0.10f;
 		mPrepareDurationDecay = mPrepareDurationTime;
-		mReadyDurationTime = 2.50f;
+		mReadyDurationTime = 2.250f;
 		mReadyDurationDecay = mReadyDurationTime;
 	}
 

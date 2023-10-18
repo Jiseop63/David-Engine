@@ -601,8 +601,12 @@ namespace renderer
 		Resources::Load<AudioClip>(L"JailField", L"..\\Resources\\Sound\\background\\1.JailField.ogg");
 		Resources::Load<AudioClip>(L"JailBoss", L"..\\Resources\\Sound\\background\\1.JailBoss.ogg");
 
+		Resources::Load<AudioClip>(L"DungeonOut", L"..\\Resources\\Sound\\etc\\DungeonOut.ogg");
 		Resources::Load<AudioClip>(L"stoneDoor", L"..\\Resources\\Sound\\etc\\stoneDoor.ogg");
+		Resources::Load<AudioClip>(L"JailOpen", L"..\\Resources\\Sound\\etc\\Jail Metal Door Sound Effect.ogg");
 		Resources::Load<AudioClip>(L"OpenInventory", L"..\\Resources\\Sound\\etc\\OpenInventory.ogg");
+		Resources::Load<AudioClip>(L"Equip", L"..\\Resources\\Sound\\etc\\Equip.ogg");
+		Resources::Load<AudioClip>(L"Heal", L"..\\Resources\\Sound\\etc\\FoodEat2.ogg");
 
 		Resources::Load<AudioClip>(L"RifleFire", L"..\\Resources\\Sound\\boss\\RifleFire.ogg");
 		Resources::Load<AudioClip>(L"jumperLaserFire", L"..\\Resources\\Sound\\boss\\jumperLaserFire.ogg");
@@ -612,10 +616,8 @@ namespace renderer
 		Resources::Load<AudioClip>(L"LilithAttack", L"..\\Resources\\Sound\\monster\\LilithAttack.ogg");
 		Resources::Load<AudioClip>(L"MonsterDie", L"..\\Resources\\Sound\\monster\\MonsterDie.ogg");
 		Resources::Load<AudioClip>(L"SpawnMonster", L"..\\Resources\\Sound\\monster\\SpawnMonster.ogg");
+
 		Resources::Load<AudioClip>(L"swish", L"..\\Resources\\Sound\\player\\swish-1.ogg");
-
-
-
 		Resources::Load<AudioClip>(L"Jumping", L"..\\Resources\\Sound\\player\\Jumping.ogg");
 		Resources::Load<AudioClip>(L"dash", L"..\\Resources\\Sound\\player\\dash.ogg");
 		Resources::Load<AudioClip>(L"Hit_Player", L"..\\Resources\\Sound\\player\\Hit_Player.ogg");

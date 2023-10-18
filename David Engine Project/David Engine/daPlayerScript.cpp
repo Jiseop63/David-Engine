@@ -2,6 +2,7 @@
 #include "daPlayerScript.h"
 
 #include "daGameObject.h"
+#include "daSceneManager.h"
 
 #include "daInput.h"
 #include "daTime.h"
@@ -14,10 +15,9 @@
 
 #include "daPlayerCombatScript.h"
 #include "daMonsterScript.h"
+#include "daSkellBossScript.h"
 
 #include "daPlayerActionUnitScript.h"
-#include "daBansheeProjectileScript.h"
-
 namespace da
 {
     PlayerScript::PlayerScript()
@@ -54,7 +54,7 @@ namespace da
 	{
         CreatureScript::Initialize();
         mLight = GetOwner()->GetComponent<Light>();
-       
+        mPlayerAudio = GetOwner()->AddComponent<AudioSource>();
         initializeAnimation();
         initializeCollider();
         initializeData();
@@ -104,11 +104,11 @@ namespace da
     void PlayerScript::inputDebug()
     {
         if (Input::GetKeyDown(eKeyCode::R))
-            GetHeal(5.0f);
-        if (Input::GetKeyDown(eKeyCode::E))
-            downDashCount();
-        if (Input::GetKeyDown(eKeyCode::T))
-            GetDamage();
+            GetHeal(20.0f);
+        /*if (Input::GetKeyDown(eKeyCode::E))
+            downDashCount();*/
+        /*if (Input::GetKeyDown(eKeyCode::T))
+            GetDamage();*/
         if (Input::GetKeyDown(eKeyCode::Y))
         {
             GameDataManager::DebugMode();
@@ -384,7 +384,7 @@ namespace da
     }
     void PlayerScript::DungeonClearSound()
     {
-        mCreatureAudio->Play(Resources::Find<AudioClip>(L"stoneDoor"), 0.30f);
+        mCreatureAudio->Play(Resources::Find<AudioClip>(L"stoneDoor"), 0.050f);
     }
     void PlayerScript::todoDustSpawn()
     {
@@ -591,7 +591,7 @@ namespace da
     }
     void PlayerScript::initializeData()
     {
-        mCreatureStat.MaxHP = 40;
+        mCreatureStat.MaxHP = 60;
         mCreatureStat.CurHP = mCreatureStat.MaxHP;
         mCreatureStat.MoveSpeed = 3.50f;
 
@@ -624,6 +624,15 @@ namespace da
             GameObject* creatureObj = other->GetOwner();
             MonsterScript* creatureScript = creatureObj->GetComponent<MonsterScript>();
             creatureScript->MonsterFindsPlayer(true);
+        }
+
+        if (enums::eLayerType::Boss == other->GetOwner()->GetLayerType()
+            && Collider2D::eDetectionType::Sensor == other->GetDetectionType())
+        {
+            GameObject* creatureObj = other->GetOwner();
+            SkellBossScript* bossScript = creatureObj->GetComponent<SkellBossScript>();
+            bossScript->BossFindPlayer();
+            SceneManager::GetLightObject()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"JailBoss"), 30.0f, true);
         }
     }
     void PlayerScript::OnCollisionExit(Collider2D* other)

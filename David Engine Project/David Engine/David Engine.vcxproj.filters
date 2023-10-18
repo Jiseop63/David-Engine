@@ -94,18 +94,6 @@
     <Filter Include="Objects\Creature\2 ActionUnitScript">
       <UniqueIdentifier>{9c4aace8-4121-4244-a6a4-c42b6ffe2e4f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\Portal">
-      <UniqueIdentifier>{350f2c07-4ea3-4fa4-a3c4-ab9087820174}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\Portal\TownPortal">
-      <UniqueIdentifier>{1577fc2d-1e43-468a-a8ee-be757f383e5d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\Portal\DungeonPortal">
-      <UniqueIdentifier>{a40b0aba-5bf7-4322-a5db-7b5828ad3525}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\Portal\BossPortal">
-      <UniqueIdentifier>{46f631a2-77a8-442b-8cfa-db8a9ca3d0d6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\Creature\3 Item">
       <UniqueIdentifier>{8e7cfccf-1d5c-4556-b859-fe4e094fc81b}</UniqueIdentifier>
     </Filter>
@@ -114,6 +102,18 @@
     </Filter>
     <Filter Include="Objects\Env">
       <UniqueIdentifier>{0a13dac2-073b-49d2-adb8-bc7b6bfd0853}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Env\Portal">
+      <UniqueIdentifier>{350f2c07-4ea3-4fa4-a3c4-ab9087820174}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Env\Portal\TownPortal">
+      <UniqueIdentifier>{1577fc2d-1e43-468a-a8ee-be757f383e5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Env\Portal\DungeonPortal">
+      <UniqueIdentifier>{a40b0aba-5bf7-4322-a5db-7b5828ad3525}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Env\Portal\BossPortal">
+      <UniqueIdentifier>{46f631a2-77a8-442b-8cfa-db8a9ca3d0d6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -223,22 +223,22 @@
       <Filter>Objects\Creature\Monster\0 Base</Filter>
     </ClInclude>
     <ClInclude Include="daPortalScript.h">
-      <Filter>Objects\Portal</Filter>
+      <Filter>Objects\Env\Portal</Filter>
     </ClInclude>
     <ClInclude Include="daTownPortalScript.h">
-      <Filter>Objects\Portal\TownPortal</Filter>
+      <Filter>Objects\Env\Portal\TownPortal</Filter>
     </ClInclude>
     <ClInclude Include="daDungeonPortalScript.h">
-      <Filter>Objects\Portal\DungeonPortal</Filter>
+      <Filter>Objects\Env\Portal\DungeonPortal</Filter>
     </ClInclude>
     <ClInclude Include="daPortalWallScript.h">
-      <Filter>Objects\Portal\DungeonPortal</Filter>
+      <Filter>Objects\Env\Portal\DungeonPortal</Filter>
     </ClInclude>
     <ClInclude Include="daBossPortalScript.h">
-      <Filter>Objects\Portal\BossPortal</Filter>
+      <Filter>Objects\Env\Portal\BossPortal</Filter>
     </ClInclude>
     <ClInclude Include="daPortalIconScript.h">
-      <Filter>Objects\Portal\BossPortal</Filter>
+      <Filter>Objects\Env\Portal\BossPortal</Filter>
     </ClInclude>
     <ClInclude Include="daItemScript.h">
       <Filter>Objects\Inventory</Filter>
@@ -390,22 +390,22 @@
       <Filter>Objects\Creature\Monster\0 Base</Filter>
     </ClCompile>
     <ClCompile Include="daPortalScript.cpp">
-      <Filter>Objects\Portal</Filter>
+      <Filter>Objects\Env\Portal</Filter>
     </ClCompile>
     <ClCompile Include="daTownPortalScript.cpp">
-      <Filter>Objects\Portal\TownPortal</Filter>
+      <Filter>Objects\Env\Portal\TownPortal</Filter>
     </ClCompile>
     <ClCompile Include="daDungeonPortalScript.cpp">
-      <Filter>Objects\Portal\DungeonPortal</Filter>
+      <Filter>Objects\Env\Portal\DungeonPortal</Filter>
     </ClCompile>
     <ClCompile Include="daPortalWallScript.cpp">
-      <Filter>Objects\Portal\DungeonPortal</Filter>
+      <Filter>Objects\Env\Portal\DungeonPortal</Filter>
     </ClCompile>
     <ClCompile Include="daBossPortalScript.cpp">
-      <Filter>Objects\Portal\BossPortal</Filter>
+      <Filter>Objects\Env\Portal\BossPortal</Filter>
     </ClCompile>
     <ClCompile Include="daPortalIconScript.cpp">
-      <Filter>Objects\Portal\BossPortal</Filter>
+      <Filter>Objects\Env\Portal\BossPortal</Filter>
     </ClCompile>
     <ClCompile Include="daItemScript.cpp">
       <Filter>Objects\Inventory</Filter>

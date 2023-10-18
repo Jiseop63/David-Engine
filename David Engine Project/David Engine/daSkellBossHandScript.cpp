@@ -25,6 +25,8 @@ namespace da
 		, mTargetFind(false)
 		, mAttackReady(true)
 
+		, mAttackFinished(true)
+
 	{
 	}
 	SkellBossHandScript::~SkellBossHandScript()
@@ -45,8 +47,7 @@ namespace da
 		mHandAnimator->Create(L"SkellBossHandAttack", Resources::Find<Texture>(L"SkellBossHandAttack"), math::Vector2(0.0f, 0.0f), math::Vector2(70.0f, 80.0f), 18, math::Vector2(0.0f, 0.0f), 0.10f, 75.0f);
 		
 		//mHandAnimator->ActionEvent(L"SkellBossHandAttack", 7) = std::bind(&SkellBossHandScript::activeCollider, this);
-		mHandAnimator->CompleteEvent(L"SkellBossHandAttack") = std::bind(&SkellBossHandScript::retIdle, this);
-
+		mHandAnimator->CompleteEvent(L"SkellBossHandAttack") = std::bind(&SkellBossHandScript::AttackIsFinished, this);
 		mHandAnimator->PlayAnimation(L"SkellBossHandIdle");
 
 		mAttackDelay.End = 0.50f;
@@ -69,7 +70,7 @@ namespace da
 				// 레이저 발사 후 공격 비활성화
 				shootLaser();
 				mAttackDelay.Clear();
-				mTargetFind = false;
+				mTargetFind = false;				
 			}
 		}		
 	}
@@ -84,6 +85,11 @@ namespace da
 		mChasePlayer = true;
 		activeCollider();
 	}
+	void SkellBossHandScript::AttackIsFinished()
+	{
+		mAttackFinished = true;
+		retIdle();
+	}
 	void SkellBossHandScript::updateMoveToPlayer()
 	{
 		if (!mChasePlayer)
@@ -93,7 +99,7 @@ namespace da
 		float handPositionY = handPosition.y;
 		float playerPositionY = mPlayerScript->GetCreatureTransform()->GetPosition().y;
 		
-		// 이동하기
+		// 이동방향 구하기
 		float distance = playerPositionY - handPositionY;
 		handPosition.y += 2.0f * distance * (float)Time::DeltaTime();
 		mHandTransform->SetPosition(handPosition);
@@ -103,7 +109,7 @@ namespace da
 		mHandAnimator->PlayAnimation(L"SkellBossHandAttack", false);
 		mOwnerScript->GetCreatureAudio()->Play(Resources::Find<AudioClip>(L"jumperLaserFire"), 10.0f, false);
 
-		ActionUnitScript* actionUnit = mOwnerScript->CallBossProjectile();
+		ActionUnitScript* actionUnit = mOwnerScript->CallBossActionUnit();
 		actionUnit->SetUnitPosition(mHandTransform->GetPosition());
 
 		structs::sActionUnitTypes effectUnitTypes = {};
@@ -121,15 +127,13 @@ namespace da
 
 		math::Vector3 offsetVector;
 		if (misLeftHand)
-			offsetVector = math::Vector3(4.0f, 0.0f, 0.0f);
+			offsetVector = math::Vector3(5.50f, 0.0f, 0.0f);
 		else
-			offsetVector = math::Vector3(-4.0f, 0.0f, 0.0f);
+			offsetVector = math::Vector3(-5.50f, 0.0f, 0.0f);
 		actionUnit->SetUnitReverse(!misLeftHand);
 
 		actionUnit->SetUnitOffset(offsetVector);
 		actionUnit->OnActive();
-		/*math::Vector3 handPosition = mHandTransform->GetPosition();
-		actionUnit->SetUnitOverridePosition(handPosition + offsetVector);*/
 	}
 	void SkellBossHandScript::retIdle()
 	{
@@ -157,6 +161,7 @@ namespace da
 
 			// 발사가 준비됬으므로 update에서 조건에 따라 공격 실행
 			mTargetFind = true;
+			mHandCollider->ApplyComponentUsing(false);
 		}
 	}
 }

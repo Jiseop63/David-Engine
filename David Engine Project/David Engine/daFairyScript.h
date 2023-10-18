@@ -3,6 +3,7 @@
 #include "daMeshRenderer.h"
 #include "daRigidbody.h"
 #include "daAnimator.h"
+#include "daAudioSource.h"
 
 namespace da
 {
@@ -25,5 +26,6 @@ namespace da
 		Transform* mFairyTransform;
 		Collider2D* mFairyCollider;
 		Animator* mFairyAnimator;
+		AudioSource* mFairyAudio;
 	};
 }

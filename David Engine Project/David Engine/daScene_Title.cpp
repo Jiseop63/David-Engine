@@ -702,7 +702,7 @@ namespace da
 				structs::sItemInfo itemInfo;
 				itemInfo.UseAnimation = false;
 				itemInfo.AttackType = enums::eItemAttackType::Swing;
-				itemInfo.AttackDelayTime.End = 0.30f;
+				itemInfo.AttackDelayTime.End = 0.450f;
 				itemInfo.Sound = L"swing";
 				longswordItemScript->SetItemInfo(itemInfo);
 
@@ -714,7 +714,7 @@ namespace da
 
 				structs::sActionUnitStat itemProjectileStat;
 				itemProjectileStat.Animation.Action = L"Swing";
-				itemProjectileStat.AtaackDamage = 7.50f;
+				itemProjectileStat.AtaackDamage = 6.50f;
 				longswordItemScript->SetProjectileStat(itemProjectileStat);
 
 				longswordItemScript->SetProjectileScale(math::Vector3(1.40f, 1.40f, 1.0f));
@@ -757,7 +757,7 @@ namespace da
 				crossbowItemScript->SetProjectileTypes(itemProjectileTypes);
 
 				structs::sActionUnitStat itemProjectileStat;
-				itemProjectileStat.AtaackDamage = 6.0f;
+				itemProjectileStat.AtaackDamage = 4.750f;
 				itemProjectileStat.Range = 7.0f;
 				itemProjectileStat.Speed = 20.0f;
 				itemProjectileStat.Texture = L"CrossbowArrow";
@@ -765,7 +765,7 @@ namespace da
 
 				crossbowItemScript->SetProjectileScale(math::Vector3(0.120f * 1.30f, 0.440f * 1.30f, 1.0f));
 				crossbowItemScript->SetProjectileOffset(math::Vector3(0.20f, 0.20f, 0.0f));
-				crossbowItemScript->SetProjectileSize(math::Vector2(1.0f, 1.0f));
+				crossbowItemScript->SetProjectileSize(math::Vector2(1.20f, 1.20f));
 			}
 			ItemManager::AddItem(L"Crossbow", crossbowItemScript);
 			inventoryScript->AddItemToSlot(enums::eItemSlot::Slot02, ItemManager::GetItem(L"Crossbow"));
@@ -800,7 +800,7 @@ namespace da
 
 				structs::sActionUnitStat itemProjectileStat;
 				itemProjectileStat.DurationTime.End = 0.10f;
-				itemProjectileStat.AtaackDamage = 4.50f;
+				itemProjectileStat.AtaackDamage = 6.50f;
 				quarterStaffItemScript->SetProjectileStat(itemProjectileStat);
 
 				quarterStaffItemScript->SetProjectileScale(math::Vector3(1.40f, 1.40f, 1.0f));

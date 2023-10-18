@@ -1,5 +1,6 @@
 #pragma once
 #include "daPortalScript.h"
+#include "daAudioSource.h"
 
 namespace da
 {
@@ -25,8 +26,9 @@ namespace da
 		virtual void GateOpen() override;
 
 	public:
-		void DoorOpening();
-		void DoorClosing();
+		void PlayOpenSound();
+		/*void DoorOpening();
+		void DoorClosing();*/
 
 	public:
 		void PlayDoorOpen();
@@ -34,6 +36,7 @@ namespace da
 		void HidePlayer();
 
 	private:
+		AudioSource* mPortalAudio;
 		class PortalIconScript* mPortalIcon;
 		bool mIsClear;
 		bool mFocused;

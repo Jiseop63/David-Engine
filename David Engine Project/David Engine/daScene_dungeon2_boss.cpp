@@ -59,7 +59,7 @@ namespace da
 
 
 		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Stop();
-		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"JailBoss"), 30.0f, true);
+		
 	}
 	void Scene_dungeon2_boss::OnExit()
 	{

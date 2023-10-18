@@ -77,9 +77,9 @@ namespace da
 		structs::sActionUnitStat mMonsterUnitInfo = {};
 		mMonsterUnitInfo.Speed = 0.01f;
 		mMonsterUnitInfo.DurationTime.End = 0.250f;
-		mMonsterUnitInfo.AtaackDamage = 2.0f;
+		mMonsterUnitInfo.AtaackDamage = 10.0f;
 		actionUnit->SetUnitInfo(mMonsterUnitInfo);
-		actionUnit->SetUnitScale(math::Vector3(1.20f, 1.40f, 1.0f));
+		actionUnit->SetUnitScale(math::Vector3(1.20f, 1.80f, 1.0f));
 		actionUnit->SetUnitRotateAngle(mWeaponAngle);
 
 		math::Vector3 offsetPosition = math::Vector3::Zero;

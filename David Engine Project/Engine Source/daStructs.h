@@ -24,6 +24,7 @@ namespace da::structs
 		{}
 		void Clear() { Start = 0.0f; }
 		bool TimeOut() { return (End <= Start) ? true : false; }
+		void SetTime(float value) { End = value; Clear(); }
 	};
 
 	// Unit

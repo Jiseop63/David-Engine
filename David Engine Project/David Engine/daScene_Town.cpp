@@ -73,7 +73,7 @@ namespace da
 	{
 		SceneManager::GetPlayerScript()->CreatureIsNotGround();
 		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Stop();
-		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"JailField"), 50.0f, true);
+		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Play(Resources::Find<AudioClip>(L"JailField"), 60.0f, true);
 	}
 
 	void Scene_Town::addBackgroundObject()

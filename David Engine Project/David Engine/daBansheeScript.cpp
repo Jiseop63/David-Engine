@@ -49,20 +49,20 @@ namespace da
 
 
 		// 스텟 초기화
-		mCreatureStat.MaxHP = 22.0f;
-		mCreatureStat.CurHP = 22.0f;
+		mCreatureStat.MaxHP = 24.0f;
+		mCreatureStat.CurHP = mCreatureStat.MaxHP;
 
-		mMonsterAttackStat.AttackRange = 4.0f;
+		mMonsterAttackStat.AttackRange = 5.0f;
 		mMonsterAttackStat.AttackDelayAccumulateTime = 0.0f;
-		mMonsterAttackStat.AttackDelay = 4.0f;
+		mMonsterAttackStat.AttackDelay = 3.0f;
 
 		//mCreatureStat.MoveSpeed = 1.50f;
 
 		mChaseDurationTime = 1.50f;
 		mChaseDurationDecay = mChaseDurationTime;
-		mPrepareDurationTime = 1.250f;
+		mPrepareDurationTime = 0.450f;
 		mPrepareDurationDecay = mPrepareDurationTime;
-		mReadyDurationTime = 5.50f;
+		mReadyDurationTime = 3.50f;
 		mReadyDurationDecay = mReadyDurationTime;
 
 		// 충돌체 설정하기
@@ -240,11 +240,11 @@ namespace da
 				actionUnit->SetUnitTypes(mMonsterUnitTypes);
 
 				structs::sActionUnitStat mMonsterUnitInfo = {};
-				mMonsterUnitInfo.Speed = 2.0f;
+				mMonsterUnitInfo.Speed = 2.20f;
 				mMonsterUnitInfo.Range = 4.50f;
 				mMonsterUnitInfo.Animation.Idle = L"BansheeBulletIdle";
 				mMonsterUnitInfo.Animation.Action = L"BansheeBulletHit";
-				mMonsterUnitInfo.AtaackDamage = 1.50f;
+				mMonsterUnitInfo.AtaackDamage = 3.0f;
 				actionUnit->SetUnitInfo(mMonsterUnitInfo);
 				actionUnit->SetUnitScale(math::Vector3(2.250f, 2.250f, 1.0f));
 

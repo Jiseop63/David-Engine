@@ -18,25 +18,28 @@ namespace da
 	SkellBossScript::SkellBossScript()
 		: mPlayerScript(nullptr)
 		, mBossActiveState(eBossState::Idle)
-		, mAttackReady(false)
+		, mLeftHand(nullptr)
+		, mRightHand(nullptr)
+		, mPlayerJumpCount(0)
+		, mPlayerDashCount(0)
+		, mPlayerFind(false)
+
+		, mIdleStayTime()
+		, mGetDamageCount(0)
+		, mProjectileAttackOn(false)
+		, mNextLaserAttackReady(true)
+		, mLaserAttakFinished(false)
 		
 		, mLeftHandTurn(true)
 		, mMaxLaserCount(0)
 		, mCurLaserCount(0)
 		
-		, mPrepareAttack(false)
-		, mPrepareDurationTime(0.0f)
-		, mPrepareDurationDecay(0.0f)
-		, mAttackProgress(false)
-		, mReadyDurationTime(0.0f)
-		, mReadyDurationDecay(0.0f)
 
-		, mProjectileAttackOn(false)
-		, mLaserAttackOn(false)
 		, mLaserCallDelayTime{}
 		, mProjectileCallDelayTime{}
 		, mRotatePerSeconds(0.0f)
 		, mDeadTrigger(true)
+		, mAttacking(false)
 	{
 	}
 	SkellBossScript::~SkellBossScript()
@@ -50,11 +53,13 @@ namespace da
 		// Tr
 		mCreatureTransform->SetScale(math::Vector3(5.50f, 5.50f, 1.0f));
 		// 보스 충돌체
-		mCreatureBodyCollider->ImBody();
-		mCreatureBodyCollider->SetDetectionType(Collider2D::eDetectionType::Default);
 		mCreatureBodyCollider->SetSize(math::Vector2(0.60f, 0.60f));
 		mCreatureRigidbody->ApplyComponentUsing(false);
 		mCreatureFootCollider->ApplyComponentUsing(false);
+		
+		mBossOpeningCollider = GetOwner()->AddComponent<Collider2D>();
+		mBossOpeningCollider->SetDetectionType(Collider2D::eDetectionType::Sensor);
+		mBossOpeningCollider->SetSize(math::Vector2(1.50f, 1.80f));
 		// 보스 애니메이션
 		std::shared_ptr<Texture> texture = Resources::Load<Texture>(L"BossSpriteSheet", L"..\\Resources\\Texture\\\\Skel\\SpriteSheet.png");
 		mCreatureAnimator->Create(L"SkellBossIdle", texture, math::Vector2(0.0f, 0.0f), math::Vector2(85.0f, 99.0f), 10, math::Vector2(0.0f, 0.0f), 0.10f, 150.0f);
@@ -62,28 +67,27 @@ namespace da
 		mCreatureAnimator->Create(L"SkellBossAttacking", Resources::Find<Texture>(L"SkellBossAttacking"), math::Vector2(0.0f, 0.0f), math::Vector2(85.0f, 128.0f), 4, math::Vector2(0.0f, 0.0f), 0.10f, 150.0f);
 		mCreatureAnimator->Create(L"SkellBossDead", texture, math::Vector2(0.0f, 227.0f), math::Vector2(85.0f, 128.0f), 1, math::Vector2(0.0f, 0.0f), 0.10f, 150.0f);
 		
-		mCreatureAnimator->CompleteEvent(L"SkellBossAttact") = std::bind(&SkellBossScript::attackingAnimation, this);
-		mCreatureAnimator->ActionEvent(L"SkellBossAttact", 4) = std::bind(&SkellBossScript::attackingAnimation, this);
+		mCreatureAnimator->CompleteEvent(L"SkellBossAttact") = std::bind(&SkellBossScript::playAttackingAnimation, this);
+		mCreatureAnimator->ActionEvent(L"SkellBossAttact", 4) = std::bind(&SkellBossScript::startProjectileAttack, this);
 		mCreatureAnimator->PlayAnimation(L"SkellBossIdle");
 
 
 		mMaxLaserCount = 3;
 		mCurLaserCount = mMaxLaserCount;
-		// 선딜 (공격 패턴 대기시간)
-		mPrepareDurationTime = 3.0f;
-		mPrepareDurationDecay = mPrepareDurationTime;
+		
+		// idle -> attack 으로 넘어가기 전 대기시간
+		mIdleStayTime.SetTime(2.40f);
 
-		// 후딜
-		mReadyDurationTime = 6.250f;
-		mReadyDurationDecay = mReadyDurationTime;
+		// 투사체 공격이 유지되는 시간
+		mProjectileFinishTime.SetTime(6.20f);
+		mProjectileCallDelayTime.SetTime(0.250f); // 4.5초동안 공격한다는 가정하에 60개가 화면에 나타날 예정
+		// 각 레이저 호출 딜레이 타임
+		mLaserCallDelayTime.SetTime(0.50f);
+		
 
-		// 레이저 호출 딜레이 (3번 호출됨)
-		mLaserCallDelayTime.End = 2.250f;
-		// 투사체 호출 딜레이 (60개가 호출됨 ㄷㄷ)
-		mProjectileCallDelayTime.End = 0.20f; // 4.5초동안 공격한다는 가정하에 60개가 화면에 나타날 예정
 
 		// 스텟 초기화
-		mCreatureStat.MaxHP = 320.0f;
+		mCreatureStat.MaxHP = 525.0f;
 		mCreatureStat.CurHP = mCreatureStat.MaxHP;
 
 	}
@@ -95,26 +99,7 @@ namespace da
 		// 패턴 조건 찾기 (둘 중 하나가 충족되면 끝)
 		patternCondition();
 		BossFSM();
-		callLaserAttack();
-		callProjectileAttack();
 		lifeCheck();
-	}
-	void SkellBossScript::ChangeStateAnimation(eBossState state)
-	{
-		switch (state)
-		{
-		case da::SkellBossScript::eBossState::Idle:
-			mCreatureAnimator->PlayAnimation(L"SkellBossIdle");
-			break;
-		case da::SkellBossScript::eBossState::Attack:
-			//mBossAnimator->PlayAnimation(L"SkellBossAttact",false);
-			break;
-		case da::SkellBossScript::eBossState::Dead:
-			mCreatureAnimator->PlayAnimation(L"SkellBossDead");
-			break;
-		default:
-			break;
-		}
 	}
 	void SkellBossScript::BossFSM()
 	{
@@ -136,176 +121,77 @@ namespace da
 	}
 	void SkellBossScript::SkellBossHandleIdle()
 	{
-		// 공격 준비가 되면 Attack 상태로 변경
-		if (!mPrepareAttack)
+		if (!mPlayerFind)
+			return;
+
+		// Attack 상태로 넘어가기전에 쿨다운 대기시간 넣기
+		mIdleStayTime.Start += (float)Time::DeltaTime();
+		if (mIdleStayTime.TimeOut())
+		{
+			mIdleStayTime.Clear();
 			mBossActiveState = eBossState::Attack;
-	}
-	void SkellBossScript::SkellBossHandleAttack()
-	{
-		// 공격 선딜 3초 대기
-		prepareForAttack();
-		// 패턴 선택 및 공격 진행
-		doAttack();
-		// 공격 후딜
-		readyForAttackDelay();
-	}
-	void SkellBossScript::SkellBossHandleDead()
-	{
-		if (mDeadTrigger)
-		{
-			GameDataManager::DecreaseMonsterCount(SceneManager::GetActiveScene()->GetPortals());
-
-			// 손 치우기
-			mRightHand->GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
-			mLeftHand->GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
-
-			// 중력 활성화
-			mCreatureRigidbody->ApplyComponentUsing(true);
-			mCreatureFootCollider->ApplyComponentUsing(true);
-			mCreatureBodyCollider->ApplyComponentUsing(false);
-			// 사망 애니메이션
-			mCreatureTransform->SetScale(math::Vector3(5.0f, 5.0f, 1.0f));
-			mCreatureAnimator->PlayAnimation(L"SkellBossDead");
-			mCreatureFootCollider->SetSize(math::Vector2(0.10f, 0.10f));
-			mCreatureFootCollider->SetCenter(math::Vector2(0.0f, -0.80f));
-			mDeadTrigger = false;
-		}
-	}
-	void SkellBossScript::prepareForAttack()
-	{
-		// 선딜이 끝났다면 넘기기
-		if (mPrepareAttack)
-			return;
-
-		// 선딜 진행
-		mPrepareDurationDecay -= (float)Time::DeltaTime();
-		if (0 >= mPrepareDurationDecay)
-		{
-			mPrepareDurationDecay = mPrepareDurationTime;	// 선딜 시간값 초기화
-			mPrepareAttack = true;							// 공격, 후딜 조건 활성화
-		}
-	}
-	void SkellBossScript::doAttack()
-	{
-		// 아직 선딜레이가 남았으면 넘기기
-		if (!mPrepareAttack)
-			return;
-
-		// 공격하기 전이라면
-		if (!mAttackProgress)
-		{
-			mAttackProgress = true;							// 다음 진행으로 넘기기
-
-			// 공격 패턴 선택
+			mAttacking = true;
 			if (mProjectileAttackOn)
-			{
 				mCreatureAnimator->PlayAnimation(L"SkellBossAttact");
-			}
-			else
-				mLaserAttackOn = true;
-
 		}
-	}
-	void SkellBossScript::readyForAttackDelay()
-	{
-		if (!mPrepareAttack)
-			return;
 
-		if (mAttackProgress)
-		{
-			mReadyDurationDecay -= (float)Time::DeltaTime();
-			if (0 >= mReadyDurationDecay)
-			{
-				mReadyDurationDecay = mReadyDurationTime;	// 후딜 시간값 초기화
-				mPrepareAttack = false;						// 선딜 조건 초기화
-				mAttackProgress = false;					// 공격 애니메이션 호출 조건 초기화
 
-				mGetDamageCount = 0;						// 투사체, 레이저 패턴 조건 변수
-				mProjectileAttackOn = false;				// 투사체 공격 비활성화
-				mLaserAttackOn = false;						// 레이저 공격 비활성화
-				mCurLaserCount = mMaxLaserCount;			// 레이저 공격 횟수 초기화
-				mRotatePerSeconds = 0.0f;
-				mBossActiveState = eBossState::Idle;
-				mCreatureAnimator->PlayAnimation(L"SkellBossIdle");
-			}
-		}
+		// 공격 준비가 되면 Attack 상태로 변경
+		//if (!mPrepareAttack)
+			
 	}
 
 	void SkellBossScript::patternCondition()
 	{
-		if (8 <= mGetDamageCount
-			&& !mLaserAttackOn)
+		if (mAttacking)
+			return;
+
+		if (5 <= mGetDamageCount)
 			mProjectileAttackOn = true;
-		else
-			mProjectileAttackOn = false;
 	}
 
-	void SkellBossScript::AddActionUnit(GameObject* unit)
+	void SkellBossScript::SkellBossHandleAttack()
 	{
-		SkellBossProjectileScript* bossProjectile = unit->AddComponent<SkellBossProjectileScript>();
-		bossProjectile->SetOwnerScript(this);
-		mBossProjectiles.push_back(bossProjectile);
-	}
+		// 결정된 패턴을 시행하기
+		if (mProjectileAttackOn)
+		{
+			// 패턴에 맞게 공격 시행
+			callProjectileAttack();
 
-	SkellBossProjectileScript* SkellBossScript::CallBossProjectile()
-	{
-		for (size_t projectile = 0; projectile < mBossProjectiles.size(); ++projectile)
-		{
-			if (GameObject::eObjectState::Inactive ==
-				mBossProjectiles[projectile]->GetOwner()->GetObjectState())
-				return mBossProjectiles[projectile];
-		}
-		return nullptr;
-	}
-	void SkellBossScript::callLaserAttack()
-	{
-		if (mProjectileAttackOn)	// 투사체 공격중이라면 ret
-			return;
-		if (!mLaserAttackOn)		// 레이저 공격이 아니라면 ret
-			return;
-		if (eBossState::Idle == mBossActiveState)
-			return;
-		
-		
-		// 레이저 호출횟수가 남아잉슴
-		if (0 < mCurLaserCount)
-		{
-			// 공격 대기시간 기다리기
-			mLaserCallDelayTime.Start += (float)Time::DeltaTime();
-			if (mLaserCallDelayTime.TimeOut())
+			// 공격 종료 조건
+			mProjectileFinishTime.Start += (float)Time::DeltaTime();
+			if (mProjectileFinishTime.TimeOut())
 			{
-				// 호출할 대상 찾기
-				if (mLeftHandTurn)
-				{
-					// Hand의 레이저를 호출하고, 카운트 감소
-					mLeftHand->DoAttack();
-					mLeftHandTurn = false;
-					mCurLaserCount--;
-				}
-				else
-				{
-					mRightHand->DoAttack();
-					mLeftHandTurn = true;
-					mCurLaserCount--;
-				}
-				mLaserCallDelayTime.Clear();
-			}								
+				// 조건 초기화
+				mProjectileFinishTime.Clear();
+				mGetDamageCount = 0;
+				mProjectileAttackOn = false;
+				mProjectileAttackActive = false;		// 특정 타이밍에 공격을 진행하고 싶어서 따로 변수로 조건체크
+				mAttacking = false;
+
+				// 상태 변경
+				mCreatureAnimator->PlayAnimation(L"SkellBossIdle");					
+				mBossActiveState = eBossState::Idle;
+			}			
 		}
-		// 카운트를 다했다면? 레이저 종료
 		else
-			mLaserAttackOn = false;
+		{
+			callLaserAttack();
+
+			// 공격 종료 조건
+			if (0 >= mCurLaserCount)
+			{
+				mGetDamageCount = 0;
+				mLaserAttakFinished = false;
+				mAttacking = false;
+				mCurLaserCount = mMaxLaserCount;
+			}
+		}		
 	}
 
 	void SkellBossScript::callProjectileAttack()
 	{
-		if (mLaserAttackOn)				// 레이저 공격중이라면
-			return;
-		if (!mProjectileAttackOn)		// 투사체 공격 시간이 아니라면
-			return;
-		if (eBossState::Attack != mBossActiveState)
-			return;
-
-		// 딜레이 계산
+		if (mProjectileAttackActive)
 		{
 			float deltaTime = (float)Time::DeltaTime();
 
@@ -315,11 +201,11 @@ namespace da
 			{
 				mProjectileCallDelayTime.Clear();	// 딜레이 시간 초기화
 				mCreatureAudio->Play(Resources::Find<AudioClip>(L"RifleFire"), 10.0f, false);
-				
+
 				// 투사체를 4갈래로 각각 호출해주기!
 				for (size_t projectile = 0; projectile < 4; ++projectile)
 				{
-					ActionUnitScript* actionUnit = CallBossProjectile();
+					ActionUnitScript* actionUnit = CallBossActionUnit();
 					actionUnit->SetUnitPosition(mCreatureTransform->GetPosition());
 
 					structs::sActionUnitTypes mMonsterUnitTypes = {};
@@ -346,7 +232,109 @@ namespace da
 			}
 		}
 	}
+	void SkellBossScript::callLaserAttack()
+	{
+		// 왼쪽이 공격할 차례임
+		if (mLeftHandTurn)
+		{
+			// 반대편 공격이 끝남 (최초상태는 둘다 true임) // 일단 ok
+			if (mRightHand->IsAttackFinished())
+			{
+				// 대기시간 됬음 (이것도 최초상태는 true임)
+				if (mNextLaserAttackReady)
+				{
+					// 공격실행
+					mLeftHand->DoAttack();
+					mLeftHand->NotAttackFinish();	// 여기서 finish를 false로 세팅해놔도 공격이 끝나면 알아서 true가 될것임
+					mLeftHandTurn = false;			// 반대편 손으로 턴을 넘김
+					mNextLaserAttackReady = false;		// 대기시간을 초기화함 (방향이 바뀌면 다시 시간을 잴것임)
+					mCurLaserCount--;				// 레이저 카운트도 감소시킴
+				}
+				else
+				{
+					mLaserCallDelayTime.Start += (float)Time::DeltaTime();
+					if (mLaserCallDelayTime.TimeOut())
+					{
+						mLaserCallDelayTime.Clear();
+						mNextLaserAttackReady = true;
+					}
+				}
+			}
+		}
+		else
+		{
+			if (mLeftHand->IsAttackFinished())
+			{
+				// 대기시간 됬음
+				if (mNextLaserAttackReady)
+				{
+					// 공격실행
+					mRightHand->DoAttack();
+					mRightHand->NotAttackFinish();
+					mLeftHandTurn = true;
+					mNextLaserAttackReady = false;
+					mCurLaserCount--;
+				}
+				else
+				{
+					mLaserCallDelayTime.Start += (float)Time::DeltaTime();
+					if (mLaserCallDelayTime.TimeOut())
+					{
+						mLaserCallDelayTime.Clear();
+						mNextLaserAttackReady = true;
+					}
+				}
+			}
+		}
 
+		
+	}
+
+
+	void SkellBossScript::SkellBossHandleDead()
+	{
+		if (mDeadTrigger)
+		{
+			GameDataManager::DecreaseMonsterCount(SceneManager::GetActiveScene()->GetPortals());
+
+			// 손 치우기
+			mRightHand->GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
+			mLeftHand->GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
+
+			// 중력 활성화
+			mCreatureRigidbody->ApplyComponentUsing(true);
+			mCreatureFootCollider->ApplyComponentUsing(true);
+			mCreatureBodyCollider->ApplyComponentUsing(false);
+			// 사망 애니메이션
+			mCreatureTransform->SetScale(math::Vector3(5.0f, 5.0f, 1.0f));
+			mCreatureAnimator->PlayAnimation(L"SkellBossDead");
+			mCreatureFootCollider->SetSize(math::Vector2(0.10f, 0.10f));
+			mCreatureFootCollider->SetCenter(math::Vector2(0.0f, -0.80f));
+			mDeadTrigger = false;
+			//SceneManager::GetLightObject()->GetComponent<AudioSource>()->Stop();
+		}
+	}
+	
+
+	void SkellBossScript::AddActionUnit(GameObject* unit)
+	{
+		SkellBossProjectileScript* bossProjectile = unit->AddComponent<SkellBossProjectileScript>();
+		bossProjectile->SetOwnerScript(this);
+		mBossProjectiles.push_back(bossProjectile);
+	}
+
+	SkellBossProjectileScript* SkellBossScript::CallBossActionUnit()
+	{
+		for (size_t projectile = 0; projectile < mBossProjectiles.size(); ++projectile)
+		{
+			if (GameObject::eObjectState::Inactive ==
+				mBossProjectiles[projectile]->GetOwner()->GetObjectState())
+				return mBossProjectiles[projectile];
+		}
+		return nullptr;
+	}
+
+	
 	void SkellBossScript::SetLeftHand(GameObject* left)
 	{
 		SkellBossHandScript* leftHandScript = left->AddComponent<SkellBossHandScript>();
@@ -374,8 +362,12 @@ namespace da
 		mCreatureAnimator->PlayAnimation(L"SkellBossIdle");
 		mBossActiveState = eBossState::Idle;
 	}
-	void SkellBossScript::attackingAnimation()
+	void SkellBossScript::playAttackingAnimation()
 	{
 		mCreatureAnimator->PlayAnimation(L"SkellBossAttacking");
+	}
+	void SkellBossScript::startProjectileAttack()
+	{
+		mProjectileAttackActive = true;
 	}
 }

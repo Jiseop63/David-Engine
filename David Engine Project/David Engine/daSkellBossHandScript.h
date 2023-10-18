@@ -28,6 +28,10 @@ namespace da
 
 		void DoAttack();
 		bool IsAttackReady() { return mAttackReady; }
+		bool IsAttackFinished() { return mAttackFinished; }
+		void NotAttackFinish(bool value = false) { mAttackFinished = value; }
+		void AttackIsFinished();
+
 	private:
 		void updateMoveToPlayer();
 
@@ -64,6 +68,8 @@ namespace da
 		bool			mAttackReady;
 		structs::sActionTimeValues mAttackDelay;
 		structs::sActionTimeValues mAttackCooldown;
+
+		bool			mAttackFinished;
 
 	};
 }

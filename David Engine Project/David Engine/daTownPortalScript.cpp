@@ -1,6 +1,7 @@
 #include "daTownPortalScript.h"
 #include "daResources.h"
 #include "daGameObject.h"
+#include "daSceneManager.h"
 
 namespace da
 {
@@ -48,6 +49,9 @@ namespace da
 		// 애니메이션 재생
 		mPortalRenderer->SetMaterial(Resources::Find<Material>(L"AnimationMaterial"));
 		mPortalAnimator->PlayAnimation(L"DungeonPortalEat", false);
+		SceneManager::GetLightObject()->GetComponent<AudioSource>()->Stop();		
+		SceneManager::GetPlayerScript()->GetPlayerAudio()->Play(Resources::Find<AudioClip>(L"DungeonOut"), 80, false);
+
 	}
 
 	void TownPortalScript::HidePlayer()

@@ -196,6 +196,7 @@ namespace da
 		mSwapIndex.Clear();
 		// 혹시라도 무기가 바뀐다면 한번 갱신해주기
 		mPlayerScript->GetCombatScript()->EquipWeapon(mActiveItemSlot->GetItemScript());
+		mPlayerScript->GetPlayerAudio()->Play(Resources::Find<AudioClip>(L"Equip"), 60.0f, false);
 	}
 
 	ItemScript* InventoryScript::GetActiveItemScript()
