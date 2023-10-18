@@ -19,7 +19,7 @@ namespace da
 
 		void SetPosition(math::Vector3 position) { mFairyTransform->SetPosition(position); }
 		void SetPosition(float x, float y) { mFairyTransform->SetPosition(math::Vector3(x, y, 0.0f)); }
-
+		void SetHealValue(float value) { mValue = value; }
 		void DungeonFinished();
 
 	protected:
@@ -27,5 +27,7 @@ namespace da
 		Collider2D* mFairyCollider;
 		Animator* mFairyAnimator;
 		AudioSource* mFairyAudio;
+
+		float mValue;
 	};
 }

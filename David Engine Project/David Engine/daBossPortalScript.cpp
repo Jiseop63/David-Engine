@@ -3,7 +3,7 @@
 #include "daInput.h"
 
 #include "daGameObject.h"
-#include "daPortalIconScript.h"
+#include "daInputIconScript.h"
 
 namespace da
 {
@@ -58,7 +58,7 @@ namespace da
 	}
 	void BossPortalScript::AddIconScript(GameObject* object)
 	{
-		mPortalIcon = object->AddComponent<PortalIconScript>();
+		mPortalIcon = object->AddComponent<InputIconScript>();
 	}
 
 	void BossPortalScript::GatePass()

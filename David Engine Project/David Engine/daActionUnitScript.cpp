@@ -148,7 +148,6 @@ namespace da
 			GameObject* creatureObj = other->GetOwner();
 			CreatureScript* creatureScript = creatureObj->GetComponent<CreatureScript>();
 			// 피격 호출
-			mOwnerScript->CallHitEffect(creatureScript->GetCreatureTransform()->GetPosition());			
 			//SceneManager::GetMainCameraScript()->SetOscillation(20.0f, 0.250f);	// 카메라 진동
 			// 피격 호출
 			creatureScript->OnDamaged(mUnitInfo.AtaackDamage);
@@ -159,7 +158,6 @@ namespace da
 			GameObject* creatureObj = other->GetOwner();
 			SkellBossScript* bossScript = creatureObj->GetComponent<SkellBossScript>();
 			// 보스 피격 호출
-			mOwnerScript->CallHitEffect(bossScript->GetCreatureTransform()->GetPosition());
 			bossScript->IncreaseDamageCount();
 			bossScript->OnDamaged(mUnitInfo.AtaackDamage);
 			//SceneManager::GetMainCameraScript()->SetOscillation(20.0f, 0.250f);	// 카메라 진동

@@ -7,6 +7,7 @@ namespace da
 	class GameObject;
 	class CameraObject;
 	class FairyScript;
+	class ItemBoxScript;
 	class Scene : public Entity
 	{
 	public:
@@ -43,7 +44,8 @@ namespace da
 	public:
 		Layer& GetLayer(enums::eLayerType targetLayer) { return mLayers[(UINT)targetLayer]; }
 		std::vector<class PortalScript*> GetPortals() { return mPortals; }
-		FairyScript* GetFairySript() { return mFairySript; }
+		FairyScript* GetFairySript() { return mFairyScript; }
+		ItemBoxScript* GetItemBoxScript() { return mItemBoxScript; }
 
 
 
@@ -52,6 +54,7 @@ namespace da
 
 	protected:
 		std::vector<class PortalScript*>	mPortals;
-		FairyScript*						mFairySript;
+		FairyScript*						mFairyScript;
+		ItemBoxScript*						mItemBoxScript;
 	};
 }

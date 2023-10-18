@@ -45,6 +45,7 @@ namespace da
 		void ChangeItems();
 		ItemScript* GetActiveItemScript();
 		void AddItemToSlot(enums::eItemSlot slot, ItemScript* item);
+		bool CheckItemSlot(enums::eItemSlot slot);
 #pragma endregion
 
 

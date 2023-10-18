@@ -45,7 +45,8 @@
 #include "daDungeonPortalScript.h"
 #include "daBossPortalScript.h"
 #include "daPortalWallScript.h"
-#include "daPortalIconScript.h"
+#include "daInputIconScript.h"
+#include "daItemBoxScript.h"
 #include "daFairyScript.h"
 
 // Player

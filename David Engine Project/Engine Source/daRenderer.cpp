@@ -546,8 +546,9 @@ namespace renderer
 
 		// dungeon etc
 		Resources::Load<Texture>(L"FairyTexture", L"..\\Resources\\Texture\\Object\\FairyL.png");
+		Resources::Load<Texture>(L"BigBoxTexture", L"..\\Resources\\Texture\\Object\\BigBox0.png");
 		// light, box 추가하면 좋을거같은데
-
+		
 
 		// monster
 		Resources::Load<Texture>(L"SkelSprite", L"..\\Resources\\Texture\\Monster\\Skel\\SpriteSheet.png");
@@ -752,6 +753,7 @@ namespace renderer
 			Resources::Insert<Material>(L"TextureProjectileMaterial", material);
 		}
 #pragma endregion
+
 #pragma region HUD Material		
 		// Basic Cursor
 		{
@@ -1081,7 +1083,7 @@ namespace renderer
 			Resources::Insert<Material>(L"SecondFloor_OneWayMaterial", material);
 		}
 #pragma endregion
-#pragma region 1F material
+#pragma region Scene Material
 		// platform
 		{
 			material = std::make_shared<Material>();
@@ -1190,9 +1192,17 @@ namespace renderer
 			material->SetShader(shader);
 			Resources::Insert<Material>(L"Dungeon2-bossMaterial", material);
 		}
+#pragma endregion
 
-
-		
+#pragma region Etc
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"BigBoxTexture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"BoxMaterial", material);
+		}
 		{
 			material = std::make_shared<Material>();
 			texture = Resources::Find<Texture>(L"KeyFTexture");
@@ -1200,26 +1210,6 @@ namespace renderer
 			material->SetTexture(texture);
 			material->SetShader(shader);
 			Resources::Insert<Material>(L"IconMaterial", material);
-		}
-#pragma endregion
-#pragma region 2F material
-		// stage1
-		{
-			material = std::make_shared<Material>();
-			texture = Resources::Find<Texture>(L"2FStage1Texture");
-			shader = Resources::Find<Shader>(L"SpriteShader");
-			material->SetTexture(texture);
-			material->SetShader(shader);
-			Resources::Insert<Material>(L"2FStage1Material", material);
-		}
-		// stage2
-		{
-			material = std::make_shared<Material>();
-			texture = Resources::Find<Texture>(L"2FStage2Texture");
-			shader = Resources::Find<Shader>(L"SpriteShader");
-			material->SetTexture(texture);
-			material->SetShader(shader);
-			Resources::Insert<Material>(L"2FStage2Material", material);
 		}
 #pragma endregion
 	}

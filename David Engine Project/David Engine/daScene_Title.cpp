@@ -768,7 +768,7 @@ namespace da
 				crossbowItemScript->SetProjectileSize(math::Vector2(1.20f, 1.20f));
 			}
 			ItemManager::AddItem(L"Crossbow", crossbowItemScript);
-			inventoryScript->AddItemToSlot(enums::eItemSlot::Slot02, ItemManager::GetItem(L"Crossbow"));
+			//inventoryScript->AddItemToSlot(enums::eItemSlot::Slot02, ItemManager::GetItem(L"Crossbow"));
 
 			GameObject* quarterStaffItemObject = objects::InstantiateCommonObject<GameObject>(this, enums::eLayerType::UI, L"QuarterStaffIconMaterial");
 			quarterStaffItemObject->SetObjectState(GameObject::eObjectState::Inactive);
@@ -810,7 +810,7 @@ namespace da
 			// Add item
 			ItemManager::AddItem(L"QuarterStaff", quarterStaffItemScript);
 
-			inventoryScript->AddItemToSlot(enums::eItemSlot::Slot20, ItemManager::GetItem(L"QuarterStaff"));
+			//inventoryScript->AddItemToSlot(enums::eItemSlot::Slot20, ItemManager::GetItem(L"QuarterStaff"));
 
 			inventoryScript->SetPlayerScript(playerObject);
 		}

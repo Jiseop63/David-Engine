@@ -201,7 +201,10 @@ namespace da
 		{
 			FairyScript* fairyScript = objects::InstantiateFairy(this);
 			fairyScript->SetPosition(6.50f, 2.0f);
-			mFairySript = fairyScript;
+			fairyScript->SetHealValue(20.0f);
+			mFairyScript = fairyScript;
 		}
+
+		
 	}
 }

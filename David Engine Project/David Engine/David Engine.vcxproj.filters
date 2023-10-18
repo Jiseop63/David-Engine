@@ -243,7 +243,7 @@
     <ClInclude Include="daBossPortalScript.h">
       <Filter>Objects\Env\Portal\BossPortal</Filter>
     </ClInclude>
-    <ClInclude Include="daPortalIconScript.h">
+    <ClInclude Include="daInputIconScript.h">
       <Filter>Objects\Env\Portal\BossPortal</Filter>
     </ClInclude>
     <ClInclude Include="daItemScript.h">
@@ -288,7 +288,7 @@
     <ClInclude Include="daFairyScript.h">
       <Filter>Objects\Env\Fairy</Filter>
     </ClInclude>
-    <ClInclude Include="daItemBox.h">
+    <ClInclude Include="daItemBoxScript.h">
       <Filter>Objects\Env\ItemBox</Filter>
     </ClInclude>
   </ItemGroup>
@@ -413,7 +413,7 @@
     <ClCompile Include="daBossPortalScript.cpp">
       <Filter>Objects\Env\Portal\BossPortal</Filter>
     </ClCompile>
-    <ClCompile Include="daPortalIconScript.cpp">
+    <ClCompile Include="daInputIconScript.cpp">
       <Filter>Objects\Env\Portal\BossPortal</Filter>
     </ClCompile>
     <ClCompile Include="daItemScript.cpp">
@@ -454,6 +454,9 @@
     </ClCompile>
     <ClCompile Include="daFairyScript.cpp">
       <Filter>Objects\Env\Fairy</Filter>
+    </ClCompile>
+    <ClCompile Include="daItemBoxScript.cpp">
+      <Filter>Objects\Env\ItemBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

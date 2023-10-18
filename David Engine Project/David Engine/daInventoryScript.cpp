@@ -224,4 +224,12 @@ namespace da
 		else
 			mActiveItemSlot = mItemSlots[(UINT)enums::eItemSlot::Slot02];
 	}
+	bool InventoryScript::CheckItemSlot(enums::eItemSlot slot)
+	{
+		ItemScript* hasItem = mItemSlots[(UINT)slot]->GetItemScript();
+		if (hasItem)
+			return false;
+		else
+			return true;
+	}
 }

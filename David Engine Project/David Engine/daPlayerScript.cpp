@@ -65,6 +65,17 @@ namespace da
         if (!mIsControl)
             return;
 
+        if (!mAudioReady)
+        {
+            mAudioCooldown.Start += (float)Time::DeltaTime();
+            if (mAudioCooldown.TimeOut())
+            {
+                mAudioCooldown.Clear();
+                mAudioReady = true;
+            }
+        }
+        
+
         updateDashRegen();
         updateJumpRegen();
         updateBufferedJump();
@@ -270,6 +281,13 @@ namespace da
             mCreatureAudio->Play(Resources::Find<AudioClip>(L"Hit_Player"), 60.0f);
             mhitted = true;
         }        
+    }
+    AudioSource* PlayerScript::CallPlayerAudio()
+    {
+        if (mAudioReady)
+            return mPlayerAudio;
+        else
+            return nullptr;
     }
 #pragma endregion
 #pragma region Weapon Logic
@@ -608,10 +626,12 @@ namespace da
         mJumpData.BufferedJump = false;
         mJumpData.ExtraJump = true;
 
-        mDustDelayTime.End = 0.250f;
-        mAfterimageTime.End = 0.0550f;
-        mDashTime.End = 0.20f;
-        mDamageDelayTime.End = 0.1250f;
+        mDustDelayTime.SetTime(0.250f);
+        mAfterimageTime.SetTime(0.0550f);
+        mDashTime.SetTime(0.20f);
+        mDamageDelayTime.SetTime(0.1250f);
+
+        mAudioCooldown.SetTime(0.70f);
     }
 #pragma endregion
 #pragma region Collision Func

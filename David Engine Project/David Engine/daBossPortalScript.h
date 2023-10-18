@@ -37,9 +37,9 @@ namespace da
 
 	private:
 		AudioSource* mPortalAudio;
-		class PortalIconScript* mPortalIcon;
-		bool mIsClear;
+		class InputIconScript* mPortalIcon;
 		bool mFocused;
+		bool mIsClear;
 	};
 
 }

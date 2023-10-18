@@ -10,6 +10,7 @@ namespace da
 		: mFairyTransform(nullptr)
 		, mFairyCollider(nullptr)
 		, mFairyAnimator(nullptr)
+		, mValue(0.0f)
 	{
 	}
 	FairyScript::~FairyScript()
@@ -24,6 +25,7 @@ namespace da
 		mFairyAudio = GetOwner()->AddComponent<AudioSource>();
 		mFairyAnimator->Create(L"FairyIdle", Resources::Find<Texture>(L"FairyTexture"), math::Vector2::Zero, math::Vector2(24.0f, 25.0f), 16, math::Vector2::Zero, 0.1f);
 		mFairyAnimator->PlayAnimation(L"FairyIdle");
+		mValue = 10.0f;
 	}
 	void FairyScript::OnCollisionEnter(Collider2D* other)
 	{
@@ -32,7 +34,7 @@ namespace da
 		{
 			// 대상의 채력을 회복시킴
 			PlayerScript* player = creatureObj->GetComponent<PlayerScript>();
-			player->GetHeal(10.0f);
+			player->GetHeal(mValue);
 			mFairyAudio->Play(Resources::Find<AudioClip>(L"Heal"), 175.0f, false);
 
 			// 나를 비활성화
@@ -41,6 +43,6 @@ namespace da
 	}
 	void FairyScript::DungeonFinished()
 	{
-		GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+		
 	}
 }

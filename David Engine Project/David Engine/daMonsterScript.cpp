@@ -6,6 +6,7 @@
 #include "daMonsterActionUnitScript.h"
 #include "daAudioSource.h"
 #include "daResources.h"
+#include "daSceneManager.h"
 
 namespace da
 {
@@ -47,7 +48,8 @@ namespace da
 		mCreatureStat.CurHP -= damage;
 		if (0 >= mCreatureStat.CurHP)
 			mCreatureStat.CurHP = 0;
-		mCreatureAudio->Play(Resources::Find<AudioClip>(L"Hit_Monster"), 40.0f);
+		//mCreatureAudio->Play(Resources::Find<AudioClip>(L"Hit_Monster"), 40.0f);
+		SceneManager::GetPlayerScript()->CallPlayerAudio()->Play(Resources::Find<AudioClip>(L"Hit_Monster"), 40.0f);
 
 		MonsterFindsPlayer(true);
 	}
@@ -73,6 +75,7 @@ namespace da
 		actionUnit->SetUnitOffset(math::Vector3(0.0f, -0.20f, 0.0f));
 		actionUnit->OnActive();
 		mIsDead = true;
+		//SceneManager::GetPlayerScript()->CallPlayerAudio()->Play(Resources::Find<AudioClip>(L"MonsterDie"), 40.0f);
 
 		mCreatureAudio->Play(Resources::Find<AudioClip>(L"MonsterDie"), 50.0f);
 	}

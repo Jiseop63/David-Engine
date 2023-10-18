@@ -4,11 +4,11 @@
 
 namespace da
 {
-	class PortalIconScript : public Script
+	class InputIconScript : public Script
 	{
 	public:
-		PortalIconScript();
-		virtual ~PortalIconScript();
+		InputIconScript();
+		virtual ~InputIconScript();
 
 		virtual void Initialize() override;
 

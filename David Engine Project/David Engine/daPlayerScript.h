@@ -84,6 +84,9 @@ namespace da
 #pragma region public Func
 	public:
 		virtual void OnDamaged(float damage) override;
+		AudioSource* CallPlayerAudio();
+
+
 		PlayerCombatScript* GetCombatScript() { return mPlayerCombatScript; }
 		AudioSource* GetPlayerAudio() { return mPlayerAudio; }
 		InventoryScript* GetInventoryScript() { return mInventoryScript; }
@@ -202,6 +205,11 @@ namespace da
 
 		structs::sActionTimeValues mDamageDelayTime;
 		bool			mhitted;
+
+
+		structs::sActionTimeValues mAudioCooldown;
+		bool						mAudioReady;
+
 		// ÇÃ·¿Æû ¿¹¿ÜÃ³¸® º¯¼ö
 	private:
 		bool			mJumping;

@@ -185,11 +185,32 @@ namespace da
 			skelScript->GetOwner()->GetTransform()->SetPosition(math::Vector3(-5.0f, - 2.20f, ObjectZ));
 		}
 
+		//// È¸º¹
+		//{
+		//	FairyScript* fairyScript = objects::InstantiateFairy(this);
+		//	fairyScript->SetPosition(-1.50f, 0.750f);
+		//	mFairySript = fairyScript;
+		//}
 
 		{
-			FairyScript* fairyScript = objects::InstantiateFairy(this);
-			fairyScript->SetPosition(-1.50f, 0.750f);
-			mFairySript = fairyScript;
+			ItemBoxScript* boxScript = objects::InstantiateItemBox(this);
+			boxScript->SetPosition(math::Vector3(-1.50f, -0.40f, 0.0f));
+			boxScript->SetItemName(L"Crossbow");
+			mItemBoxScript = boxScript;
 		}
+
+		//{
+		//	ItemBoxScript* boxScript = objects::InstantiateItemBox(this);
+		//	boxScript->SetPosition(-1.50f, 0.750f);
+		//	boxScript->SetItemName(L"Crossbow");
+		//	mItemBoxScript = boxScript;
+		//}
+
+		//{
+		//	FairyScript* fairyScript = objects::InstantiateFairy(this);
+		//	fairyScript->SetPosition(-1.50f, 0.750f);
+		//	fairyScript->SetHealValue(20.0f);
+		//	mFairyScript = fairyScript;
+		//}
 	}
 }

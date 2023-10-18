@@ -267,8 +267,20 @@ namespace da::objects
 		GameObject* icon = InstantiateGameObject<GameObject>(scene, enums::eLayerType::ENV, L"IconMaterial");
 		portalScript->AddIconScript(icon);
 
-
 		return portalScript;
+	}
+	static ItemBoxScript* InstantiateItemBox(Scene* scene)
+	{
+
+		GameObject* box = InstantiateGameObject<GameObject>(scene, enums::eLayerType::ENV, L"BoxMaterial");
+		box->SetName(L"boxObject");
+		box->SetObjectState(GameObject::eObjectState::Inactive);
+		ItemBoxScript* boxScript = box->AddComponent<ItemBoxScript>();
+
+		GameObject* icon = InstantiateGameObject<GameObject>(scene, enums::eLayerType::ENV, L"IconMaterial");
+		boxScript->AddIconScript(icon);
+
+		return boxScript;
 	}
 	static FairyScript* InstantiateFairy(Scene* scene)
 	{

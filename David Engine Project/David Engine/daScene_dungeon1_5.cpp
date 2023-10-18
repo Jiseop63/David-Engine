@@ -163,11 +163,11 @@ namespace da
 			bansheeScript->GetOwner()->GetTransform()->SetPosition(math::Vector3(-2.40f, 2.0f, ObjectZ));
 		}
 
-
 		{
-			FairyScript* fairyScript = objects::InstantiateFairy(this);
-			fairyScript->SetPosition(0.0f, 2.0f);
-			mFairySript = fairyScript;
+			ItemBoxScript* boxScript = objects::InstantiateItemBox(this);
+			boxScript->SetPosition(math::Vector3(0.0f, 1.40f, 0.0f));
+			boxScript->SetItemName(L"QuarterStaff");
+			mItemBoxScript = boxScript;
 		}
 	}
 }

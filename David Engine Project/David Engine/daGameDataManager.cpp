@@ -6,7 +6,9 @@
 #include "daDashCountScript.h"
 #include "daDungeonPortalScript.h"
 #include "daBossPortalScript.h"
+
 #include "daFairyScript.h"
+#include "daItemBoxScript.h"
 
 namespace da
 {
@@ -85,11 +87,15 @@ namespace da
 				bossPortal->PlayOpenSound();
 			else
 				SceneManager::GetPlayerScript()->DungeonClearSound();
+			int a = 0;
 			// 회복객체 배치하기
 			FairyScript* fairy = SceneManager::GetActiveScene()->GetFairySript();
+			ItemBoxScript* itemBox = SceneManager::GetActiveScene()->GetItemBoxScript();
 
 			if (fairy)
-				fairy->DungeonFinished();
+				fairy->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
+			if (itemBox)
+				itemBox->GetOwner()->SetObjectState(GameObject::eObjectState::Active);
 		}
 	}
 
