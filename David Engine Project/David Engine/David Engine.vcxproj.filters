@@ -168,15 +168,6 @@
     <ClInclude Include="daSubCameraScript.h">
       <Filter>Objects\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="daScene_Dungeon1F_Stage1.h">
-      <Filter>Scenes\03 Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="daScene_Dungeon2F_Stage1.h">
-      <Filter>Scenes\03 Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="daScene_Dungeon2F_Stage2.h">
-      <Filter>Scenes\03 Dungeon</Filter>
-    </ClInclude>
     <ClInclude Include="daArmourScript.h">
       <Filter>Objects\UI\HUD</Filter>
     </ClInclude>
@@ -194,12 +185,6 @@
     </ClInclude>
     <ClInclude Include="daPlayerCombatScript.h">
       <Filter>Objects\Creature\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="daScene_Dungeon1F_Stage2.h">
-      <Filter>Scenes\03 Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="daScene_Dungeon1F_Stage3.h">
-      <Filter>Scenes\03 Dungeon</Filter>
     </ClInclude>
     <ClInclude Include="daCreatureScript.h">
       <Filter>Objects\Creature\0 BaseScript</Filter>
@@ -273,6 +258,30 @@
     <ClInclude Include="daFairyScript.h">
       <Filter>Objects\Env</Filter>
     </ClInclude>
+    <ClInclude Include="daScene_dungeon1_1.h">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="daScene_dungeon1_2.h">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="daScene_dungeon1_3.h">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="daScene_dungeon1_4.h">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="daScene_dungeon1_5.h">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="daScene_dungeon1_final.h">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="daScene_dungeon2_1.h">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="daScene_dungeon2_boss.h">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="David Engine.cpp">
@@ -326,15 +335,6 @@
     <ClCompile Include="daSubCameraScript.cpp">
       <Filter>Objects\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="daScene_Dungeon1F_Stage1.cpp">
-      <Filter>Scenes\03 Dungeon</Filter>
-    </ClCompile>
-    <ClCompile Include="daScene_Dungeon2F_Stage1.cpp">
-      <Filter>Scenes\03 Dungeon</Filter>
-    </ClCompile>
-    <ClCompile Include="daScene_Dungeon2F_Stage2.cpp">
-      <Filter>Scenes\03 Dungeon</Filter>
-    </ClCompile>
     <ClCompile Include="daArmourScript.cpp">
       <Filter>Objects\UI\HUD</Filter>
     </ClCompile>
@@ -352,12 +352,6 @@
     </ClCompile>
     <ClCompile Include="daPlayerCombatScript.cpp">
       <Filter>Objects\Creature\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="daScene_Dungeon1F_Stage3.cpp">
-      <Filter>Scenes\03 Dungeon</Filter>
-    </ClCompile>
-    <ClCompile Include="daScene_Dungeon1F_Stage2.cpp">
-      <Filter>Scenes\03 Dungeon</Filter>
     </ClCompile>
     <ClCompile Include="daCreatureScript.cpp">
       <Filter>Objects\Creature\0 BaseScript</Filter>
@@ -427,6 +421,30 @@
     </ClCompile>
     <ClCompile Include="daFairyScript.cpp">
       <Filter>Objects\Env</Filter>
+    </ClCompile>
+    <ClCompile Include="daScene_dungeon1_1.cpp">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="daScene_dungeon1_2.cpp">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="daScene_dungeon1_3.cpp">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="daScene_dungeon1_4.cpp">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="daScene_dungeon1_5.cpp">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="daScene_dungeon1_final.cpp">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="daScene_dungeon2_1.cpp">
+      <Filter>Scenes\03 Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="daScene_dungeon2_boss.cpp">
+      <Filter>Scenes\03 Dungeon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

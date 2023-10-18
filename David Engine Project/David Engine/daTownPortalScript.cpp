@@ -27,7 +27,7 @@ namespace da
 		mPortalAnimator->CompleteEvent(L"DungeonPortalEat") = std::bind(&PortalScript::ChangeScene, this);
 		mPortalAnimator->ActionEvent(L"DungeonPortalEat", 10) = std::bind(&TownPortalScript::HidePlayer, this);
 
-		SetSceneName(L"Scene_Dungeon1F_Stage1");
+		SetSceneName(L"Scene_dungeon1_1");
 
 		// 충돌체 세팅
 		mPortalBodyCollider->SetSize(math::Vector2(1.0f, 0.10f));

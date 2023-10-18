@@ -3,11 +3,11 @@
 
 namespace da
 {
-	class Scene_Dungeon2F_Stage2 : public Scene
+	class Scene_dungeon2_boss : public Scene
 	{
 	public:
-		Scene_Dungeon2F_Stage2();
-		virtual ~Scene_Dungeon2F_Stage2();
+		Scene_dungeon2_boss();
+		virtual ~Scene_dungeon2_boss();
 		virtual void Initialize() override;
 		virtual void Update() override;
 		virtual void LateUpdate() override;
@@ -19,6 +19,5 @@ namespace da
 	private:
 		void addBackgroundObjects();
 		void addGameObjects();
-
 	};
 }

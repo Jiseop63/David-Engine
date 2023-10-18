@@ -1,10 +1,9 @@
 #include "daSkellBossScript.h"
-#include "daSkellBossScript.h"
-#include "daSkellBossScript.h"
-#include "daSkellBossScript.h"
 #include "daResources.h"
 #include "daTime.h"
 #include "daGameObject.h"
+
+#include "daGameDataManager.h"
 
 #include "daCollider2D.h"
 #include "daAnimator.h"
@@ -152,6 +151,8 @@ namespace da
 	{
 		if (mDeadTrigger)
 		{
+			GameDataManager::DecreaseMonsterCount(SceneManager::GetActiveScene()->GetPortals());
+
 			// 손 치우기
 			mRightHand->GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);
 			mLeftHand->GetOwner()->SetObjectState(GameObject::eObjectState::Inactive);

@@ -584,11 +584,16 @@ namespace renderer
 
 		
 		// dungeonTexture
-		Resources::Load<Texture>(L"1FStage1Texture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\1FStage1.png");
-		Resources::Load<Texture>(L"1FStage2Texture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\1FStage2.png");
-		Resources::Load<Texture>(L"1FStage3Texture", L"..\\Resources\\Texture\\Scene_Dungeon1F\\1FStage3.png");
-		Resources::Load<Texture>(L"2FStage1Texture", L"..\\Resources\\Texture\\Scene_Dungeon2F\\EntranceBossroom.png");
-		Resources::Load<Texture>(L"2FStage2Texture", L"..\\Resources\\Texture\\Scene_Dungeon2F\\Bossroom.png");
+		Resources::Load<Texture>(L"Dungeon1-1Texture", L"..\\Resources\\Texture\\Dungeon\\DungeonBackGround\\dungeon1-1.png");
+		Resources::Load<Texture>(L"Dungeon1-2Texture", L"..\\Resources\\Texture\\Dungeon\\DungeonBackGround\\dungeon1-2.png");
+		Resources::Load<Texture>(L"Dungeon1-3Texture", L"..\\Resources\\Texture\\Dungeon\\DungeonBackGround\\dungeon1-3.png");
+		Resources::Load<Texture>(L"Dungeon1-4Texture", L"..\\Resources\\Texture\\Dungeon\\DungeonBackGround\\dungeon1-4.png");
+		Resources::Load<Texture>(L"Dungeon1-5Texture", L"..\\Resources\\Texture\\Dungeon\\DungeonBackGround\\dungeon1-5.png");
+		Resources::Load<Texture>(L"Dungeon1-finalTexture", L"..\\Resources\\Texture\\Dungeon\\DungeonBackGround\\dungeon1-final.png");
+
+		Resources::Load<Texture>(L"Dungeon2-1Texture", L"..\\Resources\\Texture\\Dungeon\\DungeonBackGround\\dungeon2-1.png");
+		Resources::Load<Texture>(L"Dungeon2-bossTexture", L"..\\Resources\\Texture\\Dungeon\\DungeonBackGround\\dungeon2-boss.png");
+
 
 		// sound
 		Resources::Load<AudioClip>(L"title", L"..\\Resources\\Sound\\background\\title.ogg");
@@ -1119,35 +1124,72 @@ namespace renderer
 			material->SetShader(shader);
 			Resources::Insert<Material>(L"Open1FMaterial", material);
 		}
-		// stage1
 		{
 			material = std::make_shared<Material>();
-			texture = Resources::Find<Texture>(L"1FStage1Texture");
+			texture = Resources::Find<Texture>(L"Dungeon1-1Texture");
 			shader = Resources::Find<Shader>(L"SpriteShader");
 			material->SetTexture(texture);
 			material->SetShader(shader);
-			Resources::Insert<Material>(L"1FStage1Material", material);
+			Resources::Insert<Material>(L"Dungeon1-1Material", material);
+		}
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"Dungeon1-2Texture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"Dungeon1-2Material", material);
+		}
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"Dungeon1-3Texture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"Dungeon1-3Material", material);
+		}
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"Dungeon1-4Texture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"Dungeon1-4Material", material);
+		}
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"Dungeon1-5Texture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"Dungeon1-5Material", material);
+		}
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"Dungeon1-finalTexture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"Dungeon1-finalMaterial", material);
+		}
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"Dungeon2-1Texture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"Dungeon2-1Material", material);
+		}
+		{
+			material = std::make_shared<Material>();
+			texture = Resources::Find<Texture>(L"Dungeon2-bossTexture");
+			shader = Resources::Find<Shader>(L"SpriteShader");
+			material->SetTexture(texture);
+			material->SetShader(shader);
+			Resources::Insert<Material>(L"Dungeon2-bossMaterial", material);
 		}
 
-		//stage2
-		{
-			material = std::make_shared<Material>();
-			texture = Resources::Find<Texture>(L"1FStage2Texture");
-			shader = Resources::Find<Shader>(L"SpriteShader");
-			material->SetTexture(texture);
-			material->SetShader(shader);
-			Resources::Insert<Material>(L"1FStage2Material", material);
-		}
 
-		//stage3
-		{
-			material = std::make_shared<Material>();
-			texture = Resources::Find<Texture>(L"1FStage3Texture");
-			shader = Resources::Find<Shader>(L"SpriteShader");
-			material->SetTexture(texture);
-			material->SetShader(shader);
-			Resources::Insert<Material>(L"1FStage3Material", material);
-		}
 		
 		{
 			material = std::make_shared<Material>();

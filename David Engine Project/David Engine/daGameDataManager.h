@@ -7,9 +7,18 @@ namespace da
 {
 	enum class eDungeonScene
 	{
-		F1Stage2,
+		//dungeon1_1,
+		dungeon1_2,
+		dungeon1_3,
+		dungeon1_4,
+		dungeon1_5,
+		dungeon1_final,
+		//dungeon2_1,
+		dungeon2_boss,
+
+		/*F1Stage2,
 		F1Stage3,
-		F2Stage2,
+		F2Stage2,*/
 		End,
 	};
 	class GameDataManager
