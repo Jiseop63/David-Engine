@@ -11,6 +11,8 @@
 #include "daSceneManager.h"
 #include "daSkellBossProjectileScript.h"
 #include "daSkellBossHandScript.h"
+#include "daDungeonPortalScript.h"
+
 namespace da
 {
 	SkellBossScript::SkellBossScript()
@@ -34,7 +36,7 @@ namespace da
 		, mLaserCallDelayTime{}
 		, mProjectileCallDelayTime{}
 		, mRotatePerSeconds(0.0f)
-		, mDeadTrigger(false)
+		, mDeadTrigger(true)
 	{
 	}
 	SkellBossScript::~SkellBossScript()
@@ -364,11 +366,7 @@ namespace da
 	void SkellBossScript::lifeCheck()
 	{
 		if (0 >= mCreatureStat.CurHP)
-		{
 			mBossActiveState = eBossState::Dead;
-			mDeadTrigger = true;
-		}
-			
 	}
 
 	void SkellBossScript::retIdle()

@@ -175,18 +175,18 @@ namespace da
 	{
 		{
 			DungeonPortalScript* portalScript = objects::InstantiateDungeonPortal(this);
-			portalScript->SetPosition(math::Vector3(6.50f, -4.20f, 0.0f));
+			portalScript->SetPosition(math::Vector3(-6.50f, -4.20f, 0.0f));
 			portalScript->SetSceneName(L"Scene_dungeon2_1");
-			portalScript->SetExitPosition(math::Vector3(6.0f, -1.0f, 0.0f));
-			portalScript->SetRotate(-1.570f);
+			portalScript->SetExitPosition(math::Vector3(-12.0f, -1.50f, 0.0f));
+			portalScript->SetRotate(1.570f);
 			mPortals.push_back(portalScript);
 		}
 		{
 			DungeonPortalScript* portalScript = objects::InstantiateDungeonPortal(this);
-			portalScript->SetPosition(math::Vector3(-6.50f, -4.20f, 0.0f));
+			portalScript->SetPosition(math::Vector3(6.50f, -4.20f, 0.0f));
 			portalScript->SetSceneName(L"Scene_Title");
-			portalScript->SetExitPosition(math::Vector3(-12.0f, -1.50f, 0.0f));
-			portalScript->SetRotate(1.570f);
+			portalScript->SetExitPosition(math::Vector3(6.0f, -1.0f, 0.0f));
+			portalScript->SetRotate(-1.570f);
 			mPortals.push_back(portalScript);
 		}
 		// skell Boss

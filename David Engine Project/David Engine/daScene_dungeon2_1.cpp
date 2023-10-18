@@ -85,32 +85,26 @@ namespace da
 		// ground
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
-				this, math::Vector3(0.30f, -2.750f, 0.0f), math::Vector3(12.40f, 1.0f, 1.0f));
+				this, math::Vector3(1.0f, -2.750f, 0.0f), math::Vector3(13.0f, 1.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
 		// left
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
-				this, math::Vector3(-6.250f, -0.50f, 0.0f), math::Vector3(1.0f, 5.0f, 1.0f));
-			landObject->SetName(L"LandObj");
-		}
-		// right
-		{
-			GameObject* landObject = objects::InstantiateLandObject(
-				this, math::Vector3(7.150f, -2.60f, 0.0f), math::Vector3(1.50f, 2.0f, 1.0f));
+				this, math::Vector3(-6.50f, 0.0f, 0.0f), math::Vector3(1.0f, 5.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
 		// Top
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
-				this, math::Vector3(0.30f, 2.050f, 0.0f), math::Vector3(12.40f, 1.0f, 1.0f));
+				this, math::Vector3(0.30f, 3.0f, 0.0f), math::Vector3(13.0f, 1.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
 
 		// right top
 		{
 			GameObject* landObject = objects::InstantiateLandObject(
-				this, math::Vector3(7.150f, 1.950f, 0.0f), math::Vector3(1.50f, 2.0f, 1.0f));
+				this, math::Vector3(7.50f, 1.50f, 0.0f), math::Vector3(1.50f, 2.0f, 1.0f));
 			landObject->SetName(L"LandObj");
 		}
 
@@ -121,7 +115,7 @@ namespace da
 		{
 			DungeonPortalScript* portalScript = objects::InstantiateDungeonPortal(this);
 			portalScript->SetSceneName(L"Scene_dungeon2_boss");
-			portalScript->SetPosition(math::Vector3(7.150f, 0.0f, 0.0f));
+			portalScript->SetPosition(math::Vector3(7.150f, -1.0f, 0.0f));
 			portalScript->SetExitPosition(math::Vector3(-5.0f, -4.250f, 0.0f));
 			portalScript->SetRotate(-1.570f);
 			mPortals.push_back(portalScript);
