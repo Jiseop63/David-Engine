@@ -15,7 +15,7 @@
 namespace da
 {
 	SkelCombatScript::SkelCombatScript()
-		: mAttackFinished(false)
+		: mAttackFinished(true)
 	{
 	}
 	SkelCombatScript::~SkelCombatScript()
